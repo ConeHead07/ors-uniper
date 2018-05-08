@@ -1,0 +1,280 @@
+
+<form action="index.php?s={s}" method="post">
+<input type="submit" name="speichern" value="Weiter">
+<input type="submit" name="reset" value="Zur&uuml;cksetzen"><br>&nbsp;
+<style>
+.titelbalken {
+	background:#83a7e2;
+}
+</style>
+<!-- %webansicht% -->
+<table width="440" border=1 cellpadding=3 cellspacing=0>
+
+<tr>
+	<td class="titelbalken"><b>Seitenbereich %eingabe[name]%</b></td>
+</tr>
+
+<tr>
+	<td>
+
+<table width="100%" border=1>
+<tr>
+	<td style="/*dynStyle_webfreigabe*/"><b>Webfreigabe</b></td>
+	<td>
+	<input type="radio" name="eingabe[webfreigabe]" value="Ja" chck_webfreigabe="Ja">Ja
+	<input type="radio" name="eingabe[webfreigabe]" value="Nein" chck_webfreigabe="Nein">Nein
+	</td>
+</tr>
+
+<tr>
+	<td style="/*dynStyle_webfreigabe*/"><b>Content-Bereich (CMS)</b></td>
+	<td>
+	<input type="radio" name="eingabe[content]" value="Ja" chck_content="Ja">Ja
+	<input type="radio" name="eingabe[content]" value="Nein" chck_content="Nein">Nein
+	</td>
+</tr>
+
+<tr>
+	<td style="/*dynStyle_visibility*/"><b>Sprache</b></td>
+	<td>
+	<input type="radio" name="eingabe[lang]" value="DE" chck_lang="DE">DE
+	<input type="radio" name="eingabe[lang]" value="EN" chck_lang="EN">EN
+	</td>
+</tr>
+
+<tr>
+	<td style="/*dynStyle_geschuetzt*/"><b>Passwortbereich</b></td>
+	<td>
+	<div>
+	<div style="float:left;">
+	<input type="radio" name="eingabe[geschuetzt]" value="Ja" chck_geschuetzt="Ja">Ja
+	<input type="radio" name="eingabe[geschuetzt]" value="Nein" chck_geschuetzt="Nein">Nein
+	</div>
+	<div style="float:right;"><b>Gruppen:</b><input type="text" name="eingabe[gruppen]" style="width:200px; border: thin groove;" value="%eingabe[gruppen]%"></div>
+	<div style="clear:both;"></div>
+	</div>
+	</td>
+</tr>
+<!--
+<tr>
+	<td style="vertical-align:top;/*dynStyle_visibility*/;display:none;"><b>Erforderliche Rechtestufe</b></td>
+	<td>
+	<input type="radio" name="eingabe[rechte]" value="0" chck_rechte="0">0
+	<input type="radio" name="eingabe[rechte]" value="1" chck_rechte="1">1
+	<input type="radio" name="eingabe[rechte]" value="2" chck_rechte="2">2
+	<input type="radio" name="eingabe[rechte]" value="3" chck_rechte="3">3
+	<input type="radio" name="eingabe[rechte]" value="4" chck_rechte="4">4
+	<input type="radio" name="eingabe[rechte]" value="5" chck_rechte="5">5
+	<input type="radio" name="eingabe[rechte]" value="6" chck_rechte="6">6
+	<input type="radio" name="eingabe[rechte]" value="7" chck_rechte="7">7
+	</td>
+</tr>
+ -->
+<tr>
+	<td style="vertical-align:top;/*dynStyle_visibility_iflogin*/"><b>Menü ist sichtbar?</b></td>
+	<td>
+	<input type="radio" name="eingabe[visibility]" value="allways" chck_visibility="allways">Immer
+	<input type="radio" name="eingabe[visibility]" value="never" chck_visibility="never"> Nie
+	<input type="radio" name="eingabe[visibility]" value="conditional" chck_visibility="conditional"> Bedingt
+	</td>
+</tr>
+<tr>
+	<td style="vertical-align:top;/*dynStyle_visibility_iflogin*/"><b>Anzeigebedingung</b></td>
+	<td>
+	Wenn: <input type="checkbox" name="eingabe[visibility_condition][]" value="login" chck_visibility_condition="login">Login
+	<input type="checkbox" name="eingabe[visibility_condition][]" value="loginas:gruppe" chck_visibility_condition="loginas:gruppe"> als Gruppe
+	<!-- <input type="checkbox" name="eingabe[visibility_condition][]" value="loginas:gleicherechte" chck_visibility_condition="loginas:gleicherechte">mit gleichen Rechten<br>
+	<input type="checkbox" name="eingabe[visibility_condition][]" value="loginas:mindestrechte" chck_visibility_condition="loginas:mindestrechte">mit mind. Rechten -->
+	<input type="checkbox" name="eingabe[visibility_condition][]" value="loginas:admin" chck_visibility_condition="loginas:admin">Login als Admin
+	<input type="checkbox" name="eingabe[visibility_condition][]" value="logout" chck_visibility_condition="logout">Logout
+	</td>
+</tr>
+
+
+<tr>
+	<td style="/*dynStyle_parentid*/"><b>Eltern-Menü</b></td>
+	<td>
+<select name="eingabe[parentid]"><!-- {parent_menu_options} --></select>
+	</td>
+</tr>
+<tr>
+	<td style="/*dynStyle_srv*/"><b>Seitenbereich <br>
+	(Interner Bezeichner) </b></td>
+	<td valign=top>
+	<input type="text" name="eingabe[srv]" style="width:200px; border: thin groove;" value="%eingabe[srv]%">
+</td>
+<tr>
+	<td style="/*dynStyle_srv*/"><b>cmd </b></td>
+	<td valign=top>
+	<input type="text" name="eingabe[cmd]" style="width:200px; border: thin groove;" value="%eingabe[cmd]%">(Ausgabesteuerung)
+</td>
+</tr>
+<tr>
+	<td style="/*dynStyle_create_menu_function*/"><b>Funktion für Menüerstellung</b></td>
+	<td valign=top>
+	<input type="text" name="eingabe[create_menu_function]" style="width:200px; border: thin groove;" value="%eingabe[create_menu_function]%">(Php-Funktion)
+</td>
+</tr>
+<tr>
+	<td style="/*dynStyle_create_menu_script*/"><b>Script für Menüerstellung </b></td>
+	<td valign=top>
+	<input type="text" name="eingabe[create_menu_script]" style="width:200px; border: thin groove;" value="%eingabe[create_menu_script]%">(Pfad zu Php-Script, dass für die Menüerstellung benötigt wird!)
+</td>
+</tr>
+<tr>
+	<td style="/*dynStyle_script*/"><b>Script (rel. Pfad) </b></td>
+	<td valign=top>
+	<input type="text" name="eingabe[script]" style="width:200px; border: thin groove;" value="%eingabe[script]%">(relativer Pfad)
+</td>
+</tr></table></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Name / Titel </b><br>
+	<input type="text" name="eingabe[name]" style="width:550px; border: thin groove;" value="%eingabe[name]%">
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Position </b><br>
+	<input type="text" name="eingabe[ordnungszahl]" style="width:550px; border: thin groove;" value="%eingabe[ordnungszahl]%">
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Übersetzungen</b> <br>
+	Bsp. für Startseite:<br>
+	<em>EN=Main Page<br>
+	FR=Accueil</em><br>
+	<textarea name="eingabe[name_translations]" style="width:550px; height:50px;font-size:11px; border: thin groove;">%eingabe[name_translations]%</textarea>
+	<br></td>
+</tr>
+
+<tr>
+	<td style="/*dynStyle_text*/"><b>Öffentlicher Infotext</b><br>
+	<textarea type="text" name="eingabe[text]" cols="30" rows="2" style="height:100px; width:550px; border: thin groove;">%eingabe[text]%</textarea>
+	<br></td>
+</tr>
+
+<tr>
+	<td style="/*dynStyle_kommentar*/"><b>Kommentar (Intern)</b><br>
+	<textarea type="text" name="eingabe[kommentar]" cols="30" rows="10" style="height:60px; width:550px; border: thin groove;">%eingabe[kommentar]%</textarea><!-- txtedit_toolbar?groupid=edit2&formname=cmsform&inputname=eingabe[volltext]&width=550&height=440&class=content -->
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Themenbild </b><br>
+	<input type="text" name="eingabe[logo]" style="width:550px; border: thin groove;" value="%eingabe[logo]%">
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Redirect </b><br>
+	Falls der Seitenbereich deaktiviert wurde, können Sie hier einen anderen Seitenbereich
+	oder aber auch eine andere URL angeben auf die der User umgeleitet werden soll.	
+	<input type="text" name="eingabe[redirect]" style="width:550px; border: thin groove;" value="%eingabe[redirect]%">
+	<br></td>
+</tr>
+
+<tr>
+	<td class="titelbalken"><b>Menü-Eigenschaften</b></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Position</b>%eingabe[ordnungszahl]%</td>
+</tr>
+
+<tr>
+	<td style="/*dynStyle_name*/"><b>Menü-Gruppe/Position</b><br>
+	<input type="text" name="eingabe[menu_groupname]" style="width:550px; border: thin groove;" value="%eingabe[menu_groupname]%">
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Menü-Title</b><br>
+	<input type="text" name="eingabe[menu_title]" style="width:550px; border: thin groove;" value="%eingabe[menu_title]%">
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Menü-Icon</b><br>
+	<input type="text" name="eingabe[menu_icon]" style="width:550px; border: thin groove;" value="%eingabe[menu_icon]%">
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_kommentar*/"><b>Wie soll sich das Menü verhalten, wenn Unterelemente vorhanden sind:</b><br>
+	<input type="radio" name="eingabe[menu_behaviour]" chck_menu_behaviour="openSubMenu" value="openSubMenu">Auf Klick,
+	Unterelemente einblenden<br>	
+	<input type="radio" name="eingabe[menu_behaviour]" chck_menu_behaviour="openLink" value="openLink">Auf Klick, 
+	Übersichtsseite öffnen<br>
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_kommentar*/"><b>Sollen  Untermmenüs direkt sichtbar sein:</b><br>
+	<input type="radio" name="eingabe[submenu_behaviour]" chck_submenu_behaviour="visible" value="visible">Ja, Untermenüs sollen immer sichtbar sein bzw. dann, wenn auch das Obermenü sichtbar ist<br>	
+	<input type="radio" name="eingabe[submenu_behaviour]" chck_submenu_behaviour="hidden" value="hidden">Nein,
+	Untermenüs sollen nur auf Aufforderung sichtbar sein<br>
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_kommentar*/"><b>Menü-Style überschreiben / hinzufügen</b><br>
+	Spezielle abweichende Style-Angaben für das &quot;style&quot;-Attribut.<br>	
+	<div><div style="float:left;">style = </div>
+	<div style="float:right;"><textarea type="text" name="eingabe[menu_style]" cols="30" rows="10" style="height:60px; width:485px; border: thin groove;">%eingabe[menu_style]%</textarea></div></div><!-- txtedit_toolbar?groupid=edit2&formname=cmsform&inputname=eingabe[volltext]&width=550&height=440&class=content -->
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_kommentar*/"><b>Menü-OnClick überschreiben (Javascript)</b><br>
+	Nur für Sonderfälle, ansonsten sollten Click-Events im Template stehen.<br>	
+	<div><div style="float:left;">onclick = </div>
+	<div style="float:right;"><textarea type="text" name="eingabe[menu_onclick]" cols="30" rows="10" style="height:60px; width:485px; border: thin groove;">%eingabe[menu_onclick]%</textarea></div></div><!-- txtedit_toolbar?groupid=edit2&formname=cmsform&inputname=eingabe[volltext]&width=550&height=440&class=content -->
+	</td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Menü-Link </b><br>
+	Bitte nur angeben, wenn nicht der automatisch generierte Link verwendet werden soll.
+	<input type="text" name="eingabe[menu_link]" style="width:550px; border: thin groove;" value="%eingabe[menu_link]%">
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Menü-Target </b><br>
+	Bitte nur angeben, wenn die Seite nicht im gleichen Fenster angezeigt werden soll.
+	<input type="text" name="eingabe[menu_target]" style="width:550px; border: thin groove;" value="%eingabe[menu_target]%">
+	<br></td>
+</tr>
+
+<tr>
+	<td style="/*dynStyle_name*/"><b>Menü Div-Box: Attribute </b><br>
+	<div><div style="float:left;">&lt;div ... </div>
+	<div style="float:right;">
+	<textarea name="eingabe[menu_div_attr]" type="text" name="eingabe[menu_div_attr]" cols="30" rows="10" style="height:60px; width:485px; border: thin groove;">%eingabe[menu_div_attr]%</textarea></div></div>
+	<br></td>
+</tr><tr>
+	<td style="/*dynStyle_name*/"><b>Menü Link: Attribute </b><br>
+	<div><div style="float:left;">&lt;a ... </div>
+	<div style="float:right;">
+	<textarea name="eingabe[menu_ahref_attr]" type="text" name="eingabe[menu_ahref_attr]" cols="30" rows="10" style="height:60px; width:485px; border: thin groove;">%eingabe[menu_ahref_attr]%</textarea></div></div>
+	<br></td>
+</tr><tr>
+	<td style="/*dynStyle_name*/"><b>Untermenüs: Attribute für Div-Box-Container </b><br>
+	<div><div style="float:left;">&lt;div ... </div>
+	<div style="float:right;">
+	<textarea name="eingabe[menu_sub_attr]" type="text" name="eingabe[menu_sub_attr]" cols="30" rows="10" style="height:60px; width:485px; border: thin groove;">%eingabe[menu_sub_attr]%</textarea></div></div></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Code-Before </b><br>
+	<textarea name="eingabe[menu_code_before]" type="text" name="eingabe[kommentar]" cols="30" rows="10" style="height:60px; width:550px; border: thin groove;">%eingabe[menu_code_before]%</textarea></div></div></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Code-Behind </b><br>
+	<textarea name="eingabe[menu_code_behind]" type="text" name="eingabe[kommentar]" cols="30" rows="10" style="height:60px; width:550px; border: thin groove;">%eingabe[menu_code_behind]%</textarea>
+	<br></td>
+</tr>
+<tr>
+	<td style="/*dynStyle_name*/"><b>Menü-HTML (Ersetzt alle vorausgegangenen Menü-Angaben) </b><br>
+	Bitte nur angeben, wenn für das Menü <span style="text-decoration:underline;">nicht</span>
+	die allgemeine Vorlage verwendet werden soll.
+	<textarea name="eingabe[menu_html]" type="text" name="eingabe[kommentar]" cols="30" rows="10" style="height:60px; width:550px; border: thin groove;">%eingabe[menu_html]%</textarea>
+	<br></td>
+</tr>
+
+</table>
+<input type="hidden" name="eingabe[rechte]" value="0">
+<input type="hidden" name="eingabe[id]" value="%eingabe[id]%">
+<input type="submit" name="speichern" value="Weiter">
+<input type="submit" name="reset" value="Zur&uuml;cksetzen">
+</form>
+<textarea id="zwischenspeicher" style="display:none;"></textarea>
+<IFRAME scrolling="no" id="htmlzwischenspeicher" width="1px" height="1px" ></IFRAME>

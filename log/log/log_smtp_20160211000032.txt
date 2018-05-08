@@ -1,0 +1,185 @@
+
+
+START:SMTP-CONNECT: 2016-02-11 00:00:33
+|secs:1|SERVER: 220 LOCALHOST.LOG_DUMMIE ESMTP MAIL Service( last-command: )
+|secs:1|CLIENT: EHLO 62.225.25.12
+|secs:1|SERVER: 250-E2013.LOCALHOST.LOG_DUMMIE Hello [10.10.1.62]( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-SIZE 36700160( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-PIPELINING( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-DSN( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-ENHANCEDSTATUSCODES( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-STARTTLS( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-X-ANONYMOUSTLS( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-AUTH NTLM LOGIN( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-X-EXPS GSSAPI NTLM( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-8BITMIME( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-BINARYMIME( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-CHUNKING( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250 XRDST( last-command: EHLO 62.225.25.12)
+|secs:1|CLIENT: AUTH LOGIN
+|secs:1|SERVER: 334 VXNlcm5hbWU6( last-command: AUTH LOGIN)
+|secs:1|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:1|SERVER: 334 UGFzc3dvcmQ6( last-command: bWVydGVuc1xiYXllcm1v)
+|secs:1|CLIENT: bWVyVGVuczQ3ODc3
+|secs:1|SERVER: 235 2.7.0 Authentication successful( last-command: bWVyVGVuczQ3ODc3)
+|secs:1|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:1|SERVER: 250 2.1.0 Sender OK( last-command: MAIL FROM: <bayerors)
+|secs:1|CLIENT: RCPT TO:<frank.barthold@gmail.com>
+|secs:1|SERVER: 250 2.1.5 Recipient OK( last-command: RCPT TO:<frank.barth)
+|secs:1|CLIENT: DATA
+|secs:1|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>( last-command: DATA)
+|secs:1|CLIENT: Subject: Umzug ID 136 - Genehmigt
+From: ors <bayerors@mertens.ag>
+Reply-To: ors@mertens-henk.de
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2016-02-11 00:00:33
+X-QUEUE-ID:1
+
+
+.
+|secs:1|SERVER: 250 2.6.0 <fd106a5c-750f-450c-b156-5c8868b03007@E2013.LOCALHOST.LOG_DUMMIE> [InternalId=13344463388832, Hostname=e2013.LOCALHOST.LOG_DUMMIE] Queued mail for delivery( last-command: Subject: Umzug ID 13)
+|secs:1|CLIENT: QUIT
+|secs:1|SERVER: 250 2.6.0 <fd106a5c-750f-450c-b156-5c8868b03007@E2013.LOCALHOST.LOG_DUMMIE> [InternalId=13344463388832, Hostname=e2013.LOCALHOST.LOG_DUMMIE] Queued mail for delivery( last-command: Subject: Umzug ID 13)( last-command: QUIT)
+
+ENDE:SMTP-CONNECT: 2016-02-11 00:00:33
+
+START:SMTP-CONNECT: 2016-02-11 00:00:33
+|secs:1|SERVER: 220 LOCALHOST.LOG_DUMMIE ESMTP MAIL Service( last-command: )
+|secs:1|CLIENT: EHLO 62.225.25.12
+|secs:1|SERVER: 250-E2013.LOCALHOST.LOG_DUMMIE Hello [10.10.1.62]( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-SIZE 36700160( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-PIPELINING( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-DSN( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-ENHANCEDSTATUSCODES( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-STARTTLS( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-X-ANONYMOUSTLS( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-AUTH NTLM LOGIN( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-X-EXPS GSSAPI NTLM( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-8BITMIME( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-BINARYMIME( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-CHUNKING( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250 XRDST( last-command: EHLO 62.225.25.12)
+|secs:1|CLIENT: AUTH LOGIN
+|secs:1|SERVER: 334 VXNlcm5hbWU6( last-command: AUTH LOGIN)
+|secs:1|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:1|SERVER: 334 UGFzc3dvcmQ6( last-command: bWVydGVuc1xiYXllcm1v)
+|secs:1|CLIENT: bWVyVGVuczQ3ODc3
+|secs:1|SERVER: 235 2.7.0 Authentication successful( last-command: bWVyVGVuczQ3ODc3)
+|secs:1|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:1|SERVER: 250 2.1.0 Sender OK( last-command: MAIL FROM: <bayerors)
+|secs:1|CLIENT: RCPT TO:<bre-umzugskoordination@bayer.com>
+|secs:1|SERVER: 250 2.1.5 Recipient OK( last-command: RCPT TO:<bre-umzugsk)
+|secs:1|CLIENT: DATA
+|secs:1|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>( last-command: DATA)
+|secs:1|CLIENT: Subject: Umzug ID 136 - Genehmigt
+From: ors <bayerors@mertens.ag>
+Reply-To: ors@mertens-henk.de
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2016-02-11 00:00:33
+X-QUEUE-ID:1
+
+
+.
+|secs:1|SERVER: 250 2.6.0 <fd106a5c-750f-450c-b156-5c8868b03007@E2013.LOCALHOST.LOG_DUMMIE> [InternalId=13344463388832, Hostname=e2013.LOCALHOST.LOG_DUMMIE] Queued mail for delivery( last-command: Subject: Umzug ID 13)
+|secs:1|CLIENT: QUIT
+|secs:1|SERVER: 250 2.6.0 <fd106a5c-750f-450c-b156-5c8868b03007@E2013.LOCALHOST.LOG_DUMMIE> [InternalId=13344463388832, Hostname=e2013.LOCALHOST.LOG_DUMMIE] Queued mail for delivery( last-command: Subject: Umzug ID 13)( last-command: QUIT)
+
+ENDE:SMTP-CONNECT: 2016-02-11 00:00:33
+
+START:SMTP-CONNECT: 2016-02-11 00:00:33
+|secs:1|SERVER: 220 LOCALHOST.LOG_DUMMIE ESMTP MAIL Service( last-command: )
+|secs:1|CLIENT: EHLO 62.225.25.12
+|secs:1|SERVER: 250-E2013.LOCALHOST.LOG_DUMMIE Hello [10.10.1.62]( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-SIZE 36700160( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-PIPELINING( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-DSN( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-ENHANCEDSTATUSCODES( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-STARTTLS( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-X-ANONYMOUSTLS( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-AUTH NTLM LOGIN( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-X-EXPS GSSAPI NTLM( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-8BITMIME( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-BINARYMIME( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-CHUNKING( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250 XRDST( last-command: EHLO 62.225.25.12)
+|secs:1|CLIENT: AUTH LOGIN
+|secs:1|SERVER: 334 VXNlcm5hbWU6( last-command: AUTH LOGIN)
+|secs:1|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:1|SERVER: 334 UGFzc3dvcmQ6( last-command: bWVydGVuc1xiYXllcm1v)
+|secs:1|CLIENT: bWVyVGVuczQ3ODc3
+|secs:1|SERVER: 235 2.7.0 Authentication successful( last-command: bWVyVGVuczQ3ODc3)
+|secs:1|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:1|SERVER: 250 2.1.0 Sender OK( last-command: MAIL FROM: <bayerors)
+|secs:1|CLIENT: RCPT TO:<bayerors@mertens.ag>
+|secs:1|SERVER: 250 2.1.5 Recipient OK( last-command: RCPT TO:<bayerors@me)
+|secs:1|CLIENT: DATA
+|secs:1|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>( last-command: DATA)
+|secs:1|CLIENT: Subject: Umzug ID 136 - Genehmigt
+From: ors <bayerors@mertens.ag>
+Reply-To: ors@mertens-henk.de
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2016-02-11 00:00:33
+X-QUEUE-ID:1
+
+
+.
+|secs:1|SERVER: 250 2.6.0 <fd106a5c-750f-450c-b156-5c8868b03007@E2013.LOCALHOST.LOG_DUMMIE> [InternalId=13344463388832, Hostname=e2013.LOCALHOST.LOG_DUMMIE] Queued mail for delivery( last-command: Subject: Umzug ID 13)
+|secs:1|CLIENT: QUIT
+|secs:1|SERVER: 250 2.6.0 <fd106a5c-750f-450c-b156-5c8868b03007@E2013.LOCALHOST.LOG_DUMMIE> [InternalId=13344463388832, Hostname=e2013.LOCALHOST.LOG_DUMMIE] Queued mail for delivery( last-command: Subject: Umzug ID 13)( last-command: QUIT)
+
+ENDE:SMTP-CONNECT: 2016-02-11 00:00:33
+
+START:SMTP-CONNECT: 2016-02-11 00:00:33
+|secs:1|SERVER: 220 LOCALHOST.LOG_DUMMIE ESMTP MAIL Service( last-command: )
+|secs:1|CLIENT: EHLO 62.225.25.12
+|secs:1|SERVER: 250-E2013.LOCALHOST.LOG_DUMMIE Hello [10.10.1.62]( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-SIZE 36700160( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-PIPELINING( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-DSN( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-ENHANCEDSTATUSCODES( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-STARTTLS( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-X-ANONYMOUSTLS( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-AUTH NTLM LOGIN( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-X-EXPS GSSAPI NTLM( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-8BITMIME( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-BINARYMIME( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250-CHUNKING( last-command: EHLO 62.225.25.12)
+|secs:1|SERVER: 250 XRDST( last-command: EHLO 62.225.25.12)
+|secs:1|CLIENT: AUTH LOGIN
+|secs:1|SERVER: 334 VXNlcm5hbWU6( last-command: AUTH LOGIN)
+|secs:1|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:1|SERVER: 334 UGFzc3dvcmQ6( last-command: bWVydGVuc1xiYXllcm1v)
+|secs:1|CLIENT: bWVyVGVuczQ3ODc3
+|secs:1|SERVER: 235 2.7.0 Authentication successful( last-command: bWVyVGVuczQ3ODc3)
+|secs:1|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:1|SERVER: 250 2.1.0 Sender OK( last-command: MAIL FROM: <bayerors)
+|secs:1|CLIENT: RCPT TO:<bayerumzuege@mertens.ag>
+|secs:1|SERVER: 250 2.1.5 Recipient OK( last-command: RCPT TO:<bayerumzueg)
+|secs:1|CLIENT: DATA
+|secs:1|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>( last-command: DATA)
+|secs:1|CLIENT: Subject: Umzug ID 136 - Genehmigt
+From: ors <bayerors@mertens.ag>
+Reply-To: ors@mertens-henk.de
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2016-02-11 00:00:33
+X-QUEUE-ID:1
+
+
+.
+|secs:1|SERVER: 250 2.6.0 <fd106a5c-750f-450c-b156-5c8868b03007@E2013.LOCALHOST.LOG_DUMMIE> [InternalId=13344463388832, Hostname=e2013.LOCALHOST.LOG_DUMMIE] Queued mail for delivery( last-command: Subject: Umzug ID 13)
+|secs:1|CLIENT: QUIT
+|secs:1|SERVER: 250 2.6.0 <fd106a5c-750f-450c-b156-5c8868b03007@E2013.LOCALHOST.LOG_DUMMIE> [InternalId=13344463388832, Hostname=e2013.LOCALHOST.LOG_DUMMIE] Queued mail for delivery( last-command: Subject: Umzug ID 13)( last-command: QUIT)
+
+ENDE:SMTP-CONNECT: 2016-02-11 00:00:33

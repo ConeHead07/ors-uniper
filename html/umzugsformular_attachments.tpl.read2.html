@@ -1,0 +1,29 @@
+{if empty($noOuterBox)}
+{if empty($noCss)}<link rel="stylesheet" type="text/css" href="{if !empty($WebRoot)}{$WebRoot}{/if}css/umzugsformular_attachements.css" />{/if}
+
+<fieldset><legend><strong>{if !empty($internal)}Interne {/if}Dateianhänge</strong></legend>
+	<div class="attachements_list" id="attachments{if !empty($internal)}_internal{/if}_list" data-url="sites/umzugsantrag_attachements_list.php?aid={$AS.aid}&internal={$internal}" style="padding:5px;">
+	{/if}
+		<div class="row names{if count($UmzugsAnlagen)==0} hidden{/if}">
+			<span class="col fname">Datei</span>
+			<span class="col fsize">Gr&ouml;&szlig;e</span>
+			<span class="col fdate">Upload vom</span>
+		</div>
+
+		<ul class="ulAttachements row-values">
+
+		{foreach name=ATList item=AT from=$UmzugsAnlagen}
+
+			<li class="row values">
+			 <span class="col fname" title="{$AT.titel}"><a href="{$AT.datei_link}" target="_blank">{if $AT.titel}{$AT.titel|truncate:60:"..."}{else}{$AT.dok_datei|truncate:60:"..."}{/if}</a></span> 
+			 <span class="col fsize">{$AT.datei_groesse}</span> 
+			 <span class="col fdate">{$AT.created}</span>
+			</li>
+		{foreachelse}
+			<li class="none"><em>keine</em></li>
+		{/foreach}
+		</ul>
+	{if empty($noOuterBox)}
+	</div>
+</fieldset>
+{/if}

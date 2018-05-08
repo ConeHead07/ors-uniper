@@ -1,0 +1,184 @@
+
+
+START:SMTP-CONNECT: 2017-01-26 09:01:27
+|secs:0|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Thu, 26 Jan 2017 09:01:27 +0100
+|secs:0|CLIENT: EHLO bayer.mertens.ag
+|secs:0|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:0|SERVER: 250-SIZE 36700160
+|secs:0|SERVER: 250-PIPELINING
+|secs:0|SERVER: 250-DSN
+|secs:0|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:0|SERVER: 250-STARTTLS
+|secs:0|SERVER: 250-X-ANONYMOUSTLS
+|secs:0|SERVER: 250-AUTH NTLM LOGIN
+|secs:0|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:0|SERVER: 250-8BITMIME
+|secs:0|SERVER: 250-BINARYMIME
+|secs:0|SERVER: 250-CHUNKING
+|secs:0|SERVER: 250 XRDST
+|secs:0|CLIENT: AUTH LOGIN
+|secs:0|SERVER: 334 VXNlcm5hbWU6
+|secs:0|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:0|SERVER: 334 UGFzc3dvcmQ6
+|secs:0|CLIENT: bWVyVGVuczQ3ODc3
+|secs:1|SERVER: 235 2.7.0 Authentication successful
+|secs:1|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:1|SERVER: 250 2.1.0 Sender OK
+|secs:1|CLIENT: RCPT TO:<s.laschewski@mertens.ag>
+|secs:1|SERVER: 250 2.1.5 Recipient OK
+|secs:1|CLIENT: DATA
+|secs:1|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>
+|secs:1|CLIENT: Subject: Umzug ID 2191 - Storniert
+From: ors <bayerors@mertens.ag>
+Reply-To: bayerors@mertens.ag
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2017-01-26 09:01:28
+X-QUEUE-ID:1
+
+Sehr geehrter Anwender,
+sehr geehrte Anwenderin,
+
+die Leistungsanforderung mit der ID 2191 wurde storniert und wird geschlossen.
+
+Antragsteller:  Stefan Laschewski
+SAP Nr.         4501529146
+Ticket Nr.      228741
+
+Sie können den  Vorgang  unter folgendem Link einsehen:
+https://bayer.mertens.ag/bayer/?s=kantrag&id=2191
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+.
+|secs:2|SERVER: 250 2.6.0 <b6e85821-f9e5-40af-b296-a9392ba3c863@TE2013.mertens.int> [InternalId=105905303584778, Hostname=Te2013.mertens.int] Queued mail for delivery
+|secs:2|CLIENT: QUIT
+|secs:2|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2017-01-26 09:01:29
+
+START:SMTP-CONNECT: 2017-01-26 09:01:29
+|secs:2|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Thu, 26 Jan 2017 09:01:29 +0100
+|secs:2|CLIENT: EHLO bayer.mertens.ag
+|secs:2|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:2|SERVER: 250-SIZE 36700160
+|secs:2|SERVER: 250-PIPELINING
+|secs:2|SERVER: 250-DSN
+|secs:2|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:2|SERVER: 250-STARTTLS
+|secs:2|SERVER: 250-X-ANONYMOUSTLS
+|secs:2|SERVER: 250-AUTH NTLM LOGIN
+|secs:2|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:2|SERVER: 250-8BITMIME
+|secs:2|SERVER: 250-BINARYMIME
+|secs:2|SERVER: 250-CHUNKING
+|secs:2|SERVER: 250 XRDST
+|secs:2|CLIENT: AUTH LOGIN
+|secs:2|SERVER: 334 VXNlcm5hbWU6
+|secs:2|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:2|SERVER: 334 UGFzc3dvcmQ6
+|secs:2|CLIENT: bWVyVGVuczQ3ODc3
+|secs:6|SERVER: 235 2.7.0 Authentication successful
+|secs:6|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:6|SERVER: 250 2.1.0 Sender OK
+|secs:6|CLIENT: RCPT TO:<s.laschewski@mertens.ag>
+|secs:6|SERVER: 250 2.1.5 Recipient OK
+|secs:6|CLIENT: DATA
+|secs:6|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>
+|secs:6|CLIENT: Subject: Umzug ID 2191 - Storniert
+From: ors <bayerors@mertens.ag>
+Reply-To: bayerors@mertens.ag
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2017-01-26 09:01:33
+X-QUEUE-ID:1
+
+Sehr geehrter Anwender,
+sehr geehrte Anwenderin,
+
+die Leistungsanforderung mit der ID 2191 wurde storniert und wird geschlossen.
+
+Antragsteller:  Stefan Laschewski
+SAP Nr.         4501529146
+Ticket Nr.      228741
+
+Sie können den  Vorgang  unter folgendem Link einsehen:
+https://bayer.mertens.ag/bayer/?s=pantrag&id=2191
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+.
+|secs:7|SERVER: 250 2.6.0 <6b43ab17-f2ec-46d6-b540-e5daf0842b9b@TE2013.mertens.int> [InternalId=105905303584782, Hostname=Te2013.mertens.int] Queued mail for delivery
+|secs:7|CLIENT: QUIT
+|secs:7|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2017-01-26 09:01:34
+
+START:SMTP-CONNECT: 2017-01-26 09:01:34
+|secs:7|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Thu, 26 Jan 2017 09:01:33 +0100
+|secs:7|CLIENT: EHLO bayer.mertens.ag
+|secs:7|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:7|SERVER: 250-SIZE 36700160
+|secs:7|SERVER: 250-PIPELINING
+|secs:7|SERVER: 250-DSN
+|secs:7|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:7|SERVER: 250-STARTTLS
+|secs:7|SERVER: 250-X-ANONYMOUSTLS
+|secs:7|SERVER: 250-AUTH NTLM LOGIN
+|secs:7|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:7|SERVER: 250-8BITMIME
+|secs:7|SERVER: 250-BINARYMIME
+|secs:7|SERVER: 250-CHUNKING
+|secs:7|SERVER: 250 XRDST
+|secs:7|CLIENT: AUTH LOGIN
+|secs:7|SERVER: 334 VXNlcm5hbWU6
+|secs:7|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:7|SERVER: 334 UGFzc3dvcmQ6
+|secs:7|CLIENT: bWVyVGVuczQ3ODc3
+|secs:7|SERVER: 235 2.7.0 Authentication successful
+|secs:7|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:7|SERVER: 250 2.1.0 Sender OK
+|secs:7|CLIENT: RCPT TO:<BreUk@mertens.ag>
+|secs:7|SERVER: 250 2.1.5 Recipient OK
+|secs:7|CLIENT: DATA
+|secs:7|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>
+|secs:7|CLIENT: Subject: Umzug ID 2191 - Storniert
+From: ors <bayerors@mertens.ag>
+Reply-To: bayerors@mertens.ag
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2017-01-26 09:01:34
+X-QUEUE-ID:1
+
+Sehr geehrter Anwender,
+sehr geehrte Anwenderin,
+
+die Leistungsanforderung mit der ID 2191 wurde storniert und wird geschlossen.
+
+Antragsteller:  Stefan Laschewski
+SAP Nr.         4501529146
+Ticket Nr.      228741
+
+Sie können den  Vorgang  unter folgendem Link einsehen:
+https://bayer.mertens.ag/bayer/?s=pantrag&id=2191
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+.
+|secs:7|SERVER: 250 2.6.0 <89721b89-a270-45f3-9fc9-8927776dce60@TE2013.mertens.int> [InternalId=105905303584783, Hostname=Te2013.mertens.int] Queued mail for delivery
+|secs:7|CLIENT: QUIT
+|secs:7|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2017-01-26 09:01:34

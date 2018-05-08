@@ -1,0 +1,61 @@
+Insert `mt_move_bayer`.`mm_umzuege` SET
+`token` = "a8c21e54f9",
+`anrede` = NULL,
+`name` = "Laschewski",
+`vorname` = "Stefan",
+`email` = "s.laschewski@mertens.ag",
+`fon` = "0177-9699495",
+`ort` = "Leverkusen",
+`gebaeude` = "1",
+`raumnr` = NULL,
+`etage` = "1. OG",
+`kostenstelle` = "4501792715",
+`planonnr` = "328065",
+`umzug` = "Nein",
+`umzugstermin` = NULL,
+`umzugszeit` = NULL,
+`terminwunsch` = "2018-05-07",
+`ansprechpartner` = "Stefan Laschewski",
+`ansprechpartner_email` = "s.laschewski@mertens.ag",
+`ansprechpartner_fon` = "0177-9699495",
+`geraete_csv` = NULL,
+`bemerkungen` = "Bemerkung von slaschewski am 26.04.2018 um 12:00
+AA 328065, DLS-MUT: Hr. Collin 01512-7615086 / Vor Ort: Herr Uwe
+Hamacher 0214-30-53900, 07.05.2018 Aus LEV Geb. K009 BRE
+Lagerkeller 007 nach Geb. B407, Raum 11 1 x offene Garderobe Aus LEV
+Geb. K017 BRE-Lager QSS nach Geb. B407, Raum 11 1 x Schreibtisch
+(IT-Montage und LAN-Verkabelung %u2013 Kabel ist beizustellen) 2 x
+Rollcontainer 1 x Bürodrehstuhl 3 x 3OH-Theken Aus LEV Geb. B407, Raum 11 extern entsorgen 2 x 3OH-Theken 1 x 6OH-Schrank In LEV Geb.
+B407, Raum 11 vorhandene Möbel umstellen nach Skizze 3 x Schreibtische
+(IT De- und Montage) 3 x Stühle 3 x Rollcontainer Der Stellplan geht Ihnen
+in separater Email zu.",
+`antragsstatus` = "bearbeitung",
+`umzugsstatus` = "temp",
+`dienstleister_id` = NULL,
+`dienstleister_name` = NULL,
+`dienstleister_bemerkung` = NULL,
+`geprueft` = "Init",
+`angeboten_am` = NULL,
+`angeboten_von` = NULL,
+`geprueft_am` = NULL,
+`geprueft_von` = NULL,
+`genehmigt_br` = "Init",
+`genehmigt_br_am` = NULL,
+`genehmigt_br_von` = NULL,
+`bestaetigt` = "Init",
+`bestaetigt_am` = NULL,
+`bestaetigt_von` = NULL,
+`abgeschlossen` = "Init",
+`abgeschlossen_am` = NULL,
+`abgeschlossen_von` = NULL,
+`genehmigt` = "Init",
+`bearbeiter_stelle` = NULL,
+`bearbeiter_name` = NULL,
+`bearbeiter_mail` = NULL,
+`bearbeiter_fon` = NULL,
+`bearbeiter_ort` = NULL,
+`bearbeiter_bemerkung` = NULL,
+`antragsteller_uid` = "2980" ,
+`antragsdatum` = NOW() ,
+`created` = NOW() ,
+ `b_modifiedby` = "2980" 

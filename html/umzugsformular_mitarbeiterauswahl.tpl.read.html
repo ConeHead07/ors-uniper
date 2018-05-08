@@ -1,0 +1,65 @@
+<h2 style="margin:0;padding:0;">Mitarbeiterliste</h2>
+<ol type="1" style="margin-top:0;padding-top:0;">
+<div id="mitarbeiterliste" style="margin-top:0;padding-top:0;">
+<table id="MA1" class="MitarbeierItem">
+  <thead>
+  <tr>
+    <td class="ColNName">Name</td>
+    <td class="ColXF" title="Bitte geben Sie bei externen Mitarbeitern die Firma an!">Fremdfirma</td>
+	
+    <td class="ColAbt"><b>Von:</b> Abtg</td>
+    <td class="ColGeb">Geb&auml;ude</td>
+    <td class="ColEtg">Etage</td>
+    <td class="ColRnr">R-Nr</td>
+    <td class="ColAP">AP-Nr</td>
+	
+    <td class="ColAbt"><b>Nach:</b> Abtg</td>
+    <td class="ColGeb">Geb&auml;ude</td>
+    <td class="ColEtg">Etage</td>
+    <td class="ColRnr">R-Nr</td>
+    <td class="ColAP">AP-Nr</td>
+    
+    <td class="ColFon">Anforderungsart</td>
+    <td class="ColFon">Tel-Nr</td>
+    <td class="ColPC">PC-Nr</td>
+    <td class="ColIP">Feste IP</td>
+  </tr>
+  </thead>
+  <tbody>
+{foreach name=MAList item=MA from=$Mitarbeiterliste}
+  <tr class="inputRowVon">
+	{if $MA.maid}
+	<td class="nn"><li>{$MA.name|escape} {$MA.vorname|escape}</li></td>
+    <td class="xf">{$MA.extern_firma|escape}</td>
+	<td class="abt">{$MA.abteilung|escape}</td>
+	<td class="geb">{$MA.gebaeude|escape}</td>
+    <td class="etg">{$MA.etage|escape}</td>
+    <td class="rnr">{$MA.raumnr|escape}</td>
+    <td class="apnr">{$MA.apnr|escape}</td>
+    {else}
+	<td class="nn"><li>{$MA.name|escape} {$MA.vorname|escape}</li></td>
+    <td class="xf">{$MA.extern_firma|escape}</td>
+	<td class="abt">{$MA.abteilung|escape}</td>
+	<td class="geb">{$MA.gebaeude|escape}</td>
+    <td class="etg">{$MA.etage|escape}</td>
+    <td class="rnr">{$MA.raumnr|escape}</td>
+    <td class="apnr">{$MA.apnr|escape}</td>
+	{/if}
+	<td class="abt">{$MA.zabteilung|escape}</td>
+	<td class="geb">{$MA.zgebaeude|escape}</td>
+    <td class="etg">{$MA.zetage|escape}</td>
+    <td class="rnr">{$MA.zraumnr|escape}</td>
+    <td class="apnr">{$MA.zapnr|escape}</td>
+    
+	<td class="fon">{$MA.umzugsart|escape}</td>
+    <td class="fon">{$MA.fon|escape}</td>
+    <td class="pcnr">{$MA.pcnr|escape}</td>
+    <td class="festeip">{$MA.festeip|escape}</td>
+</tr>
+{/foreach}
+</tbody>
+</table>
+</div>
+</ol>
+
+<br/>

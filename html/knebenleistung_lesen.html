@@ -1,0 +1,64 @@
+<div id="SysInfoBox"></div>
+
+<link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
+<link rel="stylesheet" type="text/css" href="../css/umzugsformular.css">
+<!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
+<h1><span class="spanTitle">Nebenleistung {if $NL.id}#{$NL.id}{/if}</span></h1> 
+<p>
+<div id="Umzugsantrag" class="divInlay"> 
+<form action="?s={$s}" method="post" name="frmUmzugsantrag">
+<input type="hidden" name="NL[id]" value="{$NL.id}">
+<a href="{$WebRoot}sites/nebenleistungsblatt.php?id={$NL.id}" target="Nebenleistungsblatt{$NL.id}"><img src="{$WebRoot}images/printer.png" width="16" height="16" alt="">Druckansicht</a>
+<table>
+  <tr>
+    <td style="padding:0;"><label for="mitarbeiter" style="width:180px;">Vor &amp; Nachname:</label></td>
+    <td style="padding:0;" class="itxt itxt2col" style="width:auto;">{$NL.vorname|escape} {$NL.name|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="email" style="width:180px;">E-Mail:</label></td>
+    <td style="padding:0;" class="itxt itxt2col" style="width:auto;">{$NL.email|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="fon" style="width:180px;">Fon:</label></td>
+    <td style="padding:0;" class="itxt itxt2col" style="width:auto;">{$NL.fon|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="mitarbeiter" style="width:180px;">Standort:</label></td>
+    <td style="padding:0;" class="itxt itxt2col" style="width:auto;">{$NL.standort|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="gebaeude" style="width:180px;">Gebaeude:</label></td>
+    <td style="padding:0;" class="itxt itxt2col" style="width:auto;">{$NL.gebaeude|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="mitarbeiter" style="width:180px;">Kostenstelle:</label></td>
+    <td style="padding:0;" class="itxt itxt2col" style="width:auto;">{$NL.kostenstelle|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="termin" style="width:180px;">Datum:</label></td>
+    <td style="padding:0;" class="itxt itxt2col" style="width:auto;">{$NL.datum|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="termin" style="width:180px;">Bevorzugte Uhrzeit:</label></td>
+    <td style="padding:0;" class="itxt itxt2col" style="width:auto;">{$NL.uhrzeit|escape}</td>
+  </tr>
+	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+</table>
+<strong>Aufgabe:</strong><br>
+<textarea class="iarea bemerkungen" name="NL[aufgabe]"></textarea>
+<br>
+
+<input type="submit" style="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Anmerkung hinzufügen">
+</form>
+<div id="BoxBemerkungen">
+<strong>Bisherige Angaben:</strong><br>
+<div id="BemerkungenHistorie">{$NL.aufgabe|nl2br}</div>
+</div>
+<br>
+<br>
+</div>
+</div>
+<div id="LoadingBar"></div>
+</p>
+</div> 

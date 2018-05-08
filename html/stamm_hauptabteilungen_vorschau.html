@@ -1,0 +1,29 @@
+<h3 class="formTitle">Stamm_hauptabteilungen</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><div class="Input">
+<div class="inputLbl">Id</div>
+<div>{lesen[id]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Bereich</div>
+<div>{lesen[bereich]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Bereichsname</div>
+<div>{lesen[bereichsname]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Bereichsleiter</div>
+<div>{lesen[bereichsleiter]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Organisationseinheit</div>
+<div>{lesen[organisationseinheit]}</div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="475" type="hidden" name="eingabe[id]" maxlength="11" value="{eingabe[id]}">
+<input LINE="475" type="hidden" name="eingabe[bereich]" maxlength="10" value="{eingabe[bereich]}">
+<input LINE="475" type="hidden" name="eingabe[bereichsname]" maxlength="30" value="{eingabe[bereichsname]}">
+<input LINE="475" type="hidden" name="eingabe[bereichsleiter]" maxlength="50" value="{eingabe[bereichsleiter]}">
+<input LINE="475" type="hidden" name="eingabe[organisationseinheit]" maxlength="10" value="{eingabe[organisationseinheit]}">
+<input LINE="483" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Correct]" value="Korrigieren"></form></div>

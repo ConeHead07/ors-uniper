@@ -1,0 +1,102 @@
+<html>
+<head>
+<style>
+{literal}
+*,
+html * {
+	font-family:Arial,sans-serif;
+	font-size:12px;
+}
+{/literal}
+</style>
+<link rel="stylesheet" type="text/css" href="{$WebRoot}css/umzugsformular.css">
+<link rel="STYLESHEET" type="text/css" href="{$WebRoot}css/tablelisting.css">
+<link rel="STYLESHEET" type="text/css" href="{$WebRoot}css/SelBox.easy.css">
+<link rel="STYLESHEET" type="text/css" media="print" href="{$WebRoot}css/tablelisting.print.css">
+<style>
+{literal}
+td label {
+	background:none;
+	color:#000;
+	border:0;
+	text-align:left;
+}
+{/literal}
+</style>
+</head>
+<body onload="window.print()">
+<div id="SysInfoBox"></div>
+
+<!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
+<table>
+<tr>
+	<td width=350><!-- logo --></td>
+</tr>
+</table>
+
+<div id="SysInfoBox"></div>
+
+<!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
+
+<h1 style="margin-bottom:0;font-size:20px;">Nebenleistung {if $NL.id}#{$NL.id}{/if}</h1> 
+<table border=1 cellpadding=1 cellspacing=0 class="tblList">
+  <tr>
+    <td><label for="mitarbeiter">Vor &amp; Nachname:</label></td>
+    <td>{$NL.vorname|escape} {$NL.name|escape}</td>
+  </tr>
+  <tr>
+    <td><label for="email">E-Mail:</label></td>
+    <td>{$NL.email|escape}</td>
+  </tr>
+  <tr>
+    <td><label for="fon">Fon:</label></td>
+    <td>{$NL.fon|escape}</td>
+  </tr>
+  <tr>
+    <td><label for="mitarbeiter">Standort:</label></td>
+    <td>{$NL.standort|escape}</td>
+  </tr>
+  <tr>
+    <td><label for="gebaeude">Gebaeude:</label></td>
+    <td>{$NL.gebaeude|escape}</td>
+  </tr>
+  <tr>
+    <td><label for="mitarbeiter">Kostenstelle:</label></td>
+    <td>{$NL.kostenstelle|escape}</td>
+  </tr>
+  <tr>
+    <td><label for="termin">Datum:</label></td>
+    <td>{$NL.datum|escape}</td>
+  </tr>
+  <tr>
+    <td><label for="termin">Bevorzugte&nbsp;Uhrzeit:</label></td>
+    <td>{$NL.uhrzeit|escape}</td>
+  </tr>
+  <tr>
+    <td><label for="termin">Status:</label></td>
+    <td>{$NL.status|escape}</td>
+  </tr>
+  <tr>
+    <td><label for="termin">Erledigt am:</label></td>
+    <td>{$NL.erledigt_am}</td>
+  </tr>
+	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+</table><br>
+{if $UmzugsAnlagen}
+<ul class="ulAttachements" style="margin:0;padding:0;display:block;">
+<strong>Dateianhänge</strong><br>
+{foreach name=ATList item=AT from=$UmzugsAnlagen}
+<li><a href="{$AT.datei_link}" target="_blank">{$AT.dok_datei}</a> {$AT.datei_groesse}</li>
+{/foreach}
+</ul><br>
+{else}
+<strong>Dateianhänge: </strong><em>Keine</em><br><br>
+{/if}
+<div id="BoxBemerkungen">
+<strong>Aufgabe:</strong><br>
+{$NL.aufgabe|escape|nl2br}
+</div>
+
+</div> 

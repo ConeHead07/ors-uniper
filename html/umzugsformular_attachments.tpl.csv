@@ -1,0 +1,6 @@
+{if $UmzugsAnlagen}
+Datei;Groesse;Upload vom
+{foreach name=ATList item=AT from=$UmzugsAnlagen}
+{if $AT.titel}{$AT.titel}{else}{$AT.dok_datei}{/if};{$AT.datei_groesse};{$AT.created}
+{/foreach}
+{/if}

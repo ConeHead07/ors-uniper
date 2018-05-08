@@ -1,0 +1,184 @@
+<script>
+
+function sendCheck() {
+	selectAllOptions(document.getElementById("classid"));
+	//alert("hallo");
+}
+
+function openAcmVideoauswahl(frm, el) {
+	var url = "admin_cms_acmvideoauswahl.php?frmid="+frm+"&elid="+el;
+	var props = "height=700px,width=500px,scrollbars=yes,resizable=yes,top=0px,";
+	imgwin = window.open(url, "imgwin", props);
+	imgwin.focus();
+}
+</script>
+<form onsubmit="sendCheck()" name="cmsform" action="index.php?area=admin&task=cms_ext&srv={srv}" method="post">
+<input type="submit" name="vorschau" value="Weiter">
+<input type="submit" name="reset" value="Zur&uuml;cksetzen"><br>&nbsp;
+<style>
+.titelbalken {
+	background:#83a7e2;
+}
+</style>
+<!-- %webansicht% -->
+<table width="100%" border=0 cellpadding=3 cellspacing=0>
+
+<tr>
+	<td><b>Beitrag ist &ouml;ffentlich:</b> %eingabe[webfreigabe]%<br>&nbsp;<br></td>
+</tr>
+<tr>
+	<td><b>Kurzname/Notation: Benennung des Beitrags in Kurzform, kann auch als Link/Verweis auf den Eintrag verwendet werden</b><br>
+	<div style="font-size:11px;">
+	Die Notation ist eine beliebige alfanumerische Zeichenkette ohne Leer- u. Sonderzeichen wie z.B. üä?ß/()=&amp;<br>
+	Für Ersatz von Leerzeichen empfiehlt sich die Verwendung von Unterstrichen.
+	Die Verlinkung kann mit &quot;<span style="color:blue;text-decoration:underline;"><em>n=MeineNotation</em></span>&quot; 
+	zusammengesetzt werden. 
+	Bsp: <span style="color:blue;text-decoration:underline;">http://www.bratwurst.tv/bw/cms/lib/?<em>n=MeineNotation</em></span><br>
+	</div>
+	<input type="text" name="eingabe[notation]" value="%eingabe[notation]%" size="32" maxlength="32" style="width:550px; border: thin groove;">
+	</td>
+</tr>
+<tr>
+	<td><b>Sprache</b>
+	<input type="radio" name="eingabe[lang]" value="DE" chck_lang="DE">DE
+	<input type="radio" name="eingabe[lang]" value="EN" chck_lang="EN">EN
+	</td>
+</tr>
+<tr>
+	<td><b>Gemeinsame sprachübergreifende ID für Übersetzungen (Common Language Key)</b>
+	<div style="font-size:11px;">
+	<span style="color:green;">Wenn dieser Beitrag keine Übersetzung ist können Sie das Feld leer lassen, die ID wird dann generiert!</span><br>
+	Wenn Sie z.B. eine englische Übersetzung anlegen, muss in diesem Feld die gleiche ID wie im Deutschen stehen. <br>	
+	Die ID beginnt mit dem Länderkürzel des Originalbeitrags gefolgt von einem Bindestrich und der ID des Originalbeitrags (Bsp: DE-54). 
+	</div>
+	<input type="text" name="eingabe[common_lang_key]" value="%eingabe[common_lang_key]%" size="32" maxlength="32" style="width:550px; border: thin groove;">
+	</td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Trailer / Listentext</b></td>
+</tr>
+
+<tr>
+	<td><b>Trailer anzeigen</b>
+	<input type="radio" name="eingabe[antrailern]" value="Ja" chck_antrailern="Ja">Ja
+	<input type="radio" name="eingabe[antrailern]" value="Nein" chck_antrailern="Nein">Nein
+	</td>
+</tr>
+<tr>
+	<td><b>Trailer: Titel</b><br>
+	<textarea type="text" name="eingabe[listentitel]" cols="30" rows="2" style="height:40; width:550px; border: thin groove;">%eingabe[listentitel]%</textarea>
+	</td>
+</tr>
+<tr>
+	<td><b>Trailer: Kurzer Text</b><br>
+	<textarea type="text" name="eingabe[listentext]" cols="30" rows="10" style="height:200; width:550px; border: thin groove;">%eingabe[listentext]%</textarea><!-- txtedit_toolbar?groupid=edit1&formname=cmsform&inputname=eingabe[listentext]&width=550&height=250&class=content -->
+	<br></td>
+</tr>
+
+<tr>
+	<td class="titelbalken"><b>Media / Video</b></td>
+</tr>
+<tr>
+	<td><b>Mediaquelle / Pfad [<a href="admin_cms_acmvideoauswahl.php?frmid=cmsform&elid=media_src" target="imgwin"
+	onclick="openAcmVideoauswahl('cmsform', 'media_src');return false;">Auswahl öffnen</a>]</b><br>
+	<input type="text" name="eingabe[media_src]" value="%eingabe[media_src]%" size="32" maxlength="120" style="width:550px; border: thin groove;">
+	</td>
+</tr>
+<tr>
+	<td><b>Mediaattribute: Höhe, Breite, Type, Autostart etc.</b><br>
+	Bsp: height=530&height=460&type=wmv&autostart=1
+	<textarea type="text" name="eingabe[media_params]" cols="30" rows="2" style="height:40; width:550px; border: thin groove;">%eingabe[media_params]%</textarea>
+	<br></td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Volltext / Mehr-Text</b></td>
+</tr>
+<tr>
+	<td><b>mehr...-Text</b> für Verweis zum Volltext <br>
+	<textarea type="text" name="eingabe[text2mehr]" cols="30" rows="2" style="height:40; width:550px; border: thin groove;">%eingabe[text2mehr]%</textarea>
+	</td>
+</tr>
+<tr>
+	<td><b>Volltext(Link) anzeigen</b>
+	<input type="radio" name="eingabe[linkzumvolltext]" value="Ja" chck_linkzumvolltext="Ja">Ja
+	<input type="radio" name="eingabe[linkzumvolltext]" value="Nein" chck_linkzumvolltext="Nein">Nein
+	<input type="radio" name="eingabe[linkzumvolltext]" value="Auto" chck_linkzumvolltext="Auto">Automatisch
+	</td>
+</tr>
+<tr>
+	<td><b>Volltext: Titel</b><br>
+	<textarea type="text" name="eingabe[titel]" cols="30" rows="2" style="height:40; width:550px; border: thin groove;">%eingabe[titel]%</textarea>
+	</td>
+</tr>
+
+<tr>
+	<td><b>Volltext</b><br>
+	<textarea type="text" name="eingabe[volltext]" cols="30" rows="10" style="height:200; width:550px; border: thin groove;">%eingabe[volltext]%</textarea><!-- txtedit_toolbar?groupid=edit2&formname=cmsform&inputname=eingabe[volltext]&width=550&height=440&class=content -->
+	<br></td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Verschlagwortung</b></td>
+</tr>
+<tr>
+	<td><b>Freie Schlagwörter</b><br>
+	<textarea type="text" name="eingabe[schlagwort]" cols="30" rows="2" style="height:40; width:550px; border: thin groove;">%eingabe[schlagwort]%</textarea>
+	</td>
+</tr>
+<tr>
+	<td><b>Deskriptoren:</b> <br>
+	<select id="classid" type="text" name="eingabe[classid][]" multiple cols="30" rows="4" style="font-size:11px; width:550px; border: thin groove;">
+		<!-- {options_classid2deskriptor} -->
+	</select>
+	[<a href="auswahl_rubrikenbaum.php" target="_blank" onclick="showRubrikenbaum('classid');return false;">Hinzufügen:</a>] 
+	[<a href="#" onclick="dropSelection(classid);return false;">»Markierte Einträge löschen</a>]
+	<br>
+	<br>
+	</td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Webfreigabe</b></td>
+</tr>
+<tr>
+	<td><b>Beitrag freigeben</b>
+	<input type="radio" name="eingabe[webfreigabe]" value="Ja" chck_webfreigabe="Ja">Ja
+	<input type="radio" name="eingabe[webfreigabe]" value="Nein" chck_webfreigabe="Nein">Nein
+	<input type="radio" name="eingabe[webfreigabe]" value="Timer" chck_webfreigabe="Timer">Zeitgesteuert
+<table>
+<tr>
+	<td class="tdLabel">Anzeigen von (JJJJ-MM-TT)</td>
+	<td class="tdLabel"><input class="inputvolltext" size="" maxlength="" style="" type="text" name="eingabe[timer_datumvon]" value="%eingabe[timer_datumvon]%">
+	bis <input class="inputvolltext" size="" maxlength="" style="" type="text" name="eingabe[timer_datumbis]" value="%eingabe[timer_datumbis]%"></td>
+</tr>
+
+<tr>
+	<td class="tdLabel">Tageszeit von (HH:MM)</td>
+	<td class="tdLabel"><input class="inputvolltext" size="" maxlength="" style="" type="text" name="eingabe[timer_zeitvon]" value="%eingabe[timer_zeitvon]%"><!-- 
+ --> <b>bis</b> <input class="inputvolltext" size="" maxlength="" style="" type="text" name="eingabe[timer_zeitbis]" value="%eingabe[timer_zeitbis]%"></td>
+</tr>
+
+<tr>
+	<td class="tdLabel">Wochentage</td>
+	<td><input class="inputCheck" type="checkbox" name="eingabe[timer_wochentage][]" chck_timer_wochentage="Mo" value="Mo">MO
+		<input class="inputCheck" type="checkbox" name="eingabe[timer_wochentage][]" chck_timer_wochentage="Di" value="Di">Di
+		<input class="inputCheck" type="checkbox" name="eingabe[timer_wochentage][]" chck_timer_wochentage="Mi" value="Mi">Mi
+		<input class="inputCheck" type="checkbox" name="eingabe[timer_wochentage][]" chck_timer_wochentage="Do" value="Do">Do
+		<input class="inputCheck" type="checkbox" name="eingabe[timer_wochentage][]" chck_timer_wochentage="Fr" value="Fr">Fr
+		<input class="inputCheck" type="checkbox" name="eingabe[timer_wochentage][]" chck_timer_wochentage="Sa" value="Sa">Sa
+		<input class="inputCheck" type="checkbox" name="eingabe[timer_wochentage][]" chck_timer_wochentage="So" value="So">So</td>
+</tr>
+</table>
+	</td>
+</tr>
+
+	<tr>
+		<td><b>Beitrag ist &ouml;ffentlich:</b> %eingabe[webfreigabe]%<br></td>
+	</tr>
+</table>
+<input type="hidden" name="eingabe[id]" value="%eingabe[id]%">
+<input type="hidden" name="eingabe[seitenbereich]" value="{srv}">
+<input type="hidden" name="id" value="%id%">
+<input type="submit" onclick="sendCheck()" name="vorschau" value="Weiter">
+<input type="submit" name="reset" value="Zur&uuml;cksetzen">
+</form>
+<textarea id="zwischenspeicher" style="display:none;"></textarea>
+<IFRAME scrolling="no" id="htmlzwischenspeicher" width="1px" height="1px" ></IFRAME>

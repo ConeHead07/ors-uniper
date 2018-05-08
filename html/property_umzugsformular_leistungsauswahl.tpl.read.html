@@ -1,0 +1,95 @@
+<style>
+{literal}
+tr.row * {
+    font-size:11px;
+}
+div.ktg1, div.lstg {
+    min-height: 18px;
+}
+tr#summary td { 
+    text-align:right;
+    padding:5px;font-weight:bold;
+}
+td.unit {
+    text-align:center;
+}
+td.menge, td.menge, input.menge, td.preis, td.sum {
+    text-align:right;
+}
+{/literal}
+</style>
+<script>
+var lkItems = {$lkTreeItemsJson};
+{literal}
+$("body").append( $("<select/>" ).css({width:"220px",position:"absolute", zIndex:99, minWidth:250}).attr({id: "lktgselect", size:5}).hide()    );
+$("body").append( $("<select/>" ).css({width:"220px",position:"absolute", zIndex:100, minWidth:280}).attr({id: "ldescselect", size:5}).hide()    );
+
+function blurBox(callback, hide) {
+    var blurBoxId = "BlurBox1";
+    var body = $("body");
+    if ( !$("#"+blurBoxId).length ) {
+        
+        body.append( $("<div/>").attr({id:blurBoxId}).css({position:"fixed",top:0,left:0,zIndex:98,display:"none"}) );
+    }
+    if (arguments.length > 1 && hide) {
+        return $("#" + blurBoxId).hide();
+    }
+    $("#" + blurBoxId)
+        .css({width:"100%",minWidth:body.width(),height:"100%",minHeight:body.height()})
+        .show()
+        .click(function(e){
+          $( this ).hide();
+          if (typeof(callback) === "function") {
+              callback.call();
+          }
+          else {
+              if (callback) $( callback ).hide();
+          }
+    });
+}
+
+{/literal}
+</script>
+<!-- Removed MH in Leistungen  -->
+<br>
+<h2 style="margin:0;padding:0">Leistungen</h2>
+<table class="MitarbeierItem" style="width:100%;">
+    <thead>
+        <tr>
+            <td>Kategorie</td>
+            <td>Leistung</td>
+            <td>Menge 1 DSD</td>
+            <td>Einheit 1</td>
+            <td>Menge 2 DSD</td>
+            <td>Einheit 2</td>
+            <td>Menge1 M</td>
+            <td>Menge2 M</td>
+            {if $PreiseAnzeigen}<td>Preis/Einh.</td>
+            <td>Gesamt</td>
+            {/if}
+        </tr>
+    </thead>
+    <tbody id="TblLeistungenBody">
+    {foreach name=LList item=L from=$Umzugsleistungen}
+        <tr class="row inputRowVon">
+            <td class="ktg1">{$L.kategorie|escape}</td>
+            <td class="lstg">{$L.leistung|escape}</td>
+            <td>{if is_numeric($L.menge_property)}{$L.menge_property|escape|number_format:2:",":"."}{/if}</td>
+            <td class="unit">{$L.leistungseinheit|escape}</td>
+            <td class="menge menge2">{if is_numeric($L.menge2_property)}{$L.menge2_property|escape|number_format:2:",":"."}{/if}</td>
+            <td class="unit unit2">{$L.leistungseinheit2|escape}</td>
+            <td class="menge">{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:2:",":"."}{/if}</td>
+            <td class="menge menge2">{if is_numeric($L.menge2_mertens)}{$L.menge2_mertens|escape|number_format:2:",":"."}{/if}</td>
+            {if $PreiseAnzeigen}<td class="preis">{if $L.preis_pro_einheit}{$L.preis_pro_einheit|number_format:2:",":"."}{/if}</td>
+            <td class="preis sum">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|escape|number_format:2:",":"."}{/if}</td>
+            {/if}
+        </tr>
+    {/foreach}
+    <tr id="summary">
+    {if $PreiseAnzeigen}
+        <td colspan="{if $PreiseAnzeigen}11{else}9{/if}"><span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
+        {/if}
+    </tr>
+    </tbody>
+</table>
+<input type="hidden" name="AS[leistungen_csv]" value="">

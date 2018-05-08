@@ -1,0 +1,66 @@
+<h3 class="formTitle">Lieferfirmen</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#pHandy,
+#pFestnetz,
+#pEmail,
+#pcreated { display:none; }
+#plieferfirma_id,
+#pFirmenname,
+#pStrasse,
+#pOrt,
+#pPLZ,
+#pAnsprechpartner,
+#pmodified { color:#f00 }
+</style>
+<div class="input" id="InputBoxlieferfirma_id">
+<div class="inputLbl"><label errclass="lieferfirma_id" for="eingabe[lieferfirma_id]" id="InputLbllieferfirma_id">Lieferfirma_id<span class="showPflicht" id="plieferfirma_id">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[lieferfirma_id]" id="eingabe[lieferfirma_id]" maxlength="11" value="{eingabe[lieferfirma_id]}"></div>
+</div>
+<div class="input" id="InputBoxFirmenname">
+<div class="inputLbl"><label errclass="Firmenname" for="eingabe[Firmenname]" id="InputLblFirmenname">Firmenname<span class="showPflicht" id="pFirmenname">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[Firmenname]" id="eingabe[Firmenname]" maxlength="80" value="{eingabe[Firmenname]}"></div>
+</div>
+<div class="input" id="InputBoxStrasse">
+<div class="inputLbl"><label errclass="Strasse" for="eingabe[Strasse]" id="InputLblStrasse">Strasse<span class="showPflicht" id="pStrasse">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[Strasse]" id="eingabe[Strasse]" maxlength="100" value="{eingabe[Strasse]}"></div>
+</div>
+<div class="input" id="InputBoxOrt">
+<div class="inputLbl"><label errclass="Ort" for="eingabe[Ort]" id="InputLblOrt">Ort<span class="showPflicht" id="pOrt">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[Ort]" id="eingabe[Ort]" maxlength="50" value="{eingabe[Ort]}"></div>
+</div>
+<div class="input" id="InputBoxPLZ">
+<div class="inputLbl"><label errclass="PLZ" for="eingabe[PLZ]" id="InputLblPLZ">PLZ<span class="showPflicht" id="pPLZ">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[PLZ]" id="eingabe[PLZ]" maxlength="10" value="{eingabe[PLZ]}"></div>
+</div>
+<div class="input" id="InputBoxAnsprechpartner">
+<div class="inputLbl"><label errclass="Ansprechpartner" for="eingabe[Ansprechpartner]" id="InputLblAnsprechpartner">Ansprechpartner<span class="showPflicht" id="pAnsprechpartner">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[Ansprechpartner]" id="eingabe[Ansprechpartner]" maxlength="40" value="{eingabe[Ansprechpartner]}"></div>
+</div>
+<div class="input" id="InputBoxHandy">
+<div class="inputLbl"><label errclass="Handy" for="eingabe[Handy]" id="InputLblHandy">Handy<span class=isPflicht id="pHandy">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[Handy]" id="eingabe[Handy]" maxlength="20" value="{eingabe[Handy]}"></div>
+</div>
+<div class="input" id="InputBoxFestnetz">
+<div class="inputLbl"><label errclass="Festnetz" for="eingabe[Festnetz]" id="InputLblFestnetz">Festnetz<span class=isPflicht id="pFestnetz">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[Festnetz]" id="eingabe[Festnetz]" maxlength="20" value="{eingabe[Festnetz]}"></div>
+</div>
+<div class="input" id="InputBoxEmail">
+<div class="inputLbl"><label errclass="Email" for="eingabe[Email]" id="InputLblEmail">Email<span class=isPflicht id="pEmail">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[Email]" id="eingabe[Email]" maxlength="50" value="{eingabe[Email]}"></div>
+</div>
+<div class="input" id="InputBoxcreated">
+<div class="inputLbl"><label errclass="created" for="eingabe[created]" id="InputLblcreated">Created<span class=isPflicht id="pcreated">*</span></label></div>
+<div class="inputFrm"><div class="sysfield">{eingabe[created]}</div>
+</div>
+</div>
+<div class="input" id="InputBoxmodified">
+<div class="inputLbl"><label errclass="modified" for="eingabe[modified]" id="InputLblmodified">Modified<span class="showPflicht" id="pmodified">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[modified]" id="eingabe[modified]" maxlength="" value="{eingabe[modified]}"></div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="484" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Preview]" value="Vorschau"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><br>
+<input LINE="489" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen</form></div>

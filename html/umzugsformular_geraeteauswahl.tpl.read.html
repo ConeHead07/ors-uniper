@@ -1,0 +1,27 @@
+
+{if $Geraeteliste}
+<h2 style="margin:0;padding:0">Ger&auml;teliste</h2>
+<table class="MitarbeierItem" style="margin-top:0;padding-top:0;">
+    <thead>
+        <tr>
+            <td>Art</td>
+            <td>Ger&auml;te-Nr</td>
+            <td>Von (Raum)</td>
+            <td>Nach (Raum)</td>
+        </tr>
+    </thead>
+    <tbody id="TblGeraeteBody">
+    {foreach name=GList item=G from=$Geraeteliste}
+        <tr class="inputRowVon">
+            <td>{$G.Art|escape}</td>
+            <td>{$G.Nr|escape}</td>
+            <td>{$G.Von|escape}</td>
+            <td>{$G.Nach|escape}</td>
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
+{else}
+<strong>Ger&auml;te: </strong><em>Keine</em><br>
+{/if}
+<br>

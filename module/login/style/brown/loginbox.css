@@ -1,0 +1,69 @@
+
+table.LoginBox {
+	border-collapse:collapse;
+	border-spacing:0px;
+}
+.LoginBox {
+	width:530px;
+	margin-top:0px;
+	border:1px solid #867b5d;
+}
+.LoginBox .hdCell {
+	border-bottom:0px solid #867b5d;
+	background:#867b5d;
+	padding:4px;
+	color:#f9f9f4;
+	font-size:15px;
+	font-weight:bold;
+}
+.LoginBox .topCell {
+	background:#aba07c;
+	color:#f9f9f4;
+	padding:40px;
+}
+
+.LoginAdLinks {
+	margin-top:20px;
+	border:1px dotted #f9f9f4;
+	padding:5px 10px 5px 15px;
+	width:60%;
+}
+.LoginBox * a,
+.LoginAdLinks a {
+	color:#ffff99;
+}
+.LoginBox * a:hover,
+.LoginAdLinks a:hover {
+	color:#f8ed70;
+}
+.tdLbl {
+	padding-right:5px;
+	color:#f9f9f4;
+	font-weight:bold;
+	text-align:right;
+}
+input {
+	font-family:Arial,sans-serif;
+	font-size:12px;
+}
+.LoginBox .msg,
+.topCell .msg
+ {
+	color:#867b5d;
+	background:#f9f9f4;
+	font-size:12px;
+	font-family:Arial,sans-serif;
+	padding:4px;
+	margin:2px 0px 10px 0px;
+}
+
+.LoginBox .err,
+.topCell .err,
+{
+	color:red;
+	background:#f9f9f4;
+	font-size:12px;
+	font-family:Arial,sans-serif;
+	padding:4px;
+	margin:2px 0px 10px 0px;
+}

@@ -1,0 +1,61 @@
+Insert `mt_move_bayer`.`mm_umzuege` SET
+`token` = "b955258981",
+`anrede` = NULL,
+`name` = "Katzler",
+`vorname` = "Michael",
+`email` = "m.katzler@mertens.ag",
+`fon` = "01732661063",
+`ort` = "Leverkusen",
+`gebaeude` = "1",
+`raumnr` = NULL,
+`etage` = "1. OG",
+`kostenstelle` = "4501426900",
+`planonnr` = "199024",
+`umzug` = "Nein",
+`umzugstermin` = NULL,
+`umzugszeit` = "08:00:00",
+`terminwunsch` = "2016-08-11",
+`ansprechpartner` = "Michael Katzler",
+`ansprechpartner_email` = "m.katzler@mertens.ag",
+`ansprechpartner_fon` = "01732661063",
+`geraete_csv` = NULL,
+`bemerkungen` = "Bemerkung von m.katzler am 09.08.2016 um 15:29
+EXPRESS-Auftrag48h 199024, Asp. Hr. El-Kassem, Termin: 11.08.2016 - 08:00 Uhr, Gebäude E061
+
+%u2022	Umzug Anit Patel Raum 104 nach Raum 107: Schreibtisch, Rollcontainer und IT-Equipment
+%u2022	Umzug Jens Reissmann: Raum 104 nach Raum 107: Schreibtisch, 1 Umzugskarton, Rollcontainer, IT Equipment 
+%u2022	Umzug Stefan Prause Raum 102 nach Raum 104: 1 Umzugskarton und IT-Equipment
+%u2022	Umzug Anja Weber Raum 107 nach Raum 104: 2 Umzugskartons und IT-Equipment
+%u2022	Umzug Christoph Grobelny Raum 107 nach Raum 104, nur IT-Equipment 
+%u2022	1 Tisch (älterer, nicht höhenverstellbar) inklusive Rollcontainer aus Raum 104 bitte entsorgen 
+%u2022	2 defekte Tische mit Rollcontainer aus Raum 107 müssen ebenfalls entsorgt werden",
+`antragsstatus` = "bearbeitung",
+`umzugsstatus` = "temp",
+`dienstleister_id` = NULL,
+`dienstleister_name` = NULL,
+`dienstleister_bemerkung` = NULL,
+`geprueft` = "Init",
+`angeboten_am` = NULL,
+`angeboten_von` = NULL,
+`geprueft_am` = NULL,
+`geprueft_von` = NULL,
+`genehmigt_br` = "Init",
+`genehmigt_br_am` = NULL,
+`genehmigt_br_von` = NULL,
+`bestaetigt` = "Init",
+`bestaetigt_am` = NULL,
+`bestaetigt_von` = NULL,
+`abgeschlossen` = "Init",
+`abgeschlossen_am` = NULL,
+`abgeschlossen_von` = NULL,
+`genehmigt` = "Init",
+`bearbeiter_stelle` = NULL,
+`bearbeiter_name` = NULL,
+`bearbeiter_mail` = NULL,
+`bearbeiter_fon` = NULL,
+`bearbeiter_ort` = NULL,
+`bearbeiter_bemerkung` = NULL,
+`antragsteller_uid` = "2972" ,
+`antragsdatum` = NOW() ,
+`created` = NOW() ,
+ `b_modifiedby` = "2972" 

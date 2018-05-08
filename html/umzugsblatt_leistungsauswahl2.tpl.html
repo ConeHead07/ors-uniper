@@ -1,0 +1,42 @@
+
+{if count($Umzugsleistungen)}
+<h2 style="margin:0;padding:0">Leistungen</h2>
+<table class="MitarbeierItem" border="1" cellpadding="1" cellspacing="0" style="width:100%;margin-top:0;padding-top:0;">
+    <thead>
+        <tr>
+            <td><b>Kategorie</b></td>
+            <td><b>Leistung</b></td>
+            <td><b>Menge 1 DSD</b></td>
+            <td><b>Einheit 1</b></td>
+            <td><b>Menge 2 DSD</b></td>
+            <td><b>Einheit 2</b></td>
+            <td><b>Menge1 M</b></td>
+            <td><b>Menge2 M</b></td>
+            {if $PreiseAnzeigen}<td class="preis"><b>Preis/Einh.</b></td></tr>{/if}
+        </tr>
+    </thead>
+    <tbody id="TblLeistungenBody">
+    {foreach name=GList item=L from=$Umzugsleistungen}
+        <tr class="row inputRowVon">
+            <td class="ktg1">{$L.kategorie|escape}&nbsp;</td>
+            <td class="lstg">{$L.leistung|escape}&nbsp;</td>
+            <td>{$L.menge_property|escape}&nbsp;</td>
+            <td class="unit">{$L.leistungseinheit|escape}&nbsp;</td>
+            <td>{$L.menge2_property|escape}&nbsp;</td>
+            <td class="unit">{$L.leistungseinheit2|escape}&nbsp;</td>
+            <td>{$L.menge_mertens|escape}&nbsp;</td>
+            <td>{$L.menge2_mertens|escape}&nbsp;</td>
+            {if $PreiseAnzeigen}<td>{$L.preis_pro_einheit}&nbsp;</td></tr>{/if}
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" style="border:0;width:100%;margin-top:20px;padding-top:0;">
+    <tr id="summary">
+     <td colspan="{if $PreiseAnzeigen}11{else}9{/if}" style="border:0;text-align: right;padding-right:80px;font-weight:bold;font-size:20px;"><span id="allsum" data-allsum="0">Gesamtsumme Netto: {$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
+    </tr>    
+</table>
+{else}
+<strong>Leistungen:</strong> <em>Keine </em> <br>
+{/if}
+<br>

@@ -1,0 +1,60 @@
+
+    .attachements_list ul.ulAttachements li {
+        width:100%;
+    }
+    
+    .attachements_list .row .col.fname {
+        width:50%;
+        max-width:400px;
+    }
+    .attachements_list .row .col.fsize {
+        width:20%;
+        max-width:120px;
+    }
+    
+    .attachements_list .row .col.fdate {
+        width:20%;
+        max-width:140px;
+    }
+    .attachements_list .row.names {
+        background:#eee;
+    }
+    .attachements_list .row.names .col {
+        font-weight:bold;
+        color:#0075B5;
+    }
+    .attachements_list .row.names .col.fname {
+        padding-left:4px;
+    }
+    
+    .attachements_list .row {
+        height:auto;
+        overflow: hidden;
+    }
+    
+    .attachements_list .row .col {
+        display:inline-block;
+        padding-bottom:5px;
+        padding-top:3px;
+    }
+    .hidden {
+        display:none;
+    }
+    
+    .attachements_list .row.values {
+        padding-top:4px;
+    }
+    .attachements_list .row.values:nth-child(2) {
+        background:#fafafa;
+    }
+        
+    .ulAttachements li {
+        background: none;
+        padding-left:0;
+    }
+    
+    .ulAttachements .row.values .col.fname {
+        background: url(images/attachment-icon2.png) left top no-repeat;
+        padding-left:18px;
+        box-sizing: border-box;
+    }

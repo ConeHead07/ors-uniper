@@ -1,0 +1,111 @@
+<style>
+.titelbalken {
+	background:#83a7e2;
+}
+</style>
+<form action="index.php?area=admin&task=cms_ext&srv={srv}" method="post">
+
+<table cellpadding="0" cellspacing="0" border="0" width="500">
+
+<tr>
+	<td class="titelbalken"><b>Notation: %lesen[notation]%</b></td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Sprache: %lesen[lang]%</b></td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Gemeinsame SprachId: %lesen[common_lang_key]%</b></td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Trailer / Listentext</b></td>
+</tr>
+<tr>
+	<td><b>Trailer anzeigen</b> %lesen[antrailern]%</td>
+</tr>
+<!-- Start: Inhaltstabelle Gross/Blau -->
+<tr>
+	<td>
+	<table class="tblContent" cellspacing=0 border=0>
+		<tr>
+			<td class="contentTitle">%lesen[listentitel]%</td>
+		</tr>
+		<tr>
+			<td class="contentTextXyPos">%lesen[listentext]%</td>
+		</tr>
+	</table><br></td>
+</tr>
+
+<tr>
+	<td class="titelbalken"><b>Media / Video</b></td>
+</tr>
+<tr>
+	<td><b>Mediaquelle / Pfad</b><br>
+	%lesen[media_src]%<b><br>
+	<input type="text" name="eingabe[media_src]" value="%eingabe[media_src]%" size="32" maxlength="32" style="width:550px; border: thin groove;">
+	</td>
+</tr>
+<tr>
+	<td><b>Mediaattribute: Höhe, Breite, Type, Autostart etc.</b><br>
+	%lesen[media_params]%
+	<br></td>
+</tr>
+<tr>
+	<td><!-- {media_object} --></td>
+</tr>
+
+<tr>
+	<td class="titelbalken"><b>Volltext / Mehr-Text</b></td>
+</tr>
+<tr>
+	<td>
+	<table class="tblContent" cellspacing=0 border=0>
+		<tr>
+			<td>%lesen[text2mehr]%</td>
+		</tr>
+		<tr>
+			<td class="contentTitle">%lesen[titel]%</td>
+		</tr>
+		<tr>
+			<td class="contentTextXyPos">%lesen[volltext]%</td>
+		</tr>
+	</table><br></td>
+</tr>
+<!-- Ende: Inhaltstabelle Gross/Blau -->
+
+<tr>
+	<td class="titelbalken"><b>Verschlagwortung</b></td>
+</tr>
+<tr>
+	<td><b>Freie Schlagwörter:</b><br>
+	<div style="width:450px; border:silver thin groove;">%lesen[schlagwort]%</div>
+	</td>
+</tr>
+<tr>
+	<td><b>Deskriptoren</b><br>
+	<div style="width:450px; border:silver thin groove;">%lesen[deskriptor]%</div>
+	<br></td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Webfreigabe</b></td>
+</tr>
+<tr>
+	<td><b>Freigegeben:</b> %lesen[webfreigabe]%
+	</td>
+</tr>
+<tr>
+	<td><b>Zeitsteuerung</b><br>
+	<div style="width:450px; border:silver thin groove;">Anzeigen  von %lesen[timer_datumvon]% bis %lesen[timer_datumbis]%<br>
+	Tageszeit von %lesen[timer_zeitvon]%  bis %lesen[timer_zeitbis]%<br>
+	Wochentage %lesen[timer_wochentage]%</div>
+	<br></td>
+</tr>
+
+<tr><!-- Zeile 5 -->
+	<td bgcolor="#f0fff0" style="padding-left:5px;"><b>%strWebfreigabe%</b> : <font class="freigabe%lesen[webfreigabe]%">%lesen[webfreigabe]%</font></td>
+</tr>
+</table><br>
+<!-- cmsTasks -->
+<!-- Ende: Inhaltstabelle Gross/Blau -->

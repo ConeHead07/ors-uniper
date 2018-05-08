@@ -1,0 +1,120 @@
+<pre style="display: none;">
+html/auswertung_form.html
+Rechnungsstellung nur Mertens-Henk:
+ 
+Es wird eine Funktion zur Abrechnung der Vorgänge benötigt.
+Hierzu soll eine Auswahl von KW bis KW  und das Jahr angegeben werden.
+Daraus soll eine Liste mit allen Vorgängen die Abgeschlossen worden sind 
+und noch nicht abgerechnet worden sind mit
+Folgenden Feldern ausgegeben werden:
+ 
+ID|STOM|Region|Standort|Wirtschaftseinheit|PSP-Element|Planon Nr.|Leistungsdatum|AbschlussDatum|Summe
+ 
+Unter dieser Tabelle muss es ein Feld geben wo wir unsere WWS Vorgangs Nr. 
+eintragen können und dann ein Fertigsstellungsbutton.
+Beim Bestätigen müssen der Status alle angezeigten Vorgänge auf Berechnet 
+gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
+</pre>
+
+<form id="frmStat" name="frmStat" method="get" action="?">
+<span style="border:0;font-weight:bold;font-size:12px;">Kalenderwoche 
+<select onchange="document.forms['frmStat'].submit()" selected="{$kwvon}" name="kwvon" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
+<option value="">auswählen</option>
+        {html_options options=$kw_options selected=$kwvon}
+</select> bis 
+<select onchange="document.forms['frmStat'].submit()" selected="{$kwbis}" name="kwbis" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
+<option value="">auswählen</option>
+        {html_options options=$kw_options selected=$kwbis}
+</select> 
+<input style="margin-left:15px;" id="all" name="all" type="checkbox" value="1" {if $all}checked="checked"{/if}><label for="all"><span title="Auch bereits abgerechnete Leistungen anzeigen">Alle</span></label>
+<input type="hidden" name="s" value="{$s}">
+<input type="hidden" name="order" value="" id="orderby">
+<input type="hidden" name="queriedorder" value="{$order}">
+<input type="hidden" name="queriedodir" value="{$odir}">
+<noscript>&lt;input type="submit" value="Auswertung starten"&gt;</noscript>
+</span>
+<style type="text/css">{literal}
+    th.order {
+        cursor:pointer;
+    }
+{/literal}</style>
+<script>{literal}
+$(function(){
+    
+    var send = function() {
+        self.location.href = "?" + $("#frmStat").serialize();
+    };
+    
+    $("th.order").click(function(e){        
+        $("input#orderby").val( $(this).attr("data-fld") );
+        send();
+    });
+    
+    $("th input").keypress(function(e){
+        if ( (e.keyCode || e.which) === 13) send();
+    });
+    
+});
+{/literal}
+</script>
+
+<table class="tblList">
+    <thead>
+        <tr>
+            <th style="cursor:pointer" {literal}
+                onclick="(function(){
+                    $('input:checkbox[name^=aids]').attr('checked', !$('input:checkbox[name^=aids]:first').is(':checked') );
+            })(){/literal}">x</th>
+            <th class="order" data-fld="aid">ID</th>
+            <th class="order" data-fld="vorgangsnummer">WWS</th>
+            <th class="order" data-fld="nachname">STOM</th>
+            <th class="order" data-fld="bundesland">Region</th>
+            <th class="order" data-fld="stadtname">Standort</th>
+            <th class="order" data-fld="Wirtschaftseinheit">WE</th>
+            <th class="order" data-fld="kostenstelle">PSP-Element</th>
+            <th class="order" data-fld="planonnr">Planon Nr.</th>
+            <th class="order" data-fld="umzugstermin">Leistungsdatum</th>
+            <th class="order" data-fld="abgeschlossen_am">Abschlussdatum</th>
+            <th class="order" data-fld="abgerechnet_am">Rechnungsdatum</th>
+            <th class="order" data-fld="summe">Summe</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th><input name="q[aid]" style="width:100%" value="{$q.aid}"></th>
+            <th><input name="q[vorgangsnummer]" style="width:100%" value="{$q.vorgangsnummer}"></th>
+            <th><input name="q[nachname]" style="width:100%" value="{$q.nachname}"></th>
+            <th><input name="q[bundesland]" style="width:100%" value="{$q.bundesland}"></th>
+            <th><input name="q[stadtname]" style="width:100%" value="{$q.stadtname}"></th>
+            <th><input name="q[Wirtschaftseinheit]" style="width:100%" value="{$q.Wirtschaftseinheit}"></th>
+            <th><input name="q[kostenstelle]" style="width:100%" value="{$q.kostenstelle}"></th>
+            <th><input name="q[planonnr]" style="width:100%" value="{$q.planonnr}"></th>
+            <th><input name="q[umzugstermin]" style="width:100%" value="{$q.umzugstermin}"></th>
+            <th><input name="q[abgeschlossen_am]" style="width:100%" value="{$q.abgeschlossen_am}"></th>
+            <th><input name="q[berechnet_am]" style="width:100%" value="{$q.berechnet_am}"></th>
+            <th><input name="q[summe]" style="width:100%" value="{$q.summe}"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {foreach name=AList item=item from=$Auftraege}
+    <tr>
+        <td>{if !$item.berechnet_am}<input type="checkbox" name="aids[]" value="{$item.aid}">{/if}</td>
+        <td><a href="?s=aantrag&id={$item.aid}">{$item.aid}</a></td>
+            <td>{$item.vorgangsnummer}</td>
+            <td>{$item.nachname}</td>
+            <td>{$item.bundesland}{*Region*}</td>
+            <td>{$item.stadtname}, {$item.adresse}</td>
+            <td>{$item.Wirtschaftseinheit}</td>
+            <td>{$item.kostenstelle}{*PSP-Element*}</td>
+            <td>{$item.planonnr}</td>
+            <td>{$item.umzugstermin}{*Leistungsdatum*}</td>
+            <td>{$item.abgeschlossen_am}</td>
+            <td>{$item.berechnet_am}</td>
+            <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
+        </tr>
+        {/foreach}
+    </tbody>
+</table>
+    <input type="text" name="wwsnr" placeholder="Vorgangsnummer" size="15" style="border:1px solid #666;width:180px;font-size:11px;" value="{$wwsnr}">
+<input type="submit" name="finish" value="Fertig stellen" 
+       style="border-style:grove;border-width:1px;background-color:#666;color:#fff;font-weight:bold;">
+</form>

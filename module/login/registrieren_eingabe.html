@@ -1,0 +1,69 @@
+	<script>
+	function init() {
+		if (document.getElementById("inputUser")) {
+			document.getElementById("inputUser").focus();
+		}
+	}
+	
+	var aPp = new Array();
+	function openPp(winUrl, winName, winWidth, winHeight) {
+		aPp[winName] = window.open(winUrl, winName, "width="+winWidth+",height="+winHeight+",resizable=yes,scrollbars=yes,scrollbar=yes,scrolling=yes");
+		aPp[winName].focus();
+	}
+	</script>
+	<style>
+	.tblRegister td { vertical-align:top; }
+	</style>
+	<link rel="stylesheet" href="../css/forms.css" media="screen">
+<table width="350" height="200" class="LoginBox" align=center>
+<tr><td class="topCell">
+<!-- {error} -->
+<!-- {msg} -->
+<table class="tblRegister">
+<form action="" method="post">
+<tr>
+	<td><label errclass="anrede" for="eingabe[anrede]" id="InputLblanrede">Anrede:</label></td> 
+	<td><input type="radio" name="eingabe[anrede]" value="Frau" class="iRad" check_anrede="Frau">Frau
+	    <input type="radio" name="eingabe[anrede]" value="Herr" class="iRad" check_anrede="Herr">Herr</td>
+</tr>
+<tr>
+	<td><label errclass="vorname" for="eingabe[vorname]" id="InputLblvorname">vorname:</label></td> 
+	<td><input id="inputUser" type="text" name="eingabe[vorname]" value="{eingabe[vorname]}" class="iTxt"></td>
+</tr>
+<tr>
+	<td><label errclass="nachname" for="eingabe[nachname]" id="InputLblnachname">Nachname:</label></td> 
+	<td><input type="text" name="eingabe[nachname]" value="{eingabe[nachname]}" class="iTxt"></td>
+</tr>
+
+<tr>
+	<td><label errclass="email" for="eingabe[email]" id="InputLblemail">Email:</label></td> 
+	<td><input type="text" name="eingabe[email]" value="{eingabe[email]}" class="iTxt"></td>
+</tr>
+<tr>
+	<td><label errclass="user" for="eingabe[user]" id="InputLbluser">Benutzername:</label></td> 
+	<td><input type="text" name="eingabe[user]" value="{eingabe[user]}" class="iTxt"></td>
+</tr>
+<tr>
+	<td><label errclass="pw" for="eingabe[pw]" id="InputLblpw">Passwort:</label></td> 
+	<td><input type="password" name="eingabe[pw]" value="{eingabe[pw]}"  class="iPass"></td>
+</tr>
+<tr>
+	<td><label errclass="pwc" for="eingabe[pwc]" id="InputLblpwc">PW wiederholen:</label></td> 
+	<td><input type="password" name="eingabe[pwc]" value="{eingabe[pwc]}" class="iPass"></td>
+</tr>
+<tr>
+	<td><label errclass="pwc" for="eingabe[agb_confirm]" id="InputLblpwc">AGB:</label></td> 
+	<td><input type="checkbox" name="eingabe[agb_confirm]" value="Ja" check_agb_confirm="Ja">
+	Ja, ich stimme den <a target="winAGB" onclick="openPp(this.href, this.target, 400, 600);return false"; href="{webPath}/agb.php">AGB</a> zu</td>
+</tr>
+<tr>
+	<td colspan=2>
+	<input type="submit" name="register" value="Registierung senden" class="iSubmit">
+		<input type="submit" name="reset" value="Zurücksetzen" class="iSubmit"></td>
+</tr>
+</form>
+</table>
+<div class="LoginAdLinks">
+{LnkRegister} 
+{LnkForgetPw}</div>
+</td></tr></table>

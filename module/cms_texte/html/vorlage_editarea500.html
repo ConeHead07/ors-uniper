@@ -1,0 +1,61 @@
+<div ID="div%GROUPID%"><table height=26 background="../images/bg_menues.gif" width="99.9%" style="/*styleWidth*/">
+	<tr>
+		<td align="leftt"><!-- 
+ --><img name="cut%GROUPID%" src="../images/btn_cut_0.gif" width="23" height="22" border="0" title="Markierten Bereich ausschneiden"><!-- 
+ --><img name="copy%GROUPID%" src="../images/btn_copy_0.gif" width="23" height="22" border="0" title="Markierten Bereich kopieren"><!-- 
+ --><img name="paste%GROUPID%" src="../images/btn_paste_0.gif" width="23" height="22" border="0" title="Zwischenablage einfügen"><!-- 
+ --><img name="bold%GROUPID%" src="../images/btn_bold_0.gif" width="23" height="22" border="0" title="Fett" alt="Fett"><!-- 
+ --><img name="italic%GROUPID%" src="../images/btn_italic_0.gif" width="23" height="22" border="0" title="Kursiv"><!-- 
+ --><img name="uline%GROUPID%" src="../images/btn_underline_0.gif" width="23" height="22" border="0" title="Unterstreichen"><!-- 
+ --><img name="head1%GROUPID%" src="../images/btn_head1_0.gif" width="23" height="22" border="0" title="Überschrift 1"><!-- 
+ --><img name="head2%GROUPID%" src="../images/btn_head2_0.gif" width="23" height="22" border="0" title="Überschrift 2"><!-- 
+ --><img name="ol%GROUPID%" src="../images/btn_insertorderedlist_0.gif" width="23" height="22" border="0" title="Numerierte Liste erstellen"><!-- 
+ --><img name="ul%GROUPID%" src="../images/btn_insertunorderedlist_0.gif" alt="" width="23" height="22" border="0" title="Unnumerierte Liste erstellen"><!-- 
+ --><img name="unformat%GROUPID%" src="../images/btn_removeformat_0.gif" width="23" height="22" border="0" title="Formatierung entfernen"><!-- 
+ --><img name="insertimage%GROUPID%" src="../images/btn_insertimage_0.gif" width="24" height="22" border="0" title="Grafik aus Auswahlliste hinzufuegen"><!-- 
+ --><img name="settable%GROUPID%" src="../images/btn_settable_0.gif" width="24" height="22" border="0" title="Setze Tabelle"><!-- 
+ --><img name="link%GROUPID%" src="../images/btn_createlink_0.gif" width="23" height="22" border="0" title="Markierten Bereich verlinken"><!-- 
+ --><img name="unlink%GROUPID%" src="../images/btn_unlink_0.gif" width="23" height="22" border="0" title="Verlinkung entfernen"><!-- 
+ --><img name="dllink%GROUPID%" src="../images/btn_createdllink_0.gif" width="23" height="22" border="0" title="Auswahl für Download-Verlinkung"><!-- 
+ --><img name="insertamazon%GROUPID%" src="../images/btn_insertamazon_0.gif" width="24" height="22" border="0" title="Amazon-Buchlink hinzufügen"><!-- 
+ --><img name="insertamazoncd%GROUPID%" src="../images/btn_insertamazoncd_0.gif" width="24" height="22" border="0" title="Amazon-CD-Link hinzufügen"><!-- 
+ --><img name="insertamazondvd%GROUPID%" src="../images/btn_insertamazondvd_0.gif" width="24" height="22" border="0" title="Amazon-DVD-Link hinzufügen"><!-- 
+ --><img name="editsource%GROUPID%" src="../images/btn_editsource_0.gif" width="29" height="22" border="0" title="Quelltext öffnen" alt="Quelltext öffnen"><!-- 
+ --><img name="textbildcombo%GROUPID%" src="../images/btn_textbildcombo_0.gif" width="23" height="22" border="0" title="Neuer Textblock (ermöglicht Bild ohne Abstand zum Rand links oder rechtsbündig zu setzen)"><!-- 
+ --><img name="insertmovie%GROUPID%" src="../images/btn_insertmovie_0.gif" width="24" height="22" border="0" title="ACM-Video aus Auswahlliste hinzufuegen"><!-- 
+ --><img name="insertpagebreak%GROUPID%" src="../images/btn_insertpagebreak_0.gif" width="24" height="22" border="0" title="Seitenumbruch einfügen"><!-- 
+ --><!-- 
+ 	<a href="#" onclick="textedit('%GROUPID%', 'settable'); return false;"></a> 
+   --><!--   
+ createdllink<br>
+ insertamazon<br>
+ insertamazoncd<br>
+ insertamazondvd<br> 
+ --></td>
+	</tr>
+</table>
+<IFRAME scrolling="auto" id="%GROUPID%" width="99.9%" height="350px" style="/*styleSize*/"></IFRAME></div>
+<table id="tblFetchSrc%GROUPID%" background="../images/bg_menues.gif" width="99.9%" style="display:none;/*styleWidth*/">
+	<tr><a href="#" onclick="alert(%GROUPID%.document.body.innerHTML);return false;" style="text-decoration:none;">&nbsp;</a>
+		<td><a href="#" onclick="return false;"><b>Eingabe</b></a></td>
+		<td><img src="../images/clear.gif" width="29" height="22" border="0"></td>
+		<td align=right><button onclick="document.images['editsource%GROUPID%'].click()" id="btnFetchSrc%GROUPID%" eingabeObj="%GROUPID%" style="border:1 gray solid; font-size:10px;">Übernehmen</button></td></tr></table>
+<script language="JavaScript1.2">
+ 	tmpObj = document.getElementById("imgPosExtrasOf_%GROUPID%");
+	//alert("#31 "+tmpObj.name);
+if (typeof %GROUPID% != "undefined" && %GROUPID%.document && %GROUPID%.document.open) {
+	%GROUPID%.document.open();
+	%GROUPID%.document.write("<html><body topmargin='10' marginheight='10' bgcolor=''#dadada>");
+	%GROUPID%.document.write("<b><font style='font-size:12px;' face='Arial' color='#000080'>");
+	%GROUPID%.document.write("Bitte warten!<br>&nbsp;<br>");
+	%GROUPID%.document.write("&nbsp; &nbsp; &nbsp;Der Webeditor wird geladen ...");
+	/*for (i in tmpObj) {
+		%GROUPID%.document.write("<br>"+i+": "+tmpObj[i]+"");
+	}
+	*/
+	%GROUPID%.document.write("</font></b>");
+	%GROUPID%.document.write("</body></html>");
+	%GROUPID%.document.close();
+}
+</script>
+<textarea id="zwischenspeicher%GROUPID%" style="display:none;"></textarea>

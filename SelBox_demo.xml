@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<Result type="success">
+	<Attribute id="SelBoxItems" name="LSResultNum" value="3"></Attribute>
+	<Attribute id="SelBoxItems" name="LSResultNumAll" value="3"></Attribute>
+	<Attribute id="SelBoxItems" name="LSResultOffset" value="0"></Attribute>
+	<Attribute id="SelBoxItems" name="LSResultNextOffset" value="0"></Attribute>
+	<Attribute id="SelBoxItems" name="LSResultLimit" value="30"></Attribute>
+	<Attribute id="SelBoxItems" name="LSResultName" value=""></Attribute>
+	<Attribute id="SelBoxItems" name="LSResultQuery" value=""><![CDATA[]]></Attribute><Update id="SelBoxItems"><![CDATA[<div class="SelItem"><input xtype="checkbox" type="radio" value="Koeln"> Koeln</div>
+<div class="SelItem"><input xtype="checkbox" type="radio" value="Wuppertal"> Wuppertal</div>
+<span onclick=alert(this.innerHTML)>Info<span style="display:;"><br>\nSELECT umzugstermin, terminwunsch 
+FROM  mm_umzuege 
+GROUP BY umzugstermin, terminwunsch 
+ORDER BY umzugstermin, terminwunsch 
+LIMIT 0, 30<br></span></span>]]></Update>
+<LoadScript language="javascript" src="cdata"><![CDATA[
+SelBox_initChilds("SelBoxItems");
+//alert(document.getElementById("SelBoxItems"));
+]]></LoadScript>
+</Result>

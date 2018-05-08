@@ -1,0 +1,25 @@
+<h3 class="formTitle">Leistungskategorie</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#pleistungskategorie_id,
+#pleistungskategorie,
+#pmodified { color:#f00 }
+</style>
+<div class="input" id="InputBoxleistungskategorie_id">
+<div class="inputLbl"><label errclass="leistungskategorie_id" for="eingabe[leistungskategorie_id]" id="InputLblleistungskategorie_id">Leistungskategorie_id<span class="showPflicht" id="pleistungskategorie_id">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[leistungskategorie_id]" id="eingabe[leistungskategorie_id]" maxlength="11" value="{eingabe[leistungskategorie_id]}"></div>
+</div>
+<div class="input" id="InputBoxleistungskategorie">
+<div class="inputLbl"><label errclass="leistungskategorie" for="eingabe[leistungskategorie]" id="InputLblleistungskategorie">Leistungskategorie<span class="showPflicht" id="pleistungskategorie">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[leistungskategorie]" id="eingabe[leistungskategorie]" maxlength="80" value="{eingabe[leistungskategorie]}"></div>
+</div>
+<div class="input" id="InputBoxmodified">
+<div class="inputLbl"><label errclass="modified" for="eingabe[modified]" id="InputLblmodified">Modified<span class="showPflicht" id="pmodified">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[modified]" id="eingabe[modified]" maxlength="" value="{eingabe[modified]}"></div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="484" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Preview]" value="Vorschau"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><br>
+<input LINE="489" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen</form></div>

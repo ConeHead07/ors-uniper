@@ -1,0 +1,38 @@
+
+.Menu {
+	
+}
+
+.MenuMain * {
+	font-weight:bold;
+}
+.MenuMain * div.navitem,
+.MenuMain * div.unavitem {
+	display:inline;
+	color:#00f;
+}
+.MenuMain * .liActive {
+	display:inline;
+	color:#f00;
+}
+.MenuMain * .liActive * {
+	color:#f00;
+}
+
+.iconHelp {
+  background-image: url(../images/help.png);
+  background-position: right 0px;      
+}
+.iconLangEN {
+  background-image: url(../images/flagge_uk.gif);
+  background-position: right 0px;      
+}
+.iconLangDE {
+  background-image: url(../images/flagge_de.gif);
+  background-position: right 0px;      
+}
+
+#ulWhoami {
+    font-style: italic;
+    font-weight:bold;
+}

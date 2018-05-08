@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<result type="success">
+	<Msg/>
+	<Err/>
+	<JScript/>
+		<Mandant>10</Mandant>
+	<Bearbeitungsstatus>9</Bearbeitungsstatus>
+	<UnterBearbeitungsstatus>0</UnterBearbeitungsstatus>
+	<AbschlussStatus>1</AbschlussStatus>
+	<vorgangsnr>191592</vorgangsnr>
+	<firmenname>Fortuna Düsseldorf 1895 e.V.</firmenname>
+	<firmenplz>40235</firmenplz>
+	<firmenort>Düsseldorf</firmenort>
+	<firmenplzort>40235 Düsseldorf</firmenplzort>
+	<firmenstr>Flinger Broich 87</firmenstr>
+</result>

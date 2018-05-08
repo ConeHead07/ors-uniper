@@ -1,0 +1,66 @@
+<style>
+{literal}
+tr.row * {
+    font-size:11px;
+}
+div.ktg1, div.lstg {
+    min-height: 18px;
+}
+tr#summary td { 
+    text-align:right;
+    padding:5px;
+    font-weight:bold;
+}
+td.unit {
+    text-align:center;
+}
+td.menge, td.menge, input.menge, td.preis, td.sum {
+    text-align:right;
+}
+{/literal}
+</style>
+{if count($Umzugsleistungen)}
+<h2 style="margin:0;padding:0">Leistungen</h2>
+<table class="MitarbeierItem" style="margin-top:0;padding-top:0;width:100%;">
+    <thead>
+        <tr>
+            <td>Kategorie</td>
+            <td>Leistung</td>
+            <td>Menge 1 DSD</td>
+            <td>Einheit 1</td>
+            <td>Menge 2 DSD</td>
+            <td>Einheit 2</td>
+            <td>Menge1 M</td>
+            <td>Menge2 M</td>
+            {if $PreiseAnzeigen}<td class="preis">Preis/Einh.</td>
+            <td class="sum">Gesamt</td>
+            {/if}
+        </tr>
+    </thead>
+    <tbody id="TblLeistungenBody">
+    {foreach name=GList item=L from=$Umzugsleistungen}
+        <tr class="row inputRowVon">
+            <td class="ktg1">{$L.kategorie|escape}</td>
+            <td class="lstg">{$L.leistung|escape}</td>
+            <td>{if is_numeric($L.menge_property)}{$L.menge_property|escape|number_format:2:",":"."}{/if}</td>
+            <td class="unit">{$L.leistungseinheit|escape}</td>
+            <td>{if is_numeric($L.menge2_property)}{$L.menge2_property|escape|number_format:2:",":"."}{/if}</td>
+            <td class="unit">{$L.leistungseinheit2|escape}</td>
+            <td class="menge">{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:2:",":"."}{/if}</td>
+            <td class="menge">{if is_numeric($L.menge2_mertens)}{$L.menge2_mertens|escape|number_format:2:",":"."}{/if}</td>
+            {if $PreiseAnzeigen}<td class="preis">{$L.preis_pro_einheit}</td>
+            <td class="sum">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|escape|number_format:2:",":"."}{/if}</td>
+            {/if}
+        </tr>
+    {/foreach}
+        <tr id="summary">
+        {if $PreiseAnzeigen}
+            <td colspan="{if $PreiseAnzeigen}11{else}9{/if}"><span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
+        {/if}
+        </tr>
+    </tbody>
+</table>
+{else}
+<strong>Leistungen:</strong> <em>Keine </em> <br>
+{/if}
+<br>

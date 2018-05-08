@@ -1,0 +1,29 @@
+<h3 class="formTitle">Raumtypen</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><div class="Input">
+<div class="inputLbl">Id</div>
+<div>{lesen[id]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Raumkategorie_id</div>
+<div>{lesen[raumkategorie_id]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Raumkategorie</div>
+<div>{lesen[raumkategorie]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Raumtyp</div>
+<div>{lesen[raumtyp]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Beschreibung</div>
+<div>{lesen[beschreibung]}</div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="475" type="hidden" name="eingabe[id]" maxlength="11" value="{eingabe[id]}">
+<input LINE="475" type="hidden" name="eingabe[raumkategorie_id]" maxlength="11" value="{eingabe[raumkategorie_id]}">
+<input LINE="475" type="hidden" name="eingabe[raumkategorie]" maxlength="10" value="{eingabe[raumkategorie]}">
+<input LINE="475" type="hidden" name="eingabe[raumtyp]" maxlength="15" value="{eingabe[raumtyp]}">
+<input LINE="475" type="hidden" name="eingabe[beschreibung]" maxlength="50" value="{eingabe[beschreibung]}">
+<input LINE="483" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Correct]" value="Korrigieren"></form></div>

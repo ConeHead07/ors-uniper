@@ -1,0 +1,61 @@
+Insert `mt_move_bayer`.`mm_umzuege` SET
+`token` = "ac14489033",
+`anrede` = NULL,
+`name` = "Laschewski",
+`vorname` = "Stefan",
+`email` = "s.laschewski@mertens.ag",
+`fon` = "0177-9699495",
+`ort` = "Leverkusen",
+`gebaeude` = "1",
+`raumnr` = NULL,
+`etage` = "1. OG",
+`kostenstelle` = "4501516361",
+`planonnr` = "224284",
+`umzug` = "Nein",
+`umzugstermin` = NULL,
+`umzugszeit` = NULL,
+`terminwunsch` = "2017-01-10",
+`ansprechpartner` = "Stefan Laschewski",
+`ansprechpartner_email` = "s.laschewski@mertens.ag",
+`ansprechpartner_fon` = "0177-9699495",
+`geraete_csv` = NULL,
+`bemerkungen` = "Bemerkung von slaschewski am 06.01.2017 um 10:33
+Auftrag 224284 - Kristina Nitz, Tel. 0175-3021751 - Festnetz: 21751
+Leihgabe/Transport von 1 Flipchart und 5 Metaplanwänden aus
+demBBS-Lager C 151 Keller 2 in Schokoladenmuseum nach Köln Anschrift:
+Am Schokoladenmuseum 1 A, 50678 Köln Termin: 10.01.17 Die Anlieferung
+muss erfolgt sein bis 08:30 Uhr Abholung und Rücktransport von 1 Flipchart
+und 5 Metaplanwänden ins BBS-Lager C 151 Keller am12.01.17 im Laufe des Vormittags Ansprechpartner im Schokoladenmuseum: Hr. Kroll, Kristina
+Nitz - bitte melden Sie sich bei Ankunft unter oben genannter Mobilnummer.
+(Tel: 21751 /0 175 3021751); Telefonnummer Schokoladenmuseum: 0221
+931888 - 0",
+`antragsstatus` = "bearbeitung",
+`umzugsstatus` = "temp",
+`dienstleister_id` = NULL,
+`dienstleister_name` = NULL,
+`dienstleister_bemerkung` = NULL,
+`geprueft` = "Init",
+`angeboten_am` = NULL,
+`angeboten_von` = NULL,
+`geprueft_am` = NULL,
+`geprueft_von` = NULL,
+`genehmigt_br` = "Init",
+`genehmigt_br_am` = NULL,
+`genehmigt_br_von` = NULL,
+`bestaetigt` = "Init",
+`bestaetigt_am` = NULL,
+`bestaetigt_von` = NULL,
+`abgeschlossen` = "Init",
+`abgeschlossen_am` = NULL,
+`abgeschlossen_von` = NULL,
+`genehmigt` = "Init",
+`bearbeiter_stelle` = NULL,
+`bearbeiter_name` = NULL,
+`bearbeiter_mail` = NULL,
+`bearbeiter_fon` = NULL,
+`bearbeiter_ort` = NULL,
+`bearbeiter_bemerkung` = NULL,
+`antragsteller_uid` = "2980" ,
+`antragsdatum` = NOW() ,
+`created` = NOW() ,
+ `b_modifiedby` = "2980" 

@@ -1,0 +1,62 @@
+Insert `mt_move_bayer`.`mm_umzuege` SET
+`token` = "3f0233141b",
+`anrede` = NULL,
+`name` = "Laschewski",
+`vorname` = "Stefan",
+`email` = "s.laschewski@mertens.ag",
+`fon` = "0177-9699495",
+`ort` = "Leverkusen",
+`gebaeude` = "1",
+`raumnr` = NULL,
+`etage` = "1. OG",
+`kostenstelle` = "4501419341",
+`planonnr` = "197018",
+`umzug` = "Nein",
+`umzugstermin` = NULL,
+`umzugszeit` = "08:00:00",
+`terminwunsch` = "2016-07-28",
+`ansprechpartner` = "Stefan Laschewski",
+`ansprechpartner_email` = "s.laschewski@mertens.ag",
+`ansprechpartner_fon` = "0177-9699495",
+`geraete_csv` = NULL,
+`bemerkungen` = "Bemerkung von slaschewski am 26.07.2016 um 09:25
+Auftrag 197018 Termin: Donnerstag, 28. Juli 2016 - bitte teilen Sie uns in der
+Bestätigung eine ca.-Startzeit mit Umzug für: Claudia Degen (Tel. 30387)
+IST: LEV %u2013 Geb. C 151 %u2013 EG00 %u2013 R. 035 %u2013 AP 01 ZIEL: LEV %u2013 Geb. C 151 %u2013
+EG00 %u2013 R. 047 %u2013 AP 01 Transport von: 3 Kartons   Vorablieferung IT
+Equipment   Wiederanschluss im Zielraum Petra Bonnacker (Tel. 54100)
+IST: LEV %u2013 Geb. C 151 %u2013 EG00 %u2013 R. 035 %u2013 AP 02 ZIEL: LEV %u2013 Geb. C 151 %u2013 EG00 %u2013 R. 047 %u2013 AP 02 Transport von: 3 Kartons   Vorablieferung bis
+morgen Mittag 12 Uhr, (Dienstreise im Anschluss) 1 Bild Privateigentum,
+keine zusätzl. Versicherung erforderlich 1 Bürostuhl 1 Laptop 2 Monitore 1
+Dockingstation 1 Tastatur   Wiederanschluss des IT %u2013Equipment im
+Zielraum Auftrag folgt zusätzlich per Mail",
+`antragsstatus` = "bearbeitung",
+`umzugsstatus` = "temp",
+`dienstleister_id` = NULL,
+`dienstleister_name` = NULL,
+`dienstleister_bemerkung` = NULL,
+`geprueft` = "Init",
+`angeboten_am` = NULL,
+`angeboten_von` = NULL,
+`geprueft_am` = NULL,
+`geprueft_von` = NULL,
+`genehmigt_br` = "Init",
+`genehmigt_br_am` = NULL,
+`genehmigt_br_von` = NULL,
+`bestaetigt` = "Init",
+`bestaetigt_am` = NULL,
+`bestaetigt_von` = NULL,
+`abgeschlossen` = "Init",
+`abgeschlossen_am` = NULL,
+`abgeschlossen_von` = NULL,
+`genehmigt` = "Init",
+`bearbeiter_stelle` = NULL,
+`bearbeiter_name` = NULL,
+`bearbeiter_mail` = NULL,
+`bearbeiter_fon` = NULL,
+`bearbeiter_ort` = NULL,
+`bearbeiter_bemerkung` = NULL,
+`antragsteller_uid` = "2980" ,
+`antragsdatum` = NOW() ,
+`created` = NOW() ,
+ `b_modifiedby` = "2980" 

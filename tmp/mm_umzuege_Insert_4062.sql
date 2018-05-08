@@ -1,0 +1,61 @@
+Insert `mt_move_bayer`.`mm_umzuege` SET
+`token` = "4d666013c8",
+`anrede` = NULL,
+`name` = "Katzler",
+`vorname` = "Michael",
+`email` = "m.katzler@mertens.ag",
+`fon` = "01732661063",
+`ort` = "Leverkusen",
+`gebaeude` = "1",
+`raumnr` = NULL,
+`etage` = "1. OG",
+`kostenstelle` = "4501677952",
+`planonnr` = "279094",
+`umzug` = "Nein",
+`umzugstermin` = NULL,
+`umzugszeit` = NULL,
+`terminwunsch` = "2017-10-16",
+`ansprechpartner` = "Michael Katzler",
+`ansprechpartner_email` = "m.katzler@mertens.ag",
+`ansprechpartner_fon` = "01732661063",
+`geraete_csv` = NULL,
+`bemerkungen` = "Bemerkung von m.katzler am 11.10.2017 um 07:42
+AA 279094, Hr. Winterlich 0214-30-72733, Termin 16.10.2017 (Rückbau von AA 245993)
+ 
+Von LEV Geb. C153, Freifläche auf der Westseite nach Lagerraum Keller
+30 x Sitzbankgruppen
+ 
+Es sind 4 MA erforderlich, da die Bänke sehr schwer sind.
+ 
+Vor Ort ist Herr Merkel unter Tel. 0214-30-57341 Ansprechpartner.
+Handwerker vor Ort ist Herr Marquardt 0171-4928771.",
+`antragsstatus` = "bearbeitung",
+`umzugsstatus` = "temp",
+`dienstleister_id` = NULL,
+`dienstleister_name` = NULL,
+`dienstleister_bemerkung` = NULL,
+`geprueft` = "Init",
+`angeboten_am` = NULL,
+`angeboten_von` = NULL,
+`geprueft_am` = NULL,
+`geprueft_von` = NULL,
+`genehmigt_br` = "Init",
+`genehmigt_br_am` = NULL,
+`genehmigt_br_von` = NULL,
+`bestaetigt` = "Init",
+`bestaetigt_am` = NULL,
+`bestaetigt_von` = NULL,
+`abgeschlossen` = "Init",
+`abgeschlossen_am` = NULL,
+`abgeschlossen_von` = NULL,
+`genehmigt` = "Init",
+`bearbeiter_stelle` = NULL,
+`bearbeiter_name` = NULL,
+`bearbeiter_mail` = NULL,
+`bearbeiter_fon` = NULL,
+`bearbeiter_ort` = NULL,
+`bearbeiter_bemerkung` = NULL,
+`antragsteller_uid` = "2972" ,
+`antragsdatum` = NOW() ,
+`created` = NOW() ,
+ `b_modifiedby` = "2972" 

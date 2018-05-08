@@ -1,0 +1,96 @@
+ ;;Preise nicht sichtbar;Dussmann;Mertens-Henk;Reserve 1;Reserve 2
+Material;;;;;;
+PC-Wannen, Tagesmiete;Stück;2,50 €;;;;
+Aktenrollwagen, Tagesmiete;Stück;3,00 €;;;;
+Security Box, Tagesmiete;Stück;5,00 €;;;;
+Kartonagenkauf BxHxT 60x40x30;Stück;1,85 €;;;;
+Gitterboxen, Tagesmiete;Stück;2,50 €;;;;
+Europapaletten bei Verlust;Stück;11,00 €;;;;
+Seidenpapier, 2,5 kg (Paket);Stück;3,50 €;;;;
+Klebeband (Rolle);Stück;1,80 €;;;;
+Luftpolsterfolie;Quadratmeter;0,45 €;;;;
+Strechfolie (300 m Rolle);Stück;9,90 €;;;;
+Entsorgung;;;;;;
+Entsorgungskosten für gewerblichen Sperrmüll;KG; 0,55 € ;;;;
+Dienstleistungen;;;;;;
+Kunsttransport (Raum München u. Zentrale);Stück;250,00 €;;;;
+Mitarbeiter Hausservice;Stunde;22,00 €;;;;
+Möbelmonteur;Stunde;23,00 €;;;;
+Möbelträger;Stunde;21,50 €;;;;
+Möbelwagen inkl. Fahrer;Stunde;43,00 €;;;;
+Transportbus inkl. Fahrer;Stunde;35,00 €;;;;
+Umzugs-/Transportleiter;Stunde;24,00 €;;;;
+Vorarbeiter;Stunde;24,00 €;;;;
+Träger/Packer;je angefangene Std.; 21,50 € ;;;;
+Schreiner Spezialmontagen;je angefangene Std.; 48,00 € ;;;;
+USM-Haller Monteur;je angefangene Std.; 34,00 € ;;;;
+Fahrer/Teamleiter/Monteur;je angefangene Std.; 23,00 € ;;;;
+Umzugskoordinator;je angef. Std. und Mann; 45,00 € ;;;;
+EDV-Techniker;je angef. Std. und Mann; 75,00 € ;;;;
+Einsatz von Handwerkern für Spezialverpackung oder Spezialmontagen (z.B. Küchenmontage);je angef. Std. und Mann; 48,00 € ;;;;
+Planer;Stunde;45,00 €;;;;
+Umzugskoordination;AP;22,50 €;;;;
+Projektsteuerung;Stunde;45,00 €;;;;
+Einrichtung von Halteverbotzonen zzgl. Gebühren;Stück; 45,00 € ;;;;
+Raum- und Belegungsplanung;AP;22,50 €;;;;
+Fahrzeuge/Maschinen;;;;;;
+Einsatz von Fahrzeugen bis 2 to;je angefangene Std.; 20,00 € ;;;;
+Einsatz von Fahrzeugen bis 2 to;Tagessatz; 180,00 € ;;;;
+Einsatz von Bus oder LKW bis 3,5 to.;je angefangene Std.; 12,00 € ;;;;
+Einsatz von Bus oder LKW bis 3,5 to.;Tagessatz; 120,00 € ;;;;
+Einsatz von Anhänger;je angefangene Std.; 8,00 € ;;;;
+Einsatz Schrägaufzug;je angefangene Std.; 25,00 € ;;;;
+Einsatz Schrägaufzug;Tagessatz; 200,00 € ;;;;
+Stretchmaschine portabel;je Tag; 150,00 € ;;;;
+Aufzug selbstfahrbar, Tagessatz;Stück;200,00 €;;;;
+Zuschläge;;;;;;
+Schwergutzuschlag je angef. 100kg;pro 100kg; 15,00 € ;;;;
+Samstagsarbeit;Prozent;25,00%;;;;
+"Zuschlag Nachtarbeit 
+(22:00 Uhr bis 5:00 Uhr)";Prozent;50,00%;;;;
+Zuschlag Sonntagsarbeit ;Prozent;100,00%;;;;
+Zuschlag Feiertagsarbeit ;Prozent;100,00%;;;;
+Koordinierende Tätigkeit;;;;;;
+übergr. Kleinumzug ohne Ausst.;AP;Siehe Preismatrix;;;;
+übergr. Kleinumzug mit Ausst.;AP;Siehe Preismatrix;;;;
+innerer Kleinumzug ohne Ausst.;AP;Siehe Preismatrix;;;;
+innerer Kleinumzug mit Ausst.;AP;Siehe Preismatrix;;;;
+MUE Zentrale Kleinumzug ohne Ausst.;AP;Siehe Preismatrix;;;;
+MUE Zentrale Kleinumzug mit Ausst.;AP;Siehe Preismatrix;;;;
+Arbeitsplatzpauschalen innerhalb des Gebäudes:;;;;;;
+"Arbeitsvariante A
+Arbeitsplatz ohne Möbel, mit Umzugskartons und/oder Aktenwagen";AP;Siehe Preismatrix;;;;
+"Arbeitsvariante B
+Arbeitsplatz ohne Möbel mit PC komplett, Aktenwagen und/oder Umzugskartons";AP;Siehe Preismatrix;;;;
+"Arbeitsvariante C
+Arbeitsplatz komplett mit Möbel, PC komplett, Aktenwagen und Umzugskartons. (Schreibtisch/ Drehstuhl/ Aktenschrank/ Sideboard/ Rollcontainer";AP;Siehe Preismatrix;;;;
+"Arbeitsvariante D
+Arbeitsplatz komplett mit Möbel, ohne PC, Aktenwagen und Umzugskartons. (Schreibtisch /Drehstuhl/ Aktenschrank/ Sideboard/ Rollcontainer)";AP;Siehe Preismatrix;;;;
+Arbeitsplatzpauschalen innerhalb des Ortes:;                           ;                           ;;;;
+"Arbeitsvariante A
+Arbeitsplatz ohne Möbel, mit Umzugskartons und/oder AktenwagenArbeitsvariante A
+Arbeitsplatz ohne Möbel, mit Umzugskartons und/oder Aktenwagen";AP;Siehe Preismatrix;;;;
+"Arbeitsvariante B
+Arbeitsplatz ohne Möbel mit PC komplett, Aktenwagen und/oder Umzugskartons";AP;Siehe Preismatrix;;;;
+"Arbeitsvariante C
+Arbeitsplatz komplett mit Möbel, PC komplett, Aktenwagen und Umzugskartons. (Schreibtisch/Drehstuhl/Aktenschrank/Sideboard/Rollcontainer)";AP;Siehe Preismatrix;;;;
+"Arbeitsvariante D
+Arbeitsplatz komplett mit Möbel, ohne PC, Aktenwagen und Umzugskartons. (Schreibtisch/Drehstuhl/Aktenschrank/Sideboard/Rollcontainer";AP;Siehe Preismatrix;;;;
+Pausenräume, Besprechungsräume, Bürotechnikräume, Küchen, Lagerraum, Archive, Unterrichtsräume, Verkehrsflächen, sonstige Räume;cbm;24,00 €;;;;
+Lagerraum mit Packen zusätzlich zu den o.g. Kubikmeter;pro Karton;3,20 €;;;;
+Lagerraum mit Ein.- und Auspacken zusätzlich zu den o.g. Kubikmeter;pro Karton ;6,00 €;;;;
+Archive mit Packen zusätzlich zu den o.g. Kubikmeter;pro Karton;3,20 €;;;;
+Archive mit Ein.- und Auspacken zusätzlich zu den o.g. Kubikmeter;pro Karton ;6,00 €;;;;
+Raumplanung/Belegung/Codierung 1-10AP;AP;45,00 €;;;;
+Raumplanung/Belegung/Codierung 11-20 AP;AP;45,00 €;;;;
+Raumplanung/Belegung/Codierung über 20 AP;AP;45,00 €;;;;
+EDV Service, An.- und Abklemmen der IT Arbeitsplätze ;AP; 42,00 € ;;;;
+Einlagerung und Zwischenlagerung;;;;;;
+Lagern in Holzlagerkisten bzw. festem Lager je Kiste;Kiste; 50,00 € ;;;;
+Lagern in Holzlagerkisten bzw. festem Lager je Monat;Monat; 50,00 € ;;;;
+Ein- und Auslagerung je cbm;pro m³; 5,00 € ;;;;
+Lagerung in 20´Container= 33 cbm, je Container/Monat; Container/Monat; 165,00 € ;;;;
+Lagerung pro Palette im Hochregal je Stück/Monat;Stück/Monat; 15,00 € ;;;;
+Containerhandling Ab- und Aufnehmen der Container per Kran, pro Vorgang;pro Vorgang; 75,00 € ;;;;
+Lagerversicherung, Gesamtwert des Umzugsgutes;Gesamtwert;1%;;;;
+Leistung gemäß Angebot;Angebot;hier muss Angebotswert zur Berechnung eingefügt werden;;;;

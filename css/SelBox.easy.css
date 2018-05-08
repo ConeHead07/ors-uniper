@@ -1,0 +1,81 @@
+.UpperCase {
+	text-transform:uppercase;
+}
+
+.SelBoxItems,
+.SelBoxEasy {
+  border:1px solid #0075b5;
+  padding:2px;
+  font-family:Arial;
+  background:#fff;
+  width:300px;
+}
+.SelBoxEasy {
+  position:absolute;
+  top:20px;
+  left:-1000px;
+}
+.SelBoxOrte {
+	width:250px;
+}
+.SelBoxGebaeude {
+	width:350px;
+}
+.SelBoxRegisterOrte {
+	width:200px;
+}
+.SelBoxRegisterGebaeude {
+	width:200px;
+}
+.SelBoxEtagen {
+	width:100px;
+}
+.SelBoxRaumnr {
+	width:100px;
+}
+.SelBoxMitarbeiterWidth,
+.SelBoxMitarbeiter {
+	width:550px;
+}
+.SelBoxAbteilungen {
+	width:350px;
+}
+.SelBoxUmzugsart {
+	width:150px;
+}
+.SelBoxRaumbelegung {
+	width:300px;
+}
+
+.SelBoxItem,
+.SelBoxEasy div {
+  xwidth:100%;
+  border-bottom:1px dotted #0075b5;
+  display:block; /*inline-block;*/
+  color: #3b3b3b;
+  margin:0;
+  padding:0 5px 0 5px;
+  font-size:11px;
+}
+.SelBoxEasy div.IsActiveItem {
+	background:#d1ddef;
+	color:#f00;
+	cursor:pointer;
+}
+.IsHoverItem,
+.SelBoxEasy div.IsHoverItem {
+	background:#d8e0e2;
+	color:#0075B5;
+	cursor:pointer;
+}
+.SelBoxEasy .SelTitle {
+  border-bottom:1px dotted #0075b5;
+  display:block; /*inline-block;*/
+  color: #bd7100;
+  margin:0;
+  padding:0;
+  font-size:11px;
+}
+.SelBoxEasy div input {
+  margin:3px 4px 0 0;
+}

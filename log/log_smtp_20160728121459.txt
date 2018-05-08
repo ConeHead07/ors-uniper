@@ -1,0 +1,247 @@
+
+
+START:SMTP-CONNECT: 2016-07-28 12:14:59
+|secs:0|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Thu, 28 Jul 2016 12:15:12 +0200
+|secs:0|CLIENT: EHLO bayer.mertens.ag
+|secs:0|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:0|SERVER: 250-SIZE 36700160
+|secs:0|SERVER: 250-PIPELINING
+|secs:0|SERVER: 250-DSN
+|secs:0|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:0|SERVER: 250-STARTTLS
+|secs:0|SERVER: 250-X-ANONYMOUSTLS
+|secs:0|SERVER: 250-AUTH NTLM LOGIN
+|secs:0|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:0|SERVER: 250-8BITMIME
+|secs:0|SERVER: 250-BINARYMIME
+|secs:0|SERVER: 250-CHUNKING
+|secs:0|SERVER: 250 XRDST
+|secs:0|CLIENT: AUTH LOGIN
+|secs:0|SERVER: 334 VXNlcm5hbWU6
+|secs:0|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:0|SERVER: 334 UGFzc3dvcmQ6
+|secs:0|CLIENT: bWVyVGVuczQ3ODc3
+|secs:0|SERVER: 235 2.7.0 Authentication successful
+|secs:0|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:14|SERVER: 250 2.1.0 Sender OK
+|secs:14|CLIENT: RCPT TO:<s.laschewski@mertens.ag>
+|secs:14|SERVER: 250 2.1.5 Recipient OK
+|secs:14|CLIENT: DATA
+|secs:14|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>
+|secs:14|CLIENT: Subject: Umzug ID 1128 - Genehmigt
+From: ors <bayerors@mertens.ag>
+Reply-To: bayerors@mertens.ag
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2016-07-28 12:15:13
+X-QUEUE-ID:1
+
+Hallo Stefan Laschewski,
+
+die Leistungsanforderung mit der ID 1128 wurde genehmigt und befindet sich 
+im Durchführungsstatus.
+
+Antragsteller:  Stefan Laschewski
+Ausführungszeit 03.08.2016
+SAP Nr.         4501420791	
+Ticket Nr.      197427
+
+Sie können den  Vorgang  unter folgendem Link  einesehen:
+https://bayer.mertens.ag/bayer/?s=aantrag&id=1128
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+.
+|secs:14|SERVER: 250 2.6.0 <f81f2e1c-ee31-4392-8518-32aee619e245@TE2013.mertens.int> [InternalId=87398289506466, Hostname=Te2013.mertens.int] Queued mail for delivery
+|secs:14|CLIENT: QUIT
+|secs:14|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2016-07-28 12:15:13
+
+START:SMTP-CONNECT: 2016-07-28 12:15:13
+|secs:14|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Thu, 28 Jul 2016 12:15:27 +0200
+|secs:14|CLIENT: EHLO bayer.mertens.ag
+|secs:14|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:14|SERVER: 250-SIZE 36700160
+|secs:14|SERVER: 250-PIPELINING
+|secs:14|SERVER: 250-DSN
+|secs:14|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:14|SERVER: 250-STARTTLS
+|secs:14|SERVER: 250-X-ANONYMOUSTLS
+|secs:14|SERVER: 250-AUTH NTLM LOGIN
+|secs:14|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:14|SERVER: 250-8BITMIME
+|secs:14|SERVER: 250-BINARYMIME
+|secs:14|SERVER: 250-CHUNKING
+|secs:14|SERVER: 250 XRDST
+|secs:14|CLIENT: AUTH LOGIN
+|secs:14|SERVER: 334 VXNlcm5hbWU6
+|secs:14|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:14|SERVER: 334 UGFzc3dvcmQ6
+|secs:14|CLIENT: bWVyVGVuczQ3ODc3
+|secs:14|SERVER: 235 2.7.0 Authentication successful
+|secs:14|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:21|SERVER: 250 2.1.0 Sender OK
+|secs:21|CLIENT: RCPT TO:<BreUk@mertens.ag>
+|secs:21|SERVER: 250 2.1.5 Recipient OK
+|secs:21|CLIENT: DATA
+|secs:21|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>
+|secs:21|CLIENT: Subject: Umzug ID 1128 - Genehmigt
+From: ors <bayerors@mertens.ag>
+Reply-To: bayerors@mertens.ag
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2016-07-28 12:15:20
+X-QUEUE-ID:1
+
+Hallo Peterhoff Umzugsteam,
+
+die Leistungsanforderung mit der ID 1128 wurde genehmigt und befindet sich 
+im Durchführungsstatus.
+
+Antragsteller:  Stefan Laschewski
+Ausführungszeit 03.08.2016
+SAP Nr.         4501420791	
+Ticket Nr.      197427
+
+Sie können den  Vorgang  unter folgendem Link  einesehen:
+https://bayer.mertens.ag/bayer/?s=aantrag&id=1128
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+.
+|secs:22|SERVER: 250 2.6.0 <ccdde61c-3920-44e8-86cc-3e03c42cd2db@TE2013.mertens.int> [InternalId=87398289506469, Hostname=Te2013.mertens.int] Queued mail for delivery
+|secs:22|CLIENT: QUIT
+|secs:22|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2016-07-28 12:15:21
+
+START:SMTP-CONNECT: 2016-07-28 12:15:21
+|secs:22|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Thu, 28 Jul 2016 12:15:35 +0200
+|secs:22|CLIENT: EHLO bayer.mertens.ag
+|secs:22|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:22|SERVER: 250-SIZE 36700160
+|secs:22|SERVER: 250-PIPELINING
+|secs:22|SERVER: 250-DSN
+|secs:22|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:22|SERVER: 250-STARTTLS
+|secs:22|SERVER: 250-X-ANONYMOUSTLS
+|secs:22|SERVER: 250-AUTH NTLM LOGIN
+|secs:22|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:22|SERVER: 250-8BITMIME
+|secs:22|SERVER: 250-BINARYMIME
+|secs:22|SERVER: 250-CHUNKING
+|secs:22|SERVER: 250 XRDST
+|secs:22|CLIENT: AUTH LOGIN
+|secs:22|SERVER: 334 VXNlcm5hbWU6
+|secs:22|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:22|SERVER: 334 UGFzc3dvcmQ6
+|secs:22|CLIENT: bWVyVGVuczQ3ODc3
+|secs:22|SERVER: 235 2.7.0 Authentication successful
+|secs:22|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:25|SERVER: 250 2.1.0 Sender OK
+|secs:25|CLIENT: RCPT TO:<bayerors@mertens.ag>
+|secs:25|SERVER: 250 2.1.5 Recipient OK
+|secs:25|CLIENT: DATA
+|secs:25|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>
+|secs:25|CLIENT: Subject: Umzug ID 1128 - Genehmigt
+From: ors <bayerors@mertens.ag>
+Reply-To: bayerors@mertens.ag
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2016-07-28 12:15:24
+X-QUEUE-ID:1
+
+Hallo Order Request System ORS,
+
+es liegt eine neue genehmigte Leistungsanforderung mit der ID 1128 zur Durchführung vor.
+
+Antragsteller:  Stefan Laschewski
+Ausführungszeit 03.08.2016
+SAP Nr.         4501420791	
+Ticket Nr.      197427
+
+Sie können den  Vorgang  unter folgendem Link  bearbeiten:
+https://bayer.mertens.ag/bayer/?s=aantrag&id=1128
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+.
+|secs:25|SERVER: 250 2.6.0 <b7a0705c-58d7-4475-8410-e431cf7af5c6@TE2013.mertens.int> [InternalId=87398289506472, Hostname=Te2013.mertens.int] Queued mail for delivery
+|secs:25|CLIENT: QUIT
+|secs:25|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2016-07-28 12:15:24
+
+START:SMTP-CONNECT: 2016-07-28 12:15:24
+|secs:25|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Thu, 28 Jul 2016 12:15:38 +0200
+|secs:25|CLIENT: EHLO bayer.mertens.ag
+|secs:25|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:25|SERVER: 250-SIZE 36700160
+|secs:25|SERVER: 250-PIPELINING
+|secs:25|SERVER: 250-DSN
+|secs:25|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:25|SERVER: 250-STARTTLS
+|secs:25|SERVER: 250-X-ANONYMOUSTLS
+|secs:25|SERVER: 250-AUTH NTLM LOGIN
+|secs:25|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:25|SERVER: 250-8BITMIME
+|secs:25|SERVER: 250-BINARYMIME
+|secs:25|SERVER: 250-CHUNKING
+|secs:25|SERVER: 250 XRDST
+|secs:25|CLIENT: AUTH LOGIN
+|secs:25|SERVER: 334 VXNlcm5hbWU6
+|secs:25|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:25|SERVER: 334 UGFzc3dvcmQ6
+|secs:25|CLIENT: bWVyVGVuczQ3ODc3
+|secs:26|SERVER: 235 2.7.0 Authentication successful
+|secs:26|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:27|SERVER: 250 2.1.0 Sender OK
+|secs:27|CLIENT: RCPT TO:<bayerumzuege@mertens.ag>
+|secs:27|SERVER: 250 2.1.5 Recipient OK
+|secs:27|CLIENT: DATA
+|secs:27|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>
+|secs:27|CLIENT: Subject: Umzug ID 1128 - Genehmigt
+From: ors <bayerors@mertens.ag>
+Reply-To: bayerors@mertens.ag
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2016-07-28 12:15:26
+X-QUEUE-ID:1
+
+Hallo Bayer Umzüge,
+
+es liegt eine neue genehmigte Leistungsanforderung mit der ID 1128 zur Durchführung vor.
+
+Antragsteller:  Stefan Laschewski
+Ausführungszeit 03.08.2016
+SAP Nr.         4501420791	
+Ticket Nr.      197427
+
+Sie können den  Vorgang  unter folgendem Link  bearbeiten:
+https://bayer.mertens.ag/bayer/?s=aantrag&id=1128
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+.
+|secs:27|SERVER: 250 2.6.0 <c709be81-f64b-4869-884c-86d52b49f79d@TE2013.mertens.int> [InternalId=87398289506474, Hostname=Te2013.mertens.int] Queued mail for delivery
+|secs:27|CLIENT: QUIT
+|secs:27|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2016-07-28 12:15:26

@@ -1,0 +1,75 @@
+<h3 class="formTitle">Leistungskatalog</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#pkategorie,
+#pkategorie2,
+#ppreiseinheit,
+#pvodafone,
+#pmertens_henk,
+#preserve1,
+#preserve2 { display:none; }
+#pleistung_id,
+#pleistung,
+#pleistungseinheit,
+#pmengen_von,
+#pmengen_bis,
+#ppreis { color:#f00 }
+</style>
+<div class="input" id="InputBoxleistung_id">
+<div class="inputLbl"><label errclass="leistung_id" for="eingabe[leistung_id]" id="InputLblleistung_id">Leistung_id<span class="showPflicht" id="pleistung_id">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[leistung_id]" id="eingabe[leistung_id]" maxlength="10) unsigne" value="{eingabe[leistung_id]}"></div>
+</div>
+<div class="input" id="InputBoxleistung">
+<div class="inputLbl"><label errclass="leistung" for="eingabe[leistung]" id="InputLblleistung">Leistung<span class="showPflicht" id="pleistung">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[leistung]" id="eingabe[leistung]" maxlength="100" value="{eingabe[leistung]}"></div>
+</div>
+<div class="input" id="InputBoxleistungseinheit">
+<div class="inputLbl"><label errclass="leistungseinheit" for="eingabe[leistungseinheit]" id="InputLblleistungseinheit">Leistungseinheit<span class="showPflicht" id="pleistungseinheit">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[leistungseinheit]" id="eingabe[leistungseinheit]" maxlength="30" value="{eingabe[leistungseinheit]}"></div>
+</div>
+<div class="input" id="InputBoxmengen_von">
+<div class="inputLbl"><label errclass="mengen_von" for="eingabe[mengen_von]" id="InputLblmengen_von">Mengen_von<span class="showPflicht" id="pmengen_von">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[mengen_von]" id="eingabe[mengen_von]" maxlength="11" value="{eingabe[mengen_von]}"></div>
+</div>
+<div class="input" id="InputBoxmengen_bis">
+<div class="inputLbl"><label errclass="mengen_bis" for="eingabe[mengen_bis]" id="InputLblmengen_bis">Mengen_bis<span class="showPflicht" id="pmengen_bis">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[mengen_bis]" id="eingabe[mengen_bis]" maxlength="11" value="{eingabe[mengen_bis]}"></div>
+</div>
+<div class="input" id="InputBoxkategorie">
+<div class="inputLbl"><label errclass="kategorie" for="eingabe[kategorie]" id="InputLblkategorie">Kategorie<span class=isPflicht id="pkategorie">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[kategorie]" id="eingabe[kategorie]" maxlength="80" value="{eingabe[kategorie]}"></div>
+</div>
+<div class="input" id="InputBoxkategorie2">
+<div class="inputLbl"><label errclass="kategorie2" for="eingabe[kategorie2]" id="InputLblkategorie2">Kategorie2<span class=isPflicht id="pkategorie2">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[kategorie2]" id="eingabe[kategorie2]" maxlength="50" value="{eingabe[kategorie2]}"></div>
+</div>
+<div class="input" id="InputBoxpreis">
+<div class="inputLbl"><label errclass="preis" for="eingabe[preis]" id="InputLblpreis">Preis<span class="showPflicht" id="ppreis">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[preis]" id="eingabe[preis]" maxlength="" value="{eingabe[preis]}"></div>
+</div>
+<div class="input" id="InputBoxpreiseinheit">
+<div class="inputLbl"><label errclass="preiseinheit" for="eingabe[preiseinheit]" id="InputLblpreiseinheit">Preiseinheit<span class=isPflicht id="ppreiseinheit">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[preiseinheit]" id="eingabe[preiseinheit]" maxlength="10" value="{eingabe[preiseinheit]}"></div>
+</div>
+<div class="input" id="InputBoxdussmann">
+<div class="inputLbl"><label errclass="dussmann" for="eingabe[dussmann]" id="InputLbldussmann">Dussmann<span class=isPflicht id="pdussmann">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[dussmann]" id="eingabe[dussmann]" maxlength="50" value="{eingabe[dussmann]}"></div>
+</div>
+<div class="input" id="InputBoxmertens_henk">
+<div class="inputLbl"><label errclass="mertens_henk" for="eingabe[mertens_henk]" id="InputLblmertens_henk">Mertens_henk<span class=isPflicht id="pmertens_henk">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[mertens_henk]" id="eingabe[mertens_henk]" maxlength="50" value="{eingabe[mertens_henk]}"></div>
+</div>
+<div class="input" id="InputBoxreserve1">
+<div class="inputLbl"><label errclass="reserve1" for="eingabe[reserve1]" id="InputLblreserve1">Reserve1<span class=isPflicht id="preserve1">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[reserve1]" id="eingabe[reserve1]" maxlength="50" value="{eingabe[reserve1]}"></div>
+</div>
+<div class="input" id="InputBoxreserve2">
+<div class="inputLbl"><label errclass="reserve2" for="eingabe[reserve2]" id="InputLblreserve2">Reserve2<span class=isPflicht id="preserve2">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[reserve2]" id="eingabe[reserve2]" maxlength="50" value="{eingabe[reserve2]}"></div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="484" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Preview]" value="Vorschau"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><br>
+<input LINE="489" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen</form></div>

@@ -1,0 +1,61 @@
+<div id="SysInfoBox"></div>
+
+<link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
+<link rel="stylesheet" type="text/css" href="../css/umzugsformular.css">
+<!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
+<h1><span class="spanTitle">Nebenleistung {if $NL.id}#{$NL.id}{/if}</span></h1> 
+<p>
+<div id="Umzugsantrag" class="divInlay"> 
+<form action="?s={$s}" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
+
+<input type="hidden" name="NL[id]" value="{$NL.id}">
+<table>
+  <tr>
+    <td style="padding:0;"><label for="mitarbeiter" style="width:180px;">Auftraggeber:</label></td>
+    <td style="padding:0;width:200px;"><input type="text" value="{$NL.name|escape}" name="NL[name]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="mitarbeiter" style="width:180px;">Standort:</label></td>
+    <td style="padding:0;width:200px;"><input type="text" value="{$NL.standort|escape}" name="NL[standort]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="mitarbeiter" style="width:180px;">Kostenstelle:</label></td>
+    <td style="padding:0;width:200px;"><input type="text" value="{$NL.kostenstelle|escape}" name="NL[kostenstelle]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="termin" style="width:180px;">Datum:</label></td>
+    <td style="padding:0;"><input type="text" value="{$NL.datum|escape}" onfocus="showDtPicker(this)" name="NL[datum]" class="itxt itxt2col" title="DatumE-Mail"></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="termin" style="width:180px;">Uhrzeit:</label></td>
+    <td style="padding:0;"><input type="text" value="{$NL.uhrzeit|escape}" name="NL[uhrzeit]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="gebaeude" style="width:180px;">Erledigt:</label></td>
+    <td style="padding:0;"><input type="text" value="{$NL.erledigt|escape}" name="NL[erledigt]" class="itxt itxt2col"></td>
+  </tr>
+
+  <tr>
+    <td style="padding:0;"><label for="gebaeude" style="width:180px;">Zeit:</label></td>
+    <td style="padding:0;"><input type="text" value="{$NL.zeit|escape}" name="NL[zeit]" class="itxt itxt2col"></td>
+  </tr>
+	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+</table>
+<div id="BoxBemerkungen">
+<strong>Aufgabe:</strong><br>
+<textarea class="iarea bemerkungen" name="NL[aufgabe]">{$NL.aufgabe|escape}</textarea>
+</div>
+<input type="hidden" name="s" value="{$s}">
+<div style="margin-top:20px;width:100%;"><!-- 
+ --><input type="submit" style="padding:0 0 9px 0;background:url(images/BtnBlue.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Speichern"><!-- 
+ --><input type="reset" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Zurücksetzen"> 
+<br>
+<br>
+</div>
+
+</form>
+</div>
+<div id="LoadingBar"></div>
+</p>
+</div> 

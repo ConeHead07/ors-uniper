@@ -1,0 +1,32 @@
+Angebotsstatus 
+[Bearbeitungsstatus] => 1
+[AbschlussStatus] => 0
+
+Bestätigt: 
+[Bearbeitungsstatus] => 2
+[AbschlussStatus] => 0
+
+Geliefert: 
+[Bearbeitungsstatus] => 4
+[AbschlussStatus] => 0
+
+Teilberechnet: 
+[Bearbeitungsstatus] => 5
+[AbschlussStatus] => 0
+
+Erledigt: 
+[Bearbeitungsstatus] => 9
+[AbschlussStatus] => 1
+
+BESCHREIBUNG DER LOGIK FÜR DIE STATUSAUSWERTUNG
+Für die Webanwendung werden die Statuszahlen übersetzt in die mögl. Werte:
+Angebot, Beauftrag, Abgeschlossen, Verloren
+
+Wenn Bearbeitungsstatus == 1 => sStatus = "Angebot"
+
+Wenn Bearbeitungsstatus == 9
+    Prüfe AbschlussStatus für weitere Auswertung
+    Wenn AbschlussStatus == 1 sStatus = "Abgeschlossen"
+    Andernfall                sStatus = "Verloren"
+
+Wenn Bearb.Status weder 1 noch 9 => sStatus = "Beauftragt"

@@ -1,0 +1,42 @@
+<table class="tblList" border=1 cellpadding=1 cellspacing=0 style="border-collapse:collapse;border-color:#000;">
+  <thead style="font-weight:bold;">
+  <tr>
+    <td>Nr</td>
+    <td>Geb&auml;ude neu</td>
+    <td>Raum neu &nbsp; &nbsp;</td>
+    <td>Name, Vorname</td>
+    
+    <td>Abteilung</td>
+    <td>Geb&auml;ude alt</td>
+    <td>Raum alt &nbsp; &nbsp;</td>
+    <td>Tel.Nr</td>
+    
+    <td>Anforderungsart</td>
+    <td>Fremdfirma</td>
+    <td>PC/Laptop</td>
+    <td>Feste IP</td>
+  </tr>
+  </thead>
+  <tbody>
+{foreach name=MAList item=MA from=$Mitarbeiterliste}
+  <tr>
+	<td>{$smarty.foreach.MAList.iteration}</td>
+	<td>{$MA.zgebaeude|escape}</td>
+    <td nowrap="true">{$MA.zraumnr|escape} {$MA.zapnr|escape}</td>
+    {if $MA.maid}
+	<td>{$MA.name|escape}, {$MA.vorname|escape}</td>
+    {else}
+	<td>{$MA.name|escape}, {$MA.vorname|escape}</td>
+	{/if}
+	<td>{$MA.zabteilung|escape}</td>
+	<td>{$MA.gebaeude|escape}</td>
+    <td nowrap="true">{$MA.raumnr|escape} {$MA.apnr|escape}</td>
+    <td>{$MA.fon|escape}</td>    
+    <td>{$MA.umzugsart|escape}</td>    
+    <td>{$MA.extern_firma|escape}</td>  
+    <td>{$MA.pcnr|escape}</td>  
+    <td>{$MA.festeip|escape}</td>    
+</tr>
+{/foreach}
+</tbody>
+</table>

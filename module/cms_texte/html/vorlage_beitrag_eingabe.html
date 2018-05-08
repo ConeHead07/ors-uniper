@@ -1,0 +1,56 @@
+<body>
+<form name="cmsform" action="index.php?area=admin&task=cms_ext&srv={srv}" method="post">
+<input type="submit" name="vorschau" value="Weiter">
+<input type="submit" name="reset" value="Zur&uuml;cksetzen"><br>&nbsp;
+		
+<!-- %webansicht% -->
+<table width="440" border=0 cellpadding=3 cellspacing=0>
+
+<tr>
+	<td><b>Beitrag ist &ouml;ffentlich:</b> %eingabe[webfreigabe]%<br>&nbsp;<br></td>
+</tr>
+
+<tr>
+	<td><b>Trailer anzeigen</b>
+	<input type="radio" name="eingabe[antrailern]" value="Ja" chck_antrailern="Ja">Ja
+	<input type="radio" name="eingabe[antrailern]" value="Nein" chck_antrailern="Nein">Nein
+	</td>
+</tr>
+<tr>
+	<td><b>Trailer: Titel</b><br>
+	<textarea type="text" name="eingabe[listentitel]" cols="30" rows="2" style="height:40; width:550px; border: thin groove;">%eingabe[listentitel]%</textarea>
+	</td>
+</tr>
+<tr>
+	<td><b>Trailer: Kurzer Text</b><br>
+	<textarea type="text" name="eingabe[text1]" cols="30" rows="10" style="height:200; width:550px; border: thin groove;">%eingabe[text1]%</textarea><!-- txtedit_toolbar?groupid=edit1&formname=cmsform&inputname=eingabe[text1]&width=550&height=440&class=content -->
+	</td>
+</tr>
+<tr>
+	<td><hr></td>
+</tr>
+<tr>
+	<td><b>Volltext: Titel</b><br>
+	<textarea type="text" name="eingabe[titel]" cols="30" rows="2" style="height:40; width:550px; border: thin groove;">%eingabe[titel]%</textarea>
+	</td>
+</tr>
+
+<tr>
+	<td><b>Volltext</b><br>
+	<textarea type="text" name="eingabe[text2]" cols="30" rows="10" style="height:200; width:550px; border: thin groove;">%eingabe[text2]%</textarea><!-- txtedit_toolbar?groupid=edit2&formname=cmsform&inputname=eingabe[text2]&width=550&height=440&class=content -->
+	</td>
+</tr>
+
+	<tr>
+		<td><b>Beitrag ist &ouml;ffentlich:</b> %eingabe[webfreigabe]%<br></td>
+	</tr>
+</table>
+<input type="hidden" name="eingabe[webfreigabe]" value="%eingabe[webfreigabe]%">
+<input type="hidden" name="eingabe[id]" value="%eingabe[id]%">
+<input type="hidden" name="id" value="%id%">
+<input type="submit" name="vorschau" value="Weiter">
+<input type="submit" name="reset" value="Zur&uuml;cksetzen">
+</form>
+<textarea id="zwischenspeicher" style="display:none;"></textarea>
+<IFRAME scrolling="no" id="htmlzwischenspeicher" width="1px" height="1px" ></IFRAME>
+</body>

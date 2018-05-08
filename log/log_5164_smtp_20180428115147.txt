@@ -1,0 +1,102 @@
+Array
+(
+    [aTo] => Array
+        (
+            [0] => Array
+                (
+                    [email] => <bre-dls-mut@bayer.com>
+                    [anrede] => 
+                )
+
+        )
+
+    [sSubject] => Umzug ID 5164 - Durchführung
+    [sHtmlBody] => 
+    [sTxtBody] => Sehr geehrter Anwender,
+sehr geehrte Anwenderin,
+
+Ihre Leistungsanforderung mit der ID 5164 wurde durchgeführt und wird geschlossen.
+
+Antragsteller:  Stefan Laschewski
+Ausführungszeit 05.04.2018
+SAP Nr.         4501774281	
+Ticket Nr.      321853
+
+Sie können den  Vorgang  unter folgendem Link  einsehen:
+https://bayer.mertens.ag/bayer/?s=pantrag&id=5164
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+    [aAttachments] => Array
+        (
+        )
+
+    [aHeaders] => Array
+        (
+            [Reply-To] => bayerors@mertens.ag
+        )
+
+)
+Array
+(
+    [_to] => Array
+        (
+            [email] => bre-dls-mut@bayer.com
+            [anrede] => 
+        )
+
+)
+
+++ Starting Swift_SmtpTransport
+<< 220 secure.mertens.ag ESMTP ready.
+
+>> EHLO bayer.mertens.ag
+
+<< 250-secure.mertens.ag Hello bayer.mertens.ag [80.154.97.118]
+250-SIZE 52428800
+250-8BITMIME
+250-PIPELINING
+250-STARTTLS
+250 HELP
+
+>> STARTTLS
+
+<< 220 TLS go ahead
+
+>> EHLO bayer.mertens.ag
+
+<< 250-secure.mertens.ag Hello bayer.mertens.ag [80.154.97.118]
+250-SIZE 52428800
+250-8BITMIME
+250-PIPELINING
+250 HELP
+
+++ Swift_SmtpTransport started
+>> MAIL FROM: <bayerors@mertens.ag>
+
+<< 250 OK
+
+>> RCPT TO: <bre-dls-mut@bayer.com>
+
+<< 250 Accepted
+
+>> DATA
+
+<< 354 Enter message, ending with "." on a line by itself
+
+>> 
+.
+
+<< 250 OK id=1fCMWB-0002SV-2m
+
+Result: 1
+Error : 
+TRACE : #0 /var/www/html/bayer/htdocs/bayer/include/fbmail.php(35): SmtpMailer->sendMultiMail(Array, 'Umzug ID 5164 -...', NULL, 'Sehr geehrter A...', Array, Array)
+#1 /var/www/html/bayer/htdocs/bayer/sites/umzugsantrag_sendmail.php(345): fbmail('bre-dls-mut@bay...', 'Umzug ID 5164 -...', 'Sehr geehrter A...', 'Reply-To:bayero...')
+#2 /var/www/html/bayer/htdocs/bayer/sites/umzugsantrag_sendmail.php(523): send_status_mail(Array, 'Betreff=Umzug I...', Array)
+#3 /var/www/html/bayer/htdocs/bayer/sites/umzugsantrag_sendmail.php(543): umzugsantrag_mailinform_dussmann('5164', 'abgeschlossen', 'Ja')
+#4 /var/www/html/bayer/htdocs/bayer/sites/umzugsantrag_status.php(179): umzugsantrag_mailinform('5164', 'abgeschlossen', 'Ja')
+#5 /var/www/html/bayer/htdocs/bayer/umzugsantrag.php(136): umzugsantrag_status('5164', 'abgeschlossen', 'Ja')
+#6 {main}

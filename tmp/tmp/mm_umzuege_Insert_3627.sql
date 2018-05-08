@@ -1,0 +1,63 @@
+Insert `mt_move_bayer`.`mm_umzuege` SET
+`token` = "fd416cb64d",
+`anrede` = NULL,
+`name` = "Laschewski",
+`vorname` = "Stefan",
+`email` = "s.laschewski@mertens.ag",
+`fon` = "0177-9699495",
+`ort` = "Leverkusen",
+`gebaeude` = "1",
+`raumnr` = NULL,
+`etage` = "1. OG",
+`kostenstelle` = "4501643319",
+`planonnr` = "266943",
+`umzug` = "Nein",
+`umzugstermin` = NULL,
+`umzugszeit` = NULL,
+`terminwunsch` = "2017-08-29",
+`ansprechpartner` = "Stefan Laschewski",
+`ansprechpartner_email` = "s.laschewski@mertens.ag",
+`ansprechpartner_fon` = "0177-9699495",
+`geraete_csv` = NULL,
+`bemerkungen` = "Bemerkung von slaschewski am 04.08.2017 um 07:25
+AA 266943 Ansprechpartner Frau Micic 02133-51 5958 Termin 29.08.2017
+Aus LEV Geb. K017 QSS nach DOR Geb. C028 (Außerhalb Werk,
+Schwarzer Weg 6) Raum 001 1 Schreibtisch 1 Rollcontainer Anthrazit
+1-2-3-3 1 Bürodrehstuhl Aus LEV Geb. K017 BRE Lager Keller 007
+nachDOR Geb. C028 Raum 001 1 Multifunktionssichtblende 2 Halter zu
+Multifunktionssichtblende 2 TFT Halter 1 Laptophalter mit Kabeldurchlass 1 Sitzkissen Anthrazit (muss einzeln da liegen) dort bitte gegen ein grünes
+Kissen austauschen Innerhalb DOR Geb. C028 Raum 001 Den neuen
+Schreibtisch als zusätzlichen AP aufstellen 3 Schreibtische so verstellen,
+dass letztlich 2 zweier Blöcke stehen 5 Schränke innerhalb des Raumes
+verstellen (zur Wand an der Eingangstüre) Von DOR Geb. C028 Raum 001
+nach LEV Geb. K009 BRE Keller 007 1 Sitzkissen grün",
+`antragsstatus` = "bearbeitung",
+`umzugsstatus` = "temp",
+`dienstleister_id` = NULL,
+`dienstleister_name` = NULL,
+`dienstleister_bemerkung` = NULL,
+`geprueft` = "Init",
+`angeboten_am` = NULL,
+`angeboten_von` = NULL,
+`geprueft_am` = NULL,
+`geprueft_von` = NULL,
+`genehmigt_br` = "Init",
+`genehmigt_br_am` = NULL,
+`genehmigt_br_von` = NULL,
+`bestaetigt` = "Init",
+`bestaetigt_am` = NULL,
+`bestaetigt_von` = NULL,
+`abgeschlossen` = "Init",
+`abgeschlossen_am` = NULL,
+`abgeschlossen_von` = NULL,
+`genehmigt` = "Init",
+`bearbeiter_stelle` = NULL,
+`bearbeiter_name` = NULL,
+`bearbeiter_mail` = NULL,
+`bearbeiter_fon` = NULL,
+`bearbeiter_ort` = NULL,
+`bearbeiter_bemerkung` = NULL,
+`antragsteller_uid` = "2980" ,
+`antragsdatum` = NOW() ,
+`created` = NOW() ,
+ `b_modifiedby` = "2980" 

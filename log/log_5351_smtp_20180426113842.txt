@@ -1,0 +1,101 @@
+Array
+(
+    [aTo] => Array
+        (
+            [0] => Array
+                (
+                    [email] => <bayerumzuege@mertens.ag>
+                    [anrede] => 
+                )
+
+        )
+
+    [sSubject] => Umzug ID 5351 - Genehmigt
+    [sHtmlBody] => 
+    [sTxtBody] => Hallo Bayer Umzüge,
+
+es liegt eine neue genehmigte Leistungsanforderung mit der ID 5351 zur Durchführung vor.
+
+Antragsteller:  Stefan Laschewski
+Ausführungszeit 07.05.2018
+SAP Nr.         4501792723	
+Ticket Nr.      328246
+
+Sie können den  Vorgang  unter folgendem Link  bearbeiten:
+https://bayer.mertens.ag/bayer/?s=aantrag&id=5351
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+    [aAttachments] => Array
+        (
+        )
+
+    [aHeaders] => Array
+        (
+            [Reply-To] => bayerors@mertens.ag
+        )
+
+)
+Array
+(
+    [_to] => Array
+        (
+            [email] => bayerumzuege@mertens.ag
+            [anrede] => 
+        )
+
+)
+
+++ Starting Swift_SmtpTransport
+<< 220 secure.mertens.ag ESMTP ready.
+
+>> EHLO bayer.mertens.ag
+
+<< 250-secure.mertens.ag Hello bayer.mertens.ag [80.154.97.118]
+250-SIZE 52428800
+250-8BITMIME
+250-PIPELINING
+250-STARTTLS
+250 HELP
+
+>> STARTTLS
+
+<< 220 TLS go ahead
+
+>> EHLO bayer.mertens.ag
+
+<< 250-secure.mertens.ag Hello bayer.mertens.ag [80.154.97.118]
+250-SIZE 52428800
+250-8BITMIME
+250-PIPELINING
+250 HELP
+
+++ Swift_SmtpTransport started
+>> MAIL FROM: <bayerors@mertens.ag>
+
+<< 250 OK
+
+>> RCPT TO: <bayerumzuege@mertens.ag>
+
+<< 250 Accepted
+
+>> DATA
+
+<< 354 Enter message, ending with "." on a line by itself
+
+>> 
+.
+
+<< 250 OK id=1fBdMR-0002uG-1I
+
+Result: 1
+Error : 
+TRACE : #0 /var/www/html/bayer/htdocs/bayer/include/fbmail.php(35): SmtpMailer->sendMultiMail(Array, 'Umzug ID 5351 -...', NULL, 'Hallo Bayer Umz...', Array, Array)
+#1 /var/www/html/bayer/htdocs/bayer/sites/umzugsantrag_sendmail.php(345): fbmail('bayerumzuege@me...', 'Umzug ID 5351 -...', 'Hallo Bayer Umz...', 'Reply-To:bayero...')
+#2 /var/www/html/bayer/htdocs/bayer/sites/umzugsantrag_sendmail.php(478): send_status_mail(Array, 'Betreff=Umzug I...', Array)
+#3 /var/www/html/bayer/htdocs/bayer/sites/umzugsantrag_sendmail.php(543): umzugsantrag_mailinform_dussmann(5351, 'genehmigt', '')
+#4 /var/www/html/bayer/htdocs/bayer/sites/umzugsantrag_senden.php(200): umzugsantrag_mailinform(5351, 'genehmigt', '')
+#5 /var/www/html/bayer/htdocs/bayer/umzugsantrag.php(84): umzugsantrag_senden()
+#6 {main}

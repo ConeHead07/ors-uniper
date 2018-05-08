@@ -1,0 +1,143 @@
+/* ------------------------------------------------------------------------------------------- */
+/* cms.global.print.css - VERSION 1.0.1
+/* ------------------------------------------------------------------------------------------- */
+/* PUBLISHING DATE Dienstag, 2. März 2010 13:51 */
+/* ------------------------------------------------------------------------------------------- */
+  * {
+    border: none;
+    font-family: Arial, Verdana, Geneva, Helvetica, sans-serif;
+  }
+  
+  body {
+    font-size: 69%;
+    line-height: 140%;
+  }
+  
+  
+div.divSkyScraper,
+div.divContentBaseOptional,
+div.divSticker,
+div.divBreadcrumb,
+div.divBannerHeader,
+ul.ulNavigationMeta,
+form.formGlobalSearch,
+ul.ulNavigationMain li,
+ul.ulNavigationTop,
+div.divFooter,
+div.divLoginBox,
+span.spanMoreLink,
+ul.ulLinkList,
+ul.ulLogin,
+div.classNavigation,
+div.divTabbedNavigation ul.tabs-nav {
+  display: none;
+}
+ul.ulNavigationMain li.liActive {
+  display: inline;
+}
+table,
+tr,
+td,
+th {
+  border: 1px solid #000000;
+}
+li.liActive a {
+  font-size: 11px;
+  color: #333333;
+  text-decoration: none;
+}
+img {
+  border: none;
+}
+div.divMatrix,
+div.divContent5Col,
+div.divContent4Col,
+.width5Col,
+.width4Col {
+  width: auto;
+}
+object,
+embed {
+  display: none;
+}
+.width1Col,
+.width2Col,
+.width3Col,
+.width4Col,
+.width5Col {
+  background-image: none;
+}
+.height168,
+.height168 .divInlay,
+.height174,
+.height174 .divInlay,
+.height282,
+.height282 .divInlay {
+  height: auto;
+}
+div.divInlay {
+  background: none;
+}
+div.divModuleBasic h1 {
+  background: none;
+  color: #000000;
+  font-size: 18px;
+  margin-top: 30px;
+}
+div.divSkyScraper,
+div.divBannerHeader,
+ul.ulNavigationMeta,
+form.formGlobalSearch,
+ul.ulNavigationMain,
+ul.ulNavigationTop {
+  display: none;
+}
+div.divMatrix,
+div.divContent5Col,
+div.divContent4Col,
+.width5Col,
+.width4Col {
+  width: 600px;
+}
+object,
+embed {
+  display: none;
+}
+.width1Col,
+.width2Col,
+.width3Col,
+.width4Col,
+.width5Col {
+  background-image: none;
+}
+.height168,
+.height168 .divInlay,
+.height174,
+.height174 .divInlay,
+.height282,
+.height282 .divInlay {
+  height: auto;
+}
+div.divInlay {
+  background: none;
+}
+
+.divTabbedTariff .tabs-nav {
+      display: none;
+    }
+
+.priceTagDigits {
+    font-size: 2.18182em;
+    font-weight:bold;
+    color:#333333;
+    }
+
+.priceTagDigits a {
+    text-decoration:none;
+    color:#333333;
+    }
+ 
+/* FLASH FALLBACK PRINTABLE (27.05.2009 h.g.) */
+#printFlashFallback {
+    display:block;
+    }

@@ -1,0 +1,61 @@
+Insert `mt_move_bayer`.`mm_umzuege` SET
+`token` = "1af773d64f",
+`anrede` = NULL,
+`name` = "Laschewski",
+`vorname` = "Stefan",
+`email` = "s.laschewski@mertens.ag",
+`fon` = "0177-9699495",
+`ort` = "Leverkusen",
+`gebaeude` = "1",
+`raumnr` = NULL,
+`etage` = "1. OG",
+`kostenstelle` = "4501701788",
+`planonnr` = "287647",
+`umzug` = "Nein",
+`umzugstermin` = NULL,
+`umzugszeit` = NULL,
+`terminwunsch` = "2017-11-29",
+`ansprechpartner` = "Stefan Laschewski",
+`ansprechpartner_email` = "s.laschewski@mertens.ag",
+`ansprechpartner_fon` = "0177-9699495",
+`geraete_csv` = NULL,
+`bemerkungen` = "Bemerkung von slaschewski am 21.11.2017 um 07:13
+AA 287647 ASP.: Hr. Bebber Tel. 62030 Termin : 29.11.2017 im Laufe des
+Tages Aus Geb. C102, div. Räume und Etagen den Inhalt ausMobiliar nach
+Hausmüll- /Papiercontainer, sowie E-Schrott nach Geb. C305 wie folgt :
+(E-Schrott bitte in 10 U-Kartons füllen und entsorgen.) EG: Räme 4-6 Raum
+11 Räume 17 %u2013 19 Räume 21 %u2013 23 Raum 31 Raum 44 1.OG: Raum 1048
+Raum 1055 Raum 1056 (nur den Inhalt der Schränke) Räume 1076 %u2013 1081 (und aus Flur-Schränken zwischen den Treppenhäusern auf der Ostseite)
+2.OG: Raum 239 3.OG: Räume 392a %u2013 392c 4.OG: Raum 490 Raum 492
+Achtung, kein Druckerpapier entsorgen ! Verbleibt in den dafür
+vorgesehenen Theken.",
+`antragsstatus` = "bearbeitung",
+`umzugsstatus` = "temp",
+`dienstleister_id` = NULL,
+`dienstleister_name` = NULL,
+`dienstleister_bemerkung` = NULL,
+`geprueft` = "Init",
+`angeboten_am` = NULL,
+`angeboten_von` = NULL,
+`geprueft_am` = NULL,
+`geprueft_von` = NULL,
+`genehmigt_br` = "Init",
+`genehmigt_br_am` = NULL,
+`genehmigt_br_von` = NULL,
+`bestaetigt` = "Init",
+`bestaetigt_am` = NULL,
+`bestaetigt_von` = NULL,
+`abgeschlossen` = "Init",
+`abgeschlossen_am` = NULL,
+`abgeschlossen_von` = NULL,
+`genehmigt` = "Init",
+`bearbeiter_stelle` = NULL,
+`bearbeiter_name` = NULL,
+`bearbeiter_mail` = NULL,
+`bearbeiter_fon` = NULL,
+`bearbeiter_ort` = NULL,
+`bearbeiter_bemerkung` = NULL,
+`antragsteller_uid` = "2980" ,
+`antragsdatum` = NOW() ,
+`created` = NOW() ,
+ `b_modifiedby` = "2980" 

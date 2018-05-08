@@ -1,0 +1,50 @@
+{literal}
+<link href="{WebRoot}css/suchformular.css" rel="STYLESHEET" type="text/css" />
+<link href="{WebRoot}css/umzugsformular.css" rel="stylesheet" type="text/css" />
+<link href="{WebRoot}css/SelBox.easy.css" rel="stylesheet" type="text/css" />
+<script src="{WebRoot}js/suchformular.easy.js" type="text/javascript"></script>
+<script src="{WebRoot}js/SelBox.easy.js" type="text/javascript"></script>
+<script src="{WebRoot}js/ObjectHandler.js" type="text/javascript"></script>
+{/literal}
+<form name="frmSuche" class="frmSuche">
+<table>
+<tr>
+	<td><label>Ort</label></td>
+	<td><input class="qField" name="q[ort]" value="{q[ort]}" onclick="get_fieldindex_ort(this)"></td>
+</tr>
+<tr>
+	<td><label>Gebäude</label></td>
+	<td><input class="qField" name="q[gebaeude]" value="{q[gebaeude]}" onclick="get_fieldindex_gebaeude(this)"></td>
+</tr>
+<tr>
+	<td><label>Etage</label></td>
+	<td><input class="qField" name="q[etage]" value="{q[etage]}" onclick="get_fieldindex_etage(this)"></td>
+</tr>
+<tr>
+	<td><label>Raumnr</label></td>
+	<td><input class="qField" name="q[raumnr]" value="{q[raumnr]}" onclick="get_fieldindex_raumnr(this)"></td>
+</tr>
+<tr>
+	<td><label>Raumkategorie</label></td>
+	<td><input class="qField" name="q[raum_kategorie]" value="{q[raum_kategorie]}" onclick="get_fieldindex_raumkategorie(this)"></td>
+</tr>
+<tr>
+	<td><label>Raumtyp</label></td>
+	<td><input class="qField" name="q[raum_typ]" value="{q[raum_typ]}" onclick="get_fieldindex_raumtyp(this)"></td>
+</tr>
+<tr>
+	<td><label>0-Belegung</label></td>
+	<td><input type="checkbox" name="q[leereRaeume]" check_leereRaeume="1">Zeige nur leere R&auml;ume</td>
+</tr>
+</table>
+<br>
+<input type="submit" class="qSubmit" value="Suche starten">
+<input type="button" class="qSubmit" onclick="qFelderLeeren()" value="Felder leeren">
+<a href="module/auswertung/raumabteilung_zuordnung.php?ShowDebug=1" target="WinStat" style="margin-left:50px;">Raumstatistik aktualisieren</a>
+<input type="hidden" name="s" value="{s}">
+<!-- {hiddenFields} -->
+</form>
+
+
+</body>
+</html>

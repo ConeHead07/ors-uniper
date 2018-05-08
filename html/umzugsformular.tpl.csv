@@ -1,0 +1,35 @@
+{include file="umzugsformular_leistungsauswahl.tpl.csv"} 
+ 
+ 
+Leistungsanforderung #{$AS.aid}; 
+ID;{$AS.aid} 
+Umzugstermin;{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"} 
+Umzugszeit;{$AS.umzugszeit|escape} 
+{if $AS.angeboten_am}Genehmigt{else}Best&auml;tigt{/if};{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if} 
+Abgeschlossen;{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if} 
+Status;{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if} 
+ 
+ 
+Leistungsantragsteller 
+Vor- und Nachname;{$AS.vorname|escape} {$AS.name|escape} 
+E-Mail;{$AS.email|escape} 
+Fon;{$AS.fon|escape} 
+Standort;{$AS.ort|escape} 
+Wirtschaftseinheit;{$AS.gebaeude_text|escape} 
+PSP-Element;{$AS.kostenstelle|escape} 
+Planon-Nr.;{$AS.planonnr|escape} 
+Terminwunsch;{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"} 
+
+
+Ansprechpartner vor Ort 
+Vor- und Nachname;{$AS.ansprechpartner|escape} 
+E-Mail;"{$AS.ansprechpartner_email|escape} 
+Fon:{$AS.ansprechpartner_fon|escape} 
+ 
+ 
+Dateianhänge 
+{include file="umzugsformular_attachments.tpl.csv"} 
+ 
+ 
+Bemerkungen 
+{$AS.bemerkungen} 

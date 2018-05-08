@@ -1,0 +1,40 @@
+<h3 class="formTitle">Lm</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#ppreismatrix_id,
+#pleistung_id,
+#ppreis,
+#ppreiseinheit,
+#pmengen_von,
+#pmengen_bis { color:#f00 }
+</style>
+<div class="input" id="InputBoxpreismatrix_id">
+<div class="inputLbl"><label errclass="preismatrix_id" for="eingabe[preismatrix_id]" id="InputLblpreismatrix_id">Preismatrix_id<span class="showPflicht" id="ppreismatrix_id">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[preismatrix_id]" id="eingabe[preismatrix_id]" maxlength="10) unsigne" value="{eingabe[preismatrix_id]}"></div>
+</div>
+<div class="input" id="InputBoxleistung_id">
+<div class="inputLbl"><label errclass="leistung_id" for="eingabe[leistung_id]" id="InputLblleistung_id">Leistung_id<span class="showPflicht" id="pleistung_id">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[leistung_id]" id="eingabe[leistung_id]" maxlength="11" value="{eingabe[leistung_id]}"></div>
+</div>
+<div class="input" id="InputBoxpreis">
+<div class="inputLbl"><label errclass="preis" for="eingabe[preis]" id="InputLblpreis">Preis<span class="showPflicht" id="ppreis">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[preis]" id="eingabe[preis]" maxlength="11" value="{eingabe[preis]}"></div>
+</div>
+<div class="input" id="InputBoxpreiseinheit">
+<div class="inputLbl"><label errclass="preiseinheit" for="eingabe[preiseinheit]" id="InputLblpreiseinheit">Preiseinheit<span class="showPflicht" id="ppreiseinheit">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[preiseinheit]" id="eingabe[preiseinheit]" maxlength="20" value="{eingabe[preiseinheit]}"></div>
+</div>
+<div class="input" id="InputBoxmengen_von">
+<div class="inputLbl"><label errclass="mengen_von" for="eingabe[mengen_von]" id="InputLblmengen_von">Mengen_von<span class="showPflicht" id="pmengen_von">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[mengen_von]" id="eingabe[mengen_von]" maxlength="11" value="{eingabe[mengen_von]}"></div>
+</div>
+<div class="input" id="InputBoxmengen_bis">
+<div class="inputLbl"><label errclass="mengen_bis" for="eingabe[mengen_bis]" id="InputLblmengen_bis">Mengen_bis<span class="showPflicht" id="pmengen_bis">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[mengen_bis]" id="eingabe[mengen_bis]" maxlength="11" value="{eingabe[mengen_bis]}"></div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="484" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Preview]" value="Vorschau"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><br>
+<input LINE="489" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen</form></div>

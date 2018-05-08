@@ -1,0 +1,30 @@
+<h3 class="formTitle">Stamm_standorte</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#pstandorte_id,
+#port,
+#portsgruppe,
+#pstandortverantwortung { color:#f00 }
+</style>
+<div class="input" id="InputBoxstandorte_id">
+<div class="inputLbl"><label errclass="standorte_id" for="eingabe[standorte_id]" id="InputLblstandorte_id">Standorte_id</label><span class="showPflicht" id="pstandorte_id">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[standorte_id]" id="eingabe[standorte_id]" maxlength="5" value="{eingabe[standorte_id]}"></div>
+</div>
+<div class="input" id="InputBoxort">
+<div class="inputLbl"><label errclass="ort" for="eingabe[ort]" id="InputLblort">Ort</label><span class="showPflicht" id="port">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[ort]" id="eingabe[ort]" maxlength="50" value="{eingabe[ort]}"></div>
+</div>
+<div class="input" id="InputBoxortsgruppe">
+<div class="inputLbl"><label errclass="ortsgruppe" for="eingabe[ortsgruppe]" id="InputLblortsgruppe">Ortsgruppe</label><span class="showPflicht" id="portsgruppe">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[ortsgruppe]" id="eingabe[ortsgruppe]" maxlength="50" value="{eingabe[ortsgruppe]}"></div>
+</div>
+<div class="input" id="InputBoxstandortverantwortung">
+<div class="inputLbl"><label errclass="standortverantwortung" for="eingabe[standortverantwortung]" id="InputLblstandortverantwortung">Standortverantwortung</label><span class="showPflicht" id="pstandortverantwortung">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[standortverantwortung]" id="eingabe[standortverantwortung]" maxlength="50" value="{eingabe[standortverantwortung]}"></div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="483" type="hidden" name="id" value="{id}">
+<input LINE="484" type="submit" class="ibtn isubmit" name="editCmd[Preview]" value="Vorschau"><input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><br>
+<input LINE="488" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen</form></div>

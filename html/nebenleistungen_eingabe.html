@@ -1,0 +1,74 @@
+<h3 class="formTitle">Nebenleistungen</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#pstandort,
+#pkostenstelle,
+#pcreated,
+#pmodified,
+#pcreateduid { display:none; }
+#pid,
+#pname,
+#pdatum,
+#puhrzeit,
+#perledigt,
+#pzeit,
+#paufgabe { color:#f00 }
+</style>
+<div class="input" id="InputBoxid">
+<div class="inputLbl"><label errclass="id" for="eingabe[id]" id="InputLblid">Id<span class="showPflicht" id="pid">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[id]" id="eingabe[id]" maxlength="11" value="{eingabe[id]}"></div>
+</div>
+<div class="input" id="InputBoxstandort">
+<div class="inputLbl"><label errclass="standort" for="eingabe[standort]" id="InputLblstandort">Standort<span class=isPflicht id="pstandort">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[standort]" id="eingabe[standort]" maxlength="50" value="{eingabe[standort]}"></div>
+</div>
+<div class="input" id="InputBoxname">
+<div class="inputLbl"><label errclass="name" for="eingabe[name]" id="InputLblname">Name<span class="showPflicht" id="pname">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[name]" id="eingabe[name]" maxlength="80" value="{eingabe[name]}"></div>
+</div>
+<div class="input" id="InputBoxkostenstelle">
+<div class="inputLbl"><label errclass="kostenstelle" for="eingabe[kostenstelle]" id="InputLblkostenstelle">Kostenstelle<span class=isPflicht id="pkostenstelle">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[kostenstelle]" id="eingabe[kostenstelle]" maxlength="80" value="{eingabe[kostenstelle]}"></div>
+</div>
+<div class="input" id="InputBoxdatum">
+<div class="inputLbl"><label errclass="datum" for="eingabe[datum]" id="InputLbldatum">Datum<span class="showPflicht" id="pdatum">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[datum]" id="eingabe[datum]" maxlength="" value="{eingabe[datum]}"></div>
+</div>
+<div class="input" id="InputBoxuhrzeit">
+<div class="inputLbl"><label errclass="uhrzeit" for="eingabe[uhrzeit]" id="InputLbluhrzeit">Uhrzeit<span class="showPflicht" id="puhrzeit">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[uhrzeit]" id="eingabe[uhrzeit]" maxlength="" value="{eingabe[uhrzeit]}"></div>
+</div>
+<div class="input" id="InputBoxerledigt">
+<div class="inputLbl"><label errclass="erledigt" for="eingabe[erledigt]" id="InputLblerledigt">Erledigt<span class="showPflicht" id="perledigt">*</span></label></div>
+<div class="inputFrm"><input LINE="392"  class="chckbox" type="radio" name="eingabe[erledigt]" id="eingabe[erledigt]0" value="Ja" check_erledigt="Ja">Ja <input LINE="392"  class="chckbox" type="radio" name="eingabe[erledigt]" id="eingabe[erledigt]1" value="Nein" check_erledigt="Nein">Nein </div>
+</div>
+<div class="input" id="InputBoxzeit">
+<div class="inputLbl"><label errclass="zeit" for="eingabe[zeit]" id="InputLblzeit">Zeit<span class="showPflicht" id="pzeit">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[zeit]" id="eingabe[zeit]" maxlength="30" value="{eingabe[zeit]}"></div>
+</div>
+<div class="input" id="InputBoxaufgabe">
+<div class="inputLbl"><label errclass="aufgabe" for="eingabe[aufgabe]" id="InputLblaufgabe">Aufgabe<span class="showPflicht" id="paufgabe">*</span></label></div>
+<div class="inputFrm iBoxTxtArea"><textarea  class="itxarea" name="eingabe[aufgabe]" id="eingabe[aufgabe]">{eingabe[aufgabe]}</textarea>
+</div>
+</div>
+<div class="input" id="InputBoxcreated">
+<div class="inputLbl"><label errclass="created" for="eingabe[created]" id="InputLblcreated">Created<span class=isPflicht id="pcreated">*</span></label></div>
+<div class="inputFrm"><div class="sysfield">{eingabe[created]}</div>
+</div>
+</div>
+<div class="input" id="InputBoxmodified">
+<div class="inputLbl"><label errclass="modified" for="eingabe[modified]" id="InputLblmodified">Modified<span class=isPflicht id="pmodified">*</span></label></div>
+<div class="inputFrm"><div class="sysfield">{eingabe[modified]}</div>
+</div>
+</div>
+<div class="input" id="InputBoxcreateduid">
+<div class="inputLbl"><label errclass="createduid" for="eingabe[createduid]" id="InputLblcreateduid">Createduid<span class=isPflicht id="pcreateduid">*</span></label></div>
+<div class="inputFrm"><div class="sysfield">{eingabe[createduid]}</div>
+</div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="484" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Preview]" value="Vorschau"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><br>
+<input LINE="489" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen</form></div>

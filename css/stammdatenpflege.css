@@ -1,0 +1,51 @@
+	/*, body *, html * { font-family:Arial,Helvetica,sans-serif; font-size:12px; }*/
+	.jLink { cursor:pointer; color:#00f; }
+	.rowHide { display:none; }
+	.tblList td input, .tblList td textarea { border:0; }
+	.tblList .rowInfoLine td { border-bottom:2px solid #b4b4b4; }
+	
+	
+	.h1Form { margin:0; font-weight:bold; }
+	#frmEditData { padding:5px; }
+	.frmBtn { border-style: ActiveBorder; border-color: ActiveBorder; border-width: thin; padding:0 4px 0 0; margin:0 4px 1px 0; }
+	.frmSubmit { }
+	.boxMenu { border:#778899 1px solid; background:#fff; }
+	.boxFrmFilter { background:#fff; }
+	.boxLnkNewData { margin:4px; }
+	.boxLnkNewData a { border:0; background:none; padding:0 5px 0 5px; margin:2px 10px 2px 4px; }
+	.boxFrmFilter label {
+		width:auto;
+		padding:0 4px 0 4px;
+		background:none;
+		border:0;
+		color:#000;
+		font-weight:bold;
+	}
+	.boxLnkNewData {
+		background:#fff;
+		
+	}
+	input,
+	select {
+	border-style: ActiveBorder;
+	border-color: ActiveBorder;
+	border-width: thin;
+	}
+	.frmNewEntry label {
+		height:22px;
+		width:160px;
+		padding:0 4px 0 0;
+		margin:0 4px 1px 0;
+		border:0;
+		font-weight:bold;
+	}
+	.frmNewEntry input,
+	.frmNewEntry textarea,
+	.frmNewEntry select {
+		font-weight:normal;
+		border-top:1px solid #3025f1;
+		border-bottom:1px solid #3025f1;
+		border-right:1px solid #3025f1;
+		border-left:1px solid #3025f1;
+		
+	}

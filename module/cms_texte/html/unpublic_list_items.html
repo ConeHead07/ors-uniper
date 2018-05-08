@@ -1,0 +1,25 @@
+	<!-- start item -->
+<table width="440" border=0 cellpadding=2 cellspacing=1 class="adminListBodyTblUP">
+	<tr>
+		<td class="%zeilenwechsel%"><b>%file_titel%</b></td>
+	</tr>
+	<tr>
+		<td class="adminListBodyTdUP">%file_image1% %file_text1%</td>
+	</tr>
+</table>
+<!-- cmsTasksMenu -->
+<table vspace="0" width="440" class="adminMenueTbl" border=0 cellspacing=1>
+<form action="index.php" hspace=0 vspace=0 method="get">
+	<tr class="adminMenueTr">
+		<td class="adminMenueTd"><a href="#editLink%" class="adminMenueAHref">Bearbeiten </a></td>
+		<td class="adminMenueTd"><a href="#readLink%" class="adminMenueAHref"> Webansicht </a></td>
+		<td class="adminMenueTd"><a href="#killLink%" class="adminMenueAHref"> L&ouml;schen </a></td>
+		<td class="adminMenueTdPos"><select class='positionsauswahl' name='pos'> %positionsauswahl%</select><input type="submit" value="go" class="go"></td>
+	</tr>
+	<input type="hidden" name="area" value="admin">
+	<input type="hidden" name="task" value="cms">
+	<input type="hidden" name="cmstask" value="sortierung">
+	<input type="hidden" name="file_name" value="%file_name%">
+</form>
+</table><!-- cmsTasksMenu --><br>
+	<!-- end item -->

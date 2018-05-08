@@ -1,0 +1,32 @@
+	<script>
+	function init() {
+		if (document.getElementById("inputUser")) {
+			document.getElementById("inputUser").focus();
+		}
+	}
+	</script>
+<!-- {msg} -->
+<!-- {error} -->
+<table width="350" height="200" class="LoginBox" align=center>
+<tr><td class="topCell">
+<table style="margin:40px;">
+<form action="login_bridge.php" method="post">
+<tr>
+	<td align=right style="padding-right:5px;color:#ff8c00;font-weight:bold;">E-Mail</td>
+	<td><input id="inputUser" type="text" name="username" value="{username}"></td>
+</tr>
+<tr>
+	<td align=right style="padding-right:5px;color:#ff8c00;font-weight:bold;">Kennung</td>
+	<td><input type="password" name="password" value=""></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" name="login" value="Anmelden"></td>
+</tr>
+<input type="hidden" name="redirect" value="{redirect}">
+</form>
+</table>
+<div class="LoginAdLinks">
+{LnkRegister} 
+{LnkForgetPw}</div>
+</td></tr></table>

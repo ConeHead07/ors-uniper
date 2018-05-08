@@ -1,0 +1,133 @@
+<link rel="STYLESHEET" type="text/css" href="../css/SelBox.easy.css">
+<link rel="STYLESHEET" type="text/css" href="css/SelBox.easy.css">
+
+<div id="SysInfoBox"></div>
+
+<link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
+<link rel="stylesheet" type="text/css" href="../css/umzugsformular.css">
+<!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
+<h1><span class="spanTitle">Leistungsanforderung {if $AS.aid}#{$AS.aid}{/if}</span></h1> 
+<p>
+<div id="Umzugsantrag" class="divInlay"> 
+<h2 style="margin:0;">Leistungsantragsteller</h2> 
+<table>
+  <tr>
+    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
+    <td style="padding:0;width:250px;">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
+    <td style="padding:0;">{$AS.vorname|escape} {$AS.name|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
+    <td style="padding:0;">{$AS.email|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
+    <td style="padding:0;">{$AS.fon|escape}</td>
+  </tr>
+
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Standort:</label></td>
+    <td style="padding:0;">{$AS.ort|escape}</td>
+  </tr>
+
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Wirtschaftseinheit:</label></td>
+    <td style="padding:0;">{$AS.gebaeude_text|escape}</td>
+  </tr>
+
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Etage:</label></td>
+    <td style="padding:0;">{$AS.etage}</td>
+  </tr>
+
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Raumnr:</label></td>
+    <td style="padding:0;">{$AS.raumnr}</td>
+  </tr>
+{*
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Kostenstelle:</label></td>
+    <td style="padding:0;">{$AS.kostenstelle|escape}</td>
+  </tr>
+*}
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Terminwunsch:</label></td>
+    <td style="padding:0;">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="umzugszeitt" style="display:block;width:auto;">Uhrzeit</label></td>
+    <td style="padding:0;">{$AS.umzugszeit|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="background:#f00;border:0;display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
+    <td style="padding:0;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</td>
+  </tr>
+	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+  <tr>
+    <td style="padding:0;"><label for="von_gebaeude_text" style="display:block;width:auto;">Von:</label></td>
+    <td class="ort">{if $AS.von_gebaeude_text eq ""}{$AS.von_gebaeude_id|escape}{/if}{$AS.von_gebaeude_text|escape}</td>
+  </tr>
+	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+  <tr>
+    <td style="padding:0;"><label for="nach_gebauede_text" style="display:block;width:auto;">Nach:</label></td>
+    <td class="zort">{if $AS.nach_gebaeude_text eq""}{$AS.nach_gebaeude_id|escape}{/if}{$AS.nach_gebaeude_text|escape}</td>
+  </tr>
+</table>
+<br>
+<h2 style="margin:0;">Ansprechpartner vor Ort</h2> 
+<table>
+  <tr>
+    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname</label></td>
+    <td style="padding:0;width:300px;">{$AS.ansprechpartner|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">E-Mail</label></td>
+    <td style="padding:0;">{$AS.ansprechpartner_email|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Fon</label></td>
+    <td style="padding:0;">{$AS.ansprechpartner_fon|escape}</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Umzug</label></td>
+    <td style="padding:0;width:300px;" class="options-onoff"><label class='{if $AS.umzug eq "Ja"}on{else}off{/if} active'>{$AS.umzug}</label></td>
+  </tr>
+</table>
+<br clear="all" >
+
+{if 0}
+    {include file="umzugsformular_mitarbeiterauswahl.tpl.read.html"}
+{/if}
+{if 0}
+    {include file="umzugsformular_geraeteauswahl.tpl.read.html"}
+{/if}
+{if 1}
+    {include file="umzugsformular_leistungsauswahl.tpl.read.html"}
+{/if}
+
+{include file="umzugsformular_attachments.tpl.read.html"}
+
+<form action="?s={$s}" method="post" name="frmUmzugsantrag">
+<input type="hidden" name="AS[aid]" value="{$AS.aid}">
+<input type="hidden" name="AS[token]" value="{$AS.token}">
+<strong>Bemerkung:</strong><br>
+<textarea class="iarea bemerkungen" name="AS[add_bemerkungen]"></textarea>
+<br>
+
+<input class='btn blue' type="submit" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Anmerkung hinzufügen">
+</form>
+<div id="BoxBemerkungen">
+<strong>Bisherige Bemerkungen:</strong><br>
+<div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
+</div>
+<div id="LoadingBar"></div>
+
+</p>
+</div> 

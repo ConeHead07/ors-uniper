@@ -1,0 +1,3 @@
+2009-09-25 13:59:13  Aktivieren Sie die Erweiterung extension=php_mssql in xampp/php/php.ini indem Sie das Semikolon am Zeilenanfang entfernen. Danach muss der Webserver neu gestartet werden.
+2009-09-25 13:59:39  Aktivieren Sie die Erweiterung extension=php_mssql in xampp/php/php.ini indem Sie das Semikolon am Zeilenanfang entfernen. Danach muss der Webserver neu gestartet werden.
+2009-09-25 14:00:09  Aktivieren Sie die Erweiterung extension=php_mssql in xampp/php/php.ini indem Sie das Semikolon am Zeilenanfang entfernen. Danach muss der Webserver neu gestartet werden.

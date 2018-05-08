@@ -1,0 +1,94 @@
+<script src="{WebRoot}js/FbAjaxUpdater.js" type="text/javascript"></script>
+<script src="{WebRoot}js/PageInfo.js" type="text/javascript"></script>
+<link rel="STYLESHEET" type="text/css" href="{WebRoot}css/SelBox.easy.css" />
+<script src="{WebRoot}js/ObjectHandler.js" type="text/javascript"></script>
+<script src="{WebRoot}js/SelBox.easy.js" type="text/javascript"></script>
+<script src="{WebRoot}js/registrieren.easy.js" type="text/javascript"></script>
+
+	<script>
+	function init() {
+		if (document.getElementById("inputUser")) {
+			document.getElementById("inputUser").focus();
+		}
+	}
+	
+	var aPp = new Array();
+	function openPp(winUrl, winName, winWidth, winHeight) {
+		aPp[winName] = window.open(winUrl, winName, "width="+winWidth+",height="+winHeight+",resizable=yes,scrollbars=yes,scrollbar=yes,scrolling=yes");
+		aPp[winName].focus();
+	}
+	</script>
+	<style>
+	.tblRegister td { vertical-align:top; }
+	</style>
+	<link rel="stylesheet" href="../css/forms.css" media="screen">
+<table width="350" height="200" class="LoginBox" align=center>
+<thead>
+<tr>
+<td class="hdCell">Benutzerkonto erstellen für {HomepageTitle}</td>
+</tr>
+</thead>
+<tr><td class="topCell">
+<!-- {error} -->
+<!-- {msg} -->
+<table class="tblRegister">
+<form action="" method="post">
+<tr>
+	<td><label errclass="anrede" for="eingabe[anrede]" id="InputLblanrede">Anrede:</label></td> 
+	<td><input type="radio" name="eingabe[anrede]" value="Frau" class="iRad" check_anrede="Frau">Frau
+	    <input type="radio" name="eingabe[anrede]" value="Herr" class="iRad" check_anrede="Herr">Herr</td>
+</tr>
+<tr>
+	<td><label errclass="vorname" for="eingabe[vorname]" id="InputLblvorname">Vorname:</label></td> 
+	<td><input id="inputUser" type="text" name="eingabe[vorname]" value="{eingabe[vorname]}" class="iTxt"></td>
+</tr>
+<tr>
+	<td><label errclass="nachname" for="eingabe[nachname]" id="InputLblnachname">Nachname:</label></td> 
+	<td><input type="text" name="eingabe[nachname]" value="{eingabe[nachname]}" class="iTxt"></td>
+</tr>
+
+<tr>
+	<td><label errclass="email" for="eingabe[email]" id="InputLblemail">Benutzer / E-Mail:</label></td> 
+	<td><input type="text" name="eingabe[email]" value="{eingabe[email]}" class="iTxt">{email_tld_only}</td>
+</tr>
+<tr>
+	<td><label errclass="fon" for="eingabe[fon]" id="InputLblfon">Fon:</label></td> 
+	<td><input type="text" name="eingabe[fon]" value="{eingabe[fon]}" class="iTxt"></td>
+</tr>
+<!-- 
+<tr>
+	<td><label errclass="standort" for="eingabe[standort]" id="InputLblstandort">Standort:</label></td> 
+	<td><input type="text" name="eingabe[standort]" readonly="true" onclick="get_fieldindex_ort(this)" value="{eingabe[standort]}" class="iTxt"></td>
+</tr>
+<tr>
+	<td><label errclass="gebaeude" for="eingabe[gebaeude]" id="InputLblgebaeude">Gebaeude:</label></td> 
+	<td><input type="text" name="eingabe[gebaeude]" readonly="true" onclick="get_fieldindex_gebaeude(this)" value="{eingabe[gebaeude]}" class="iTxt"></td>
+</tr>
+<tr>
+	<td><label errclass="user" for="eingabe[user]" id="InputLbluser">Benutzername:</label></td> 
+	<td><input type="text" name="eingabe[user]" value="{eingabe[user]}" class="iTxt"></td>
+</tr> -->
+<tr>
+	<td><label errclass="pw" for="eingabe[pw]" id="InputLblpw">Passwort:</label></td> 
+	<td><input type="password" name="eingabe[pw]" value="{eingabe[pw]}"  class="iPass"> mind. {pw_min_length} Zeichen</td>
+</tr>
+<tr>
+	<td><label errclass="pwc" for="eingabe[pwc]" id="InputLblpwc">PW wiederholen:</label></td> 
+	<td><input type="password" name="eingabe[pwc]" value="{eingabe[pwc]}" class="iPass"></td>
+</tr>
+<!-- <tr>
+	<td><label errclass="agb_confirm" for="eingabe[agb_confirm]" id="InputLblagb_confirm">AGB:</label></td> 
+	<td><input type="checkbox" name="eingabe[agb_confirm]" value="Ja" check_agb_confirm="Ja">
+	Ja, ich stimme den <a target="winAGB" onclick="openPp(this.href, this.target, 450, 420);return false"; href="{webPath}/agb.php">AGB</a> zu</td>
+</tr> -->
+<tr>
+	<td colspan=2>
+	<input type="submit" name="register" value="Registierung senden" class="iSubmit">
+		<input type="submit" name="reset" value="Zurücksetzen" class="iSubmit"></td>
+</tr>
+<input type="hidden" name="eingabe[agb_confirm]" value="Ja">
+</form>
+</table>
+<!-- <div class="LoginAdLinks">
+{LnkForgetPw}</div> -->
+</td></tr></table>

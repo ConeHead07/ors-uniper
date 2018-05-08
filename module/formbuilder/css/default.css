@@ -1,0 +1,34 @@
+.errBox {
+	border:1px solid #f00;
+	padding:5px;
+	margin:3px 0px 3px 0px;
+	color:#f00;
+	background:#fff;
+}
+
+.msgBox {
+	border:1px solid #0f0;
+	padding:5px;
+	margin:3px 0px 3px 0px;
+	color:#000;
+	background:#fff;
+}
+.CHANGED {
+	color:#ff8c00;
+	font-weight:bold;
+}
+.DROPPED {
+	color:#f00;
+	font-weight:bold;
+}
+.NEW {
+	color:#008000;
+	font-weight:bold;
+}
+.itext {
+	width:100%;
+}
+.itxarea {
+	width:100%;
+	height:60px;
+}

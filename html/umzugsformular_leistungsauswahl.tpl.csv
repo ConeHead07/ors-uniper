@@ -1,0 +1,4 @@
+Kategorie;Leistung;Menge 1 DSD;Einheit 1;Menge 2 DSD;Einheit 2;Menge1 MH;Menge2 MH{*;Preis/Einh*};Gesamt 
+{foreach name=LList item=L from=$Umzugsleistungen}{$L.kategorie|escape|trim};{$L.leistung|escape|trim};{if $L.menge_property}{$L.menge_property|escape|trim|number_format:2:",":"."}{/if};{$L.leistungseinheit|escape};{if $L.menge2_property}{$L.menge2_property|escape|number_format:2:",":"."}{/if};{$L.leistungseinheit2|escape};{if $L.menge_mertens}{$L.menge_mertens|escape|number_format:2:",":"."}{/if};{if $L.menge2_mertens}{$L.menge2_mertens|escape|number_format:2:",":"."}{/if}{if $L.gesamtpreis}{$L.gesamtpreis|escape|number_format:2:",":"."}{/if}
+{/foreach} 
+ 

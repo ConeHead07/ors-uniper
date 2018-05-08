@@ -1,0 +1,90 @@
+.tblList,
+.tblList * {
+	font-size:13px;
+	font-weight:normal;
+	font-family:Arial,Helvetica,sans-serif;
+}
+.tblList {
+	margin-top:5px;
+	border-collapse:collapse;
+	border-spacing:0px;
+	border-right:1px solid #0075b5;
+	border-bottom:1px solid #0075b5;
+        border-radius:2px;
+}
+
+.tblList td,
+.tblList tr td,
+.tblList thead td,
+.tblList thead tr td,
+.tblList thead tr th,
+.tblList tbody tr td {
+	border-left:1px solid #0075b5;
+	border-top:1px solid #0075b5;
+	padding:1px 3px 1px 3px;
+	border-collapse: collapse;
+}
+.tblList thead td,
+.tblList thead tr td,
+.tblList thead tr th,
+.tblList td.thead {
+	background:#0075b5;
+        border:#0075b5;
+	color:#fff;
+	font-weight:bold;
+	padding:4px 2px;
+}
+.tblList thead a,
+.tblList thead a:visited {
+    color:#fff;
+    font-weight:bold;
+}
+.tblList thead a,
+.tblList thead a:visited,
+.tblList tbody a,
+.tblList tbody a:visited {
+    text-decoration:none;
+}
+.tblList thead a:hover,
+.tblList tbody a:hover {
+    text-decoration: underline;
+}
+.tblList tbody {
+    background:#fff;
+}
+.tblList .wz1,
+.tblList .wz1 * {
+    background:#fff;
+}
+.tblList .wz2,
+.tblList .wz2 * {
+	background:#f7f7f7;
+}
+
+.tblList .wz1:hover,
+.tblList .wz2:hover {
+	background:#ffff5e;
+}
+.tblList td.int,
+.tblList td.float {
+	text-align:right;
+}
+.tblList td.sum,
+.tblList tr td.sum,
+.tblList tbody tr td.sum {
+	font-weight:bold;
+}
+.tblList td.lbl,
+.tblList tr td.lbl,
+.tblList tbody tr td.lbl {
+	font-weight:bold;
+}
+
+table.tblList {
+	border-top-width: 1px;
+	border-left-width: 1px;
+}
+table.tblList td {
+	border-bottom-width: 1px;
+	border-right-width: 1px;
+}

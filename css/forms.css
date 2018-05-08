@@ -1,0 +1,132 @@
+fieldset {
+    border:1px solid #0075B5;
+    border-radius: 2px;
+}
+fieldset legend {
+    padding: 0 8px 0 4px;
+}
+
+textarea {
+    border-radius:2px;
+}
+.inputFrm input.itext {
+    width:96%;
+    padding:4px;
+    box-sizing:border-box;
+    height:25px;
+    border-radius:2px;
+}
+
+.input {
+	margin-bottom:4px;
+	x-border:1px solid #cecece;
+	x-background:#ededed;
+	height:auto;
+	overflow:hidden;
+	clear:both;
+}
+
+.input div {
+	font-weight:bold;
+}
+
+.inputLbl {
+  background:#0075B5;
+  font-weight:bold;
+  color:#fff;
+  float:left;
+  width:20%;
+  padding:4px;
+  border-radius:2px;
+    box-sizing:border-box;
+    height:25px;
+}
+.inputLbl label {
+  display:block;
+  height:18px;
+  border:1px solid #0075B5;
+  text-align:left;
+  font-size:12px;
+  margin:0;
+  font-weight:bold;
+  color:#fff;
+}
+
+.inputLbl span.showPflicht {
+   float:right;
+   color:#000 !important;
+}
+
+div.inputLbl + div,
+.inputFrm {
+	float:left;
+	width:75%;
+	margin:0 5px 0 5px;
+}
+
+div.button {
+    display:inline-block;
+    overflow:hidden;
+}
+input.ibtn, input[type=submit], input[type=reset], input[type=button], button, .button,
+.options-onoff label {
+    border-radius:3px;
+    border:1px solid #41b3f3;
+    background:#eee;
+    padding:4px;
+    box-sizing: border-box;
+    font-weight:bold;
+    font-size:12px;
+    color:#000;
+}
+.options-onoff label {
+    text-align: left;
+}
+.options-onoff label.on {
+    color:green;
+}
+.options-onoff label.off {
+    color:red;
+}
+.options-onoff label.on.active {
+    color:#fff;
+    background:green;
+}
+.options-onoff label.off.active {
+    color:#fff;
+    background:red;
+}
+.inputFrm input,
+.inputFrm div,
+.inputFrm div.sysfield {
+	height:18px;
+	margin:0;
+        border-radius: 2px;
+        padding:4px;
+}
+.inputFrm .itext {
+    height:18px;
+    margin:0;
+}
+.inputFrm select.iselect {
+    padding:4px;
+}
+.inputFrm input.chckbox {
+    margin-left:8px;
+}
+.inputFrm .itxarea,
+.inputFrm textarea {
+	width:100%;
+}
+.iBoxTxtArea {
+	width:100%;
+	padding:0;
+	margin:0;
+}
+.iBoxTxtArea .itxarea,
+.iBoxTxtArea textarea {
+	width:100%;
+	padding:0;
+	margin:0;
+}
+

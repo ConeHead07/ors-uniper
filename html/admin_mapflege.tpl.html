@@ -1,0 +1,280 @@
+{literal}
+<link href="{WebRoot}css/SelBox.easy.css" rel="STYLESHEET" type="text/css" />
+<link href="{WebRoot}css/umzugsformular.css" rel="stylesheet" type="text/css" />
+<script src="{WebRoot}js/FbAjaxUpdater.js" type="text/javascript"></script>
+<script src="{WebRoot}js/PageInfo.js" type="text/javascript"></script>
+<script src="{WebRoot}js/ObjectHandler.js" type="text/javascript"></script>
+<script src="{WebRoot}js/SelBox.easy.js" type="text/javascript"></script>
+<script src="{WebRoot}js/umzugsformular.easy.js?lm=20120103" type="text/javascript"></script>
+{/literal}
+<div id="SysInfoBox"></div>
+
+<!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
+<h1><span class="spanTitle">Mitarbeiterpflege #{$AS.aid}</span></h1> 
+<p>
+<div id="Umzugsantrag" class="divInlay"> 
+<form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
+<input type="hidden" value='' id="umzugstermin" name="AS[umzugstermin]">
+<br>
+
+<h2 style="margin:0;">Verantwortlicher</h2> 
+<input type="hidden" name="AS[aid]" value="{$AS.aid}">
+<input type="hidden" value="" id="terminwunsch" name="AS[terminwunsch]">
+<input type="hidden" value="" name="AS[kostenstelle]">
+<table>
+  <tr>
+    <td style="padding:0;"><label for="mitarbeiter" style="width:180px;">Vor &amp; Nachname:</label></td>
+    <td style="padding:0;width:200px;"><input type="text" readonly="true" value="{$AS.vorname|escape}" name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" readonly="true" value="{$AS.name|escape}" name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="termin" style="width:180px;">E-Mail:</label></td>
+    <td style="padding:0;"><input type="text" readonly="true" value="{$AS.email|escape}" name="AS[email]" class="itxt itxt2col" title="E-Mail"></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="termin" style="width:180px;">Fon:</label></td>
+    <td style="padding:0;"><input type="text" value="{$AS.fon|escape}" name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
+  </tr>
+
+  <tr>
+    <td style="padding:0;"><label for="ort" style="width:180px;">Standort:</label></td>
+    <td style="padding:0;"><input type="text" onclick="get_standort_ort(this)" value="{$AS.ort|escape}" name="AS[ort]" class="itxt itxt2col"></td>
+  </tr>
+
+  <tr>
+    <td style="padding:0;"><label for="gebaeude" style="width:180px;">Gebäude:</label></td>
+    <td style="padding:0;"><input type="text" onclick="get_standort_gebaeude(this)" value="{$AS.gebaeude|escape}" name="AS[gebaeude]" class="itxt itxt2col"></td>
+  </tr>  
+	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+</table>
+<br>
+<br clear= >
+
+<h2 style="margin:0;">Mitarbeiterliste</h2> 
+
+<div class="SelBoxMitarbeiterWidth">
+<span style="float:left;margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="mapflege_new_search();return false;">
+Mitarbeiter aus Liste hinzufügen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
+<span style="float:right;margin-bottom:2px;color:#000;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="mapflege_neu_anlegen();return false;">
+Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" alt=""></span><br clear="all">
+<table class="MitarbeierItem" style="border:0;padding:0;margin:0 0 15px 0"><tr><td style="border:0;padding:0;margin:0">
+<input name="SelectMitarbeiter" id="SelectMitarbeiter" class="SelBoxMitarbeiterWidth UpperCase" style="border:1px solid #549e1a" onclick="get_mapflege(this)" ondblclick="mitarbeiter_new_search()"></div><br>
+</td></tr></table>
+</div>
+<ol type="1">
+<div id="mitarbeiterliste">
+{foreach name=MAList item=MA from=$Mitarbeiterliste}
+<table id="MA1" class="MitarbeierItem">
+  <caption style="font-size:11px;padding:0px;height:18px;">
+  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;">{if $MA.maid}Aus Stammdaten{else}Händischer Eintrag!{/if}</span></div>
+  <div style="float:right;">{if $MA.maid}{else}<a href="#" onclick="check_mitarbeiter(this);return false;"></a> &nbsp; {/if} 
+  <img name="RaumStatImg" src="images/{$MA.critical_status_img}" align="absmiddle" style="border:0;" width=16 height=16 title="{$MA.critical_status_info}"><a href="" onclick="show_raum_mitarbeiter(this, 'ziel');return false;">[Raum-Neu: <span id="RaumStatInfo">{$MA.critical_status_info}</span> ]</a> &nbsp; 
+  <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> 
+  <span onclick="dropMA(this)" style="cursor:pointer;">Aus Liste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
+</caption>
+  <thead>
+  <tr>
+    <td class="ColNName">Nachname</td>
+    <td class="ColVName">Vorname</td>
+    <td class="ColXF" title="Bitte geben Sie bei externen Mitarbeitern die Firma an!">Fremdfirma</td>
+	
+    <td class="ColAbt">Abteilung</td>
+	<td class="ColGeb">Geb&auml;ude</td>
+    <td class="ColEtg">Etage</td>
+    <td class="ColRnr">R-Nr</td>
+    <td class="ColAP">AP-Nr</td>
+    
+    <td class="ColFon">Fon</td>
+    <td class="ColPC">PC-Nr</td>
+    <td class="ColIP">Feste IP</td>
+  </tr>
+  </thead>
+  <tbody>
+  {if $MA.maid}
+  <tr class="inputRowVon">
+	<td class="nn"><input type="hidden" name="MA[mid][]" value="{$MA.mid|escape}"><!-- 
+ 	 --><input type="hidden" name="MA[maid][]" value="{$MA.maid|escape}"><!-- 
+	 --><input value="{$MA.name|escape}" id="mitarbeiter"  onclick="get_mapflege(this)"  class="AutoFill UpperCase" type="text" name="MA[name][]"></td>
+    <td class="vn"><input value="{$MA.vorname|escape}" class="itxt itxt1col UpperCase AutoFill" type="text" name="MA[vorname][]"></td>
+	<td class="xf"><input value="{$MA.extern_firma|escape}" onclick="get_extern_firma(this)" class="itxt itxt1col AutoFill" size=15 type="text" name="MA[extern_firma][]"></td>
+	
+	<td class="abt"><input value="{$MA.abteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt AutoFill" size=4 type="text" name="MA[abteilung][]"></td>
+	<td class="geb"><input  autocomplete="off" value="{$MA.gebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col AutoFill" type="text" name="MA[gebaeude][]"></td>
+    <td class="etg"><input value="{$MA.etage|escape}" onclick="get_etage(this)" readonly="true" class="itxt AutoFill" type="text" name="MA[etage][]"></td>
+    <td class="rnr"><input value="{$MA.raumnr|escape}" onclick="get_raumnr(this)" readonly="true" class="itxt AutoFill" size=8 type="text" name="MA[raumnr][]"></td>
+    <td class="apnr"><input value="{$MA.apnr|escape}" onclick="get_apnr(this)" class="itxt AutoFill" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
+    
+    <td class="fon"><input value="{$MA.fon|escape}" class="itxt" type="text" name="MA[fon][]"></td>
+    <td class="pcnr"><input value="{$MA.pcnr|escape}" class="itxt" type="text" name="MA[pcnr][]"></td>
+    <td class="festeip"><input value="{$MA.festeip|escape}" class="itxt" type="text" name="MA[festeip][]"></td>
+</tr>
+  {else}
+  <tr class="inputRowVon">
+	<td class="nn"><input type="hidden" name="MA[mid][]" value=""><!-- 
+ 	 --><input type="hidden" name="MA[maid][]" value=""><!-- 
+	 --><input value="{$MA.name|escape}" id="mitarbeiter"  onclick="get_mapflege(this)"  class="itxt itxt1col UpperCase UserInput" type="text" name="MA[name][]"></td>
+    <td class="vn"><input value="{$MA.vorname|escape}" class="itxt itxt1col UpperCase UserInput" type="text" name="MA[vorname][]"></td>
+	<td class="xf"><input value="{$MA.extern_firma|escape}" onclick="get_extern_firma(this)" class="itxt itxt1col UserInput" size=15 type="text" name="MA[extern_firma][]"></td>
+	
+	<td class="abt"><input value="{$MA.abteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" size=4 type="text" name="MA[abteilung][]"></td>
+	<td class="geb"><input  autocomplete="off" value="{$MA.gebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col UserInput" type="text" name="MA[gebaeude][]"></td>
+    <td class="etg"><input value="{$MA.etage|escape}" onclick="get_etage(this)" readonly="true" class="itxt UserInput" type="text" name="MA[etage][]"></td>
+    <td class="rnr"><input value="{$MA.raumnr|escape}" onclick="get_raumnr(this)" readonly="true" class="itxt UserInput" size=8 type="text" name="MA[raumnr][]"></td>
+    <td class="apnr"><input value="{$MA.apnr|escape}" onclick="get_apnr(this)" readonly="true" class="itxt UserInput" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
+    
+    <td class="fon"><input value="{$MA.fon|escape}" class="itxt" type="text" name="MA[fon][]"></td>
+    <td class="pcnr"><input value="{$MA.pcnr|escape}" class="itxt" type="text" name="MA[pcnr][]"></td>
+    <td class="festeip"><input value="{$MA.festeip|escape}" class="itxt" type="text" name="MA[festeip][]"></td>
+	</tr>
+  {/if}
+  <tr class="inputRowZiel">
+    <td class="ziel" align=right>Anforderungsart</td>
+	<td class="uart"><input value="Datenpflege" default="Datenpflege" class="UserInput" readonly="true" type="text" name="MA[umzugsart][]"></td>
+    <td class="ziel" align=right> Nach:</td>
+    <td class="etg"><input value="{$MA.zabteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" type="text" name="MA[zabteilung][]"></td>
+	<td class="zort"><input value="{$MA.zgebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt UserInput" type="text" name="MA[zgebaeude][]"></td>
+    <td class="geb"><input value="{$MA.zetage|escape}" readonly="true" onclick="get_etage(this)" class="itxt UserInput" type="text" name="MA[zetage][]"></td>
+    <td class="rnr"><input value="{$MA.zraumnr|escape}" readonly="true" onclick="get_raumnr(this)" class="itxt UserInput" type="text" name="MA[zraumnr][]"></td>
+    <td class="rnr"><input value="{$MA.zapnr|escape}" xreadonly="true"  class="itxt UserInput" type="text" name="MA[zapnr][]"></td>
+    <td class="zspace" colspan=3>{$MA.aufgenommen_am|escape}</td>
+</tr>
+</tbody>
+</table>
+{/foreach}
+</div>
+</ol>
+<br/>
+
+<input type="hidden" name="AS[geraete_csv]" value="">
+<input type="hidden" name="umzugsart" value="Datenpflege">
+
+<!-- <div style="color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="addMa();return false;">Weiteren Mitarbeiter ausw&auml;hlen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></div><br> -->
+<br>
+<div style="margin-top:20px;width:100%;"><!-- 
+ -->
+<input type="submit" onclick="mapflege_save()" style="padding:0 0 9px 0;background:url(images/BtnGreen_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="MA-Daten übernehmen">
+</div>
+
+</form>
+</div>
+<div id="LoadingBar"></div>
+</p>
+</div> 
+<style>
+</style>
+
+<div style="display:none;">
+<table id="MA_SELECT" class="MitarbeierItem">
+  <caption style="font-size:11px;padding:0px;height:18px;">
+  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;">Aus Stammdaten</span></div>
+  <div style="float:right;">[Anzeigen/Bearbeiten] 
+  <img name="RaumStatImg" src="" align="absmiddle" style="border:0;" width=16 height=16 title=""><a href="" onclick="show_raum_mitarbeiter(this, 'ziel');return false;">[Raum-Neu: <span class="RaumStatInfo"></span> ]</a> &nbsp; 
+  <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> <span onclick="dropMA(this)" style="cursor:pointer;">Aus Liste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
+</caption>
+  <thead>
+  <tr>
+    <td class="ColNName">Nachname</td>
+    <td class="ColVName">Vorname</td>
+    <td class="ColXF" title="Bitte geben Sie bei externen Mitarbeitern die Firma an!">Fremdfirma</td>
+	
+    <td class="ColAbt">Abteilung</td>
+	<td class="ColGeb">Geb&auml;ude</td>
+    <td class="ColEtg">Etage</td>
+    <td class="ColRnr">R-Nr</td>
+    <td class="ColAP">AP-Nr</td>
+    
+    <td class="ColFon">Fon</td>
+    <td class="ColPC">PC-Nr</td>
+    <td class="ColIP">Feste IP</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="inputRowVon">
+	<td class="nn"><input type="hidden" name="MA[mid][]" value=""><!-- 
+ 	 --><input type="hidden" name="MA[maid][]" value=""><!-- 
+	 --><input value="{$MA.name|escape}" id="mitarbeiter"  xonclick="get_mitarbeiter(this)"  class="AutoFill UpperCase" type="text" name="MA[name][]"></td>
+    <td class="vn"><input value="{$MA.vorname|escape}" class="itxt itxt1col UpperCase AutoFill" type="text" name="MA[vorname][]"></td>
+	<td class="xf"><input value="{$MA.extern_firma|escape}" onclick="get_extern_firma(this)" class="itxt itxt1col AutoFill" size=15 type="text" name="MA[extern_firma][]"></td>
+	
+	<td class="abt"><input value="{$MA.abteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt AutoFill" size=4 type="text" name="MA[abteilung][]"></td>
+	<td class="geb"><input  autocomplete="off" value="{$MA.gebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col AutoFill" type="text" name="MA[gebaeude][]"></td>
+    <td class="etg"><input value="{$MA.etage|escape}" onclick="get_etage(this)" readonly="true" class="itxt AutoFill" type="text" name="MA[etage][]"></td>
+    <td class="rnr"><input value="{$MA.raumnr|escape}" onclick="get_raumnr(this)" readonly="true" class="itxt AutoFill" size=8 type="text" name="MA[raumnr][]"></td>
+    <td class="apnr"><input value="{$MA.apnr|escape}" onclick="get_apnr(this)" class="itxt AutoFill" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
+    
+    <td class="fon"><input value="{$MA.fon|escape}" class="itxt" type="text" name="MA[fon][]"></td>
+    <td class="pcnr"><input value="{$MA.pcnr|escape}" class="itxt" type="text" name="MA[pcnr][]"></td>
+    <td class="festeip"><input value="{$MA.festeip|escape}" class="itxt" type="text" name="MA[festeip][]"></td>
+</tr>
+  <tr class="inputRowZiel">
+    <td class="ziel" align=right>Anforderungsart</td>
+	<td class="uart"><input value="Datenpflege" default="Datenpflege" class="UserInput" readonly="true" type="text" name="MA[umzugsart][]"></td>
+    <td class="ziel" align=right> Nach:</td>
+    <td class="etg"><input value="{$MA.zabteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" type="text" name="MA[zabteilung][]"></td>
+	<td class="zort"><input value="{$MA.zgebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt UserInput" type="text" name="MA[zgebaeude][]"></td>
+    <td class="geb"><input value="{$MA.zetage|escape}" readonly="true" onclick="get_etage(this)" class="itxt UserInput" type="text" name="MA[zetage][]"></td>
+    <td class="rnr"><input value="{$MA.zraumnr|escape}" readonly="true" onclick="get_raumnr(this)" class="itxt UserInput" type="text" name="MA[zraumnr][]"></td>
+    <td class="rnr"><input value="{$MA.zapnr|escape}" xreadonly="true"  class="itxt" type="text" name="MA[zapnr][]"></td>
+    <td class="zspace" colspan=3>{$MA.aufgenommen_am|escape}</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div style="display:none;">
+<table id="MA_INPUT" class="MitarbeierItem">
+  <caption style="font-size:11px;padding:0px;height:18px;">
+  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;color:#f00;">Händischer Eintrag!</div>
+  <div style="float:right;">[Namen prüfen] 
+  <img name="RaumStatImg" src="" align="absmiddle" style="border:0;" width=16 height=16 title=""><a href="" onclick="show_raum_mitarbeiter(this, 'ziel');return false;">[Raum-Neu: <span id="RaumStatInfo"></span> ]</a> &nbsp; 
+  <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> <span onclick="dropMA(this)" style="cursor:pointer;">Aus Liste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div><div style="clear:both;"></div>
+</caption>
+  <thead>
+  <tr>
+    <td class="ColNName">Nachname</td>
+    <td class="ColVName">Vorname</td>
+    <td class="ColXF" title="Bitte geben Sie bei externen Mitarbeitern die Firma an!">Fremdfirma</td>
+	
+    <td class="ColAbt">Abteilung</td>
+	<td class="ColGeb">Geb&auml;ude</td>
+    <td class="ColEtg">Etage</td>
+    <td class="ColRnr">R-Nr</td>
+    <td class="ColAP">AP-Nr</td>
+    
+    <td class="ColFon">Fon</td>
+    <td class="ColPC">PC-Nr</td>
+    <td class="ColIP">Feste IP</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="inputRowVon">
+	<td class="nn"><input type="hidden" name="MA[mid][]" value=""><!-- 
+ 	 --><input type="hidden" name="MA[maid][]" value=""><!-- 
+	 --><input value="{$MA.name|escape}" id="mitarbeiter" xonclick="get_mitarbeiter(this)"  class="itxt itxt1col UpperCase UserInput" type="text" name="MA[name][]"></td>
+    <td class="vn"><input value="{$MA.vorname|escape}" class="itxt itxt1col UpperCase UserInput" type="text" name="MA[vorname][]"></td>
+	<td class="xf"><input value="{$MA.extern_firma|escape}" onclick="get_extern_firma(this)" class="itxt itxt1col UserInput" size=15 type="text" name="MA[extern_firma][]"></td>
+	
+	<td class="abt"><input value="{$MA.abteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" size=4 type="text" name="MA[abteilung][]"></td>
+	<td class="geb"><input  autocomplete="off" value="{$MA.gebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col UserInput" type="text" name="MA[gebaeude][]"></td>
+    <td class="etg"><input value="{$MA.etage|escape}" onclick="get_etage(this)" readonly="true" class="itxt UserInput" type="text" name="MA[etage][]"></td>
+    <td class="rnr"><input value="{$MA.raumnr|escape}" onclick="get_raumnr(this)" readonly="true" class="itxt UserInput" size=8 type="text" name="MA[raumnr][]"></td>
+    <td class="apnr"><input value="{$MA.apnr|escape}" class="itxt UserInput" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
+    
+    <td class="fon"><input value="{$MA.fon|escape}" class="itxt" type="text" name="MA[fon][]"></td>
+    <td class="pcnr"><input value="{$MA.pcnr|escape}" class="itxt" type="text" name="MA[pcnr][]"></td>
+    <td class="festeip"><input value="{$MA.festeip|escape}" class="itxt" type="text" name="MA[festeip][]"></td>
+	</tr>
+  <tr class="inputRowZiel">
+    <td class="ziel" align=right>Anforderungsart</td>
+	<td class="uart"><input value="Datenpflege" class="UserInput" readonly="true" type="text" name="MA[umzugsart][]"></td>
+    <td class="ziel" align=right> Nach:</td>
+    <td class="abt"><input value="{$MA.zabteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" type="text" name="MA[zabteilung][]"></td>
+	<td class="geb"><input value="{$MA.zgebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt UserInput" type="text" name="MA[zgebaeude][]"></td>
+    <td class="etg"><input value="{$MA.zetage|escape}" readonly="true" onclick="get_etage(this)" class="itxt UserInput" type="text" name="MA[zetage][]"></td>
+    <td class="rnr"><input value="{$MA.zraumnr|escape}" readonly="true" onclick="get_raumnr(this)" class="itxt UserInput" type="text" name="MA[zraumnr][]"></td>
+    <td class="apnr"><input value="{$MA.zapnr|escape}" xreadonly="true" class="itxt UserInput" type="text" name="MA[zapnr][]"></td>
+    <td class="zspace" colspan=3>{$MA.aufgenommen_am|escape}</td>
+</tr>
+</tbody>
+</table>
+</div>

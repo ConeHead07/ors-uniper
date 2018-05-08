@@ -1,0 +1,72 @@
+div.lbBox {
+    background:#a5c7ce;
+    color:#000;
+    border:0px solid gray;
+    height:auto;
+    overflow:hidden;
+    padding:4px;
+}
+
+div.lbnavBox {
+    float:left;
+    margin-right:50px;
+    color:#000;
+    padding:3px 5px 2px 5px;
+}
+div.lbsearchBox {
+    float:left;
+    color:#fff;
+}
+
+div.lbnavBox,
+div.lbnavBox a,
+div.lbnavBox * {
+    color:#e8e8e8;
+    font-size:12px;
+    font-weight:bold;
+}
+div.lbnavBox a {
+	text-decoration:none;
+}
+div.lbnavBox a:active,
+div.lbnavBox a:hover {
+	color:#f00;
+}
+
+div.lbsearchBox {
+    height:auto;
+    overflow:hidden;
+}
+div.lbsearchBox input,
+div.lbsearchBox select {
+    font-size:12px;
+    padding:2px;
+    margin:0;
+    box-sizing: border-box;
+    height:22px;
+    border:1px solid #CCCCCC;s
+}
+
+div.lbsearchBox input[type=submit] {
+    background:#fff;
+    padding: 2px;
+}
+
+div.lbnav-compact {
+    width:550px;
+}
+div.lbnav-compact .lbnav-form-box {
+    float:left;
+    margin-right:25px;
+}
+div.lbnav-back {
+    float:left;
+    width:150px;
+}
+div.lbnav-nav-page{
+    float:left;
+    width:100px;
+}
+div.clear-left {
+    clear:left;
+}

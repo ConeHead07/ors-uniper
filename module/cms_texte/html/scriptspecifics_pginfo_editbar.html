@@ -1,0 +1,26 @@
+<script language="javascript" src="../js/webedit.js"></script>
+<script language="javascript">
+	// Aus dem Stringwert von objAsStringArr lässt sich später 
+	// mit eval() das Objekt referenzieren
+	// Aufbau imgNamesArr: "'Bildname1,Befehl1,objStrID','...' für Eingabeobjekt",
+	objAsStringArr=new Array(/*jsIFrameNames*/);
+	objSourceArr=new Array(/*objSourceItems*/);
+	imgNamesArr=new Array(/*jsGroupButtons*/);
+	
+	function init_editbar()
+	{
+		if (typeof document.execCommand != "undefined") {
+			init_images();
+			init_eingabeframes();
+			if (document.forms["%FORMNAME%"]) {
+				document.forms["%FORMNAME%"].onsubmit=transmit_iframe;
+			} else if (document.forms["frmPgInfo"]) {
+				document.forms["frmPgInfo"].onsubmit=transmit_iframe;
+			} else {
+				document.forms[0].onsubmit=transmit_iframe;
+			}
+		} else {
+			alert("#22 scripspecifics_editbar.html");
+		}
+	}
+</script>

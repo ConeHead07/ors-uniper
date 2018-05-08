@@ -1,0 +1,283 @@
+<h3 class="formTitle">Leistungsanforderung {if $AS.aid}#{$AS.aid}{/if}</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#ptoken,
+#panrede,
+#pvorname,
+#port,
+#pgebaeude,
+#pkostenstelle,
+#pumzugstermin,
+#pumzugszeit,
+#pterminwunsch,
+#pmitarbeiter_num,
+#pgeraete_csv,
+#pbemerkungen,
+#pantragsdatum,
+#pumzugsstatus_vom,
+#pzurueckgegeben,
+#pzurueckgegeben_am,
+#pzurueckgegeben_von,
+#pgeprueft_am,
+#pgeprueft_von,
+#pgenehmigt_br_am,
+#pgenehmigt_br_von,
+#pbestaetigt_am,
+#pbestaetigt_von,
+#pabgeschlossen_am,
+#pabgeschlossen_von,
+#pbearbeiter_stelle,
+#pbearbeiter_uid,
+#pbearbeiter_name,
+#pbearbeiter_mail,
+#pbearbeiter_fon,
+#pbearbeiter_ort,
+#pbearbeiter_bemerkung,
+#pcreated,
+#pmodified,
+#pb_modified,
+#pb_modifiedby { display:none; }
+#paid,
+#pantragsteller_uid,
+#pname,
+#pemail,
+#pfon,
+#pvon_gebaeude_id,
+#pnach_gebaeude_id,
+#pantragsstatus,
+#pumzugsstatus,
+#pgeprueft,
+#pgenehmigt_br,
+#pbestaetigt,
+#pabgeschlossen,
+#pgenehmigt { color:#f00 }
+</style>
+<div class="input" id="InputBoxaid">
+<div class="inputLbl"><label errclass="aid" for="eingabe[aid]" id="InputLblaid">Aid<span class="showPflicht" id="paid">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[aid]" id="eingabe[aid]" maxlength="11" value="{eingabe[aid]}"></div>
+</div>
+<div class="input" id="InputBoxtoken">
+<div class="inputLbl"><label errclass="token" for="eingabe[token]" id="InputLbltoken">Token<span class=isPflicht id="ptoken">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[token]" id="eingabe[token]" maxlength="10" value="{eingabe[token]}"></div>
+</div>
+<div class="input" id="InputBoxantragsteller_uid">
+<div class="inputLbl"><label errclass="antragsteller_uid" for="eingabe[antragsteller_uid]" id="InputLblantragsteller_uid">Antragsteller_uid<span class="showPflicht" id="pantragsteller_uid">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[antragsteller_uid]" id="eingabe[antragsteller_uid]" maxlength="11" value="{eingabe[antragsteller_uid]}"></div>
+</div>
+<div class="input" id="InputBoxanrede">
+<div class="inputLbl"><label errclass="anrede" for="eingabe[anrede]" id="InputLblanrede">Anrede<span class=isPflicht id="panrede">*</span></label></div>
+<div class="inputFrm"><input LINE="392"  class="chckbox" type="radio" name="eingabe[anrede]" id="eingabe[anrede]0" value="Frau" check_anrede="Frau">Frau <input LINE="392"  class="chckbox" type="radio" name="eingabe[anrede]" id="eingabe[anrede]1" value="Herr" check_anrede="Herr">Herr </div>
+</div>
+<div class="input" id="InputBoxname">
+<div class="inputLbl"><label errclass="name" for="eingabe[name]" id="InputLblname">Name<span class="showPflicht" id="pname">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[name]" id="eingabe[name]" maxlength="50" value="{eingabe[name]}"></div>
+</div>
+<div class="input" id="InputBoxvorname">
+<div class="inputLbl"><label errclass="vorname" for="eingabe[vorname]" id="InputLblvorname">Vorname<span class=isPflicht id="pvorname">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[vorname]" id="eingabe[vorname]" maxlength="50" value="{eingabe[vorname]}"></div>
+</div>
+<div class="input" id="InputBoxemail">
+<div class="inputLbl"><label errclass="email" for="eingabe[email]" id="InputLblemail">Email<span class="showPflicht" id="pemail">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[email]" id="eingabe[email]" maxlength="50" value="{eingabe[email]}"></div>
+</div>
+<div class="input" id="InputBoxfon">
+<div class="inputLbl"><label errclass="fon" for="eingabe[fon]" id="InputLblfon">Fon<span class="showPflicht" id="pfon">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[fon]" id="eingabe[fon]" maxlength="50" value="{eingabe[fon]}"></div>
+</div>
+<div class="input" id="InputBoxort">
+<div class="inputLbl"><label errclass="ort" for="eingabe[ort]" id="InputLblort">Ort<span class=isPflicht id="port">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[ort]" id="eingabe[ort]" maxlength="50" value="{eingabe[ort]}"></div>
+</div>
+<div class="input" id="InputBoxgebaeude">
+<div class="inputLbl"><label errclass="gebaeude" for="eingabe[gebaeude]" id="InputLblgebaeude">Gebaeude<span class=isPflicht id="pgebaeude">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[gebaeude]" id="eingabe[gebaeude]" maxlength="50" value="{eingabe[gebaeude]}"></div>
+</div>
+<div class="input" id="InputBoxvon_gebaeude_id">
+<div class="inputLbl"><label errclass="von_gebaeude_id" for="eingabe[von_gebaeude_id]" id="InputLblvon_gebaeude_id">Von_gebaeude_id<span class="showPflicht" id="pvon_gebaeude_id">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[von_gebaeude_id]" id="eingabe[von_gebaeude_id]" maxlength="11" value="{eingabe[von_gebaeude_id]}"></div>
+</div>
+<div class="input" id="InputBoxnach_gebaeude_id">
+<div class="inputLbl"><label errclass="nach_gebaeude_id" for="eingabe[nach_gebaeude_id]" id="InputLblnach_gebaeude_id">Nach_gebaeude_id<span class="showPflicht" id="pnach_gebaeude_id">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[nach_gebaeude_id]" id="eingabe[nach_gebaeude_id]" maxlength="11" value="{eingabe[nach_gebaeude_id]}"></div>
+</div>
+<div class="input" id="InputBoxkostenstelle">
+<div class="inputLbl"><label errclass="kostenstelle" for="eingabe[kostenstelle]" id="InputLblkostenstelle">Kostenstelle<span class=isPflicht id="pkostenstelle">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[kostenstelle]" id="eingabe[kostenstelle]" maxlength="20" value="{eingabe[kostenstelle]}"></div>
+</div>
+<div class="input" id="InputBoxumzugstermin">
+<div class="inputLbl"><label errclass="umzugstermin" for="eingabe[umzugstermin]" id="InputLblumzugstermin">Ausf&uuml;hrungstermin<span class=isPflicht id="pumzugstermin">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[umzugstermin]" id="eingabe[umzugstermin]" maxlength="" value="{eingabe[umzugstermin]}"></div>
+</div>
+<div class="input" id="InputBoxumzugszeit">
+<div class="inputLbl"><label errclass="umzugszeit" for="eingabe[umzugszeit]" id="InputLblumzugszeit">Ausf&uuml;hrungszeit<span class=isPflicht id="pumzugszeit">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[umzugszeit]" id="eingabe[umzugszeit]" maxlength="" value="{eingabe[umzugszeit]}"></div>
+</div>
+<div class="input" id="InputBoxterminwunsch">
+<div class="inputLbl"><label errclass="terminwunsch" for="eingabe[terminwunsch]" id="InputLblterminwunsch">Terminwunsch<span class=isPflicht id="pterminwunsch">*</span></label></div>
+<div class="inputFrm"><textarea  class="itxarea" name="eingabe[terminwunsch]" id="eingabe[terminwunsch]">{eingabe[terminwunsch]}</textarea>
+</div>
+</div>
+<div class="input" id="InputBoxmitarbeiter_num">
+<div class="inputLbl"><label errclass="mitarbeiter_num" for="eingabe[mitarbeiter_num]" id="InputLblmitarbeiter_num">Mitarbeiter_num<span class=isPflicht id="pmitarbeiter_num">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[mitarbeiter_num]" id="eingabe[mitarbeiter_num]" maxlength="5" value="{eingabe[mitarbeiter_num]}"></div>
+</div>
+<div class="input" id="InputBoxgeraete_csv">
+<div class="inputLbl"><label errclass="geraete_csv" for="eingabe[geraete_csv]" id="InputLblgeraete_csv">Geraete_csv<span class=isPflicht id="pgeraete_csv">*</span></label></div>
+<div class="inputFrm"><textarea  class="itxarea" name="eingabe[geraete_csv]" id="eingabe[geraete_csv]">{eingabe[geraete_csv]}</textarea>
+</div>
+</div>
+<div class="input" id="InputBoxbemerkungen">
+<div class="inputLbl"><label errclass="bemerkungen" for="eingabe[bemerkungen]" id="InputLblbemerkungen">Bemerkungen<span class=isPflicht id="pbemerkungen">*</span></label></div>
+<div class="inputFrm"><textarea  class="itxarea" name="eingabe[bemerkungen]" id="eingabe[bemerkungen]">{eingabe[bemerkungen]}</textarea>
+</div>
+</div>
+<div class="input" id="InputBoxantragsdatum">
+<div class="inputLbl"><label errclass="antragsdatum" for="eingabe[antragsdatum]" id="InputLblantragsdatum">Antragsdatum<span class=isPflicht id="pantragsdatum">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[antragsdatum]" id="eingabe[antragsdatum]" maxlength="" value="{eingabe[antragsdatum]}"></div>
+</div>
+<div class="input" id="InputBoxantragsstatus">
+<div class="inputLbl"><label errclass="antragsstatus" for="eingabe[antragsstatus]" id="InputLblantragsstatus">Antragsstatus<span class="showPflicht" id="pantragsstatus">*</span></label></div>
+<div class="inputFrm"><select  class="ichck iselect" id="eingabe[antragsstatus]"  name="eingabe[antragsstatus]">
+<option value="bearbeitung" check_antragsstatus="bearbeitung">bearbeitung </option>
+<option value="gesendet" check_antragsstatus="gesendet">gesendet </option>
+<option value="genehmigt" check_antragsstatus="genehmigt">genehmigt </option>
+<option value="geschlossen" check_antragsstatus="geschlossen">geschlossen </option>
+<option value="storniert" check_antragsstatus="storniert">storniert </option>
+</select></div>
+</div>
+<div class="input" id="InputBoxumzugsstatus">
+<div class="inputLbl"><label errclass="umzugsstatus" for="eingabe[umzugsstatus]" id="InputLblumzugsstatus">Ausf&uuml;hrungsstatus<span class="showPflicht" id="pumzugsstatus">*</span></label></div>
+<div class="inputFrm"><select  class="ichck iselect" id="eingabe[umzugsstatus]"  name="eingabe[umzugsstatus]">
+<option value="temp" check_umzugsstatus="temp">temp </option>
+<option value="beantragt" check_umzugsstatus="beantragt">beantragt </option>
+<option value="zurueckgegeben" check_umzugsstatus="zurueckgegeben">zurueckgegeben </option>
+<option value="geprueft" check_umzugsstatus="geprueft">geprueft </option>
+<option value="genehmigt" check_umzugsstatus="genehmigt">genehmigt </option>
+<option value="abgelehnt" check_umzugsstatus="abgelehnt">abgelehnt </option>
+<option value="bestaetigt" check_umzugsstatus="bestaetigt">bestaetigt </option>
+<option value="storniert" check_umzugsstatus="storniert">storniert </option>
+<option value="abgeschlossen" check_umzugsstatus="abgeschlossen">abgeschlossen </option>
+</select></div>
+</div>
+<div class="input" id="InputBoxumzugsstatus_vom">
+<div class="inputLbl"><label errclass="umzugsstatus_vom" for="eingabe[umzugsstatus_vom]" id="InputLblumzugsstatus_vom">Ausf&uuml;hrungsstatus_vom<span class=isPflicht id="pumzugsstatus_vom">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[umzugsstatus_vom]" id="eingabe[umzugsstatus_vom]" maxlength="" value="{eingabe[umzugsstatus_vom]}"></div>
+</div>
+<div class="input" id="InputBoxzurueckgegeben">
+<div class="inputLbl"><label errclass="zurueckgegeben" for="eingabe[zurueckgegeben]" id="InputLblzurueckgegeben">Zurueckgegeben<span class=isPflicht id="pzurueckgegeben">*</span></label></div>
+<div class="inputFrm"><input LINE="392"  class="chckbox" type="radio" name="eingabe[zurueckgegeben]" id="eingabe[zurueckgegeben]0" value="Init" check_zurueckgegeben="Init">Init <input LINE="392"  class="chckbox" type="radio" name="eingabe[zurueckgegeben]" id="eingabe[zurueckgegeben]1" value="Ja" check_zurueckgegeben="Ja">Ja </div>
+</div>
+<div class="input" id="InputBoxzurueckgegeben_am">
+<div class="inputLbl"><label errclass="zurueckgegeben_am" for="eingabe[zurueckgegeben_am]" id="InputLblzurueckgegeben_am">Zurueckgegeben_am<span class=isPflicht id="pzurueckgegeben_am">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[zurueckgegeben_am]" id="eingabe[zurueckgegeben_am]" maxlength="" value="{eingabe[zurueckgegeben_am]}"></div>
+</div>
+<div class="input" id="InputBoxzurueckgegeben_von">
+<div class="inputLbl"><label errclass="zurueckgegeben_von" for="eingabe[zurueckgegeben_von]" id="InputLblzurueckgegeben_von">Zurueckgegeben_von<span class=isPflicht id="pzurueckgegeben_von">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[zurueckgegeben_von]" id="eingabe[zurueckgegeben_von]" maxlength="50" value="{eingabe[zurueckgegeben_von]}"></div>
+</div>
+<div class="input" id="InputBoxgeprueft">
+<div class="inputLbl"><label errclass="geprueft" for="eingabe[geprueft]" id="InputLblgeprueft">Geprueft<span class="showPflicht" id="pgeprueft">*</span></label></div>
+<div class="inputFrm"><input LINE="392"  class="chckbox" type="radio" name="eingabe[geprueft]" id="eingabe[geprueft]0" value="Init" check_geprueft="Init">Init <input LINE="392"  class="chckbox" type="radio" name="eingabe[geprueft]" id="eingabe[geprueft]1" value="Ja" check_geprueft="Ja">Ja <input LINE="392"  class="chckbox" type="radio" name="eingabe[geprueft]" id="eingabe[geprueft]2" value="Nein" check_geprueft="Nein">Nein </div>
+</div>
+<div class="input" id="InputBoxgeprueft_am">
+<div class="inputLbl"><label errclass="geprueft_am" for="eingabe[geprueft_am]" id="InputLblgeprueft_am">Geprueft_am<span class=isPflicht id="pgeprueft_am">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[geprueft_am]" id="eingabe[geprueft_am]" maxlength="" value="{eingabe[geprueft_am]}"></div>
+</div>
+<div class="input" id="InputBoxgeprueft_von">
+<div class="inputLbl"><label errclass="geprueft_von" for="eingabe[geprueft_von]" id="InputLblgeprueft_von">Geprueft_von<span class=isPflicht id="pgeprueft_von">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[geprueft_von]" id="eingabe[geprueft_von]" maxlength="50" value="{eingabe[geprueft_von]}"></div>
+</div>
+<div class="input" id="InputBoxgenehmigt_br">
+<div class="inputLbl"><label errclass="genehmigt_br" for="eingabe[genehmigt_br]" id="InputLblgenehmigt_br">Genehmigt_br<span class="showPflicht" id="pgenehmigt_br">*</span></label></div>
+<div class="inputFrm"><input LINE="392"  class="chckbox" type="radio" name="eingabe[genehmigt_br]" id="eingabe[genehmigt_br]0" value="Init" check_genehmigt_br="Init">Init <input LINE="392"  class="chckbox" type="radio" name="eingabe[genehmigt_br]" id="eingabe[genehmigt_br]1" value="Ja" check_genehmigt_br="Ja">Ja <input LINE="392"  class="chckbox" type="radio" name="eingabe[genehmigt_br]" id="eingabe[genehmigt_br]2" value="Nein" check_genehmigt_br="Nein">Nein </div>
+</div>
+<div class="input" id="InputBoxgenehmigt_br_am">
+<div class="inputLbl"><label errclass="genehmigt_br_am" for="eingabe[genehmigt_br_am]" id="InputLblgenehmigt_br_am">Genehmigt_br_am<span class=isPflicht id="pgenehmigt_br_am">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[genehmigt_br_am]" id="eingabe[genehmigt_br_am]" maxlength="" value="{eingabe[genehmigt_br_am]}"></div>
+</div>
+<div class="input" id="InputBoxgenehmigt_br_von">
+<div class="inputLbl"><label errclass="genehmigt_br_von" for="eingabe[genehmigt_br_von]" id="InputLblgenehmigt_br_von">Genehmigt_br_von<span class=isPflicht id="pgenehmigt_br_von">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[genehmigt_br_von]" id="eingabe[genehmigt_br_von]" maxlength="50" value="{eingabe[genehmigt_br_von]}"></div>
+</div>
+<div class="input" id="InputBoxbestaetigt">
+<div class="inputLbl"><label errclass="bestaetigt" for="eingabe[bestaetigt]" id="InputLblbestaetigt">Bestaetigt<span class="showPflicht" id="pbestaetigt">*</span></label></div>
+<div class="inputFrm"><input LINE="392"  class="chckbox" type="radio" name="eingabe[bestaetigt]" id="eingabe[bestaetigt]0" value="Init" check_bestaetigt="Init">Init <input LINE="392"  class="chckbox" type="radio" name="eingabe[bestaetigt]" id="eingabe[bestaetigt]1" value="Ja" check_bestaetigt="Ja">Ja <input LINE="392"  class="chckbox" type="radio" name="eingabe[bestaetigt]" id="eingabe[bestaetigt]2" value="Nein" check_bestaetigt="Nein">Nein </div>
+</div>
+<div class="input" id="InputBoxbestaetigt_am">
+<div class="inputLbl"><label errclass="bestaetigt_am" for="eingabe[bestaetigt_am]" id="InputLblbestaetigt_am">Bestaetigt_am<span class=isPflicht id="pbestaetigt_am">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[bestaetigt_am]" id="eingabe[bestaetigt_am]" maxlength="" value="{eingabe[bestaetigt_am]}"></div>
+</div>
+<div class="input" id="InputBoxbestaetigt_von">
+<div class="inputLbl"><label errclass="bestaetigt_von" for="eingabe[bestaetigt_von]" id="InputLblbestaetigt_von">Bestaetigt_von<span class=isPflicht id="pbestaetigt_von">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[bestaetigt_von]" id="eingabe[bestaetigt_von]" maxlength="50" value="{eingabe[bestaetigt_von]}"></div>
+</div>
+<div class="input" id="InputBoxabgeschlossen">
+<div class="inputLbl"><label errclass="abgeschlossen" for="eingabe[abgeschlossen]" id="InputLblabgeschlossen">Abgeschlossen<span class="showPflicht" id="pabgeschlossen">*</span></label></div>
+<div class="inputFrm"><input LINE="392"  class="chckbox" type="radio" name="eingabe[abgeschlossen]" id="eingabe[abgeschlossen]0" value="Init" check_abgeschlossen="Init">Init <input LINE="392"  class="chckbox" type="radio" name="eingabe[abgeschlossen]" id="eingabe[abgeschlossen]1" value="Ja" check_abgeschlossen="Ja">Ja <input LINE="392"  class="chckbox" type="radio" name="eingabe[abgeschlossen]" id="eingabe[abgeschlossen]2" value="Storniert" check_abgeschlossen="Storniert">Storniert </div>
+</div>
+<div class="input" id="InputBoxabgeschlossen_am">
+<div class="inputLbl"><label errclass="abgeschlossen_am" for="eingabe[abgeschlossen_am]" id="InputLblabgeschlossen_am">Abgeschlossen_am<span class=isPflicht id="pabgeschlossen_am">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[abgeschlossen_am]" id="eingabe[abgeschlossen_am]" maxlength="" value="{eingabe[abgeschlossen_am]}"></div>
+</div>
+<div class="input" id="InputBoxabgeschlossen_von">
+<div class="inputLbl"><label errclass="abgeschlossen_von" for="eingabe[abgeschlossen_von]" id="InputLblabgeschlossen_von">Abgeschlossen_von<span class=isPflicht id="pabgeschlossen_von">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[abgeschlossen_von]" id="eingabe[abgeschlossen_von]" maxlength="50" value="{eingabe[abgeschlossen_von]}"></div>
+</div>
+<div class="input" id="InputBoxgenehmigt">
+<div class="inputLbl"><label errclass="genehmigt" for="eingabe[genehmigt]" id="InputLblgenehmigt">Genehmigt<span class="showPflicht" id="pgenehmigt">*</span></label></div>
+<div class="inputFrm"><input LINE="392"  class="chckbox" type="radio" name="eingabe[genehmigt]" id="eingabe[genehmigt]0" value="Init" check_genehmigt="Init">Init <input LINE="392"  class="chckbox" type="radio" name="eingabe[genehmigt]" id="eingabe[genehmigt]1" value="Ja" check_genehmigt="Ja">Ja <input LINE="392"  class="chckbox" type="radio" name="eingabe[genehmigt]" id="eingabe[genehmigt]2" value="Nein" check_genehmigt="Nein">Nein </div>
+</div>
+<div class="input" id="InputBoxbearbeiter_stelle">
+<div class="inputLbl"><label errclass="bearbeiter_stelle" for="eingabe[bearbeiter_stelle]" id="InputLblbearbeiter_stelle">Bearbeiter_stelle<span class=isPflicht id="pbearbeiter_stelle">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[bearbeiter_stelle]" id="eingabe[bearbeiter_stelle]" maxlength="50" value="{eingabe[bearbeiter_stelle]}"></div>
+</div>
+<div class="input" id="InputBoxbearbeiter_uid">
+<div class="inputLbl"><label errclass="bearbeiter_uid" for="eingabe[bearbeiter_uid]" id="InputLblbearbeiter_uid">Bearbeiter_uid<span class=isPflicht id="pbearbeiter_uid">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[bearbeiter_uid]" id="eingabe[bearbeiter_uid]" maxlength="5" value="{eingabe[bearbeiter_uid]}"></div>
+</div>
+<div class="input" id="InputBoxbearbeiter_name">
+<div class="inputLbl"><label errclass="bearbeiter_name" for="eingabe[bearbeiter_name]" id="InputLblbearbeiter_name">Bearbeiter_name<span class=isPflicht id="pbearbeiter_name">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[bearbeiter_name]" id="eingabe[bearbeiter_name]" maxlength="50" value="{eingabe[bearbeiter_name]}"></div>
+</div>
+<div class="input" id="InputBoxbearbeiter_mail">
+<div class="inputLbl"><label errclass="bearbeiter_mail" for="eingabe[bearbeiter_mail]" id="InputLblbearbeiter_mail">Bearbeiter_mail<span class=isPflicht id="pbearbeiter_mail">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[bearbeiter_mail]" id="eingabe[bearbeiter_mail]" maxlength="50" value="{eingabe[bearbeiter_mail]}"></div>
+</div>
+<div class="input" id="InputBoxbearbeiter_fon">
+<div class="inputLbl"><label errclass="bearbeiter_fon" for="eingabe[bearbeiter_fon]" id="InputLblbearbeiter_fon">Bearbeiter_fon<span class=isPflicht id="pbearbeiter_fon">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[bearbeiter_fon]" id="eingabe[bearbeiter_fon]" maxlength="50" value="{eingabe[bearbeiter_fon]}"></div>
+</div>
+<div class="input" id="InputBoxbearbeiter_ort">
+<div class="inputLbl"><label errclass="bearbeiter_ort" for="eingabe[bearbeiter_ort]" id="InputLblbearbeiter_ort">Bearbeiter_ort<span class=isPflicht id="pbearbeiter_ort">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[bearbeiter_ort]" id="eingabe[bearbeiter_ort]" maxlength="50" value="{eingabe[bearbeiter_ort]}"></div>
+</div>
+<div class="input" id="InputBoxbearbeiter_bemerkung">
+<div class="inputLbl"><label errclass="bearbeiter_bemerkung" for="eingabe[bearbeiter_bemerkung]" id="InputLblbearbeiter_bemerkung">Bearbeiter_bemerkung<span class=isPflicht id="pbearbeiter_bemerkung">*</span></label></div>
+<div class="inputFrm"><textarea  class="itxarea" name="eingabe[bearbeiter_bemerkung]" id="eingabe[bearbeiter_bemerkung]">{eingabe[bearbeiter_bemerkung]}</textarea>
+</div>
+</div>
+<div class="input" id="InputBoxcreated">
+<div class="inputLbl"><label errclass="created" for="eingabe[created]" id="InputLblcreated">Created<span class=isPflicht id="pcreated">*</span></label></div>
+<div class="inputFrm"><div class="sysfield">{eingabe[created]}</div>
+</div>
+</div>
+<div class="input" id="InputBoxmodified">
+<div class="inputLbl"><label errclass="modified" for="eingabe[modified]" id="InputLblmodified">Modified<span class=isPflicht id="pmodified">*</span></label></div>
+<div class="inputFrm"><div class="sysfield">{eingabe[modified]}</div>
+</div>
+</div>
+<div class="input" id="InputBoxb_modified">
+<div class="inputLbl"><label errclass="b_modified" for="eingabe[b_modified]" id="InputLblb_modified">B_modified<span class=isPflicht id="pb_modified">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[b_modified]" id="eingabe[b_modified]" maxlength="" value="{eingabe[b_modified]}"></div>
+</div>
+<div class="input" id="InputBoxb_modifiedby">
+<div class="inputLbl"><label errclass="b_modifiedby" for="eingabe[b_modifiedby]" id="InputLblb_modifiedby">B_modifiedby<span class=isPflicht id="pb_modifiedby">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[b_modifiedby]" id="eingabe[b_modifiedby]" maxlength="5" value="{eingabe[b_modifiedby]}"></div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="484" type="hidden" name="id" value="{id}">
+<input LINE="484" type="hidden" name="token"  value="{eingabe[token]}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Preview]" value="Vorschau"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><br>
+<input LINE="489" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen</form></div>

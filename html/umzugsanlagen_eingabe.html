@@ -1,0 +1,75 @@
+<h3 class="formTitle">Leistungsanforderungsanlagen</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#pdok_datei,
+#pdok_text,
+#pdok_url,
+#pcreated,
+#pcreatedby,
+#pmodified,
+#pmodifiedby { display:none; }
+#paid,
+#pdokid,
+#poeffentlich,
+#ptyp,
+#ptitel { color:#f00 }
+</style>
+<div class="input" id="InputBoxaid">
+<div class="inputLbl"><label errclass="aid" for="eingabe[aid]" id="InputLblaid">Aid</label><span class="showPflicht" id="paid">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[aid]" id="eingabe[aid]" maxlength="11" value="{eingabe[aid]}"></div>
+</div>
+<div class="input" id="InputBoxdokid">
+<div class="inputLbl"><label errclass="dokid" for="eingabe[dokid]" id="InputLbldokid">Dokid</label><span class="showPflicht" id="pdokid">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[dokid]" id="eingabe[dokid]" maxlength="11" value="{eingabe[dokid]}"></div>
+</div>
+<div class="input" id="InputBoxoeffentlich">
+<div class="inputLbl"><label errclass="oeffentlich" for="eingabe[oeffentlich]" id="InputLbloeffentlich">Oeffentlich</label><span class="showPflicht" id="poeffentlich">*</span></div>
+<div class="inputFrm"><input LINE="391"  class="chckbox" type="radio" name="eingabe[oeffentlich]" id="eingabe[oeffentlich]0" value="Ja" check_oeffentlich="Ja">Ja <input LINE="391"  class="chckbox" type="radio" name="eingabe[oeffentlich]" id="eingabe[oeffentlich]1" value="Nein" check_oeffentlich="Nein">Nein </div>
+</div>
+<div class="input" id="InputBoxtyp">
+<div class="inputLbl"><label errclass="typ" for="eingabe[typ]" id="InputLbltyp">Typ</label><span class="showPflicht" id="ptyp">*</span></div>
+<div class="inputFrm"><input LINE="391"  class="chckbox" type="radio" name="eingabe[typ]" id="eingabe[typ]0" value="Datei" check_typ="Datei">Datei <input LINE="391"  class="chckbox" type="radio" name="eingabe[typ]" id="eingabe[typ]1" value="Text" check_typ="Text">Text <input LINE="391"  class="chckbox" type="radio" name="eingabe[typ]" id="eingabe[typ]2" value="Url" check_typ="Url">Url </div>
+</div>
+<div class="input" id="InputBoxtitel">
+<div class="inputLbl"><label errclass="titel" for="eingabe[titel]" id="InputLbltitel">Titel</label><span class="showPflicht" id="ptitel">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[titel]" id="eingabe[titel]" maxlength="100" value="{eingabe[titel]}"></div>
+</div>
+<div class="input" id="InputBoxdok_datei">
+<div class="inputLbl"><label errclass="dok_datei" for="eingabe[dok_datei]" id="InputLbldok_datei">Dok_datei</label><span class=isPflicht id="pdok_datei">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[dok_datei]" id="eingabe[dok_datei]" maxlength="250" value="{eingabe[dok_datei]}"></div>
+</div>
+<div class="input" id="InputBoxdok_text">
+<div class="inputLbl"><label errclass="dok_text" for="eingabe[dok_text]" id="InputLbldok_text">Dok_text</label><span class=isPflicht id="pdok_text">*</span></div>
+<div class="inputFrm"><textarea  class="itxarea" name="eingabe[dok_text]" id="eingabe[dok_text]">{eingabe[dok_text]}</textarea>
+</div>
+</div>
+<div class="input" id="InputBoxdok_url">
+<div class="inputLbl"><label errclass="dok_url" for="eingabe[dok_url]" id="InputLbldok_url">Dok_url</label><span class=isPflicht id="pdok_url">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[dok_url]" id="eingabe[dok_url]" maxlength="250" value="{eingabe[dok_url]}"></div>
+</div>
+<div class="input" id="InputBoxcreated">
+<div class="inputLbl"><label errclass="created" for="eingabe[created]" id="InputLblcreated">Created</label><span class=isPflicht id="pcreated">*</span></div>
+<div class="inputFrm"><div class="sysfield">{eingabe[created]}</div>
+</div>
+</div>
+<div class="input" id="InputBoxcreatedby">
+<div class="inputLbl"><label errclass="createdby" for="eingabe[createdby]" id="InputLblcreatedby">Createdby</label><span class=isPflicht id="pcreatedby">*</span></div>
+<div class="inputFrm"><div class="sysfield">{eingabe[createdby]}</div>
+</div>
+</div>
+<div class="input" id="InputBoxmodified">
+<div class="inputLbl"><label errclass="modified" for="eingabe[modified]" id="InputLblmodified">Modified</label><span class=isPflicht id="pmodified">*</span></div>
+<div class="inputFrm"><div class="sysfield">{eingabe[modified]}</div>
+</div>
+</div>
+<div class="input" id="InputBoxmodifiedby">
+<div class="inputLbl"><label errclass="modifiedby" for="eingabe[modifiedby]" id="InputLblmodifiedby">Modifiedby</label><span class=isPflicht id="pmodifiedby">*</span></div>
+<div class="inputFrm"><div class="sysfield">{eingabe[modifiedby]}</div>
+</div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="483" type="hidden" name="id" value="{id}">
+<input LINE="484" type="submit" class="ibtn isubmit" name="editCmd[Preview]" value="Vorschau"><input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><br>
+<input LINE="488" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen</form></div>

@@ -1,0 +1,50 @@
+#SelCont {
+	background:#fff;
+}
+.DeActiveSelCont {
+	display:none;
+}
+.ActiveSelCont {
+	display:normal;
+}
+.DeActiveSel {
+	display:inline-block;
+	width:100px;
+	text-align:center;
+	background:#cdcdcd;
+	font-size:14px;
+	color:#00f;
+	border:1px solid #fff;
+	margin:0px 5px 0px 0px;
+}
+.ActiveSel {
+	display:inline-block;
+	width:100px;
+	text-align:center;
+	background:#fff;
+	font-size:14px;
+	font-weight:bold;
+	color:#f00;
+	border:1px solid #fff;
+	margin:0px 5px 0px 0px;
+}
+#ZSelect {
+	padding:15px;
+}
+
+.Angebot,
+.Angebot * {
+	color:#ff8c00;
+}
+.Beauftragt,
+.Beauftragt * {
+	color:#008000;
+}
+.Abgeschlossen,
+.Abgeschlossen * {
+	color:#4b0082;
+}
+.Verloren,
+.Verloren * {
+	color:#f00;
+}

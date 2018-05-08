@@ -1,0 +1,56 @@
+<h3 class="formTitle">Leistungskatalog2</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#pcreated { display:none; }
+#pleistungs_id,
+#pleistungskategorie_id,
+#pPos,
+#pUmzugsart,
+#pBezeichnung,
+#pleistungseinheit,
+#ppreis_pro_einheit,
+#pmodified { color:#f00 }
+</style>
+<div class="input" id="InputBoxleistungs_id">
+<div class="inputLbl"><label errclass="leistungs_id" for="eingabe[leistungs_id]" id="InputLblleistungs_id">Leistungs_id<span class="showPflicht" id="pleistungs_id">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[leistungs_id]" id="eingabe[leistungs_id]" maxlength="11" value="{eingabe[leistungs_id]}"></div>
+</div>
+<div class="input" id="InputBoxleistungskategorie_id">
+<div class="inputLbl"><label errclass="leistungskategorie_id" for="eingabe[leistungskategorie_id]" id="InputLblleistungskategorie_id">Leistungskategorie_id<span class="showPflicht" id="pleistungskategorie_id">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[leistungskategorie_id]" id="eingabe[leistungskategorie_id]" maxlength="11" value="{eingabe[leistungskategorie_id]}"></div>
+</div>
+<div class="input" id="InputBoxPos">
+<div class="inputLbl"><label errclass="Pos" for="eingabe[Pos]" id="InputLblPos">Pos<span class="showPflicht" id="pPos">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[Pos]" id="eingabe[Pos]" maxlength="11" value="{eingabe[Pos]}"></div>
+</div>
+<div class="input" id="InputBoxUmzugsart">
+<div class="inputLbl"><label errclass="Umzugsart" for="eingabe[Umzugsart]" id="InputLblUmzugsart">Umzugsart<span class="showPflicht" id="pUmzugsart">*</span></label></div>
+<div class="inputFrm"><input LINE="392"  class="chckbox" type="radio" name="eingabe[Umzugsart]" id="eingabe[Umzugsart]0" value="" check_Umzugsart=""> <input LINE="392"  class="chckbox" type="radio" name="eingabe[Umzugsart]" id="eingabe[Umzugsart]1" value="Typ A" check_Umzugsart="Typ A">Typ A <input LINE="392"  class="chckbox" type="radio" name="eingabe[Umzugsart]" id="eingabe[Umzugsart]2" value="Typ B" check_Umzugsart="Typ B">Typ B </div>
+</div>
+<div class="input" id="InputBoxBezeichnung">
+<div class="inputLbl"><label errclass="Bezeichnung" for="eingabe[Bezeichnung]" id="InputLblBezeichnung">Bezeichnung<span class="showPflicht" id="pBezeichnung">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[Bezeichnung]" id="eingabe[Bezeichnung]" maxlength="60" value="{eingabe[Bezeichnung]}"></div>
+</div>
+<div class="input" id="InputBoxleistungseinheit">
+<div class="inputLbl"><label errclass="leistungseinheit" for="eingabe[leistungseinheit]" id="InputLblleistungseinheit">Leistungseinheit<span class="showPflicht" id="pleistungseinheit">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[leistungseinheit]" id="eingabe[leistungseinheit]" maxlength="60" value="{eingabe[leistungseinheit]}"></div>
+</div>
+<div class="input" id="InputBoxpreis_pro_einheit">
+<div class="inputLbl"><label errclass="preis_pro_einheit" for="eingabe[preis_pro_einheit]" id="InputLblpreis_pro_einheit">Preis_pro_einheit<span class="showPflicht" id="ppreis_pro_einheit">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[preis_pro_einheit]" id="eingabe[preis_pro_einheit]" maxlength="7,2" value="{eingabe[preis_pro_einheit]}"></div>
+</div>
+<div class="input" id="InputBoxcreated">
+<div class="inputLbl"><label errclass="created" for="eingabe[created]" id="InputLblcreated">Created<span class=isPflicht id="pcreated">*</span></label></div>
+<div class="inputFrm"><div class="sysfield">{eingabe[created]}</div>
+</div>
+</div>
+<div class="input" id="InputBoxmodified">
+<div class="inputLbl"><label errclass="modified" for="eingabe[modified]" id="InputLblmodified">Modified<span class="showPflicht" id="pmodified">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[modified]" id="eingabe[modified]" maxlength="" value="{eingabe[modified]}"></div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="484" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Preview]" value="Vorschau"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><br>
+<input LINE="489" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen</form></div>

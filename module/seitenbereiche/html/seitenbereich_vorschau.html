@@ -1,0 +1,95 @@
+<style>
+.titelbalken {
+	background:#83a7e2;
+}
+</style>
+%lesen[srv]%
+<table cellpadding="0" cellspacing="0" border="0" width="500">
+
+<tr>
+	<td class="titelbalken" colspan=2><b>Seitenbereich %lesen[listentext]%</b></td>
+</tr>
+
+<tr>
+	<td><b>Webfreigabe </b></td> 
+	<td>%lesen[webfreigabe]%</td>
+</tr>
+
+<tr>
+	<td><b>Geschuetzt</b></td>
+	<td>%lesen[geschuetzt]%</td>
+</tr>
+
+<tr>
+	<td><b>Aktiv sichtbar</b></td>
+	<td>%lesen[visibility]%</td>
+</tr>
+<tr>
+	<td><b>Eltern-Menü</b></td>
+	<td>%lesen[parents]%<br>
+	    %lesen[parentid]%</td>
+</tr>
+<tr>
+	<td colspan=2><b>Seitenbereich (Interner Bezeichner) </b><br>
+	<div name="eingabe[srv]" style="width:550px; border: 1px dotted gray;">%lesen[srv]%</div>
+</td>
+</tr>
+<tr>
+	<td colspan=2><b>Name / Titel </b><br>
+	<div name="eingabe[srv]" style="width:550px; border: 1px dotted gray;">%lesen[name]%</div>
+	<br></td>
+</tr>
+<tr>
+	<td colspan=2><b>Öffentlicher Infotext</b><br>
+	<div style="height:100px; width:550px;border: 1px dotted gray;">%lesen[text]%</div>
+	</td>
+</tr>
+
+<tr>
+	<td colspan=2><b>Kommentar (Intern)</b><br>
+	<div style="height:100px; width:550px;border: 1px dotted gray;">%lesen[kommentar]%</div>
+	<br></td>
+</tr>
+<tr>
+	<td colspan=2><b>Menü-Icon </b><br>
+	<div name="eingabe[icon]" style="width:550px; border: 1px dotted gray;">
+	<!-- {img[icon]} -->
+	%lesen[icon]%</div>
+	<br></td>
+</tr>
+<tr>
+	<td colspan=2><b>Menü-Style </b><br>
+	<div name="eingabe[menustyle]" style="width:550px; border: 1px dotted gray;%lesen[menustyle]%">%lesen[menustyle]%</div>
+	<br></td>
+</tr>
+<tr>
+	<td colspan=2><b>Menü-Onclick (JavaScript) </b><br>
+	<div name="eingabe[onclick]" style="width:550px; border: 1px dotted gray;" onclick="%lesen[onclick]%">%lesen[onclick]%</div>
+	<br></td>
+</tr>
+<tr>
+	<td colspan=2><b>Logo </b><br>
+	<div name="eingabe[logo]" style="width:550px; border: 1px dotted gray;">
+	<!-- {img[logo]} -->
+	%lesen[logo]%</div>
+	<br></td>
+</tr>
+<tr>
+	<td colspan=2><b>Redirect (URL: relativ od. absolut) </b><br>
+	<div name="eingabe[redirect]" style="width:550px; border: 1px dotted gray;">
+	<a href="%lesen[redirect]%" target=_blank>%lesen[redirect]%</a></div>
+	<br></td>
+</tr>
+<tr>
+	<td colspan=2><b>Shortlink </b><br>
+	<div name="eingabe[redirect]" style="width:550px; border: 1px dotted gray;">
+	<a href="%lesen[shortlink]%" target=_blank>%lesen[shortlink]%</a></div>
+	<br></td>
+</tr>
+
+<tr><!-- Zeile 5 -->
+	<td colspan=2 bgcolor="#f0fff0" style="padding-left:5px;"><b>%strWebfreigabe%</b> : <font class="freigabe%lesen[webfreigabe]%">%lesen[webfreigabe]%</font></td>
+</tr>
+</table><br>
+<!-- cmsTasks -->
+<!-- Ende: Inhaltstabelle Gross/Blau -->

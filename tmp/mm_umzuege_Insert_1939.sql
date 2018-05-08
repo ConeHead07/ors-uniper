@@ -1,0 +1,61 @@
+Insert `mt_move_bayer`.`mm_umzuege` SET
+`token` = "ac31f19add",
+`anrede` = NULL,
+`name` = "Laschewski",
+`vorname` = "Stefan",
+`email` = "s.laschewski@mertens.ag",
+`fon` = "0177-9699495",
+`ort` = "Leverkusen",
+`gebaeude` = "1",
+`raumnr` = NULL,
+`etage` = "1. OG",
+`kostenstelle` = "4501504966",
+`planonnr` = "219246",
+`umzug` = "Nein",
+`umzugstermin` = NULL,
+`umzugszeit` = NULL,
+`terminwunsch` = "2016-12-20",
+`ansprechpartner` = "Stefan Laschewski",
+`ansprechpartner_email` = "s.laschewski@mertens.ag",
+`ansprechpartner_fon` = "0177-9699495",
+`geraete_csv` = NULL,
+`bemerkungen` = "Bemerkung von slaschewski am 16.12.2016 um 07:36
+Auftrag 219246 - Uwe Bebber, Tel. 62030 Termin: bis zum 21.12.16 3. OG
+Raum 317/318 - Woodtec-Umbau   Möblierung 1 zusätzlichen APZeichnung
+folgt per Mail Demontage u. Einlagerung in C 102, K18: von 4
+Wandelementen 1 vorhandene Hängeleuchte höher ziehen bis an die Halter
+- Einlagerung in K16 von: 2 Besprechungstischen, 5 Besucherstühlen aus
+K16 aufstellen: 1 Stehleuchte Waldmann mit klappbaren Leuchtkörpern innerhalb des Raumes verschieben: 6 Möbelstücke (Tisch/Schrank/Stuhl)
+Nach dem Umbau 1 zusätzlichen AP mitRohde & Grahl-Möbeln aus dem
+BBS-Lager in C151 Keller 2 in R. 317, Geb. C 102 aufstellen: 1
+Liftschreibtisch, 1 Drehstuhl, 1 Rollcontainer, 1 Stk. 3OH-Theke",
+`antragsstatus` = "bearbeitung",
+`umzugsstatus` = "temp",
+`dienstleister_id` = NULL,
+`dienstleister_name` = NULL,
+`dienstleister_bemerkung` = NULL,
+`geprueft` = "Init",
+`angeboten_am` = NULL,
+`angeboten_von` = NULL,
+`geprueft_am` = NULL,
+`geprueft_von` = NULL,
+`genehmigt_br` = "Init",
+`genehmigt_br_am` = NULL,
+`genehmigt_br_von` = NULL,
+`bestaetigt` = "Init",
+`bestaetigt_am` = NULL,
+`bestaetigt_von` = NULL,
+`abgeschlossen` = "Init",
+`abgeschlossen_am` = NULL,
+`abgeschlossen_von` = NULL,
+`genehmigt` = "Init",
+`bearbeiter_stelle` = NULL,
+`bearbeiter_name` = NULL,
+`bearbeiter_mail` = NULL,
+`bearbeiter_fon` = NULL,
+`bearbeiter_ort` = NULL,
+`bearbeiter_bemerkung` = NULL,
+`antragsteller_uid` = "2980" ,
+`antragsdatum` = NOW() ,
+`created` = NOW() ,
+ `b_modifiedby` = "2980" 

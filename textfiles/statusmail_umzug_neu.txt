@@ -1,0 +1,19 @@
+Betreff=Umzug ID {AID} - Bearbeitung
+
+Sehr geehrter Anwender,
+sehr geehrte Anwenderin,
+
+Es liegt eine neue Leistungsanforderung  mit der ID {AID} vor.
+
+Antragsteller:  {vorname} {name}
+Ausführungszeit {ausgefuehrtam}}
+SAP Nr.         {kostenstell}	
+Ticket Nr.      {planonnr}
+
+Sie können den Status des Auftrags unter folgendem Link einsehen:
+{StatusLink}
+
+Mit freundlichen Grüßen
+
+Ihr
+{HomepageTitle}

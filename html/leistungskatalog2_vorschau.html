@@ -1,0 +1,49 @@
+<h3 class="formTitle">Leistungskatalog2</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><div class="Input">
+<div class="inputLbl">Leistungs_id</div>
+<div>{lesen[leistungs_id]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Leistungskategorie_id</div>
+<div>{lesen[leistungskategorie_id]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Pos</div>
+<div>{lesen[Pos]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Anforderungsart</div>
+<div>{lesen[Umzugsart]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Bezeichnung</div>
+<div>{lesen[Bezeichnung]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Leistungseinheit</div>
+<div>{lesen[leistungseinheit]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Preis_pro_einheit</div>
+<div>{lesen[preis_pro_einheit]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Created</div>
+<div>{lesen[created]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Modified</div>
+<div>{lesen[modified]}</div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="476" type="hidden" name="eingabe[leistungs_id]" maxlength="11" value="{eingabe[leistungs_id]}">
+<input LINE="476" type="hidden" name="eingabe[leistungskategorie_id]" maxlength="11" value="{eingabe[leistungskategorie_id]}">
+<input LINE="476" type="hidden" name="eingabe[Pos]" maxlength="11" value="{eingabe[Pos]}">
+<input LINE="476" type="hidden" name="eingabe[Umzugsart]" maxlength="'','Typ A','Typ B'" value="{eingabe[Umzugsart]}">
+<input LINE="476" type="hidden" name="eingabe[Bezeichnung]" maxlength="60" value="{eingabe[Bezeichnung]}">
+<input LINE="476" type="hidden" name="eingabe[leistungseinheit]" maxlength="60" value="{eingabe[leistungseinheit]}">
+<input LINE="476" type="hidden" name="eingabe[preis_pro_einheit]" maxlength="7,2" value="{eingabe[preis_pro_einheit]}">
+<input LINE="476" type="hidden" name="eingabe[created]" maxlength="" value="{eingabe[created]}">
+<input LINE="476" type="hidden" name="eingabe[modified]" maxlength="" value="{eingabe[modified]}">
+<input LINE="484" type="hidden" name="id" value="{id}">
+<input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><input LINE="487" type="submit" class="ibtn isubmit" name="editCmd[Correct]" value="Korrigieren"></form></div>

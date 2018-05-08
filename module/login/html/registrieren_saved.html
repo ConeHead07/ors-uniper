@@ -1,0 +1,40 @@
+<script>
+	function init() {
+		if (document.getElementById("inputUser")) {
+			document.getElementById("inputUser").focus();
+		}
+	}
+	
+	var aPp = new Array();
+	function openPp(winUrl, winName, winWidth, winHeight) {
+		aPp[winName] = window.open(winUrl, winName, "width="+winWidth+",height="+winHeight+",resizable=yes,scrollbars=yes,scrollbar=yes,scrolling=yes");
+		aPp[winName].focus();
+	}
+</script>
+<style>
+	.tblRegister td { vertical-align:top; }
+</style>
+<link rel="stylesheet" href="../css/forms.css" media="screen">
+<table width="350" height="200" class="LoginBox" align=center>
+	<thead>
+	<tr>
+		<td class="hdCell">Benutzerkonto erstellen für {HomepageTitle}</td>
+	</tr>
+	</thead>
+	<tr>
+		<td class="topCell">
+		<!-- {error} -->
+		<!-- {msg} -->
+		<table class="tblRegister">
+		<tr>
+			<td>
+Ihre Anmeldedaten wurden gespeichert.<br>
+Sie erhalten von uns in den nächsten Minuten eine Bestätigungsmail an <strong>{eingabe[email]}</strong> mit einem Freischaltcode um Ihren Zugang zu aktivieren.<br>
+<br>
+Falls diese ausbleibt oder Probleme auftreten, schreiben Sie uns eine E-Mail an <a href="mailto:{supportmail}">{supportmail}</a>.<br>
+		</td>
+		</tr>
+		</table>
+		</td>
+	</tr>
+</table>

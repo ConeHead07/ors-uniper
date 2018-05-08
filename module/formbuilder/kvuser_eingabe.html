@@ -1,0 +1,99 @@
+<h3 class="formTitle">Kvuser</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#pconfirmdate,
+#plastlogin,
+#plastvisit,
+#plastvisitbefore { display:none; }
+#puid,
+#puser,
+#pemail,
+#ppw,
+#pgruppe,
+#pgid,
+#pfreigegeben,
+#panrede,
+#pvorname,
+#pnachname,
+#pauthentcode,
+#pregisterdate,
+#ponlinestatus { color:#f00 }
+</style>
+<div class="input" id="InputBoxuid">
+<div class="inputLbl"><label errclass="uid" for="eingabe[uid]" id="InputLbluid">Uid</label><span class="showPflicht" id="puid">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[uid]" id="eingabe[uid]" maxlength="11" value="{eingabe[uid]}"></div>
+</div>
+<div class="input" id="InputBoxuser">
+<div class="inputLbl"><label errclass="user" for="eingabe[user]" id="InputLbluser">User</label><span class="showPflicht" id="puser">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[user]" id="eingabe[user]" maxlength="32" value="{eingabe[user]}"></div>
+</div>
+<div class="input" id="InputBoxemail">
+<div class="inputLbl"><label errclass="email" for="eingabe[email]" id="InputLblemail">Email</label><span class="showPflicht" id="pemail">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[email]" id="eingabe[email]" maxlength="50" value="{eingabe[email]}"></div>
+</div>
+<div class="input" id="InputBoxpw">
+<div class="inputLbl"><label errclass="pw" for="eingabe[pw]" id="InputLblpw">Pw</label><span class="showPflicht" id="ppw">*</span></div>
+<div class="inputFrm"><input LINE="405"  type="password" class="itext ipass" name="eingabe[pw]" id="eingabe[pw]" maxlength="32" value="{eingabe[pw]}"></div>
+</div>
+<div class="input" id="InputBoxpw_wh">
+<div class="inputLbl"><label for="eingabe[pw_wh]" id="InputLblpw_wh"><em>wiederholen</em></label><span class=isPflicht id="ppw">*</span></div>
+<div class="inputFrm"><input LINE="414"  type="password" class="itext ipass" name="eingabe[pw_wh]" id="eingabe[pw_wh]" maxlength="32" value="{eingabe[pw_wh]}"></div>
+</div>
+<div class="input" id="InputBoxgruppe">
+<div class="inputLbl"><label errclass="gruppe" for="eingabe[gruppe]" id="InputLblgruppe">Gruppe</label><span class="showPflicht" id="pgruppe">*</span></div>
+<div class="inputFrm"><input LINE="391"  class="chckbox" type="radio" name="eingabe[gruppe]" id="eingabe[gruppe]0" value="user" check_gruppe="user">user <input LINE="391"  class="chckbox" type="radio" name="eingabe[gruppe]" id="eingabe[gruppe]1" value="admin" check_gruppe="admin">admin </div>
+</div>
+<div class="input" id="InputBoxgid">
+<div class="inputLbl"><label errclass="gid" for="eingabe[gid]" id="InputLblgid">Gid</label><span class="showPflicht" id="pgid">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[gid]" id="eingabe[gid]" maxlength="11" value="{eingabe[gid]}"></div>
+</div>
+<div class="input" id="InputBoxfreigegeben">
+<div class="inputLbl"><label errclass="freigegeben" for="eingabe[freigegeben]" id="InputLblfreigegeben">Freigegeben</label><span class="showPflicht" id="pfreigegeben">*</span></div>
+<div class="inputFrm"><input LINE="391"  class="chckbox" type="radio" name="eingabe[freigegeben]" id="eingabe[freigegeben]0" value="init" check_freigegeben="init">init <input LINE="391"  class="chckbox" type="radio" name="eingabe[freigegeben]" id="eingabe[freigegeben]1" value="Nein" check_freigegeben="Nein">Nein <input LINE="391"  class="chckbox" type="radio" name="eingabe[freigegeben]" id="eingabe[freigegeben]2" value="Ja" check_freigegeben="Ja">Ja </div>
+</div>
+<div class="input" id="InputBoxanrede">
+<div class="inputLbl"><label errclass="anrede" for="eingabe[anrede]" id="InputLblanrede">Anrede</label><span class="showPflicht" id="panrede">*</span></div>
+<div class="inputFrm"><input LINE="391"  class="chckbox" type="radio" name="eingabe[anrede]" id="eingabe[anrede]0" value="Frau" check_anrede="Frau">Frau <input LINE="391"  class="chckbox" type="radio" name="eingabe[anrede]" id="eingabe[anrede]1" value="Herr" check_anrede="Herr">Herr </div>
+</div>
+<div class="input" id="InputBoxvorname">
+<div class="inputLbl"><label errclass="vorname" for="eingabe[vorname]" id="InputLblvorname">Vorname</label><span class="showPflicht" id="pvorname">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[vorname]" id="eingabe[vorname]" maxlength="50" value="{eingabe[vorname]}"></div>
+</div>
+<div class="input" id="InputBoxnachname">
+<div class="inputLbl"><label errclass="nachname" for="eingabe[nachname]" id="InputLblnachname">Nachname</label><span class="showPflicht" id="pnachname">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[nachname]" id="eingabe[nachname]" maxlength="50" value="{eingabe[nachname]}"></div>
+</div>
+<div class="input" id="InputBoxauthentcode">
+<div class="inputLbl"><label errclass="authentcode" for="eingabe[authentcode]" id="InputLblauthentcode">Authentcode</label><span class="showPflicht" id="pauthentcode">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[authentcode]" id="eingabe[authentcode]" maxlength="10" value="{eingabe[authentcode]}"></div>
+</div>
+<div class="input" id="InputBoxregisterdate">
+<div class="inputLbl"><label errclass="registerdate" for="eingabe[registerdate]" id="InputLblregisterdate">Registerdate</label><span class="showPflicht" id="pregisterdate">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[registerdate]" id="eingabe[registerdate]" maxlength="" value="{eingabe[registerdate]}"></div>
+</div>
+<div class="input" id="InputBoxconfirmdate">
+<div class="inputLbl"><label errclass="confirmdate" for="eingabe[confirmdate]" id="InputLblconfirmdate">Confirmdate</label><span class=isPflicht id="pconfirmdate">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[confirmdate]" id="eingabe[confirmdate]" maxlength="" value="{eingabe[confirmdate]}"></div>
+</div>
+<div class="input" id="InputBoxlastlogin">
+<div class="inputLbl"><label errclass="lastlogin" for="eingabe[lastlogin]" id="InputLbllastlogin">Lastlogin</label><span class=isPflicht id="plastlogin">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[lastlogin]" id="eingabe[lastlogin]" maxlength="" value="{eingabe[lastlogin]}"></div>
+</div>
+<div class="input" id="InputBoxlastvisit">
+<div class="inputLbl"><label errclass="lastvisit" for="eingabe[lastvisit]" id="InputLbllastvisit">Lastvisit</label><span class=isPflicht id="plastvisit">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[lastvisit]" id="eingabe[lastvisit]" maxlength="" value="{eingabe[lastvisit]}"></div>
+</div>
+<div class="input" id="InputBoxlastvisitbefore">
+<div class="inputLbl"><label errclass="lastvisitbefore" for="eingabe[lastvisitbefore]" id="InputLbllastvisitbefore">Lastvisitbefore</label><span class=isPflicht id="plastvisitbefore">*</span></div>
+<div class="inputFrm"><input LINE="428"  type="text" class="itext" name="eingabe[lastvisitbefore]" id="eingabe[lastvisitbefore]" maxlength="" value="{eingabe[lastvisitbefore]}"></div>
+</div>
+<div class="input" id="InputBoxonlinestatus">
+<div class="inputLbl"><label errclass="onlinestatus" for="eingabe[onlinestatus]" id="InputLblonlinestatus">Onlinestatus</label><span class="showPflicht" id="ponlinestatus">*</span></div>
+<div class="inputFrm"><input LINE="391"  class="chckbox" type="radio" name="eingabe[onlinestatus]" id="eingabe[onlinestatus]0" value="online" check_onlinestatus="online">online <input LINE="391"  class="chckbox" type="radio" name="eingabe[onlinestatus]" id="eingabe[onlinestatus]1" value="loggedout" check_onlinestatus="loggedout">loggedout <input LINE="391"  class="chckbox" type="radio" name="eingabe[onlinestatus]" id="eingabe[onlinestatus]2" value="timeout" check_onlinestatus="timeout">timeout </div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="483" type="hidden" name="id" value="{id}">
+<input LINE="484" type="submit" class="ibtn isubmit" name="editCmd[Preview]" value="Vorschau"><input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><br>
+<input LINE="488" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen</form></div>

@@ -1,0 +1,58 @@
+Array
+(
+    [aTo] => Array
+        (
+            [0] => Array
+                (
+                    [email] => <bayerumzuege@mertens.ag>
+                    [anrede] => 
+                )
+
+        )
+
+    [sSubject] => Umzug ID 4642 - Genehmigt
+    [sHtmlBody] => 
+    [sTxtBody] => Hallo Bayer Umzüge,
+
+es liegt eine neue genehmigte Leistungsanforderung mit der ID 4642 zur Durchführung vor.
+
+Antragsteller:  Michael Katzler
+Ausführungszeit 22.01.2018
+SAP Nr.         4501732706	
+Ticket Nr.      302826
+
+Sie können den  Vorgang  unter folgendem Link  bearbeiten:
+https://bayer.mertens.ag/bayer/?s=aantrag&id=4642
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+    [aAttachments] => Array
+        (
+        )
+
+    [aHeaders] => Array
+        (
+            [Reply-To] => bayerors@mertens.ag
+            [BCC] =>  frank.barthold@googlemail.com
+        )
+
+)
+Array
+(
+    [_to] => Array
+        (
+            [email] => bayerumzuege@mertens.ag
+            [anrede] => 
+        )
+
+)
+
+++ Starting Swift_SmtpTransport
+!! Connection could not be established with host mail.mertens.ag [Connection refused #111]
+Result: 0
+Error : Connection could not be established with host mail.mertens.ag [Connection refused #111]
+Log data:
+++ Starting Swift_SmtpTransport
+!! Connection could not be established with host mail.mertens.ag [Connection refused #111]

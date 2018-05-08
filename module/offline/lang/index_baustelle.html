@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="de"> 
+  
+<head> 
+
+<title>Bratwurst.tv</title> 
+
+<style type="text/css">
+html, body {
+	background: #c6bc91;
+	height: 100%;
+}
+
+#center_content {
+	width: 900px;
+	height: 675px;
+	text-align: center;
+	background: #c6bc91 url(http://www.bratwurst.tv/bw/cms/cms_images/baustelle.jpg) no-repeat;
+	color: #fff;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -450px;
+	margin-top: -337px;
+}
+
+	
+	h1 {
+		font-size:13px;
+		font-weight:bold;
+		margin:0px;
+	}
+
+#content {
+	width: 355px;
+	height: 245px;
+	text-align: left;
+	color: #fff;
+	position: absolute;
+	left: 275px;
+	top: 250px;
+	font-family:Arial,Verdana,sans-serif;
+	font-size:11px;
+	font-weight:normal;
+	line-height:100%;
+	overflow:norma; /*auto; */
+}
+
+#nav {
+	width: 355px;
+	height: 245px;
+	text-align: right;
+	x-color:#aa7b51;
+	color:#d7d7d7;
+	position: absolute;
+	left: 275px;
+	top: 225px;
+	font-family:Arial,Verdana,sans-serif;
+	font-size:11px;
+	font-weight:normal;
+	line-height:100%;
+	overflow:norma; /*auto; */
+}
+#nav a:link,
+#nav a:visited {
+	x-color:#d7d7d7;
+	color:#fff;
+	text-decoration:none;
+}
+#nav a:hover,
+#nav a:active {
+	color:#fff;
+	text-decoration:underline;
+}
+
+
+#player {
+	position: absolute;
+	top: 305px;
+}
+
+</style> 
+
+<script type="text/javascript" src="http://www.bratwurst.tv/bw/cms/media/swfobject.js"></script>
+	<script type="text/javascript">
+	function init() {
+		return false;
+	}
+	
+	function initPlayer() {
+		var so = new SWFObject('http://www.bratwurst.tv/bw/cms/media/player.swf','mpl','470','20','9');
+		so.addParam('allowscriptaccess','always');
+		so.addParam('allowfullscreen','false');
+		so.addParam('flashvars','&duration=33&file=http://www.bratwurst.tv/bw/cms/media/sound/thebratwurstsong01.mp3&frontcolor=#867b5d&lightcolor=#867b5d&screencolor=#867b5d&volume=6');
+		so.write('player');
+	}
+	window.onload = init;
+</script>
+
+
+</head> 
+<body> 
+
+<div id="center_content">
+
+	<div id="nav">
+	<a href="?ln=de">Deutsch</a> &nbsp; <a href="?ln=en">English</a> &nbsp; <a href="?ln=es">Espagnol</a>
+	</div>
+	<div id="content">
+{content}
+		
+
+	</div> 
+	
+</div> 
+</body> 
+</html>

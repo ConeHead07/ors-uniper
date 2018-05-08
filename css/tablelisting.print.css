@@ -1,0 +1,73 @@
+.tblList,
+.tblList * {
+	font-size:11pt;
+	font-weight:normal;
+	font-family:Arial,Helvetica,sans-serif;
+}
+.tblList {
+	margin-top:5pt;
+	border-collapse:collapse;
+	border-spacing:0pt;
+	border-right:1pt solid #363636;
+	border-bottom:1pt solid #363636;
+}
+
+.tblList td,
+.tblList tr td,
+.tblList thead td,
+.tblList thead tr td,
+.tblList tbody tr td,
+.tblList * td {
+	border-left:1pt solid #363636;
+	border-top:1pt solid #363636;
+	padding:1pt;
+}
+.tblList thead td,
+.tblList td.thead {
+	background:#e9e9e9;
+	color:#000;
+	font-weight:bold;
+}
+.tblList tbody {
+	
+}
+.tblList .wz1,
+.tblList .wz1 * {
+	background:#fff;
+}
+.tblList .wz2,
+.tblList .wz2 * {
+	background:#f7f7f7;
+}
+
+.tblList .wz1:hover,
+.tblList .wz2:hover {
+	background:#ffff5e;
+}
+.tblList td.int,
+.tblList td.float {
+	text-align:right;
+}
+.tblList td.sum {
+	font-weight:bold;
+}
+
+table.tblList {
+	border-top-width: 1px;
+	border-left-width: 1px;
+}
+table.tblList td {
+	border-bottom-width: 1px;
+	border-right-width: 1px;
+}
+
+.NoPageBreakInside {
+	page-break-inside:avoid;
+}
+
+.NoPageBreakAfterThis {
+	page-break-after:avoid;
+}
+.AllwaysPageBreakAfterThis {
+	page-break-after:always;
+}

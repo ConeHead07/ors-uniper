@@ -1,0 +1,1050 @@
+Start WWS-Status-Synchronisation: 2010-01-11 17:20:10<br>
+#40 Updatesuche für 390 Projekteinträge!<br>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 154153
+)
+<br>
+#61 aProjectStatus[154153]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 170377
+)
+<br>
+#61 aProjectStatus[170377]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 172992
+)
+<br>
+#61 aProjectStatus[172992]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 174801
+)
+<br>
+#61 aProjectStatus[174801]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 174939
+)
+<br>
+#61 aProjectStatus[174939]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 175440
+)
+<br>
+#61 aProjectStatus[175440]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 175649
+)
+<br>
+#61 aProjectStatus[175649]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 176608
+)
+<br>
+#61 aProjectStatus[176608]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 176703
+)
+<br>
+#61 aProjectStatus[176703]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 177179
+)
+<br>
+#61 aProjectStatus[177179]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 177892
+)
+<br>
+#61 aProjectStatus[177892]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 178200
+)
+<br>
+#61 aProjectStatus[178200]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 179079
+)
+<br>
+#61 aProjectStatus[179079]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 179876
+)
+<br>
+#61 aProjectStatus[179876]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 180058
+)
+<br>
+#61 aProjectStatus[180058]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 180321
+)
+<br>
+#61 aProjectStatus[180321]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 181524
+)
+<br>
+#61 aProjectStatus[181524]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 181971
+)
+<br>
+#61 aProjectStatus[181971]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 182170
+)
+<br>
+#61 aProjectStatus[182170]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 182639
+)
+<br>
+#61 aProjectStatus[182639]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 183053
+)
+<br>
+#61 aProjectStatus[183053]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 183347
+)
+<br>
+#61 aProjectStatus[183347]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 183431
+)
+<br>
+#61 aProjectStatus[183431]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 183534
+)
+<br>
+#61 aProjectStatus[183534]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 183535
+)
+<br>
+#61 aProjectStatus[183535]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 183678
+)
+<br>
+#61 aProjectStatus[183678]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 183914
+)
+<br>
+#61 aProjectStatus[183914]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 184080
+)
+<br>
+#61 aProjectStatus[184080]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 184253
+)
+<br>
+#61 aProjectStatus[184253]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 184412
+)
+<br>
+#61 aProjectStatus[184412]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 184436
+)
+<br>
+#61 aProjectStatus[184436]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 184563
+)
+<br>
+#61 aProjectStatus[184563]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 184589
+)
+<br>
+#61 aProjectStatus[184589]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 184705
+)
+<br>
+#61 aProjectStatus[184705]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185138
+)
+<br>
+#61 aProjectStatus[185138]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185160
+)
+<br>
+#61 aProjectStatus[185160]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185164
+)
+<br>
+#61 aProjectStatus[185164]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185228
+)
+<br>
+#61 aProjectStatus[185228]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185288
+)
+<br>
+#61 aProjectStatus[185288]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185343
+)
+<br>
+#61 aProjectStatus[185343]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 5
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185364
+)
+<br>
+#61 aProjectStatus[185364]: != wws_status:Beauftragt<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185371
+)
+<br>
+#61 aProjectStatus[185371]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185491
+)
+<br>
+#61 aProjectStatus[185491]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185558
+)
+<br>
+#61 aProjectStatus[185558]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185606
+)
+<br>
+#61 aProjectStatus[185606]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185877
+)
+<br>
+#61 aProjectStatus[185877]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185952
+)
+<br>
+#61 aProjectStatus[185952]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 185960
+)
+<br>
+#61 aProjectStatus[185960]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186016
+)
+<br>
+#61 aProjectStatus[186016]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186050
+)
+<br>
+#61 aProjectStatus[186050]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186187
+)
+<br>
+#61 aProjectStatus[186187]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186269
+)
+<br>
+#61 aProjectStatus[186269]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186313
+)
+<br>
+#61 aProjectStatus[186313]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186314
+)
+<br>
+#61 aProjectStatus[186314]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186383
+)
+<br>
+#61 aProjectStatus[186383]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186425
+)
+<br>
+#61 aProjectStatus[186425]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186519
+)
+<br>
+#61 aProjectStatus[186519]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186672
+)
+<br>
+#61 aProjectStatus[186672]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186685
+)
+<br>
+#61 aProjectStatus[186685]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 186971
+)
+<br>
+#61 aProjectStatus[186971]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 187029
+)
+<br>
+#61 aProjectStatus[187029]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 187150
+)
+<br>
+#61 aProjectStatus[187150]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 187215
+)
+<br>
+#61 aProjectStatus[187215]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 187445
+)
+<br>
+#61 aProjectStatus[187445]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 187587
+)
+<br>
+#61 aProjectStatus[187587]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 187655
+)
+<br>
+#61 aProjectStatus[187655]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 187674
+)
+<br>
+#61 aProjectStatus[187674]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 187710
+)
+<br>
+#61 aProjectStatus[187710]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 187990
+)
+<br>
+#61 aProjectStatus[187990]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 188104
+)
+<br>
+#61 aProjectStatus[188104]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 188194
+)
+<br>
+#61 aProjectStatus[188194]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 188358
+)
+<br>
+#61 aProjectStatus[188358]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 188361
+)
+<br>
+#61 aProjectStatus[188361]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 188434
+)
+<br>
+#61 aProjectStatus[188434]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 188442
+)
+<br>
+#61 aProjectStatus[188442]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 188507
+)
+<br>
+#61 aProjectStatus[188507]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 2
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 188684
+)
+<br>
+#61 aProjectStatus[188684]: != wws_status:Beauftragt<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 188722
+)
+<br>
+#61 aProjectStatus[188722]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 188761
+)
+<br>
+#61 aProjectStatus[188761]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 189297
+)
+<br>
+#61 aProjectStatus[189297]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 5
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 189372
+)
+<br>
+#61 aProjectStatus[189372]: != wws_status:Beauftragt<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 189951
+)
+<br>
+#61 aProjectStatus[189951]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 189956
+)
+<br>
+#61 aProjectStatus[189956]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 190128
+)
+<br>
+#61 aProjectStatus[190128]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 2
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 190268
+)
+<br>
+#61 aProjectStatus[190268]: != wws_status:Beauftragt<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 3
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 190272
+)
+<br>
+#61 aProjectStatus[190272]: != wws_status:Beauftragt<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 190482
+)
+<br>
+#61 aProjectStatus[190482]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 190918
+)
+<br>
+#61 aProjectStatus[190918]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 190944
+)
+<br>
+#61 aProjectStatus[190944]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 190972
+)
+<br>
+#61 aProjectStatus[190972]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 190977
+)
+<br>
+#61 aProjectStatus[190977]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 191564
+)
+<br>
+#61 aProjectStatus[191564]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#60 Array
+(
+    [Mandant] => 10
+    [Bearbeitungsstatus] => 1
+    [AbschlussStatus] => 0
+    [vorgangsnr] => 191940
+)
+<br>
+#61 aProjectStatus[191940]: != wws_status:Angebot<br>
+<div style="color:#f00;">#63 UPDATE REQUIERED !</div>
+#70 <pre>Array
+(
+    [10:Angebot] => Array
+        (
+            [0] => 154153
+            [1] => 170377
+            [2] => 172992
+            [3] => 174801
+            [4] => 174939
+            [5] => 175440
+            [6] => 175649
+            [7] => 176608
+            [8] => 176703
+            [9] => 177179
+            [10] => 177892
+            [11] => 178200
+            [12] => 179079
+            [13] => 179876
+            [14] => 180058
+            [15] => 180321
+            [16] => 181524
+            [17] => 181971
+            [18] => 182170
+            [19] => 182639
+            [20] => 183053
+            [21] => 183347
+            [22] => 183431
+            [23] => 183534
+            [24] => 183535
+            [25] => 183678
+            [26] => 183914
+            [27] => 184080
+            [28] => 184253
+            [29] => 184412
+            [30] => 184436
+            [31] => 184563
+            [32] => 184589
+            [33] => 184705
+            [34] => 185138
+            [35] => 185160
+            [36] => 185164
+            [37] => 185228
+            [38] => 185288
+            [39] => 185343
+            [40] => 185371
+            [41] => 185491
+            [42] => 185558
+            [43] => 185606
+            [44] => 185877
+            [45] => 185952
+            [46] => 185960
+            [47] => 186016
+            [48] => 186050
+            [49] => 186187
+            [50] => 186269
+            [51] => 186313
+            [52] => 186314
+            [53] => 186383
+            [54] => 186425
+            [55] => 186519
+            [56] => 186672
+            [57] => 186685
+            [58] => 186971
+            [59] => 187029
+            [60] => 187150
+            [61] => 187215
+            [62] => 187445
+            [63] => 187587
+            [64] => 187655
+            [65] => 187674
+            [66] => 187710
+            [67] => 187990
+            [68] => 188104
+            [69] => 188194
+            [70] => 188358
+            [71] => 188361
+            [72] => 188434
+            [73] => 188442
+            [74] => 188507
+            [75] => 188722
+            [76] => 188761
+            [77] => 189297
+            [78] => 189951
+            [79] => 189956
+            [80] => 190128
+            [81] => 190482
+            [82] => 190918
+            [83] => 190944
+            [84] => 190972
+            [85] => 190977
+            [86] => 191564
+            [87] => 191940
+        )
+
+    [10:Beauftragt] => Array
+        (
+            [0] => 185364
+            [1] => 188684
+            [2] => 189372
+            [3] => 190268
+            [4] => 190272
+        )
+
+)
+</pre>
+#81 <pre>UPDATE `mt_project_meta`
+SET status = &quot;Angebot&quot;
+WHERE vorgangsnr IN (154153,170377,172992,174801,174939,175440,175649,176608,176703,177179,177892,178200,179079,179876,180058,180321,181524,181971,182170,182639,183053,183347,183431,183534,183535,183678,183914,184080,184253,184412,184436,184563,184589,184705,185138,185160,185164,185228,185288,185343,185371,185491,185558,185606,185877,185952,185960,186016,186050,186187,186269,186313,186314,186383,186425,186519,186672,186685,186971,187029,187150,187215,187445,187587,187655,187674,187710,187990,188104,188194,188358,188361,188434,188442,188507,188722,188761,189297,189951,189956,190128,190482,190918,190944,190972,190977,191564,191940) AND mid = &quot;10&quot;
+/* COUNT ENTRIES: 88
+COUNT UPDATES: 0 */
+</pre>
+#81 <pre>UPDATE `mt_project_meta`
+SET status = &quot;Beauftragt&quot;
+WHERE vorgangsnr IN (185364,188684,189372,190268,190272) AND mid = &quot;10&quot;
+/* COUNT ENTRIES: 5
+COUNT UPDATES: 0 */
+</pre>
+#86 num_updates_done: 0

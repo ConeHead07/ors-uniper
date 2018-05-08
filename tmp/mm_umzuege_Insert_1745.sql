@@ -1,0 +1,61 @@
+Insert `mt_move_bayer`.`mm_umzuege` SET
+`token` = "bdf33aa723",
+`anrede` = NULL,
+`name` = "Laschewski",
+`vorname` = "Stefan",
+`email` = "s.laschewski@mertens.ag",
+`fon` = "0177-9699495",
+`ort` = "Leverkusen",
+`gebaeude` = "1",
+`raumnr` = NULL,
+`etage` = "1. OG",
+`kostenstelle` = "4501483970",
+`planonnr` = "213348",
+`umzug` = "Nein",
+`umzugstermin` = NULL,
+`umzugszeit` = NULL,
+`terminwunsch` = "2016-11-21",
+`ansprechpartner` = "Stefan Laschewski",
+`ansprechpartner_email` = "s.laschewski@mertens.ag",
+`ansprechpartner_fon` = "0177-9699495",
+`geraete_csv` = NULL,
+`bemerkungen` = "Bemerkung von slaschewski am 15.11.2016 um 10:12
+Auftrag 213348 - Uwe Bebber, Tel. 62030 Termin: bis zum 21.11.2016 -
+Gebäude C 102 Räume 1066,1057 Das Druckerpapier aus dem R. 1066 in
+den im Plan eingezeichneten Schrank legen (10 Pakete). Die Türen dieses
+Schranks ausbauen und im K18 einlagern. Den Inhalt der beiden Schränke
+in R. 1066 entsorgen (ca. 4 Umzugskartons dafür beistellen). Die beiden
+Schränke in den K03 stellen. Den Inhalt der beiden Schränke neben dem Plotter vor dem Treppenhaus entsorgen (ca. 4 Umzugskartons dafür
+beistellen). Die beiden Schränke in den K03 stellen. R. 1057: 1
+Woodtec-Element ausbauen und im K18 einlagern 3 Schränke innerhalb des
+Raums verschieben. Auftrag   Zeichnung folgt zusätzlich per Mail",
+`antragsstatus` = "bearbeitung",
+`umzugsstatus` = "temp",
+`dienstleister_id` = NULL,
+`dienstleister_name` = NULL,
+`dienstleister_bemerkung` = NULL,
+`geprueft` = "Init",
+`angeboten_am` = NULL,
+`angeboten_von` = NULL,
+`geprueft_am` = NULL,
+`geprueft_von` = NULL,
+`genehmigt_br` = "Init",
+`genehmigt_br_am` = NULL,
+`genehmigt_br_von` = NULL,
+`bestaetigt` = "Init",
+`bestaetigt_am` = NULL,
+`bestaetigt_von` = NULL,
+`abgeschlossen` = "Init",
+`abgeschlossen_am` = NULL,
+`abgeschlossen_von` = NULL,
+`genehmigt` = "Init",
+`bearbeiter_stelle` = NULL,
+`bearbeiter_name` = NULL,
+`bearbeiter_mail` = NULL,
+`bearbeiter_fon` = NULL,
+`bearbeiter_ort` = NULL,
+`bearbeiter_bemerkung` = NULL,
+`antragsteller_uid` = "2980" ,
+`antragsdatum` = NOW() ,
+`created` = NOW() ,
+ `b_modifiedby` = "2980" 

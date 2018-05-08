@@ -1,0 +1,120 @@
+<h3 class="formTitle">Gebaeude</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#padresse,
+#pcampus { display:none; }
+#pid,
+#pgebaeude,
+#pgebaeudename,
+#pnutzflaeche,
+#pbelegschaft,
+#pnutzflaeche_pro_ma,
+#pflaeche_pro_ma,
+#pbundesland,
+#pplz,
+#pstadt,
+#pstadtname,
+#pNL,
+#pschlagwort,
+#pObjektstatus,
+#pgebaeudecluster,
+#ptop42,
+#pAktiv,
+#pregionalmanager,
+#pstandortmanager,
+#pobjektleiter { color:#f00 }
+</style>
+<div class="input" id="InputBoxid">
+<div class="inputLbl"><label errclass="id" for="eingabe[id]" id="InputLblid">Id<span class="showPflicht" id="pid">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[id]" id="eingabe[id]" maxlength="9" value="{eingabe[id]}"></div>
+</div>
+<div class="input" id="InputBoxgebaeude">
+<div class="inputLbl"><label errclass="gebaeude" for="eingabe[gebaeude]" id="InputLblgebaeude">Gebaeude<span class="showPflicht" id="pgebaeude">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[gebaeude]" id="eingabe[gebaeude]" maxlength="30" value="{eingabe[gebaeude]}"></div>
+</div>
+<div class="input" id="InputBoxgebaeudename">
+<div class="inputLbl"><label errclass="gebaeudename" for="eingabe[gebaeudename]" id="InputLblgebaeudename">Gebaeudename<span class="showPflicht" id="pgebaeudename">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[gebaeudename]" id="eingabe[gebaeudename]" maxlength="100" value="{eingabe[gebaeudename]}"></div>
+</div>
+<div class="input" id="InputBoxnutzflaeche">
+<div class="inputLbl"><label errclass="nutzflaeche" for="eingabe[nutzflaeche]" id="InputLblnutzflaeche">Nutzflaeche<span class="showPflicht" id="pnutzflaeche">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[nutzflaeche]" id="eingabe[nutzflaeche]" maxlength="9,2" value="{eingabe[nutzflaeche]}"></div>
+</div>
+<div class="input" id="InputBoxbelegschaft">
+<div class="inputLbl"><label errclass="belegschaft" for="eingabe[belegschaft]" id="InputLblbelegschaft">Belegschaft<span class="showPflicht" id="pbelegschaft">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[belegschaft]" id="eingabe[belegschaft]" maxlength="9" value="{eingabe[belegschaft]}"></div>
+</div>
+<div class="input" id="InputBoxnutzflaeche_pro_ma">
+<div class="inputLbl"><label errclass="nutzflaeche_pro_ma" for="eingabe[nutzflaeche_pro_ma]" id="InputLblnutzflaeche_pro_ma">Nutzflaeche_pro_ma<span class="showPflicht" id="pnutzflaeche_pro_ma">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[nutzflaeche_pro_ma]" id="eingabe[nutzflaeche_pro_ma]" maxlength="9,2" value="{eingabe[nutzflaeche_pro_ma]}"></div>
+</div>
+<div class="input" id="InputBoxflaeche_pro_ma">
+<div class="inputLbl"><label errclass="flaeche_pro_ma" for="eingabe[flaeche_pro_ma]" id="InputLblflaeche_pro_ma">Flaeche_pro_ma<span class="showPflicht" id="pflaeche_pro_ma">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[flaeche_pro_ma]" id="eingabe[flaeche_pro_ma]" maxlength="9,2" value="{eingabe[flaeche_pro_ma]}"></div>
+</div>
+<div class="input" id="InputBoxbundesland">
+<div class="inputLbl"><label errclass="bundesland" for="eingabe[bundesland]" id="InputLblbundesland">Bundesland<span class="showPflicht" id="pbundesland">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[bundesland]" id="eingabe[bundesland]" maxlength="60" value="{eingabe[bundesland]}"></div>
+</div>
+<div class="input" id="InputBoxplz">
+<div class="inputLbl"><label errclass="plz" for="eingabe[plz]" id="InputLblplz">Plz<span class="showPflicht" id="pplz">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[plz]" id="eingabe[plz]" maxlength="10" value="{eingabe[plz]}"></div>
+</div>
+<div class="input" id="InputBoxstadt">
+<div class="inputLbl"><label errclass="stadt" for="eingabe[stadt]" id="InputLblstadt">Stadt<span class="showPflicht" id="pstadt">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[stadt]" id="eingabe[stadt]" maxlength="3" value="{eingabe[stadt]}"></div>
+</div>
+<div class="input" id="InputBoxstadtname">
+<div class="inputLbl"><label errclass="stadtname" for="eingabe[stadtname]" id="InputLblstadtname">Stadtname<span class="showPflicht" id="pstadtname">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[stadtname]" id="eingabe[stadtname]" maxlength="50" value="{eingabe[stadtname]}"></div>
+</div>
+<div class="input" id="InputBoxadresse">
+<div class="inputLbl"><label errclass="adresse" for="eingabe[adresse]" id="InputLbladresse">Adresse<span class=isPflicht id="padresse">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[adresse]" id="eingabe[adresse]" maxlength="100" value="{eingabe[adresse]}"></div>
+</div>
+<div class="input" id="InputBoxcampus">
+<div class="inputLbl"><label errclass="campus" for="eingabe[campus]" id="InputLblcampus">Campus<span class=isPflicht id="pcampus">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[campus]" id="eingabe[campus]" maxlength="15" value="{eingabe[campus]}"></div>
+</div>
+<div class="input" id="InputBoxNL">
+<div class="inputLbl"><label errclass="NL" for="eingabe[NL]" id="InputLblNL">NL<span class="showPflicht" id="pNL">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[NL]" id="eingabe[NL]" maxlength="60" value="{eingabe[NL]}"></div>
+</div>
+<div class="input" id="InputBoxschlagwort">
+<div class="inputLbl"><label errclass="schlagwort" for="eingabe[schlagwort]" id="InputLblschlagwort">Schlagwort<span class="showPflicht" id="pschlagwort">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[schlagwort]" id="eingabe[schlagwort]" maxlength="50" value="{eingabe[schlagwort]}"></div>
+</div>
+<div class="input" id="InputBoxObjektstatus">
+<div class="inputLbl"><label errclass="Objektstatus" for="eingabe[Objektstatus]" id="InputLblObjektstatus">Objektstatus<span class="showPflicht" id="pObjektstatus">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[Objektstatus]" id="eingabe[Objektstatus]" maxlength="50" value="{eingabe[Objektstatus]}"></div>
+</div>
+<div class="input" id="InputBoxgebaeudecluster">
+<div class="inputLbl"><label errclass="gebaeudecluster" for="eingabe[gebaeudecluster]" id="InputLblgebaeudecluster">Gebaeudecluster<span class="showPflicht" id="pgebaeudecluster">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[gebaeudecluster]" id="eingabe[gebaeudecluster]" maxlength="80" value="{eingabe[gebaeudecluster]}"></div>
+</div>
+<div class="input" id="InputBoxtop42">
+<div class="inputLbl"><label errclass="top42" for="eingabe[top42]" id="InputLbltop42">Top42<span class="showPflicht" id="ptop42">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[top42]" id="eingabe[top42]" maxlength="1" value="{eingabe[top42]}"></div>
+</div>
+<div class="input" id="InputBoxAktiv">
+<div class="inputLbl"><label errclass="Aktiv" for="eingabe[Aktiv]" id="InputLblAktiv">Aktiv<span class="showPflicht" id="pAktiv">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[Aktiv]" id="eingabe[Aktiv]" maxlength="20" value="{eingabe[Aktiv]}"></div>
+</div>
+<div class="input" id="InputBoxregionalmanager">
+<div class="inputLbl"><label errclass="regionalmanager" for="eingabe[regionalmanager]" id="InputLblregionalmanager">Regionalmanager<span class="showPflicht" id="pregionalmanager">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[regionalmanager]" id="eingabe[regionalmanager]" maxlength="80" value="{eingabe[regionalmanager]}"></div>
+</div>
+<div class="input" id="InputBoxstandortmanager">
+<div class="inputLbl"><label errclass="standortmanager" for="eingabe[standortmanager]" id="InputLblstandortmanager">Standortmanager<span class="showPflicht" id="pstandortmanager">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[standortmanager]" id="eingabe[standortmanager]" maxlength="80" value="{eingabe[standortmanager]}"></div>
+</div>
+<div class="input" id="InputBoxobjektleiter">
+<div class="inputLbl"><label errclass="objektleiter" for="eingabe[objektleiter]" id="InputLblobjektleiter">Objektleiter<span class="showPflicht" id="pobjektleiter">*</span></label></div>
+<div class="inputFrm"><input LINE="429"  type="text" class="itext" name="eingabe[objektleiter]" id="eingabe[objektleiter]" maxlength="80" value="{eingabe[objektleiter]}"></div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="484" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Preview]" value="Vorschau"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><br>
+<input LINE="489" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen</form></div>

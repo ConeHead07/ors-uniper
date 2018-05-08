@@ -1,0 +1,87 @@
+<title>Anmeldung {HomepageTitle}</title>
+    <meta name="author" content="Frank Barthold" />
+    <meta name="author:email" content="Frank.Barthold@gmail.com" />
+<script>
+	function init() {
+		if (document.getElementById("inputUser")) {
+			document.getElementById("inputUser").focus();
+		}
+	}
+</script>
+
+<table width="350" height="200" class="LoginBox" align=center>
+<thead>
+<tr>
+<td class="hdCell">{HomepageTitle}: Benutzer-Login</td>
+</tr>
+</thead>
+<tr>
+<td class="topCell" style="padding-top:20px;">
+<style>
+#maintenance-info {
+	display:none;
+	border-radius:4px;
+	font-size:13px;
+	padding:5px;
+	margin-bottom:20px;
+	background:#0757f769;
+	color:#00349c;
+	border
+}
+#maintenance-info h4 {
+	margin:0 0 3px 0;
+	padding:0;
+	font-size:14px;
+}
+#maintenance-info > div {
+	background-color:rgba(255,255,255,.8);
+	padding:5px
+}
+#maintenance-info p {
+	margin:0;
+	padding:0 0 5px 0;
+	line-height:135%;
+}
+#maintenance-info p + p {
+	padding-bottom:0;
+}
+</style>
+<div id="maintenance-info">
+	<h4>
+		!!! ACHTUNG: IT-Optimierung !!!
+	</h4>
+	<div>
+		<p>
+		Um f&uuml;r Sie noch besser, schneller und effizienter agieren zu k&ouml;nnen, 
+		f&uuml;hren wir in der Zeit vom <strong>23.12.2017 - 01.01.2018</strong> eine umfangreiche IT-Umstellung durch.
+		</p>
+		<p>
+		Damit bereiten wir uns auf die neuen Herausforderungen der Digitalisierung vor, 
+		von der Sie ebenfalls profitieren.
+		</p>
+	</div>
+</div>
+<!-- {msg} -->
+<!-- {error} -->
+<table>
+<form action="{UrlToHomepage}login.php" method="post">
+<tr>
+	<td align=right class="tdLbl">Benutzername</td>
+	<td><input id="inputUser" type="text" name="username" value="{username}">{email_tld_only}</td>
+</tr>
+<tr>
+	<td align=right class="tdLbl">Passwort</td>
+	<td><input type="password" name="password" value=""></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" name="login" value="Anmelden"></td>
+</tr>
+<input type="hidden" name="redirect" value="{redirect}">
+</form>
+</table>
+<div>{login_hint}</div>
+<div class="LoginAdLinks">
+{LnkRegister} 
+{LnkForgetPw}</div>
+</td></tr></table>

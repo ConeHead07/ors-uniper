@@ -1,0 +1,20 @@
+
+<h2 style="margin:0;">Ausf&uuml;hrungsorte</h2> 
+
+<table class="MitarbeierItem">
+  <thead>
+  <tr>
+    <td class="ColNName">Von</td>
+    <td class="ColVName">Nach</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="inputRowVon">
+    <input id="von_gebaeude_id"  value="{$AS.von_gebaeude_id|escape}" type="hidden"  name="AS[von_gebaeude_id]">
+    <input id="nach_gebaeude_id" value="{$AS.nach_gebaeude_id|escape}" type="hidden" name="AS[nach_gebaeude_id]">
+    <td class="ort" onclick="get_gebaeude(O('von_gebaeude_id'), this)"></td>    
+    <td class="zort" onclick="get_gebaeude(O('von_gebaeude_id'), this)"></td>
+  </tr>
+</tbody>
+</table>
+</div>

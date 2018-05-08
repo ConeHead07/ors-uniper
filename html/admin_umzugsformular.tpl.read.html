@@ -1,0 +1,144 @@
+<link rel="STYLESHEET" type="text/css" href="../css/SelBox.easy.css">
+<link rel="STYLESHEET" type="text/css" href="css/SelBox.easy.css">
+
+<div id="SysInfoBox"></div>
+
+<link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
+<link rel="stylesheet" type="text/css" href="../css/umzugsformular.css">
+<!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
+<h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1> 
+<p>
+<div id="Umzugsantrag" class="divInlay"> 
+<h2 style="margin:0;">Auftrags-Status</h2>
+<table border=0 cellspacing=1 cellpadding=1>
+  <tr>
+    <td style="padding:0;height:auto;width:200px;"><label for="termin" style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
+    <td style="padding:0;width:250px;"><input type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
+	onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td style="padding:0;height:auto;"><label for="umzugszeitt" style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
+    <td style="padding:0;"><input type="text" value='{$AS.umzugszeit|escape}'
+	id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td style="padding:0;height:auto;"><label for="termin" style="display:block;width:auto;">Antragsdatum:</label></td>
+    <td style="padding:0;">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
+  </tr>
+  {if $AS.angeboten_am}
+  <tr>
+    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">Genehmigt:</label></td>
+    <td style="padding:0;" class="status_{$AS.genehmigt_br}"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></td>
+  </tr>
+  {else}
+  <tr>
+    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">Bestätigt:</label></td>
+    <td style="padding:0;" class="status_{$AS.genehmigt_br}"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></td>
+  </tr>
+  {/if}
+  <tr>
+    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">Abgeschlossen:</label></td>
+    <td style="padding:0;" class="status_{$AS.abgeschlossen}"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="umzugsstatus" style="display:block;width:auto;">Status:</label></td>
+    <td style="padding:0;">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</td>
+  </tr>
+	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+</table>
+<a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Anforderungsblatt / Druckansicht</a>
+<br>
+
+<div style="float:left">
+<h2 style="margin:0;">Leistungsantragsteller</h2> 
+<table>
+  <tr>
+    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
+    <td style="padding:0;width:250px;"><span data-fld="AS[vorname]"></span>{$AS.vorname|escape}</span> <span data-fld="AS[name]"></span>{$AS.name|escape}</span></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
+    <td style="padding:0;" data-fld="AS[email]">{$AS.email|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
+    <td style="padding:0;" data-fld="AS[fon]">{$AS.fon|escape}</td>
+  </tr>
+
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Standort:</label></td>
+    <td style="padding:0;" data-fld="AS[ort]">{$AS.ort|escape}</td>
+  </tr>
+
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Gebäude:</label></td>
+    <td style="padding:0;" data-fld="AS[gebauede]">{$AS.gebaeude|escape}</td>
+  </tr>
+  
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Etage:</label></td>
+    <td style="padding:0;"><span data-fld="AS[etage]">{$AS.etage|escape}</span></td>
+  </tr>
+  
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Raum-Nr:</label></td>
+    <td style="padding:0;"><span data-fld="AS[raumnr]">{$AS.raumnr|escape}</span></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">{$ASConf.kostenstelle.label}:</label></td>
+    <td style="padding:0;"><span data-fld="AS[kostenstelle]">{$AS.kostenstelle|escape}</span></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Ticket-Nr.:</label></td>
+    <td style="padding:0;"><span data-fld="AS[planonr]">{$AS.planonnr|escape}</span></td>
+  </tr>
+  
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Terminwunsch:</label></td>
+    <td style="padding:0;" data-fld="AS[terminwunsch]">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</td>
+  </tr>
+	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+</table>
+<br>
+</div>
+{if 1}
+<div style="float:left; margin-left:50px;">
+    {include file="admin_umzugsformular_lieferauswahl.tpl.html"}
+</div>
+{/if}
+
+<br clear= "all">
+<div style="clear:all;"></div>
+
+
+{if 0}
+    {include file="admin_umzugsformular_mitarbeiterauswahl.tpl.html"}
+{/if}
+{if 0}
+    {include file="admin_umzugsformular_geraeteauswahl.tpl.html"}
+{/if}
+{if 0}
+    {include file="admin_umzugsformular_ortsauswahl.tpl.html"}
+{/if}
+{if 1}
+    {include file="umzugsformular_leistungsauswahl.tpl.read.html"}
+{/if}
+
+{include file="umzugsformular_attachments.tpl.read.html" internal=1}
+<br>
+{include file="umzugsformular_attachments.tpl.read2.html" UmzugsAnlagen=$UmzugsAnlagenIntern internal=1}
+
+{if 1}
+<div style="width:100%">
+    {include file="admin_umzugsformular_gruppierung.tpl.html"}
+</div>
+{/if}
+
+<div id="BoxBemerkungen">
+<strong>Bemerkungen:</strong><br>
+<div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
+</div>
+<div id="LoadingBar"></div>
+
+</div> 

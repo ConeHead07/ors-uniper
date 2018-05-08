@@ -1,0 +1,15 @@
+Betreff=Umzug ID {AID} - Abgelehnt
+
+Sehr geehrter Anwender,
+sehr geehrte Anwenderin,
+
+Ihre Leistungsanforderung mit der ID {AID} wurde 
+abgelehnt und geschlossen.
+
+Begründung:
+{Bemerkung}
+
+Mit freundlichen Grüßen
+
+Ihr
+{HomepageTitle}

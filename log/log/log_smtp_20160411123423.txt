@@ -1,0 +1,187 @@
+
+
+START:SMTP-CONNECT: 2016-04-11 12:34:23
+|secs:0|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Mon, 11 Apr 2016 12:34:22 +0200
+|secs:0|CLIENT: EHLO bayer.mertens.ag
+|secs:0|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:0|SERVER: 250-SIZE 36700160
+|secs:0|SERVER: 250-PIPELINING
+|secs:0|SERVER: 250-DSN
+|secs:0|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:0|SERVER: 250-STARTTLS
+|secs:0|SERVER: 250-X-ANONYMOUSTLS
+|secs:0|SERVER: 250-AUTH NTLM LOGIN
+|secs:0|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:0|SERVER: 250-8BITMIME
+|secs:0|SERVER: 250-BINARYMIME
+|secs:0|SERVER: 250-CHUNKING
+|secs:0|SERVER: 250 XRDST
+|secs:0|CLIENT: AUTH LOGIN
+|secs:0|SERVER: 334 VXNlcm5hbWU6
+|secs:0|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:0|SERVER: 334 UGFzc3dvcmQ6
+|secs:0|CLIENT: bWVyVGVuczQ3ODc3
+|secs:0|SERVER: 235 2.7.0 Authentication successful
+|secs:0|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:24|SERVER: 250 2.1.0 Sender OK
+|secs:24|CLIENT: RCPT TO:<m.katzler@mertens.ag>
+|secs:24|SERVER: 250 2.1.5 Recipient OK
+|secs:24|CLIENT: DATA
+|secs:24|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>
+|secs:24|CLIENT: Subject: Umzug ID 494 - Durchführung
+From: ors <bayerors@mertens.ag>
+Reply-To: bayerors@mertens.ag
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2016-04-11 12:34:47
+X-QUEUE-ID:1
+
+Sehr geehrter Anwender,
+sehr geehrte Anwenderin,
+
+Ihre Leistungsanforderung mit der ID 494 wurde durchgeführt und wird geschlossen.
+
+Antragsteller:  Michael Katzler
+Ausführungszeit 08.04.2016
+SAP Nr.         4501351235	
+Ticket Nr.      182169
+
+Sie können den  Vorgang  unter folgendem Link  einsehen:
+https://bayer.mertens.ag/bayer/?s=kantrag&id=494
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+.
+|secs:24|SERVER: 250 2.6.0 <f3a7291a-544d-4cd7-9896-41ac73dead27@TE2013.mertens.int> [InternalId=76291504079110, Hostname=Te2013.mertens.int] Queued mail for delivery
+|secs:24|CLIENT: QUIT
+|secs:24|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2016-04-11 12:34:47
+
+START:SMTP-CONNECT: 2016-04-11 12:34:47
+|secs:24|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Mon, 11 Apr 2016 12:34:47 +0200
+|secs:24|CLIENT: EHLO bayer.mertens.ag
+|secs:24|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:24|SERVER: 250-SIZE 36700160
+|secs:24|SERVER: 250-PIPELINING
+|secs:24|SERVER: 250-DSN
+|secs:24|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:24|SERVER: 250-STARTTLS
+|secs:24|SERVER: 250-X-ANONYMOUSTLS
+|secs:24|SERVER: 250-AUTH NTLM LOGIN
+|secs:24|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:24|SERVER: 250-8BITMIME
+|secs:24|SERVER: 250-BINARYMIME
+|secs:24|SERVER: 250-CHUNKING
+|secs:24|SERVER: 250 XRDST
+|secs:24|CLIENT: AUTH LOGIN
+|secs:24|SERVER: 334 VXNlcm5hbWU6
+|secs:24|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:24|SERVER: 334 UGFzc3dvcmQ6
+|secs:24|CLIENT: bWVyVGVuczQ3ODc3
+|secs:24|SERVER: 235 2.7.0 Authentication successful
+|secs:24|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:60|SERVER: 250 2.1.0 Sender OK
+|secs:60|CLIENT: RCPT TO:<m.katzler@mertens.ag>
+|secs:60|SERVER: 250 2.1.5 Recipient OK
+|secs:60|CLIENT: DATA
+|secs:60|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>
+|secs:60|CLIENT: Subject: Umzug ID 494 - Durchführung
+From: ors <bayerors@mertens.ag>
+Reply-To: bayerors@mertens.ag
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2016-04-11 12:35:23
+X-QUEUE-ID:1
+
+Sehr geehrter Anwender,
+sehr geehrte Anwenderin,
+
+Ihre Leistungsanforderung mit der ID 494 wurde durchgeführt und wird geschlossen.
+
+Antragsteller:  Michael Katzler
+Ausführungszeit 08.04.2016
+SAP Nr.         4501351235	
+Ticket Nr.      182169
+
+Sie können den  Vorgang  unter folgendem Link  einsehen:
+https://bayer.mertens.ag/bayer/?s=pantrag&id=494
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+.
+|secs:61|SERVER: 250 2.6.0 <66e0fb12-76a9-463d-84fd-9065f9090e94@TE2013.mertens.int> [InternalId=76291504079114, Hostname=Te2013.mertens.int] Queued mail for delivery
+|secs:61|CLIENT: QUIT
+|secs:61|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2016-04-11 12:35:24
+
+START:SMTP-CONNECT: 2016-04-11 12:35:24
+|secs:61|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Mon, 11 Apr 2016 12:35:23 +0200
+|secs:61|CLIENT: EHLO bayer.mertens.ag
+|secs:61|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:61|SERVER: 250-SIZE 36700160
+|secs:61|SERVER: 250-PIPELINING
+|secs:61|SERVER: 250-DSN
+|secs:61|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:61|SERVER: 250-STARTTLS
+|secs:61|SERVER: 250-X-ANONYMOUSTLS
+|secs:61|SERVER: 250-AUTH NTLM LOGIN
+|secs:61|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:61|SERVER: 250-8BITMIME
+|secs:61|SERVER: 250-BINARYMIME
+|secs:61|SERVER: 250-CHUNKING
+|secs:61|SERVER: 250 XRDST
+|secs:61|CLIENT: AUTH LOGIN
+|secs:61|SERVER: 334 VXNlcm5hbWU6
+|secs:61|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:61|SERVER: 334 UGFzc3dvcmQ6
+|secs:61|CLIENT: bWVyVGVuczQ3ODc3
+|secs:61|SERVER: 235 2.7.0 Authentication successful
+|secs:61|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:79|SERVER: 250 2.1.0 Sender OK
+|secs:79|CLIENT: RCPT TO:<BreUk@mertens.ag>
+|secs:79|SERVER: 250 2.1.5 Recipient OK
+|secs:79|CLIENT: DATA
+|secs:79|SERVER: 354 Start mail input; end with <CRLF>.<CRLF>
+|secs:79|CLIENT: Subject: Umzug ID 494 - Durchführung
+From: ors <bayerors@mertens.ag>
+Reply-To: bayerors@mertens.ag
+BCC:  frank.barthold@googlemail.com
+Errors-To: bayerors@mertens.ag
+Return-Path: bayerors@mertens.ag
+Bounce-To: bayerors@mertens.ag
+X-QUEUE-Date: 2016-04-11 12:35:42
+X-QUEUE-ID:1
+
+Sehr geehrter Anwender,
+sehr geehrte Anwenderin,
+
+Ihre Leistungsanforderung mit der ID 494 wurde durchgeführt und wird geschlossen.
+
+Antragsteller:  Michael Katzler
+Ausführungszeit 08.04.2016
+SAP Nr.         4501351235	
+Ticket Nr.      182169
+
+Sie können den  Vorgang  unter folgendem Link  einsehen:
+https://bayer.mertens.ag/bayer/?s=pantrag&id=494
+
+Mit freundlichen Grüßen
+
+Ihr
+ORS Order Request System
+.
+|secs:79|SERVER: 250 2.6.0 <66ba9336-de46-41e7-bc89-813b9b004bc8@TE2013.mertens.int> [InternalId=76291504079121, Hostname=Te2013.mertens.int] Queued mail for delivery
+|secs:79|CLIENT: QUIT
+|secs:79|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2016-04-11 12:35:42

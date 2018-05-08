@@ -1,0 +1,95 @@
+
+<h2 style="margin:0;">Mitarbeiterliste</h2> 
+
+<div class="SelBoxMitarbeiterWidth">
+<span style="float:left;margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="mitarbeiter_new_search();return false;">
+Mitarbeiter aus Liste hinzufügen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
+<span style="float:right;margin-bottom:2px;color:#000;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="mitarbeiter_neu_anlegen();return false;">
+Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" alt=""></span><br clear="all">
+<table class="MitarbeierItem" style="border:0;padding:0;margin:0 0 15px 0"><tr><td style="border:0;padding:0;margin:0">
+<input name="name" id="SelectMitarbeiter" class="SelBoxMitarbeiterWidth UpperCase" style="border:1px solid #549e1a" onclick="get_mitarbeiter(this)" ondblclick="mitarbeiter_new_search()"></div><br>
+</td></tr></table>
+<ol type="1">
+<div id="mitarbeiterliste">
+{foreach name=MAList item=MA from=$Mitarbeiterliste}
+{if $MA.maid}Select{else}Input{/if}
+<table id="MA{$smarty.foreach.MAList.iteration}" class="MitarbeierItem">
+  <caption style="font-size:11px;padding:0px;height:18px;">
+  {if $MA.maid}
+  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;">Sind die Daten korrekt? Anmerkungen und abweichende Zuordnungen (Raum,Abtlg) bitte unten ins Feld <span style="text-decoration:underline;">Bemerkungen</span> eintragen</div></div>
+  {else}
+  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;color:#f00;">Bitte nur händisch eintragen, wenn der Mitarbeiter nicht ausgewählt werden kann!</div></div>
+  {/if}
+  <div style="float:right;"><span onclick="dropMA(this)" style="cursor:pointer;">Aus Anforderungsliste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
+</caption>
+  <thead>
+  <tr>
+    <td class="ColNName">Nachname</td>
+    <td class="ColVName">Vorname</td>
+    <td class="ColXF" title="Bitte geben Sie bei externen Mitarbeitern die Firma an!">Fremdfirma</td>
+	
+    <td class="ColAbt">Abtg</td>
+	<td class="ColGeb">Geb&auml;ude</td>
+    <td class="ColEtg">Etage</td>
+    <td class="ColRnr">R-Nr</td>
+    <td class="ColAP">AP-Nr</td>
+    
+    <td class="ColFon">Tel-Nr</td>
+    <td class="ColPC">PC-Nr</td>
+    <td class="ColIP">Feste IP</td>
+  </tr>
+  </thead>
+  <tbody>
+  {if $MA.maid}
+  <tr class="inputRowVon">
+	<td class="nn"><input type="hidden" name="MA[mid][]" value="{$MA.mid|escape}"><!-- 
+ 	 --><input type="hidden" name="MA[maid][]" value="{$MA.maid|escape}"><!-- 
+	 --><input value="{$MA.name|escape}" readonly="true" id="mitarbeiter"  xonclick="get_mitarbeiter(this)"  class="AutoFill UpperCase" type="text" name="MA[name][]"></td>
+    <td class="vn"><input value="{$MA.vorname|escape}" readonly="true" class="itxt itxt1col UpperCase AutoFill" type="text" name="MA[vorname][]"></td>
+	<td class="xf"><input value="{$MA.extern_firma|escape}" readonly="true" xonclick="get_extern_firma(this)" class="itxt itxt1col AutoFill" size=15 type="text" name="MA[extern_firma][]"></td>
+	
+	<td class="abt"><input value="{$MA.abteilung|escape}" readonly="true" xonclick="get_abteilung(this)" class="itxt AutoFill" size=4 type="text" name="MA[abteilung][]"></td>
+	<td class="geb"><input  autocomplete="off" value="{$MA.gebaeude|escape}" readonly="true" xonclick="get_gebaeude(this)" class="itxt itxt1col AutoFill" type="text" name="MA[gebaeude][]"></td>
+    <td class="etg"><input value="{$MA.etage|escape}" xonclick="get_etage(this)" readonly="true" class="itxt AutoFill" type="text" name="MA[etage][]"></td>
+    <td class="rnr"><input value="{$MA.raumnr|escape}" xonclick="get_raumnr(this)" readonly="true" class="itxt AutoFill" size=8 type="text" name="MA[raumnr][]"></td>
+    <td class="apnr"><input value="{$MA.apnr|escape}" class="itxt AutoFill" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
+    
+    <td class="fon"><input value="{$MA.fon|escape}" onclick="get_fon(this)" class="itxt AutoFill" type="text" name="MA[fon][]"></td>
+    <td class="pcnr"><input value="{$MA.pcnr|escape}" onclick="get_pcnr(this)" class="itxt AutoFill" type="text" name="MA[pcnr][]"></td>
+    <td class="festeip"><input value="{$MA.festeip|escape}" class="itxt" type="text" name="MA[festeip][]"></td>
+</tr>
+  {else}
+  <tr class="inputRowVon">
+    <td class="nn"><input type="hidden" name="MA[mid][]" value=""><!-- 
+ 	 --><input type="hidden" name="MA[maid][]" value=""><!-- 
+	 --><input value="{$MA.name|escape}" id="mitarbeiter"  xonclick="get_mitarbeiter(this)"  class="itxt itxt1col UpperCase UserInput" type="text" name="MA[name][]"></td>
+    <td class="vn"><input value="{$MA.vorname|escape}" class="itxt itxt1col UpperCase UserInput" type="text" name="MA[vorname][]"></td>
+	<td class="xf"><input value="{$MA.extern_firma|escape}" onclick="get_extern_firma(this)" class="itxt itxt1col UserInput" size=15 type="text" name="MA[extern_firma][]"></td>
+	
+	<td class="abt"><input value="{$MA.abteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" size=4 type="text" name="MA[abteilung][]"></td>
+	<td class="geb"><input  autocomplete="off" value="{$MA.gebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col UserInput" type="text" name="MA[gebaeude][]"></td>
+    <td class="etg"><input value="{$MA.etage|escape}" onclick="get_etage(this)" readonly="true" class="itxt UserInput" type="text" name="MA[etage][]"></td>
+    <td class="rnr"><input value="{$MA.raumnr|escape}" onclick="get_raumnr(this)" readonly="true" class="itxt UserInput" size=8 type="text" name="MA[raumnr][]"></td>
+    <td class="apnr"><input value="{$MA.apnr|escape}" class="itxt" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
+    
+    <td class="fon"><input value="{$MA.fon|escape}" onclick="get_fon(this)" class="itxt AutoFill" type="text" name="MA[fon][]"></td>
+    <td class="pcnr"><input value="{$MA.pcnr|escape}" onclick="get_pcnr(this)" class="itxt AutoFill" type="text" name="MA[pcnr][]"></td>
+    <td class="festeip"><input value="{$MA.festeip|escape}" class="itxt" type="text" name="MA[festeip][]"></td>
+	</tr>
+  {/if}
+  <tr class="inputRowZiel">
+    <td class="ziel" align=right>Anforderungsart</td>
+	<td class="uart"><input value="{$MA.umzugsart|escape}" class="UserInput" readonly="true" onclick="get_umzugsart(this)" type="text" name="MA[umzugsart][]"></td>
+    <td class="ziel" align=right> Nach:</td>
+    <td class="etg"><input value="{$MA.zabteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt" type="text" name="MA[zabteilung][]"></td>
+	<td class="zort"><input value="{$MA.zgebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt" type="text" name="MA[zgebaeude][]"></td>
+    <td class="geb"><input value="{$MA.zetage|escape}" readonly="true" onclick="get_etage(this)" class="itxt" type="text" name="MA[zetage][]"></td>
+    <td class="rnr"><input value="{$MA.zraumnr|escape}" readonly="true" onclick="get_raumnr(this)" class="itxt" type="text" name="MA[zraumnr][]"></td>
+    <td class="rnr"><input value="{$MA.zapnr|escape}"  class="itxt" type="text" name="MA[zapnr][]"></td>
+    <td class="zspace" colspan=3></td>
+</tr>
+</tbody>
+</table>
+{/foreach}
+</div>
+</ol>

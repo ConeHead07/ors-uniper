@@ -1,0 +1,189 @@
+<style>
+.titelbalken {
+	background:#83a7e2;
+}
+div.readInputText {
+	width:500px;
+	border:1px solid silver;
+	font:12px normal black Arial,sans-serif;
+	margin-top:5px;
+	margin-bottom:10px;
+	padding:4px;
+}
+div.readInputHtml {
+	width:500px;
+	border:1px solid silver;
+	margin-top:5px;
+	margin-bottom:10px;
+	padding:4px;
+}
+.timerJa,
+.timerNein {
+	display:none;
+}
+.timerTimer {
+	display:;
+}
+</style>
+<script>
+function sendCheck() {
+	if (document.getElementById("classid") != null) {
+		var inputClassId = document.getElementById("classid");
+		if (inputClassId.tagName.toUpperCase() == "SELECT") {
+			for (var i = 0; i < inputClassId.length; i++) {
+				if (inputClassId.option[i].value) inputClassId.option[i].selected = true;
+			}
+		}
+	}
+}
+</script>
+<form onsubmit="sendCheck()" action="index.php?area=admin&task=cms_ext&srv={srv}" method="post">
+<table cellpadding="1" cellspacing="0" border="0" width="100%" align="center">
+	<tr>
+		<td bgcolor=red style="background:red;"><strong><font color="#FFFFFF">
+		&nbsp; : : Vorschau : Möchten Sie den Beitrag so speichern?</font></strong></td>
+	</tr>
+</table>
+<input type='submit' value='Speichern' name='speichern'>
+<input type='submit' value='korrigieren' name='korrigieren'>
+<br>&nbsp;<br>
+<table cellpadding="0" cellspacing="0" border="0" width="500">
+
+<tr>
+	<td class="titelbalken"><b>Notation: %lesen[notation]%</b></td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Sprache: %lesen[lang]%</b></td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Gemeinsame SprachId: %lesen[common_lang_key]%</b></td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Trailer / Listentext</b></td>
+</tr>
+<tr>
+	<td><b>Trailer anzeigen</b> %lesen[antrailern]%</td>
+</tr>
+<!-- Start: Inhaltstabelle Gross/Blau -->
+<tr>
+	<td>
+	<div class="readInputHtml">
+	<table class="tblContent" cellspacing=0 border=0>
+		<tr>
+			<td class="contentTitle">%lesen[listentitel]%</td>
+		</tr>
+		<tr>
+			<td class="contentTextXyPos">%lesen[listentext]%</td>
+		</tr>
+	</table></div>
+	<br></td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Media / Video</b></td>
+</tr>
+<tr>
+	<td><b>Mediaquelle / Pfad</b><br>
+	%lesen[media_src]%<b><br>
+	<input type="text" name="eingabe[media_src]" value="%eingabe[media_src]%" size="32" maxlength="32" style="width:550px; border: thin groove;">
+	</td>
+</tr>
+<tr>
+	<td><b>Mediaattribute: Höhe, Breite, Type, Autostart etc.</b><br>
+	%lesen[media_params]%
+	<br></td>
+</tr>
+<tr>
+	<td><!-- {media_object} --></td>
+</tr>
+
+<tr>
+	<td class="titelbalken"><b>Volltext / Mehr-Text</b></td>
+</tr>
+<tr>
+	<td><b>Volltext anzeigen (...mehr)</b> %lesen[linkzumvolltext]%</td>
+</tr>
+
+<tr>
+	<td>
+	<div class="readInputHtml">
+	<table class="tblContent" cellspacing=0 border=0>
+		<tr>
+			<td>%lesen[text2mehr]%</td>
+		</tr>
+		<tr>
+			<td class="contentTitle">%lesen[titel]%</td>
+		</tr>
+		<tr>
+			<td class="contentTextXyPos">%lesen[volltext]%</td>
+		</tr>
+	</table></div>
+	<br></td>
+</tr>
+
+<!-- Ende: Inhaltstabelle Gross/Blau -->
+
+
+<tr>
+	<td class="titelbalken"><b>Verschlagwortung</b></td>
+</tr>
+<tr>
+	<td><b>Freie Schlagwörter:</b><br>
+	<div class="readInputText">%lesen[schlagwort]%</div>
+	</td>
+</tr>
+<tr>
+	<td><b>Deskriptoren</b><br>
+	<div style="display:none;font-size:11px; width:450px; border:1px solid silver;">%lesen[classid]%</div>
+	<div class="readInputText">%lesen[deskriptor]%</div>
+	<br></td>
+</tr>
+<tr>
+	<td class="titelbalken"><b>Webfreigabe</b></td>
+</tr>
+<tr>
+	<td><b>%strWebfreigabe%</b> : <font class="freigabe%lesen[webfreigabe]%">%lesen[webfreigabe]%</font>
+	</td>
+</tr>
+<tr style="/*displayTimer*/" class="timer%lesen[webfreigabe]%">
+	<td><b>Zeitsteuerung</b><br>
+	<div class="readInputText">Anzeigen  von %lesen[timer_datumvon]% bis %lesen[timer_datumbis]%<br>
+	Tageszeit von %lesen[timer_zeitvon]%  bis %lesen[timer_zeitbis]%<br>
+	Wochentage %lesen[timer_wochentage]%</div>
+	<br></td>
+</tr>
+
+	<tr>
+		<td>
+	<input type='submit' value='Speichern' name='speichern'>
+	<input type='submit' value='korrigieren' name='korrigieren'></td>
+	</tr>
+	<input type='hidden' name='eingabe[notation]' value="%eingabe[notation]%">
+	<input type='hidden' name='eingabe[lang]' value="%eingabe[lang]%">
+	<input type='hidden' name='eingabe[common_lang_key]' value="%eingabe[common_lang_key]%">
+	<input type='hidden' name='eingabe[datum]' value="%eingabe[datum]%">
+	<input type='hidden' name='eingabe[antrailern]' value="%eingabe[antrailern]%">
+	<input type='hidden' name='eingabe[listentitel]' value="%eingabe[listentitel]%">
+	<input type='hidden' name='eingabe[listentext]' value="%eingabe[listentext]%">
+	<input type='hidden' name='eingabe[text2mehr]' value="%eingabe[text2mehr]%">
+	<input type='hidden' name='eingabe[linkzumvolltext]' value="%eingabe[linkzumvolltext]%">
+	<input type='hidden' name='eingabe[titel]' value="%eingabe[titel]%">
+	<input type='hidden' name='eingabe[volltext]' value="%eingabe[volltext]%">
+	<input type='hidden' name='eingabe[schlagwort]' value="%eingabe[schlagwort]%">
+	<input type='hidden' name='eingabe[media_src]' value="%eingabe[media_src]%">
+	<input type='hidden' name='eingabe[media_params]' value="%eingabe[media_params]%">
+	<input type='hidden' name='eingabe[classid]' value="%eingabe[classid]%">
+	<input type='hidden' name='eingabe[deskriptor]' value="%eingabe[deskriptor]%">
+	<input type='hidden' name='eingabe[timer_datumvon]' value="%eingabe[timer_datumvon]%">
+	<input type='hidden' name='eingabe[timer_datumbis]' value="%eingabe[timer_datumbis]%">
+	<input type='hidden' name='eingabe[timer_zeitvon]' value="%eingabe[timer_zeitvon]%">
+	<input type='hidden' name='eingabe[timer_zeitbis]' value="%eingabe[timer_zeitbis]%">
+	<input type='hidden' name='eingabe[timer_wochentage]' value="%eingabe[timer_wochentage]%">
+	<input type='hidden' name='eingabe[webfreigabe]' value="%eingabe[webfreigabe]%">
+	<input type='hidden' name='eingabe[id]' value="%eingabe[id]%">
+	<input type='hidden' name='eingabe[seitenbereich]' value="{srv}">
+	<input type='hidden' name='id' value="%id%">
+</table>
+</form>

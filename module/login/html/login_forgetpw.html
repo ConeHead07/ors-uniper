@@ -1,0 +1,68 @@
+	<script>
+	function init() {
+		if (document.getElementById("inputUser")) {
+			document.getElementById("inputUser").focus();
+		}
+	}
+	</script>
+<table width="350" height="200" class="LoginBox" align=center>
+<tr><td class="topCell">
+<!-- {msg} -->
+<!-- {error} -->
+<strong>Sie haben Ihr Passwort vergessen?</strong><br>
+<br>
+Kein Problem! Wir benötigen lediglich Ihre E-Mail mit der Sie sich 
+auf <strong>{HomepageTitle}</strong> registriert haben.<br>
+<br>
+An diese Adresse senden wir einen neuen Freischaltlink, über den
+Sie sich ein neues Passwort anlegen können.
+<table width="350">
+<tr><td>
+<table>
+<form action="{action}" method="post">
+<tr>
+	<td width=130 class="tdLbl">E-Mail</td>
+	<td><input id="inputUser" type="text" name="email" value="{email}"></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" name="send_fpwmail" value="Freischaltcode zusenden"></td>
+</tr>
+<input type="hidden" name="redirect" value="{redirect}">
+</form>
+</table>
+<br>
+<strong>Sie haben bereits einen neuen Freischaltcode angefordert und per Mail erhalten?</strong>
+<table>
+<form action="{action}" method="post">
+<tr>
+	<td width=130 class="tdLbl">Freischaltcode</td>
+	<td><input type="text" name="code" value="{code}"></td>
+</tr>
+<tr>
+	<td class="tdLbl">E-Mail</td>
+	<td><input type="text" name="email" value="{email}"></td>
+</tr>
+<tr>
+	<td class="tdLbl">Neues Passwort</td>
+	<td><input type="password" name="pw" value=""></td>
+</tr>
+<tr>
+	<td class="tdLbl">Passwort wiederholen</td>
+	<td><input type="password" name="pwc" value=""></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" name="create_fpw" value="Neues Passwort erstellen"></td>
+</tr>
+<input type="hidden" name="redirect" value="{redirect}">
+</form>
+</table>
+<div class="LoginAdLinks">
+{LnkRegister}
+<a href="{UrlToHomepage}login.php">Zum Login</a></div>
+</td></tr></table>
+
+</td>
+</tr>
+</table>

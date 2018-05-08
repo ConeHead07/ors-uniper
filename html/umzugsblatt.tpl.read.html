@@ -1,0 +1,189 @@
+<html>
+<head>
+<link rel="STYLESHEET" type="text/css" href="../css/tablelisting.css">
+<link rel="STYLESHEET" type="text/css" href="css/tablelisting.css">
+<link rel="STYLESHEET" type="text/css" href="../css/SelBox.easy.css">
+<link rel="STYLESHEET" type="text/css" href="css/SelBox.easy.css">
+<link rel="stylesheet" type="text/css" xhref="css/umzugsformular.css">
+<link rel="stylesheet" type="text/css" xhref="../css/umzugsformular.css">
+<link rel="stylesheet" type="text/css" xhref="{$WebRoot}css/umzugsformular.css">
+
+<link rel="STYLESHEET" type="text/css" href="{$WebRoot}css/tablelisting.css">
+<link rel="STYLESHEET" type="text/css" href="{$WebRoot}css/SelBox.easy.css">
+
+<link rel="STYLESHEET" type="text/css" media="print" href="../css/tablelisting.print.css">
+<link rel="STYLESHEET" type="text/css" media="print" href="css/tablelisting.print.css">
+<link rel="STYLESHEET" type="text/css" media="print" href="{$WebRoot}css/tablelisting.print.css">
+<link rel="STYLESHEET" type="text/css" media="print" href="{$WebRoot}css/umzugsdatenblatt.print.css">
+<link rel="STYLESHEET" type="text/css" media="print" href="../css/umzugsdatenblatt.print.css">
+<link rel="STYLESHEET" type="text/css" media="print" href="css/umzugsdatenblatt.print.css">
+
+<style>
+{literal}
+@page { size:landscape; }
+*,
+html * {
+	font-family:Arial,sans-serif;
+        font-size:12px;
+}
+table {
+    border-bottom:1px solid #bbb;
+    border-left:1px solid #bbb;
+    border-collapse:collapse;
+}
+table td {
+    border-top:1px solid #bbb;
+    border-right:1px solid #bbb;
+    border-collapse:collapse;
+    padding:3px;
+}
+td label {
+    margin-left:10px;
+}
+h2 {
+    font-size:16px;
+	letter-spacing:3px;
+}
+{/literal}
+</style>
+</head>
+<body onload="window.print()">
+<div id="SysInfoBox"></div>
+
+<!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
+    <div><img src="{$WebRoot}images/logo_mertens.png" width="174" height="32" style="margin-bottom:20px"></div>
+	<table style="width:480px">
+	<tr>
+		<td style="padding:8px 13px">
+			<h1 style="display:inline;margin:0;font-size:18px;color:#bbb;">Leistungsanforderungsblatt ID <span style="float:right;font-size:18px;">#{$AS.aid}</span></h1>
+			<div style="margin-top:10px;height:30px;position:relative;">
+			<em style="font-size:14px;font-weight:bold;color:#bbb;position:absolute;bottom:0;">Ausf&uuml;hrungstermin</em>
+			<span style="float:right;font-size:18px;position:absolute;bottom:0;right:0;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"} ab {$AS.umzugszeit|escape|substr:0:5}</span>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+<div id="Umzugsantrag" class="divInlay"> 
+{php}print_r($AS,1 ){/php}
+<br>
+<div>
+<h2 style="margin:6px 0;">Leistungsantragsteller</h2> 
+<input type="hidden" name="AS[aid]" value="{$AS.aid}">
+<table style="width:480px">
+  <tr>
+      <td style="width:160px"><label for="mitarbeiter"><b>Vor &amp; Nachname:</b></label></td>
+    <td style="width:220px;">{$AS.vorname|escape} {$AS.name|escape}</td>
+  </tr>
+  <tr>
+    <td style=""><label for="termin"><b>E-Mail:</b></label></td>
+    <td style="">{$AS.email|escape}</td>
+  </tr>
+  <tr>
+    <td style=""><label for="termin"><b>Fon:</b></label></td>
+    <td style="">{$AS.fon|escape}</td>
+  </tr>
+
+  <tr>
+    <td style=""><label for="ort"><b>Standort:</b></label></td>
+    <td style="">{$AS.ort|escape}</td>
+  </tr>
+
+  <tr>
+    <td style=""><label for="gebaeude"><b>Wirtschaftseinheit:</b></label></td>
+    <td style="">{$AS.gebaeude_text|escape}</td>
+  </tr>
+  <tr>
+    <td style=""><label><b>{$ASConf.kostenstelle.label}:</b></label></td>
+    <td style="">{$AS.kostenstelle|escape}</td>
+  </tr>
+  <tr>
+    <td style="" class="th"><label><b>Ticket Nr.</b></label></td>
+    <td style="">{$AS.planonnr|escape}</td>
+  </tr>
+  <tr>
+    <td style=""><label for="termin"><b>Terminwunsch:</b></label></td>
+    <td style="">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</td>
+  </tr>
+  <tr>
+      <td style=""><label for="von_gebaeude_text"><b>Von:</b></label></td>
+    <td style="">{$AS.von_gebaeude_text|escape}</td>
+  </tr>
+  <tr>
+      <td style=""><label for="nach_gebaeude_text"><b>Nach:</b></label></td>
+    <td style="">{$AS.nach_gebaeude_text|escape}</td>
+  </tr>
+	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+</table>
+<br>
+<h2 style="margin:6px 0;">Ansprechpartner vor Ort</h2> 
+<table style="width:480px">
+  <tr>
+      <td style="width:160px"><label for="ansprechpartner"><b>Vor &amp; Nachname:</b></label></td>
+    <td style="width:220px;">{$AS.ansprechpartner|escape}</td>
+  </tr>
+  <tr>
+    <td style=""><label for="termin"><b>E-Mail:</b></label></td>
+    <td style="">{$AS.ansprechpartner_email|escape}</td>
+  </tr>
+  <tr>
+    <td style=""><label for="termin"><b>Fon:</b></label></td>
+    <td style="">{$AS.ansprechpartner_fon|escape}</td>
+  </tr>
+</table>
+</div>
+<br>
+
+<div>
+
+{if 0}
+    {include file="umzugsblatt_mitarbeiterauswahl.tpl.html"}
+{/if}
+
+{if 0}
+    {include file="umzugsformular_geraeteauswahl.tpl.read.html"}
+{/if}{if 1}
+    {include file="umzugsblatt_leistungsauswahl.tpl.html"}
+{/if}
+
+</div>
+</div>
+
+{if $UmzugsAnlagen}
+<ul class="ulAttachements">
+<strong>Dateianhänge</strong><br>
+{foreach name=ATList item=AT from=$UmzugsAnlagen}
+<li><a href="{$AT.datei_link}" target="_blank">{$AT.dok_datei}</a> {$AT.datei_groesse}</li>
+{/foreach}
+</ul>
+{else}
+<strong>Dateianhänge: </strong><em>Keine</em><br>
+{/if}
+<br>
+<h2 style="margin:6px 0">Bemerkungen</h2>
+<div style="border:1px solid #888;height:100px;padding:"></div>
+<br>
+{if $AS.bemerkungen}
+<div id="BoxBemerkungenHistorie" style="">
+<h2 style="margin:6px 0">Bisherige Bemerkungen</h2>
+<div id="BemerkungenHistorie" style="border:1px solid #888;min-height:20px;padding:8px;">{$AS.bemerkungen|nl2br}</div>
+</div>
+</div>
+{/if}
+<div style="height:60px;margin-top:70px;">
+    <div style="width:100%;margin-top:25px;">
+        <div style="width:40%;float:left;">
+        <br>
+        <hr style="border:1px dotted #000;">
+        Unterschrift Datum/Dienstleister</div>
+    </div>
+    <div style="width:100%;margin-top:25px;">
+        <div style="width:40%;float:right;">
+        <br>
+        <hr style="border:1px dotted #000;">
+        Unterschrift Datum/Auftraggeber</div>
+    </div>
+</div>
+</body>
+</html>

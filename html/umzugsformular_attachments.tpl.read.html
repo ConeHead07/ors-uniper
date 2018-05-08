@@ -1,0 +1,86 @@
+{literal}
+<style>
+    #attachments_list ul.ulAttachements li {
+        width:100%;
+    }
+    
+    #attachments_list .row .col.fname {
+        width:50%;
+        max-width:400px;
+    }
+    #attachments_list .row .col.fsize {
+        width:20%;
+        max-width:120px;
+    }
+    
+    #attachments_list .row .col.fdate {
+        width:20%;
+        max-width:140px;
+    }
+    #attachments_list .row.names {
+        background:#eee;
+    }
+    #attachments_list .row.names .col {
+        font-weight:bold;
+        color:#0075B5;
+    }
+    #attachments_list .row.names .col.fname {
+        padding-left:4px;
+    }
+    
+    #attachments_list .row {
+        height:auto;
+        overflow: hidden;
+    }
+    
+    #attachments_list .row .col {
+        display:inline-block;
+        padding-bottom:5px;
+        padding-top:3px;
+    }
+    .hidden {
+        display:none;
+    }
+    
+    #attachments_list .row.values {
+        padding-top:4px;
+    }
+    #attachments_list .row.values:nth-child(2) {
+        background:#fafafa;
+    }
+        
+    .ulAttachements li {
+        background: none;
+        padding-left:0;
+    }
+    
+    .ulAttachements .row.values .col.fname {
+        background: url(images/attachment-icon2.png) left top no-repeat;
+        padding-left:18px;
+        box-sizing: border-box;
+    }
+</style>
+{/literal}
+<fieldset><legend><strong>Dateianhänge</strong></legend>
+<div id="attachments_list" data-url="sites/umzugsantrag_attachements_list.php?aid={$AS.aid}" style="padding:5px;">
+
+    <div class="row names{if count($UmzugsAnlagen)==0} hidden{/if}">
+    <span class="col fname">Datei</span><span class="col fsize">Gr&ouml;&szlig;e</span><span class="col fdate">Upload vom</span>
+</div>
+
+<ul class="ulAttachements row-values">
+{foreach name=ATList item=AT from=$UmzugsAnlagen}
+{* <li><a href="{$AT.datei_link}" target="_blank">{if $AT.titel}{$AT.titel}{else}{$AT.dok_datei}{/if}</a> {$AT.datei_groesse}</li> *}
+
+<li class="row values">
+ <span class="col fname" title="{$AT.titel}"><a href="{$AT.datei_link}" target="_blank">{if $AT.titel}{$AT.titel|truncate:60:"..."}{else}{$AT.dok_datei|truncate:60:"..."}{/if}</a></span> 
+ <span class="col fsize">{$AT.datei_groesse}</span> 
+ <span class="col fdate">{$AT.created}</span>
+</li>
+{/foreach}
+{* else}
+<li class="none"><em>keine</em></li>
+{/else *}
+</ul>
+</div>
+</fieldset>

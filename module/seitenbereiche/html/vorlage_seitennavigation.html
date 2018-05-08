@@ -1,0 +1,72 @@
+<!-- DynLevel:0:NoSub -->
+<div active="{srv}" class="navitem WithoutSub" id="{srv}" onmouseover="menuHiOn(this, '{srv}')" 
+onclick="/*showContent*/" style="/*menu_style*/" x_div_attr>
+» <a class="Sliste" id="a{srv}" href="{menu_link}" target="{menu_target}">{menu_title}</a>
+</div>
+<!-- /DynLevel:0:NoSub -->
+
+<!-- DynLevel:0:WithSub -->
+<div active="{srv}" class="navitem WithSub" id="{srv}" onmouseover="menuHiOn(this, '{srv}')" 
+onclick="/*showContent*/" style="/*menu_style*/" x_div_attr>
+» <A class="Sliste" id="a{srv}" href="{menu_link}" onclick="return false;" target="{menu_target}" x_ahref_attr>{menu_title}</A></div>
+<div id="Sub{srv}" onmouseover="menuHiOn(this)" style="display:none;/*Display{srv}*/" x_sub_attr>
+{submenu}
+</div>
+<!-- /DynLevel:0:WithSub -->
+
+<!-- DynLevel:1:NoSub -->
+<div class="unavitem WithoutSub" id="{srv}" onmouseover="menuHiOn(this, '{srv}')" 
+onclick="gotoMenuLink(this)" style="/*menu_style*/" x_div_attr>
+» <a class="Sliste" id="a{srv}" href="{menu_link}" target="{menu_target}">{menu_title}</a><br>
+</div>
+<!-- /DynLevel:1:NoSub -->
+
+<!-- DynLevel:1:WithSub -->
+<div active="{srv}" class="unavitem WithSub" id="{srv}" onmouseover="menuHiOn(this, '{srv}')" 
+onclick="/*showContent*/;" style="/*menu_style*/" x_div_attr>
+» <a class="Sliste" id="a{srv}" onclick="return false;" href="{menu_link}" target="{menu_target}">{menu_title}</a><br></div>
+<div id="Sub{srv}" onmouseover="menuHiOn(this)" style="display:none;/*Display{srv}*/" x_sub_attr>
+{submenu}
+</div>
+<!-- /DynLevel:1:WithSub -->
+
+
+<!-- DynLevel:0x:NoSub -->
+<div active="{srv}" class="navlinksbg" id="{srv}" onmouseover="menuHiOn(this)"
+onclick="gotoMenuLink(this);" style="/*menu_style*/" x_div_attr>
+<img id="mp{srv}" src="../images/clear.gif" class="imgmenupfeil">
+<A class="navlinks" id="a{srv}" href="{menu_link}" target="{menu_target}" x_ahref_attr>{menu_title}</A></div>
+<!-- /DynLevel:0x:NoSub -->
+
+<!-- DynLevel:0x:WithSub -->
+<div active="{srv}" class="navlinksbg" id="{srv}" onmouseover="menuHiOn(this, '{srv}')" 
+onclick="/*showContent*/" style="/*menu_style*/" x_div_attr>
+<img id="mp{srv}" src="../images/clear.gif" class="imgmenupfeil">
+<A class="navlinks" id="a{srv}" href="{menu_link}" onclick="return false;" target="{menu_target}" x_ahref_attr>{menu_title}</A></div>
+<div id="Sub{srv}" onmouseover="menuHiOn(this)" style="display:none;/*Display{srv}*/" x_sub_attr>
+{submenu}
+</div>
+<!-- /DynLevel:0x:WithSub -->
+
+<!-- DynLevel:1x:NoSub -->
+<div class="unavlinksbg" id="{srv}" onmouseover="menuHiOn(this, '{srv}')" 
+onclick="gotoMenuLink(this)" style="/*menu_style*/" x_div_attr>
+<img id="mp{srv}" src="../images/clear.gif" class="imgmenupfeilSub1">
+<A class="unavlinks" id="a{srv}" href="{menu_link}"  target="{menu_target}" x_ahref_attr>{menu_title}</A></div>
+<!-- /DynLevel:1x:NoSub -->
+
+<!-- DynLevel:1x:WithSub -->
+<div active="{srv}" class="unavlinksbg" id="{srv}" onmouseover="menuHiOn(this, '{srv}')" 
+onclick="/*showContent*/;" style="/*menu_style*/" x_div_attr>
+<img id="mp{srv}" src="../images/clear.gif" class="imgmenupfeilSub1">
+<A class="unavlinks" id="a{srv}" onclick="return false;" href="{menu_link}" target="{menu_target}" x_ahref_attr>{menu_title}</A></div>
+<div id="Sub{srv}" onmouseover="menuHiOn(this)" style="display:none;/*Display{srv}*/" x_sub_attr>
+{submenu}
+</div>
+<!-- /DynLevel:1x:WithSub -->
+
+<!-- DynLevel:2:NoSub -->
+<div active="{srv}" class="u2navlinksbg" id="{srv}" onmouseover="menuHiOn(this, '{srv}')" 
+onclick="gotoMenuLink(this);" style="/*menu_style*/" x_div_attr>
+<img id="mp{srv}" src="../images/clear.gif" class="imgmenupfeilSub2"><A class="unavlinks" id="a{srv}" href="{menu_link}"  target="{menu_target}" x_ahref_attr>{menu_title}</A></div>
+<!-- /DynLevel:2:NoSub -->

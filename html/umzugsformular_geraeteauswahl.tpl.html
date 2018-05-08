@@ -1,0 +1,37 @@
+<div style="display:block;margin-top:15px;">
+<span style="margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="geraet_hinzufuegen();return false;">
+    Ger&auml;t hinzuf&uuml;gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
+</div>
+
+<table class="MitarbeierItem">
+    <thead>
+        <tr>
+            <td style="width:14px;padding:0;"> X </td>
+            <td>Art</td>
+            <td>Ger&auml;te-Nr</td>
+            <td>Von (Geb&auml;ude/Etage/Raum)</td>
+            <td>Nach (Geb&auml;ude/Etage/Raum)</td>
+        </tr>
+    </thead>
+    <tbody id="TblGeraeteBody">
+    {foreach name=GList item=G from=$Geraeteliste}
+        <tr class="inputRowVon">
+            <td style="padding:0;"><span onclick="dropGeraet(this)" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></td>
+            <td><input name="G[Art][]" value="{$G.Art|escape}" onclick="get_geraet(this)" class="AutoFill" type="text"></td>
+            <td><input name="G[Nr][]" value="{$G.Nr|escape}" type="text"></td>
+            <td><input name="G[Von][]" value="{$G.Von|escape}" type="text"></td>
+            <td><input name="G[Nach][]" value="{$G.Nach|escape}" type="text"></td>
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
+<table style="display:none;">
+        <tr id="TplGeraet" class="inputRowVon">
+            <td style="padding:0;"><span onclick="dropGeraet(this)" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></td>
+            <td><input name="G[Art][]" value="" onclick="get_geraet(this)" class="AutoFill" type="text"></td>
+            <td><input name="G[Nr][]" value="" type="text"></td>
+            <td><input name="G[Von][]" value="" type="text"></td>
+            <td><input name="G[Nach][]" value="" type="text"></td>
+        </tr>
+</table>
+<input type="hidden" name="AS[geraete_csv]" value="">

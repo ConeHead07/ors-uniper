@@ -1,0 +1,110 @@
+Vergleichen der Dateien ConfEditor.class.__NeuAberBuggy.php und CONFEDITOR.CLASS.PHP
+***** ConfEditor.class.__NeuAberBuggy.php
+                        include($this->var_file);
+                        if (isset($_CONF) && is_array($_CONF)) {
+                                $this->sCnfName = key($_CONF);
+                                $this->load_conf($_CONF[$this->sCnfName]);
+                        }
+                } else {
+                        // die("#".__LINE__." ".__FILE__." var_file:".$this->var_file." kann nicht geladen werden!<br>\n");
+                }
+***** CONFEDITOR.CLASS.PHP
+                        include($this->var_file);
+                        if (isset($_CONF) && is_array($_CONF)) $this->sCnfName = key($_CONF);
+                } else {
+                        die("#".__LINE__." ".__FILE__." var_file:".$this->var_file." kann nicht geladen werden!<br>\n");
+                }
+*****
+
+***** ConfEditor.class.__NeuAberBuggy.php
+                                $this->aCnfData = $_POST[$this->sCnfPostVar];
+                                $this->strip_post_data($this->aCnfData);
+                        }
+***** CONFEDITOR.CLASS.PHP
+                                $this->aCnfData = $_POST[$this->sCnfPostVar];
+                                $this->strip_post_data(&$this->aCnfData);
+                        }
+*****
+
+***** ConfEditor.class.__NeuAberBuggy.php
+                foreach($D as $k => $v) {
+                        if (is_array($v)) $this->strip_post_data($D[$k]);
+                        else $D[$k] = stripslashes($v);
+***** CONFEDITOR.CLASS.PHP
+                foreach($D as $k => $v) {
+                        if (is_array($v)) $this->strip_post_data(&$D[$k]);
+                        else $D[$k] = stripslashes($v);
+*****
+
+***** ConfEditor.class.__NeuAberBuggy.php
+                                for ($i = 0; $i < count($opt); $i++) {
+                                        if (substr($opt[$i],0,1) == "'") $opt[$i] = substr($opt[$i], 1, -1);
+                                        $checked = (!is_null($dval) && $opt[$i] == $dval);
+***** CONFEDITOR.CLASS.PHP
+                                for ($i = 0; $i < count($opt); $i++) {
+                                        if ($opt[$i][0] == "'") $opt[$i] = substr($opt[$i], 1, -1);
+                                        $checked = (!is_null($dval) && $opt[$i] == $dval);
+*****
+
+***** ConfEditor.class.__NeuAberBuggy.php
+                
+                $sCnfForm = "";
+                $TAB = "";
+                $TAB2 = "";
+                for($i = 0; $i < $deep; $i++) $TAB.= "\t";
+***** CONFEDITOR.CLASS.PHP
+                
+                $TAB = "";
+                for($i = 0; $i < $deep; $i++) $TAB.= "\t";
+*****
+
+***** ConfEditor.class.__NeuAberBuggy.php
+                                                // SubArray
+                                                try {
+                                                        $sCnfForm.= $this->get_conf_code(
+                                                                $c[$k], 
+                                                                (isset($d[$k])?$d[$k]:false), $pfad."[$k]", false, $deep+1);
+                                                } catch (Exception $e) {
+                                                    echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
+                                                        echo "\$c[$k]:".$c[$k]."; \$d[$k]:".$d[$k]."<br>\n";
+                                                }
+                                        }
+***** CONFEDITOR.CLASS.PHP
+                                                // SubArray
+                                                $sCnfForm.= $this->get_conf_code($c[$k], $d[$k], $pfad."[$k]", false, $deep+1);
+
+                                        }
+*****
+
+***** ConfEditor.class.__NeuAberBuggy.php
+        function write_conf($ConfKey = "") {
+                $existingCode = (file_exists($this->var_file)) ? file_get_contents($this->var_file) : "";
+                $ndlA = "// START BASE CONF";
+***** CONFEDITOR.CLASS.PHP
+        function write_conf($ConfKey = "") {
+                $existingCode = file_get_contents($this->var_file);
+                $ndlA = "// START BASE CONF";
+*****
+
+***** ConfEditor.class.__NeuAberBuggy.php
+                $boxId = "CNFBX".$this->boxNr++;
+                $sCnfForm = "";
+                // $aFormatVarsByFnc = array(
+***** CONFEDITOR.CLASS.PHP
+                $boxId = "CNFBX".$this->boxNr++;
+                
+                // $aFormatVarsByFnc = array(
+*****
+
+***** ConfEditor.class.__NeuAberBuggy.php
+                                        } else {
+                                                $sCnfForm.= "\t<tr><td colspan=2>".$this->get_conf_form($c[$k], (isset($d[$k])?
+$d[$k]:false), $pfad."[$k]")."</td></tr>\n";
+                                        }
+***** CONFEDITOR.CLASS.PHP
+                                        } else {
+                                                $sCnfForm.= "\t<tr><td colspan=2>".$this->get_conf_form($c[$k], $d[$k], $pfad."
+[$k]")."</td></tr>\n";
+                                        }
+*****
+

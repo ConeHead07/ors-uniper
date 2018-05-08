@@ -1,0 +1,66 @@
+<form action="index.php?area=admin&task=cms_ext&srv={srv}" method="post">
+<table cellpadding="1" cellspacing="0" border="0" width="100%" align="center">
+	<tr>
+		<td bgcolor=red style="background:red;"><strong><font color="#FFFFFF">
+		&nbsp; : : Vorschau : Möchten Sie den Beitrag so speichern?</font></strong></td>
+	</tr>
+</table>
+<input type='submit' value='Speichern' name='speichern'>
+<input type='submit' value='korrigieren' name='korrigieren'>
+<br>&nbsp;<br>
+<table cellpadding="0" cellspacing="0" border="0" width="440" align="center">
+	<tr>
+		<td><strong>Kurzeintrag auf VJ-Startseite:</strong></td>
+	</tr>
+	<tr>
+		<td><b>Trailer anzeigen</b> %lesen[antrailern]%</td>
+	</tr>
+</table>
+<!-- Start: Inhaltstabelle Gross/Blau -->
+		<table class="tblContent" cellspacing=0 border=0>
+			<tr>
+				<td class="contentTitle">%lesen[listentitel]%</td>
+			</tr>
+			<tr>
+				<td class="contentTextXyPos">%lesen[listentext]%</td>
+			</tr>
+		</table>
+
+<table cellpadding="0" cellspacing="0" border="0" width="440" align="center">
+	<tr>
+		<td><strong>Vollständiger Beitrag:</strong></td>
+	</tr>
+</table>
+		<table class="tblContent" cellspacing=0 border=0>
+			<tr>
+				<td class="contentTitle">%lesen[titel]%</td>
+			</tr>
+			<tr>
+				<td class="contentTextXyPos">%lesen[volltext]%</td>
+			</tr>
+		</table>
+<!-- Ende: Inhaltstabelle Gross/Blau -->
+
+<table border=0 bgcolor="#f0fff0" cellspacing=0 cellpadding=2 width="440" align="center">
+	<tr>
+		<td><img src="../images/clear.gif" height="1" border="0"></td>
+	</tr>
+	<tr><!-- Zeile 5 -->
+		<td style="padding-left:5px;"><b>%strWebfreigabe%</b> : <font class="freigabe%lesen[webfreigabe]%">%lesen[webfreigabe]%</font></td>
+	</tr>
+	<tr>
+		<td>
+	<input type='submit' value='Speichern' name='speichern'>
+	<input type='submit' value='korrigieren' name='korrigieren'></td>
+	</tr>
+	<input type='hidden' value="%eingabe[datum]%" name='eingabe[datum]'>
+	<input type='hidden' value="%eingabe[antrailern]%" name='eingabe[antrailern]'>
+	<input type='hidden' value="%eingabe[listentitel]%" name='eingabe[listentitel]'>
+	<input type='hidden' value="%eingabe[listentext]%" name='eingabe[listentext]'>
+	<input type='hidden' value="%eingabe[titel]%" name='eingabe[titel]'>
+	<input type='hidden' value="%eingabe[volltext]%" name='eingabe[volltext]'>
+	<input type='hidden' value="%eingabe[webfreigabe]%" name='eingabe[webfreigabe]'>
+	<input type='hidden' value="%eingabe[id]%" name='eingabe[id]'>
+	<input type='hidden' name='id' value="%id%">
+</table>
+</form>

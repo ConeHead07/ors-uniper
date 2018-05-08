@@ -1,0 +1,49 @@
+An mail() übergebene Argumente: to, subject, body, header:
+
+to:
+frank.barthold@gmail.com
+
+subject:
+Kleine Testmail mit Anahng
+
+body:
+
+
+header:
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="========NextPart_FranceysBoundaryb342ec5d7c4235e7cc0f559e075798f1"
+Subject: Kleine Testmail mit Anahng
+
+FROM: movemanagement@mertens.ag
+Reply-To: movemanagement@mertens.ag
+Return-Path: movemanagement@mertens.ag
+X-Entwickler: Frank Barthold
+
+This is a MIME encapsulated multipart message -
+please use a MIME-compliant e-mail program to open it.
+
+Dies ist eine mehrteilige Nachricht im MIME-Format -
+bitte verwenden Sie zum Lesen ein MIME-konformes Mailprogramm.
+--========NextPart_FranceysBoundaryb342ec5d7c4235e7cc0f559e075798f1
+Content-Type: text/html; charset="us-ascii"
+
+<strong>Hallo</strong> <em>Frank</em>
+--========NextPart_FranceysBoundaryb342ec5d7c4235e7cc0f559e075798f1
+Content-Type: text/plain; charset=\us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Hallo Frank
+--========NextPart_FranceysBoundaryb342ec5d7c4235e7cc0f559e075798f1
+Content-Type: application/octet-stream; name="BtnBlue.png"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="BtnBlue.png"
+
+iVBORw0KGgoAAAANSUhEUgAAAFoAAAAYCAIAAAD1Wn0yAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+bWFnZVJlYWR5ccllPAAAAM1JREFUeNrs1z8KwjAUx/E2fyAS6NLBrahrD+Du7h0Er+MVvIonEDc3
+qegiqBWqrU3oEB8WrKOTS37fIUPGD+8FEm72t+Uq2x7zwO/SJJ5PRvyaTA/nIvC+S1Gvs4Ll9woW
+bUTBoPAdOMABjh8T5WkHBUwHOMABDnCAAxzg+D+H7g+h0EYUbDEbx4MUFoRAFOGjelZlaaw1pvZ3
+RxjXWkdRJAxlLV0p1fN5OpqmIQnhnFNK+b4qzr0PJ6QQeDi6D76QEgodB+ccCp9eAgwAcsE+FYVO
+714AAAAASUVORK5CYII=
+
+--========NextPart_FranceysBoundaryb342ec5d7c4235e7cc0f559e075798f1--
+

@@ -1,0 +1,24 @@
+<h3 class="formTitle">Stamm_standorte</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><div class="Input">
+<div class="inputLbl">Standorte_id</div>
+<div>{lesen[standorte_id]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Ort</div>
+<div>{lesen[ort]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Ortsgruppe</div>
+<div>{lesen[ortsgruppe]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Standortverantwortung</div>
+<div>{lesen[standortverantwortung]}</div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="475" type="hidden" name="eingabe[standorte_id]" maxlength="5" value="{eingabe[standorte_id]}">
+<input LINE="475" type="hidden" name="eingabe[ort]" maxlength="50" value="{eingabe[ort]}">
+<input LINE="475" type="hidden" name="eingabe[ortsgruppe]" maxlength="50" value="{eingabe[ortsgruppe]}">
+<input LINE="475" type="hidden" name="eingabe[standortverantwortung]" maxlength="50" value="{eingabe[standortverantwortung]}">
+<input LINE="483" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Correct]" value="Korrigieren"></form></div>

@@ -1,0 +1,62 @@
+Insert `mt_move_bayer`.`mm_umzuege` SET
+`token` = "f02e7dcc55",
+`anrede` = NULL,
+`name` = "Laschewski",
+`vorname` = "Stefan",
+`email` = "s.laschewski@mertens.ag",
+`fon` = "0177-9699495",
+`ort` = "Leverkusen",
+`gebaeude` = "1",
+`raumnr` = NULL,
+`etage` = "1. OG",
+`kostenstelle` = "4501613820",
+`planonnr` = "255725",
+`umzug` = "Nein",
+`umzugstermin` = NULL,
+`umzugszeit` = NULL,
+`terminwunsch` = "2017-07-10",
+`ansprechpartner` = "Stefan Laschewski",
+`ansprechpartner_email` = "s.laschewski@mertens.ag",
+`ansprechpartner_fon` = "0177-9699495",
+`geraete_csv` = NULL,
+`bemerkungen` = "Bemerkung von slaschewski am 16.06.2017 um 11:43
+AA 255725; Herr Bebber, Tel. 62030; Termin am 10.07.2017
+Transport/Möblierung aus Gebäude C151 BBS-Lager - 4
+Standardschreibtische - 4 Rollcontainer - 4 Drehstühle - 4 Theken 3OH - 1
+Besprechungstisch R&G, (80cmx80cm) - 4 Besprechungsstühle R&G - 2
+Waldmann-Stehleuchten (ausklappbare Leuchtkörper   Präsenzmelder) - 1
+Garderobenständer nach Gebäude B151; Raum 237 aus Gebäude C151 BBS-Lager - 4 Standardschreibtische - 4 Rollcontainer - 4 Drehstühle - 4
+Theken 3OH - 1 Garderobenständer - 1 Besprechungstisch R&G,
+(80cmx80cm) - 4 Besprechungsstühle R&G nach Raum 238 Wichtig! Die
+Möbel im Lager für diesen Auftrag reservieren - mit der Auftragsnummer
+beschriften",
+`antragsstatus` = "bearbeitung",
+`umzugsstatus` = "temp",
+`dienstleister_id` = NULL,
+`dienstleister_name` = NULL,
+`dienstleister_bemerkung` = NULL,
+`geprueft` = "Init",
+`angeboten_am` = NULL,
+`angeboten_von` = NULL,
+`geprueft_am` = NULL,
+`geprueft_von` = NULL,
+`genehmigt_br` = "Init",
+`genehmigt_br_am` = NULL,
+`genehmigt_br_von` = NULL,
+`bestaetigt` = "Init",
+`bestaetigt_am` = NULL,
+`bestaetigt_von` = NULL,
+`abgeschlossen` = "Init",
+`abgeschlossen_am` = NULL,
+`abgeschlossen_von` = NULL,
+`genehmigt` = "Init",
+`bearbeiter_stelle` = NULL,
+`bearbeiter_name` = NULL,
+`bearbeiter_mail` = NULL,
+`bearbeiter_fon` = NULL,
+`bearbeiter_ort` = NULL,
+`bearbeiter_bemerkung` = NULL,
+`antragsteller_uid` = "2980" ,
+`antragsdatum` = NOW() ,
+`created` = NOW() ,
+ `b_modifiedby` = "2980" 

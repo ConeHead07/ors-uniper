@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<result type="success">
+	<Msg/>
+	<Err/>
+	<JScript/>
+		<Row0_Mandant><![CDATA[10]]></Row0_Mandant>
+	<Row0_Auftragsnummer><![CDATA[191592]]></Row0_Auftragsnummer>
+	<Row0_Auftragsart><![CDATA[0]]></Row0_Auftragsart>
+	<Row0_Abrechnungsart><![CDATA[0]]></Row0_Abrechnungsart>
+	<Row0_Bearbeitungsstatus><![CDATA[9]]></Row0_Bearbeitungsstatus>
+	<Row0_UnterBearbeitungsstatus><![CDATA[0]]></Row0_UnterBearbeitungsstatus>
+	<Row0_Referenznummer><![CDATA[0]]></Row0_Referenznummer>
+	<Row0_Gruppierungsnummer><![CDATA[191592]]></Row0_Gruppierungsnummer>
+	<Row0_Vorgangstitel><![CDATA[Büroräume Esprit-Arena]]></Row0_Vorgangstitel>
+	<Row0_Kundennummer><![CDATA[14790]]></Row0_Kundennummer>
+	<Row0_Debitorenkonto><![CDATA[14790]]></Row0_Debitorenkonto>
+	<Row0_Sprache><![CDATA[de]]></Row0_Sprache>
+	<Row0_Rechnungsanschrift><![CDATA[3005677]]></Row0_Rechnungsanschrift>
+	<Row0_RechnungName><![CDATA[Fortuna Düsseldorf 1895 e.V.]]></Row0_RechnungName>
+	<Row0_RechnungStrassePostfach><![CDATA[Flinger Broich 87]]></Row0_RechnungStrassePostfach>
+	<Row0_RechnungPostleitzahl><![CDATA[40235]]></Row0_RechnungPostleitzahl>
+	<Row0_RechnungOrt><![CDATA[Düsseldorf]]></Row0_RechnungOrt>
+	<Row0_RechnungLand><![CDATA[D]]></Row0_RechnungLand>
+	<Row0_RechnungPostfach><![CDATA[]]></Row0_RechnungPostfach>
+	<Row0_RechnungPLZPostfach><![CDATA[]]></Row0_RechnungPLZPostfach>
+	<Row0_RechnungOrtPostfach><![CDATA[]]></Row0_RechnungOrtPostfach>
+	<Row0_AnsprechpartnerNummer><![CDATA[3008531]]></Row0_AnsprechpartnerNummer>
+	<Row0_AnsprechpartnerNachname><![CDATA[Franck]]></Row0_AnsprechpartnerNachname>
+	<Row0_AnsprechpartnerVorname><![CDATA[Carsten]]></Row0_AnsprechpartnerVorname>
+	<Row0_AnsprechpartnerAnrede><![CDATA[Herr Carsten Franck]]></Row0_AnsprechpartnerAnrede>
+	<Row0_AnsprechpartnerAnrede2><![CDATA[Sehr geehrter Herr Franck,]]></Row0_AnsprechpartnerAnrede2>
+	<Row0_AnsprechpartnerTelefon><![CDATA[+49 (175) 4357027]]></Row0_AnsprechpartnerTelefon>
+	<Row0_AnsprechpartnerFax><![CDATA[+49 (0211) 2327120]]></Row0_AnsprechpartnerFax>
+	<Row0_AnsprechpartnerMail><![CDATA[ ]]></Row0_AnsprechpartnerMail>
+	<Row0_Lieferanschrift><![CDATA[3005677]]></Row0_Lieferanschrift>
+	<Row0_LieferungName><![CDATA[Fortuna Düsseldorf 1895 e.V.
+K6 melden bei BMZ neben P 7]]></Row0_LieferungName>
+	<Row0_LieferungStrassePostfach><![CDATA[Arena-Str. (Esprit-Arena)]]></Row0_LieferungStrassePostfach>
+	<Row0_LieferungPostleitzahl><![CDATA[40235]]></Row0_LieferungPostleitzahl>
+	<Row0_LieferungOrt><![CDATA[Düsseldorf]]></Row0_LieferungOrt>
+	<Row0_LieferungLand><![CDATA[D]]></Row0_LieferungLand>
+	<Row0_LieferungStellplatz><![CDATA[ ]]></Row0_LieferungStellplatz>
+	<Row0_AnsprechpartnernummerLief><![CDATA[3008531]]></Row0_AnsprechpartnernummerLief>
+	<Row0_AnsprechpartnerNachnameLief><![CDATA[Franck]]></Row0_AnsprechpartnerNachnameLief>
+	<Row0_AnsprechpartnerVornameLief><![CDATA[Carsten]]></Row0_AnsprechpartnerVornameLief>
+	<Row0_AnsprechpartnerAnredeLief><![CDATA[Herr Carsten Franck]]></Row0_AnsprechpartnerAnredeLief>
+	<Row0_AnsprechpartnerAnrede2Lief><![CDATA[Sehr geehrter Herr Franck,]]></Row0_AnsprechpartnerAnrede2Lief>
+	<Row0_AnsprechpartnerTelefonLief><![CDATA[+49 (175) 4357027]]></Row0_AnsprechpartnerTelefonLief>
+	<Row0_AnsprechpartnerFaxLief><![CDATA[+49 (0211) 2327120]]></Row0_AnsprechpartnerFaxLief>
+	<Row0_AnsprechpartnerMailLief><![CDATA[ ]]></Row0_AnsprechpartnerMailLief>
+	<Row0_Angebotanschrift><![CDATA[3005677]]></Row0_Angebotanschrift>
+	<Row0_AngebotName><![CDATA[Fortuna Düsseldorf 1895 e.V.]]></Row0_AngebotName>
+	<Row0_AngebotStrassePostfach><![CDATA[Flinger Broich 87]]></Row0_AngebotStrassePostfach>
+	<Row0_AngebotPostleitzahl><![CDATA[40235]]></Row0_AngebotPostleitzahl>
+	<Row0_AngebotOrt><![CDATA[Düsseldorf]]></Row0_AngebotOrt>
+	<Row0_AngebotLand><![CDATA[D]]></Row0_AngebotLand>
+	<Row0_AngebotPostfach><![CDATA[]]></Row0_AngebotPostfach>
+	<Row0_AngebotPLZPostfach><![CDATA[]]></Row0_AngebotPLZPostfach>
+	<Row0_AngebotOrtPostfach><![CDATA[]]></Row0_AngebotOrtPostfach>
+	<Row0_AnsprechpartnerNummerAng><![CDATA[3008531]]></Row0_AnsprechpartnerNummerAng>
+	<Row0_AnsprechpartnerNachnameAng><![CDATA[Franck]]></Row0_AnsprechpartnerNachnameAng>
+	<Row0_AnsprechpartnerVornameAng><![CDATA[Carsten]]></Row0_AnsprechpartnerVornameAng>
+	<Row0_AnsprechpartnerAnredeAng><![CDATA[Herr Carsten Franck]]></Row0_AnsprechpartnerAnredeAng>
+	<Row0_AnsprechpartnerAnrede2Ang><![CDATA[Sehr geehrter Herr Franck,]]></Row0_AnsprechpartnerAnrede2Ang>
+	<Row0_AnsprechpartnerTelefonAng><![CDATA[+49 (175) 4357027]]></Row0_AnsprechpartnerTelefonAng>
+	<Row0_AnsprechpartnerFaxAng><![CDATA[+49 (0211) 2327120]]></Row0_AnsprechpartnerFaxAng>
+	<Row0_AnsprechpartnerMailAng><![CDATA[ ]]></Row0_AnsprechpartnerMailAng>
+	<Row0_AvisierungsAnschrift><![CDATA[3005677]]></Row0_AvisierungsAnschrift>
+	<Row0_AvisierungName><![CDATA[Fortuna Düsseldorf 1895 e.V.]]></Row0_AvisierungName>
+	<Row0_AvisierungStrassePostfach><![CDATA[Flinger Broich 87]]></Row0_AvisierungStrassePostfach>
+	<Row0_AvisierungPostleitzahl><![CDATA[40235]]></Row0_AvisierungPostleitzahl>
+	<Row0_AvisierungOrt><![CDATA[Düsseldorf]]></Row0_AvisierungOrt>
+	<Row0_AvisierungLand><![CDATA[D]]></Row0_AvisierungLand>
+	<Row0_AvisierungPostfach><![CDATA[]]></Row0_AvisierungPostfach>
+	<Row0_AvisierungPLZPostfach><![CDATA[]]></Row0_AvisierungPLZPostfach>
+	<Row0_AvisierungOrtPostfach><![CDATA[]]></Row0_AvisierungOrtPostfach>
+	<Row0_AnsprechpartnerNummerAvis><![CDATA[3008531]]></Row0_AnsprechpartnerNummerAvis>
+	<Row0_AnsprechpartnerNachnameAvis><![CDATA[Franck]]></Row0_AnsprechpartnerNachnameAvis>
+	<Row0_AnsprechpartnerVornameAvis><![CDATA[Carsten]]></Row0_AnsprechpartnerVornameAvis>
+	<Row0_AnsprechpartnerAnredeAvis><![CDATA[Herr Carsten Franck]]></Row0_AnsprechpartnerAnredeAvis>
+	<Row0_AnsprechpartnerAnrede2Avis><![CDATA[Sehr geehrter Herr Franck,]]></Row0_AnsprechpartnerAnrede2Avis>
+	<Row0_AnsprechpartnerTelefonAvis><![CDATA[+49 (175) 4357027]]></Row0_AnsprechpartnerTelefonAvis>
+	<Row0_AnsprechpartnerFaxAvis><![CDATA[+49 (0211) 2327120]]></Row0_AnsprechpartnerFaxAvis>
+	<Row0_AnsprechpartnerMailAvis><![CDATA[ ]]></Row0_AnsprechpartnerMailAvis>
+	<Row0_MontageFirmaAnschrift><![CDATA[0]]></Row0_MontageFirmaAnschrift>
+	<Row0_MontageName><![CDATA[ ]]></Row0_MontageName>
+	<Row0_MontageStrassePostfach><![CDATA[ ]]></Row0_MontageStrassePostfach>
+	<Row0_MontagePostleitzahl><![CDATA[ ]]></Row0_MontagePostleitzahl>
+	<Row0_MontageOrt><![CDATA[ ]]></Row0_MontageOrt>
+	<Row0_MontageLand><![CDATA[ ]]></Row0_MontageLand>
+	<Row0_MontagePostfach><![CDATA[]]></Row0_MontagePostfach>
+	<Row0_MontagePLZPostfach><![CDATA[]]></Row0_MontagePLZPostfach>
+	<Row0_MontageOrtPostfach><![CDATA[]]></Row0_MontageOrtPostfach>
+	<Row0_AnsprechpartnerNummerMont><![CDATA[0]]></Row0_AnsprechpartnerNummerMont>
+	<Row0_AnsprechpartnerNachnameMont><![CDATA[ ]]></Row0_AnsprechpartnerNachnameMont>
+	<Row0_AnsprechpartnerVornameMont><![CDATA[ ]]></Row0_AnsprechpartnerVornameMont>
+	<Row0_AnsprechpartnerAnredeMont><![CDATA[ ]]></Row0_AnsprechpartnerAnredeMont>
+	<Row0_AnsprechpartnerAnrede2Mont><![CDATA[ ]]></Row0_AnsprechpartnerAnrede2Mont>
+	<Row0_AnsprechpartnerTelefonMont><![CDATA[ ]]></Row0_AnsprechpartnerTelefonMont>
+	<Row0_AnsprechpartnerFaxMont><![CDATA[ ]]></Row0_AnsprechpartnerFaxMont>
+	<Row0_AnsprechpartnerMailMont><![CDATA[ ]]></Row0_AnsprechpartnerMailMont>
+	<Row0_AnsprechpartnerNummerBest><![CDATA[0]]></Row0_AnsprechpartnerNummerBest>
+	<Row0_AnsprechpartnerNachnameBest><![CDATA[ ]]></Row0_AnsprechpartnerNachnameBest>
+	<Row0_AnsprechpartnerVornameBest><![CDATA[ ]]></Row0_AnsprechpartnerVornameBest>
+	<Row0_AnsprechpartnerAnredeBest><![CDATA[ ]]></Row0_AnsprechpartnerAnredeBest>
+	<Row0_AnsprechpartnerAnrede2Best><![CDATA[ ]]></Row0_AnsprechpartnerAnrede2Best>
+	<Row0_AnsprechpartnerTelefonBest><![CDATA[ ]]></Row0_AnsprechpartnerTelefonBest>
+	<Row0_AnsprechpartnerFaxBest><![CDATA[ ]]></Row0_AnsprechpartnerFaxBest>
+	<Row0_AnsprechpartnerMailBest><![CDATA[ ]]></Row0_AnsprechpartnerMailBest>
+	<Row0_Verkaufsteam><![CDATA[7]]></Row0_Verkaufsteam>
+	<Row0_Zahlungsbedingung><![CDATA[140]]></Row0_Zahlungsbedingung>
+	<Row0_Lieferwoche><![CDATA[49]]></Row0_Lieferwoche>
+	<Row0_Lieferjahr><![CDATA[9]]></Row0_Lieferjahr>
+	<Row0_Liefertermin><![CDATA[]]></Row0_Liefertermin>
+	<Row0_LieferterminFix><![CDATA[0]]></Row0_LieferterminFix>
+	<Row0_LieferterminHinweisText><![CDATA[Tagesgeschäft
+09.10.09]]></Row0_LieferterminHinweisText>
+	<Row0_DirektLieferInfo><![CDATA[ ]]></Row0_DirektLieferInfo>
+	<Row0_AvisierterTermin><![CDATA[]]></Row0_AvisierterTermin>
+	<Row0_AvisierteWoche><![CDATA[0]]></Row0_AvisierteWoche>
+	<Row0_AvisiertesJahr><![CDATA[0]]></Row0_AvisiertesJahr>
+	<Row0_AvisierterTerminFix><![CDATA[0]]></Row0_AvisierterTerminFix>
+	<Row0_AvisierterTerminDauer><![CDATA[0]]></Row0_AvisierterTerminDauer>
+	<Row0_AvisierterTerminDisponiert><![CDATA[0]]></Row0_AvisierterTerminDisponiert>
+	<Row0_Kostenstelle><![CDATA[ ]]></Row0_Kostenstelle>
+	<Row0_Bestellnummer><![CDATA[ ]]></Row0_Bestellnummer>
+	<Row0_Bestellinfo><![CDATA[ ]]></Row0_Bestellinfo>
+	<Row0_Sammelrechnung><![CDATA[0]]></Row0_Sammelrechnung>
+	<Row0_Sammellieferschein><![CDATA[0]]></Row0_Sammellieferschein>
+	<Row0_Eingangsart><![CDATA[(NUL)]]></Row0_Eingangsart>
+	<Row0_Abwicklungsart><![CDATA[Kommissionslager]]></Row0_Abwicklungsart>
+	<Row0_Geschaeftsbereich><![CDATA[Neuss Handel]]></Row0_Geschaeftsbereich>
+	<Row0_Angebotsfreigabedatum><![CDATA[]]></Row0_Angebotsfreigabedatum>
+	<Row0_Aufbestfreigabedatum><![CDATA[]]></Row0_Aufbestfreigabedatum>
+	<Row0_Packzettelfreigabedatum><![CDATA[]]></Row0_Packzettelfreigabedatum>
+	<Row0_Lieferscheinfreigabedatum><![CDATA[]]></Row0_Lieferscheinfreigabedatum>
+	<Row0_Rechnungsfreigabedatum><![CDATA[]]></Row0_Rechnungsfreigabedatum>
+	<Row0_TeilRechnung><![CDATA[1]]></Row0_TeilRechnung>
+	<Row0_TeilLieferung><![CDATA[1]]></Row0_TeilLieferung>
+	<Row0_AltenSteuersatzVerwenden><![CDATA[0]]></Row0_AltenSteuersatzVerwenden>
+	<Row0_Bemerkung><![CDATA[NICHT BERECHNEN !!! RÜCKSPRACHE RALF !!!]]></Row0_Bemerkung>
+	<Row0_Auftragswert><![CDATA[28212.51]]></Row0_Auftragswert>
+	<Row0_AuftragswertHW><![CDATA[28212.51]]></Row0_AuftragswertHW>
+	<Row0_FakturierterAuftragswert><![CDATA[28212.51]]></Row0_FakturierterAuftragswert>
+	<Row0_FakturierterAuftragswertHW><![CDATA[28212.51]]></Row0_FakturierterAuftragswertHW>
+	<Row0_Rohgewinn><![CDATA[8832.33]]></Row0_Rohgewinn>
+	<Row0_RohgewinnHW><![CDATA[8832.33]]></Row0_RohgewinnHW>
+	<Row0_AuftrZuschlaegeWertNichtUmlegb><![CDATA[0]]></Row0_AuftrZuschlaegeWertNichtUmlegb>
+	<Row0_AuftragswertMitZuschlaegen><![CDATA[28212.51]]></Row0_AuftragswertMitZuschlaegen>
+	<Row0_AuftragswertMitZuschlaegenHW><![CDATA[28212.51]]></Row0_AuftragswertMitZuschlaegenHW>
+	<Row0_AuftragswertListe><![CDATA[55733]]></Row0_AuftragswertListe>
+	<Row0_AuftragswertListeHW><![CDATA[55733]]></Row0_AuftragswertListeHW>
+	<Row0_AuftragsWerteGueltig><![CDATA[1]]></Row0_AuftragsWerteGueltig>
+	<Row0_Waehrung><![CDATA[EUR]]></Row0_Waehrung>
+	<Row0_Rechnungskennzeichen><![CDATA[Standard]]></Row0_Rechnungskennzeichen>
+	<Row0_Versandbedingung><![CDATA[Standard]]></Row0_Versandbedingung>
+	<Row0_Lieferbedingung><![CDATA[Frei Verwendungsstelle inkl. Montage]]></Row0_Lieferbedingung>
+	<Row0_Filialkennung><![CDATA[NE]]></Row0_Filialkennung>
+	<Row0_Kopftext><![CDATA[wir danken für Ihre freundliche Anfrage und unterbreiten Ihnen nachstehend das gewünschte Angebot.
+]]></Row0_Kopftext>
+	<Row0_KopftextFormatiert><![CDATA[ ]]></Row0_KopftextFormatiert>
+	<Row0_ZusatzKopftext><![CDATA[ ]]></Row0_ZusatzKopftext>
+	<Row0_ZusatzFusstext><![CDATA[ ]]></Row0_ZusatzFusstext>
+	<Row0_Fusstext><![CDATA[Die angebotenen Preise verstehen sich zuzüglich der gesetzlichen Mehrwertsteuer.
+Es gelten unsere umseitig gedruckten allgemeinen Geschäftsbedingungen.
+Die Ware bleibt bis zur vollständigen Bezahlung unser Eigentum.
+Wir hoffen, dass unser Angebot Ihr Interesse findet und würden uns freuen, Ihren Auftrag zu erhalten. Für weitere Informationen oder Alternativ-Vorschläge stehen wir Ihnen gerne zur Verfügung.
+
+Mit freundlichen Grüßen
+
+merTens AG
+]]></Row0_Fusstext>
+	<Row0_FusstextFormatiert><![CDATA[ ]]></Row0_FusstextFormatiert>
+	<Row0_Kopftext1><![CDATA[vielen Dank für Ihre Bestellung. Anbei bestätigen wir Ihnen folgende Positionen.
+
+]]></Row0_Kopftext1>
+	<Row0_Kopftext1Formatiert><![CDATA[ ]]></Row0_Kopftext1Formatiert>
+	<Row0_Fusstext1><![CDATA[Die Ware bleibt bis zur vollständigen Bezahlung unser Eigentum. Es gelten die umseitig abgedruckten Geschäftsbedingungen.
+Bitte faxen Sie die Auftragsbestätigung unterschrieben an uns zurück.
+
+Mit freundlichen Grüßen
+
+merTens AG]]></Row0_Fusstext1>
+	<Row0_Fusstext1Formatiert><![CDATA[ ]]></Row0_Fusstext1Formatiert>
+	<Row0_Kopftext2><![CDATA[ ]]></Row0_Kopftext2>
+	<Row0_Kopftext2Formatiert><![CDATA[ ]]></Row0_Kopftext2Formatiert>
+	<Row0_Fusstext2><![CDATA[ ]]></Row0_Fusstext2>
+	<Row0_Fusstext2Formatiert><![CDATA[ ]]></Row0_Fusstext2Formatiert>
+	<Row0_Kopftext3><![CDATA[ ]]></Row0_Kopftext3>
+	<Row0_Kopftext3Formatiert><![CDATA[ ]]></Row0_Kopftext3Formatiert>
+	<Row0_Fusstext3><![CDATA[ ]]></Row0_Fusstext3>
+	<Row0_Fusstext3Formatiert><![CDATA[ ]]></Row0_Fusstext3Formatiert>
+	<Row0_Kopftext4><![CDATA[ ]]></Row0_Kopftext4>
+	<Row0_Kopftext4Formatiert><![CDATA[ ]]></Row0_Kopftext4Formatiert>
+	<Row0_Fusstext4><![CDATA[ ]]></Row0_Fusstext4>
+	<Row0_Fusstext4Formatiert><![CDATA[ ]]></Row0_Fusstext4Formatiert>
+	<Row0_ADMitarbeiterNummer><![CDATA[7]]></Row0_ADMitarbeiterNummer>
+	<Row0_SBMitarbeiterNummer><![CDATA[42]]></Row0_SBMitarbeiterNummer>
+	<Row0_Bezirk><![CDATA[ ]]></Row0_Bezirk>
+	<Row0_Tournummer><![CDATA[0]]></Row0_Tournummer>
+	<Row0_Projektkennung><![CDATA[ ]]></Row0_Projektkennung>
+	<Row0_Aktionskennung><![CDATA[]]></Row0_Aktionskennung>
+	<Row0_Angebotsbindefrist><![CDATA[Nov 3 2009 12:00AM]]></Row0_Angebotsbindefrist>
+	<Row0_AnfrageVom><![CDATA[]]></Row0_AnfrageVom>
+	<Row0_StornoRechnungsnummer><![CDATA[0]]></Row0_StornoRechnungsnummer>
+	<Row0_Realisierungstermin><![CDATA[]]></Row0_Realisierungstermin>
+	<Row0_Realisierungswahrschkt><![CDATA[0]]></Row0_Realisierungswahrschkt>
+	<Row0_AbschlussStatus><![CDATA[1]]></Row0_AbschlussStatus>
+	<Row0_Erledigungsgrund><![CDATA[205]]></Row0_Erledigungsgrund>
+	<Row0_Mitbewerber><![CDATA[0]]></Row0_Mitbewerber>
+	<Row0_XmlDataExt><![CDATA[]]></Row0_XmlDataExt>
+	<Row0_Steuergebiet><![CDATA[D]]></Row0_Steuergebiet>
+	<Row0_BestaetigtAm><![CDATA[Sep 9 2009 12:00AM]]></Row0_BestaetigtAm>
+	<Row0_IstAlternativ><![CDATA[0]]></Row0_IstAlternativ>
+	<Row0_RechnungInklMWSt><![CDATA[0]]></Row0_RechnungInklMWSt>
+	<Row0_FaktAbwMandant><![CDATA[0]]></Row0_FaktAbwMandant>
+	<Row0_AbwWaehrungsKurs><![CDATA[0]]></Row0_AbwWaehrungsKurs>
+	<Row0_Meldedatum><![CDATA[Aug 5 2009 11:31AM]]></Row0_Meldedatum>
+	<Row0_HinweisNaechsterAuftrag><![CDATA[ ]]></Row0_HinweisNaechsterAuftrag>
+	<Row0_ReaktionsZeit><![CDATA[0]]></Row0_ReaktionsZeit>
+	<Row0_IstTKDAuftrag><![CDATA[0]]></Row0_IstTKDAuftrag>
+	<Row0_TechnikerNummer><![CDATA[0]]></Row0_TechnikerNummer>
+	<Row0_Kostentraeger><![CDATA[0]]></Row0_Kostentraeger>
+	<Row0_TicketID><![CDATA[ ]]></Row0_TicketID>
+	<Row0_AngelegtProgramm><![CDATA[Vorgangsbearbeitung]]></Row0_AngelegtProgramm>
+	<Row0_AngelegtDurch><![CDATA[becker]]></Row0_AngelegtDurch>
+	<Row0_AngelegtAm><![CDATA[Aug 5 2009 11:31AM]]></Row0_AngelegtAm>
+	<Row0_GeaendertProgramm><![CDATA[Vorgangsbearbeitung]]></Row0_GeaendertProgramm>
+	<Row0_GeaendertDurch><![CDATA[shollatz]]></Row0_GeaendertDurch>
+	<Row0_GeaendertAm><![CDATA[Nov 30 2009  1:55PM]]></Row0_GeaendertAm>
+	<Row0_UniqueID><![CDATA[Ã:Ìá}æEJ£Õ@û¹
+ßÜ]]></Row0_UniqueID>
+
+</result>

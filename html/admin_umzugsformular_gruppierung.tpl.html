@@ -1,0 +1,75 @@
+<script src="js/auftraege_gruppieren.js?201704250208"></script>
+<div style="clear:both;width:100%">
+
+<div class="SelBoxDienstleisterWidth" style="width:390px;clear:both">
+  <span style="float:left;margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" 
+      onclick="gruppierungsauftrag_new_search();return false;">
+  Gruppierung hinzuf&uuml;gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
+    
+<table class="MitarbeierItem" style="border:0;padding:0;margin:0 0 5px 0;width:100%;">
+    <tr>
+        <td style="border:0;padding:0;margin:0">
+            <input name="SelectGruppierung" id="SelectGruppierung"  
+                   style="width:100%;border:1px solid #549e1a" 
+                   onclick="get_gruppierungsauftrag(this)" 
+                   ondblclick="gruppierungsauftrag_new_search()">
+        </td>
+    </tr>
+</table>
+</div>
+</div>
+
+<table class="MitarbeierItem" style="width:100%;">
+    <thead>
+        <tr>
+            <td style="width:14px;padding:0;"> X </td>
+            <td>ID</td>
+            <td>Termin</td>
+            <td>Auftragsort</td>
+            <td>Etage</td>
+            <td>Raumnr</td>
+            <td>Mit Umzug</td>
+            <td>Auftragseingang</td>
+            <td>G</td>
+            <td>M</td>
+			<td>Abgeschlossen</td>
+        </tr>
+    </thead>
+    <tbody id="TblGruppierungenBody">
+    {foreach name=GList item=G from=$UmzugsGruppierungen}
+        <tr data-id="{$G.aid}" class="row inputRowVon">
+            <td style="padding:0;">
+			<span data-editid="{$G.aid}"  onclick="auftragsliste_remove({$G.aid})" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></td>
+            <td><a href="?s=aantrag&id={$G.aid}">{$G.aid}</a></td>
+			<td>{if $G.umzugstermin}{$G.umzugstermin}{else}{$G.terminwunsch}{/if}</td>
+			<td>{$G.ort}</td>
+			<td>{$G.etage}</td>
+			<td>{$G.raumnr}</td>
+			<td>{$G.umzug}</td>
+			<td>{$G.antragsdatum}</td>
+			<td>{$G.Genehmigt}{if $G.genehmigt_br_am} {$G.genehmigt_br_am}{/if}</td>
+			<td>{$G.Geprueft}{if $G.geprueft_am} {$G.geneprueft_am}{/if}</td>
+			<td>{$G.abgeschlossen}{if $G.abgeschlossen_am}{$G.abgeschlossen_am}{/if}</td>
+		</tr>
+	{/foreach}
+	</tbody>
+</table>
+<input id="gruppierteauftraege" name="gruppierteauftraege" type="hidden" value="{$UmzugsGruppierungsIds}">
+
+
+<table id="TplGruppierungsTable" style="display:none;">
+        <tr class="row inputRowVon">
+            <td style="padding:0;">
+			<span data-editid="" onclick="auftragsliste_remove($(this).attr('data-editid'))" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></td>
+            <td><a data-lnkto="umzug" data-fld="aid" href=""></a></td>
+			<td data-fld="termin"></td>
+			<td data-fld="ort"></td>
+			<td data-fld="etage"></td>
+			<td data-fld="raumnr"></td>
+			<td data-fld="umzug"></td>
+			<td data-fld="antragsdatum"></td>
+			<td><span data-fld="Genehmigt"></span><span data-fld="genehmigt_br_am"></span></td>
+			<td><span data-fld="Geprueft"></span><span data-fld="geprueft_am"></span></td>
+			<td><span data-fld="Abgeschlossen"></span><span data-fld="abgeschlossen_am"></span></td>
+		</tr>
+</table>

@@ -1,0 +1,73 @@
+<!-- TAB BASIC MODULE (128585) BEGIN --> 
+<!-- INITIAL JS BEGIN --> 
+<script type="text/javascript"> 
+  //{literal}
+  $(function() {
+    //$('#ID128585').tabs({fxFade: true, fxSpeed: 'fast' });
+  });
+  //{/literal}
+</script> 
+<!-- INITIAL JS END --> 
+ 
+<!-- TAB NAVIGATION ITEMS BEGIN --> 
+<div id="ID128585" class="divTabbedNavigation" style="width:100%;"> 
+<div class="divTabbedList" style="width:100%;"> 
+<ul> 
+        <li {if $cat eq "Neu"}class="activeTab"{/if}><a href="?s={$s}&cat=Neu" style="width:100px">Gesendet</a></li> 
+        <li {if $cat eq "Beauftragt"}class="activeTab"{/if}><a href="?s={$s}&cat=Beauftragt" style="width:170px">Beauftragt</a></li>
+        <li {if $cat eq "Abgelehnt"}class="activeTab"{/if}><a href="?s={$s}&cat=Abgelehnt" style="width:170px">Abgelehnt</a></li>
+        <li {if $cat eq "Abgeschlossen"}class="activeTab"{/if}><a href="?s={$s}&cat=Abgeschlossen" style="width:130px">Abgeschlossen</a></li>
+        <li {if $cat eq "nlsuche"}class="activeTab"{/if}><a xhref="?s=nlsuche" style="width:280px">&nbsp;<!-- Suche --></a></li>
+        <!-- <li><a href="#ID128586" style="width:60px">&nbsp;</a></li> -->
+</ul><br clear="all">
+<div class="clearLeft"></div> 
+</div>
+<!-- TAB NAVIGATION ITEMS END --> 
+ 
+<!-- TAB ITEM (128587) BEGIN --> 
+<div id="ID128587" class="divModuleBasic padding12px width5Col heightAuto"> 
+<div class="divInlay noMarginBottom borderTop"> 
+</div> 
+
+<!-- Add-On Fließtext(dyn) ID: 128588 BEGIN --> 
+<div class="divInlay borderTop"> 
+<h2>Es liegen {$Umzuege|@count} {$catTitle} Nebenleistungsauftr&auml;ge vor</h2>
+{if $ListBrowsing}{$ListBrowsing}{/if}
+  <ul class="ulLinkList"> 
+  <div>
+  <div style="float:left;display:block;width:30px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=id{if $ofld eq "id" && $odir ne "DESC"}&odir=DESC{/if}">ID</a></div>
+  <div style="float:left;display:block;width:70px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=created{if $ofld eq "created" && $odir ne "DESC"}&odir=DESC{/if}">Gesendet</a></div>
+  <div style="float:left;display:block;width:70px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Datum</a></div>
+  <div style="float:left;display:block;width:50px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=uhrzeit{if $ofld eq "uhrzeit" && $odir ne "DESC"}&odir=DESC{/if}">Uhrzeit</a></div>
+  <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=kostenstelle{if $ofld eq "kostenstelle" && $odir ne "DESC"}&odir=DESC{/if}">Kostenstelle</a></div>
+  <div style="float:left;display:block;width:470px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=aufgabe{if $ofld eq "aufgabe" && $odir ne "DESC"}&odir=DESC{/if}">Aufgabe</a></div>
+  <div style="float:left;display:block;width:80px;font-weight:bold;color:#00869c;" title="Abgeschlossen"><a href="{$ListBaseLink}&ofld=erledigt_am{if $ofld eq "erledigt_am" && $odir ne "DESC"}&odir=DESC{/if}">Erledigt</a></div><br clear=left></div>
+
+{foreach item=U from=$Umzuege}
+  <li><a class="iconRightContentMain" href="{$U.LinkOpen}">
+  <div>
+  <div style="float:left;display:block;width:30px;font-weight:bold;">{$U.id}&nbsp;</div>
+  <div style="float:left;display:block;width:70px;font-weight:bold;">{$U.created|date_format:"%d.%m.%Y"}&nbsp;</div>
+  <div style="float:left;display:block;width:70px;font-weight:bold;">{$U.datum|date_format:"%d.%m.%Y"}&nbsp;</div>
+  <div style="float:left;display:block;width:50px;font-weight:bold;">{$U.uhrzeit}&nbsp;</div>
+  <div style="float:left;display:block;width:100px;">{$U.kostenstelle}&nbsp;</div>
+  <div style="float:left;display:block;width:470px;">{$U.aufgabe}&nbsp;</div>
+  <div style="float:left;display:block;width:80px;">{$U.Erledigt} {if $U.erledigt_am}{$U.erledigt_am|date_format:"%d.%m.%Y"}{/if}</div><br clear=left></div>
+  </a></li>
+{/foreach}
+  </ul> 
+<!-- <h2>Startseite Mertens AG</h2> 
+<p>
+- Infos nachlegen
+- Mails an Beteiligte verschicken
+- Gesprächsnotizen
+- Lagerbestand abfragen</p>  --> 
+</div>
+<!-- Add-On Fließtext(dyn) ID: 128588 END --> 
+</div> 
+<!-- TAB ITEM (128587) END --> 
+ 
+<br class="floatNone" /> 
+</div> 
+<!-- TAB BASIC MODULE (128585) END -->
+

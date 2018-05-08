@@ -1,0 +1,57 @@
+
+body, td {
+	font-family:Arial,sans-serif;
+	font-size:13px;
+}
+table.LoginBox {
+	border-collapse:collapse;
+	border-spacing:0px;
+}
+.LoginBox {
+	width:100%;
+	margin-top:0px;
+	border:1px solid #436b94;
+}
+.LoginBox .hdCell {
+	border-bottom:1px solid #436b94;
+	padding:4px;
+	color:#436b94;
+	font-size:15px;
+	font-weight:bold;
+}
+.LoginBox .topCell {
+	padding:40px;
+}
+.LoginAdLinks {
+	margin-top:20px;
+	border:1px dotted #436b94;
+	padding:5px 10px 5px 15px;
+	width:60%;
+}
+.tdLbl {
+	padding-right:5px;
+	color:#436b94;
+	font-weight:bold;
+	text-align:right;
+}
+input {
+	font-family:Arial,sans-serif;
+	font-size:12px;
+}
+.msg {
+	color:#436b94;
+	background:;#f5f5f5;
+	font-size:12px;
+	font-family:Arial,sans-serif;
+	padding:4px;
+	margin:2px 0px 10px 0px;
+}
+
+.err {
+	color:red;
+	background:;#f5f5f5;
+	font-size:12px;
+	font-family:Arial,sans-serif;
+	padding:4px;
+	margin:2px 0px 10px 0px;
+}

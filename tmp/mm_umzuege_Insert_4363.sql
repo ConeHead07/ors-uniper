@@ -1,0 +1,61 @@
+Insert `mt_move_bayer`.`mm_umzuege` SET
+`token` = "b8510192f1",
+`anrede` = NULL,
+`name` = "Laschewski",
+`vorname` = "Stefan",
+`email` = "s.laschewski@mertens.ag",
+`fon` = "0177-9699495",
+`ort` = "Leverkusen",
+`gebaeude` = "1",
+`raumnr` = NULL,
+`etage` = "1. OG",
+`kostenstelle` = "4501703534",
+`planonnr` = "288836",
+`umzug` = "Nein",
+`umzugstermin` = NULL,
+`umzugszeit` = "07:30:00",
+`terminwunsch` = "2017-11-29",
+`ansprechpartner` = "Stefan Laschewski",
+`ansprechpartner_email` = "s.laschewski@mertens.ag",
+`ansprechpartner_fon` = "0177-9699495",
+`geraete_csv` = NULL,
+`bemerkungen` = "Bemerkung von slaschewski am 23.11.2017 um 06:48
+Auftrag 288836, Asp. Hr. Büchel 57478 vor Ort, Termin: 29.11.2017 - 07:30
+Gebäude E041 1.Im Raum 151 einen elektr. verstellbarenSchreibtisch und
+einen Standcontainer* aufstellen, der alte Schreibtisch kommt im Gegenzug
+in den Keller zur Zwischenlagerung. IT und Strom sind wieder
+anzuschließen. Alter Schreibtisch wird vom Nutzer (Lemke) freigeräumt.
+2.In Raum 257 vorrübergehend einen dritter Schreibtisch (1,6m lange Füße, aus unserer altenK&N-Serie)   Rollcontainer aufstellen, incl.IT und
+Stromverkabelung.>Skizze *=Stellfüße auf niedrigste Position stellen, ggf.
+vorhandene Verlängerungsfüße auf den Stellfüßen weg nehmen. Fundus
+aus Möbelkeller E41 nutzen, Drehstühle sind außen vor",
+`antragsstatus` = "bearbeitung",
+`umzugsstatus` = "temp",
+`dienstleister_id` = NULL,
+`dienstleister_name` = NULL,
+`dienstleister_bemerkung` = NULL,
+`geprueft` = "Init",
+`angeboten_am` = NULL,
+`angeboten_von` = NULL,
+`geprueft_am` = NULL,
+`geprueft_von` = NULL,
+`genehmigt_br` = "Init",
+`genehmigt_br_am` = NULL,
+`genehmigt_br_von` = NULL,
+`bestaetigt` = "Init",
+`bestaetigt_am` = NULL,
+`bestaetigt_von` = NULL,
+`abgeschlossen` = "Init",
+`abgeschlossen_am` = NULL,
+`abgeschlossen_von` = NULL,
+`genehmigt` = "Init",
+`bearbeiter_stelle` = NULL,
+`bearbeiter_name` = NULL,
+`bearbeiter_mail` = NULL,
+`bearbeiter_fon` = NULL,
+`bearbeiter_ort` = NULL,
+`bearbeiter_bemerkung` = NULL,
+`antragsteller_uid` = "2980" ,
+`antragsdatum` = NOW() ,
+`created` = NOW() ,
+ `b_modifiedby` = "2980" 

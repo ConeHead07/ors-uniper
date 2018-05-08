@@ -1,0 +1,3907 @@
+/* ------------------------------------------------------------------------------------------- */
+/* cms.global.v2.css - VERSION 3.6.4 DESIGN REFRESH 2010 - 2010/03/09 */
+/* ------------------------------------------------------------------------------------------- */
+/* PUBLISHING DATE 2010-03-10 10:17:37 */
+/* ------------------------------------------------------------------------------------------- */
+/* GLOBAL BASICS BEGIN */
+* {
+  margin: 0px 0px 0px 0px; /* 0px 0px 0px 0px */
+  padding: 0px 0px 0px 0px; /* 0px 0px 0px 0px */
+  border: none;
+  font-family: Arial, Verdana, Geneva, Helvetica, sans-serif;
+}
+body {  
+  font-size: 69%;
+  line-height: 140%;
+}
+a,
+a:active,
+a:focus,
+a:hover,
+a:link,
+a:visited {
+  cursor: pointer;
+  text-decoration: underline;
+}
+ul * {
+  list-style-type: square;
+}
+div.divTrackingIVW {
+  height: 0px;
+  width: 0px;
+  display: none;
+}
+/* GLOBAL BASICS END */
+/* ------------------------------------------------------------------------------------------- */
+/* PRESETTINGS BEGIN */
+.displayNone {
+  display: none;
+}
+.noPadding {
+  padding: 0;
+}
+.hidden {
+  visibility: hidden;
+}
+.formBasic input.hidden {
+  display:none;
+}
+.visible {
+  visibility: visible;
+}
+.floatLeft {
+  float: left;
+}
+.floatRight {
+  float: right;
+}
+.floatNone {
+  clear: both;
+  float: none;
+}
+.ieBugFix {
+  display: none;
+}
+br.clear {
+  float:none;
+  clear:both;
+  height:0px;
+  line-height:0px;
+}
+/* PRESETTINGS END */
+/* ------------------------------------------------------------------------------------------- */
+/* GLOBAL DIMENSIONS BEGIN */
+/* GRID 1 COLUMN */
+div.divContent1Col {
+  float: left;
+  overflow: hidden;
+  width: 192px;
+}
+/* GRID 2 COLUMN */
+div.divContent2Col {
+  float: left;
+  overflow: hidden;
+  width: 384px;
+}
+/* GRID 3 COLUMN */
+div.divContent3Col {
+  float: left;
+  overflow: hidden;
+  width: 576px;
+}
+/* GRID 4 COLUMN */
+div.divContent4Col {
+  float: left;
+  overflow: hidden;
+  width: 768px;
+}
+/* GRID 5 COLUMN */
+div.divContent5Col {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  width: 961px;
+}
+/* WIDTH 1 COLUMN */
+.width1Col {
+  overflow: hidden;
+  width:186px;
+}
+/* WIDTH 2 COLUMN */
+.width2Col {
+  overflow: hidden;
+  width:378px;
+}
+/* WIDTH 3 COLUMN */
+.width3Col {
+  overflow: hidden;
+  width:570px;
+}
+/* WIDTH 4 COLUMN */
+.width4Col {
+  overflow: hidden;
+  width:762px;
+}
+/* WIDTH 5 COLUMN */
+.width5Col {
+  overflow: hidden;
+  width:954px;
+}
+/* WIDTH 1 COLUMN */
+.width186 {
+  width:186px;
+}
+/* WIDTH 2 COLUMN */
+.width378 {
+  width:378px;
+}
+/* WIDTH 3 COLUMN */
+.width570 {
+  width:570px;
+}
+/* WIDTH 4 COLUMN */
+.width762 {
+  width:762px;
+}
+/* WIDTH 5 COLUMN */
+.width954 {
+  width:954px;
+}
+/* HEIGHT 168PX FOR HOMEPAGE */
+.height168 {
+  /* overflow: hidden; */
+height:168px;
+}
+.height168 .divInlay {
+  /* overflow: hidden; */
+height:142px;
+}
+.height168 object,
+.height168 embed {
+  height:168px;
+}
+/* HEIGHT 174PX FOR HOMEPAGE */
+.height174 {
+  /* overflow: hidden; */
+height:174px;
+}
+.height174 .divInlay {
+  /* overflow: hidden; */
+height:148px;
+}
+.height174 object,
+.height174 embed {
+  height:168px;
+}
+/* HEIGHT 282PX FOR HOMEPAGE */
+.height282 {
+  /* overflow: hidden; */
+height:282px;
+}
+.height282 .divInlay {
+  /* overflow: hidden; */
+height:256px;
+}
+.height282 object,
+.height282 embed {
+  height:282px;
+}
+/* HEIGHT 135PX FOR HOMEPAGE */
+.height135 {
+  overflow: hidden;
+  height:135px;
+}
+.height135 .divInlay {
+  /* overflow: hidden; */
+height: 110px;
+}
+.height135 object,
+.height135 embed {
+  height: 135px;
+}
+.height135 .divInlay .ulLinkList {
+  /* overflow: hidden; */
+margin-top: 0px;
+  height: 24px;
+}
+.height168 .divInlay .ulLinkList {
+  /* overflow: hidden; */
+margin-top: 0px;
+  height: 24px;
+}
+.height174 .divInlay .ulLinkList {
+  /* overflow: hidden; */
+margin-top: 0px;
+  height: 24px;
+}
+.height282 .divInlay .ulLinkList {
+  /* overflow: hidden; */
+margin-top: 0px;
+  height: 24px;
+}
+.height135 .dynLinkList,
+.height168 .dynLinkList,
+.height174 .dynLinkList,
+.height282 .dynLinkList {
+  position: relative;
+}
+.height135 .dynLinkList .ulLinkList,
+.height168 .dynLinkList .ulLinkList,
+.height174 .dynLinkList .ulLinkList,
+.height282 .dynLinkList .ulLinkList {
+  position: absolute;
+  height: auto;
+  margin-bottom: 9px;
+  bottom: 0px;
+  background-color: #FFFFFF;
+}
+.width1Col .dynLinkList .ulLinkList {
+  width: 174px;
+}
+.width2Col .dynLinkList .ulLinkList {
+  width: 366px;
+}
+.width3Col .dynLinkList .ulLinkList {
+  width: 558px;
+}
+.width4Col .dynLinkList .ulLinkList {
+  width: 750px;
+}
+.width5Col .dynLinkList .ulLinkList {
+  width: 942px;
+}
+/* HEIGHT AUTO FOR ALL PAGES */
+div.heightAuto {
+  height: auto;
+}
+.heightAuto .divInlay {
+}
+.heightAuto .divInlay.noMarginBottom {
+  margin-bottom: 0px;
+}
+/* iFrame-Banners */
+iframe.iframeSkyScraper {
+  width: 160px;
+  height: 600px;
+}
+iframe.iframeBannerHeader {
+  width: 468px;
+  height: 60px;
+}
+#bannerHeader {
+  height: 60px;
+}
+div.divSuperBanner {
+  margin:0 0 15px 3px;
+  position:relative;
+}
+/* GLOBAL DIMENSIONS END */
+/* ------------------------------------------------------------------------------------------- */
+/* BASICS BEGIN */
+div.divMatrix {
+  position: relative;
+  width:1135px;
+  padding:12px 0px 19px 0px;
+  margin:0px auto;
+}
+div.divPopUp {
+  margin:6px;
+}
+/* BASICS END */
+/* ------------------------------------------------------------------------------------------- */
+/* HEADER BEGIN */
+/* BASICS */
+div.divHeader {
+  margin:0px 0px 0px 3px;
+  height: 67px;
+  background: url(../images/menuBgMain2010.gif) repeat-x;
+  position: relative;
+  width: 956px;
+}
+div.divPopUp div.divHeader {
+  width: auto;
+  background: none;
+  height:80px;
+}
+div.divPopUpLinks {
+  margin:6px;
+}
+/* CORNER LOGO */
+img.imgLogo {
+  position: absolute;
+  top:0px;
+  left:0px;
+  width:80px;
+  height:67px;
+  border: none;
+}
+div.divPopUp img.imgLogo {
+  margin:0px;
+}
+/* PARTNER LOGO */
+img.imgPartnerLogo {
+  float: left;
+  width:954px;
+  height:131px;
+  margin:0px 0px 12px 0px;
+  border: none;
+}
+/* BANNER */
+div.divBannerHeader {
+  /* display: none; */ /* TO REMOVE BANNER ON ALL PAGES */
+position: absolute;
+  top:37px;
+  left:163px;
+  z-index: 500;
+  width:468px;
+  height:60px;
+}
+/* NAVIGATION META HEAD RIGHT */
+div.divNavigationMeta {
+  height:32px;
+}
+ul.ulNavigationMeta {
+  float: right;
+  height:32px;
+}
+ul.ulNavigationMeta li {
+  float: left;
+  line-height: 2;
+  font-size:1em;
+  list-style-type: none;
+  font-weight:bold;
+  margin:4px 0 0 15px;
+}
+ul.ulNavigationMeta li a,
+ul.ulNavigationMeta li a:active,
+ul.ulNavigationMeta li a:focus,
+ul.ulNavigationMeta li a:hover,
+ul.ulNavigationMeta li a:link,
+ul.ulNavigationMeta li a:visited {
+  text-decoration: none;
+  color: #FFFFFF;
+}
+ul.ulNavigationMeta li a:hover {
+  text-decoration: underline;
+}
+ul.ulNavigationMeta li a.aActive,
+ul.ulNavigationMeta li a.aActive:active,
+ul.ulNavigationMeta li a.aActive:focus,
+ul.ulNavigationMeta li a.aActive:hover,
+ul.ulNavigationMeta li a.aActive:link,
+ul.ulNavigationMeta li a.aActive:visited {
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* NAVIGATION META HEAD RIGHT PLUS SHOPPINGCART */
+ul.ulNavigationMeta li.liShoppingCart {
+  padding: 0px 0px 0px 0px;
+  border-right: none;
+}
+ul.ulNavigationMeta li.liShoppingCart a,
+ul.ulNavigationMeta li.liShoppingCart a:active,
+ul.ulNavigationMeta li.liShoppingCart a:focus,
+ul.ulNavigationMeta li.liShoppingCart a:hover,
+ul.ulNavigationMeta li.liShoppingCart a:link,
+ul.ulNavigationMeta li.liShoppingCart a:visited {
+  margin-left: 7px;
+  padding: 0px 0px 0px 16px;
+  background-image: url(../images/shoppingcart2010.gif);
+  background-position: 0px 1px;
+  background-repeat: no-repeat;
+}
+/* MAIN NAVIGATION */
+ul.ulNavigationMain {
+  height: 35px;
+  margin-left:10px;
+  margin-bottom: -2px;
+  background: url(../images/mainNavBg2010.gif) repeat-x;
+  position:relative;
+}
+ul.ulNavigationMain li {
+  height: 35px;
+  float: left;
+  background: url(../images/mainNavBg2010.gif) repeat-x;
+  display: inline;
+  line-height: 1.4;
+}
+ul.ulNavigationMain li.liActive {
+  background: url(../images/mainNavBgActive2010.gif) repeat-x;
+}
+ul.ulNavigationMain li a,
+ul.ulNavigationMain li a:link,
+ul.ulNavigationMain li a:visited {
+  display: block;
+  float: left;
+  height: 25px;
+  color: #fff;
+  font-size: 1.182em;
+  font-weight: bold;
+  padding: 8px 15px 0 15px;
+  margin: 2px 0 0 0;
+  border-right: 1px solid #3e952f;
+  text-decoration: none;
+}
+ul.ulNavigationMain li a:hover {
+  background: #C80000;
+  border-right: 1px solid #C80000;
+}
+ul.ulNavigationMain li.liActive a,
+ul.ulNavigationMain li.liActive a:hover,
+ul.ulNavigationMain li.liActive a:link,
+ul.ulNavigationMain li.liActive a:visited {
+  color:#c80000;
+  border-right: 0;
+  margin: 0 0 0 4px;
+  padding: 10px 15px 0 11px;
+  background: url(../images/mainNavBgActive2010.gif) right 0;
+}
+ul.ulNavigationMain li.liActive a {
+  cursor: pointer;
+}
+/* HEADER END */
+/* ------------------------------------------------------------------------------------------- */
+/* CONTENT BEGIN */
+/* BASICS */
+div.divContent {
+  float: none;
+  clear: both;
+  overflow: hidden;
+  width: 970px;
+  height: inherit;
+  position:relative;
+}
+/* SKYSCRAPER */
+div.divSkyScraper {
+  /* display: none; /* TO REMOVE BANNER ON ALL PAGES */
+position: absolute;
+  z-index: 500;
+  top: 173px;
+  left: 972px;
+  width: 160px; /*fixed from 150*/
+  height: 600px;
+}
+/* STICKER */
+div.divSticker {
+  display: none; /* TO REMOVE BANNER ON ALL PAGES */
+  position: absolute;
+  z-index: 500;
+  top: 20px;
+  left: 972px;
+  width: 160px;
+  height: 117px;
+}
+/* NAVIGATION TOP */
+ul.ulNavigationTop {
+  background:#FFF;
+  float: left;
+  margin-left: 3px;
+  margin-bottom: 10px;
+  width: 954px;
+  border-bottom:2px solid #E0E0E0;
+  border-right:2px solid #E0E0E0;
+  overflow: hidden;
+}
+ul.ulNavigationTop li {
+  float: left;
+  display: inline;
+  line-height: 2.2;
+  font-size: 1.182em;
+  margin: 0 0 0 15px;
+}
+ul.ulNavigationTop li a,
+ul.ulNavigationTop li a:link,
+ul.ulNavigationTop li a:visited {
+  color: #000000;
+  text-decoration: none;
+}
+ul.ulNavigationTop li a:hover {
+  color:#c80000;
+  text-decoration: underline;
+}
+ul.ulNavigationTop li a.aActive,
+ul.ulNavigationTop li a.aActive:link,
+ul.ulNavigationTop li a.aActive:visited {
+  color:#c80000;
+  font-weight: bold;
+}
+/*
+ul.ulNavigationTop.widthHomepage {
+width: 954px;
+}
+*/
+/* LOGIN & REGISTER */
+ul.ulLogin {
+    position: absolute;
+    right: 20px !important;
+    top: 0px;
+    width: 200px;
+    height: 30px;
+    margin: 0px 0px 0px 3px;
+    list-style: none;
+}
+ul.ulLogin li {
+  float: right;
+  margin: 7px 0px 0px 12px;
+  list-style-type: none;
+}
+/* MEGATEASER */
+img.imgMegaTeaser {
+  float: left;
+  height: 168px;
+  padding:  0px 3px 0px 3px;
+}
+div.divMegaTeaser {
+  float: left;
+  padding:  0px 3px 0px 3px;
+}
+div.divMegaTeaser.noBG {
+  background-image: none;
+}
+/* BASIC MODULE */
+div.divModuleBasic {
+  /* position: relative;  2009/07/28 sl */
+float: left;
+  margin: 0px 1px 10px 3px;
+  padding: 0px 0px 0px 0px;
+  background-color:#FFF;
+}
+strong.headline {
+  display:block;
+}
+div.divModuleBasic h1,
+div.divModuleBasic h2,
+div.divModuleBasic h3,
+div.divModuleBasic h4,
+div.divModuleBasic h5,
+div.divModuleBasic h6,
+div.divModuleBasic strong.headline {
+  height: 24px;
+  line-height: 23px;
+  margin: 0px 5px;
+  font-size: 11px;
+  font-weight: bold;
+}
+div.divModuleBasic h1 span.spanTitle,
+div.divModuleBasic h2 span.spanTitle,
+div.divModuleBasic h3 span.spanTitle,
+div.divModuleBasic h4 span.spanTitle,
+div.divModuleBasic h5 span.spanTitle,
+div.divModuleBasic h6 span.spanTitle,
+div.divModuleBasic strong.headline span.spanTitle {
+  float: left;
+  width:100%;
+  border-bottom:1px solid #EDEDED;
+}
+div.divModuleBasic h1 span.spanTitleBig,
+div.divModuleBasic h2 span.spanTitleBig,
+div.divModuleBasic h3 span.spanTitleBig,
+div.divModuleBasic h4 span.spanTitleBig,
+div.divModuleBasic h5 span.spanTitleBig,
+div.divModuleBasic h6 span.spanTitleBig,
+div.divModuleBasic strong.headline span.spanTitleBig {
+  float: left;
+  width:100%;
+  border-bottom:1px solid #EDEDED;
+  font-size:15px;
+}
+/* noBorder option to switch off Headline border*/
+div.divModuleBasic h1.noBorder span.spanTitle,
+div.divModuleBasic h1.noBorder span.spanTitle,
+div.divModuleBasic h1.noBorder span.spanTitle,
+div.divModuleBasic h1.noBorder span.spanTitle,
+div.divModuleBasic h1.noBorder span.spanTitle,
+div.divModuleBasic h1.noBorder span.spanTitle,
+div.divModuleBasic strong.noBorder span.spanTitle,
+div.divModuleBasic h1.noBorder span.spanTitleBig,
+div.divModuleBasic h1.noBorder span.spanTitleBig,
+div.divModuleBasic h1.noBorder span.spanTitleBig,
+div.divModuleBasic h1.noBorder span.spanTitleBig,
+div.divModuleBasic h1.noBorder span.spanTitleBig,
+div.divModuleBasic h1.noBorder span.spanTitleBig,
+div.divModuleBasic strong.noBorder span.spanTitleBig {
+  float: left;
+  width:100%;
+  border-bottom:0px none;
+}
+div.divModuleBasic h1 span.spanMoreLink,
+div.divModuleBasic h2 span.spanMoreLink,
+div.divModuleBasic h3 span.spanMoreLink,
+div.divModuleBasic h4 span.spanMoreLink,
+div.divModuleBasic h5 span.spanMoreLink,
+div.divModuleBasic h6 span.spanMoreLink,
+div.divModuleBasic strong.headline span.spanMoreLink {
+  margin: 0px 6px 0px 0px;
+  font-weight: normal;
+  vertical-align: text-bottom;
+  position:absolute;
+  right:0px;
+  top:0px;
+}
+div.divModuleBasic div.divInlay h4 {
+  padding: 6px 0;
+  margin:0;
+}
+div.divModuleBasic div.divInlay h5 {
+  padding: 6px 0;
+  margin:0;
+}
+/* div.image72Top168 h1 span.spanTitle,
+div.image72Top168 h2 span.spanTitle,
+div.image72Top168 h3 span.spanTitle,
+div.image72Top168 h4 span.spanTitle,
+div.image72Top168 h5 span.spanTitle,
+div.image72Top168 h6 span.spanTitle,
+div.image72Top168 strong.headline span.spanTitle {
+  border-bottom:0px none;
+}
+div.image72Top174 h1 span.spanTitle,
+div.image72Top174 h2 span.spanTitle,
+div.image72Top174 h3 span.spanTitle,
+div.image72Top174 h4 span.spanTitle,
+div.image72Top174 h5 span.spanTitle,
+div.image72Top174 h6 span.spanTitle,
+div.image72Top174 strong.headline span.spanTitle {
+  border-bottom:0px none;
+}
+div.image72Top282 h1 span.spanTitle,
+div.image72Top282 h2 span.spanTitle,
+div.image72Top282 h3 span.spanTitle,
+div.image72Top282 h4 span.spanTitle,
+div.image72Top282 h5 span.spanTitle,
+div.image72Top282 h6 span.spanTitle,
+div.image72Top282 strong.headline span.spanTitle {
+  border-bottom:0px none;
+}
+div.image90Top168 h1 span.spanTitle,
+div.image90Top168 h2 span.spanTitle,
+div.image90Top168 h3 span.spanTitle,
+div.image90Top168 h4 span.spanTitle,
+div.image90Top168 h5 span.spanTitle,
+div.image90Top168 h6 span.spanTitle,
+div.image90Top168 strong.headline span.spanTitle {
+  border-bottom:0px none;
+}
+div.image90Top174 h1 span.spanTitle,
+div.image90Top174 h2 span.spanTitle,
+div.image90Top174 h3 span.spanTitle,
+div.image90Top174 h4 span.spanTitle,
+div.image90Top174 h5 span.spanTitle,
+div.image90Top174 h6 span.spanTitle,
+div.image90Top174 strong.headline span.spanTitle {
+  border-bottom:0px none;
+}
+div.image90Top282 h1 span.spanTitle,
+div.image90Top282 h2 span.spanTitle,
+div.image90Top282 h3 span.spanTitle,
+div.image90Top282 h4 span.spanTitle,
+div.image90Top282 h5 span.spanTitle,
+div.image90Top282 h6 span.spanTitle,
+div.image90Top282 strong.headline span.spanTitle {
+  border-bottom:0px none;
+} */
+div.divModuleBasic h1 a,
+div.divModuleBasic h1 a:active,
+div.divModuleBasic h1 a:focus,
+div.divModuleBasic h1 a:hover,
+div.divModuleBasic h1 a:link,
+div.divModuleBasic h1 a:visited,
+div.divModuleBasic h2 a,
+div.divModuleBasic h2 a:active,
+div.divModuleBasic h2 a:focus,
+div.divModuleBasic h2 a:hover,
+div.divModuleBasic h2 a:link,
+div.divModuleBasic h2 a:visited,
+div.divModuleBasic h3 a,
+div.divModuleBasic h3 a:active,
+div.divModuleBasic h3 a:focus,
+div.divModuleBasic h3 a:hover,
+div.divModuleBasic h3 a:link,
+div.divModuleBasic h3 a:visited,
+div.divModuleBasic h4 a,
+div.divModuleBasic h4 a:active,
+div.divModuleBasic h4 a:focus,
+div.divModuleBasic h4 a:hover,
+div.divModuleBasic h4 a:link,
+div.divModuleBasic h4 a:visited,
+div.divModuleBasic h5 a,
+div.divModuleBasic h5 a:active,
+div.divModuleBasic h5 a:focus,
+div.divModuleBasic h5 a:hover,
+div.divModuleBasic h5 a:link,
+div.divModuleBasic h5 a:visited,
+div.divModuleBasic h6 a,
+div.divModuleBasic h6 a:active,
+div.divModuleBasic h6 a:focus,
+div.divModuleBasic h6 a:hover,
+div.divModuleBasic h6 a:link,
+div.divModuleBasic h6 a:visited,
+div.divModuleBasic strong.headline a,
+div.divModuleBasic strong.headline a:active,
+div.divModuleBasic strong.headline a:focus,
+div.divModuleBasic strong.headline a:hover,
+div.divModuleBasic strong.headline a:link,
+div.divModuleBasic strong.headline a:visited {
+  text-decoration: none;
+  color: #C80000;
+}
+div.divModuleBasic h1 a:hover,
+div.divModuleBasic h2 a:hover,
+div.divModuleBasic h3 a:hover,
+div.divModuleBasic h4 a:hover,
+div.divModuleBasic h5 a:hover,
+div.divModuleBasic h6 a:hover,
+div.divModuleBasic strong.headline a:hover {
+  text-decoration: underline;
+  color: #C80000;
+}
+/* IMG OVERLAY */
+div.divWrapperOverlay { /* 2009/08/10 sl */
+  position: relative;
+}
+div.divImgOverlay { /* 2009/07/28 sl */
+  position: absolute;
+  z-index: 500;
+}
+/* INLAY */
+div.divModuleBasic div.divInlay h2,
+div.divModuleBasic div.divInlay h3,
+div.divModuleBasic div.divInlay h4,
+div.divModuleBasic div.divInlay h5,
+div.divModuleBasic div.divInlay h6 {
+  background-color:#FFFFFF;
+  color:#000000;
+  height:auto;
+  line-height:normal;
+}
+div.divInlay {
+  border: 1px solid;
+  border-top-width: 0px;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+}
+div.divInlay.borderTop {
+  border-top-width: 1px;
+}
+div.divInlay h2 {
+  padding: 11px 0px 9px 0px;
+  font-size: 1.272727272em;
+  font-weight: bolder;
+}
+div.divInlay h3 {
+  padding: 11px 0px 9px 0px;
+  font-size: 1.09090909em;
+  font-weight: bold;
+}
+div.divInlay h4 {
+  /* padding: 11px 0px 9px 0px; */
+font-size: 1em;
+  font-weight: bold;
+}
+div.divInlay h5 {
+  /* padding: 11px 0px 9px 0px; */
+font-size: 1em;
+  font-weight: bold;
+}
+div.divInlay p {
+  padding: 5px 0px 10px 0px;
+  line-height: 1.454545454em;
+}
+div.divInlay blockquote {
+  padding: 5px 27px 10px 27px;
+  line-height: 1.454545454em; /* 16px */
+}
+/* P INSIDE INLAY WIDTH FIX HEIGHT AND TEXT ONLY */
+.height168 div.divInlay p {
+  /* overflow: hidden; */
+height: 90px;
+  margin-bottom: 3px;
+}
+.height174 div.divInlay p {
+  /* overflow: hidden; */
+height: 90px;
+  margin-bottom: 9px;
+}
+.height282 div.divInlay p {
+  /* overflow: hidden; */
+height: 202px;
+  margin-bottom: 5px;
+}
+div.divInlay ul.ulContent {
+  display: table;
+  margin: 4px 0px 0px 13px;
+  padding-bottom:11px;
+  font-size: 1em;
+  list-style-position: outside;
+}
+div.divInlay ul.ulContent li {
+  line-height: 1.454545454em;
+}
+div.divInlay ul.ulLinkList {
+  padding-top: 0px;
+}
+/* INLAY WITH PADDING */
+div.divModuleBasic.padding6px div.divInlay {
+  padding: 0px 5px 0px 5px;
+}
+div.divModuleBasic.padding12px div.divInlay {
+  padding: 0px 11px 0px 11px;
+}
+div.divModuleBasic.padding6px div.divInlay.noPadding {
+  padding: 0px 0px 0px 0px;
+}
+div.divModuleBasic.padding12px div.divInlay.noPadding {
+  padding: 0px 0px 0px 0px;
+}
+/* NAVIGATION LEFT BASIC */
+ul.ulNavigationLeft {
+  border: 1px solid;
+  border-top: none;
+  padding:0 5px;
+  margin:0 0 6px 0;
+}
+/* NAVIGATION LEFT LEVEl 3 */
+ul.ulNavigationLeft li {
+  border-top: 1px solid;
+  list-style-type: none;
+}
+ul.ulNavigationLeft li a,
+ul.ulNavigationLeft li a:active,
+ul.ulNavigationLeft li a:focus,
+ul.ulNavigationLeft li a:hover,
+ul.ulNavigationLeft li a:link,
+ul.ulNavigationLeft li a:visited {
+  display: block;
+  line-height: 14px;
+  padding: 5px 0px 4px 3px;
+  text-decoration: none;
+}
+ul.ulNavigationLeft li a:hover {
+  text-decoration: underline;
+}
+ul.ulNavigationLeft li a.aActive:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+/* NAVIGATION LEFT LEVEL 4 */
+ul.ulNavigationLeft li ul li a,
+ul.ulNavigationLeft li ul li a:active,
+ul.ulNavigationLeft li ul li a:focus,
+ul.ulNavigationLeft li ul li a:hover,
+ul.ulNavigationLeft li ul li a:link,
+ul.ulNavigationLeft li ul li a:visited {
+  display: block;
+  line-height: 14px;
+  padding: 5px 0px 4px 15px;
+  text-decoration: none;
+}
+ul.ulNavigationLeft li ul li a:hover {
+  text-decoration: underline;
+}
+ul.ulNavigationLeft li ul li a.aActive:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+/* NAVIGATION LEFT LEVEL 5 */
+ul.ulNavigationLeft li ul li ul li a,
+ul.ulNavigationLeft li ul li ul li a:active,
+ul.ulNavigationLeft li ul li ul li a:focus,
+ul.ulNavigationLeft li ul li ul li a:hover,
+ul.ulNavigationLeft li ul li ul li a:link,
+ul.ulNavigationLeft li ul li ul li a:visited {
+  display: block;
+  line-height: 14px;
+  padding: 5px 0px 4px 27px;
+  text-decoration: none;
+}
+ul.ulNavigationLeft li ul li ul li a:hover {
+  text-decoration: underline;
+}
+ul.ulNavigationLeft li ul li ul li a.aActive:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+/* NAVIGATION LEFT LEVEL 6 */
+ul.ulNavigationLeft li ul li ul li ul li a,
+ul.ulNavigationLeft li ul li ul li ul li a:active,
+ul.ulNavigationLeft li ul li ul li ul li a:focus,
+ul.ulNavigationLeft li ul li ul li ul li a:hover,
+ul.ulNavigationLeft li ul li ul li ul li a:link,
+ul.ulNavigationLeft li ul li ul li ul li a:visited {
+  display: block;
+  line-height: 14px;
+  padding: 5px 0px 4px 37px;
+  text-decoration: none;
+}
+ul.ulNavigationLeft li ul li ul li ul li a:hover {
+  text-decoration: underline;
+}
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+/* NAVIGATION LEFT LEVEL 3/4/5/6 ACTIVE + SELECTED */
+ul.ulNavigationLeft li a b,
+ul.ulNavigationLeft li a:active b,
+ul.ulNavigationLeft li a:focus b,
+ul.ulNavigationLeft li a:hover b,
+ul.ulNavigationLeft li a:link b,
+ul.ulNavigationLeft li a:visited b,
+ul.ulNavigationLeft li ul li a b,
+ul.ulNavigationLeft li ul li a:active b,
+ul.ulNavigationLeft li ul li a:focus b,
+ul.ulNavigationLeft li ul li a:hover b,
+ul.ulNavigationLeft li ul li a:link b,
+ul.ulNavigationLeft li ul li a:visited b,
+ul.ulNavigationLeft li ul li ul li a b,
+ul.ulNavigationLeft li ul li ul li a:active b,
+ul.ulNavigationLeft li ul li ul li a:focus b,
+ul.ulNavigationLeft li ul li ul li a:hover b,
+ul.ulNavigationLeft li ul li ul li a:link b,
+ul.ulNavigationLeft li ul li ul li a:visited b,
+ul.ulNavigationLeft li ul li ul li ul li a b,
+ul.ulNavigationLeft li ul li ul li ul li a:active b,
+ul.ulNavigationLeft li ul li ul li ul li a:focus b,
+ul.ulNavigationLeft li ul li ul li ul li a:hover b,
+ul.ulNavigationLeft li ul li ul li ul li a:link b,
+ul.ulNavigationLeft li ul li ul li ul li a:visited b {
+  font-weight: bold;
+}
+ul.ulNavigationLeft li a:hover b,
+ul.ulNavigationLeft li ul li a:hover b,
+ul.ulNavigationLeft li ul li ul li a:hover b,
+ul.ulNavigationLeft li ul li ul li ul li a:hover b {
+  font-weight: bold;
+}
+ul.ulNavigationLeft li a.aActive b,
+ul.ulNavigationLeft li a.aActive:active b,
+ul.ulNavigationLeft li a.aActive:focus b,
+ul.ulNavigationLeft li a.aActive:hover b,
+ul.ulNavigationLeft li a.aActive:link b,
+ul.ulNavigationLeft li a.aActive:visited b,
+ul.ulNavigationLeft li ul li a.aActive b,
+ul.ulNavigationLeft li ul li a.aActive:active b,
+ul.ulNavigationLeft li ul li a.aActive:focus b,
+ul.ulNavigationLeft li ul li a.aActive:hover b,
+ul.ulNavigationLeft li ul li a.aActive:link b,
+ul.ulNavigationLeft li ul li a.aActive:visited b,
+ul.ulNavigationLeft li ul li ul li a.aActive b,
+ul.ulNavigationLeft li ul li ul li a.aActive:active b,
+ul.ulNavigationLeft li ul li ul li a.aActive:focus b,
+ul.ulNavigationLeft li ul li ul li a.aActive:hover b,
+ul.ulNavigationLeft li ul li ul li a.aActive:link b,
+ul.ulNavigationLeft li ul li ul li a.aActive:visited b,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive b,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:active b,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:focus b,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:hover b,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:link b,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:visited b {
+  font-weight: bold;
+  text-decoration: none;
+}
+ul.ulNavigationLeft li a.aActive:hover b,
+ul.ulNavigationLeft li ul li a.aActive:hover b,
+ul.ulNavigationLeft li ul li ul li a.aActive:hover b,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:hover b {
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* LINK */
+a.aLink,
+a.aLink:active,
+a.aLink:focus,
+a.aLink:hover,
+a.aLink:link,
+a.aLink:visited {
+  display: table-cell;
+  height: 19px;
+  padding: 0px 20px 0px 0px;
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+a.aLink:hover {
+  text-decoration: underline;
+}
+div.divPopUpLinks a.aLink {
+  padding-left: 12px;
+}
+/* LINK LISTS */
+ul.ulLinkList {
+  float: none;
+  clear: both;
+  margin: 10px 0px 12px 0px;
+  list-style: none;
+  border-bottom: 1px solid;
+}
+ul.ulLinkList li {
+  height: auto;
+  padding: 0px 0px 0px 0px;
+  border-top: 1px solid;
+  list-style-type: none;
+}
+ul.ulLinkList li a,
+ul.ulLinkList li a:active,
+ul.ulLinkList li a:focus,
+ul.ulLinkList li a:hover,
+ul.ulLinkList li a:link,
+ul.ulLinkList li a:visited {
+  display: block;
+  width: auto;
+  line-height: 19px;
+  margin: 3px 0px 0px 0px;
+  padding: 0px 16px 1px 1px;
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+ul.ulLinkList li a:hover {
+  text-decoration: underline;
+}
+/* BUTTONS */
+a.aButton,
+a.aButton:active,
+a.aButton:focus,
+a.aButton:hover,
+a.aButton:link,
+a.aButton:visited {
+  float: right;
+  display: block;
+  height: 24px;
+  text-decoration: none;
+}
+a.aButton:hover {
+  cursor: pointer;
+}
+a.aButton span,
+a.aButton:active span,
+a.aButton:focus span,
+a.aButton:hover span,
+a.aButton:link span,
+a.aButton:visited span {
+  display: block;
+  height: 24px;
+}
+a.aButton:hover span {
+  cursor: pointer;
+}
+a.aButton span b,
+a.aButton:active span b,
+a.aButton:focus span b,
+a.aButton:hover span b,
+a.aButton:link span b a.aButton:visited span b {
+  line-height: 18px;
+  margin:  0px 6px 6px 6px;
+}
+a.aButton.marginR12px {
+  margin-right: 12px;
+}
+/* ARTICLE */
+div.divArticleBasic {
+  float: none;
+  clear:both;
+  background-color:#FFFFFF;
+  border-bottom:2px solid #E0E0E0;
+  border-right:2px solid #E0E0E0;
+  margin: 0px 1px 10px 3px;
+}
+div.divArticleBasic h1 {
+  padding: 12px 10px 12px 10px;
+  line-height: 1.09090909em;
+  font-size: 1.6em;
+  font-weight: bold;
+}
+div.divArticleBasic h2 {
+  font-size:1em;
+  line-height:1.09091em;
+  padding:6px 10px 6px;
+}
+div.divArticleBasic h3 {
+  padding: 8px 10px 2px 10px;
+  line-height: 1.454545454em;
+  font-size: 1.181818181em;
+  font-weight: bold;
+}
+div.divArticleBasic p {
+  margin: 3px 10px 0px 10px;
+  line-height: 1.636363636em;
+  font-size: 1em;
+}
+div.divArticleBasic p strong {
+  display: inline;
+  margin: 0px 0px 0px 0px;
+  line-height: 1.636363636em;
+  font-size: 1em;
+  font-weight: bold;
+}
+div.divArticleBasic p b {
+  font-weight: bold;
+}
+div.divArticleBasic strong {
+  display: block;
+  margin: 3px 9px 0px 9px;
+  line-height: 1.636363636em;
+  font-size: 1.181818181em;
+  font-weight: bold;
+}
+div.divArticleBasic blockquote {
+  margin: 3px 36px 0px 36px;
+  line-height: 1.636363636em; /* 18px */
+}
+/* CONTENT LIST */
+ul.ulContent {
+  display: table;
+  margin: 12px 0px 12px 24px;
+  font-size: 1em;
+}
+ul.ulContent.imgLeft {
+  display: table;
+  margin: 4px 0px 0px 12px;
+}
+ul.ulContent li {
+  line-height: 18px;
+}
+ul.ulAlphabet,
+ul.ulNumeric {
+  height: 15px;
+  margin: 10px 0px 20px 0px;
+  border-left: 1px solid #333333;
+}
+ul.ulAlphabet li,
+ul.ulNumeric li {
+  float: left;
+  list-style: none;
+  border-right: 1px solid #333333;
+}
+ul.ulAlphabet li a,
+ul.ulNumeric li a {
+  padding: 0px 6px 0px 6px;
+}
+/* CONTENT IMAGES */
+div.divArticleBasic img.imgContent {
+  width: 174px;
+  height: auto;
+  margin: 7px 18px 5px 12px;
+}
+div.divArticleBasic img.imgContentDyn {
+  width: auto;
+  height: auto;
+  margin: 7px 18px 5px 12px;
+}
+/* FORMS */
+form.formBasic {
+  display: table;
+}
+form.formBasic label {
+  float: left;
+  display: table-cell;
+  width: 116px;
+  margin: 4px 12px 0px 0px;
+  text-align: right;
+}
+form.formBasic input.input96 {
+  float: left;
+  display: table-cell;
+  width: 96px;
+  height: 16px;
+  margin: 0px 220px 14px 0px;
+  padding: 2px 4px 0px 4px;
+  border: 1px solid;
+}
+form.formBasic input {
+  float: left;
+  display: table-cell;
+  width: 278px;
+  height: 16px;
+  margin: 0px 100px 14px 0px;
+  padding: 2px 4px 0px 4px;
+  border: 1px solid;
+  font-size: 1em;
+}
+form.formBasic fieldset.fieldsetCheckbox {
+  float: left;
+  width: 286px;
+  margin: 0px 100px 14px 0px;
+  padding-top: 4px;
+  border: none;
+}
+form.formBasic fieldset.fieldsetCheckbox label {
+  width: auto;
+  margin: 0px 20px 0px 0px;
+}
+form.formBasic fieldset.fieldsetCheckbox input {
+  width: 14px;
+  height: 14px;
+  margin: 0px 6px 0px 0px;
+  border: 1px solid;
+  font-size: 1em;
+}
+form.formBasic textarea {
+  float: left;
+  display: table-cell;
+  width: 278px;
+  height: 149px;
+  margin: 0px 100px 14px 0px;
+  padding: 4px 4px 4px 4px;
+  border: 1px solid;
+  font-size: 1em;
+}
+form.formBasic select {
+  float: left;
+  display: table-cell;
+  width: 288px;
+  height: 18px;
+  margin: 0px 100px 14px 0px;
+  border: 1px solid;
+  font-size: 1em;
+}
+form.formBasic select option {
+  padding: 2px 4px 0px 4px;
+  font-size: 1em;
+}
+/* TABLE BASICS */
+table.tableBasic {
+  /*    margin: 0px 0px 10px 1px; */
+  margin: 0px 0px 0px 1px;
+  table-layout: auto;
+  border-collapse: collapse;
+  border-left: 1px solid;
+}
+div.tabs-container table.tableBasic {
+  margin-top: 10px;
+}
+div.divArticleBasic table.tableBasic {
+  margin-top: 18px;
+  border-bottom: 1px solid;
+}
+/* TABLE SIZES */
+.divModuleBasic.width1Col table.tableBasic {
+  width: 175px;
+}
+.divModuleBasic.width2Col table.tableBasic {
+  width: 377px;
+}
+.divModuleBasic.width3Col table.tableBasic {
+  width: 569px;
+}
+.divModuleBasic.width4Col table.tableBasic {
+  width: 761px;
+}
+.divModuleBasic.width5Col table.tableBasic {
+  width: 953px;
+}
+/* TABLE HEAD */
+table.tableBasic thead {
+  line-height: 18px;
+}
+table.tableBasic tr th,
+table.tableBasic thead tr th {
+  padding: 6px 11px 6px 11px;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  text-align: left;
+  vertical-align: top;
+  font-weight: bold;
+}
+/* TABLE BODY */
+table.tableBasic tr td,
+table.tableBasic tbody tr td {
+  line-height: 18px;
+  padding: 6px 10px 6px 11px;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  vertical-align: top;
+}
+/* TABLE FOOTER */
+table.tableBasic tfoot tr td {
+  line-height: 18px;
+  padding: 6px 11px 6px 11px;
+  border-right: 1px solid;
+  vertical-align: top;
+}
+/* TABLE BODY CONTENT */
+table.tableBasic tr td sup,
+table.tableBasic tbody tr td sup {
+  font-weight: bold;
+}
+table.tableBasic tr th.center,
+table.tableBasic tr td.center,
+table.tableBasic thead tr th.center,
+table.tableBasic tbody tr td.center {
+  text-align: center;
+  vertical-align: top;
+}
+table.tableBasic tr th b,
+table.tableBasic tr td b,
+table.tableBasic thead tr th b,
+table.tableBasic tbody tr td b {
+  font-weight: bold;
+}
+table.tableBasic tr th strong,
+table.tableBasic tr td strong,
+table.tableBasic thead tr th strong,
+table.tableBasic tbody tr td strong {
+  font-weight: bold;
+}
+table.tableBasic tr td.tdContent ul table.tableBasic tbody tr td.tdContent ul {
+  margin: 0px 0px 0px 12px;
+}
+/* additional sizes */
+.tableBasic.percent33 td,
+.percent33 {
+  width: 33.3%;
+}
+.tableBasic.percent50 td,
+.percent50 {
+  width: 50%;
+}
+.percent66 {
+  width: 66%;
+}
+.tableBasic td ul.ulLinkList,
+.tableBasic.percent33 td ul.ulLinkList,
+.tableBasic.percent50 td ul.ulLinkList {
+  margin: 5px 0px 6px 0px;
+}
+.tableBasic td ul.ulContent {
+  font-size: 1em; /* 11px */
+}
+/* TABBED NAVIGATION (JQUERY.JS) */
+.divTabbedNavigation div.divModuleBasic div.divInlay,
+.divTabbedNavigationSmall div.divModuleBasic div.divInlay {
+  border-top: 0px none;
+}
+.divTabbedNavigation ul,
+.divTabbedNavigationSmall ul {
+  padding: 0px 0px 15px 15px;
+  list-style-type: none;
+}
+.divTabbedNavigation ul.tabs-nav,
+.divTabbedNavigationSmall ul.tabs-nav {
+  padding: 0px 0px 0px 0px;
+}
+.divTabbedNavigation ul.ulLinkList,
+.divTabbedNavigationSmall ul.ulLinkList {
+  padding: 0px 0px 0px 0px;
+}
+@media projection, screen {
+.tabs-hide {
+  display: none;
+}
+}
+@media print {
+.tabs-nav {
+  display: none;
+}
+}
+.tabs-nav {
+  width: auto;
+  margin: 0px 3px 0px 3px;
+  list-style: none;
+}
+.tabs-nav:after {
+  display: block;
+  clear: both;
+  content: "";
+}
+.tabs-nav li {
+  float: left;
+  margin: 0px 5px 0px 0px;
+  line-height: 30px;
+  list-style-type: none;
+  position:relative;
+}
+.tabs-nav li.tabs-selected {
+  border-right:1px solid #E0E0E0;
+}
+.tabs-nav a,
+.tabs-nav a:active,
+.tabs-nav a:focus,
+.tabs-nav a:hover,
+.tabs-nav a:link,
+.tabs-nav a:visited,
+.tabs-nav a span,
+.tabs-nav a:active span,
+.tabs-nav a:focus span,
+.tabs-nav a:hover span,
+.tabs-nav a:link span,
+.tabs-nav a:visited span {
+  display: block;
+  padding: 2px 9px 0px 9px;
+  line-height: 30px;
+  text-decoration: none;
+  font-size:12px;
+  font-weight:bold;
+  background-color: #DBDBDB;
+  color: #333333;
+}
+.tabs-nav a:hover,
+.tabs-nav a:focus,
+.tabs-nav a:active {
+  text-decoration: underline;
+  cursor: pointer;
+  color:#C80000;
+}
+.tabs-nav .tabs-selected a:hover,
+.tabs-nav .tabs-selected a:focus,
+.tabs-nav .tabs-selected a:active {
+  text-decoration: none;
+}
+.tabs-nav a,
+.tabs-nav .tabs-disabled a:hover,
+.tabs-nav .tabs-disabled a:focus,
+.tabs-nav .tabs-disabled a:active {
+  text-decoration: none;
+}
+.tabs-nav .tabs-disabled a:link,
+.tabs-nav .tabs-disabled a:visited {
+  cursor: text;
+}
+.tabs-nav .tabs-selected a:link,
+.tabs-nav .tabs-selected a:visited {
+  cursor: pointer;
+}
+.tabs-nav .tabs-selected a:link,
+.tabs-nav .tabs-selected a:visited,
+.tabs-nav .tabs-selected a:hover {
+  background-color: #FFFFFF;
+}
+.tabs-nav .tabs-disabled {
+  opacity: 0.4;
+}
+/* small Tabs */
+.divTabbedNavigationSmall .tabs-nav li {
+  margin:0 1px 0 0;
+  line-height:24px;
+  height:24px;
+}
+.divTabbedNavigationSmall .tabs-nav a,
+.divTabbedNavigationSmall .tabs-nav a:active,
+.divTabbedNavigationSmall .tabs-nav a:focus,
+.divTabbedNavigationSmall .tabs-nav a:hover,
+.divTabbedNavigationSmall .tabs-nav a:link,
+.divTabbedNavigationSmall .tabs-nav a:visited,
+.divTabbedNavigationSmall .tabs-nav a span,
+.divTabbedNavigationSmall .tabs-nav a:active span,
+.divTabbedNavigationSmall .tabs-nav a:focus span,
+.divTabbedNavigationSmall .tabs-nav a:hover span,
+.divTabbedNavigationSmall .tabs-nav a:link span,
+.divTabbedNavigationSmall .tabs-nav a:visited span {
+  font-size:11px;
+  font-weight:normal;
+  line-height:14px;
+  padding:5px 9px;
+}
+/* CONTENT END */
+/* ------------------------------------------------------------------------------------------- */
+/* FOOTER BEGIN */
+/* BASICS */
+div.divFooter {
+  float: none;
+  clear: both;
+  width: 954px;
+  height: 45px;
+  margin: 0px 12px 0px 0px;
+  text-align:center;
+}
+div.divPopUp div.divFooter {
+  width: auto;
+  margin: 0px 3px 0px 3px;
+  padding-top: 10px;
+  height: 150px;
+}
+/* NAVIGATION FOOTER */
+ul.ulNavigationFooter {
+  float: none;
+  margin: 10px 0px 0px 0px;
+  display:inline-block;
+}
+div.divPopUp ul.ulNavigationFooter {
+  margin: 11px 0px 0px 0px;
+}
+ul.ulNavigationFooter li {
+  float: left;
+  margin-left: 7px;
+  line-height: 11px;
+  list-style-type: none;
+  border-left: 1px solid;
+}
+ul.ulNavigationFooter li.liCopyright {
+  padding: 0px 0px 0px 0px;
+  border-left: none;
+}
+ul.ulNavigationFooter li a,
+ul.ulNavigationFooter li a:active,
+ul.ulNavigationFooter li a:focus,
+ul.ulNavigationFooter li a:hover,
+ul.ulNavigationFooter li a:link,
+ul.ulNavigationFooter li a:visited {
+  padding: 0px 0px 0px 7px;
+  text-decoration: none;
+}
+ul.ulNavigationFooter li a:hover {
+  text-decoration: underline;
+}
+ul.ulNavigationFooter li a.aActive,
+ul.ulNavigationFooter li a.aActive:active,
+ul.ulNavigationFooter li a.aActive:focus,
+ul.ulNavigationFooter li a.aActive:hover,
+ul.ulNavigationFooter li a.aActive:link,
+ul.ulNavigationFooter li a.aActive:visited {
+  padding: 0px 0px 0px 7px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* FOOTER END */
+/* ------------------------------------------------------------------------------------------- */
+/* ASSETS GLOBAL BEGIN */
+/* FORM LOGIN MY VODAFONE */
+div.divLoginBox {
+  display: block;
+  position: relative;
+  float: left;
+}
+div.divLoginBoxSSI {
+  display: none;
+  float: left;
+}
+#MVLoginTabs .tabs-nav {
+  width:186px;
+  margin:0;
+}
+#MVLoginTabs .tabs-nav li {
+  margin:0;
+  line-height:24px;
+  height:24px;
+}
+#MVLoginTabs .tabs-nav a,
+#MVLoginTabs .tabs-selected a {
+  width:87px;
+  padding:0px 0px 0px 6px;
+  font-size:11px;
+  line-height:24px;
+  height:24px;
+  overflow:hidden;
+}
+#MVLoginTabs .tabs-selected a {
+  color:#C80000;
+}
+#MVLoginTabs .tabs-nav li.tabs-selected {
+  border-right:0px none;
+}
+input.inputLoginMV {
+  width: 162px;
+  height: 15px;
+  margin: 6px 0px 6px 0px;
+  padding: 1px 5px 0px 5px;
+  border: 1px solid;
+  font-size: 100%;
+  display:block;
+}
+form.formIframeLogin input.inputLoginMV {
+  float: left;
+  width: 110px;
+}
+form.formIframeLogin div.divHelpLoginMV {
+  float: left;
+  height: 15px;
+  margin: 7px 0px 6px 5px;
+}
+input.inputPasswordMV {
+  float: left;
+  width:  110px;
+  height: 15px;
+  margin: 1px 0px 12px 0px;
+  padding: 1px 5px 0px 5px;
+  border: 1px solid;
+  font-size: 100%;
+}
+.inputLoginButton {
+  float: left;
+  margin-left: 5px;
+}
+/* FORM LOGGED IN MY VODAFONE */
+img.imgIconMV {
+  float: right;
+  width: 71px;
+  height: 70px;
+  padding: 8px 0px 6px 0px;
+}
+img.imgIconMVsmall {
+  float: right;
+  width: 36px;
+  height: 35px;
+  padding-top: 3px;
+}
+/* FOOTNOTES */
+div.divArticleBasic ol.olContent,
+div.divArticleBasic ol.olFootnote {
+  margin: 0px 11px 0px 30px;
+  padding: 7px 0px 0px 0px;
+  list-style-type: decimal;
+}
+div.divInlay ol.olContent,
+div.divInlay ol.olFootnote {
+  margin: 0px 11px 0px 17px;
+  padding: 7px 0px 11px 0px;
+  list-style-type: decimal;
+}
+ol.olContent,
+ol.olFootnote {
+  margin: 0px 11px 11px 30px;
+  padding: 7px 0px 11px 0px;
+  list-style-type: decimal;
+}
+ol.olContent li,
+ol.olFootnote li {
+  padding: 0px 0px 6px 0px;
+}
+/* MODULE IMAGE TOP HEIGHT AUTO */
+.width1Col img.imgTeaser,
+.width1Col a img.imgTeaser {
+  width: 186px;
+}
+.width1Col div.divInlay img.imgTeaser,
+.width1Col div.divInlay a img.imgTeaser {
+  width: 174px;
+  padding-bottom: 1px;
+}
+.width2Col img.imgTeaser,
+.width2Col a img.imgTeaser {
+  width: 378px;
+}
+.width2Col div.divInlay img.imgTeaser,
+.width2Col div.divInlay a img.imgTeaser {
+  width: 362px;
+  padding-bottom: 1px;
+}
+.width3Col img.imgTeaser,
+.width3Col a img.imgTeaser {
+  width: 570px;
+}
+.width3Col div.divInlay img.imgTeaser,
+.width3Col div.divInlay a img.imgTeaser {
+  width: 558px;
+  padding-bottom: 1px;
+}
+.width4Col img.imgTeaser,
+.width4Col a img.imgTeaser {
+  width: 762px;
+}
+.width4Col div.divInlay img.imgTeaser,
+.width4Col div.divInlay a img.imgTeaser {
+  width: 750px;
+  padding-bottom: 1px;
+}
+.width5Col img.imgTeaser,
+.width5Col a img.imgTeaser {
+  width: 954px;
+}
+.width5Col div.divInlay img.imgTeaser,
+.width5Col div.divInlay a img.imgTeaser {
+  width: 942px;
+  padding-bottom: 1px;
+}
+.width1Col img.imgTeaser,
+.width2Col img.imgTeaser,
+.width3Col img.imgTeaser,
+.width4Col img.imgTeaser,
+.width5Col img.imgTeaser,
+.width1Col a img.imgTeaser,
+.width2Col a img.imgTeaser,
+.width3Col a img.imgTeaser,
+.width4Col a img.imgTeaser,
+.width5Col a img.imgTeaser {
+/* margin-bottom: 7px; */
+}
+.width1Col div.divInlay img.imgTeaser,
+.width2Col div.divInlay img.imgTeaser,
+.width3Col div.divInlay img.imgTeaser,
+.width4Col div.divInlay img.imgTeaser,
+.width5Col div.divInlay img.imgTeaser,
+.width1Col div.divInlay a img.imgTeaser,
+.width2Col div.divInlay a img.imgTeaser,
+.width3Col div.divInlay a img.imgTeaser,
+.width4Col div.divInlay a img.imgTeaser,
+.width5Col div.divInlay a img.imgTeaser {
+  margin-bottom: 0px;
+}
+/* MODULE IMAGE LEFT/RIGHT HEIGHT 168PX/174PX/282PX */
+.imageLeft168 div.divInlay,
+.imageLeft174 div.divInlay,
+.imageLeft282 div.divInlay {
+  float: left;
+  width: 174px;
+  margin-left: 7px;
+  border-left: none;
+}
+.imageLeft168width3Col div.divInlay,
+.imageLeft174width3Col div.divInlay,
+.imageLeft282width3Col div.divInlay {
+  float: left;
+  width: 366px;
+  margin-left: 7px;
+  border-left: none;
+}
+.imageRight168 div.divInlay,
+.imageRight174 div.divInlay,
+.imageRight282 div.divInlay {
+  float: right;
+  width: 174px;
+  margin-right: 7px;
+  border-right: none;
+}
+.imageRight168width3Col div.divInlay,
+.imageRight174width3Col div.divInlay,
+.imageRight282width3Col div.divInlay {
+  float: right;
+  width: 366px;
+  margin-right: 7px;
+  border-right: none;
+}
+.imageLeft168 div.divInlay p,
+.imageLeft174 div.divInlay p,
+.imageLeft282 div.divInlay p,
+.imageRight168 div.divInlay p,
+.imageRight174 div.divInlay p,
+.imageRight282 div.divInlay p,
+.imageLeft168width3Col div.divInlay p,
+.imageLeft174width3Col div.divInlay p,
+.imageLeft282width3Col div.divInlay p,
+.imageRight168width3Col div.divInlay p,
+.imageRight174width3Col div.divInlay p,
+.imageRight282width3Col div.divInlay p {
+  overflow: hidden;
+  height: 84px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  padding-top: 0px;
+}
+.imageLeft174 div.divInlay p,
+.imageRight174 div.divInlay p,
+.imageLeft174width3Col div.divInlay p,
+.imageRight174width3Col div.divInlay p {
+  height: 90px;
+}
+.imageLeft282 div.divInlay p,
+.imageRight282 div.divInlay p,
+.imageLeft282width3Col div.divInlay p,
+.imageRight282width3Col div.divInlay p {
+  height: 198px;
+}
+.imageLeft168 a img.imgTeaser,
+.imageLeft174 a img.imgTeaser,
+.imageLeft282 a img.imgTeaser,
+.imageRight168 a img.imgTeaser,
+.imageRight174 a img.imgTeaser,
+.imageRight282 a img.imgTeaser,
+.imageLeft168width3Col a img.imgTeaser,
+.imageLeft174width3Col a img.imgTeaser,
+.imageLeft282width3Col a img.imgTeaser,
+.imageRight168width3Col a img.imgTeaser,
+.imageRight174width3Col a img.imgTeaser,
+.imageRight282width3Col a img.imgTeaser {
+  float: left;
+  width: 186px;
+  height: 144px;
+  margin-bottom: 0px;
+}
+.imageRight168 a img.imgTeaser,
+.imageRight174 a img.imgTeaser,
+.imageRight282 a img.imgTeaser,
+.imageRight168width3Col a img.imgTeaser,
+.imageRight174width3Col a img.imgTeaser,
+.imageRight282width3Col a img.imgTeaser {
+  float: right;
+}
+.imageLeft174 a img.imgTeaser,
+.imageRight174 a img.imgTeaser,
+.imageLeft174width3Col a img.imgTeaser,
+.imageRight174width3Col a img.imgTeaser {
+  height: 150px;
+}
+.imageLeft282 a img.imgTeaser,
+.imageRight282 a img.imgTeaser,
+.imageLeft282width3Col a img.imgTeaser,
+.imageRight282width3Col a img.imgTeaser {
+  height: 258px;
+}
+/* MODULE IMAGE 72PX/90PX TOP HEIGHT 168PX/174PX/282PX */
+.image72Top168 a img.imgTeaser,
+.image72Top174 a img.imgTeaser,
+.image72Top282 a img.imgTeaser {
+  height: 72px;
+  margin-bottom: 0px;
+}
+.image90Top168 a img.imgTeaser,
+.image90Top174 a img.imgTeaser,
+.image90Top282 a img.imgTeaser {
+  height: 90px;
+  margin-bottom: 0px;
+}
+.image72Top168 div.divInlay,
+.image72Top174 div.divInlay {
+  height: 70px;
+}
+.image90Top168 div.divInlay,
+.image90Top174 div.divInlay {
+  height: 52px;
+}
+.image72Top168 div.divInlay p,
+.image72Top174 div.divInlay p {
+  overflow: hidden;
+  height: 24px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding-top: 0px;
+}
+.image72Top174 div.divInlay p {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.image90Top168 div.divInlay p,
+.image90Top174 div.divInlay p {
+  overflow: hidden;
+  height: 7px;
+  margin-top: 0px;
+  margin-bottom: 1px;
+  padding-top: 0px;
+}
+.image90Top174 div.divInlay p {
+  margin-top: 3px;
+  margin-bottom: 4px;
+}
+.image72Top282 div.divInlay {
+  height: 183px;
+}
+.image90Top282 div.divInlay {
+  height: 166px;
+}
+.image72Top282 div.divInlay p {
+  overflow: hidden;
+  height: 137px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  padding-top: 0px;
+}
+.image90Top282 div.divInlay p {
+  overflow: hidden;
+  height: 121px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding-top: 0px;
+}
+/* ASSETS GLOBAL BEGIN */
+.image72Top168 div.divInlay ul.ulLinkList,
+.image72Top174 div.divInlay ul.ulLinkList,
+.image72Top282 div.divInlay ul.ulLinkList,
+.image90Top168 div.divInlay ul.ulLinkList,
+.image90Top174 div.divInlay ul.ulLinkList,
+.image90Top282 div.divInlay ul.ulLinkList,
+.imageLeft168 div.divInlay ul.ulLinkList,
+.imageLeft174 div.divInlay ul.ulLinkList,
+.imageLeft282 div.divInlay ul.ulLinkList,
+.imageRight168 div.divInlay ul.ulLinkList,
+.imageRight174 div.divInlay ul.ulLinkList,
+.imageRight282 div.divInlay ul.ulLinkList,
+.imageLeft168width3Col div.divInlay ul.ulLinkList,
+.imageLeft174width3Col div.divInlay ul.ulLinkList,
+.imageLeft282width3Col div.divInlay ul.ulLinkList,
+.imageRight168width3Col div.divInlay ul.ulLinkList,
+.imageRight174width3Col div.divInlay ul.ulLinkList,
+.imageRight282width3Col div.divInlay ul.ulLinkList {
+  margin-top: 0px;
+  margin-bottom:0px;
+}
+.imageLeft168 img.imgTeaser,
+.imageLeft174 img.imgTeaser,
+.imageLeft282 img.imgTeaser,
+.imageRight168 img.imgTeaser,
+.imageRight174 img.imgTeaser,
+.imageRight282 img.imgTeaser,
+.imageLeft168width3Col img.imgTeaser,
+.imageLeft174width3Col img.imgTeaser,
+.imageLeft282width3Col img.imgTeaser,
+.imageRight168width3Col img.imgTeaser,
+.imageRight174width3Col img.imgTeaser,
+.imageRight282width3Col img.imgTeaser {
+  float: left;
+  width: 186px;
+  height: 144px;
+  margin-bottom: 0px;
+}
+.imageRight168 img.imgTeaser,
+.imageRight174 img.imgTeaser,
+.imageRight282 img.imgTeaser,
+.imageRight168width3Col img.imgTeaser,
+.imageRight174width3Col img.imgTeaser,
+.imageRight282width3Col img.imgTeaser {
+  float: right;
+}
+.imageLeft174 img.imgTeaser,
+.imageRight174 img.imgTeaser,
+.imageLeft174width3Col img.imgTeaser,
+.imageRight174width3Col img.imgTeaser {
+  height: 150px;
+}
+.imageLeft282 img.imgTeaser,
+.imageRight282 img.imgTeaser,
+.imageLeft282width3Col img.imgTeaser,
+.imageRight282width3Col img.imgTeaser {
+  height: 257px;
+}
+/* MODULE IMAGE 72PX/90PX TOP HEIGHT 168PX/174PX/282PX */
+.image72Top168 img.imgTeaser,
+.image72Top174 img.imgTeaser,
+.image72Top282 img.imgTeaser {
+  height: 72px;
+  margin-bottom: 0px;
+}
+.image90Top168 img.imgTeaser,
+.image90Top174 img.imgTeaser,
+.image90Top282 img.imgTeaser {
+  height: 90px;
+  margin-bottom: 0px;
+}
+/* FORM QUICKNAVI */
+select.selectQuickNavi {
+  width: 174px;
+  height:18px;
+  margin: 6px 0px 6px 0px;
+  border: 1px solid #cccccc;
+  font-size: 100%;
+}
+select.selectQuickNavi option {
+  padding:0 3px;
+}
+/* ASSETS GLOBAL END */      
+/* CALL TO ACTION FULL IMAGE TEASER */
+div.divCallToActionTeaser {
+  position: relative;
+  overflow: hidden;
+}
+.height168 div.divCallToActionTeaser {
+  height: 168px;
+}
+.height174 div.divCallToActionTeaser {
+  height: 174px;
+}
+.height282 div.divCallToActionTeaser {
+  height: 262px;
+}
+div.divCallToActionBox {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;/* background-color: #FF0000; /* FOR DEMO ONLY */
+}
+img.imgCallToAction {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+div.divCallToActionBox a.aLink,
+div.divCallToActionBox a.aLink:active,
+div.divCallToActionBox a.aLink:focus,
+div.divCallToActionBox a.aLink:hover,
+div.divCallToActionBox a.aLink:link,
+div.divCallToActionBox a.aLink:visited {
+  position: absolute;
+  float: right;
+  bottom: 2px;
+  right: 12px;
+  padding-top: 1px;
+}
+div.divCallToActionBox a.aButton,
+div.divCallToActionBox a.aButton:active,
+div.divCallToActionBox a.aButton:focus,
+div.divCallToActionBox a.aButton:hover,
+div.divCallToActionBox a.aButton:link,
+div.divCallToActionBox a.aButton:visited {
+  position: absolute;
+  float: right;
+  bottom: 2px;
+  right: 12px;
+}
+.height168 div.divCallToActionBox {
+  height: 101px;
+}
+.height174 div.divCallToActionBox {
+  height: 107px;
+}
+.height282 div.divCallToActionBox {
+  height: 160px;
+}
+.width1Col div.divCallToActionBox {
+  width: 101px;
+}
+.width2Col div.divCallToActionBox {
+  width: 116px;
+}
+.width3Col div.divCallToActionBox {
+  width: 190px;
+}
+.width4Col div.divCallToActionBox {
+  width: 234px;
+}
+.width5Col div.divCallToActionBox {
+  width: 318px;
+}
+/* TEASER HANDSET */
+div.teaserHandset {
+  float: left;
+  width: 174px;
+  padding-right: 18px;
+}
+div.teaserHandset.lastItem {
+  padding-right: 0px;
+}
+div.teaserHandset img {
+  float: left;
+  padding: 6px 12px 75px 0px;
+}
+div.teaserHandset h2 {
+  padding-top: 3px;
+  padding-bottom: 5px;
+  font-size: 1.272727272em;
+}
+div.teaserHandset h3 {
+  height: 27px;
+  padding-top: 0px;
+  padding-bottom: 2px;
+  font-size: 1em;
+}
+div.teaserHandset ul.ulInfo {
+  overflow: hidden;
+  height: 62px;
+}
+div.teaserHandset ul.ulInfo li {
+  margin-left: 15px;
+  list-style-position: outside;
+}
+div.teaserHandset div.divPrice {
+  height: 26px;
+  line-height: 26px;
+  padding-bottom: 7px;
+  font-size: 2.363636363em;
+  font-weight: bold;
+}
+div.teaserHandset div.divPrice sup {
+  font-size: 0.545454545em;
+}
+div.teaserHandset a.aTarif,
+div.teaserHandset a.aTarif:active,
+div.teaserHandset a.aTarif:focus,
+div.teaserHandset a.aTarif:hover,
+div.teaserHandset a.aTarif:link,
+div.teaserHandset a.aTarif:visited {
+  display: block;
+  padding-bottom: 9px;
+}
+/* ASSETS GLOBAL END */
+/* ------------------------------------------------------------------------------------------- */
+/* SPECIALS BEGIN */
+h3 span.spanLink {
+  float: right;
+  font-size: 11px;
+}
+h3 span.spanLink a.aLink {
+  font-weight: normal;
+}
+/* SPECIALS END */
+/* ------------------------------------------------------------------------------------------- */
+/* GLOBAL COLORS BEGIN */
+/* GLOBAL */
+a,
+a:active,
+a:focus,
+a:hover,
+a:link,
+a:visited {
+  color: #333333;
+}
+a:hover {
+  color: #C80000;
+}
+body {
+  background-color: #F4F4F4;
+}
+/* BASICS */
+div.divMatrix {
+  background-color: #F4F4F4;
+}
+/* BANNER */
+div.divBannerHeader {
+  /* background-color: #EEEEEE; /* ONLY FOR DEMO */
+overflow: hidden;
+}
+/* BASICS CONTENT */
+div.divContent {
+/*    background-color: #FFFFFF; */
+}
+/* SKYSCRAPER */
+div.divSkyScraper {
+  /* background-color: #EEEEEE; /* ONLY FOR DEMO */
+}
+/* BASICS MODULE */
+div.divModuleBasic h1,
+div.divModuleBasic h2,
+div.divModuleBasic h3,
+div.divModuleBasic h4,
+div.divModuleBasic h5,
+div.divModuleBasic h6,
+div.divModuleBasic strong.headline {
+  color: #C80000;
+}
+.width1Col,
+.width2Col,
+.width3Col,
+.width4Col,
+.width5Col {
+  border-bottom:2px solid #E0E0E0;
+  border-right:2px solid #E0E0E0;
+}
+/* INLAY */
+div.divInlay {
+  border-color: #CCCCCC;
+  background-color: #FFFFFF;
+}
+div.divInlay.highlight {
+  background-color: #EDEDED;
+}
+div.divModuleBasic div.divInlay h4 {
+  color: #333333;
+}
+div.divModuleBasic div.divInlay h5 {
+  color: #C80000;
+}
+div.divInlay p {
+  color: #333333;
+}
+/* NAVIGATION LEFT BASIC */
+ul.ulNavigationLeft {
+  border-color: #FFFFFF;
+}
+/* NAVIGATION LEFT LEVEl 3 */
+ul.ulNavigationLeft li {
+  border-top-color: #EDEDED;
+}
+ul.ulNavigationLeft li.liFirstItem {
+  border-top-color: #EDEDED;
+}
+ul.ulNavigationLeft li a,
+ul.ulNavigationLeft li a:active,
+ul.ulNavigationLeft li a:focus,
+ul.ulNavigationLeft li a:link,
+ul.ulNavigationLeft li a:visited {
+  color: #333333;
+}
+ul.ulNavigationLeft li a:hover {
+  color: #c80000;
+}
+/* NAVIGATION LEFT LEVEL 4 */
+ul.ulNavigationLeft li ul li a,
+ul.ulNavigationLeft li ul li a:active,
+ul.ulNavigationLeft li ul li a:focus,
+ul.ulNavigationLeft li ul li a:link,
+ul.ulNavigationLeft li ul li a:visited {
+  color: #333333;
+}
+ul.ulNavigationLeft li ul li a:hover {
+  color: #c80000;
+}
+/* NAVIGATION LEFT LEVEL 5 */
+ul.ulNavigationLeft li ul li ul li a,
+ul.ulNavigationLeft li ul li ul li a:active,
+ul.ulNavigationLeft li ul li ul li a:focus,
+ul.ulNavigationLeft li ul li ul li a:link,
+ul.ulNavigationLeft li ul li ul li a:visited {
+  color: #333333;
+}
+ul.ulNavigationLeft li ul li ul li a:hover {
+  color: #c80000;
+}
+/* NAVIGATION LEFT LEVEL 6 */
+ul.ulNavigationLeft li ul li ul li ul li a,
+ul.ulNavigationLeft li ul li ul li ul li a:active,
+ul.ulNavigationLeft li ul li ul li ul li a:focus,
+ul.ulNavigationLeft li ul li ul li ul li a:link,
+ul.ulNavigationLeft li ul li ul li ul li a:visited {
+  color: #333333;
+}
+ul.ulNavigationLeft li ul li ul li ul li a:hover {
+  color: #c80000;
+}
+/* NAVIGATION LEFT LEVEL 3/4/5 ACTIVE + SELECTED */
+ul.ulNavigationLeft li a,
+ul.ulNavigationLeft li a:active,
+ul.ulNavigationLeft li a:focus,
+ul.ulNavigationLeft li a:hover,
+ul.ulNavigationLeft li a:link,
+ul.ulNavigationLeft li a:visited,
+ul.ulNavigationLeft li ul li a,
+ul.ulNavigationLeft li ul li a:active,
+ul.ulNavigationLeft li ul li a:focus,
+ul.ulNavigationLeft li ul li a:hover,
+ul.ulNavigationLeft li ul li a:link,
+ul.ulNavigationLeft li ul li a:visited,
+ul.ulNavigationLeft li ul li ul li a,
+ul.ulNavigationLeft li ul li ul li a:active,
+ul.ulNavigationLeft li ul li ul li a:focus,
+ul.ulNavigationLeft li ul li ul li a:hover,
+ul.ulNavigationLeft li ul li ul li a:link,
+ul.ulNavigationLeft li ul li ul li a:visited,
+ul.ulNavigationLeft li ul li ul li ul li a,
+ul.ulNavigationLeft li ul li ul li ul li a:active,
+ul.ulNavigationLeft li ul li ul li ul li a:focus,
+ul.ulNavigationLeft li ul li ul li ul li a:hover,
+ul.ulNavigationLeft li ul li ul li ul li a:link,
+ul.ulNavigationLeft li ul li ul li ul li a:visited {
+  color: #333333;
+}
+ul.ulNavigationLeft li a.aActive:hover,
+ul.ulNavigationLeft li ul li a.aActive:hover,
+ul.ulNavigationLeft li ul li ul li a.aActive:hover,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:hover {
+  color: #333333;
+}
+ul.ulNavigationLeft li a:hover,
+ul.ulNavigationLeft li ul li a:hover,
+ul.ulNavigationLeft li ul li ul li a:hover,
+ul.ulNavigationLeft li ul li ul li ul li a:hover {
+  color: #c80000;
+  background-color:#EDEDED;
+}
+ul.ulNavigationLeft li a.aActive,
+ul.ulNavigationLeft li a.aActive:active,
+ul.ulNavigationLeft li a.aActive:focus,
+ul.ulNavigationLeft li a.aActive:hover,
+ul.ulNavigationLeft li a.aActive:link,
+ul.ulNavigationLeft li a.aActive:visited,
+ul.ulNavigationLeft li ul li a.aActive,
+ul.ulNavigationLeft li ul li a.aActive:active,
+ul.ulNavigationLeft li ul li a.aActive:focus,
+ul.ulNavigationLeft li ul li a.aActive:hover,
+ul.ulNavigationLeft li ul li a.aActive:link,
+ul.ulNavigationLeft li ul li a.aActive:visited,
+ul.ulNavigationLeft li ul li ul li a.aActive,
+ul.ulNavigationLeft li ul li ul li a.aActive:active,
+ul.ulNavigationLeft li ul li ul li a.aActive:focus,
+ul.ulNavigationLeft li ul li ul li a.aActive:hover,
+ul.ulNavigationLeft li ul li ul li a.aActive:link,
+ul.ulNavigationLeft li ul li ul li a.aActive:visited,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:active,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:focus,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:hover,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:link,
+ul.ulNavigationLeft li ul li ul li ul li a.aActive:visited {
+  color: #333333;
+  background-color:#EDEDED;
+}
+/* LINK */
+a.aLink,
+a.aLink:active,
+a.aLink:focus,
+a.aLink:hover,
+a.aLink:link,
+a.aLink:visited {
+  color: #333333;
+}
+a.aLink:hover {
+  color: #c80000;
+}
+/* LINK LISTS */
+ul.ulLinkList {
+  border-bottom-color:#EDEDED;
+}
+ul.ulLinkList li {
+  border-top-color: #EDEDED;
+}
+ul.ulLinkList li a,
+ul.ulLinkList li a:active,
+ul.ulLinkList li a:focus,
+ul.ulLinkList li a:link,
+ul.ulLinkList li a:visited {
+  color: #333333;
+}
+ul.ulLinkList li a:hover {
+  color: #c80000;
+}
+/* BUTTONS */
+a.aButton span {
+  color: #FFFFFF;
+}
+a.bgComprehensive span {
+  color: #333333;
+}
+/* ARTICLE */
+div.divArticleBasic h1 {
+  color: #c80000;
+}
+div.divArticleBasic h2 {
+  color: #333333;
+}
+div.divArticleBasic h3 {
+  color: #333333;
+}
+div.divArticleBasic p {
+  color: #333333;
+}
+div.divArticleBasic h2.colorFirstHeadline {
+  color: #C80000;
+}
+div.divArticleBasic p.colored {
+  color: #C80000;
+}
+/* FORMS */
+form.formBasic label {
+  color: #333333;
+}
+form.formBasic input.input96 {
+  border-color: #CCCCCC;
+}
+form.formBasic input {
+  border-color: #CCCCCC;
+}
+form.formBasic fieldset.fieldsetCheckbox input {
+  border-color: #CCCCCC;
+}
+form.formBasic textarea {
+  border-color: #CCCCCC;
+}
+form.formBasic select {
+  border-color: #CCCCCC;
+}
+/* TABLE BASICS */
+table.tableBasic {
+  border-left-color: #EDEDED;
+  background-color: #FFFFFF;
+}
+div.divArticleBasic table.tableBasic {
+  border-bottom-color: #EDEDED;
+}
+/* TABLE HEAD */
+table.tableBasic tr th,
+table.tableBasic thead {
+  background-color: #DBDBDB;
+}
+table.tableBasic tr th,
+table.tableBasic thead tr th {
+  border-right-color: #EDEDED;
+  border-bottom-color: #EDEDED;
+  color: #333333;
+}
+/* TABLE BODY */
+table.tableBasic tr td,
+table.tableBasic tbody tr td {
+  border-right-color: #EDEDED;
+  border-bottom-color: #EDEDED;
+}
+/* TABLE FOOTER */
+table.tableBasic tfoot tr td {
+  border-right-color: #EDEDED;
+}
+/* TABLE BODY CONTENT */
+table.tableBasic tr td sup,
+table.tableBasic tbody tr td sup {
+  color: #333333;
+}
+td.tdSubHeadline {
+  background-color: #EDEDED;
+  color: #333333;
+}
+td.tdContent {
+  background-color: #FAFAFA;
+  color: #333333;
+}
+tr.trOdd,
+td.tdOdd {
+  background-color: #FFFFFF;
+}
+tr.trEven,
+td.tdEven {
+  background-color: #FCFCFC;
+}
+table.tableBasic tr th strong,
+table.tableBasic tr td strong,
+table.tableBasic thead tr th strong,
+table.tableBasic tbody tr td strong {
+  color: #333333;
+}
+/* FOOTER */
+ul.ulNavigationFooter li {
+  border-left-color: #333333;
+}
+ul.ulNavigationFooter li a,
+ul.ulNavigationFooter li a:active,
+ul.ulNavigationFooter li a:focus,
+ul.ulNavigationFooter li a:link,
+ul.ulNavigationFooter li a:visited {
+  color: #333333;
+}
+ul.ulNavigationFooter li a:hover {
+  color: #C80000;
+}
+ul.ulNavigationFooter li a.aActive,
+ul.ulNavigationFooter li a.aActive:active,
+ul.ulNavigationFooter li a.aActive:focus,
+ul.ulNavigationFooter li a.aActive:hover,
+ul.ulNavigationFooter li a.aActive:link,
+ul.ulNavigationFooter li a.aActive:visited {
+  color: #333333;
+}
+/* FORM LOGIN MY VODAFONE */
+input.inputLoginMV {
+  border-color: #CCCCCC;
+}
+input.inputPasswordMV {
+  border-color: #CCCCCC;
+}
+/* CALL TO ACTION */
+div.divCallToActionBox a.aLink,
+div.divCallToActionBox a.aLink:active,
+div.divCallToActionBox a.aLink:focus,
+div.divCallToActionBox a.aLink:hover,
+div.divCallToActionBox a.aLink:link,
+div.divCallToActionBox a.aLink:visited {
+  color: #FFFFFF;
+}
+/* TEASER HANDSET */
+div.teaserHandset a.aTarif,
+div.teaserHandset a.aTarif:active,
+div.teaserHandset a.aTarif:focus,
+div.teaserHandset a.aTarif:hover,
+div.teaserHandset a.aTarif:link,
+div.teaserHandset a.aTarif:visited {
+  color: #333333;
+}
+div.teaserHandset a.aTarif:hover {
+  color: #C80000;
+}
+/* GLOBAL COLORS END */
+/* ------------------------------------------------------------------------------------------- */
+/* GLOBAL IMAGES LINKS & BUTTONS BEGIN */
+/* BACKGROUND-IMAGES LOGIN (GREY) */
+.iconLogin,
+.iconRegister,
+.iconSettings,
+.iconCallToAction {
+  background-image: url(../images/spriteLinkIcons2010.gif);
+  background-position: right -1800px;
+}
+/* BACKGROUND-IMAGES LOGOUT (close) */
+.iconLogout {
+  background-image: url(../images/spriteLinkIcons2010.gif);
+  background-position: right -200px;
+}
+.iconLogin:hover,
+.iconRegister:hover,
+.iconSettings:hover,
+.iconCallToAction:hover {
+  background-position: right -1900px;
+}
+.iconLogout:hover {
+  background-position: right -300px;
+}
+/* BACKGROUND-IMAGE Sprite */
+.iconCartComprehensive,
+.iconCloseComprehensive,
+.iconDeleteComprehensive,
+.iconDownloadComprehensive,
+.iconInfoComprehensive,
+.iconMinusComprehensive,
+.iconPlusComprehensive,
+.iconPopupComprehensive,
+.iconPrintComprehensive,
+.iconRightComprehensive,
+.iconSoundOnComprehensive,
+.iconSoundOffComprehensive,
+.iconChatComprehensive,
+.iconMailComprehensive,
+.iconLeftComprehensive,
+.iconCartContentPromotional,
+.iconCloseContentPromotional,
+.iconDeleteContentPromotional,
+.iconDownloadContentPromotional,
+.iconInfoContentPromotional,
+.iconMinusContentPromotional,
+.iconPlusContentPromotional,
+.iconPopupContentPromotional,
+.iconPrintContentPromotional,
+.iconRightContentPromotional,
+.iconSoundOnContentPromotional,
+.iconSoundOffContentPromotional,
+.iconChatContentPromotional,
+.iconMailContentPromotional,
+.iconLeftContentPromotional,
+.iconCartContentMain,
+.iconCloseContentMain,
+.iconDeleteContentMain,
+.iconDownloadContentMain,
+.iconInfoContentMain,
+.iconMinusContentMain,
+.iconPlusContentMain,
+.iconPopupContentMain,
+.iconPrintContentMain,
+.iconRightContentMain,
+.iconSoundOnContentMain,
+.iconSoundOffContentMain,
+.iconChatContentMain,
+.iconMailContentMain,
+.iconLeftContentMain,
+.iconCartContentSpottingA,
+.iconCloseContentSpottingA,
+.iconDeleteContentSpottingA,
+.iconDownloadContentSpottingA,
+.iconInfoContentSpottingA,
+.iconMinusContentSpottingA,
+.iconPlusContentSpottingA,
+.iconPopupContentSpottingA,
+.iconPrintContentSpottingA,
+.iconRightContentSpottingA,
+.iconSoundOnContentSpottingA,
+.iconSoundOffContentSpottingA,
+.iconChatContentSpottingA,
+.iconMailContentSpottingA,
+.iconLeftContentSpottingA,
+.iconCartContentSpottingC,
+.iconCloseContentSpottingC,
+.iconDeleteContentSpottingC,
+.iconDownloadContentSpottingC,
+.iconInfoContentSpottingC,
+.iconMinusContentSpottingC,
+.iconPlusContentSpottingC,
+.iconPopupContentSpottingC,
+.iconPrintContentSpottingC,
+.iconRightContentSpottingC,
+.iconSoundOnContentSpottingC,
+.iconSoundOffContentSpottingC,
+.iconChatContentSpottingC,
+.iconMailContentSpottingC,
+.iconLeftContentSpottingC,
+.iconCartPersonalisedA,
+.iconClosePersonalisedA,
+.iconDeletePersonalisedA,
+.iconDownloadPersonalisedA,
+.iconInfoPersonalisedA,
+.iconMinusPersonalisedA,
+.iconPlusPersonalisedA,
+.iconPopupPersonalisedA,
+.iconPrintPersonalisedA,
+.iconRightPersonalisedA,
+.iconSoundOnPersonalisedA,
+.iconSoundOffPersonalisedA,
+.iconChatPersonalisedA,
+.iconMailPersonalisedA,
+.iconLeftPersonalisedA,
+.iconCartPersonalisedC,
+.iconClosePersonalisedC,
+.iconDeletePersonalisedC,
+.iconDownloadPersonalisedC,
+.iconInfoPersonalisedC,
+.iconMinusPersonalisedC,
+.iconPlusPersonalisedC,
+.iconPopupPersonalisedC,
+.iconPrintPersonalisedC,
+.iconRightPersonalisedC,
+.iconSoundOnPersonalisedC,
+.iconSoundOffPersonalisedC,
+.iconChatPersonalisedC,
+.iconMailPersonalisedC,
+.iconLeftPersonalisedC,
+.iconCartContentSpottingD,
+.iconCloseContentSpottingD,
+.iconDeleteContentSpottingD,
+.iconDownloadContentSpottingD,
+.iconInfoContentSpottingD,
+.iconMinusContentSpottingD,
+.iconPlusContentSpottingD,
+.iconPopupContentSpottingD,
+.iconPrintContentSpottingD,
+.iconRightContentSpottingD,
+.iconSoundOnContentSpottingD,
+.iconSoundOffContentSpottingD,
+.iconChatContentSpottingD,
+.iconMailContentSpottingD,
+.iconLeftContentSpottingD,
+.iconCartContentSpottingB,
+.iconCloseContentSpottingB,
+.iconDeleteContentSpottingB,
+.iconDownloadContentSpottingB,
+.iconInfoContentSpottingB,
+.iconMinusContentSpottingB,
+.iconPlusContentSpottingB,
+.iconPopupContentSpottingB,
+.iconPrintContentSpottingB,
+.iconRightContentSpottingB,
+.iconSoundOnContentSpottingB,
+.iconSoundOffContentSpottingB,
+.iconChatContentSpottingB,
+.iconMailContentSpottingB,
+.iconLeftContentSpottingB,
+.iconCartContentHelp,
+.iconCloseContentHelp,
+.iconDeleteContentHelp,
+.iconDownloadContentHelp,
+.iconInfoContentHelp,
+.iconMinusContentHelp,
+.iconPlusContentHelp,
+.iconPopupContentHelp,
+.iconPrintContentHelp,
+.iconRightContentHelp,
+.iconSoundOnContentHelp,
+.iconSoundOffContentHelp,
+.iconChatContentHelp,
+.iconMailContentHelp,
+.iconLeftContentHelp,
+.iconCartPersonalisedB,
+.iconClosePersonalisedB,
+.iconDeletePersonalisedB,
+.iconDownloadPersonalisedB,
+.iconInfoPersonalisedB,
+.iconMinusPersonalisedB,
+.iconPlusPersonalisedB,
+.iconPopupPersonalisedB,
+.iconPrintPersonalisedB,
+.iconRightPersonalisedB,
+.iconSoundOnPersonalisedB,
+.iconSoundOffPersonalisedB,
+.iconChatPersonalisedB,
+.iconMailPersonalisedB,
+.iconLeftPersonalisedB,
+.iconCartContentAdditionalA,
+.iconCloseContentAdditionalA,
+.iconDeleteContentAdditionalA,
+.iconDownloadContentAdditionalA,
+.iconInfoContentAdditionalA,
+.iconMinusContentAdditionalA,
+.iconPlusContentAdditionalA,
+.iconPopupContentAdditionalA,
+.iconPrintContentAdditionalA,
+.iconRightContentAdditionalA,
+.iconSoundOnContentAdditionalA,
+.iconSoundOffContentAdditionalA,
+.iconChatContentAdditionalA,
+.iconMailContentAdditionalA,
+.iconLeftContentAdditionalA,
+.iconCartContentSpottingE,
+.iconCloseContentSpottingE,
+.iconDeleteContentSpottingE,
+.iconDownloadContentSpottingE,
+.iconInfoContentSpottingE,
+.iconMinusContentSpottingE,
+.iconPlusContentSpottingE,
+.iconPopupContentSpottingE,
+.iconPrintContentSpottingE,
+.iconRightContentSpottingE,
+.iconSoundOnContentSpottingE,
+.iconSoundOffContentSpottingE,
+.iconChatContentSpottingE,
+.iconMailContentSpottingE,
+.iconLeftContentSpottingE,
+.iconUp,
+.iconDown {
+  background-image: url(../images/spriteLinkIcons2010.gif);
+}
+/* Sprite Positions */
+a.iconCartComprehensive,
+a.iconCartContentPromotional,
+a.iconCartContentMain,
+a.iconCartContentSpottingA,
+a.iconCartContentSpottingC,
+a.iconCartPersonalisedA,
+a.iconCartPersonalisedC,
+a.iconCartContentSpottingD,
+a.iconCartContentSpottingB,
+a.iconCartContentHelp,
+a.iconCartPersonalisedB,
+a.iconCartContentAdditionalA,
+a.iconCartContentSpottingE {
+  background-position: right 0px;
+}
+a.iconCartComprehensive:hover,
+a.iconCartContentPromotional:hover,
+a.iconCartContentMain:hover,
+a.iconCartContentSpottingA:hover,
+a.iconCartContentSpottingC:hover,
+a.iconCartPersonalisedA:hover,
+a.iconCartPersonalisedC:hover,
+a.iconCartContentSpottingD:hover,
+a.iconCartContentSpottingB:hover,
+a.iconCartContentHelp:hover,
+a.iconCartPersonalisedB:hover,
+a.iconCartContentAdditionalA:hover,
+a.iconCartContentSpottingE:hover {
+  background-position: right -100px;
+}
+a.iconCloseComprehensive,
+a.iconCloseContentPromotional,
+a.iconCloseContentMain,
+a.iconCloseContentSpottingA,
+a.iconCloseContentSpottingC,
+a.iconClosePersonalisedA,
+a.iconClosePersonalisedC,
+a.iconCloseContentSpottingD,
+a.iconCloseContentSpottingB,
+a.iconCloseContentHelp,
+a.iconClosePersonalisedB,
+a.iconCloseContentAdditionalA,
+a.iconCloseContentSpottingE {
+  background-position: right -200px;
+}
+a.iconCloseComprehensive:hover,
+a.iconCloseContentPromotional:hover,
+a.iconCloseContentMain:hover,
+a.iconCloseContentSpottingA:hover,
+a.iconCloseContentSpottingC:hover,
+a.iconClosePersonalisedA:hover,
+a.iconClosePersonalisedC:hover,
+a.iconCloseContentSpottingD:hover,
+a.iconCloseContentSpottingB:hover,
+a.iconCloseContentHelp:hover,
+a.iconClosePersonalisedB:hover,
+a.iconCloseContentAdditionalA:hover,
+a.iconCloseContentSpottingE:hover {
+  background-position: right -300px;
+}
+a.iconDeleteComprehensive,
+a.iconDeleteContentPromotional,
+a.iconDeleteContentMain,
+a.iconDeleteContentSpottingA,
+a.iconDeleteContentSpottingC,
+a.iconDeletePersonalisedA,
+a.iconDeletePersonalisedC,
+a.iconDeleteContentSpottingD,
+a.iconDeleteContentSpottingB,
+a.iconDeleteContentHelp,
+a.iconDeletePersonalisedB,
+a.iconDeleteContentAdditionalA,
+a.iconDeleteContentSpottingE {
+  background-position: right -400px;
+}
+a.iconDeleteComprehensive:hover,
+a.iconDeleteContentPromotional:hover,
+a.iconDeleteContentMain:hover,
+a.iconDeleteContentSpottingA:hover,
+a.iconDeleteContentSpottingC:hover,
+a.iconDeletePersonalisedA:hover,
+a.iconDeletePersonalisedC:hover,
+a.iconDeleteContentSpottingD:hover,
+a.iconDeleteContentSpottingB:hover,
+a.iconDeleteContentHelp:hover,
+a.iconDeletePersonalisedB:hover,
+a.iconDeleteContentAdditionalA:hover,
+a.iconDeleteContentSpottingE:hover {
+  background-position: right -500px;
+}
+a.iconDownloadComprehensive,
+a.iconDownloadContentPromotional,
+a.iconDownloadContentMain,
+a.iconDownloadContentSpottingA,
+a.iconDownloadContentSpottingC,
+a.iconDownloadPersonalisedA,
+a.iconDownloadPersonalisedC,
+a.iconDownloadContentSpottingD,
+a.iconDownloadContentSpottingB,
+a.iconDownloadContentHelp,
+a.iconDownloadPersonalisedB,
+a.iconDownloadContentAdditionalA,
+a.iconDownloadContentSpottingE {
+  background-position: right -600px;
+}
+a.iconDownloadComprehensive:hover,
+a.iconDownloadContentPromotional:hover,
+a.iconDownloadContentMain:hover,
+a.iconDownloadContentSpottingA:hover,
+a.iconDownloadContentSpottingC:hover,
+a.iconDownloadPersonalisedA:hover,
+a.iconDownloadPersonalisedC:hover,
+a.iconDownloadContentSpottingD:hover,
+a.iconDownloadContentSpottingB:hover,
+a.iconDownloadContentHelp:hover,
+a.iconDownloadPersonalisedB:hover,
+a.iconDownloadContentAdditionalA:hover,
+a.iconDownloadContentSpottingE:hover {
+  background-position: right -700px;
+}
+a.iconInfoComprehensive,
+a.iconInfoContentPromotional,
+a.iconInfoContentMain,
+a.iconInfoContentSpottingA,
+a.iconInfoContentSpottingC,
+a.iconInfoPersonalisedA,
+a.iconInfoPersonalisedC,
+a.iconInfoContentSpottingD,
+a.iconInfoContentSpottingB,
+a.iconInfoContentHelp,
+a.iconInfoPersonalisedB,
+a.iconInfoContentAdditionalA,
+a.iconInfoContentSpottingE {
+  background-position: right -800px;
+}
+a.iconInfoComprehensive:hover,
+a.iconInfoContentPromotional:hover,
+a.iconInfoContentMain:hover,
+a.iconInfoContentSpottingA:hover,
+a.iconInfoContentSpottingC:hover,
+a.iconInfoPersonalisedA:hover,
+a.iconInfoPersonalisedC:hover,
+a.iconInfoContentSpottingD:hover,
+a.iconInfoContentSpottingB:hover,
+a.iconInfoContentHelp:hover,
+a.iconInfoPersonalisedB:hover,
+a.iconInfoContentAdditionalA:hover,
+a.iconInfoContentSpottingE:hover {
+  background-position: right -900px;
+}
+a.iconMinusComprehensive,
+a.iconMinusContentPromotional,
+a.iconMinusContentMain,
+a.iconMinusContentSpottingA,
+a.iconMinusContentSpottingC,
+a.iconMinusPersonalisedA,
+a.iconMinusPersonalisedC,
+a.iconMinusContentSpottingD,
+a.iconMinusContentSpottingB,
+a.iconMinusContentHelp,
+a.iconMinusPersonalisedB,
+a.iconMinusContentAdditionalA,
+a.iconMinusContentSpottingE {
+  background-position: right -1000px;
+}
+a.iconMinusComprehensive:hover,
+a.iconMinusContentPromotional:hover,
+a.iconMinusContentMain:hover,
+a.iconMinusContentSpottingA:hover,
+a.iconMinusContentSpottingC:hover,
+a.iconMinusPersonalisedA:hover,
+a.iconMinusPersonalisedC:hover,
+a.iconMinusContentSpottingD:hover,
+a.iconMinusContentSpottingB:hover,
+a.iconMinusContentHelp:hover,
+a.iconMinusPersonalisedB:hover,
+a.iconMinusContentAdditionalA:hover,
+a.iconMinusContentSpottingE:hover {
+  background-position: right -1100px;
+}
+a.iconPlusComprehensive,
+a.iconPlusContentPromotional,
+a.iconPlusContentMain,
+a.iconPlusContentSpottingA,
+a.iconPlusContentSpottingC,
+a.iconPlusPersonalisedA,
+a.iconPlusPersonalisedC,
+a.iconPlusContentSpottingD,
+a.iconPlusContentSpottingB,
+a.iconPlusContentHelp,
+a.iconPlusPersonalisedB,
+a.iconPlusContentAdditionalA,
+a.iconPlusContentSpottingE {
+  background-position: right -1200px;
+}
+a.iconPlusComprehensive:hover,
+a.iconPlusContentPromotional:hover,
+a.iconPlusContentMain:hover,
+a.iconPlusContentSpottingA:hover,
+a.iconPlusContentSpottingC:hover,
+a.iconPlusPersonalisedA:hover,
+a.iconPlusPersonalisedC:hover,
+a.iconPlusContentSpottingD:hover,
+a.iconPlusContentSpottingB:hover,
+a.iconPlusContentHelp:hover,
+a.iconPlusPersonalisedB:hover,
+a.iconPlusContentAdditionalA:hover,
+a.iconPlusContentSpottingE:hover {
+  background-position: right -1300px;
+}
+a.iconPopupComprehensive,
+a.iconPopupContentPromotional,
+a.iconPopupContentMain,
+a.iconPopupContentSpottingA,
+a.iconPopupContentSpottingC,
+a.iconPopupPersonalisedA,
+a.iconPopupPersonalisedC,
+a.iconPopupContentSpottingD,
+a.iconPopupContentSpottingB,
+a.iconPopupContentHelp,
+a.iconPopupPersonalisedB,
+a.iconPopupContentAdditionalA,
+a.iconPopupContentSpottingE {
+  background-position: right -1400px;
+}
+a.iconPopupComprehensive:hover,
+a.iconPopupContentPromotional:hover,
+a.iconPopupContentMain:hover,
+a.iconPopupContentSpottingA:hover,
+a.iconPopupContentSpottingC:hover,
+a.iconPopupPersonalisedA:hover,
+a.iconPopupPersonalisedC:hover,
+a.iconPopupContentSpottingD:hover,
+a.iconPopupContentSpottingB:hover,
+a.iconPopupContentHelp:hover,
+a.iconPopupPersonalisedB:hover,
+a.iconPopupContentAdditionalA:hover,
+a.iconPopupContentSpottingE:hover {
+  background-position: right -1500px;
+}
+a.iconPrintComprehensive,
+a.iconPrintContentPromotional,
+a.iconPrintContentMain,
+a.iconPrintContentSpottingA,
+a.iconPrintContentSpottingC,
+a.iconPrintPersonalisedA,
+a.iconPrintPersonalisedC,
+a.iconPrintContentSpottingD,
+a.iconPrintContentSpottingB,
+a.iconPrintContentHelp,
+a.iconPrintPersonalisedB,
+a.iconPrintContentAdditionalA,
+a.iconPrintContentSpottingE {
+  background-position: right -1600px;
+}
+a.iconPrintComprehensive:hover,
+a.iconPrintContentPromotional:hover,
+a.iconPrintContentMain:hover,
+a.iconPrintContentSpottingA:hover,
+a.iconPrintContentSpottingC:hover,
+a.iconPrintPersonalisedA:hover,
+a.iconPrintPersonalisedC:hover,
+a.iconPrintContentSpottingD:hover,
+a.iconPrintContentSpottingB:hover,
+a.iconPrintContentHelp:hover,
+a.iconPrintPersonalisedB:hover,
+a.iconPrintContentAdditionalA:hover,
+a.iconPrintContentSpottingE:hover {
+  background-position: right -1700px;
+}
+a.iconRightComprehensive,
+a.iconRightContentPromotional,
+a.iconRightContentMain,
+a.iconRightContentSpottingA,
+a.iconRightContentSpottingC,
+a.iconRightPersonalisedA,
+a.iconRightPersonalisedC,
+a.iconRightContentSpottingD,
+a.iconRightContentSpottingB,
+a.iconRightContentHelp,
+a.iconRightPersonalisedB,
+a.iconRightContentAdditionalA,
+a.iconRightContentSpottingE {
+  background-position: right -1800px;
+}
+a.iconRightComprehensive:hover,
+a.iconRightContentPromotional:hover,
+a.iconRightContentMain:hover,
+a.iconRightContentSpottingA:hover,
+a.iconRightContentSpottingC:hover,
+a.iconRightPersonalisedA:hover,
+a.iconRightPersonalisedC:hover,
+a.iconRightContentSpottingD:hover,
+a.iconRightContentSpottingB:hover,
+a.iconRightContentHelp:hover,
+a.iconRightPersonalisedB:hover,
+a.iconRightContentAdditionalA:hover,
+a.iconRightContentSpottingE:hover {
+  background-position: right -1900px;
+}
+a.iconSoundOnComprehensive,
+a.iconSoundOnContentPromotional,
+a.iconSoundOnContentMain,
+a.iconSoundOnContentSpottingA,
+a.iconSoundOnContentSpottingC,
+a.iconSoundOnPersonalisedA,
+a.iconSoundOnPersonalisedC,
+a.iconSoundOnContentSpottingD,
+a.iconSoundOnContentSpottingB,
+a.iconSoundOnContentHelp,
+a.iconSoundOnPersonalisedB,
+a.iconSoundOnContentAdditionalA,
+a.iconSoundOnContentSpottingE {
+  background-position: right -2000px;
+}
+a.iconSoundOnComprehensive:hover,
+a.iconSoundOnContentPromotional:hover,
+a.iconSoundOnContentMain:hover,
+a.iconSoundOnContentSpottingA:hover,
+a.iconSoundOnContentSpottingC:hover,
+a.iconSoundOnPersonalisedA:hover,
+a.iconSoundOnPersonalisedC:hover,
+a.iconSoundOnContentSpottingD:hover,
+a.iconSoundOnContentSpottingB:hover,
+a.iconSoundOnContentHelp:hover,
+a.iconSoundOnPersonalisedB:hover,
+a.iconSoundOnContentAdditionalA:hover,
+a.iconSoundOnContentSpottingE:hover {
+  background-position: right -2100px;
+}
+a.iconSoundOffComprehensive,
+a.iconSoundOffContentPromotional,
+a.iconSoundOffContentMain,
+a.iconSoundOffContentSpottingA,
+a.iconSoundOffContentSpottingC,
+a.iconSoundOffPersonalisedA,
+a.iconSoundOffPersonalisedC,
+a.iconSoundOffContentSpottingD,
+a.iconSoundOffContentSpottingB,
+a.iconSoundOffContentHelp,
+a.iconSoundOffPersonalisedB,
+a.iconSoundOffContentAdditionalA,
+a.iconSoundOffContentSpottingE {
+  background-position: right -2200px;
+}
+a.iconSoundOffComprehensive:hover,
+a.iconSoundOffContentPromotional:hover,
+a.iconSoundOffContentMain:hover,
+a.iconSoundOffContentSpottingA:hover,
+a.iconSoundOffContentSpottingC:hover,
+a.iconSoundOffPersonalisedA:hover,
+a.iconSoundOffPersonalisedC:hover,
+a.iconSoundOffContentSpottingD:hover,
+a.iconSoundOffContentSpottingB:hover,
+a.iconSoundOffContentHelp:hover,
+a.iconSoundOffPersonalisedB:hover,
+a.iconSoundOffContentAdditionalA:hover,
+a.iconSoundOffContentSpottingE:hover {
+  background-position: right -2300px;
+}
+a.iconChatComprehensive,
+a.iconChatContentPromotional,
+a.iconChatContentMain,
+a.iconChatContentSpottingA,
+a.iconChatContentSpottingC,
+a.iconChatPersonalisedA,
+a.iconChatPersonalisedC,
+a.iconChatContentSpottingD,
+a.iconChatContentSpottingB,
+a.iconChatContentHelp,
+a.iconChatPersonalisedB,
+a.iconChatContentAdditionalA,
+a.iconChatContentSpottingE {
+  background-position: right -2400px;
+}
+a.iconChatComprehensive:hover,
+a.iconChatContentPromotional:hover,
+a.iconChatContentMain:hover,
+a.iconChatContentSpottingA:hover,
+a.iconChatContentSpottingC:hover,
+a.iconChatPersonalisedA:hover,
+a.iconChatPersonalisedC:hover,
+a.iconChatContentSpottingD:hover,
+a.iconChatContentSpottingB:hover,
+a.iconChatContentHelp:hover,
+a.iconChatPersonalisedB:hover,
+a.iconChatContentAdditionalA:hover,
+a.iconChatContentSpottingE:hover {
+  background-position: right -2500px;
+}
+a.iconMailComprehensive,
+a.iconMailContentPromotional,
+a.iconMailContentMain,
+a.iconMailContentSpottingA,
+a.iconMailContentSpottingC,
+a.iconMailPersonalisedA,
+a.iconMailPersonalisedC,
+a.iconMailContentSpottingD,
+a.iconMailContentSpottingB,
+a.iconMailContentHelp,
+a.iconMailPersonalisedB,
+a.iconMailContentAdditionalA,
+a.iconMailContentSpottingE {
+  background-position: right -2600px;
+}
+a.iconMailComprehensive:hover,
+a.iconMailContentPromotional:hover,
+a.iconMailContentMain:hover,
+a.iconMailContentSpottingA:hover,
+a.iconMailContentSpottingC:hover,
+a.iconMailPersonalisedA:hover,
+a.iconMailPersonalisedC:hover,
+a.iconMailContentSpottingD:hover,
+a.iconMailContentSpottingB:hover,
+a.iconMailContentHelp:hover,
+a.iconMailPersonalisedB:hover,
+a.iconMailContentAdditionalA:hover,
+a.iconMailContentSpottingE:hover {
+  background-position: right -2700px;
+}
+a.iconLeftComprehensive,
+a.iconLeftContentPromotional,
+a.iconLeftContentMain,
+a.iconLeftContentSpottingA,
+a.iconLeftContentSpottingC,
+a.iconLeftPersonalisedA,
+a.iconLeftPersonalisedC,
+a.iconLeftContentSpottingD,
+a.iconLeftContentSpottingB,
+a.iconLeftContentHelp,
+a.iconLeftPersonalisedB,
+a.iconLeftContentAdditionalA,
+a.iconLeftContentSpottingE {
+  background-position: right -2800px;
+}
+a.iconLeftComprehensive:hover,
+a.iconLeftContentPromotional:hover,
+a.iconLeftContentMain:hover,
+a.iconLeftContentSpottingA:hover,
+a.iconLeftContentSpottingC:hover,
+a.iconLeftPersonalisedA:hover,
+a.iconLeftPersonalisedC:hover,
+a.iconLeftContentSpottingD:hover,
+a.iconLeftContentSpottingB:hover,
+a.iconLeftContentHelp:hover,
+a.iconLeftPersonalisedB:hover,
+a.iconLeftContentAdditionalA:hover,
+a.iconLeftContentSpottingE:hover {
+  background-position: right -2900px;
+}
+a.iconUp {
+  background-position: right -3000px;
+}
+a.iconUp:hover {
+  background-position: right -3100px;
+}
+a.iconDown {
+  background-position: right -3200px;
+}
+a.iconDown:hover {
+  background-position: right -3300px;
+}
+/* BACKGROUND-IMAGES FOR BUTTONS */
+a.bgCallToAction,
+a.bgSubmit,
+a.bgCallToActionRed,
+a.bgPersonalisedA,
+a.bgPersonalisedB,
+a.bgPersonalisedC {
+  background-image: url(../images/buttonRight2010.gif);
+  background-repeat: no-repeat;
+  background-position: right 0px;
+}
+a.bgCallToAction:hover,
+a.bgSubmit:hover,
+a.bgCallToActionRed:hover,
+a.bgPersonalisedA:hover,
+a.bgPersonalisedB:hover,
+a.bgPersonalisedC:hover {
+  background-position: right -95px;
+  cursor: pointer;
+}
+a.bgCallToAction span,
+a.bgSubmit span,
+a.bgCallToActionRed span,
+a.bgPersonalisedA span,
+a.bgPersonalisedB span,
+a.bgPersonalisedC span {
+  background-image: url(../images/buttonLeft2010.gif);
+  background-position: left 0px;
+  background-repeat: no-repeat;
+}
+a.bgCallToAction:hover span,
+a.bgSubmit:hover span,
+a.bgCallToActionRed:hover span,
+a.bgPersonalisedA:hover span,
+a.bgPersonalisedB:hover span,
+a.bgPersonalisedC:hover span {
+  background-position: left -95px;
+  cursor: pointer;
+}
+a.bgComprehensive,
+a.bgReset {
+  background-image: url(../images/buttonRight2010.gif);
+  background-position: right -240px;
+  background-repeat: no-repeat;
+}
+a.bgComprehensive:hover,
+a.bgReset:hover {
+  background-position: right -335px;
+  cursor: pointer;
+}
+a.bgComprehensive span,
+a.bgReset span {
+  background-image: url(../images/buttonLeft2010.gif);
+  background-position: left -240px;
+  background-repeat: no-repeat;
+}
+a.bgComprehensive:hover span,
+a.bgReset:hover span {
+  background-position: left -335px;
+  cursor: pointer;
+}
+/* ToDo Button-Grafik */
+.bgInactive {
+  background-image: url(../images/buttonGreyRightInactive.gif);
+}
+.bgInactive span {
+  background-image: url(../images/buttonGreyLeftInactive.gif);
+}
+/* GLOBAL IMAGES LINKS & BUTTONS END */
+/* ------------------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------- */
+/* Global AddOns moved from v1 cms.global.css */
+/* ------------------------------------------------------------------------------------------- */
+div.divModuleAppTeaser {
+  width: 260px;
+  float: left;
+  margin-right: 12px;
+  padding-left: 12px;
+}
+div.divModuleAppTeaser3Col {
+  width: 544px;
+  float: left;
+  margin-right: 12px;
+  padding-left: 12px;
+}
+div.divInlay div.divModuleAppTeaser img.imgTeaser,
+div.divInlay div.divModuleAppTeaser3Col img.imgTeaser {
+  /*width: 9.09090909em; /* 100px */
+/*height: 9.09090909em; /* 100px */
+width: auto;
+  height:auto;
+  float:left;
+  margin:0px 12px 10px 0px;
+}
+div.divModuleAppTeaser p,
+div.divModuleAppTeaser3Col p {
+  display:table;
+  padding-top:0px;
+}
+div.divModuleAppTeaser ul.ulLinkList,
+div.divModuleAppTeaser3Col ul.ulLinkList {
+  margin-top: 0px;
+}
+dl.dlApp {
+  padding:20px 0px 8px;
+  display:table;
+}
+dl.dlApp dt {
+  width:149px;
+  float:left;
+  display:block;
+  font-weight:bold;
+  padding:1px 0px 10px 12px;
+  font-size: 1.181818181em; /* 13px */
+  line-height: 1.454545454em; /* 16px */
+}
+dl.dlApp dd {
+  width:378px;
+  float:left;
+  display:block;
+}
+dl.dlApp dd p {
+  margin:0px 12px 10px;
+}
+/* Digits */
+.priceTagDigits {
+  display: block;
+  padding: 12px 0px 12px 0px;
+  font-size: 4.363636363em; /* 48px */
+  line-height:48px; /* 11px */
+  font-weight: bold;
+  color: #333333;
+}
+.priceTagDigits a,
+.priceTagDigits a:active,
+.priceTagDigits a:focus,
+.priceTagDigits a:hover,
+.priceTagDigits a:link,
+.priceTagDigits a:visited {
+  text-decoration: none;
+}
+.superscriptCent {
+  vertical-align: 40%;
+  font-size: 0.454545454em; /* 5px */
+  font-weight: bold;
+  text-decoration: none;
+}
+/* TagCloud */
+.divInlay ul.tagCloud {
+  padding:6px 0;
+}
+.divInlay ul.tagCloud li {
+  margin-right:6px;
+  list-style-type:none;
+  display:inline;
+  line-height:150%;
+}
+.divInlay ul.tagCloud li a,
+.divInlay ul.tagCloud li a:visited {
+  text-decoration:none;
+  color:#666666;
+}
+.divInlay ul.tagCloud li a:hover,
+.divInlay ul.tagCloud li a:active {
+  text-decoration:underline;
+}
+.divInlay ul.tagCloud li a.level1 {
+  font-size:11px;
+  font-weight:bold;
+}
+.divInlay ul.tagCloud li a.level2 {
+  font-size:13px;
+  font-weight:bold;
+}
+.divInlay ul.tagCloud li a.level3 {
+  font-size:15px;
+  font-weight:bold;
+}
+.divInlay ul.tagCloud li a.level4 {
+  font-size:16px;
+  font-weight:bold;
+}
+.divInlay ul.tagCloud li a.level5 {
+  font-size:18px;
+}
+div.divInlay.moviePlayer {
+  padding-left: 2px;
+  padding-top: 1px;
+}
+div.divInlay.moviePlayer object,
+div.divInlay.moviePlayer embed {
+  height: 148px;
+  width: 180px;
+}
+/* MultiAccordion add on (Klappboxen-Accordion) */
+dl.accordionMultiContent {
+  position: static;
+  margin: 0;
+}
+dl.accordionMultiContent dt,
+dl.accordionMultiContent dd {
+  margin: 0;
+  padding: 0;
+}
+dl.accordionMultiContent dt,
+dl.accordionMultiContent dt.selected {
+  height:24px;
+  line-height:24px;
+  padding: 0 0 0 24px;
+  margin: 1px 0 1px 0px;
+  font-weight:bold;
+  cursor: pointer;
+}
+dl.accordionMultiContent dt {
+  background: url(../images/bgAccordion2010.gif) no-repeat;
+  background-position: left top;
+  color:#333333;
+  font-weight:bold;
+}
+dl.accordionMultiContent dt:hover {
+  background-position: left -50px;
+}
+dl.accordionMultiContent dt.selected {
+  background-position: left -100px;
+}
+dl.accordionMultiContent dt.selected:hover {
+  background-position: left -150px;
+}
+/* ------------------------------------------------------------------------------------------- */
+/* GENERAL FIXES - BEGIN */
+select {
+  border:1px solid #CCCCCC;
+}
+/* GENERAL FIXES - END */
+/* ------------------------------------------------------------------------------------------- */
+/* BREADCRUMB - BEGIN */
+.breadcrumb li {
+  padding-bottom: 0;
+}
+ul.breadcrumb {
+  position: absolute;
+  top: 12px;
+  left: 5px;
+  display: block;
+  width: 680px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  overflow: hidden;
+}
+ul.breadcrumb li {
+  display: block;
+  width: auto;
+  height: 18px;
+  padding: 0;
+  margin: 0;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  color: #666666;
+}
+ul.breadcrumb li.lastItem {
+  width: auto;
+}
+ul.breadcrumb li b {
+  padding: 0;
+  white-space: nowrap;
+  font-weight: normal;
+  background-image: url(../images/breadcrumb-arrow.gif);
+  background-position: 0px 4px;
+  background-repeat: no-repeat;
+}
+ul.breadcrumb li.homeItem b,
+ul.breadcrumb li.firstItem b {
+  background-image: none;
+  color: #666666;
+}
+ul.breadcrumb li b a,
+ul.breadcrumb li b a:link,
+ul.breadcrumb li b a:focus,
+ul.breadcrumb li b a:visited,
+ul.breadcrumb li b a:active {
+  float: none;
+  clear: both;
+  padding: 0px 4px 0px 4px;
+  color: #666666;
+  text-decoration: none;
+}
+ul.breadcrumb li.homeItem b a {
+  padding: 0;
+}
+ul.breadcrumb li.firstItem b a {
+  padding: 0px 4px 0px 0px;
+}
+ul.breadcrumb li b a:hover {
+  text-decoration: underline;
+  color: #C80000;
+}
+ul.breadcrumb li.lastItem b {
+  padding: 0px 4px 0px 4px;
+}
+ul.breadcrumb li.homeItem b a img {
+  width: 15px;
+  height: 14px;
+  background-image: url(../images/breadcrumb-home.gif);
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+  border: none;
+}
+ul.social {
+  position: absolute;
+  right: 5px;
+  top: 9px;
+  display: block;
+  height: 24px;
+  overflow: hidden;
+  width: 350px;
+  margin: 0;
+}
+ul.social li {
+  float: right;
+  display: block;
+  width: 20px;
+  height: 24px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+ul.social li b {
+  font-weight: normal;
+}
+ul.social li b a {
+  padding: 3px 5px 7px 25px;
+  margin: 0;
+  line-height: 22px;
+  color: #666666;
+  background-image: url(../images/sprite.socialbookmarks.gif);
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+ul.social li.infoLink {
+  padding: 3px 5px 0px 10px;
+  background-image: none;
+  text-decoration: none;
+}
+ul.social li b a:hover {
+  color: #C80000;
+  text-decoration: underline;
+}
+.iconMrWongDE {
+  background-position: 0px 0px;
+}
+.iconDelicioUS {
+  background-position: 0px -200px;
+}
+.iconWebnewsDE {
+  background-position: 0px -450px;
+}
+.iconFacebookCOM {
+  background-position: 0px -650px;
+}
+.iconFolkdCOM {
+  background-position: 0px -1000px;
+}
+.iconYiggDE {
+  background-position: 0px -1350px;
+}
+.iconLinkarenaCOM {
+  background-position: 0px -1600px;
+}
+.iconMySpaceCOM {
+  background-position: 0px -2250px;
+}
+.iconTwitterCOM {
+  background-position: 0px -2300px;
+}
+div.divSocialBreadcrumb {
+  position: relative;
+  float: none;
+  clear: both;
+  width: 954px;
+  height: 40px;
+  vertical-align: top;
+  margin-left: 3px;
+  padding: 0;
+  background-repeat: repeat-x;
+}
+/* BREADCRUMB - END */
+/* ------------------------------------------------------------------------------------------- */
+/* ANTWORTCENTER - BEGIN (fuer Startseite 29.01.2009 h.g.) */
+#antwortcenterInput {
+  overflow:hidden;
+  border:1px solid #ddd;
+  width:160px;
+  color:#777;
+  margin:0 0 0 6px;
+  padding:3px 0 0 6px;
+}
+#inputImage {
+  margin:4px 0 0 147px;
+  padding:0;
+  width:27px;
+  height:25px;
+  border:0px none;
+}
+#wrapper {
+  background:url(../images/fragezeichen2.gif);
+  background-repeat:no-repeat;
+  background-position:135px 2px;
+}
+/* ANTWORTCENTER - END */
+/* ------------------------------------------------------------------------------------------- */
+/* KUNUNU-TEASER - BEGIN (26.02.2009 o.k.) */
+#kununuTeaser b {
+  font-weight: bold;
+  color: #157778;
+  line-height: 13px;
+  margin-left: 0px;
+  margin-bottom: 2px;
+}
+#kununuTeaser img {
+  padding-left: 2px;
+  margin-top: 2px;
+}
+#kununuTeaser img.firstIcon {
+  padding-left: 6px;
+}
+#kununuTeaser img.lastIcon {
+  padding-right: 6px;
+}
+/* KUNUNU-TEASER - END */
+/* ------------------------------------------------------------------------------------------- */
+/* Relaunch Handykonfigurator (06.09.2009 o.k.)*/
+div.divArticleBasic ol.olInstruction {
+  margin: 0px 11px 0px 30px;
+  padding: 7px 0px 0px 0px;
+  list-style-type: decimal;
+}
+div.divInlay ol.olInstruction {
+  margin: 0px 11px 0px 17px;
+  padding: 7px 0px 11px 0px;
+  list-style-type: decimal;
+}
+ol.Instruction {
+  margin: 0px 11px 11px 30px;
+  padding: 7px 0px 11px 0px;
+  list-style-type: decimal;
+}
+ol.olInstruction li {
+  padding: 0px 0px 6px 0px;
+}
+ol.olInstruction li,
+ol.olInstruction li strong {
+  font-size: 12px;
+  line-height: 140%;
+}
+ol.olInstruction li strong,
+div.adviceBox strong {
+  display:inline;
+  margin-left:0px;
+  margin-right:0px;
+}
+div.adviceBox {
+  border: solid 1px #cccccc;
+  background-color:#F3FAFB;
+  padding:5px;
+}
+.borderTop {
+  border-top: solid 1px #cccccc;
+}
+/* Relaunch Handykonfigurator END */
+.iFrameInlay {
+  padding: 0;
+  margin-bottom: 9px;
+  float: none;
+  clear: both;
+}
+/* jq.flash Update Div*/
+.divUpdateMessage {
+  position:absolute;
+  top:0px;
+  left:0px;
+  padding:3px;
+  background-color:#ff0000;
+  font-weight:bold;
+  color:#FFFFFF;
+}
+.divImageCopyright {
+  line-height: 14px;
+  width: 100%;
+  height: 14px;
+  overflow: hidden;
+  position: relative;
+  margin-top: -14px;
+  background-color: #ffffff;
+  opacity: 0.5;
+  font-size: 10px;
+  color: #333333;
+  text-decoration: none;
+}
+/* ------------------------------------------------------------------------------------------- */
+/* Search header extension BEGIN (05.11.2009)   */                                                                  
+/* ------------------------------------------------------------------------------------------- */
+/* SEARCH HEAD */
+div.divGlobalSearch {
+  margin:4px 6px 0 15px;
+  float:right;
+}
+#formGlobalSearch div {
+  width:238px;
+}
+#formGlobalSearch div #question {
+  border:0 none;
+  font-size:1em;
+  height:23px;
+  padding:5px 5px 0 20px;
+  width:165px;
+  float:left;
+}
+#formGlobalSearch div #question {
+  background:transparent url(../images/searchBg2010.gif) no-repeat scroll 0 0;  
+  border:0 none;
+  font-size:1em;
+  height:18px;
+  padding:5px 5px 0 20px;
+  width:165px;
+  float:left;
+}
+/* ------------------------------------------------------------------------------------------- */
+/* Autosuggest box for search header  */         
+/* ------------------------------------------------------------------------------------------- */
+.snac_box {
+  font-family: Arial, Helvetica, Sans-Serif;
+  padding: 0px;
+  border: 1px solid #C80000;
+  z-index: 99999;
+  overflow: hidden;
+}
+.snac_results {
+  background-color: white;
+}
+.snac_results ul {
+  /*
+if width is set to 100%, a horizontal scrollbar will apear
+when the scroll mode is enabled
+*/
+/*width: 100%;*/
+list-style-position: outside;
+  list-style-image: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.snac_results ul li {
+  padding-top:6px;
+}
+.snac_results ul li ul {
+  border-bottom: 1px solid #EDEDED;
+  padding-bottom:6px;
+}
+.snac_item {
+  margin: 0;
+  cursor: default;
+  display: block;
+  /*
+if width is set to 100%, a horizontal scrollbar will apear
+when the scroll mode is enabled
+*/
+width: 100%;
+  /*
+it is very important, if line-height not set or set
+in relative units scroll will be broken in firefox
+*/
+line-height: 14px;
+  overflow: hidden;
+  text-align: left;
+  /*white-space: nowrap;*/
+color: #C80000;
+  padding:3px 6px 3px 12px;
+}
+/* Do not use absolute positioning... it breaks the scroll feature. */
+.snac_item .col1 {
+  width: 230px;
+  float:left;
+  max-width: 230px;
+  min-width: 230px;
+  overflow: hidden;
+  font-size: 11px;
+}
+.snac_item a.col1 {
+  color: #666666;
+  text-decoration:none;
+}
+.snac_item .col2 {
+  width: 50px;
+  padding-top: 2px;
+  float:left;
+  overflow: hidden;
+  font-size: 11px;
+}
+.snac_footer {
+  background-color: #EDEDED;
+  line-height: 18px;
+  overflow: hidden;
+  margin: 0;
+  padding: 3px 6px;
+  text-align: right;
+  vertical-align: middle;
+}
+.snac_footer span a {
+  font-weight:bold;
+  font-size:11px;
+}
+.snac_border {
+  line-height: 0;
+  border-width: 0;
+  margin: 0;
+  padding: 0;
+  background:#fff;
+  height:1px;
+}
+.snac_loading {
+  background: transparent url(../images/searchBg2010.gif) 0 -23px no-repeat !important;
+}
+.snac_odd {
+  background-color: #eee;
+}
+.snac_over,
+.snac_over a,
+.snac_over a:hover {
+  cursor:pointer;
+  background-color:#EDEDED;
+  color:#000000;
+}
+.snac_cat {
+  font-weight: bold;
+  font-size: 12px;
+  padding:3px 6px;
+}
+.snac_tab {
+  padding-left: 16px;
+}
+/* 404 Search Form START (26.11.2009) */
+#form404Search div {
+    float: left;
+    height:30px;
+    margin:6px 0px 16px 0px;
+    padding:6px 6px;
+    width:295px;
+    background-position: right bottom;
+    background-repeat:no-repeat;
+    background-color:transparent;
+}
+#form404Search div #q,
+#form404Search div #question {
+    border:1px solid #D2D4D6;
+    color:#566171;
+    float:left;
+    height:15px;
+    width:237px;
+    margin:0px 0px 0px 0px;
+    padding:0px;
+    font-size:11px;
+}
+#form404Search div #aSubmit {
+    float:right;
+    width:46px;
+}
+#form404Search  .aButton {
+    float:left;
+}
+/* 404 Search Form END (26.11.2009) */
+
+/* fixes 03/2010 ------------------------------------------------------------------------ */
+div.divInlay.dynLinkList ul.ulLinkList {
+   padding-top:6px;
+}
+/* Homepage fixes */
+#homePageHelpTeaser {
+     float:left;
+     width:192px;
+     overflow:hidden;
+     margin-left:0;
+     padding-left:0;
+     height:290px;
+}
+.homePageHelpTeaserLinkList {
+       padding:6px;
+     }
+.homePageHelpTeaserLinkList ul.ulLinkList {
+     margin: 2px 0 0;
+}
+
+/* Line 630-683 deleted: do not auto switch off borders if image is following */
+
+/* line 765 overwrite */
+div.divInlay.borderTop {
+    border-top:0px none;
+}
+
+/* Line 1399 overwrite */
+.tabs-nav a, 
+.tabs-nav a:active, 
+.tabs-nav a:focus, 
+.tabs-nav a:hover, 
+.tabs-nav a:link, 
+.tabs-nav a:visited, 
+.tabs-nav a span, 
+.tabs-nav a:active span, 
+.tabs-nav a:focus span, 
+.tabs-nav a:hover span, 
+.tabs-nav a:link span, 
+.tabs-nav a:visited span {
+    padding:2px 8px 0;
+}
+
+/* line 2317 addon */
+a.bgComprehensive,
+a.bgReset,
+a.bgComprehensive span,
+a.bgComprehensive span b,
+a.bgReset span,
+a.bgReset span b {
+  color: #333333 !important;
+}
+
+/* line 2108 added !important */
+body {
+  background-color: #F4F4F4 !important;
+}
+
+/* line 515 ul.ulLogin see line 515: changed positioning and width */
+
+/* line 476 addon to fix ff2 no clickable bug */
+ul.ulNavigationTop,
+ul.ulLogin {
+    z-index:1;
+}
+/* fix double grey borders */
+.divArticleBasic .divArticleBasic,
+.divModuleBasic .divArticleBasic {
+    border:0px none;
+}
+/* option to switch NavigationTop to fixed height*/
+.ulNavigationTopFixedHeight {
+    height:28px;
+}
+/* line 1930 height fix
+.imageLeft282 img.imgTeaser, 
+.imageRight282 img.imgTeaser, 
+.imageLeft282width3Col img.imgTeaser, 
+.imageRight282width3Col img.imgTeaser {
+    height:257px;
+}
+*/

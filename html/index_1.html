@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de-DE" xml:lang="de-DE"> 
+  <head>
+    <title>{propertyName} - Move Management System</title>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" /> 
+    <meta http-equiv="content-language" content="de" />
+{literal}
+    <!-- VODAFONE GLOBAL CSS BEGIN --> 
+    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/cms.global.v2.css" /> 
+    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/cms.global.v2.css" /> 
+    <link rel="stylesheet" type="text/css" media="print" href="{WebRoot}themes/{theme}/css/print.global.v2.css" /> 
+    <link rel="stylesheet" type="text/css" href="{WebRoot}themes/{theme}/css/tabbed.ul.navigation.css" /> 
+    <!-- VODAFONE GLOBAL CSS END --> 
+	
+    <!-- VODAFONE ADDITIONAL CSS BEGIN -->
+    <!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/cms.ie6.v2.css" />
+    <![endif]--> 
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/cms.ie7.v2.css" />
+    <![endif]--> 
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/cms.ie8.v2.css" />
+    <![endif]--> 
+    <!-- VODAFONE ADDITIONAL JS/CSS END --> 
+ 	
+    <!-- MoveManagement-Extensions BEGIN -->
+    <script type="text/javascript" src="{WebRoot}js/jquery.js"></script>
+
+    <link rel="STYLESHEET" type="text/css" href="{WebRoot}js/cluetip/jquery.cluetip.css" />
+    <script type="text/javascript" src="{WebRoot}js/cluetip/jquery.cluetip.js"></script>
+    <script type="text/javascript" src="{WebRoot}js/cluetip/lib/jquery.bgiframe.min.js"></script>
+    <script type="text/javascript" src="{WebRoot}js/cluetip/lib/jquery.hoverIntent.js"></script>
+    <script>
+	// Init: Dynamische Kontexthilfen, die bei mouseover angezeigt werden!
+	if (typeof($) != "undefined") $(document).ready(function() {
+	   // some code here
+		$('*.jtooltip').cluetip({
+		  cluetipClass: 'jtip', 
+		  arrows: true, 
+		  dropShadow: false,
+		  hoverIntent: false,
+		  sticky: true,
+		  mouseOutClose: true,
+		  closePosition: 'title',
+		  closeText: '<img src="{WebRoot}/images/cross_white2.png" alt="close" />'
+		});
+	 });
+    </script>
+    <!-- MoveManagement-Extensions END --> 
+
+    <script type="text/javascript" src="{WebRoot}js/FbAjaxUpdater.js"></script>
+    <script type="text/javascript" src="{WebRoot}js/PageInfo.js"></script>
+    <script type="text/javascript" src="{WebRoot}js/EventHandler.js"></script>
+    <script type="text/javascript" src="{WebRoot}js/ObjectHandler.js"></script>
+    <script type="text/javascript" src="{WebRoot}js/GetObjectDisplay.js"></script>
+
+    <script type="text/javascript" src="{WebRoot}module/datepicker/DatePicker.js"></script>
+    <link rel="stylesheet" media="screen" href="{WebRoot}module/datepicker/DatePicker.css" />
+
+    <script type="text/javascript" src="{WebRoot}module/combobox/ComboBox.js"></script>
+    <link rel="stylesheet" media="screen" href="{WebRoot}module/combobox/ComboBox.css" />
+
+    <script type="text/javascript" src="{WebRoot}js/navigation.js"></script>
+    <link rel="stylesheet" media="screen" href="{WebRoot}css/navigation.css" />
+	
+    <script type="text/javascript" src="{WebRoot}module/lightbox/LightBox.js"></script>
+
+    <script type="text/javascript" src="{WebRoot}js/subbox.js"></script>
+    <script type="text/javascript" src="{WebRoot}js/PrintContent.js"></script>
+
+    <script type="text/javascript" src="{WebRoot}js/SelBox.easy.js"></script>
+    <link rel="stylesheet" media="screen" href="{WebRoot}css/SelBox.easy.css" />
+
+    <link rel="stylesheet" media="screen" href="{WebRoot}css/tablelisting.css" />
+    <link rel="stylesheet" media="screen" href="{WebRoot}css/tablelisting.css" />
+    <link rel="stylesheet" media="screen" href="{WebRoot}css/forms.css" />
+    <link rel="stylesheet" media="screen" href="{WebRoot}css/listbrowser.css" />
+
+    <style media="screen">
+    #printHeader { display:none; }
+    </style>
+{/literal}
+	<style media="print">
+	#printHeader { display:block; }
+	#screenHeader,
+	#divHeader,
+	#divHeader div,
+	#divHeader *,
+	img.imgLogo,
+	ul.ulNavigationTop, 
+	ul.ulLogin, 
+	#liLogoutID
+	{ display:none; visibility:hidden; }
+	</style>
+	<!-- {Headers} -->
+ </head> 
+  <body> 
+    
+    <!-- MATRIX - BEGIN --> 
+    <div class="divMatrix"> 
+      <!-- HEADER - BEGIN -->         
+      <div class="divHeader"> 
+	  	<div id="screenHeader" style="position:absolute;left:90px;top:10px;font-family:Arial,sans-serif;font-size:24px;color:#fff;">
+		Move Management
+		</div>
+        <!-- LOGO - BEGIN -->
+        <a onclick="s_objectID='http://www.vodafone.de/unternehmen/_1';return this.s_oc?this.s_oc(e):true" href="http://www.vodafone.de/unternehmen/"><img class="imgLogo" src="images/vodafoneLogo2010.gif" alt="DSL, Festnetz &amp; Handys - Vodafone D2"></a>
+        <!-- LOGO - END -->
+		
+		<!-- SEARCH - BEGIN -->
+          <!-- SSI DISABLED -->
+        <!-- SEARCH - END -->
+        <!-- NAVIGATION HEAD RIGHT - BEGIN -->
+        <div class="divNavigationMeta">
+		
+        <ul class="ulNavigationMeta">
+          <!-- SSI DISABLED -->
+        </ul>
+        </div>
+        <!-- NAVIGATION HEAD RIGHT - END -->
+        <!-- NAVIGATION MAIN - BEGIN -->
+        <ul class="ulNavigationMain">
+		  <!-- {MenuGroup:top} -->
+        </ul> 
+        <!-- NAVIGATION MAIN - END --> 
+      </div> 
+      <!-- HEADER - END -->      
+      <!-- CONTENT - BEGIN --> 
+      <div id="divContentID" class="divContent"> 
+        <!-- NAVIGATION TOP - BEGIN -->		
+        <ul class="ulNavigationTop">
+		<!-- Erstes li-Element sollte die class liFirstItem erhalten -->
+        <!-- {topmenu} -->
+	<!-- {MenuGroup:top:Sub} -->
+        </ul> 
+        <!-- NAVIGATION TOP - END -->
+        <!-- LOGIN & REGISTER - BEGIN -->
+        <ul class="ulLogin">
+          <!-- SSI DISABLED --><!-- 
+          <li id="xliLoginID"><a class="aLink iconLogin" href="login.php">Login</a></li>
+          <li id="liLogoutID"><a class="aLink iconLogout" href="?logout=1">Logout</a></li>  -->
+		  <!-- {MenuGroup:login} --> 
+        </ul>
+        <!-- LOGIN & REGISTER - END -->
+	<li id="liLogoutID" style="list-style: none;list-style-type:none;"><a class="aLink xiconLogout" href="?logout=1">&nbsp;</a></li>
+        <!-- CONTENTPAGE 1+DYN COLUMN - BEGIN --> 
+        <!-- box_left.tpl.html -->
+        <div id="divContentInnerBox" class="divContent5Col" xclass="divContent3Col"> 
+<!--startindex--> 
+<!-- CONTENT MIDDLE - BEGIN --> 
+<div class="Menu MenuMain"><!-- {MenuGroup:main} --></div>
+<!-- {pageTitle}<br> -->
+<!-- <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
+<h1><span class="spanTitle">{pageTitle}</span></h1></div> -->
+{content}
+<!-- ARTICLE (65384) BEGIN --> 
+
+<!-- headandsubheadlines.tp.html -->
+
+<!-- box_text.tpl.html -->
+
+<!-- box_tabs.tpl.html -->
+ 
+<!-- box_text_and_morelinks.tpl.html -->
+
+
+ 
+ 
+<!-- CONTENT MIDDLE - END --> 
+<!--stopindex--> 
+          <br/><!-- IE6 FLOAT BUGFIX --> 
+        </div>
+        
+<!-- box_right.tpl.html -->
+        <!-- CONTENTPAGE 1+DYN COLUMN - END --> 
+      </div> 
+      <!-- CONTENT - END --> 
+       
+      <div class="divContent5Col"> 
+      <!-- FOOTER - BEGIN --> 
+      
+        <div class="divSocialBreadcrumb">
+        <ul class="ulNavigationFooter breadcrumb" id="breadcrumb"> 
+          <li class="homeItem liCopyright">Copyright &copy; 2012 merTens AG</li>
+        </ul> 
+        
+        <!-- SSI INCLUDE - BEGIN --> 
+        <div class="divContentBaseOptional"> 
+          <div style="margin-right: 15px"> <!-- MODIFIED BY TP FOR TESTING --> 
+            <!-- <script type="text/javascript"> 
+                document.write('<a class="aLink iconPrintComprehensive floatRight" href="javascript:void(window.print());" id="printPage">Seite drucken</a><a class="aLink iconPopupComprehensive floatRight" href="javascript:void(sendafriend());">Seite weiterempfehlen</a>');
+
+                var htmlFavLink = '<a class="aLink iconPlusComprehensive floatRight" id="add2favorites">Seite als Favorit hinzuf&uuml;gen</a>';
+                if ($().jFav) {
+                    jQuery('#printPage').before(htmlFavLink);
+                    $('#add2favorites').jFav();
+                } 
+            </script> --> 
+          </div> 
+        </div> 
+        <!-- SSI INCLUDE - END --> 
+        </div>  
+      <!-- FOOTER - END --> 
+      
+      <br/><!-- IE6 FLOAT BUGFIX --> 
+      </div> 
+    </div> 
+    <!-- MATRIX - END --> 
+  </body> 
+</html>

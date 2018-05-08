@@ -1,0 +1,83 @@
+
+#LightBox {
+	position:absolute;
+	background:normal;
+	top:0px;
+	left:0px;
+	width:auto;
+	height:normal;
+	border:0px;
+	padding:0px;
+	overflow:visible;
+	z-index:10;
+	/**/
+}
+
+#outerBlurBox {
+	position:absolute;
+	background:url(../../images/clear.gif);
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100px;
+	z-index:5;
+}
+#ifrLight {
+	 width:200px;
+	 margin:0px;
+	 padding:0px;
+	 border:0px;
+}
+
+#outerFrameBox {
+	margin:0px;
+	padding:0px;
+	width:200px;
+	height:auto;
+	border:1px solid gray;
+	overflow:visible;
+}
+body.LightBody {
+	margin:0px;
+	padding:0px;
+}
+#LIGHTBOX {
+	z-index:10;
+	width:100%;
+}
+body.LightBody .LightItemListe {
+	width:100%;
+	background:#fff;
+	border:5px solid #858585;
+}
+body.LightBody .LightItemListe a,
+body.LightBody .LightItemListe * {
+	text-decoration:none;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:11px;
+	color:#800040;
+	
+}
+body.LightBody a:hover,
+body.LightBody a:hover .LightItem {
+	background:#800040;
+	color:#fff;
+}
+body.LightBody a:hover,
+body.LightBody a:hover span {
+	color:#fff;
+}
+body.LightBody .LightItemListe .LightItem {
+	width:100%;
+}
+body.LightBody .LightItemListe .LightItem span {
+	padding:1px 2px 1px 4px;
+}
+#btnDtpClose {
+	width:100%;
+	margin-top:2px;
+	font-weight:bold;
+	color:#00f;
+	font-family:Arial,Helvetica,sans-serif;
+	text-align:center;
+}

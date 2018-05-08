@@ -1,0 +1,117 @@
+
+
+START:SMTP-CONNECT: 2017-01-30 08:48:19
+|secs:1|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Mon, 30 Jan 2017 08:48:19 +0100
+|secs:1|CLIENT: EHLO bayer.mertens.ag
+|secs:1|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:1|SERVER: 250-SIZE 36700160
+|secs:1|SERVER: 250-PIPELINING
+|secs:1|SERVER: 250-DSN
+|secs:1|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:1|SERVER: 250-STARTTLS
+|secs:1|SERVER: 250-X-ANONYMOUSTLS
+|secs:1|SERVER: 250-AUTH NTLM LOGIN
+|secs:1|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:1|SERVER: 250-8BITMIME
+|secs:1|SERVER: 250-BINARYMIME
+|secs:1|SERVER: 250-CHUNKING
+|secs:1|SERVER: 250 XRDST
+|secs:1|CLIENT: AUTH LOGIN
+|secs:1|SERVER: 334 VXNlcm5hbWU6
+|secs:1|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:1|SERVER: 334 UGFzc3dvcmQ6
+|secs:1|CLIENT: bWVyVGVuczQ3ODc3
+|secs:3|SERVER: 235 2.7.0 Authentication successful
+|secs:3|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:3|SERVER: 452 4.3.1 Insufficient system resources
+|secs:3|CLIENT: QUIT
+|secs:3|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2017-01-30 08:48:21
+
+START:SMTP-CONNECT: 2017-01-30 08:48:21
+|secs:3|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Mon, 30 Jan 2017 08:48:22 +0100
+|secs:3|CLIENT: EHLO bayer.mertens.ag
+|secs:3|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:3|SERVER: 250-SIZE 36700160
+|secs:3|SERVER: 250-PIPELINING
+|secs:3|SERVER: 250-DSN
+|secs:3|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:3|SERVER: 250-STARTTLS
+|secs:3|SERVER: 250-X-ANONYMOUSTLS
+|secs:3|SERVER: 250-AUTH NTLM LOGIN
+|secs:3|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:3|SERVER: 250-8BITMIME
+|secs:3|SERVER: 250-BINARYMIME
+|secs:3|SERVER: 250-CHUNKING
+|secs:3|SERVER: 250 XRDST
+|secs:3|CLIENT: AUTH LOGIN
+|secs:3|SERVER: 334 VXNlcm5hbWU6
+|secs:3|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:3|SERVER: 334 UGFzc3dvcmQ6
+|secs:3|CLIENT: bWVyVGVuczQ3ODc3
+|secs:5|SERVER: 235 2.7.0 Authentication successful
+|secs:5|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:5|SERVER: 452 4.3.1 Insufficient system resources
+|secs:5|CLIENT: QUIT
+|secs:5|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2017-01-30 08:48:23
+
+START:SMTP-CONNECT: 2017-01-30 08:48:23
+|secs:5|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Mon, 30 Jan 2017 08:48:24 +0100
+|secs:5|CLIENT: EHLO bayer.mertens.ag
+|secs:5|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:5|SERVER: 250-SIZE 36700160
+|secs:5|SERVER: 250-PIPELINING
+|secs:5|SERVER: 250-DSN
+|secs:5|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:5|SERVER: 250-STARTTLS
+|secs:5|SERVER: 250-X-ANONYMOUSTLS
+|secs:5|SERVER: 250-AUTH NTLM LOGIN
+|secs:5|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:5|SERVER: 250-8BITMIME
+|secs:5|SERVER: 250-BINARYMIME
+|secs:5|SERVER: 250-CHUNKING
+|secs:5|SERVER: 250 XRDST
+|secs:5|CLIENT: AUTH LOGIN
+|secs:5|SERVER: 334 VXNlcm5hbWU6
+|secs:5|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:5|SERVER: 334 UGFzc3dvcmQ6
+|secs:5|CLIENT: bWVyVGVuczQ3ODc3
+|secs:15|SERVER: 235 2.7.0 Authentication successful
+|secs:15|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:15|SERVER: 452 4.3.1 Insufficient system resources
+|secs:15|CLIENT: QUIT
+|secs:15|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2017-01-30 08:48:33
+
+START:SMTP-CONNECT: 2017-01-30 08:48:33
+|secs:15|SERVER: 220 TE2013.mertens.int Microsoft ESMTP MAIL Service ready at Mon, 30 Jan 2017 08:48:33 +0100
+|secs:15|CLIENT: EHLO bayer.mertens.ag
+|secs:15|SERVER: 250-TE2013.mertens.int Hello [10.10.1.62]
+|secs:15|SERVER: 250-SIZE 36700160
+|secs:15|SERVER: 250-PIPELINING
+|secs:15|SERVER: 250-DSN
+|secs:15|SERVER: 250-ENHANCEDSTATUSCODES
+|secs:15|SERVER: 250-STARTTLS
+|secs:15|SERVER: 250-X-ANONYMOUSTLS
+|secs:15|SERVER: 250-AUTH NTLM LOGIN
+|secs:15|SERVER: 250-X-EXPS GSSAPI NTLM
+|secs:15|SERVER: 250-8BITMIME
+|secs:15|SERVER: 250-BINARYMIME
+|secs:15|SERVER: 250-CHUNKING
+|secs:15|SERVER: 250 XRDST
+|secs:15|CLIENT: AUTH LOGIN
+|secs:15|SERVER: 334 VXNlcm5hbWU6
+|secs:15|CLIENT: bWVydGVuc1xiYXllcm1vdmU=
+|secs:15|SERVER: 334 UGFzc3dvcmQ6
+|secs:15|CLIENT: bWVyVGVuczQ3ODc3
+|secs:15|SERVER: 235 2.7.0 Authentication successful
+|secs:15|CLIENT: MAIL FROM: <bayerors@mertens.ag>
+|secs:15|SERVER: 452 4.3.1 Insufficient system resources
+|secs:15|CLIENT: QUIT
+|secs:15|SERVER: 221 2.0.0 Service closing transmission channel
+
+ENDE:SMTP-CONNECT: 2017-01-30 08:48:33

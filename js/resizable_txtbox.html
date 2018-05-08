@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<title>Untitled</title>
+	<script src="PageInfo.js" type="text/javascript"></script>
+	<script>
+	function O(id) { return document.getElementById(id); }
+	function addTxtResAnfasser() {
+		var RA = document.createElement("div");
+		RA.id = "RTBAnfasser";
+		RA.style["position"] = "absolute";
+		RA.style["right"] = "-10px";
+		RA.style["bottom"] = "-10px";
+		RA.style["width"] = "10px";
+		RA.style["height"] = "10px";
+		RA.style["overflow"] = "hidden";
+		RA.style["background"] = "#f00";
+		RA.style["cursor"] = "nw-resize";
+		RA.style["z-index"] = 99;
+		
+		O("TxtResBox").appendChild(RA);
+		var RTBA = O("RTBAnfasser");
+		RTBA.TBResize = TBResize;
+		RTBA.TBResizeRelease = TBResizeRelease;
+		
+		addEvent(RTBA, "mousedown", TBResizeDraw);
+		addEvent(RTBA, "mouseup", TBResizeRelease);
+		
+		MouseIsDown = false;
+		addEvent(document, "mouseup", globalRegisterMouseUp);
+		addEvent(document, "mousedown", globalRegisterMouseDown);
+		//alert("#31");
+	}
+
+	function addEvent(obj, eve, fnc) {
+		if (obj.addEventListener) obj.addEventListener(eve, fnc, false);
+		else if (obj.attachEvent) {
+			obj["e"+eve+fnc] = fnc;
+			obj["e"+eve] = function() { obj["e"+eve+fnc] (window.event); }
+			obj.attachEvent("on"+eve, obj["e"+eve]);
+		} else eval("obj.on"+eve+" = fnc;\n");
+	}
+	
+	function removeEvent(obj, eve, fnc) {
+		if (obj.removeEventListener) obj.removeEventListener(eve, fnc, false);
+		else if (obj.detachEvent) {
+			obj.detachEvent("on"+eve, obj["e"+eve]);
+      		obj["e"+eve] = null;
+      		obj["e"+eve+fnc] = null;
+	  	} else eval("obj.on"+eve+" = null;\n");
+	}
+	
+	function globalRegisterMouseUp() {
+		MouseIsDown = false;
+	}
+	function globalRegisterMouseDown() {
+		MouseIsDown = true;
+	}
+	function elementOffset(obj) {
+		var aOffset = new Array();
+		aOffset['x'] = PageInfo.getMouseX()-PageInfo.getElementLeft(obj);
+		aOffset['y'] = PageInfo.getMouseY()-PageInfo.getElementTop(obj);
+		return aOffset;
+	}
+	function TBResizeDraw() {
+		//RTBA = document.getElementById("RTBAnfasser");
+		RTBA = this;
+		RTBA.mouseOffset = elementOffset(RTBA);
+		addEvent(document, "mousemove", function() {RTBA.TBResize()});
+		addEvent(document, "mouseup", function() {RTBA.TBResizeRelease()});
+		if (RTBA.TA) RTBA.TA.style["visibility"] = "hidden";
+	}
+	
+	function TBResizeRelease() {
+		RTBA = this;
+		removeEvent(document, "mousemove", function() {RTBA.TBResize()});
+		addEvent(document, "mouseup", function() {RTBA.TBResizeRelease()});
+		if (RTBA.TA) RTBA.TA.style["visibility"] = "visible";
+		//removeEvent(this, "mousemove", TBResize);
+	}
+	
+	function TBResize() {
+		if (!MouseIsDown) {
+			this.TBResizeRelease();
+			return false;
+		}
+		//alert("#59 TBResize"); // e:"+e);
+		if (typeof this.elLeft == "undefined") {
+			this.elLeft = PageInfo.getElementLeft(this);
+			this.elTop = PageInfo.getElementTop(this);
+			this.pElLeft = PageInfo.getElementLeft(this.parentNode);
+			this.pElTop = PageInfo.getElementTop(this.parentNode);
+			this.pInitHeight = PageInfo.getElementHeight(this.parentNode);
+			this.pInitWidth = PageInfo.getElementWidth(this.parentNode);
+			this.minLeft = this.pElLeft+this.pInitWidth;
+			this.minTop = this.pElTop+this.pInitHeight;
+			this.TA = this.parentNode.getElementsByTagName("textarea")[0];
+			if (RTBA.TA) RTBA.TA.style["visibility"] = "hidden";
+			//alert("#32 Set elLeft:"+this.elLeft);
+		}
+		
+		x = PageInfo.getMouseX();
+		y = PageInfo.getMouseY();
+		
+		var newWidth = (x-this.pElLeft-this.mouseOffset['x'])+"px";
+		var newHeight = (y-this.pElTop-this.mouseOffset['y'])+"px";
+		if (x >= this.minLeft) {
+			if (this.TA) this.TA.style["width"] = newWidth;
+			this.parentNode.style["width"] = newWidth;
+		}
+		if (y >= this.minTop) {
+			if (this.TA) this.TA.style["height"] = newHeight;
+			this.parentNode.style["height"] = newHeight;
+		}
+			
+		
+		
+		O('displayTxtArea').value = "this.id:"+this.id;
+		O('displayTxtArea').value+= ",\n x:"+x;
+		O('displayTxtArea').value+= ",\ny:"+y;
+		O('displayTxtArea').value+= ",\n this.minLeft:"+this.minLeft;
+		O('displayTxtArea').value+= ",\n this.minTop:"+this.minTop;
+		O('displayTxtArea').value+= ",\n newWidth:"+newWidth;
+		O('displayTxtArea').value+= ",\n newHeight:"+newHeight;
+		O('displayTxtArea').value+= ",\n parentNode.Width:"+this.parentNode.style["width"];
+		O('displayTxtArea').value+= ",\n parentNode.Height:"+this.parentNode.style["height"];
+		
+		O('displayTxtArea').value+= ",\n this.elLeft:"+this.elLeft;
+		O('displayTxtArea').value+= ",\n this.elTop:"+this.elTop;
+		O('displayTxtArea').value+= ",\n this.pElLeft:"+this.pElLeft;
+		O('displayTxtArea').value+= ",\n this.pElTop:"+this.pElTop;
+		O('displayTxtArea').value+= ",\n this.pInitHeight:"+this.pInitHeight;
+		O('displayTxtArea').value+= ",\n this.pInitWidth:"+this.pInitWidth;
+		/**/
+	}
+	
+	function init() {
+		addTxtResAnfasser();
+	}
+	
+	</script>
+</head>
+
+<body onload="init()">
+<div id="TxtResBox" style="position:relative;height:50px;width:500px;padding-bottom:10px;border:1px dotted #00f;">
+<textarea id="displayTxtArea" style="height:100%;width:100%;overflow:scroll"></textarea>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+{literal}
+<script src="{WebRoot}js/nebenleistungen.easy.js" type="text/javascript"></script>
+<script src="{WebRoot}js/SelBox.easy.js" type="text/javascript"></script>
+<script src="{WebRoot}js/ObjectHandler.js" type="text/javascript"></script>
+<link href="{WebRoot}css/umzugsformular.css" rel="stylesheet" type="text/css" />
+<link href="{WebRoot}css/SelBox.easy.css" rel="stylesheet" type="text/css" />
+{/literal}
+<h3 class="formTitle">Nebenleistungen</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput">
+<style>
+.tdInput {
+	font-size:11px;
+	vertical-align:top;
+}
+.tdLabel {
+	vertical-align:top;
+}
+.itxt1col {
+  width:155px;
+}
+.itxt2col {
+  width:320px;
+}
+</style>
+<style>
+/*cssPflichtIds*/ { display:inline; color:#f00 }
+</style>
+<style>
+#pstandort,
+#pkostenstelle,
+#pcreated,
+#pmodified,
+#pcreateduid { display:none; }
+#pid,
+#pname,
+#pdatum,
+#puhrzeit,
+#perledigt,
+#pzeit,
+#paufgabe { color:#f00 }
+</style>
+<a href="%WebRoot%sites/nebenleistungsblatt.php?id={id}" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Druckansicht</a>
+<table border=1 class="tblForm" style="width:500px;">
+  <tr>
+    <td class="tdLabel" style="padding:0;width:180px;"><label for="mitarbeiter" style="width:180px;">Vor &amp; Nachname:</label></td>
+    <td class="tdInput" style="padding:0;width:320px;"><input type="text" value="{eingabe[vorname]}" name="eingabe[vorname]" class="itxt itxt1col floatLeft"><input type="text" value="{eingabe[name]}" name="eingabe[name]" class="itxt itxt1col floatRight"></td>
+  </tr>
+  <tr>
+    <td class="tdLabel" style="padding:0;"><label for="email" style="width:180px;">E-Mail:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[email]}" name="eingabe[email]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td class="tdLabel" style="padding:0;"><label for="fon" style="width:180px;">Fon:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[fon]}" name="eingabe[fon]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td class="tdLabel" style="padding:0;"><label for="mitarbeiter" style="width:180px;">Standort:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[standort]}" onclick="get_fieldindex_ort(this)" name="eingabe[standort]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td class="tdLabel" style="padding:0;"><label for="gebaeude" style="width:180px;">Gebaeude:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[gebaeude]}" onclick="get_fieldindex_gebaeude(this)" name="eingabe[gebaeude]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td class="tdLabel" style="padding:0;"><label for="mitarbeiter" style="width:180px;">Kostenstelle:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[kostenstelle]}" name="eingabe[kostenstelle]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td class="tdLabel" style="padding:0;"><label for="termin" style="width:180px;">Datum:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[datum]}" onfocus="showDtPicker(this)" id="NLDate" name="eingabe[datum]" class="itxt itxt2col" title="DatumE-Mail"></td>
+  </tr>
+  <tr>
+    <td class="tdLabel" style="padding:0;"><label for="termin" style="width:180px;">Bevorzugte Uhrzeit:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[uhrzeit]}" name="eingabe[uhrzeit]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td class="tdLabel" style="padding:0;"><label for="termin" style="width:180px;">Ben&ouml;tigte Zeit (Std:Min):</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[zeit]}" name="eingabe[zeit]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td class="tdLabel" style="padding:0;"><label for="termin" style="width:180px;">Sonderleistung:</label></td>
+    <td class="tdInput" style="padding:0;"></td>
+  </tr>
+  <tr>
+    <td class="tdInput" colspan=2 style="padding:0;"><textarea name="eingabe[sonderleistung]" class="iarea">{eingabe[sonderleistung]}</textarea></td>
+  </tr>
+  <tr>
+    <td class="tdLabel" style="padding:0;"><label for="termin" style="width:180px;">Sonderleistung/Preis:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{lesen[sonderleistung_preis]}" name="eingabe[sonderleistung_preis]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
+    <td class="tdLabel" style="padding:0;background:#0075B5;"><label for="termin" style="width:180px;height:80px;">Status:</label></td>
+    <td class="tdInput" style="padding:2px;border:1px solid #0075B5;background:#fff;">
+	<input LINE="392"  class="chckbox" type="radio" name="eingabe[status]" id="eingabe[status]0" value="Neu" check_status="Neu">Neu <br>
+	<input LINE="392"  class="chckbox" type="radio" name="eingabe[status]" id="eingabe[status]1" value="Beauftragt" check_status="Beauftragt">Beauftragt<br>
+	<input LINE="392"  class="chckbox" type="radio" name="eingabe[status]" id="eingabe[status]1" value="Abgelehnt" check_status="Abgelehnt">Abgelehnt<br>
+	<input LINE="392"  class="chckbox" type="radio" name="eingabe[status]" id="eingabe[status]1" value="Abgeschlossen" check_status="Abgeschlossen">Abgeschlossen </td>
+  </tr>
+	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+</table>
+{NLAnlagenListe}
+
+<div id="BoxBemerkungen">
+<strong>Aufgabe:</strong><br>
+<textarea class="iarea bemerkungen" name="eingabe[aufgabe]"></textarea>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="484" type="hidden" name="id" value="{id}">
+<input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Save]"style="padding:0 0 9px 0;background:url(images/BtnBlue.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Speichern">
+<input type="button" onclick="nebenleistung_add_attachement({id});" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhänge"> <br>
+<input LINE="489" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen
+</form>
+<div id="BoxBemerkungen">
+<strong>Bisherige Angaben:</strong><br>
+<div id="BemerkungenHistorie">{lesen[aufgabe]}</div>
+</div>
+</div>

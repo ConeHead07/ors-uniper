@@ -1,0 +1,29 @@
+<h3 class="formTitle">Stamm_mitarbeiter</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><div class="Input">
+<div class="inputLbl">Id</div>
+<div>{lesen[id]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Name</div>
+<div>{lesen[name]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Extern</div>
+<div>{lesen[extern]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Externe Firma</div>
+<div>{lesen[extern_firma]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Anmerkung</div>
+<div>{lesen[anmerkung]}</div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="475" type="hidden" name="eingabe[id]" maxlength="11" value="{eingabe[id]}">
+<input LINE="475" type="hidden" name="eingabe[name]" maxlength="50" value="{eingabe[name]}">
+<input LINE="475" type="hidden" name="eingabe[extern]" maxlength="'Ja','Nein'" value="{eingabe[extern]}">
+<input LINE="475" type="hidden" name="eingabe[extern_firma]" maxlength="50" value="{eingabe[extern_firma]}">
+<input LINE="475" type="hidden" name="eingabe[anmerkung]" maxlength="200" value="{eingabe[anmerkung]}">
+<input LINE="483" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Correct]" value="Korrigieren"></form></div>

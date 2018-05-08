@@ -1,0 +1,34 @@
+<h3 class="formTitle">Todoes</h3>
+<div class="formBox"><form action="{action}" method="post" name="frmInput"><div class="Input">
+<div class="inputLbl">Id</div>
+<div>{lesen[id]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Kategorie</div>
+<div>{lesen[kategorie]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Text</div>
+<div>{lesen[text]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Bis</div>
+<div>{lesen[bis]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Status</div>
+<div>{lesen[status]}</div>
+</div>
+<div class="Input">
+<div class="inputLbl">Created</div>
+<div>{lesen[created]}</div>
+</div>
+<!-- {trackPostVars} -->
+<input LINE="475" type="hidden" name="eingabe[id]" maxlength="11" value="{eingabe[id]}">
+<input LINE="475" type="hidden" name="eingabe[kategorie]" maxlength="50" value="{eingabe[kategorie]}">
+<input LINE="475" type="hidden" name="eingabe[text]" maxlength="" value="{eingabe[text]}">
+<input LINE="475" type="hidden" name="eingabe[bis]" maxlength="" value="{eingabe[bis]}">
+<input LINE="475" type="hidden" name="eingabe[status]" maxlength="30" value="{eingabe[status]}">
+<input LINE="475" type="hidden" name="eingabe[created]" maxlength="" value="{eingabe[created]}">
+<input LINE="483" type="hidden" name="id" value="{id}">
+<input LINE="485" type="submit" class="ibtn isubmit" name="editCmd[Save]" value="Fertigstellen"><input LINE="486" type="submit" class="ibtn isubmit" name="editCmd[Correct]" value="Korrigieren"></form></div>
