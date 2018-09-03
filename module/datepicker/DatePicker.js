@@ -253,7 +253,13 @@ function get_kalenderPicker() {
 		r_datum = sMonth+"-"+(t<10?("0"+t.toString()):t);
 		wtKey = ((vorlauf+t) % 7);
 		wtDay = aWtBaseSo[wtKey];
-		pickupLink = (wtDay!="Sa" && wtDay!="So")?get_pickupLink(aTrackArgs, r_datum):"";
+        if (0) {
+        	// PERMIT Work on WEEKEND
+        	pickupLink = (wtDay!="Sa" && wtDay!="So")?get_pickupLink(aTrackArgs, r_datum):"";
+        } else {
+        	// ALLOW Work on WEEKEND
+        	pickupLink = get_pickupLink(aTrackArgs, r_datum);
+        }
 		// if (t == 1) alert("get_pickupLink():"+pickupLink);
 		kalender+= "  <td class=\""+wtDay+"\""+(sDate!=today?"":" style=\"color:#f00;font-weight:bold;\"")+"\" "+pickupLink+"> "+t+""+" </td>"; //   "+""+(get_pickupLink(aTrackArgs, sDate)+""+" 
 		if ((vorlauf+t) % 7 == 0) {
