@@ -22,6 +22,7 @@ $Tpl = new myTplEngine();
 $sql = 'SELECT leistung_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
       .' leistungskategorie kategorie, preis_pro_einheit '
       .' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k ON l.leistungskategorie_id = k.leistungskategorie_id '
+      .' WHERE l.aktiv = 1 '
       .' ORDER BY kategorie, Bezeichnung';
 
 $lkTreeItems = array();
@@ -145,7 +146,7 @@ $Tpl->assign("s", $s);
 if (!empty($MAItems) && count($MAItems)) $Tpl->assign("Mitarbeiterliste", $MAItems);
 if (!empty($aAtItems) && count($aAtItems)) $Tpl->assign("UmzugsAnlagen", $aAtItems);
 
-// Erzeuge GeraeteListe (Array) für Smarty-Template
+// Erzeuge GeraeteListe (Array) fï¿½r Smarty-Template
 $CsvLines = explode("\n", $AS->arrInput["geraete_csv"]);
 $aGItems = array();
 $aGCols = array();
