@@ -39,6 +39,7 @@ $sql = 'SELECT l.leistung_id, Bezeichnung leistung, leistungseinheit, leistungse
       .'  ON l.leistungskategorie_id = k.leistungskategorie_id '
       .' LEFT JOIN mm_leistungspreismatrix m '
       .'  ON l.leistung_id = m.leistung_id '
+      .' WHERE l.aktiv = "Ja" '
       .' ORDER BY kategorie, Bezeichnung, mx_von';
 
 $lkTreeItems = array();
@@ -184,7 +185,7 @@ if ('property' == $creator
     $ASConf['Fields']['planonnr']['required'] = true;
 }
 
-// Erzeuge GeraeteListe (Array) für Smarty-Template
+// Erzeuge GeraeteListe (Array) fï¿½r Smarty-Template
 $CsvLines = explode("\n", $AS->arrInput["geraete_csv"]);
 $aGItems = array();
 $aGCols = array();
