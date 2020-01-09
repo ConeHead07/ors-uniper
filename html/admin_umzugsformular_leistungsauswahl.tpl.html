@@ -40,7 +40,7 @@ function blurBox(callback, hide) {
 }
 
 function get_Kategorie( obj ) {
-   $("#lktgselect").html( $("<option/>").text("Bitte auswählen") );
+   $("#lktgselect").html( $("<option/>").text("Bitte auswï¿½hlen") );
    for(var ktg1 in lkItems) {
         $("#lktgselect").append( 
             $("<option/>").val(ktg1).text(ktg1).data("leistungen", lkItems[ktg1]).data("kategorie1", ktg1)
@@ -85,7 +85,7 @@ function get_Leistung( obj ) {
     }
     
     var leistungen = $( objKtg1 ).data( "leistungen" );
-    $("#ldescselect").html( $("<option/>").text("Bitte auswählen") );
+    $("#ldescselect").html( $("<option/>").text("Bitte auswï¿½hlen") );
     for(var lstg in leistungen) {
         $("#ldescselect").append( 
             $("<option/>").val(lstg).text(lstg).data("leistung", leistungen[lstg])
@@ -95,8 +95,8 @@ function get_Leistung( obj ) {
         var data = $(this).find("option:selected").data("leistung");
         if ( lstgIsAllreadyInList(data.leistung_id, objInp) ) {
             alert("Die Leistung wurde bereits in die Liste aufgenommen!\n" + 
-                  "Bitte fügen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
-                  "Andernfalls werden bestehende Mengen überschrieben."
+                  "Bitte fï¿½gen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
+                  "Andernfalls werden bestehende Mengen ï¿½berschrieben."
             );
             objInp.blur();
             return false;
@@ -291,7 +291,7 @@ $(function(){
             <td><input class="ilstg" name="L[leistung_id][]" value="{$L.leistung_id}" type="hidden"><!-- 
              --><input class="menge {if $creator !== "property"}readonly{else}editable{/if}" name="L[menge_property][]"{if $creator !== "property"} readonly="readonly"{/if} value="{if is_numeric($L.menge_property)}{$L.menge_property|escape|number_format:2:",":"."}{/if}" type="text"></td>
             <td class="unit">{$L.leistungseinheit|escape}</td>
-            <td><input class="menge menge2 {if $creator !== "property"}readonly{else}editable{/if}" name="L[menge2_property][]"{if $creator !== "property" or @empty($L.leistungseinheit2)} readonly="readonly"{/if} value="{if is_numeric($L.menge2_property)}{$L.menge2_property|escape|number_format:2:",":"."}{/if}" type="text"></td>
+            <td><input class="menge menge2 {if $creator !== "property"}readonly{else}editable{/if}" name="L[menge2_property][]"{if $creator !== "property" or empty($L.leistungseinheit2)} readonly="readonly"{/if} value="{if is_numeric($L.menge2_property)}{$L.menge2_property|escape|number_format:2:",":"."}{/if}" type="text"></td>
             <td class="unit unit2">{$L.leistungseinheit2|escape}</td>
             <td><input class="menge{if $creator == "mertens"} creator editable{else} readonly{/if}" name="L[menge_mertens][]"{if $creator !== "mertens"} readonly="readonly"{/if} value="{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:2:",":"."}{/if}" type="text"></td>
             <td><input class="menge menge2{if $creator == "mertens"} creator editable{else} readonly{/if}" name="L[menge2_mertens][]"{if $creator !== "mertens" or empty($L.leistungseinheit2)} readonly="readonly"{/if} value="{if is_numeric($L.menge2_mertens)}{$L.menge2_mertens|escape|number_format:2:",":"."}{/if}" type="text"></td>
