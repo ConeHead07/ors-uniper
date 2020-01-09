@@ -254,7 +254,7 @@ function send_umzugsblatt($AID, $antragsOrt, $antragsGebaeude, $aData) {
 	$umzugsblatt = get_umzugsblatt($AID);
 	
 	$subject = "Umzug ID ".$AID." - Umzugsdatenblatt";
-	$plaintext = "Guten Tag,\n\nanbei erhalten Sie das Umzugsdatenblatt für den Umzug mit der ID ".$AID.".\n\nMit freundlichen Grüßen\n\nIhr\n".$MConf["AppTitle"];
+	$plaintext = "Guten Tag,\n\nanbei erhalten Sie das Umzugsdatenblatt fï¿½r den Umzug mit der ID ".$AID.".\n\nMit freundlichen Grï¿½ï¿½en\n\nIhr\n".$MConf["AppTitle"];
 	$htmltext = "";
 	$header = "";
 	$specs = "";
@@ -269,7 +269,7 @@ function send_umzugsblatt($AID, $antragsOrt, $antragsGebaeude, $aData) {
 	$attachement[0]["fmime"]="text/html";
 	
 	if ($AtList) {
-		$htmltext = "Guten Tag,<br>\n<br>\nanbei erhalten Sie das Umzugsdatenblatt für den Umzug mit der ID ".$AID.".<br>\n<br>\n";
+		$htmltext = "Guten Tag,<br>\n<br>\nanbei erhalten Sie das Umzugsdatenblatt fï¿½r den Umzug mit der ID ".$AID.".<br>\n<br>\n";
 		$htmltext.= "Dem Auftrag wurden ".count($aAtItems)." Dateianh&auml;nge zum Download beigef&uuml;gt:<br>\n";
 		$htmltext.= "<ol>".$AtList."</ol>\n";
 		$htmltext.= "<br>\n<br>\nMit freundlichen Gr&uuml;&szlig;en<br>\n<br>\nIhr<br>\n".$MConf["AppTitle"];
@@ -301,48 +301,76 @@ function get_standort_admin_mail($antragsOrt, $antragsGebaeude) {
 	return $aAdminMailTo;
 }
 
-function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false) {
-//	aUserTo[] = array("email"=>"", "Vorname"=>"", "Name"=>"")
-	if (!isset($aUserTo[0]["email"]) 
-            && !isset($aUserTo[0]["Vorname"]) 
-            && !isset($aUserTo[0]["Name"])) {
-            die("Für die Statusmail konnten keine E-Mail-Empfänger ermittelt werden!");
-            // try { throw new Exception("aUserTo-Check: "); } catch(Exception $e) { die($e->getTraceAsString() . '<br>' . print_r($aUserTo,1)); }
-            // die("#".__LINE__." Ungültige ArrayStruktur für aUserTo. Erwartet: [i][email], [i][Vorname], [i][Name] !<br />\nErhalten: ".print_r($aUserTo,1));
+function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false) 
+{
+	if (!isset($aUserTo[0]['email'])
+        && !isset($aUserTo[0]['Vorname'])
+        && !isset($aUserTo[0]['Name'])) {
+        die('FÃ¼r die Statusmail konnten keine E-Mail-EmpfÃ¤nger ermittelt werden!');
 	}
+
 	$lines = explode("\n", $tplMail);
-	$tplSu = trim((strpos($lines[0], "Betreff=") === 0) ? substr($lines[0],8) : $lines[0]);
+
+	$tplSu = trim((strpos($lines[0], 'Betreff=') === 0)
+        ? substr($lines[0],8)
+        : $lines[0]
+    );
+	
 	$tplBody = trim(implode("\n",array_slice($lines, 1)));
 	
 	$success = true;
+	$iNumRecipients = count($aUserTo);
 	
-	for ($i = 0; $i < count($aUserTo); $i++) {
-            $to = $aUserTo[$i]["email"];
-            $body = $tplBody;
-            $su = $tplSu;
-            if (!isset($aUserTo[$i]["vorname"]) && !isset($aUserTo[$i]["Vorname"])) {
-                die('#'.__LINE__ . ' !isset $aUserTo['.$i.']["vorname"]<br>aUserTo :' . PHP_EOL . print_r($aUserTo,1) );
+	for ($i = 0; $i < $iNumRecipients; $i++) {
+        $to = $aUserTo[$i]["email"];
+        $cc = trim($aUserTo[$i]["emails_cc"]);
+        $body = $tplBody;
+        $su = $tplSu;
+        if (!isset($aUserTo[$i]["vorname"]) && !isset($aUserTo[$i]["Vorname"])) {
+            die('#'.__LINE__ . ' !isset $aUserTo['.$i.']["vorname"]<br>aUserTo :' . PHP_EOL . print_r($aUserTo,1) );
+        }
+
+        $_vorname  = $aUserTo[$i]["vorname"]
+                    ?? ($aUserTo[$i]["Vorname"] ?? die(print_r($aUserTo[$i],1)) );
+
+        $_nachname = $aUserTo[$i]["nachname"]
+                ?? ($aUserTo[$i]["Name"] ?? die(print_r($aUserTo[$i],1)) );
+
+        $body = str_replace("{Vorname}", $_vorname, $body);
+        $body = str_replace("{Name}", $_nachname, $body);
+
+        if ($rplVars['umzugszeit']) {
+            $ausfuehrungsZeit = date(
+                'd.m.Y H:i',
+                strtotime($rplVars['umzugstermin'] . ' ' . $rplVars['umzugszeit'])
+            );
+        } else {
+            $ausfuehrungsZeit = date('d.m.Y', strtotime($rplVars['umzugstermin'] ) )	;
+        }
+
+        $body = strtr($body, [
+            '{ausgefuehrtam}' => $ausfuehrungsZeit,
+            '{Vorname}' => $_vorname,
+            '{Name}' => $_nachname
+        ]);
+
+        foreach($rplVars as $k => $v) {
+            $body   = str_replace('{' . $k . '}', (is_scalar($v) ? $v : ''), $body);
+            $su     = str_replace('{' . $k . '}', (is_scalar($v) ? $v : ''), $su);
+        }
+
+        $hd = 'Reply-To:' . ($rplVars['Reply-To'] ?? 'bayerors@mertens.ag');
+
+        if (!fbmail($to, $su, $body, $hd)) {
+            $success = false;
+        }
+
+        if ($success && $cc) {
+            $aCC = explode(',', $cc);
+            foreach($aCC as $_emailAddress) {
+                fbmail( trim($_emailAddress), $su, $body, $hd);
             }
-//          echo '#'.__LINE__ . ' $aUserTo[$i] ' . print_r($aUserTo[$i],1);
-            $_vorname  = (isset($aUserTo[$i]["vorname"])  ? $aUserTo[$i]["vorname"]  : (isset($aUserTo[$i]["Vorname"]) ? $aUserTo[$i]["Vorname"] : die(print_r($aUserTo[$i],1))) );
-            $_nachname = (isset($aUserTo[$i]["nachname"]) ? $aUserTo[$i]["nachname"] : (isset($aUserTo[$i]["Name"]) ? $aUserTo[$i]["Name"] : die(print_r($aUserTo[$i],1))) );
-
-            $body = str_replace("{Vorname}", $_vorname, $body);
-            $body = str_replace("{Name}", $_nachname, $body);
-			if ($rplVars['umzugszeit']) {
-				$body = str_replace('{ausgefuehrtam}', date('d.m.Y H:i', strtotime($rplVars['umzugstermin'] . ' ' . $rplVars['umzugszeit']) ), $body);
-			} else {
-				$body = str_replace('{ausgefuehrtam}', date('d.m.Y', strtotime($rplVars['umzugstermin'] ) ), $body);				
-			}
-			
-            $body = str_replace("{Vorname}", $_vorname, $body);
-            $body = str_replace("{Name}", $_nachname, $body);
-            foreach($rplVars as $k => $v) $body = str_replace("{".$k."}", (is_scalar($v) ? $v : ''), $body);
-            foreach($rplVars as $k => $v) $su = str_replace("{".$k."}", (is_scalar($v) ? $v : ''), $su);
-
-            $hd = "Reply-To:".(!empty($rplVars["Reply-To"])?$rplVars["Reply-To"]:"bayerors@mertens.ag")."";
-
-            if (!fbmail($to, $su, $body, $hd)) $success = false;
+        }
 	}
 	return $success;
 }
@@ -399,7 +427,7 @@ function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
 //            $users['objektleiter'],
 	);
 	
-    // Leider noch doppelte Abfrage aus evtll. Kompatibilitätsgründen, eigentlich unnötig, Korrektur steht noch an !!!
+    // Leider noch doppelte Abfrage aus evtll. Kompatibilitï¿½tsgrï¿½nden, eigentlich unnï¿½tig, Korrektur steht noch an !!!
 	if ($users['antragsteller']['gruppe'] === 'kunde_report') {
 		$aPropertyMailTo[] = $users['antragsteller'];
 	} else {
@@ -484,13 +512,13 @@ function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
 						$tplFile = $TextBaseDir."statusmail_umzug_bestaetigt.txt";
 						if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
 						$tplMail = file_get_contents($tplFile);
-                        // Benachrichtige UmzugsTeam über bestätigten Umzugsauftrag
+                        // Benachrichtige UmzugsTeam ï¿½ber bestï¿½tigten Umzugsauftrag
 //			       send_umzugsblatt($AID, $AS->arrInput["ort"], $AS->arrInput["gebaeude"], $AS->arrInput);
                     } else {
 						$tplFile = $TextBaseDir."statusmail_umzug_aufhebung.txt";
 						if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
 						$tplMail = file_get_contents($tplFile);
-                        // Informiere Umzugsteam über (bis auf weiteres) aufgehobenen Umzugsauftrag
+                        // Informiere Umzugsteam ï¿½ber (bis auf weiteres) aufgehobenen Umzugsauftrag
 //			       $rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
 //			       send_status_mail($aAdminMailTo, $tplMail, $rplVars);
                     }
@@ -587,8 +615,8 @@ function umzugsantrag_mailinform($AID, $status="neu", $value) {
         
 	$aAdminMailTo = get_standort_admin_mail($AS->arrInput["ort"], $AS->arrInput["gebaeude"]);
 	
-	// Neue Abfrage des Verteilers unter Berücksichtigung aller enthaltenen umzuziehenden MA-Daten
-	// Leider noch doppelte Abfrage aus evtll. Kompatibilitätsgründen, eigentlich unnötig, Korrektur steht noch an !!!
+	// Neue Abfrage des Verteilers unter Berï¿½cksichtigung aller enthaltenen umzuziehenden MA-Daten
+	// Leider noch doppelte Abfrage aus evtll. Kompatibilitï¿½tsgrï¿½nden, eigentlich unnï¿½tig, Korrektur steht noch an !!!
 	$adminVerteiler = get_umzugsverteilerById($AID);
 	$propertyVerteiler = get_propertyverteilerById($AID);
 	
@@ -644,11 +672,11 @@ function umzugsantrag_mailinform($AID, $status="neu", $value) {
 //			echo "#".__LINE__." bestaetigt Ja<br />\n";
 			if ($value == "Ja") {
 				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_bestaetigt.txt");
-				// Benachrichtige UmzugsTeam über bestätigten Umzugsauftrag
+				// Benachrichtige UmzugsTeam ï¿½ber bestï¿½tigten Umzugsauftrag
 				send_umzugsblatt($AID, $AS->arrInput["ort"], $AS->arrInput["gebaeude"], $AS->arrInput);
 			} else {
 				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_aufhebung.txt");
-				// Informiere Umzugsteam über (bis auf weiteres) aufgehobenen Umzugsauftrag
+				// Informiere Umzugsteam ï¿½ber (bis auf weiteres) aufgehobenen Umzugsauftrag
 				$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
 				//echo "#".__LINE__." bestaetigt ".$value."; aAdminVerteilerTo:".print_r($aAdminVerteilerTo,1)."<br />\n";
 				send_status_mail($aAdminVerteilerTo, $tplMail, $rplVars);

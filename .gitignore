@@ -1,5 +1,7 @@
 ___test
 etc/sysdef.local.php
+**/*.local.*
+**/*.local
 tmp/*
 !tmp/.gitkeep
 log/*
@@ -7,7 +9,4 @@ log/*
 log_archive
 attachements/*
 !attachements/.gitkeep
-.idea/workspace.xml
-.idea/misc.xml
-.idea/app.iml
-.idea/modules.xml
+.idea/*

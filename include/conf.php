@@ -2,7 +2,11 @@
 @session_start();
 session_id();
 
-require_once __DIR__ . '/../etc/sysdef.php';
+if (file_exists(__DIR__ . '/../etc/sysdef.local.php')) {
+    require_once __DIR__ . '/../etc/sysdef.local.php';
+} else {
+    require_once __DIR__ . '/../etc/sysdef.php';
+}
 
 $msg = "";
 $error = "";
@@ -59,7 +63,8 @@ $MConf = array(
 	"DB_Name" => DB_DUSS,
 	"DB_Host" => DB_DUSS_HOST,
 	"DB_User" => DB_DUSS_USER,
-	"DB_Pass" => DB_DUSS_PASS,
+    "DB_Pass" => DB_DUSS_PASS,
+    "DB_Port" => DB_DUSS_PORT,
 	"DB_TblPrefix" => "mm_",
 	"Html_Ausgabe" => "index.html",
 	"Html_Body" => "index_body.html",
@@ -89,7 +94,7 @@ $SiteVars["AppTitle"]     = $MConf["AppTitle"];
 $SiteVars["WebRoot"]      = $MConf["WebRoot"];
 $SiteVars["propertyName"] = $MConf["propertyName"];
 
-// Kompatibilitäts-Variablen
+// Kompatibilitï¿½ts-Variablen
 $_CONF = $MConf;
 $_CONF["HTML"]["ausgabe"]  = $MConf["AppRoot"].$MConf["Tpl_Dir"].$MConf["Html_Ausgabe"];
 $_CONF["HTML"]["body"]     = $MConf["AppRoot"].$MConf["Tpl_Dir"].$MConf["Html_Body"];

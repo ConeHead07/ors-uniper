@@ -4,7 +4,7 @@ if ( basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
     require __DIR__ . '/../include/conf.php';
 }
 
-define('SMTP_MAILER_DEBUG', 0);
+define('SMTP_MAILER_DEBUG', APP_ENVIRONMENT == 'DEVELOPMENT' ? 1 : 0);
 
 $aSmtpConn = array(
     "server"    => $MConf['smtp_server'], //"10.10.1.70",
@@ -22,7 +22,26 @@ $aSmtpConn = array(
     "timeIn"    => time(),
     "antwort"   => "",
     "logsmtp"   => 1,
-    "logfile"   => dirname(__FILE__) . "/../log/log_smtp_".date("YmdHis").".txt",
+    "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".txt",
+    "tat"       => "" // Transaktionstext mit SERVER
+);
+
+if(SMTP_MAILER_DEBUG === 1) $aSmtpConn = array(
+    "server"    => 'smtp.gmail.com',
+    "port"      => 25,
+    "encrypt"   => 'tls',
+    "from_name" => 'Mertens Projekt-Tickets',
+    "from_addr" => 'mertens.openproject@gmail.com',
+    "from"      => '"Mertens Projekt-Tickets" <mertens.openproject@gmail.com>',
+    "postfach_from" => '<mertens.openproject@gmail.com>',
+    "auth_user" => 'mertens.openproject@gmail.com',
+    "auth_pass" => 'CersrDzC4b',
+    "socket"    => "",
+    "connection_timeout" => 5,
+    "timeIn"    => time(),
+    "antwort"   => "",
+    "logsmtp"   => 1,
+    "logfile"   => dirname(__FILE__) . "/../log/log_smtp_".date("YmdHis").".gmail.txt",
     "tat"       => "" // Transaktionstext mit SERVER
 );
 
@@ -218,37 +237,57 @@ class SmtpMailer {
      */
     public function sendMultiMail(array $aTo, $sSubject, $sHtmlBody = null, $sTxtBody = null, array $aAttachments = [], array $aHeaders = [])
     {
-           if (preg_match('#ID\s*(?P<id>\d+)\b#', $sSubject, $m)) {
-                $this->logfile = str_replace("log_smtp", "log_".$m['id'].'_smtp', $this->logfile);
-            }
+        if (preg_match('#ID\s*(?P<id>\d+)\b#', $sSubject, $m)) {
+            $this->logfile = str_replace("log_smtp", "log_".$m['id'].'_smtp', $this->logfile);
+        }
 
-            file_put_contents(
-                $this->logfile,
-		print_r(['aTo'=> $aTo, 'sSubject' => $sSubject, 'sHtmlBody' =>  $sHtmlBody, 'sTxtBody' => $sTxtBody, 'aAttachments' => $aAttachments, 'aHeaders' =>  $aHeaders],1) 
-		);
+        file_put_contents(
+            $this->logfile,
+            print_r([
+                'aTo'=> $aTo,
+                'sSubject' => $sSubject,
+                'sHtmlBody' =>  $sHtmlBody,
+                'sTxtBody' => $sTxtBody,
+                'aAttachments' => $aAttachments,
+                'aHeaders' =>  $aHeaders
+            ],1)
+        );
 
         if (isset($aHeaders['multipart_data'])) {
             unset($aHeaders['multipart_data']);
         }
 
         if (isset($aHeaders['BCC'])) {
-		$bcc = trim($aHeaders['BCC']);
+		    $bcc = trim($aHeaders['BCC']);
             unset($aHeaders['BCC']);
         } else {
-		$bcc = '';
-	}
+            $bcc = '';
+        }
 
         if (isset($aHeaders['CC'])) {
-		$cc = trim($aHeaders['CC']);
+		    $cc = trim($aHeaders['CC']);
             unset($aHeaders['CC']);
         } else {
-		$cc = '';
-	}
+            $cc = '';
+        }
 
-	if (defined('SMTP_MAILER_DEBUG') && SMTP_MAILER_DEBUG === 1) {
-		global $aSmtpDebugTo;
-		$aTo = $aSmtpDebugTo;
-	}
+        if (defined('SMTP_MAILER_DEBUG') && SMTP_MAILER_DEBUG === 1) {
+            global $aSmtpDebugTo;
+
+            if ($sHtmlBody) {
+                $sHtmlBody .= "<br>\n<br>\n"
+                    . str_repeat('*', 50)
+                    . "<br>\nOriginal aTo: <pre>"
+                    . print_r($aTo, 1)
+                    . "</pre>";
+            }
+
+            if ($sTxtBody) {
+                $sTxtBody.= "\n\n" . str_repeat('*', 50) . "\n Original aTo: " . print_r($aTo, 1);
+            }
+
+            $aTo = $aSmtpDebugTo;
+        }
 
         $this->createDefaultMailer();
         $this->addHeaders($aHeaders);
@@ -296,6 +335,14 @@ class SmtpMailer {
             $error = '';
             $result = 0;
             try {
+
+                if (0) echo '<pre>' . print_r([
+                        'to' => $_to['email'],
+                        'anrede' => $_to['anrede'],
+                        'subject' => $this->subject,
+                        'textBody' => $this->textBody,
+                        'htmlBody' => $this->htmlBody,
+                ], 1) . '</pre>' . "\n";
                 $result = $this->send();
             } catch(Exception $e) {
                 $error = $e->getMessage();
@@ -306,7 +353,7 @@ class SmtpMailer {
 
             file_put_contents(
                 $this->logfile,
-		print_r(['_to' => $_to],1) 
+		    print_r(['_to' => $_to],1)
                 . PHP_EOL . $this->logger[0]->dump()
                 . PHP_EOL . 'Result: ' . $result
                 . PHP_EOL . 'Error : ' . $error
@@ -758,11 +805,11 @@ Machen Sie mit! Wir freuen uns auf Ihren Besuch unter www.mertens.ag<br>
     $aAttachments = [
         [
             'quelle' => 'file',
-            'file' => __FILE__,
+            'file' => dirname(__DIR__) . '/hilfetexte/terminwunsch.php',
         ],
         [
             'quelle' => 'data',
-            'file' => __FILE__,
+            'file' => dirname(__DIR__) . '/hilfetexte/terminwunsch.php',
             'fname' => 'TestAnhang.html',
             'fmime' => 'text/html',
         ]

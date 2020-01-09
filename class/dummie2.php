@@ -1,5 +1,5 @@
 <?php 
-$_CONF["p_entries"] => array(
+$_CONF["p_entries"] = array(
 	"Title" => "Zeiterfassungen",
 	"Description" => "",
 	"Src" => "",
@@ -203,7 +203,7 @@ $_CONF["p_entries"] => array(
 			"fieldGroup" => "",
 			"description" => "",
 			"type" => "enum",
-			"size" => "S=Standardplanung,K=Konzept,PA=Planungsauftrag,C/P=Coloration/Präsentation",
+			"size" => "S=Standardplanung,K=Konzept,PA=Planungsauftrag,C/P=Coloration/Prï¿½sentation",
 			"sysType" => "enum",
 			"htmlType" => "radio",
 			"default" => "S",

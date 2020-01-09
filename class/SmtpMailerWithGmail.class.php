@@ -4,7 +4,7 @@ if ( basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
     require __DIR__ . '/../include/conf.php';
 }
 
-define('SMTP_MAILER_DEBUG', 0);
+define('SMTP_MAILER_DEBUG', 1);
 
 $aSmtpConn = array(
     "server"    => $MConf['smtp_server'], //"10.10.1.70",
@@ -26,7 +26,7 @@ $aSmtpConn = array(
     "tat"       => "" // Transaktionstext mit SERVER
 );
 
-if(1) $aSmtpConn = array(
+if(SMTP_MAILER_DEBUG === 1) $aSmtpConn = array(
     "server"    => 'smtp.gmail.com',
     "port"      => 25,
     "encrypt"   => 'tls',
@@ -774,14 +774,14 @@ Machen Sie mit! Wir freuen uns auf Ihren Besuch unter www.mertens.ag<br>
 <div style='font-style: italic'>Ihr Move-Management-Team</div>
 ";
 
-    $aAttachments = 1 ? [] : [
+    $aAttachments = [
         [
             'quelle' => 'file',
-            'file' => __FILE__,
+            'file' => dirname(__DIR__) . '/hilfetexte/terminwunsch.php',
         ],
         [
             'quelle' => 'data',
-            'file' => __FILE__,
+            'file' => dirname(__DIR__) . '/hilfetexte/terminwunsch.php',
             'fname' => 'TestAnhang.html',
             'fmime' => 'text/html',
         ]
