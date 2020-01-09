@@ -66,7 +66,7 @@ function __autoload($class_name) {
     global $MConf;
 	$loadfile = $MConf["AppRoot"].$MConf["Class_Dir"].$class_name . '.class.php';
 	if (!file_exists($loadfile)) {
-		if ($class_name == "Smarty") $loadfile = $MConf["AppRoot"]."smarty/Smarty.class.php";
+		if ($class_name == "Smarty") $loadfile = $MConf["AppRoot"]."smarty3/Smarty.class.php";
 		else {
 			echo "CanNotAutoLoad: ".$loadfile."<br>\n";
 			return false;
@@ -77,7 +77,7 @@ function __autoload($class_name) {
 
 function getTplEngine($tplDir = "", $cnfDir = "") {
 	global $MConf;
-	if (!class_exists("Smarty")) require_once $MConf["AppRoot"]."smarty/Smarty.class.php";
+	if (!class_exists("Smarty")) require_once $MConf["AppRoot"]."smarty3/Smarty.class.php";
 	$myTpl = new Smarty();
 	$myTpl->debugging = false; // true; // 
 	$myTpl->compile_check = true;

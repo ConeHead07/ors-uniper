@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 if (!isset($showConfData)) $showConfData = true;
 if (!isset($showErrors)) $showErrors = true;
 if (!isset($showMsg)) $showMsg = true;
@@ -128,11 +129,11 @@ if (isset($confName) && isset($ConfRegData[$confName]) && file_exists($InclBaseD
 			$show_list = true;
 			switch($inputItem->autorun_status) {
 				case 1:
-				$body_content.= "<L".__LINE__."/> Datensatz gelöscht!<br>\n";
+				$body_content.= "<L".__LINE__."/> Datensatz gelï¿½scht!<br>\n";
 				break;
 				
 				case -1:
-				$body_content.= "<L".__LINE__."/> Interner Fehler beim Löschen!<br>\n";
+				$body_content.= "<L".__LINE__."/> Interner Fehler beim Lï¿½schen!<br>\n";
 				break;
 				
 				case 2:
@@ -166,7 +167,7 @@ if (isset($confName) && isset($ConfRegData[$confName]) && file_exists($InclBaseD
 	
 	if ($show_list) {
 		if ($userHasInsertAccess) {
-			$body_content.= "[<a href=\"".$modBaseLink."&confName=".rawurlencode($confName)."&editCmd=Edit\">Neuen Eintrag hinzufügen</a>]<br>\n";
+			$body_content.= "[<a href=\"".$modBaseLink."&confName=".rawurlencode($confName)."&editCmd=Edit\">Neuen Eintrag hinzufï¿½gen</a>]<br>\n";
 		} else {
 			$body_content.= "(No Insert-Access)<br>\n";
 		}
@@ -180,6 +181,6 @@ if (isset($confName) && isset($ConfRegData[$confName]) && file_exists($InclBaseD
 	if ($inputItem->dbError) $body_content.= "#".__LINE__." <pre>".$inputItem->dbError."</pre>\n";
 	// $body_content.= "#".__LINE__." ".date("H:i:s")." <br>\n";
 } else {
-	$body_content.= "Treffen Sie eine Auswahl, welche Datenbestände sie bearbeiten möchten!<br>\n";
+	$body_content.= "Treffen Sie eine Auswahl, welche Datenbestï¿½nde sie bearbeiten mï¿½chten!<br>\n";
 	// echo "#".__LINE__." confName:$confName, ".$ConfRegData[$confName]." isFile(".$ConfRegData[$confName].") ".intval(file_exists($ConfRegData[$confName]))." <br>\n";
 }

@@ -1,7 +1,6 @@
 <?php 
 
 function fbmail($to, $su, $bo, $hd) {
-	global $aSmtpConn;
 	global $aHeader;
         
 	$aHdLines = explode("\n", $hd);
@@ -14,37 +13,29 @@ function fbmail($to, $su, $bo, $hd) {
 		$aUserHeader[$k] = implode(':', $t);
 	}
 
+
 	if (is_scalar($to)) {
 		$arrayTo[0] = ['email' => $to, 'anrede' => ''];
 	}
-	else if (isset($to['email']) || isset($to[0]['email'])) {
-		$arrayTo = $to;
+    elseif (!empty($to[0]['email'])) {
+        $arrayTo = $to;
+    }
+	elseif (!empty($to['email'])) {
+		$arrayTo[0] = $to;
 	}
-	else if (isset($to['to']))  {
-		$arrayTo = $to;
-		$arrayTo['email'] = $to['to'];
+	elseif (!empty($to['to']))  {
+		$arrayTo[0] = $to;
+		$arrayTo[0]['email'] = $to['to'];
 	}
-	else if (isset($to[0]['to'])) {
+	elseif (empty($to[0]['email']) && !empty($to[0]['to'])) {
 		$arrayTo = $to;
 		foreach($arrayTo as $k => $v) {
-			$arrayTo[$k]['email'] = $arrayTo[$k]['to'];
+			$arrayTo[$k]['email'] = $arrayTo[$k]['email'] ?? $arrayTo[$k]['to'] ?? '';
 		}
 	}
 	else {
 		return false;
 	}
-
-	if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1') {
-		$li = 1;
-		$logfile = __DIR__ . '/../log/fbmail_' . date('YmdHis') . '.txt';
-		while(file_exists($logfile)) {
-			$logfile = __DIR__ . '/../log/fbmail_' . date('YmdHis') . '(' . (++$li) . ').txt';
-		}
-
-		file_put_contents( $logfile, print_r( compact([ 'arrayTo', 'su', 'bo', 'aUserHeader']),1));
-		return true;
-	}
-
 
 	$numRecipients = SmtpMailer::getNewInstance()
 		->sendMultiMail($arrayTo, $su, null, $bo, [], $aUserHeader);

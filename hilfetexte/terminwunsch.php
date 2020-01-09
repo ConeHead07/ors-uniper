@@ -1,5 +1,5 @@
 <?php require("../header.php"); ?>
 <strong>Hinweis zur Vorlaufzeit</strong><br>
-Bitte beachten Sie, dass fÃ¼r die Bearbeitung
-von UmzugsantrÃ¤gen eine Vorlaufzeit von
-8 Werktagen benÃ¶tigt wird.<br>
+Bitte beachten Sie, dass für die Bearbeitung
+von Umzugsanträgen eine Vorlaufzeit von
+8 Werktagen benötigt wird.<br>

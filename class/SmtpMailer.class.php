@@ -66,12 +66,11 @@ $aHeader = array(
     "From"        => $MConf['smtp_from_name'] . ' <' . $MConf['smtp_from_addr'].'>',
     "Reply-To"    => $MConf['smtp_from_addr'],
     "Errors-To"   => $MConf['smtp_from_addr'],
-//    "BCC"         => 'frank.barthold@gmail.com',
+    "BCC"         => 'f.barthold@mertens.ag',
     'Return-Path' => $MConf['smtp_from_addr'],
     'Bounce-To'   => $MConf['smtp_from_addr'],
     "multipart_data" => ""
 );
-$aHeader = [];
 
 class SmtpMailer {
 
@@ -310,13 +309,14 @@ class SmtpMailer {
             $this->createMessage();
             $this->message->setTo($_to['email'], $_to['anrede']);
             $this->message->setSubject($this->subject);
-		if (!empty($bcc)) {
-			$this->message->setBcc($bcc);
-		}
 
-		if (!empty($cc)) {
-			$this->message->setCc($cc);
-		}
+            if (!empty($bcc)) {
+                $this->message->setBcc($bcc);
+            }
+
+            if (!empty($cc)) {
+                $this->message->setCc($cc);
+            }
 
             $this->isHtmlAndText = (!empty($sTxtBody) && !empty($sHtmlBody));
 

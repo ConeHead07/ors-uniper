@@ -1,8 +1,10 @@
 <?php
+require_once $MConf["AppRoot"]."smarty3/Smarty.class.php";
+
 if (basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
 	require_once(dirname(__FILE__)."/../include/conf.php");
 	require_once(dirname(__FILE__)."/../include/stdlib.php"); // __autoload
-	if (!class_exists("Smarty")) require_once $MConf["AppRoot"]."smarty/Smarty.class.php";
+	if (!class_exists("Smarty")) require_once $MConf["AppRoot"]."smarty3/Smarty.class.php";
 }
 
 

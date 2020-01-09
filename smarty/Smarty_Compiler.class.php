@@ -262,7 +262,7 @@ class Smarty_Compiler extends Smarty {
         reset($this->_folded_blocks);
 
         /* replace special blocks by "{php}" */
-        if (0) $source_content = preg_replace_callback($search, function($m) {
+        if (1) $source_content = preg_replace_callback($search, function($m) {
             return str_repeat("\n", substr_count($m[0], "\n"));
         }, $source_content);
         
@@ -275,7 +275,7 @@ class Smarty_Compiler extends Smarty {
                                        , $source_content);
         
         /* replace special blocks by "{php}" */
-        $source_content = preg_replace_callback($search, create_function ('$matches', "return '"
+        if (0) $source_content = preg_replace_callback($search, create_function ('$matches', "return '"
                                        . $this->_quote_replace($this->left_delimiter) . 'php'
                                        . "' . str_repeat(\"\n\", substr_count('\$matches[1]', \"\n\")) .'"
                                        . $this->_quote_replace($this->right_delimiter)
@@ -449,12 +449,22 @@ class Smarty_Compiler extends Smarty {
         /* Matched comment. */
         if (substr($template_tag, 0, 1) == '*' && substr($template_tag, -1) == '*')
             return '';
-        
+
         /* Split tag into two three parts: command, command modifiers and the arguments. */
+        $sPattern = '~^(?:(' . $this->_num_const_regexp . '|' . $this->_obj_call_regexp . '|' . $this->_var_regexp
+            . '|\/?' . $this->_reg_obj_regexp . '|\/?' . $this->_func_regexp . ')(' . $this->_mod_regexp . '*))
+                      (?:\s+(.*))?$
+                    ~xs';
+        $sHaystack = $template_tag;
+
         if(! preg_match('~^(?:(' . $this->_num_const_regexp . '|' . $this->_obj_call_regexp . '|' . $this->_var_regexp
-                . '|\/?' . $this->_reg_obj_regexp . '|\/?' . $this->_func_regexp . ')(' . $this->_mod_regexp . '*))
+            . '|\/?' . $this->_reg_obj_regexp . '|\/?' . $this->_func_regexp . ')(' . $this->_mod_regexp . '*))
                       (?:\s+(.*))?$
                     ~xs', $template_tag, $match)) {
+
+            echo "<pre>". print_r( compact('sPattern', 'sHaystack'), 1) . "</pre>\n";
+            ob_end_flush();
+            exit;
             $this->_syntax_error("unrecognized tag: $template_tag", E_USER_ERROR, __FILE__, __LINE__);
         }
         
