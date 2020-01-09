@@ -47,6 +47,12 @@ if (!$d || !$TFE_CNF["Dir"][$d] || !$f || !file_exists($TFE_CNF["Dir"][$d]."/".$
 		$body_content.= "<div style=\"color:#008000;\">Datei wurde gespeichert. Letzte Änderung: ".format_fstat($file)."!</div><br>\n";
 	}
 
+	if ( substr(basename($file), 0, 11) === 'statusmail_' ) {
+	    $acceptCharset = 'UTF-8';
+    } else {
+	    $acceptCharset = 'ISO-8859-1';
+    }
+
 	$content = file_get_contents($file);
 	
 	$aFileInfo = pathinfo($file);
@@ -59,8 +65,8 @@ if (!$d || !$TFE_CNF["Dir"][$d] || !$f || !file_exists($TFE_CNF["Dir"][$d]."/".$
 	}
 	
 	$body_content.= "<strong>Vorlage: ".basename($file)." &nbsp; ".format_fstat($file)."</strong> ".($fn>1?'[<a href="?s=' . str_replace('"','',$s).'">Andere Datei</a>]':"")."<br>
-	<form action=\"?s=$s\" method=\"post\">
-	<textarea name=\"fc\" style=\"width:100%;height:415px;\">".fb_htmlEntities($content, 0, 'ISO-8859-1')."</textarea>
+	<form action=\"?s=$s\" method=\"post\" accept-charset=\"$acceptCharset\">
+	<textarea name=\"fc\" style=\"width:100%;height:415px;\">".fb_htmlEntities($content, 0, $acceptCharset)."</textarea>
 	<input type=\"submit\" name=\"fs\" style=\"padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;\" value=\"Datei speichern\">
 	<input type=\"hidden\" name=\"d\" value=\"$d\">
 	<input type=\"hidden\" name=\"f\" value=\"".fb_htmlEntities($f)."\">

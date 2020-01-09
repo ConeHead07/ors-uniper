@@ -40,7 +40,7 @@ function blurBox(callback, hide) {
 }
 
 function get_Kategorie( obj ) {
-   $("#lktgselect").html( $("<option/>").text("Bitte auswï¿½hlen") );
+   $("#lktgselect").html( $("<option/>").text("Bitte auswählen") );
    for(var ktg1 in lkItems) {
         $("#lktgselect").append( 
             $("<option/>").val(ktg1).text(ktg1).data("leistungen", lkItems[ktg1]).data("kategorie1", ktg1)
@@ -85,7 +85,7 @@ function get_Leistung( obj ) {
     }
     
     var leistungen = $( objKtg1 ).data( "leistungen" );
-    $("#ldescselect").html( $("<option/>").text("Bitte auswï¿½hlen") );
+    $("#ldescselect").html( $("<option/>").text("Bitte auswählen") );
     for(var lstg in leistungen) {
         $("#ldescselect").append( 
             $("<option/>").val(lstg).text(lstg).data("leistung", leistungen[lstg])
@@ -95,8 +95,8 @@ function get_Leistung( obj ) {
         var data = $(this).find("option:selected").data("leistung");
         if ( lstgIsAllreadyInList(data.leistung_id, objInp) ) {
             alert("Die Leistung wurde bereits in die Liste aufgenommen!\n" + 
-                  "Bitte fï¿½gen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
-                  "Andernfalls werden bestehende Mengen ï¿½berschrieben."
+                  "Bitte fügen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
+                  "Andernfalls werden bestehende Mengen überschrieben."
             );
             objInp.blur();
             return false;

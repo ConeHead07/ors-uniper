@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-01-09 09:38:25
+/* Smarty version 3.1.34-dev-7, created on 2020-01-09 13:13:00
   from '/application/html/umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5e16f491f31aa7_20213589',
+  'unifunc' => 'content_5e1726dc1cd5f0_19784000',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '57388d882f7041616af80df0b27df5077038d6b1' => 
     array (
       0 => '/application/html/umzugsformular.tpl.html',
-      1 => 1578562642,
+      1 => 1578575480,
       2 => 'file',
     ),
   ),
@@ -25,7 +25,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:umzugsformular_attachments.tpl.read.html' => 1,
   ),
 ),false)) {
-function content_5e16f491f31aa7_20213589 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5e1726dc1cd5f0_19784000 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/application/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),1=>array('file'=>'/application/smarty3/plugins/function.html_radios.php','function'=>'smarty_function_html_radios',),));
 ?>
 
@@ -96,74 +96,78 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/application/smarty3/plugins
             <span class="required-label">* Erforderlicher Angaben</span>
             <table>
                 <tr>
-                    <td style="padding:0;width:200px;"><label for="as_vornachname" style="display:block;width:auto;">Vor<?php if ($_smarty_tpl->tpl_vars['ASConf']->value['vorname']['required']) {?><span class="required">*</span><?php }?> &amp; Nachname<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['name']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;width:250px;"><input type="text" id="as_vornachname" readonly="true" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['vorname'], ENT_QUOTES, 'UTF-8', true);?>
-" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['name']['required']) {?>required="required"<?php }?> name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" id="as_name" readonly="true" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['name'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;width:200px;">
+                        <label for="as_vornachname" style="display:block;width:auto;">
+                            Vor<?php if ($_smarty_tpl->tpl_vars['ASConf']->value['vorname']['required']) {?><span class="required">*</span><?php }?> &amp; Nachname<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['name']['required']) {?><span class="required">*</span><?php }?></span>
+                        </label></td>
+
+                    <td style="padding:0;width:250px;"><input type="text" id="as_vornachname" readonly="true" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['vorname'], ENT_QUOTES, 'ISO-8859-1', true);?>
+" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['name']['required']) {?>required="required"<?php }?> name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" id="as_name" readonly="true" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['name'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_email" style="display:block;width:auto;">E-Mail<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['email']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" id="as_email" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['email'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;"><input type="text" id="as_email" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['email'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[email]" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['email']['required']) {?>required="required"<?php }?> readonly="true" class="itxt itxt2col" title="E-Mail"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_fon" style="display:block;width:auto;">Fon<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['fon']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" id="as_fon" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['fon'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;"><input type="text" id="as_fon" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['fon'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['fon']['required']) {?>required="required"<?php }?> name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
                 </tr>
 
                 <tr>
                     <td style="padding:0;">
                         <label for="as_ort" style="display:block;width:auto;">Auftragsort<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['ort']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" id="as_ort" autocomplete="off" xreadonly="true" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['ort']['required']) {?>required="required"<?php }?> onclick="get_standort_ort(this)" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ort'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;"><input type="text" id="as_ort" autocomplete="off" xreadonly="true" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['ort']['required']) {?>required="required"<?php }?> onclick="get_standort_ort(this)" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ort'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[ort]" class="itxt itxt2col"></td>
                 </tr>
 
                 <tr>
                     <td style="padding:0;"><label for="gebaeude" style="display:block;width:auto;">Wirtschaftseinheit<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['gebaeude']['required']) {?><span class="required">*</span><?php }?></span></label>
-                        <input type="hidden" id="gebaeude" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['gebaeude'], ENT_QUOTES, 'UTF-8', true);?>
+                        <input type="hidden" id="gebaeude" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['gebaeude'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['gebaeude']['required']) {?>required="required"<?php }?> name="AS[gebaeude]">
                     </td>
-                    <td style="padding:0;"><input type="text" readonly="true" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['gebaeude']['required']) {?>required="required"<?php }?> id="ASGebaeudeUsrInput" onclick="get_standort_gebaeude(this, O('gebaeude'))" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['gebaeude_text'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;"><input type="text" readonly="true" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['gebaeude']['required']) {?>required="required"<?php }?> id="ASGebaeudeUsrInput" onclick="get_standort_gebaeude(this, O('gebaeude'))" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['gebaeude_text'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[gebaeude_text]" class="itxt itxt2col"></td>
                 </tr>
 
                 <tr>
                     <td style="padding:0;"><label for="etage" style="display:block;width:auto;">Etage<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['etage']['required']) {?><span class="required">*</span><?php }?></span></label>
-                        <input type="hidden" id="etage" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['etage'], ENT_QUOTES, 'UTF-8', true);?>
+                        <input type="hidden" id="etage" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['etage'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['etage']['required']) {?>required="required"<?php }?> name="AS[etage]">
                     </td>
-                    <td style="padding:0;"><input type="text" readonly="true" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['etage']['required']) {?>required="required"<?php }?> id="ASEtageUsrInput" onclick="get_gebaeude_etage(this, O('etage'))" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['etage'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;"><input type="text" readonly="true" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['etage']['required']) {?>required="required"<?php }?> id="ASEtageUsrInput" onclick="get_gebaeude_etage(this, O('etage'))" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['etage'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[etage_text]" class="itxt itxt2col"></td>
                 </tr>
 
                 <tr>
                     <td style="padding:0;"><label for="as_raumnr" style="display:block;width:auto;">Raumnummer<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['raumnr']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" id="as_raumnr" xreadonly="true" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['raumnr']['required']) {?>required="required"<?php }?> xonclick="get_standort_raumnr(this)" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['raumnr'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;"><input type="text" id="as_raumnr" xreadonly="true" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['raumnr']['required']) {?>required="required"<?php }?> xonclick="get_standort_raumnr(this)" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['raumnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[raumnr]" class="itxt itxt2col"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_kostenstelle" style="display:block;width:auto;"><?php echo $_smarty_tpl->tpl_vars['ASConf']->value['kostenstelle']['label'];?>
 <span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['kostenstelle']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" id="as_kostenstelle" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['kostenstelle'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;"><input type="text" id="as_kostenstelle" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['kostenstelle'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[kostenstelle]"<?php if ($_smarty_tpl->tpl_vars['ASConf']->value['kostenstelle']['required']) {?> required="required"<?php }?> class="itxt itxt2col"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_planonnr" style="display:block;width:auto;"><?php echo $_smarty_tpl->tpl_vars['ASConf']->value['planonnr']['label'];?>
 <span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['planonnr']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" id="as_planonnr" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['planonnr'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;"><input type="text" id="as_planonnr" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['planonnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
 "<?php if ($_smarty_tpl->tpl_vars['ASConf']->value['planonnr']['required']) {?> required="required"<?php }?> name="AS[planonnr]" class="itxt itxt2col"></td>
                 </tr>
 
                 <tr>
                     <td style="padding:0;"><label for="as_terminwunsch" style="display:block;width:auto;">Terminwunsch<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['terminwunsch']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" id="as_terminwunsch" value="<?php echo smarty_modifier_date_format(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['terminwunsch'], ENT_QUOTES, 'UTF-8', true),"%d.%m.%Y");?>
+                    <td style="padding:0;"><input type="text" id="as_terminwunsch" value="<?php echo smarty_modifier_date_format(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['terminwunsch'], ENT_QUOTES, 'ISO-8859-1', true),"%d.%m.%Y");?>
 " <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['terminwunsch']['required']) {?>required="required"<?php }?>
                         onfocus="showDtPicker(this)" id="terminwunsch" name="AS[terminwunsch]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/terminwunsch.php"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_umzugszeit" style="display:block;width:auto;">Uhrzeit<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['umzugszeit']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" id="as_umzugszeit" value='<?php echo substr(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugszeit'], ENT_QUOTES, 'UTF-8', true),0,5);?>
+                    <td style="padding:0;"><input type="text" id="as_umzugszeit" value='<?php echo substr(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugszeit'], ENT_QUOTES, 'ISO-8859-1', true),0,5);?>
 ' <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['umzugszeit']['required']) {?>required="required"<?php }?>
                         id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
                 </tr>
@@ -171,23 +175,23 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/application/smarty3/plugins
                 <tr>
                     <td style="padding:0;"><label for="von_gebaeude_text" style="display:block;width:auto;">Von<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['von_gebaeude_id']['required']) {?><span class="required">*</span><?php }?></span></label>
                         <input type="hidden" readonly="readonly" id="von_gebaeude_id" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['von_gebaeude_id']['required']) {?>required="required"<?php }?>
-                        value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['von_gebaeude_id'], ENT_QUOTES, 'UTF-8', true);?>
+                        value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['von_gebaeude_id'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[von_gebaeude_id]">
                     </td>
                     <td class="ort">
-                        <input onclick="get_gebaeude(this, O('von_gebaeude_id'))" id="von_gebaeude_text" type="text" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['von_gebaeude_text'], ENT_QUOTES, 'UTF-8', true);?>
+                        <input onclick="get_gebaeude(this, O('von_gebaeude_id'))" id="von_gebaeude_text" type="text" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['von_gebaeude_text'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " xreadonly="readonly" class="itxt itxt2col">
                     </td>
                 </tr>
                 <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
                 <tr>
                     <td style="padding:0;"><label for="nach_gebauede_text" style="display:block;width:auto;">Nach<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['nach_gebaeude_id']['required']) {?><span class="required">*</span><?php }?></span></label>
-                        <input type="hidden" id="nach_gebaeude_id" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['nach_gebaeude_id'], ENT_QUOTES, 'UTF-8', true);?>
+                        <input type="hidden" id="nach_gebaeude_id" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['nach_gebaeude_id'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['nach_gebaeude_id']['required']) {?>required="required"<?php }?>
                         name="AS[nach_gebaeude_id]">
                     </td>
                     <td class="zort">
-                        <input onclick="get_gebaeude(this, O('nach_gebaeude_id'))" id="nach_gebaeude_text" type="text" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['nach_gebaeude_text'], ENT_QUOTES, 'UTF-8', true);?>
+                        <input onclick="get_gebaeude(this, O('nach_gebaeude_id'))" id="nach_gebaeude_text" type="text" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['nach_gebaeude_text'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " xreadonly="readonly" class="itxt itxt2col">
                     </td>
                 </tr>
@@ -197,7 +201,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/application/smarty3/plugins
             <table>
                 <tr>
                     <td style="padding:0;width:200px;"><label for="as_ansprechpartner" title="Ansprechpartner Name" style="display:block;width:auto;">Vor &amp; Nachname<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['ansprechpartner']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;width:250px;"><input type="text" id="as_ansprechpartner" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;width:250px;"><input type="text" id="as_ansprechpartner" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['ansprechpartner']['required']) {?>required="required"<?php }?> name="AS[ansprechpartner]" class="itxt itxt2col" title="Ansprechpartner"></td>
                     <td rowspan="3" class="cell-buttons">
                         <a href="{WebRoot}downloads/leistungen.xls" target="_blank"><div class="button" id="filedownload" data-href="{WebRoot}/download/leistungen.xls"><span>Download Vorlage</span></div></a>
@@ -208,12 +212,12 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/application/smarty3/plugins
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_ansprech_email" title="Ansprechpartner E-Mail" style="display:block;width:auto;">E-Mail<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['ansprechpartner_email']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" id="as_ansprech_email" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_email'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;"><input type="text" id="as_ansprech_email" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_email'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['ansprechpartner_email']['required']) {?>required="required"<?php }?> name="AS[ansprechpartner_email]" class="itxt itxt2col" title="Ansprechpartner E-Mail"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_ansprech_fon" title="Ansprechpartner Fon" style="display:block;width:auto;">Fon<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['ansprechpartner_fon']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" id="as_ansprech_fon" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon'], ENT_QUOTES, 'UTF-8', true);?>
+                    <td style="padding:0;"><input type="text" id="as_ansprech_fon" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['ansprechpartner_fon']['required']) {?>required="required"<?php }?> name="AS[ansprechpartner_fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
                 </tr>
             </table>

@@ -8,6 +8,12 @@ if (file_exists(__DIR__ . '/../etc/sysdef.local.php')) {
     require_once __DIR__ . '/../etc/sysdef.php';
 }
 
+// use iso-8859-1 as character encoding
+if (function_exists('mb_internal_charset')) {
+    mb_internal_charset('ISO-8859-1');
+}
+define('SMARTY_RESOURCE_CHAR_SET', 'ISO-8859-1');
+
 $msg = "";
 $error = "";
 $sys_error = "";

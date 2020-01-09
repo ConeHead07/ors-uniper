@@ -1,5 +1,8 @@
 <?php
-//if (date("Y-m-d H:i") > "2016-01-30 13:00") die("Das Umzugsportal ist vorï¿½bergehend bis voraussichtlich 13.30 Uhr wegen Wartungsarbeiten gesperrt!");
+
+if (false && date("Y-m-d H:i") > "2016-01-30 13:00" && date("Y-m-d H:i") < "2016-01-30 15:00") {
+    die("Das Umzugsportal ist vorübergehend bis voraussichtlich 13.30 Uhr wegen Wartungsarbeiten gesperrt!");
+}
 
 // Delegate static file requests back to the PHP built-in webserver
 if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
@@ -25,8 +28,9 @@ require_once $MConf["AppRoot"].$MConf["Modul_Dir"]."seitenbereiche/include/lib_m
 require_once $MConf["AppRoot"].$MConf["Inc_Dir"]."/lib_menu_embed_functions.php";
 
 $_rplAusgabe[0]["{theme}"] = $MConf["theme"];
-$_rplAusgabe[0]["<!-- {Headers} -->"] = "";
-$_rplAusgabe[0]["<!-- {Headers} -->"] = "<link rel=\"stylesheet\" href=\"css/".(!empty($userlogin["uid"])?"ulogin.css":"ulogout.css")."\">\n";
+$_rplAusgabe[0]['<!-- {Headers} -->'] =
+    "<link rel=\"stylesheet\" href=\"css/"
+    . (!empty($userlogin["uid"]) ? "ulogin.css" : "ulogout.css")."\">\n";
 
 $_rplAusgabe[0]["{pageTitle}"]  = $MConf["AppTitle"];
 $_rplAusgabe[0]["{user.uid}"]  = $user['uid'];
@@ -36,9 +40,9 @@ $_rplAusgabe[0]["{user.gruppe}"] = ($user["adminmode"]==="superadmin" ? $user["a
 $_rplAusgabe[0]["{user.anrede}"] = $user['anrede'];
 $_rplAusgabe[0]["{user.vorname}"] = $user['vorname'];
 $_rplAusgabe[0]["{user.nachname}"] = $user['nachname'];
-$_rplAusgabe[0]["{user.nachname}"] = $user['nachname'];
-$body_content = "";
-$pview = (isset($_GET["pview"]) || isset($_POST["pview"])) ? (isset($_GET["pview"]) ? $_GET["pview"] : $_POST["pview"]) : "";
+$body_content = '';
+
+$pview = $_GET['pview'] ?? $_POST['pview'] ?? '';
 
 if (!isset($pview) || $pview != "body") {
     $ausgabe = implode("", file($_CONF["HTML"]["ausgabe"]));
@@ -64,9 +68,14 @@ if (is_array($ActiveMenu)
     && $ActiveMenu["webfreigabe"] == "Ja") {
     $_ParentItems = get_menu_parentItems($ActiveMenu["id"]);
 
-    for ($i = 0; $i < count($_ParentItems); $i++) {
+    $iNumParentItems = count($_ParentItems);
+
+    for ($i = 0; $i < $iNumParentItems; $i++)
+    {
         $M = $_ParentItems[$i];
-        $MenuAccess.= "Menï¿½ ".$M["srv"]." Rechte:".$M["rechte"]." Gruppen:".$M["gruppen"]." Geschï¿½tzt:".$M["geschuetzt"]."<br>\n";
+
+        $MenuAccess.= "Menü {$M['srv']} Rechte:{$M['rechte']} Gruppen:{$M['gruppen']} Geschützt:{$M['geschuetzt']}<br>\n";
+
         if ($_ParentItems[$i]["webfreigabe"] == "Nein") {
             $srv_error = true;
         }
@@ -74,14 +83,14 @@ if (is_array($ActiveMenu)
         if ($_ParentItems[$i]["geschuetzt"] == "Ja") {
             if (empty($user)) {
                 $srv_error = true;
-                $error.= "Zugang nur fï¿½r Mitglieder!<br>\n";
+                $error.= "Zugang nur für Mitglieder!<br>\n";
                 $show_login = true;
             } else {
 
                 switch($_ParentItems[$i]["gruppen"]) {
                     case "admin":
                         if ($user["gruppe"] != "admin") {
-                            $error.= "Unzulï¿½ssiger Seitenaufruf!<br>\n";
+                            $error.= "Unzulässiger Seitenaufruf!<br>\n";
                             $srv_error = true;
                         }
                         break;
@@ -117,10 +126,10 @@ if (is_array($ActiveMenu)
 
 if ($srv_error && empty($show_login)) {
     $body_content.= "<h3>Die angeforderte Seite wurde nicht gefunden.</h3>\n";
-    $body_content.= "Falls Sie die Adresse von Hand eingetippt haben, prï¿½fen Sie bitte die korrekte Schreibweise!\n";
-    $body_content.= "Mï¿½glicherweise befindet sich die Seite derzeit in Bearbeitung und wurde gesperrt!<br>\n";
+    $body_content.= "Falls Sie die Adresse von Hand eingetippt haben, prüfen Sie bitte die korrekte Schreibweise!\n";
+    $body_content.= "Möglicherweise befindet sich die Seite derzeit in Bearbeitung und wurde gesperrt!<br>\n";
     $body_content.= "<br>\n";
-    $body_content.= "Bei Fragen zur Erreichbarkeit der gewï¿½nschten Informationen kï¿½nnen Sie uns gerne eine E-Mail schreiben an <a href=\"mailto:$postmaster?subject=Seitenfehler:$srv\">$postmaster</a><br>\n";
+    $body_content.= "Bei Fragen zur Erreichbarkeit der gewünschten Informationen können Sie uns gerne eine E-Mail schreiben an <a href=\"mailto:$postmaster?subject=Seitenfehler:$srv\">$postmaster</a><br>\n";
 } else {
 
     if ($ActiveMenu["cmd"]) {
@@ -142,7 +151,7 @@ if ($srv_error && empty($show_login)) {
             require($ActiveMenu["script"]);
         } else {
             $error.= "Interner Fehler:".$ActiveMenu["script"]." (id:".$ActiveMenu["id"].")<br>\n";
-            $error.= "Das Ausgabemodul fï¿½r die Seite \"".$ActiveMenu["name"]."\" konnte nicht geladen werden!<br>\n";
+            $error.= "Das Ausgabemodul für die Seite \"".$ActiveMenu["name"]."\" konnte nicht geladen werden!<br>\n";
         }
     }
 }
@@ -172,11 +181,14 @@ if ($msg) {
     else
         $sysbox.= "<div class=\"msgBox\">$error</div>\n";
 }
+
+
 $ausgabe = str_replace("{content}", $sysbox.$body_content, $ausgabe);
-for ($i = 0; $i < count($_rplAusgabe); $i++) {
+$iNumRplAusgabe = count($_rplAusgabe);
+for ($i = 0; $i < $iNumRplAusgabe; $i++) {
     $ausgabe = strtr($ausgabe, $_rplAusgabe[$i]);
 }
-//echo "<pre>".print_r(get_included_files(),true)."</pre>\n";
+
 if (!empty($SiteVars)) foreach($SiteVars as $k => $v) {
     $ausgabe=str_replace("{".$k."}", $v, str_replace("%".$k."%", $v,$ausgabe));
 }

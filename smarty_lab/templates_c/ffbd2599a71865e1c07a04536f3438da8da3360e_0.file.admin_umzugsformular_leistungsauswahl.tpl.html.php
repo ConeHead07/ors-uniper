@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-01-09 10:36:22
+/* Smarty version 3.1.34-dev-7, created on 2020-01-09 11:44:18
   from '/application/html/admin_umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5e170226406fb0_70239978',
+  'unifunc' => 'content_5e1712121dc620_03608229',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ffbd2599a71865e1c07a04536f3438da8da3360e' => 
     array (
       0 => '/application/html/admin_umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1578566050,
+      1 => 1578570254,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5e170226406fb0_70239978 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5e1712121dc620_03608229 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div style="display:block;margin-top:15px;">
 <span style="margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="add_Leistung();return false;">
     Leistung hinzuf&uuml;gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
@@ -66,7 +66,7 @@ function blurBox(callback, hide) {
 }
 
 function get_Kategorie( obj ) {
-   $("#lktgselect").html( $("<option/>").text("Bitte auswï¿½hlen") );
+   $("#lktgselect").html( $("<option/>").text("Bitte auswählen") );
    for(var ktg1 in lkItems) {
         $("#lktgselect").append( 
             $("<option/>").val(ktg1).text(ktg1).data("leistungen", lkItems[ktg1]).data("kategorie1", ktg1)
@@ -111,7 +111,7 @@ function get_Leistung( obj ) {
     }
     
     var leistungen = $( objKtg1 ).data( "leistungen" );
-    $("#ldescselect").html( $("<option/>").text("Bitte auswï¿½hlen") );
+    $("#ldescselect").html( $("<option/>").text("Bitte auswählen") );
     for(var lstg in leistungen) {
         $("#ldescselect").append( 
             $("<option/>").val(lstg).text(lstg).data("leistung", leistungen[lstg])
@@ -121,8 +121,8 @@ function get_Leistung( obj ) {
         var data = $(this).find("option:selected").data("leistung");
         if ( lstgIsAllreadyInList(data.leistung_id, objInp) ) {
             alert("Die Leistung wurde bereits in die Liste aufgenommen!\n" + 
-                  "Bitte fï¿½gen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
-                  "Andernfalls werden bestehende Mengen ï¿½berschrieben."
+                  "Bitte fügen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
+                  "Andernfalls werden bestehende Mengen überschrieben."
             );
             objInp.blur();
             return false;
