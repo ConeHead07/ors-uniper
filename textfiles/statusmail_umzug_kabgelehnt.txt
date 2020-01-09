@@ -6,10 +6,10 @@ sehr geehrte Anwenderin,
 Ihre Leistungsanforderung mit der ID {AID} wurde 
 abgelehnt und geschlossen.
 
-Begründung:
+BegrÃ¼ndung:
 {Bemerkung}
 
-Mit freundlichen Grüßen
+MMit freundlichen GrÃ¼ÃŸen
 
 Ihr
 {HomepageTitle}

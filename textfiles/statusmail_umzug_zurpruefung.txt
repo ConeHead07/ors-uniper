@@ -1,17 +1,17 @@
-Betreff=Umzug ID {AID} - Prüfung
+Betreff=Umzug ID {AID} - PrÃ¼fung
 
 Hallo {Vorname} {Name},
 
-es liegt eine neue Leistungsanforderung mit der ID {AID} zur Bestätigung vor.
+es liegt eine neue Leistungsanforderung mit der ID {AID} zur BestÃ¤tigung vor.
 
 Antragsteller:  {vorname} {name}
 SAP Nr.         {kostenstell}	
 Ticket Nr.      {planonnr}
 
-Sie können den  Vorgang  unter folgendem Link  bearbeiten:
+Sie kÃ¶nnen den  Vorgang  unter folgendem Link  bearbeiten:
 {StatusLink}
 
-Mit freundlichen Grüßen
+Mit freundlichen GrÃ¼ÃŸen
 
 Ihr
 {HomepageTitle}

@@ -8,10 +8,10 @@ Antragsteller:  {vorname} {name}
 SAP Nr.         {kostenstelle}	
 Ticket Nr.      {planonnr}
 
-Sie können den  Vorgang  unter folgendem Link  bearbeiten:
+Sie kÃ¶nnen den  Vorgang  unter folgendem Link  bearbeiten:
 {StatusLink}
 
-Mit freundlichen Grüßen
+Mit freundlichen GrÃ¼ÃŸen
 
 Ihr
 {HomepageTitle}

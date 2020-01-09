@@ -3,9 +3,9 @@ Betreff=Umzug ID {AID} - Aufhebung
 Guten Tag,
 
 die Leistungsanforderung mit der ID {AID} wurde aufgehoben. 
-Sie werden erneut informiert, wenn die Leistung durchgeführt werden soll.
+Sie werden erneut informiert, wenn die Leistung durchgefÃ¼hrt werden soll.
 
-Mit freundlichen Grüßen
+Mit freundlichen GrÃ¼ÃŸen
 
 Ihr
 {HomepageTitle}

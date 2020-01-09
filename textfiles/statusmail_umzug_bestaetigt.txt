@@ -6,14 +6,14 @@ sehr geehrte Anwenderin,
 Ihre Leistungsanforderung  mit der ID {AID}  wurde bearbeitet und freigegeben.
 
 Antragsteller:  {vorname} {name}
-Ausführungszeit {ausgefuehrtam}
+AusfÃ¼hrungszeit {ausgefuehrtam}
 SAP Nr.         {kostenstelle}	
 Ticket Nr.      {planonnr}
 
-Sie können den Status Ihres Auftrags unter folgendem Link einsehen:
+Sie kÃ¶nnen den Status Ihres Auftrags unter folgendem Link einsehen:
 {StatusLink}
 
-Mit freundlichen Grüßen
+Mit freundlichen GrÃ¼ÃŸen
 
 Ihr
 {HomepageTitle}

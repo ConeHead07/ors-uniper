@@ -2,16 +2,16 @@ Betreff=Neuer Nebenleistungsantrag ID {NID}
 
 Hallo {Vorname} {Name},
 
-es liegt ein neuer Nebenleistungsantrag mit der ID {NID} zur Prüfung durch Mertens vor.
+es liegt ein neuer Nebenleistungsantrag mit der ID {NID} zur PrÃ¼fung durch Mertens vor.
 
 Antragsteller:  {vorname} {name}
 SAP Nr.         {kostenstelle}	
 Ticket Nr.      {planonnr}
 
-Sie können den  Vorgang  unter folgendem Link  bearbeiten:
+Sie kÃ¶nnen den  Vorgang  unter folgendem Link  bearbeiten:
 {StatusLink}
 
-Mit freundlichen Grüßen
+Mit freundlichen GrÃ¼ÃŸen
 
 Ihr
 {HomepageTitle}

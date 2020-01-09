@@ -3,17 +3,17 @@ Betreff=Umzug ID {AID} - Genehmigt
 Hallo {Vorname} {Name},
 
 die Leistungsanforderung mit der ID {AID} wurde genehmigt und befindet sich 
-im Durchführungsstatus.
+im DurchfÃ¼hrungsstatus.
 
 Antragsteller:  {vorname} {name}
-Ausführungszeit {ausgefuehrtam}
+AusfÃ¼hrungszeit {ausgefuehrtam}
 SAP Nr.         {kostenstelle}	
 Ticket Nr.      {planonnr}
 
-Sie können den  Vorgang  unter folgendem Link  einesehen:
+Sie kÃ¶nnen den  Vorgang  unter folgendem Link  einesehen:
 {StatusLink}
 
-Mit freundlichen Grüßen
+Mit freundlichen GrÃ¼ÃŸen
 
 Ihr
 {HomepageTitle}
