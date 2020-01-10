@@ -303,13 +303,15 @@ function get_standort_admin_mail($antragsOrt, $antragsGebaeude) {
 
 function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false) 
 {
-	if (!isset($aUserTo[0]['email'])
-        && !isset($aUserTo[0]['Vorname'])
-        && !isset($aUserTo[0]['Name'])) {
+    global $aHeader;
+
+	if (!isset($aUserTo[0]['email'])) {
         die('Für die Statusmail konnten keine E-Mail-Empfänger ermittelt werden!');
 	}
 
 	$lines = explode("\n", $tplMail);
+
+    $aUserHeader = $aHeader;
 
 	$tplSu = trim((strpos($lines[0], 'Betreff=') === 0)
         ? substr($lines[0],8)
@@ -323,54 +325,36 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false)
 	
 	for ($i = 0; $i < $iNumRecipients; $i++) {
         $to = $aUserTo[$i]["email"];
-        $cc = trim($aUserTo[$i]["emails_cc"]);
-        $body = $tplBody;
         $su = $tplSu;
-        if (!isset($aUserTo[$i]["vorname"]) && !isset($aUserTo[$i]["Vorname"])) {
-            die('#'.__LINE__ . ' !isset $aUserTo['.$i.']["vorname"]<br>aUserTo :' . PHP_EOL . print_r($aUserTo,1) );
+        $body = $tplBody;
+        $cc = trim($aUserTo[$i]["emails_cc"]);
+
+        $rplVars['Vorname'] = $aUserTo[$i]["vorname"] ?? '';
+        $rplVars['Name'] =  $aUserTo[$i]["nachname"] ?? '';
+        $rplVars['ausgefuehrtam'] = date('d.m.Y', strtotime($rplVars['umzugstermin'] ) );
+
+        if (trim($rplVars['umzugszeit'])) {
+            $rplVars['ausgefuehrtam'].= $rplVars['umzugszeit'];
         }
 
-        $_vorname  = $aUserTo[$i]["vorname"]
-                    ?? ($aUserTo[$i]["Vorname"] ?? die(print_r($aUserTo[$i],1)) );
+        $aUserHeader['Reply-To'] = $rplVars['Reply-To'] ?? 'bayerors@mertens.ag';
 
-        $_nachname = $aUserTo[$i]["nachname"]
-                ?? ($aUserTo[$i]["Name"] ?? die(print_r($aUserTo[$i],1)) );
+//        ob_end_flush();
+//        echo '<pre>' . print_r(compact('body', 'rplVars'), 1) . '</pre>';
+        // exit;
 
-        $body = str_replace("{Vorname}", $_vorname, $body);
-        $body = str_replace("{Name}", $_nachname, $body);
+        $mailer = SmtpMailer::getNewInstance();
+        $mailer->setTplVars($rplVars, 'ISO-8859-1');
+        $numRecipients = $mailer->sendMultiMail([ ['email' => $to, 'anrede' => ''] ], $su, null, $body, [], $aUserHeader);
 
-        if ($rplVars['umzugszeit']) {
-            $ausfuehrungsZeit = date(
-                'd.m.Y H:i',
-                strtotime($rplVars['umzugstermin'] . ' ' . $rplVars['umzugszeit'])
-            );
-        } else {
-            $ausfuehrungsZeit = date('d.m.Y', strtotime($rplVars['umzugstermin'] ) )	;
-        }
 
-        $body = strtr($body, [
-            '{ausgefuehrtam}' => $ausfuehrungsZeit,
-            '{Vorname}' => $_vorname,
-            '{Name}' => $_nachname
-        ]);
-
-        foreach($rplVars as $k => $v) {
-            $body   = str_replace('{' . $k . '}', (is_scalar($v) ? $v : ''), $body);
-            $su     = str_replace('{' . $k . '}', (is_scalar($v) ? $v : ''), $su);
-        }
-
-        $hd = 'Reply-To:' . ($rplVars['Reply-To'] ?? 'bayerors@mertens.ag');
-
-        if (!fbmail($to, $su, $body, $hd)) {
-            $success = false;
-        }
-
-        if ($success && $cc) {
+        if ($numRecipients) {
             $aCC = explode(',', $cc);
             foreach($aCC as $_emailAddress) {
-                fbmail( trim($_emailAddress), $su, $body, $hd);
+                $numRecipients+= $mailer->sendMultiMail([ ['email' => $_emailAddress, 'anrede' => ''] ], $su, null, $body, [], $aUserHeader);
             }
         }
+        return $numRecipients;
 	}
 	return $success;
 }

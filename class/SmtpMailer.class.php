@@ -202,13 +202,13 @@ class SmtpMailer {
      * @param string|null $val
      * @return $this
      */
-    public function assign($key, $val = null) {
+    public function assign($key, $val = null, $charset = 'ISO-8859-1') {
         if (is_array($key)) {
             foreach($key as $_k => $_v) {
-                $this->tplVars[ (string) $_k] = (string) $_v;
+                $this->tplVars[ (string) $_k] = is_numeric($_v) ? $_v : $this->toUtf8((string) $_v, $charset);
             }
         } else {
-            $this->tplVars[ $key] = $val;
+            $this->tplVars[ $key] = is_numeric($val) ? $val : $this->toUtf8((string) $val, $charset);
         }
         return $this;
     }
@@ -219,10 +219,33 @@ class SmtpMailer {
      * @param array $aKeyValuePairs
      * @return $this
      */
-    public function setTplVars(array $aKeyValuePairs) {
+    public function setTplVars(array $aKeyValuePairs, $charset = 'ISO-8859-1') {
         $this->tplVars = [];
-        $this->assign($aKeyValuePairs);
+        $this->assign($aKeyValuePairs, null, $charset);
         return $this;
+    }
+
+    public static function toUtf8(string $str, string $fromCharset = 'ISO-8859-1') {
+        // $_detectedCS = mb_detect_encoding($str);
+        if (!$fromCharset) {
+            $fromCharset = mb_detect_encoding($str);
+        }
+
+        switch(strtoupper($fromCharset))
+        {
+            case 'UTF-8':
+            case 'ASCII':
+                return $str;
+
+            case 'ISO-8859-1':
+                return utf8_encode($str);
+
+            case 'WINDOWS-1252':
+                return mb_convert_encoding($str, 'UTF-8', 'Windows-1252');
+
+            default:
+                return $str;
+        }
     }
 
     /**
@@ -300,14 +323,22 @@ class SmtpMailer {
 
             // Assign Tpl-Vars
             $this->assign('to.email', $_to['email']);
-            $this->assign('to.anrede', $_to['anrede']);
+            $this->assign('to.anrede', $_to['anrede'] ?? '');
 
             $this->subject  = $this->renderTplVars( $sSubject, true );
-            $this->textBody = $this->renderTplVars( $sTxtBody, true);
+            $this->textBody = $this->renderTplVars( $sTxtBody, false);
             $this->htmlBody = $this->renderTplVars( $sHtmlBody, true );
 
+//            $thisSubject = $this->subject;
+//            $thisTplVars = $this->tplVars;
+//            $thisTextBody = $this->textBody;
+//
+//            ob_end_flush();
+//            echo '<pre>' . print_r(compact('thisSubject', 'thisTextBody', 'thisTplVars'), 1) . '</pre>';
+//            exit;
+
             $this->createMessage();
-            $this->message->setTo($_to['email'], $_to['anrede']);
+            $this->message->setTo($_to['email'], $_to['anrede'] ?? '');
             $this->message->setSubject($this->subject);
 
             if (!empty($bcc)) {
@@ -338,7 +369,7 @@ class SmtpMailer {
 
                 if (0) echo '<pre>' . print_r([
                         'to' => $_to['email'],
-                        'anrede' => $_to['anrede'],
+                        'anrede' => $_to['anrede'] ?? '',
                         'subject' => $this->subject,
                         'textBody' => $this->textBody,
                         'htmlBody' => $this->htmlBody,
