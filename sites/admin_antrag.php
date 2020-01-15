@@ -2,7 +2,14 @@
 require_once($InclBaseDir."php_json.php");
 require_once("sites/umzugsantrag_stdlib.php");
 require_once($InclBaseDir."umzugsgruppierungen.lib.php");
-if (strpos($user["gruppe"], "admin") === false) die("UNERLAUBTER ZUGRIFF! Zugriff nur f�r Administratoren");
+if (strpos($user["gruppe"], "admin") === false) {
+    if ($user['gruppe'] === 'kunde_report' && strpos($_SERVER['REQUEST_URI'], '=aantrag')) {
+        $_alt = str_replace('=aantrag', '=pantrag', $_SERVER['REQUEST_URI']);
+        Header('Location: ' . $_alt);
+        exit;
+    }
+    die("UNERLAUBTER ZUGRIFF! Zugriff nur für Administratoren");
+}
 
 require_once($InclBaseDir."umzugsantrag.inc.php");
 require_once($InclBaseDir."umzugsmitarbeiter.inc.php");

@@ -2,9 +2,14 @@
 require_once($InclBaseDir."php_json.php");
 require_once("sites/umzugsantrag_stdlib.php");
 
-if (strpos($user["gruppe"], "kunde_report") === false && strpos($user["adminmode"], "superadmin") === false)
-	die("UNERLAUBTER ZUGRIFF!");
-
+if (strpos($user["gruppe"], "kunde_report") === false && strpos($user["adminmode"], "superadmin") === false) {
+    if ($user['gruppe'] === 'admin' && strpos($_SERVER['REQUEST_URI'], '=pantrag')) {
+        $_alt = str_replace('=pantrag', '=aantrag', $_SERVER['REQUEST_URI']);
+        Header('Location: ' . $_alt);
+        exit;
+    }
+    die("UNERLAUBTER ZUGRIFF!<br>$_lnk");
+}
 
 require_once($InclBaseDir."umzugsantrag.inc.php");
 require_once($InclBaseDir."umzugsmitarbeiter.inc.php");
