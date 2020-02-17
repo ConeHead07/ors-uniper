@@ -322,6 +322,7 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false)
 	
 	$success = true;
 	$iNumRecipients = count($aUserTo);
+	$iNumSentTo = 0;
 	
 	for ($i = 0; $i < $iNumRecipients; $i++) {
         $to = $aUserTo[$i]["email"];
@@ -345,18 +346,19 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false)
 
         $mailer = SmtpMailer::getNewInstance();
         $mailer->setTplVars($rplVars, 'ISO-8859-1');
-        $numRecipients = $mailer->sendMultiMail([ ['email' => $to, 'anrede' => ''] ], $su, null, $body, [], $aUserHeader);
+        $iNumSentTo+= $mailer->sendMultiMail([ ['email' => $to, 'anrede' => ''] ], $su, null, $body, [], $aUserHeader);
 
+        // print_r(compact('iNumRecipients', 'aUserTo', 'iNumSentTo', 'to', 'su', 'body', 'cc', 'rplVars'));
 
-        if ($numRecipients) {
+        if ($cc) {
             $aCC = explode(',', $cc);
             foreach($aCC as $_emailAddress) {
-                $numRecipients+= $mailer->sendMultiMail([ ['email' => $_emailAddress, 'anrede' => ''] ], $su, null, $body, [], $aUserHeader);
+                $iNumSentTo+= $mailer->sendMultiMail([ ['email' => $_emailAddress, 'anrede' => ''] ], $su, null, $body, [], $aUserHeader);
             }
         }
-        return $numRecipients;
 	}
-	return $success;
+
+	return $success && $iNumSentTo > 0;
 }
 
 function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {

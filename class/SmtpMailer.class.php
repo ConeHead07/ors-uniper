@@ -6,6 +6,7 @@ if ( basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
 
 define('SMTP_MAILER_DEBUG', APP_ENVIRONMENT == 'DEVELOPMENT' ? 1 : 0);
 
+
 $aSmtpConn = array(
     "server"    => $MConf['smtp_server'], //"10.10.1.70",
     "port"      => $MConf['smtp_port'], //"25",
@@ -271,8 +272,10 @@ class SmtpMailer {
                 'sHtmlBody' =>  $sHtmlBody,
                 'sTxtBody' => $sTxtBody,
                 'aAttachments' => $aAttachments,
-                'aHeaders' =>  $aHeaders
-            ],1)
+                'aHeaders' =>  $aHeaders,
+                'rplVars' => $this->subject,
+            ],1),
+            FILE_APPEND
         );
 
         if (isset($aHeaders['multipart_data'])) {
@@ -375,6 +378,7 @@ class SmtpMailer {
                         'htmlBody' => $this->htmlBody,
                 ], 1) . '</pre>' . "\n";
                 $result = $this->send();
+
             } catch(Exception $e) {
                 $error = $e->getMessage();
             }
@@ -640,7 +644,11 @@ class SmtpMailer {
             $thisHeaders->addTextHeader($_k, $_v);
         }
 
-        $result = $this->mailer->send( $this->message );
+        if (APP_ENVIRONMENT === 'PRODUKTION') {
+            $result = $this->mailer->send( $this->message );
+        } else {
+            $result = true;
+        }
 
         return $result;
     }
@@ -798,11 +806,13 @@ class SmtpMailer {
                 // echo '#' . __LINE__ . ' start sending mail' . PHP_EOL;
                 $result = $this->send();
             } catch(Exception $e) {
-                if (empty($logger)) echo '#' . __LINE__ . ' Mail-Error ' . $e->getMessage() . '' . PHP_EOL;
+                echo '#' . __LINE__ . ' Mail-Error ' . $e->getMessage() . '' . PHP_EOL;
             }
         }
 
-        file_put_contents($this->logfile, print_r($logger->dump(),1), FILE_APPEND);
+        if (count($this->logger)) {
+            file_put_contents($this->logfile, print_r($this->logger[0]->dump(), 1), FILE_APPEND);
+        }
     }
 
 }

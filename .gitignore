@@ -5,6 +5,9 @@ etc/sysdef.local.php
 tmp/*
 !tmp/.gitkeep
 log/*
+log/2016
+log/2017
+log/2018
 !log/.gitkeep
 log_archive
 attachements/*
