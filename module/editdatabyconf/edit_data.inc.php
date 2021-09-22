@@ -1,4 +1,12 @@
 <?php
+db_auto_connect();
+
+if (!empty($confName) && $confName === 'leistungskatalog') {
+    $finishEditData = include( __DIR__ . '/edit_' . $confName . '.php' );
+    if ($finishEditData === true) {
+        return;
+    }
+}
 
 if (!isset($showConfData)) $showConfData = true;
 if (!isset($showErrors)) $showErrors = true;

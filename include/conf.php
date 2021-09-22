@@ -53,7 +53,7 @@ function abs2WebPath($FileAbsPath, $WithDomain = true) {
 $postmaster = '';
 $propertyName = 'Dussman';
 $MConf = array(
-	"AppTitle" => "ORS Order Request System",
+	"AppTitle" => "Uniper ORS Order Request System",
 	"WebRoot" => abs2WebPath(dirname(__FILE__).DS."..".DS),
 	"AppRoot" => realpath(dirname(__FILE__).DS."..".DS).DS,
 	"Tpl_Dir" => "html".DS,
@@ -78,17 +78,27 @@ $MConf = array(
 	"Html_ErrBox" => "errorbox.html",
 	"theme" => "property_old",
 	"propertyName" => $propertyName,
-	"smtp_server"    => "mail.mertens.ag",
-	"smtp_port"      => "25",
-	'smtp_from_name' => 'Order Request System',
-	'smtp_from_addr' => 'bayerors@mertens.ag',        
-	'smtp_auth_user' => 'mag\bayermove',
-	'smtp_auth_pass' => 'merTens47877',
-	'smtp_client_host' => gethostbyname(gethostname()),
+//	"smtp_server"    => "mail.mertens.ag",
+//	"smtp_port"      => "25",
+//	'smtp_from_name' => 'Order Request System',
+//	'smtp_from_addr' => 'uniperors@mertens.ag',
+//	'smtp_auth_user' => 'mag\unipermove',
+//	'smtp_auth_pass' => 'merTens47877',
+//	'smtp_client_host' => gethostbyname(gethostname()),
+    "smtp_server"    => "mail.mertens.ag",
+    "smtp_port"      => "25",
+    'smtp_from_name' => 'Order Request System',
+    'smtp_from_addr' => 'uniperors@mertens.ag',
+    'smtp_auth_user' => 'mag\unipermove',
+    'smtp_auth_pass' => 'merTens47877',
+    'smtp_client_host' => gethostbyname(gethostname()),
 	'min_ma' => 0,
-	'webmaster' => 'bayerors@mertens.ag',
+	'webmaster' => 'uniperors@mertens.ag',
 	'minWerktageVorlauf' => 0,
+    'validateAntragOrt' => false,
+    'validateAntragGebaeude' => false,
 );
+//aDjSoNHQQKzT7
 //die('<pre>'.print_r($MConf,1));
 
 /* $MConf['module_login_hint'] = <<<EOT
@@ -100,7 +110,7 @@ $SiteVars["AppTitle"]     = $MConf["AppTitle"];
 $SiteVars["WebRoot"]      = $MConf["WebRoot"];
 $SiteVars["propertyName"] = $MConf["propertyName"];
 
-// Kompatibilit�ts-Variablen
+// Kompatibilitäts-Variablen
 $_CONF = $MConf;
 $_CONF["HTML"]["ausgabe"]  = $MConf["AppRoot"].$MConf["Tpl_Dir"].$MConf["Html_Ausgabe"];
 $_CONF["HTML"]["body"]     = $MConf["AppRoot"].$MConf["Tpl_Dir"].$MConf["Html_Body"];
@@ -130,4 +140,14 @@ $_ADMIN_MODUL["formcreator"] = $ModulBaseDir."formbuilder/create_any_forms.php";
 $_ADMIN_MODUL["editbyconf"] = $ModulBaseDir."editdatabyconf/edit_data.inc.php";
 $_ADMIN_MODUL["offline"] = $ModulBaseDir."offline/offline.php";
 /* ADMIN-MODULE: ENDE */
+
+if (!function_exists('getAppConfigProperty')) {
+    function getAppConfigProperty(string $key, $default = null) {
+        global $MConf;
+        if (array_key_exists($key, $MConf)) {
+            return $MConf[$key];
+        }
+        return $default;
+    }
+}
 

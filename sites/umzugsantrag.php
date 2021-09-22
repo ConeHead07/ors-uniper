@@ -185,7 +185,7 @@ if ('property' == $creator
     $ASConf['Fields']['planonnr']['required'] = true;
 }
 
-// Erzeuge GeraeteListe (Array) f�r Smarty-Template
+// Erzeuge GeraeteListe (Array) für Smarty-Template
 $CsvLines = explode("\n", $AS->arrInput["geraete_csv"]);
 $aGItems = array();
 $aGCols = array();

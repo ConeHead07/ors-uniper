@@ -203,7 +203,7 @@ $_CONF["p_entries"] = array(
 			"fieldGroup" => "",
 			"description" => "",
 			"type" => "enum",
-			"size" => "S=Standardplanung,K=Konzept,PA=Planungsauftrag,C/P=Coloration/Pr�sentation",
+			"size" => "S=Standardplanung,K=Konzept,PA=Planungsauftrag,C/P=Coloration/Präsentation",
 			"sysType" => "enum",
 			"htmlType" => "radio",
 			"default" => "S",

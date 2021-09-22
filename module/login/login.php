@@ -24,7 +24,7 @@ require_once(PATH_TO_LOGIN_MODUL."include/login_lib.php");
 require_once(PATH_TO_LOGIN_MODUL."include/user_lib.php");
 
 if (empty($msg)) $msg = "";
-if (empty($error)) $error = ""; //"Aufgrund von Anpassungen im Rahmen der Browserumstellung kann das Tool vor�bergehend nicht genutzt werden!";
+if (empty($error)) $error = ""; //"Aufgrund von Anpassungen im Rahmen der Browserumstellung kann das Tool vorübergehend nicht genutzt werden!";
 if (empty($syserr)) $syserr = "";
 
 $_rpl = array();

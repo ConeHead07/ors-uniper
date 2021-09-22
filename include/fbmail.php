@@ -5,6 +5,7 @@ function fbmail($to, $su, $bo, $hd) {
         
 	$aHdLines = explode("\n", $hd);
 	$aUserHeader = $aHeader;
+	$aUserHeader['X-LINES'] = empty($aUserHeader['X-LINES']) ? '#' . __LINE__ : $aUserHeader['X-LINES'].= ';#' . __LINE__;
 	$iNumHdLines = count($aHdLines);
 
 	for ($i = 0; $i < $iNumHdLines; $i++) {

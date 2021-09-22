@@ -10,7 +10,7 @@
 <h1><span class="spanTitle">Leistungsanforderung {if $AS.aid}#{$AS.aid}{/if}</span></h1> 
 <p>
 <div id="Umzugsantrag" class="divInlay"> 
-<h2 style="margin:0;">Leistungsantragsteller</h2> 
+<h2 style="margin:0;">Antragsteller</h2>
 <table>
   <tr>
     <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
@@ -25,41 +25,51 @@
     <td style="padding:0;">{$AS.email|escape}</td>
   </tr>
   <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Telefon:</label></td>
     <td style="padding:0;">{$AS.fon|escape}</td>
   </tr>
 
   <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Standort:</label></td>
-    <td style="padding:0;">{$AS.ort|escape}</td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Stra&szlig;e:</label></td>
+    <td style="padding:0;">{$AS.strasse|escape}</td>
   </tr>
 
   <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">PLZ:</label></td>
+    <td style="padding:0;">{$AS.plz|escape}</td>
+  </tr>
+
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Ort:</label></td>
+    <td style="padding:0;">{$AS.ort|escape}</td>
+  </tr>
+
+  <tr style="display:none;">
     <td style="padding:0;"><label style="display:block;width:auto;">Wirtschaftseinheit:</label></td>
     <td style="padding:0;">{$AS.gebaeude_text|escape}</td>
   </tr>
 
-  <tr>
+  <tr style="display:none;">
     <td style="padding:0;"><label style="display:block;width:auto;">Etage:</label></td>
     <td style="padding:0;">{$AS.etage}</td>
   </tr>
 
-  <tr>
+  <tr style="display:none;">
     <td style="padding:0;"><label style="display:block;width:auto;">Raumnr:</label></td>
     <td style="padding:0;">{$AS.raumnr}</td>
   </tr>
 {*
-  <tr>
+  <tr style="display:none;">
     <td style="padding:0;"><label style="display:block;width:auto;">Kostenstelle:</label></td>
     <td style="padding:0;">{$AS.kostenstelle|escape}</td>
   </tr>
 *}
-  <tr>
+  <tr style="display:none;">
     <td style="padding:0;"><label style="display:block;width:auto;">Terminwunsch:</label></td>
     <td style="padding:0;">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</td>
   </tr>
-  <tr>
-    <td style="padding:0;"><label for="umzugszeitt" style="display:block;width:auto;">Uhrzeit</label></td>
+  <tr style="display:none;">
+    <td style="padding:0;"><label style="display:block;width:auto;">Uhrzeit</label></td>
     <td style="padding:0;">{$AS.umzugszeit|escape}</td>
   </tr>
   <tr>
@@ -67,14 +77,14 @@
     <td style="padding:0;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</td>
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
-  <tr>
-    <td style="padding:0;"><label for="von_gebaeude_text" style="display:block;width:auto;">Von:</label></td>
+  <tr style="display:none;">
+    <td style="padding:0;"><label style="display:block;width:auto;">Von:</label></td>
     <td class="ort">{if $AS.von_gebaeude_text eq ""}{$AS.von_gebaeude_id|escape}{/if}{$AS.von_gebaeude_text|escape}</td>
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
-  <tr>
-    <td style="padding:0;"><label for="nach_gebauede_text" style="display:block;width:auto;">Nach:</label></td>
-    <td class="zort">{if $AS.nach_gebaeude_text eq""}{$AS.nach_gebaeude_id|escape}{/if}{$AS.nach_gebaeude_text|escape}</td>
+  <tr style="display:none;">
+    <td style="padding:0;"><label style="display:block;width:auto;">Nach:</label></td>
+    <td class="zort">{if $AS.nach_gebaeude_text eq ""}{$AS.nach_gebaeude_id|escape}{/if}{$AS.nach_gebaeude_text|escape}</td>
   </tr>
 </table>
 <br>

@@ -254,7 +254,7 @@ function send_umzugsblatt($AID, $antragsOrt, $antragsGebaeude, $aData) {
 	$umzugsblatt = get_umzugsblatt($AID);
 	
 	$subject = "Umzug ID ".$AID." - Umzugsdatenblatt";
-	$plaintext = "Guten Tag,\n\nanbei erhalten Sie das Umzugsdatenblatt f�r den Umzug mit der ID ".$AID.".\n\nMit freundlichen Gr��en\n\nIhr\n".$MConf["AppTitle"];
+	$plaintext = "Guten Tag,\n\nanbei erhalten Sie das Umzugsdatenblatt für den Umzug mit der ID ".$AID.".\n\nMit freundlichen Grüßen\n\nIhr\n".$MConf["AppTitle"];
 	$htmltext = "";
 	$header = "";
 	$specs = "";
@@ -269,7 +269,7 @@ function send_umzugsblatt($AID, $antragsOrt, $antragsGebaeude, $aData) {
 	$attachement[0]["fmime"]="text/html";
 	
 	if ($AtList) {
-		$htmltext = "Guten Tag,<br>\n<br>\nanbei erhalten Sie das Umzugsdatenblatt f�r den Umzug mit der ID ".$AID.".<br>\n<br>\n";
+		$htmltext = "Guten Tag,<br>\n<br>\nanbei erhalten Sie das Umzugsdatenblatt für den Umzug mit der ID ".$AID.".<br>\n<br>\n";
 		$htmltext.= "Dem Auftrag wurden ".count($aAtItems)." Dateianh&auml;nge zum Download beigef&uuml;gt:<br>\n";
 		$htmltext.= "<ol>".$AtList."</ol>\n";
 		$htmltext.= "<br>\n<br>\nMit freundlichen Gr&uuml;&szlig;en<br>\n<br>\nIhr<br>\n".$MConf["AppTitle"];
@@ -413,7 +413,7 @@ function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
 //            $users['objektleiter'],
 	);
 	
-    // Leider noch doppelte Abfrage aus evtll. Kompatibilit�tsgr�nden, eigentlich unn�tig, Korrektur steht noch an !!!
+    // Leider noch doppelte Abfrage aus evtll. Kompatibilitätsgründen, eigentlich unnötig, Korrektur steht noch an !!!
 	if ($users['antragsteller']['gruppe'] === 'kunde_report') {
 		$aPropertyMailTo[] = $users['antragsteller'];
 	} else {
@@ -498,13 +498,13 @@ function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
 						$tplFile = $TextBaseDir."statusmail_umzug_bestaetigt.txt";
 						if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
 						$tplMail = file_get_contents($tplFile);
-                        // Benachrichtige UmzugsTeam �ber best�tigten Umzugsauftrag
+                        // Benachrichtige UmzugsTeam über bestätigten Umzugsauftrag
 //			       send_umzugsblatt($AID, $AS->arrInput["ort"], $AS->arrInput["gebaeude"], $AS->arrInput);
                     } else {
 						$tplFile = $TextBaseDir."statusmail_umzug_aufhebung.txt";
 						if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
 						$tplMail = file_get_contents($tplFile);
-                        // Informiere Umzugsteam �ber (bis auf weiteres) aufgehobenen Umzugsauftrag
+                        // Informiere Umzugsteam über (bis auf weiteres) aufgehobenen Umzugsauftrag
 //			       $rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
 //			       send_status_mail($aAdminMailTo, $tplMail, $rplVars);
                     }
@@ -601,8 +601,8 @@ function umzugsantrag_mailinform($AID, $status="neu", $value) {
         
 	$aAdminMailTo = get_standort_admin_mail($AS->arrInput["ort"], $AS->arrInput["gebaeude"]);
 	
-	// Neue Abfrage des Verteilers unter Ber�cksichtigung aller enthaltenen umzuziehenden MA-Daten
-	// Leider noch doppelte Abfrage aus evtll. Kompatibilit�tsgr�nden, eigentlich unn�tig, Korrektur steht noch an !!!
+	// Neue Abfrage des Verteilers unter Berücksichtigung aller enthaltenen umzuziehenden MA-Daten
+	// Leider noch doppelte Abfrage aus evtll. Kompatibilitätsgründen, eigentlich unnötig, Korrektur steht noch an !!!
 	$adminVerteiler = get_umzugsverteilerById($AID);
 	$propertyVerteiler = get_propertyverteilerById($AID);
 	
@@ -658,11 +658,11 @@ function umzugsantrag_mailinform($AID, $status="neu", $value) {
 //			echo "#".__LINE__." bestaetigt Ja<br />\n";
 			if ($value == "Ja") {
 				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_bestaetigt.txt");
-				// Benachrichtige UmzugsTeam �ber best�tigten Umzugsauftrag
+				// Benachrichtige UmzugsTeam über best�tigten Umzugsauftrag
 				send_umzugsblatt($AID, $AS->arrInput["ort"], $AS->arrInput["gebaeude"], $AS->arrInput);
 			} else {
 				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_aufhebung.txt");
-				// Informiere Umzugsteam �ber (bis auf weiteres) aufgehobenen Umzugsauftrag
+				// Informiere Umzugsteam über (bis auf weiteres) aufgehobenen Umzugsauftrag
 				$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
 				//echo "#".__LINE__." bestaetigt ".$value."; aAdminVerteilerTo:".print_r($aAdminVerteilerTo,1)."<br />\n";
 				send_status_mail($aAdminVerteilerTo, $tplMail, $rplVars);

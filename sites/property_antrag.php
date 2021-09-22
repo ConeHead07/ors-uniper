@@ -151,7 +151,7 @@ $Tpl->assign("s", $s);
 if (!empty($MAItems) && count($MAItems)) $Tpl->assign("Mitarbeiterliste", $MAItems);
 if (!empty($aAtItems) && count($aAtItems)) $Tpl->assign("UmzugsAnlagen", $aAtItems);
 
-// Erzeuge GeraeteListe (Array) f�r Smarty-Template
+// Erzeuge GeraeteListe (Array) für Smarty-Template
 $CsvLines = explode("\n", $AS->arrInput["geraete_csv"]);
 $aGItems = array();
 $aGCols = array();

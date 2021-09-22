@@ -39,17 +39,18 @@
 <!-- Add-On Fließtext(dyn) ID: 128588 BEGIN --> 
 <div class="divInlay borderTop"> 
 <h2>Es liegen {$Umzuege|@count} {$catTitle} Leistungsanforderungen vor</h2>
+  (kantraege_liste.html)
 {if $ListBrowsing}{$ListBrowsing}{/if}
   <ul class="ulLinkList"> 
   <div>
   <div style="float:left;display:block;width:30px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=id{if $ofld eq "id" && $odir ne "DESC"}&odir=DESC{/if}">ID</a></div>
-  <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Termin</a></div>
-  <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=von{if $ofld eq "von" && $odir ne "DESC"}&odir=DESC{/if}">Von</a></div>
-  <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=nach{if $ofld eq "nach" && $odir ne "DESC"}&odir=DESC{/if}">Nach</a></div>
-  <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=ort{if $ofld eq "ort" && $odir ne "DESC"}&odir=DESC{/if}">Auftragsort</a></div>
-  <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=umzug{if $ofld eq "umzug" && $odir ne "DESC"}&odir=DESC{/if}">Mit Umzug</a></div>
+  <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Lieferdatum</a></div>
+    <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=ort{if $ofld eq "ort" && $odir ne "DESC"}&odir=DESC{/if}">Lieferort</a></div>
+    <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=plz{if $ofld eq "plz" && $odir ne "DESC"}&odir=DESC{/if}">PLZ</a></div>
+    <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=strasse{if $ofld eq "strasse" && $odir ne "DESC"}&odir=DESC{/if}">Stra&szlig;e</a></div>
+  <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=umzug{if $ofld eq "umzug" && $odir ne "DESC"}&odir=DESC{/if}">Service</a></div>
   <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Auftragseingang</a></div>
-  <div style="float:left;display:block;width:90px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=genehmigt{if $ofld eq "genehmigt" && $odir ne "DESC"}&odir=DESC{/if}" title="Genehmigt">G</a></div>
+  <div style="float:left;display:block;width:90px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=genehmigt{if $ofld eq "genehmigt" && $odir ne "DESC"}&odir=DESC{/if}" title="Genehmigt">Genehmigt</a></div>
   <div style="float:left;display:block;width:90px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=geprueft{if $ofld eq "geprueft" && $odir ne "DESC"}&odir=DESC{/if}" title="von merTens geprueft">M</a></div>
   <div style="float:left;display:block;width:80px;font-weight:bold;color:#00869c;" title="Abgeschlossen"><a href="{$ListBaseLink}&ofld=abgeschlossen{if $ofld eq "abgeschlossen" && $odir ne "DESC"}&odir=DESC{/if}">Abgeschlossen</a></div><br clear=left></div>
 
@@ -58,9 +59,9 @@
   <div>
   <div style="float:left;display:block;width:30px;font-weight:bold;">{$U.aid}&nbsp;</div>
   <div style="float:left;display:block;width:100px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
-  <div style="float:left;display:block;width:100px;">{$U.Von}&nbsp;</div>
-  <div style="float:left;display:block;width:100px;">{$U.Nach}&nbsp;</div>
-  <div style="float:left;display:block;width:75px;">{$U.ort}&nbsp;</div>
+  <div style="float:left;display:block;width:100px;">{$U.ort}&nbsp;</div>
+  <div style="float:left;display:block;width:100px;">{$U.plz}&nbsp;</div>
+  <div style="float:left;display:block;width:75px;">{$U.strasse}&nbsp;</div>
   <div style="float:left;display:block;width:75px;">{$U.umzug}&nbsp;</div>
   <div style="float:left;display:block;width:100px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
   <div style="float:left;display:block;width:90px;">{$U.Genehmigt}&nbsp;</div>

@@ -34,7 +34,9 @@ class Swift_SmtpTransport extends Swift_Transport_EsmtpTransport
 
         $this->setHost($host);
         $this->setPort($port);
-        $this->setEncryption($security);
+        if ($security) {
+            $this->setEncryption($security);
+        }
     }
 
     /**

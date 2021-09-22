@@ -34,27 +34,45 @@
 <table class="tblRegister">
 <form action="" method="post">
 <tr>
-	<td><label errclass="anrede" for="eingabe[anrede]" id="InputLblanrede">Anrede:</label></td> 
-	<td><input type="radio" name="eingabe[anrede]" value="Frau" class="iRad" check_anrede="Frau">Frau
+	<td><label errclass="anrede" for="eingabe_anrede_frau" id="InputLblanrede">Anrede:</label></td> 
+	<td><input type="radio" id="eingabe_anrede_frau" name="eingabe[anrede]" value="Frau" class="iRad" check_anrede="Frau">Frau
 	    <input type="radio" name="eingabe[anrede]" value="Herr" class="iRad" check_anrede="Herr">Herr</td>
 </tr>
 <tr>
-	<td><label errclass="vorname" for="eingabe[vorname]" id="InputLblvorname">Vorname:</label></td> 
-	<td><input id="inputUser" type="text" name="eingabe[vorname]" value="{eingabe[vorname]}" class="iTxt"></td>
+	<td><label errclass="vorname" for="eingabe_vorname" id="InputLblvorname">Vorname:</label></td> 
+	<td><input id="inputUser" id="eingabe_vorname" type="text" name="eingabe[vorname]" value="{eingabe[vorname]}" class="iTxt"></td>
 </tr>
 <tr>
-	<td><label errclass="nachname" for="eingabe[nachname]" id="InputLblnachname">Nachname:</label></td> 
-	<td><input type="text" name="eingabe[nachname]" value="{eingabe[nachname]}" class="iTxt"></td>
+	<td><label errclass="nachname" for="eingabe_nachname" id="InputLblnachname">Nachname:</label></td> 
+	<td><input type="text" id="eingabe_nachname" name="eingabe[nachname]" value="{eingabe[nachname]}" class="iTxt"></td>
 </tr>
 
 <tr>
-	<td><label errclass="email" for="eingabe[email]" id="InputLblemail">Benutzer / E-Mail:</label></td> 
-	<td><input type="text" name="eingabe[email]" value="{eingabe[email]}" class="iTxt">{email_tld_only}</td>
+	<td><label errclass="email" for="eingabe_email" id="InputLblemail">Benutzer / E-Mail:</label></td> 
+	<td><input type="text" id="eingabe_email" name="eingabe[email]" value="{eingabe[email]}" class="iTxt">{email_tld_only}</td>
 </tr>
+
+	<tr>
+		<td><label errclass="personalnr" for="eingabe_personalnr" id="InputLblpersonalnr">Personalnr:</label></td>
+		<td><input type="text" id="eingabe_personalnr" name="eingabe[personalnr]" value="{eingabe[personalnr]}" class="iTxt"></td>
+	</tr>
+
 <tr>
-	<td><label errclass="fon" for="eingabe[fon]" id="InputLblfon">Fon:</label></td> 
-	<td><input type="text" name="eingabe[fon]" value="{eingabe[fon]}" class="iTxt"></td>
+	<td><label errclass="fon" for="eingabe_fon" id="InputLblfon">Telefon:</label></td> 
+	<td><input type="text" id="eingabe_fon" name="eingabe[fon]" value="{eingabe[fon]}" class="iTxt"></td>
 </tr>
+	<tr>
+		<td><label errclass="strasse" for="eingabe_strasse" id="InputLblstrasse">Strasse:</label></td>
+		<td><input type="text" id="eingabe_strasse" name="eingabe[strasse]" value="{eingabe[strasse]}" class="iTxt"></td>
+	</tr>
+	<tr>
+		<td><label errclass="plz" for="eingabe_plz" id="InputLblplz">PLZ:</label></td>
+		<td><input type="text" id="eingabe_plz" name="eingabe[plz]" value="{eingabe[plz]}" class="iTxt"></td>
+	</tr>
+	<tr>
+		<td><label errclass="ort" for="eingabe_ort" id="InputLblort">Ort:</label></td>
+		<td><input type="text" id="eingabe_ort" name="eingabe[ort]" value="{eingabe[ort]}" class="iTxt"></td>
+	</tr>
 <!-- 
 <tr>
 	<td><label errclass="standort" for="eingabe[standort]" id="InputLblstandort">Standort:</label></td> 
@@ -69,12 +87,12 @@
 	<td><input type="text" name="eingabe[user]" value="{eingabe[user]}" class="iTxt"></td>
 </tr> -->
 <tr>
-	<td><label errclass="pw" for="eingabe[pw]" id="InputLblpw">Passwort:</label></td> 
-	<td><input type="password" name="eingabe[pw]" value="{eingabe[pw]}"  class="iPass"> mind. {pw_min_length} Zeichen</td>
+	<td><label errclass="pw" for="eingabe_pw" id="InputLblpw">Passwort:</label></td> 
+	<td><input type="password" id="eingabe_pw" name="eingabe[pw]" value="{eingabe[pw]}"  class="iPass"> mind. {pw_min_length} Zeichen</td>
 </tr>
 <tr>
-	<td><label errclass="pwc" for="eingabe[pwc]" id="InputLblpwc">PW wiederholen:</label></td> 
-	<td><input type="password" name="eingabe[pwc]" value="{eingabe[pwc]}" class="iPass"></td>
+	<td><label errclass="pwc" for="eingabe_pwc" id="InputLblpwc">PW wiederholen:</label></td> 
+	<td><input type="password" id="eingabe_pwc" name="eingabe[pwc]" value="{eingabe[pwc]}" class="iPass"></td>
 </tr>
 <!-- <tr>
 	<td><label errclass="agb_confirm" for="eingabe[agb_confirm]" id="InputLblagb_confirm">AGB:</label></td> 

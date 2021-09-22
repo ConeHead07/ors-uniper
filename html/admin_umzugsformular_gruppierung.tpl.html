@@ -25,33 +25,37 @@
             <td style="width:14px;padding:0;"> X </td>
             <td>ID</td>
             <td>Termin</td>
-            <td>Auftragsort</td>
-            <td>Etage</td>
-            <td>Raumnr</td>
-            <td>Mit Umzug</td>
+            <td>Lieferort</td>
+            <td>PLZ</td>
+            <td>Stra&szlig;e</td>
+            <td>Service</td>
             <td>Auftragseingang</td>
-            <td>G</td>
-            <td>M</td>
+            <td>Genehmigt</td>
+            <td>Avisiert</td>
 			<td>Abgeschlossen</td>
         </tr>
     </thead>
     <tbody id="TblGruppierungenBody">
-    {foreach name=GList item=G from=$UmzugsGruppierungen}
-        <tr data-id="{$G.aid}" class="row inputRowVon">
-            <td style="padding:0;">
-			<span data-editid="{$G.aid}"  onclick="auftragsliste_remove({$G.aid})" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></td>
-            <td><a href="?s=aantrag&id={$G.aid}">{$G.aid}</a></td>
-			<td>{if $G.umzugstermin}{$G.umzugstermin}{else}{$G.terminwunsch}{/if}</td>
-			<td>{$G.ort}</td>
-			<td>{$G.etage}</td>
-			<td>{$G.raumnr}</td>
-			<td>{$G.umzug}</td>
-			<td>{$G.antragsdatum}</td>
-			<td>{$G.Genehmigt}{if $G.genehmigt_br_am} {$G.genehmigt_br_am}{/if}</td>
-			<td>{$G.Geprueft}{if $G.geprueft_am} {$G.geneprueft_am}{/if}</td>
-			<td>{$G.abgeschlossen}{if $G.abgeschlossen_am}{$G.abgeschlossen_am}{/if}</td>
-		</tr>
-	{/foreach}
+    {if !empty($UmzugsGruppierungen)}
+        {foreach name=GList item=G from=$UmzugsGruppierungen}
+            <tr data-id="{$G.aid}" class="row inputRowVon">
+                <td style="padding:0;">
+                <span data-editid="{$G.aid}"
+                      onclick="auftragsliste_remove({$G.aid})"
+                      style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></td>
+                <td><a href="?s=aantrag&id={$G.aid}">{$G.aid}</a></td>
+                <td>{if $G.umzugstermin}{$G.umzugstermin}{else}{$G.terminwunsch}{/if}</td>
+                <td>{$G.ort}</td>
+                <td>{$G.etage}</td>
+                <td>{$G.raumnr}</td>
+                <td>{$G.umzug}</td>
+                <td>{$G.antragsdatum}</td>
+                <td>{$G.Genehmigt}{if $G.genehmigt_br_am} {$G.genehmigt_br_am}{/if}</td>
+                <td>{$G.Geprueft}{if $G.geprueft_am} {$G.geneprueft_am}{/if}</td>
+                <td>{$G.abgeschlossen}{if $G.abgeschlossen_am}{$G.abgeschlossen_am}{/if}</td>
+            </tr>
+        {/foreach}
+    {/if}
 	</tbody>
 </table>
 <input id="gruppierteauftraege" name="gruppierteauftraege" type="hidden" value="{$UmzugsGruppierungsIds}">

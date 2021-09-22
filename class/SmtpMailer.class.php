@@ -4,7 +4,8 @@ if ( basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
     require __DIR__ . '/../include/conf.php';
 }
 
-define('SMTP_MAILER_DEBUG', APP_ENVIRONMENT == 'DEVELOPMENT' ? 1 : 0);
+define('SMTP_MAILER_DEBUG', APP_ENVIRONMENT === 'DEVELOPMENT' ? 1 : 0);
+define('SMTP_MAILER_REALSEND', 1);
 
 
 $aSmtpConn = array(
@@ -26,8 +27,26 @@ $aSmtpConn = array(
     "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".txt",
     "tat"       => "" // Transaktionstext mit SERVER
 );
-
 if(SMTP_MAILER_DEBUG === 1) $aSmtpConn = array(
+        "server"    => 'smtp.gmail.com',
+        "port"      => 25,
+        "encrypt"   => 'tls',
+        "from_name" => 'Mertens ORS Uniper',
+        "from_addr" => 'mertens.ors.uniper@gmail.com',
+        "from"      => '"Mertens ORS Uniper" <mertens.ors.uniper@gmail.com>',
+        "postfach_from" => '<mertens.ors.uniper@gmail.com>',
+        "auth_user" => 'mertens.ors.uniper@gmail.com',
+        "auth_pass" => 'aDjSoNHQQKzT7',
+        "socket"    => "",
+        "connection_timeout" => 5,
+        "timeIn"    => time(),
+        "antwort"   => "",
+        "logsmtp"   => 1,
+        "logfile"   => dirname(__FILE__) . "/../log/log_smtp_".date("YmdHis").".gmail.txt",
+        "tat"       => "" // Transaktionstext mit SERVER
+    ) + $aSmtpConn;
+
+if(SMTP_MAILER_DEBUG === 2) $aSmtpConn = array(
     "server"    => 'smtp.gmail.com',
     "port"      => 25,
     "encrypt"   => 'tls',
@@ -64,13 +83,18 @@ $aSmtpDebugTo = [
 ];
 
 $aHeader = array(
-    "From"        => $MConf['smtp_from_name'] . ' <' . $MConf['smtp_from_addr'].'>',
-    "Reply-To"    => $MConf['smtp_from_addr'],
-    "Errors-To"   => $MConf['smtp_from_addr'],
+    "From"        => $aSmtpConn['from'],
+    "Reply-To"    => $aSmtpConn['from_addr'],
+    "Errors-To"   => $aSmtpConn['from_addr'],
     "BCC"         => 'f.barthold@mertens.ag',
-    'Return-Path' => $MConf['smtp_from_addr'],
-    'Bounce-To'   => $MConf['smtp_from_addr'],
-    "multipart_data" => ""
+    'Return-Path' => $aSmtpConn['from_addr'],
+    'Bounce-To'   => $aSmtpConn['from_addr'],
+    "multipart_data" => "",
+	'X-LINES' => '#' . __LINE__,
+);
+$LINE = __LINE__;
+if (0) die(
+    json_encode(compact('LINE', 'aSmtpConn', 'aHeader'), JSON_PRETTY_PRINT)
 );
 
 class SmtpMailer {
@@ -255,49 +279,42 @@ class SmtpMailer {
      * @param null $sHtmlBody
      * @param null $sTxtBody
      * @param array $aAttachments
-     * @param array $aHeaders
+     * @param array $aUseHeaders
      * @return int number of accepted recipients
      */
-    public function sendMultiMail(array $aTo, $sSubject, $sHtmlBody = null, $sTxtBody = null, array $aAttachments = [], array $aHeaders = [])
+    public function sendMultiMail(array $aTo, $sSubject, $sHtmlBody = null, $sTxtBody = null, array $aAttachments = [], array $aUseHeaders = [])
     {
+        global $aHeader;
+        global $aSmtpConn;
+        global $aSmtpDebugTo;
+
         if (preg_match('#ID\s*(?P<id>\d+)\b#', $sSubject, $m)) {
             $this->logfile = str_replace("log_smtp", "log_".$m['id'].'_smtp', $this->logfile);
         }
 
-        file_put_contents(
-            $this->logfile,
-            print_r([
-                'aTo'=> $aTo,
-                'sSubject' => $sSubject,
-                'sHtmlBody' =>  $sHtmlBody,
-                'sTxtBody' => $sTxtBody,
-                'aAttachments' => $aAttachments,
-                'aHeaders' =>  $aHeaders,
-                'rplVars' => $this->subject,
-            ],1),
-            FILE_APPEND
-        );
-
-        if (isset($aHeaders['multipart_data'])) {
-            unset($aHeaders['multipart_data']);
+        if (defined('SMTP_MAILER_DEBUG') && SMTP_MAILER_DEBUG === 1) {
+            $aUseHeaders = $aHeader + $aUseHeaders;
         }
 
-        if (isset($aHeaders['BCC'])) {
-		    $bcc = trim($aHeaders['BCC']);
-            unset($aHeaders['BCC']);
+        if (isset($aUseHeaders['multipart_data'])) {
+            unset($aUseHeaders['multipart_data']);
+        }
+
+        if (isset($aUseHeaders['BCC'])) {
+		    $bcc = trim($aUseHeaders['BCC']);
+            unset($aUseHeaders['BCC']);
         } else {
             $bcc = '';
         }
 
-        if (isset($aHeaders['CC'])) {
-		    $cc = trim($aHeaders['CC']);
-            unset($aHeaders['CC']);
+        if (isset($aUseHeaders['CC'])) {
+		    $cc = trim($aUseHeaders['CC']);
+            unset($aUseHeaders['CC']);
         } else {
             $cc = '';
         }
 
         if (defined('SMTP_MAILER_DEBUG') && SMTP_MAILER_DEBUG === 1) {
-            global $aSmtpDebugTo;
 
             if ($sHtmlBody) {
                 $sHtmlBody .= "<br>\n<br>\n"
@@ -313,9 +330,26 @@ class SmtpMailer {
 
             $aTo = $aSmtpDebugTo;
         }
+        $aUseHeaders['X-LINES'].= ',#' . __LINE__;
+        file_put_contents(
+            $this->logfile,
+            print_r([
+                'aTo'=> $aTo,
+                'sSubject' => $sSubject,
+                'line' => __LINE__,
+                'sHtmlBody' =>  $sHtmlBody,
+                'sTxtBody' => $sTxtBody,
+                'aAttachments' => $aAttachments,
+                'aHeader' =>  $aHeader,
+                'aSmtpConn' => $aSmtpConn,
+                'aUseHeaders' =>  $aUseHeaders,
+                'rplVars' => $this->subject,
+            ],1),
+            FILE_APPEND
+        );
 
         $this->createDefaultMailer();
-        $this->addHeaders($aHeaders);
+        $this->addHeaders($aUseHeaders);
         $this->addLogger(new Swift_Plugins_Loggers_ArrayLogger());
 
         $numAcceptedRecipients = 0;
@@ -332,15 +366,18 @@ class SmtpMailer {
             $this->textBody = $this->renderTplVars( $sTxtBody, false);
             $this->htmlBody = $this->renderTplVars( $sHtmlBody, true );
 
-//            $thisSubject = $this->subject;
-//            $thisTplVars = $this->tplVars;
-//            $thisTextBody = $this->textBody;
-//
-//            ob_end_flush();
-//            echo '<pre>' . print_r(compact('thisSubject', 'thisTextBody', 'thisTplVars'), 1) . '</pre>';
-//            exit;
+            //            $thisSubject = $this->subject;
+            //            $thisTplVars = $this->tplVars;
+            //            $thisTextBody = $this->textBody;
+            //
+            //            ob_end_flush();
+            //            echo '<pre>' . print_r(compact('thisSubject', 'thisTextBody', 'thisTplVars'), 1) . '</pre>';
+            //            exit;
 
             $this->createMessage();
+            $type = $this->message->getHeaders()->get('Content-Type');
+            $type->setValue('text/plain');
+            $type->setParameter('charset', 'iso-8859-1');
             $this->message->setTo($_to['email'], $_to['anrede'] ?? '');
             $this->message->setSubject($this->subject);
 
@@ -389,6 +426,8 @@ class SmtpMailer {
             file_put_contents(
                 $this->logfile,
 		    print_r(['_to' => $_to],1)
+                . PHP_EOL . 'AUTH_USER: ' . $this->auth_user
+                . PHP_EOL . 'AUTH_PASS: ' . $this->auth_pass
                 . PHP_EOL . $this->logger[0]->dump()
                 . PHP_EOL . 'Result: ' . $result
                 . PHP_EOL . 'Error : ' . $error
@@ -644,10 +683,10 @@ class SmtpMailer {
             $thisHeaders->addTextHeader($_k, $_v);
         }
 
-        if (APP_ENVIRONMENT === 'PRODUKTION') {
+        if (APP_ENVIRONMENT === 'PRODUKTION' || SMTP_MAILER_REALSEND === 1) {
             $result = $this->mailer->send( $this->message );
         } else {
-            $result = true;
+            $result = 2;
         }
 
         return $result;

@@ -34,7 +34,7 @@ function get_navelements(&$user, $parentid = 0, $deep = 0, $menuGroupName="main"
 	$aNavElements = array();
 	
 	if ($cnt_loop++ > $max_loop) {
-		$error.= "#".__LINE__." Max.Loops:$max_loop �berschritten!<br>\n";
+		$error.= "#".__LINE__." Max.Loops:$max_loop überschritten!<br>\n";
 		$cnt_loop = 0;
 		return false;
 	}
@@ -115,7 +115,7 @@ function render_navelements(&$aNavElements, $deep = 0, $menuGroupName="main", $H
 	}
 	
 	if ($cnt_loop++ > $max_loop) {
-		$error.= "#".__LINE__." Max.Loops:$max_loop �berschritten!<br>\n";
+		$error.= "#".__LINE__." Max.Loops:$max_loop überschritten!<br>\n";
 		$cnt_loop = 0;
 		return false;
 	}
@@ -151,7 +151,7 @@ function render_navelements(&$aNavElements, $deep = 0, $menuGroupName="main", $H
 					$error.= "\$_Item[srv]: $_Item[srv]<br>\n";
 					$error.= "\$menuGroupName: $menuGroupName<br>\n";
 					$error.= "\$tpl: $tpl<br>\n";
-					$error.= "\"".$_Item["srv"]."\": Men�vorlage der Ebene $deep ".($sub_navbar ? "mit" : "ohne")." Untermen�s konnte nicht gefunden werden!<br>\n";
+					$error.= "\"".$_Item["srv"]."\": Menüvorlage der Ebene $deep ".($sub_navbar ? "mit" : "ohne")." Untermenüs konnte nicht gefunden werden!<br>\n";
 					if (DEBUG) echo $error;
 				}
 			}
@@ -245,10 +245,10 @@ function render_dyn_navitem($tpl, $Item, $submenu = "") {
 		if (!empty($Item["strMenu"])) return $Item["strMenu"];
 	}
 	
-	// Men�-srv
+	// Menü-srv
 	$_RplTpl["{srv}"] = $Item["srv"];
 	// echo "#".__LINE__." srv:".$Item["srv"]."<br>\n";
-	// Men�-Benennung
+	// Menü-Benennung
 	$m_ti = ($Item["menu_title"] ? $Item["menu_title"] : $Item["name"]);
 	if ($Item["menu_icon"]) {
 		if (substr(trim($Item["menu_icon"]), 0, 1) == "<") {
@@ -263,7 +263,7 @@ function render_dyn_navitem($tpl, $Item, $submenu = "") {
 	// echo "#".__LINE__." m_ti: ".fb_htmlEntities($m_ti)."<br>\n";
 	$_RplTpl["{menu_title}"] = $m_ti;
 	
-	// SubMen�s
+	// SubMenüs
 	$_RplTpl["{submenu}"] = $submenu;
 	
 	// Special-Html ersetzt komplette Vorlagenstruktur
@@ -276,7 +276,7 @@ function render_dyn_navitem($tpl, $Item, $submenu = "") {
 		$strMenu = $tpl;
 	}
 	
-	// Men�-Link-URL
+	// Menü-Link-URL
 	// 
 	if ($Item["menu_link"]) {
 		$m_li = $Item["menu_link"];
@@ -293,7 +293,7 @@ function render_dyn_navitem($tpl, $Item, $submenu = "") {
 		$_AttrAhref["href"] = $m_li;
 	}
 	
-	// Men�-Link-Target
+	// Menü-Link-Target
 	$m_tg = ($Item["menu_target"] ? $Item["menu_target"] : "_self");
 	if (is_int(strpos($strMenu, "{menu_target}"))) {
 		$_RplTpl["{menu_target}"] = $m_tg;
@@ -301,12 +301,12 @@ function render_dyn_navitem($tpl, $Item, $submenu = "") {
 		$_AttrAhref["target"] = $m_tg;
 	}
 	//
-	// Men�-Class
+	// Menü-Class
 	if ($Item["menu_class"]) {
 		$_AttrDiv["class"] = $Item["menu_class"];
 	}
 	
-	// Men�-Style
+	// Menü-Style
 	$m_st = ($Item["menu_style"] ? $Item["menu_style"] : "");
 	$_RplTpl["/*menu_style*/"] = $m_st;
 	if (is_int(strpos($strMenu, "/*menu_style*/"))) {
@@ -315,7 +315,7 @@ function render_dyn_navitem($tpl, $Item, $submenu = "") {
 		$_AttrDiv["style"] = $m_st;
 	}
 	
-	// Men�-OnClick
+	// Menü-OnClick
 	if ($Item["menu_onclick"]) {
 		$_AttrDiv["onclick"] = $Item["menu_onclick"];
 	}
@@ -394,7 +394,7 @@ function render_dyn_navbar($parentid = 0, $deep = 0, $menuGroupName = "main") {
 	$dyn_navbar = "";
 	
 	if ($cnt_loop++ > $max_loop) {
-		echo "#".__LINE__." Max.Loops:$max_loop �berschritten!<br>\n";
+		echo "#".__LINE__." Max.Loops:$max_loop überschritten!<br>\n";
 		$cnt_loop = 0;
 		return false;
 	}
@@ -445,7 +445,7 @@ function render_dyn_navbar($parentid = 0, $deep = 0, $menuGroupName = "main") {
 				} else {
 					$error.= "#".__LINE__." ".basename(__FILE__)." ";
 					$error.= __FUNCTION__."(parentid, $parentid, deep = $deep)<br>\n";
-					$error.= "\"".$_Item["srv"]."\": Men�vorlage der Ebene $deep ".($sub_navbar ? "mit" : "ohne")." Untermen�s konnte nicht gefunden werden!<br>\n";
+					$error.= "\"".$_Item["srv"]."\": Menüvorlage der Ebene $deep ".($sub_navbar ? "mit" : "ohne")." Untermenüs konnte nicht gefunden werden!<br>\n";
 				}
 			}
 			

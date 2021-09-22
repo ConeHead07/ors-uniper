@@ -232,6 +232,7 @@ $(function(){
         </tr>
     </thead>
     <tbody id="TblLeistungenBody">
+    {if !empty($Umzugsleistungen)}
     {foreach name=LList item=L from=$Umzugsleistungen}
         <tr class="row inputRowVon">
             <td style="padding:0;"><span onclick="drop_Leistung(this)" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></td>
@@ -249,6 +250,7 @@ $(function(){
             {/if}
         </tr>
     {/foreach}
+    {/if}
         <tr id="summary">
     {if $PreiseAnzeigen}
             <td colspan="{if $PreiseAnzeigen}11{else}9{/if}"><span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>

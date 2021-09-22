@@ -145,6 +145,8 @@ if (is_array($all)) foreach($all as $i => $item) {
 	
 	$Umzuege[$i]["LinkOpen"] = "?s=kantrag&id=".$item["aid"];
 	$Umzuege[$i]["Mitarbeiter"] = $item["mitarbeiter_num"];
+    $Umzuege[$i]["Von"] = ($item["gebaeude"]?$item["gebaeude"]:"&nbsp;");
+    $Umzuege[$i]["Von"] = ($item["gebaeude"]?$item["gebaeude"]:"&nbsp;");
 	$Umzuege[$i]["Von"] = ($item["gebaeude"]?$item["gebaeude"]:"&nbsp;");
 	$Umzuege[$i]["Nach"] = ($item["ziel_gebaeude"]?$item["ziel_gebaeude"]:"&nbsp;");
 	$Umzuege[$i]["Antragsstatus"] =  $item["antragsstatus"];

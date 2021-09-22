@@ -12,7 +12,7 @@ function check_parentid(&$eingabe, &$lesen) {
                             $lesen["parents"].= "&raquo;".print_r($_Parent[$i],1);
 			}
 		} else {
-			$re["Error"] = "Un�ltige ParentID: ".$eingabe["parentid"]."!<br>\n";
+			$re["Error"] = "Unültige ParentID: ".$eingabe["parentid"]."!<br>\n";
 		}
 	}
 	return $re;
@@ -26,7 +26,7 @@ function check_srv(&$eingabe, &$lesen) {
 		$ckStr = strtolower($eingabe["srv"]);
 		for ($i = 0; $i < strlen($ckStr); $i++) {
 			if (!is_int(strpos($validChars, $ckStr[$i]))) {
-				$re["Error"] = "Unzul�ssiges Zeichen: <span style=\"font-style:italic;\">".$ckStr[$i]."</span>.  Zul�ssig sind: $validChars!<br>\n";
+				$re["Error"] = "Unzulässiges Zeichen: <span style=\"font-style:italic;\">".$ckStr[$i]."</span>.  Zulässig sind: $validChars!<br>\n";
 			}
 		}
 	}
@@ -155,8 +155,8 @@ function check_menu_input(&$eingabe, &$lesen, &$_FLDCONF) {
 				case "enum":
 				$encloser = (strpos($checkAttr, "'") === false) ? "" : "'";
 				if (strpos(",".$checkAttr.",", ",".$encloser.$eingabe[$k].$encloser.",") === false) {
-					$err.= "Ung�ltiger Auswahlwert in ".$v["label"].": ".$eingabe[$k]."!<br>\n";
-					$_eFields[$k] = "Ung�ltiger Auswahlwert!";
+					$err.= "Ungültiger Auswahlwert in ".$v["label"].": ".$eingabe[$k]."!<br>\n";
+					$_eFields[$k] = "Ungültiger Auswahlwert!";
 					$er = 1;
 				} else $er = 0;
 				break;
@@ -168,8 +168,8 @@ function check_menu_input(&$eingabe, &$lesen, &$_FLDCONF) {
 				for ($wi = 0; $wi < count($_Werte); $wi++) {
 					// echo "#".__LINE__." strpos(\"{$checkAttr}\", \"{$encloser}{$_Werte[$wi]}{$encloser}\" <br>\n";
 					if (strpos(",".$checkAttr.",", ",".$encloser.$_Werte[$wi].$encloser.",") === false) {
-						$err.= "Ung�ltiger Auswahlwert in ".$v["label"].": ".$_Werte[$wi]."!<br>\n";
-						$_eFields[$k] = "Ung�ltiger Auswahlwert!";
+						$err.= "Ungültiger Auswahlwert in ".$v["label"].": ".$_Werte[$wi]."!<br>\n";
+						$_eFields[$k] = "Ungültiger Auswahlwert!";
 					}
 				}
 				$lesen[$k] = implode(",\n", $_Werte);
@@ -292,7 +292,7 @@ function menu_eingabe2lesen($eingabe, &$_FLDCONF) {
 	
 	while(list($k,$v) = each($_FLDCONF)) {
 		$eingabewert = (isset($eingabe[$k])) ? $eingabe[$k] : "";
-		// Test auf Pflichtfeld, wenn Ja pr�fe ob eine Eingabe get�tigt wurde
+		// Test auf Pflichtfeld, wenn Ja prüfe ob eine Eingabe getätigt wurde
 		if (trim($eingabewert)) {
 			switch($v["type"]) {
 				
@@ -488,7 +488,7 @@ function edit_flag($id, $feld, $wert) {
 	if (!MyDB::error()) {
 		return true;
 	} else {
-		$error.= "#".__LINE__." Der Wert &quot;$wert&quot; f�r $feld konnte nicht gesetzt werden!<br>\n";
+		$error.= "#".__LINE__." Der Wert &quot;$wert&quot; für $feld konnte nicht gesetzt werden!<br>\n";
 		$error.= "DB-Error:".MyDB::error()." <br>\n";
 		$error.= "DB-QUERY:".fb_htmlEntities($SQL)." <br>\n";
 		echo $error;
@@ -506,7 +506,7 @@ function kill_menu_bySrv($srv) {
 	if (!MyDB::error()) {
 		return true;
 	} else {
-		$error.= "#".__LINE__." Das Men� mit der internen Benennung $srv konnte nicht geloescht werden!<br>\n";
+		$error.= "#".__LINE__." Das Menü mit der internen Benennung $srv konnte nicht geloescht werden!<br>\n";
 		$error.= "DB-Error:".MyDB::error()." <br>\n";
 		return false;
 	}
@@ -531,7 +531,7 @@ function kill_menu_byId($id, $_DATA) {
 	if (!MyDB::error()) {
 		return true;
 	} else {
-		$error.= "#".__LINE__." Das Men� mit der ID $id konnte nicht geloescht werden!<br>\n";
+		$error.= "#".__LINE__." Das Menü mit der ID $id konnte nicht geloescht werden!<br>\n";
 		$error.= "DB-Error:".MyDB::error()." <br>\n";
 		$error.= "DB-QUERY:".fb_htmlEntities($SQL)." <br>\n";
 		return false;
@@ -621,7 +621,7 @@ function set_position($MenueData, $setPos) {
 					if (strval(intval($setPos)) == $setPos) {
 						$newPos = intval($setPos);
 					} else {
-						$error.= "Ung�ltige Positionsangabe: $setPos!<br>\n";
+						$error.= "Ungültige Positionsangabe: $setPos!<br>\n";
 						return false;
 					}
 				}

@@ -201,6 +201,9 @@ function umzugsantrag_speichern() {
             } else {
                 $AS->arrInput["bemerkungen"] = (!empty($AS->arrDbdata["bemerkungen"])) ? $AS->arrDbdata["bemerkungen"] : "";
             }
+            // @ob_end_flush();
+            // echo '#' . __LINE__ . ' ' . __FILE__ . "\n" . var_export($AS->arrInput, 1);
+            // exit;
             $AS->save();
             if (!$AID) {
                 $AID = $AS->id;
@@ -266,7 +269,7 @@ function umzugsantrag_speichern() {
 	
 	$sql = "UPDATE `".$USERConf["Table"]."` SET `fon` = \"".$db->escape($AS->arrInput["fon"])
                 ."\", `standort`=\"".$db->escape($AS->arrInput["ort"])
-                ."\", `gebaeude` = \"".$db->escape($AS->arrInput["gebaeude"])."\" \n";
+                ."\", `gebaeude` = \"".$db->escape($AS->arrInput["gebaeude"] ?? '')."\" \n";
 	$sql.= "\n WHERE uid = \"".$db->escape($AS->arrInput["antragsteller_uid"])."\"";
 	$db->query($sql);
 	if ($db->error()) $save_errors.= $db->error()."<br>\n".$sql."<br>\n";

@@ -85,6 +85,9 @@ function insert_reguser($user_connid, $tbl, &$arrFormVars, &$authentcode) {
 	$SQL.= " anrede = \"".MyDB::escape_string($arrFormVars["anrede"])."\",\n";
 	$SQL.= " vorname = \"".MyDB::escape_string($arrFormVars["vorname"])."\",\n";
 	$SQL.= " nachname = \"".MyDB::escape_string($arrFormVars["nachname"])."\",\n";
+	$SQL.= " strasse = \"".MyDB::escape_string($arrFormVars["strasse"])."\",\n";
+	$SQL.= " plz = \"".MyDB::escape_string($arrFormVars["plz"])."\",\n";
+	$SQL.= " ort = \"".MyDB::escape_string($arrFormVars["ort"])."\",\n";
 	
 	$SQL.= " fon = \"".MyDB::escape_string($arrFormVars["fon"])."\",\n";
 	$SQL.= " standort = \"".MyDB::escape_string($arrFormVars["standort"])."\",\n";
@@ -120,7 +123,11 @@ function send_regcmail(&$vorlage, &$arrUserVars, $authentcode = "") { // Send Re
 	$mail_to   = $arrUserVars["email"];
 
 	$mail_su   = $_CONF["regc_subject"];
-	$mail_hd   = "From: ".$_CONF["email"]["webmaster"]."\nReply-To: ".$_CONF["email"]["webmaster"]."\nBCC: ".$_CONF["email"]["webmaster"];
+	$mail_hd   = "\nReply-To: ".$_CONF["email"]["webmaster"];
+
+    if (!SMTP_MAILER_DEBUG) {
+        $mail_hd.= "\nBCC: ".$_CONF["email"]["webmaster"];
+    }
 
 	$sent = fbmail($mail_to, $mail_su, $mail_text, $mail_hd);
 	return $sent;

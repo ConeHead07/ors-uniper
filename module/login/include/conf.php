@@ -21,10 +21,10 @@ if (!isset($_CONF["defaultPruefeLogin"])) $_CONF["defaultPruefeLogin"] = true;
 $_CONF["redirectAfterLogin"] = "index.php?area=admin";
 $_CONF["regc_subject"] = "Aktivieren Sie Ihren Account auf ".$MConf["WebRoot"];
 $_CONF["regc_authentlink"] = $MConf["WebRoot"]."login.php?ac={authentcode}";
-$_CONF["regc_mail_tld_only"] = ''; // "@mertens.ag"; // "@mertens.ag"; // "@googlemail.com"; // 
-$_CONF["regc_mail_tld_check"] = false; //true;
+$_CONF["regc_mail_tld_only"] = '@gmail.com'; // "@mertens.ag"; // "@mertens.ag"; // "@googlemail.com"; //
+$_CONF["regc_mail_tld_check"] = true; //false;
 $_CONF["forget_pw_link"] = $MConf["WebRoot"]."login_fpw.php";
-$_CONF["mailc_subject"]  = "Aktivieren Sie Ihre E-Mail-�nderung";
+$_CONF["mailc_subject"]  = "Aktivieren Sie Ihre E-Mail-Änderung";
 $_CONF["mailc_authentlink"] = $MConf["WebRoot"]."login.php?mc={authentcode}";
 
 $_CONF["pw_min_length"]   = 5;
@@ -32,10 +32,9 @@ $_CONF["allow_user_register"]   = true;
 $_CONF["allow_user_forgetpass"] = true;
 $_CONF["allow_user_changemail"] = true;
 
-/* $_CONF["LnkRegister"] = "<a href=\"{$_CONF['WebRoot']}login.php?rg=1\">Registrieren</a><br>"; */ //Registrieren //
-$_CONF["LnkRegister"] = "";
+$_CONF["LnkRegister"] = "<a href=\"{$_CONF['WebRoot']}login.php?rg=1\">Registrieren</a><br>"; //Registrieren //
 $_CONF["LnkForgetPw"] = "<a href=\"{$_CONF['WebRoot']}login.php?fpw=1\">Passwort vergessen?</a>";
-$_CONF["LnkChgEmail"] = "<a href=\"{$_CONF['WebRoot']}login.php?cm=1\">Email �ndern</a>";
+$_CONF["LnkChgEmail"] = "<a href=\"{$_CONF['WebRoot']}login.php?cm=1\">Email ändern</a>";
 
 $_CONF["forget_pw_link"] = $MConf["WebRoot"]."login.php?fpw=1";
 $_CONF["regc_mail_type"] = "Content-Type: text/plain";

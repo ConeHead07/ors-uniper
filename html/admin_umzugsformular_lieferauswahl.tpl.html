@@ -24,31 +24,31 @@ Neu anlegen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" a
 <table id="InputDienstleister">
   <tr>
     <td style="padding:0;"><label for="dl_firmenname" style="width:180px;">Firmenname</label></td>
-    <td style="padding:0;width:200px;"><input id="dl_firmenname" type="text" readonly="true" value="{$DL.Firmenname|escape}" name="DL[Firmenname]" class="itxt itxt2col"></td>
+    <td style="padding:0;width:200px;"><input id="dl_firmenname" type="text" readonly="true" value="{if !empty($DL.Firmenname)}{$DL.Firmenname|escape}{/if}" name="DL[Firmenname]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_ansprechpartner" style="width:180px;">Ansprechpartner</label></td>
-    <td style="padding:0;"><input id="dl_ansprechpartner" type="text" readonly="true" value="{$DL.Ansprechpartner|escape}" name="DL[Ansprechpartner]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><input id="dl_ansprechpartner" type="text" readonly="true" value="{if !empty($DL.Ansprechpartner)}{$DL.Ansprechpartner|escape}{/if}" name="DL[Ansprechpartner]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_strasse" style="width:180px;">Strasse</label></td>
-    <td style="padding:0;"><input id="dl_strasse" type="text" readonly="true" value="{$DL.Strasse|escape}" name="DL[Strasse]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><input id="dl_strasse" type="text" readonly="true" value="{if !empty($DL.Strasse)}{$DL.Strasse|escape}{/if}" name="DL[Strasse]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_ort" style="width:180px;">Ort</label></td>
-    <td style="padding:0;"><input id="dl_ort" type="text" readonly="true" value="{$DL.Ort|escape}" name="DL[Ort]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><input id="dl_ort" type="text" readonly="true" value="{if !empty($DL.Ort)}{$DL.Ort|escape}{/if}" name="DL[Ort]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_handy" style="width:180px;">Handy</label></td>
-    <td style="padding:0;"><input id="dl_handy" type="text" readonly="true" value="{$DL.Handy|escape}" name="DL[Handy]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><input id="dl_handy" type="text" readonly="true" value="{if !empty($DL.Handy)}{$DL.Handy|escape}{/if}" name="DL[Handy]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_festnetz" style="width:180px;">Festnetz</label></td>
-    <td style="padding:0;"><input id="dl_festnetz" type="text" readonly="true" value="{$DL.Festnetz|escape}" name="DL[Festnetz]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><input id="dl_festnetz" type="text" readonly="true" value="{if !empty($DL.Festnetz)}{$DL.Festnetz|escape}{/if}" name="DL[Festnetz]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_email" style="width:180px;">E-Mail</label></td>
-    <td style="padding:0;"><input id="dl_email" type="text" readonly="true" value="{$DL.Email|escape}" name="DL[Email]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><input id="dl_email" type="text" readonly="true" value="{if !empty($DL.Email)}{$DL.Email|escape}{/if}" name="DL[Email]" class="itxt itxt2col"></td>
   </tr>
   <tr>
       <td colspan="2">

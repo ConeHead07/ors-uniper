@@ -69,6 +69,7 @@
 </div>
 
 <ul class="ulAttachements row-values">
+{if !empty($UmzugsAnlagen)}
 {foreach name=ATList item=AT from=$UmzugsAnlagen}
 {* <li><a href="{$AT.datei_link}" target="_blank">{if $AT.titel}{$AT.titel}{else}{$AT.dok_datei}{/if}</a> {$AT.datei_groesse}</li> *}
 
@@ -78,9 +79,9 @@
  <span class="col fdate">{$AT.created}</span>
 </li>
 {/foreach}
-{* else}
+{else}
 <li class="none"><em>keine</em></li>
-{/else *}
+{/if}
 </ul>
 </div>
 </fieldset>

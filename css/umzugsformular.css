@@ -153,7 +153,7 @@ input[type=submit].btn.grey,
 	display:none;
 }
 textarea.bemerkungen {
-	width:550px;
+	width:100%;
 }
 input.AutoFill {
 	background:#ffecf4;	
@@ -247,7 +247,7 @@ td label {
   width:49%;
 }
 .itxt2col {
-  width:99%;
+  width:100%;
 }
 .iarea {  
   display:inline-block;
@@ -353,7 +353,7 @@ td label {
 }
 #BoxBemerkungen,
 #BoxBemerkungenHistorie {
-	width:550px;
+	width:100%;
 }
 
 .floatLeft { float:left; }

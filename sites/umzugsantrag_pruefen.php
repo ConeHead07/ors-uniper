@@ -11,12 +11,16 @@ if (!function_exists("get_ma_post_items")){ function get_ma_post_items() {
 	//echo "<pre>#".__LINE__." ".basename(__FILE__)." _POST:".print_r($_POST,1)."</pre><br>\n";
 	
 	$aMaItems = array();
-	if (!empty($_POST["MA"])) for($i = 0; $i < count($_POST["MA"]["vorname"]); $i++) {
-		$aMaItems[$i]["ID"] = $i+1;
-		foreach($_POST["MA"] as $fld => $aTmp) {
-			$aMaItems[$i][$fld] = $_POST["MA"][$fld][$i];
-		}
-	}
+	if (!empty($_POST["MA"])){
+	    // Sorry, Context nicht mehr klar
+	    $countMAVorname = count($_POST["MA"]["vorname"]);
+	    for($i = 0; $i < $countMAVorname; $i++) {
+            $aMaItems[$i]["ID"] = $i+1;
+            foreach($_POST["MA"] as $fld => $aTmp) {
+                $aMaItems[$i][$fld] = $_POST["MA"][$fld][$i];
+            }
+        }
+    }
 	return $aMaItems;
 }}
 
@@ -89,8 +93,10 @@ function check_minWerktage($datum, $minWerktage) {
 	while($current_date <= $check_date && $minWerktage >= $count_werktage) {
 		
 		if ($current_date > $check_date) break;
-		
-		switch(date("w", $heute+($i*24*60*60))) {
+
+		$_nextDayOffset = $i * 24 * 60 * 60;
+		$_nextDayTimestamp = $heute + $_nextDayOffset;
+		switch(date("w", $_nextDayTimestamp)) {
 			case 0:
 			case 6:
 			break;
@@ -98,8 +104,10 @@ function check_minWerktage($datum, $minWerktage) {
 			default:
 			$count_werktage++;
 		}
-		if ($count_werktage >= $minWerktage) return true;
-		$current_date = date("Y-m-d", $heute+($i*24*60*60));
+		if ($count_werktage >= $minWerktage){
+		    return true;
+        }
+		$current_date = date("Y-m-d", $heute + ( $i * 24 * 60 * 60 ));
 		$i++;
 	}
 	
@@ -293,45 +301,71 @@ function umzugsantrag_fehler() {
     return $error;
 }
 
-function umzugsantrag_get_zuordnungs_fehler($ASItem, $MAItems) {	
+function umzugsantrag_get_zuordnungs_fehler($ASItem, $MAItems) {
 	$as_error = "";
 	$ma_error = "";
+
+    if (empty($ASItem["ort"])) {
+        $as_error.= "Die Ortsangabe darf nicht leer sein!\n";
+    }
+
+    if (getAppConfigProperty('validateAntragOrt', true) && !ort_exists($ASItem["ort"])) {
+        $as_error.= "Ungültige Ortsauswahl ".$ASItem["ort"]."!<br>\n";
+    }
+
+    if (getAppConfigProperty('validateAntragGebaeude', false)) {
+
+
+        if ( empty($ASItem["gebaeude"])) {
+            $as_error .= "Gebäudeangabe darf nicht leer sein!<br>\n";
+        }
+
+        if ( !gebaeude_exists($ASItem["gebaeude"])) {
+            $as_error .= "Ungültige Gebäudeauswahl " . $ASItem["gebaeude"] . "!<br>\n";
+        }
+    }
 	
-	if (empty($ASItem["ort"]) || !ort_exists($ASItem["ort"]))
-		$as_error.= "Ungültige Ortsauswahl ".$ASItem["ort"]."!<br>\n";
-	
-	if (0 && (empty($ASItem["gebaeude"]) || !gebaeude_exists($ASItem["gebaeude"])))
-		$as_error.= "Ungültige Gebäudeauswahl ".$ASItem["gebaeude"]."!<br>\n";
-	
-	if ($as_error) $as_error = "<strong>Fehlerhafte Angaben beim Antragsteller:</strong><br>\n".$as_error."<br>\n";
-	
-	for($i = 0; $i < count($MAItems); $i++) {
+	if ($as_error) {
+	    $as_error = "<strong>Fehlerhafte Angaben beim Antragsteller:</strong><br>\n".$as_error."<br>\n";
+    }
+
+	$numMAItems = count($MAItems);
+	for($i = 0; $i < $numMAItems; $i++) {
 		$MA = $MAItems[$i];
 		$n = $i+1;
 		
-		if (empty($MA["abteilung"]) || !abteilung_exists($MA["abteilung"]))
-			$ma_error.= "[MA $n] Ungültige Abteilungsauswahl: von ".$ASItem["abteilung"]."!<br>\n";
+		if (empty($MA["abteilung"]) || !abteilung_exists($MA["abteilung"])){
+		    $ma_error.= "[MA $n] Ungültige Abteilungsauswahl: von ".$ASItem["abteilung"]."!<br>\n";
+        }
+		if (empty($MA["gebaeude"]) || !gebaeude_exists($MA["gebaeude"])){
+		    $ma_error.= "[MA $n] Ungültige Gebäudeauswahl: von ".$ASItem["gebaeude"]."!<br>\n";
+        }
+		elseif (empty($MA["gebaeude"]) || !etage_exists($MA["gebaeude"], $MA["etage"])){
+		    $ma_error.= "[MA $n] Ungültige Etagenauswahl: von ".$MA["etage"]." in ".$MA["gebaeude"]."!<br>\n";
+        }
+		elseif (empty($MA["raumnr"]) || !etage_exists($MA["gebaeude"], $MA["etage"], $MA["raumnr"])){
+		    $ma_error.= "[MA $n] Ungültige Raumauswahl: von ".$MA["raumnr"]." in ".$MA["gebaeude"]." ".$MA["etage"]."!<br>\n";
+        }
 		
-		if (empty($MA["gebaeude"]) || !gebaeude_exists($MA["gebaeude"]))
-			$ma_error.= "[MA $n] Ungültige Gebäudeauswahl: von ".$ASItem["gebaeude"]."!<br>\n";
-		elseif (empty($MA["gebaeude"]) || !etage_exists($MA["gebaeude"], $MA["etage"]))
-			$ma_error.= "[MA $n] Ungültige Etagenauswahl: von ".$MA["etage"]." in ".$MA["gebaeude"]."!<br>\n";
-		elseif (empty($MA["raumnr"]) || !etage_exists($MA["gebaeude"], $MA["etage"], $MA["raumnr"]))
-			$ma_error.= "[MA $n] Ungültige Raumauswahl: von ".$MA["raumnr"]." in ".$MA["gebaeude"]." ".$MA["etage"]."!<br>\n";
 		
+		if (empty($MA["zabteilung"]) || !abteilung_exists($MA["zabteilung"])){
+		    $ma_error.= "[MA $n] Ungültige Abteilungsauswahl: nach ".$ASItem["zabteilung"]."!<br>\n";
+        }
 		
-		if (empty($MA["zabteilung"]) || !abteilung_exists($MA["zabteilung"]))
-			$ma_error.= "[MA $n] Ungültige Abteilungsauswahl: nach ".$ASItem["zabteilung"]."!<br>\n";
-		
-		if (empty($MA["zgebaeude"]) || !gebaeude_exists($MA["zgebaeude"]))
-			$ma_error.= "[MA $n] Ungültige Gebäudeangabe: nach ".$ASItem["zgebaeude"]."!<br>\n";
-		elseif (empty($MA["zgebaeude"]) || !etage_exists($MA["zgebaeude"], $MA["zetage"]))
-			$ma_error.= "[MA $n] Ungültige Etagenauswahl: nach ".$MA["zetage"]." in ".$MA["zgebaeude"]."!<br>\n";
-		elseif (empty($MA["zraumnr"]) || !etage_exists($MA["zgebaeude"], $MA["zetage"], $MA["zraumnr"]))
-			$ma_error.= "[MA $n] Ungültige Raumauswahl: nach ".$MA["zraumnr"]." in ".$MA["zgebaeude"]." ".$MA["zetage"]."!<br>\n";
+		if (empty($MA["zgebaeude"]) || !gebaeude_exists($MA["zgebaeude"])){
+		    $ma_error.= "[MA $n] Ungültige Gebäudeangabe: nach ".$ASItem["zgebaeude"]."!<br>\n";
+        }
+		elseif (empty($MA["zgebaeude"]) || !etage_exists($MA["zgebaeude"], $MA["zetage"])){
+		    $ma_error.= "[MA $n] Ungültige Etagenauswahl: nach ".$MA["zetage"]." in ".$MA["zgebaeude"]."!<br>\n";
+        }
+		elseif (empty($MA["zraumnr"]) || !etage_exists($MA["zgebaeude"], $MA["zetage"], $MA["zraumnr"])){
+		    $ma_error.= "[MA $n] Ungültige Raumauswahl: nach ".$MA["zraumnr"]." in ".$MA["zgebaeude"]." ".$MA["zetage"]."!<br>\n";
+        }
 		
 	}
-	if ($ma_error) $ma_error = "<strong>Fehlerhafte Angaben in der Mitarbeiterliste:</strong><br>\n".$ma_error."<br>\n";
+	if ($ma_error){
+	    $ma_error = "<strong>Fehlerhafte Angaben in der Mitarbeiterliste:</strong><br>\n".$ma_error."<br>\n";
+    }
 	
 	return $as_error.$ma_error;
 }

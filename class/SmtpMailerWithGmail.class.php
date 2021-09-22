@@ -44,6 +44,24 @@ if(SMTP_MAILER_DEBUG === 1) $aSmtpConn = array(
     "logfile"   => dirname(__FILE__) . "/../log/log_smtp_".date("YmdHis").".gmail.txt",
     "tat"       => "" // Transaktionstext mit SERVER
 );
+elseif(SMTP_MAILER_DEBUG === 2) $aSmtpConn = array(
+    "server"    => 'smtp.gmail.com',
+    "port"      => 25,
+    "encrypt"   => 'tls',
+    "from_name" => 'Mertens ORS Uniper',
+    "from_addr" => 'mertens.ors.uniper@gmail.com',
+    "from"      => '"Mertens ORS Uniper" <mertens.ors.uniper@gmail.com>',
+    "postfach_from" => '<mertens.ors.uniper@gmail.com>',
+    "auth_user" => 'mertens.ors.uniper@gmail.com',
+    "auth_pass" => 'aDjSoNHQQKzT7',
+    "socket"    => "",
+    "connection_timeout" => 5,
+    "timeIn"    => time(),
+    "antwort"   => "",
+    "logsmtp"   => 1,
+    "logfile"   => dirname(__FILE__) . "/../log/log_smtp_".date("YmdHis").".gmail.txt",
+    "tat"       => "" // Transaktionstext mit SERVER
+);
 
 $aSmtpDebugTo = [
 	[

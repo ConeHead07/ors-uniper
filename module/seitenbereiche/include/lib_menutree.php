@@ -39,7 +39,7 @@ function get_menu_tree($onlyContentMenu = false, $parentid = 0, $deep = 0) {
 	
 	if ($deep == 0) $cnt_loop = 0;
 	if ($cnt_loop++ > $max_loop) {
-		echo "#".__LINE__." Max.Loops:$max_loop �berschritten!<br>\n";
+		echo "#".__LINE__." Max.Loops:$max_loop überschritten!<br>\n";
 		$cnt_loop = 0;
 		return false;
 	}

@@ -84,8 +84,8 @@ if ($AID) {
 //      echo '<pre>' . print_r($gebRow,1) . '</pre>';
 	if ($user["gruppe"]=="admin_standort") {
 		if ($user['uid'] != $gebRow['mertenshenk_uid'] && strpos(",".$user["standortverwaltung"].",", ",".$AS->arrInput["ort"].",")===false)
-			die("UNERLAUBTER ZUGRIFF! Standort-Administratoren d�rfen nur auf Antr�ge zugreifen, "
-                           ."die in Ihrer Standortverwaltung eingetragen sind oder f�r die Sie in der Geb�udeliste zugeordnet sind!");
+			die("UNERLAUBTER ZUGRIFF! Standort-Administratoren dürfen nur auf Anträge zugreifen, "
+                           ."die in Ihrer Standortverwaltung eingetragen sind oder für die Sie in der Gebääudeliste zugeordnet sind!");
 	}
 	
 	$sql = "SELECT mid FROM `".$MAConf["Table"]."` WHERE aid = ".intval($AID);
@@ -179,7 +179,7 @@ if (!empty($aGroupItems) && count($aGroupItems)) $Tpl->assign("UmzugsGruppierung
 $aids = array_map(function($a) { return $a['aid']; }, $aGroupItems);
 if (!empty($aids) && count($aids)) $Tpl->assign("UmzugsGruppierungsIds", implode(',', $aids));
 
-// Erzeuge GeraeteListe (Array) f�r Smarty-Template
+// Erzeuge GeraeteListe (Array) für Smarty-Template
 $CsvLines = explode("\n", $AS->arrInput["geraete_csv"]);
 $aGItems = array();
 $aGCols = array();

@@ -50,7 +50,7 @@ class MyDB {
             case 'connect':
             case 'select_db':
             case 'db_name':
-                throw new Exception("Nicht unterst�tzter und adaptierter ehemaliger mysql-Funktion " . $name);
+                throw new Exception("Nicht unterstützter und adaptierter ehemaliger mysql-Funktion " . $name);
                 break;
         }
 
@@ -83,8 +83,8 @@ class MyDB {
                 }
             }
         }
-        echo "Nicht unterst�tzter und adaptierter ehemaliger mysql-Funktion " . $name;
-        throw new Exception("Nicht unterst�tzter und adaptierter ehemaliger mysql-Funktion " . $name);
+        echo "Nicht unterstützter und adaptierter ehemaliger mysql-Funktion " . $name;
+        throw new Exception("Nicht unterstützter und adaptierter ehemaliger mysql-Funktion " . $name);
     }
 }
 
