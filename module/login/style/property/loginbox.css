@@ -1,13 +1,39 @@
+div.page-login, div.page-login * {
+	margin: revert;
+	padding: revert;
+}
+div.page-login .msg-Box h2,
+div.page-login .msg-Box h3,
+div.page-login .msg-Box h4,
+div.page-login .msg-Box h5,
+div.page-login .msg-Box h6 {
+	margin: 0.5rem;
+	color: #14802b;
+}
+div.page-login .error-Box h2,
+div.page-login .error-Box h3,
+div.page-login .error-Box h4,
+div.page-login .error-Box h5,
+div.page-login .error-Box h6 {
+	margin: 0.5rem;
+	color: red;
+}
 
+div.page-login td {
+	padding: 0.2rem;
+}
+div.page-login table.LoginBox,
 table.LoginBox {
 	border-collapse:collapse;
 	border-spacing:0px;
 }
+div.page-login .LoginBox,
 .LoginBox {
 	width:530px;
 	margin-top:0px;
 	border:1px solid #f50000;
 }
+div.page-login .LoginBox .hdCell,
 .LoginBox .hdCell {
 	border-bottom:0px solid #f50000;
 	background:#f50000;
@@ -16,12 +42,15 @@ table.LoginBox {
 	font-size:15px;
 	font-weight:bold;
 }
+
+div.page-login .LoginBox .topCell,
 .LoginBox .topCell {
 	background:#fff;
 	color:#000;
 	padding:40px;
 }
 
+div.page-login .LoginAdLinks,
 .LoginAdLinks {
 	margin-top:20px;
 	border:1px dotted #000;
@@ -36,34 +65,39 @@ table.LoginBox {
 .LoginAdLinks a:hover {
 	color:#f50000;
 }
+
+div.page-login .tdLbl,
 .tdLbl {
 	padding-right:5px;
-	color:#f50000;
 	font-weight:bold;
 	text-align:right;
 }
-input {
-	font-family:Arial,sans-serif;
-	font-size:12px;
+input,
+div.page-login input {
+	border: 1px solid gray;
+	padding-left: 0.5rem;
+	box-sizing: content-box;
 }
+div.page-login .LoginBox .msg,
+div.page-login .topCell .msg,
 .LoginBox .msg,
 .topCell .msg
  {
 	color:#f50000;
 	background:#000;
 	font-size:12px;
-	font-family:Arial,sans-serif;
 	padding:4px;
 	margin:2px 0px 10px 0px;
 }
 
+div.page-login .LoginBox .err,
+div.page-login .topCell .err,
 .LoginBox .err,
-.topCell .err,
+.topCell .err
 {
 	color:red;
 	background:#000;
 	font-size:12px;
-	font-family:Arial,sans-serif;
 	padding:4px;
 	margin:2px 0px 10px 0px;
 }

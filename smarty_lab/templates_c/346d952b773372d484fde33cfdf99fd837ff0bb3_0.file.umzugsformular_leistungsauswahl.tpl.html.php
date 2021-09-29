@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-09-15 15:36:39
+/* Smarty version 3.1.34-dev-7, created on 2021-09-29 20:53:05
   from '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61421307844b24_36305221',
+  'unifunc' => 'content_6154d231985549_16260918',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '346d952b773372d484fde33cfdf99fd837ff0bb3' => 
     array (
       0 => '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1631720190,
+      1 => 1632948680,
       2 => 'file',
     ),
   ),
@@ -20,14 +20,121 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61421307844b24_36305221 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6154d231985549_16260918 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div style="display:block;margin-top:15px;">
-<span style="margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="add_Leistung();return false;">
-    Leistung hinzuf&uuml;gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
+    <!-- umzugsformular_leistungsauswahl.tpl.html -->
 </div>
 <style>
 
+div.row {
+    width: 100%;
+    display: flex;
+    border: 2px solid #0075b5;
+    border-radius: 8px;
+    flex-wrap: nowrap;
+    margin-bottom: 1rem;
+    background-color: #f1f8ff;
+}
+div.row.checked {
+    border: 2px solid green;
+    background-color: #F2FAF3;
+}
+div.row div.bild {
+    flex-grow: 0;
+    width:160px;
+}
+div.row div.bild img {
+    max-width: 350px;
+    max-height: 150px;
+    border: 1px solid transparent;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+div.row div.lstg {
+    flex: 1 1 auto;
+    align-self: center;
+    font-weight: bold;
+    font-size: 1rem;
+}
+div.row div.chck {
+    flex: 0 0 auto;
+    align-self: center;
+}
+    /* The container */
+label.container {
+    border:0;
+    background:none;
+    display: block;
+    position: relative;
+    margin-bottom: 12px;
+    width: initial;
+    min-height:25px;
+    min-width:25px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
+div {
+    min-height: 25px;
+}
+
+/* Hide the browser's default checkbox */
+label.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+label.container .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+label.container .container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+label.container  input:checked ~ .checkmark {
+    background-color: green;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+label.container .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+label.container  input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+label.container  .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
 
 </style>
 <?php echo '<script'; ?>
@@ -241,96 +348,150 @@ $(function(){
 
 <?php echo '</script'; ?>
 >
-<table class="MitarbeierItem" style="width:100%;">
-    <thead>
-        <tr>
-            <td style="width:14px;padding:0;"> X </td>
-            <td>Kategorie</td>
-            <td>Leistung</td>
-            <td>Menge 1 Prop</td>
-            <td>Einheit 1</td>
-            <td>Menge 2 Prop</td>
-            <td>Einheit 2</td>
-            <td>Menge1 M</td>
-            <td>Menge2 M</td>
-            <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?><td>Preis/Einh.</td>
-            <td class="sum">Gesamt</td>
-            <?php }?>
-        </tr>
-    </thead>
-    <tbody id="TblLeistungenBody">
-    <?php if (!empty($_smarty_tpl->tpl_vars['Umzugsleistungen']->value)) {?>
-    <?php
-$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['Umzugsleistungen']->value, 'L', false, NULL, 'LList', array (
-));
-if ($_from !== null) {
-foreach ($_from as $_smarty_tpl->tpl_vars['L']->value) {
-?>
-        <tr class="row inputRowVon">
-            <td style="padding:0;"><span onclick="drop_Leistung(this)" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></td>
-            <td class="ktg1" onclick="get_Kategorie(this)"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'ISO-8859-1', true);?>
-</td>
-            <td class="lstg" onclick="get_Leistung(this)" data-p="<?php echo $_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'];?>
-" data-sum="<?php echo $_smarty_tpl->tpl_vars['L']->value['gesamtpreis'];?>
-"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['leistung'], ENT_QUOTES, 'ISO-8859-1', true);
-echo $_smarty_tpl->tpl_vars['creator']->value;?>
-</td>
-            <td><input class="ilstg" name="L[leistung_id][]" value="<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
-" type="hidden"><!-- 
-             --><input class="menge<?php if ($_smarty_tpl->tpl_vars['creator']->value == "property") {?> creator editable<?php } else { ?> readonly<?php }?> <?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property") {?>readonly<?php } else { ?>editable<?php }?>" name="L[menge_property][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property") {?> readonly="readonly"<?php }?> value="<?php if (is_numeric($_smarty_tpl->tpl_vars['L']->value['menge_property'])) {
-echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge_property'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");
-}?>" type="text"></td>
-            <td class="unit"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['leistungseinheit'], ENT_QUOTES, 'ISO-8859-1', true);?>
-</td>
-            <td><input class="menge menge2<?php if ($_smarty_tpl->tpl_vars['creator']->value == "property") {?> creator editable<?php } else { ?> readonly<?php }?> <?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property") {?>readonly<?php } else { ?>editable<?php }?>" name="L[menge2_property][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property") {?> readonly="readonly"<?php }?> value="<?php if (is_numeric($_smarty_tpl->tpl_vars['L']->value['menge2_property'])) {
-echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge2_property'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");
-}?>" type="text"></td>
-            <td class="unit unit2"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['leistungseinheit2'], ENT_QUOTES, 'ISO-8859-1', true);?>
-</td>
-            <td><input class="menge<?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?> creator editable<?php } else { ?> readonly<?php }?> <?php if ($_smarty_tpl->tpl_vars['creator']->value !== "mertens") {?>readonly<?php } else { ?>editable<?php }?>" name="L[menge_mertens][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "mertens") {?> readonly="readonly"<?php }?> value="<?php if (is_numeric($_smarty_tpl->tpl_vars['L']->value['menge_mertens'])) {
-echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge_mertens'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");
-}?>" type="text"></td>
-            <td><input class="menge menge2<?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?> creator editable<?php } else { ?> readonly<?php }?> <?php if ($_smarty_tpl->tpl_vars['creator']->value !== "mertens") {?>readonly<?php } else { ?>editable<?php }?>" name="L[menge2_mertens][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "mertens") {?> readonly="readonly"<?php }?> value="<?php if (is_numeric($_smarty_tpl->tpl_vars['L']->value['menge2_mertens'])) {
-echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge2_mertens'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");
-}?>" type="text"></td>
-            <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?><td class="preis"><?php if ($_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit']) {
-echo number_format($_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'],2,",",".");
-}?></td>
-            <td class="sum"><?php if ($_smarty_tpl->tpl_vars['L']->value['gesamtpreis']) {
-echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['gesamtpreis'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");
-}?></td>
-            <?php }?>
-        </tr>
-    <?php
-}
-}
-$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
-    <?php }?>
-        <tr id="summary">
-    <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>
-            <td colspan="<?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>11<?php } else { ?>9<?php }?>"><span id="allsum" data-allsum="0"><?php echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['Gesamtsumme']->value, ENT_QUOTES, 'ISO-8859-1', true),2,",",".");?>
-</span><span style="margin-left:5px">&euro;</span></td>
-    <?php }?>
-        </tr>
-    </tbody>
-</table>
-<table id="TplLeistungTable" style="display:none;">
-        <tr class="row inputRowVon">
-            <td style="padding:0;"><span onclick="drop_Leistung(this)" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></td>
-            <td class="ktg1" onclick="get_Kategorie(this)"></td>
-            <td class="lstg" onclick="get_Leistung(this)" data-p="" data-sum="0"></td>
-            <td><input class="ilstg" name="L[leistung_id][]" disabled="disabled" value="" type="hidden"><!--
-             --><input class="menge<?php if ($_smarty_tpl->tpl_vars['creator']->value == "property") {?> creator editable<?php } else { ?> readonly<?php }?>" name="L[menge_property][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property") {?> readonly="readonly"<?php }?> disabled="disabled" value="" type="text"></td>
-            <td class="unit"></td>
-            <td><input class="menge menge2<?php if ($_smarty_tpl->tpl_vars['creator']->value == "property") {?> creator editable<?php } else { ?> readonly<?php }?>" name="L[menge2_property][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property") {?> readonly="readonly"<?php }?> disabled="disabled" value="" type="text"></td>
-            <td class="unit unit2"></td>
-            <td><input class="menge<?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?> creator editable<?php } else { ?> readonly<?php }?>" name="L[menge_mertens][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "mertens") {?> readonly="readonly"<?php }?> disabled="disabled" value="" type="text"></td>
-            <td><input class="menge menge2<?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?> creator editable<?php } else { ?> readonly<?php }?>" name="L[menge2_mertens][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "mertens") {?> readonly="readonly"<?php }?> disabled="disabled" value="" type="text"></td>
-            <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?><td class="preis"></td>
-            <td class="sum"></td>
-            <?php }?>
-        </tr>
-</table>
+
+<div id="auswahlUmzugsleistungenBox"></div>
+
+
+<?php echo '<script'; ?>
+>
+
+    var boxLeistungenSel = "div#auswahlUmzugsleistungenBox";
+    var boxLeistungen = $(boxLeistungenSel);
+    if (!boxLeistungen.length) {
+        alert("NOT FOUND " + boxLeistungenSel);
+    }
+    var lkItemsByKtg = lkItems;
+    for (var ktg in lkItemsByKtg) {
+
+        if (!lkItemsByKtg.hasOwnProperty(ktg)) {
+            continue;
+        }
+        console.log({ktg});
+        var box = $("<div/>");
+        var boxTitle = $("<h3/>").text("Auswahl: " + ktg);
+        boxTitle.appendTo(box);
+        var ktgItems = Object.values(lkItemsByKtg[ktg]);
+        for (var it of ktgItems) {
+            console.log({it});
+            var tr = $("<div/>").addClass("row ktg-"+ktg).attr("data-ktg", ktg);
+            var tdBild = $("<div/>").addClass('bild').appendTo(tr);
+            var tdLstg = $("<div/>").addClass('lstg').appendTo(tr);
+            var tdChck = $("<div/>").addClass('chck').appendTo(tr);
+
+            if (it.image) {
+                var bildHref = $("<a/>").attr("href", "images/leistungskatalog/" + it.image).css({
+                    border: 0
+                });
+                bildHref.appendTo(tdBild);
+                var bild = $("<img/>")
+                    .attr({
+                        src: "images/leistungskatalog/" + it.image
+                    })
+                    .appendTo(bildHref);
+            }
+
+            tdLstg.text(it.leistung).off("click").on("click", function() {
+                var tr = $(this).closest(".row");
+                tr.find(".chck label")[0].click();
+                console.log('click leistung');
+            });
+
+            var labelChck = $("<label/>").addClass("container");
+            var inputChck = $("<input/>").attr({
+                name: "check[" + it.kategorie + "]",
+                type: "radio",
+                value: it.leistung_id
+            });
+
+            var spanChck = $("<span/>").addClass("checkmark");
+            labelChck.append(inputChck).append(spanChck);
+            labelChck.off("click").on("click", function(e) {
+                console.log('click label', { e });
+                if (!("srcElement" in e) || e.srcElement.nodeName !== 'SPAN') {
+                    var tr = $(this).closest(".row");
+                    var chckCell = tr.find("div.chck");
+                    var ktg = tr.attr("data-ktg");
+                    if (tr.is(".checked")) {
+                        $("input", this).prop("checked", false);
+                    }
+                    var checked = $("input", this).prop("checked");
+                    var selector = ".row.checked.ktg-" + ktg;
+                    console.log({tr, ktg, checked, selector });
+                    $(".row.checked.ktg-" + ktg).removeClass("checked");
+                    if (checked) {
+                        tr.addClass("checked");
+                        chckCell.find("input.lstg-input").prop("disabled", false);
+                        chckCell.find("input.lstg-input.menge").val(1);
+                    } else {
+                        chckCell.find("input.lstg-input").prop("disabled", true);
+                        chckCell.find("input.lstg-input.menge").val(0);
+                    }
+                } else {
+                    console.log("No Reaction to the click :-(");
+                }
+            });
+            tdChck.append(labelChck);
+            tdChck
+                .append(
+                    $("<input/>").attr({
+                        name: "L[leistung_id][]",
+                        value: it.leistung_id,
+                        type: "hidden",
+                        disabled: "disabled"
+                    })
+                        .prop("disabled", true)
+                        .addClass("lstg-input leistung_id")
+                )
+                .append(
+                    $("<input/>").attr({
+                        name: "L[menge_property][]",
+                        value: 0,
+                        type: "hidden",
+                        disabled: "disabled"
+                    })
+                        .prop("disabled", true)
+                        .addClass("lstg-input menge menge_property")
+                )
+                .append(
+                    $("<input/>").attr({
+                        name: "L[menge2_property][]",
+                        value: 0,
+                        type: "hidden",
+                        disabled: "disabled"
+                    })
+                        .prop("disabled", true)
+                        .addClass("lstg-input menge menge2_property")
+                )
+                .append(
+                    $("<input/>").attr({
+                        name: "L[menge_mertens][]",
+                        value: 0,
+                        type: "hidden",
+                        disabled: "disabled"
+                    })
+                        .prop("disabled", true)
+                        .addClass("lstg-input menge menge_mertens")
+                )
+                .append(
+                    $("<input/>").attr({
+                        name: "L[menge2_mertens][]",
+                        value: 0,
+                        type: "hidden",
+                        disabled: "disabled"
+                    })
+                        .prop("disabled", true)
+                        .addClass("lstg-input menge menge2_mertens")
+                );
+
+            box.append( tr );
+        }
+        box.appendTo(boxLeistungen);
+    }
+
+<?php echo '</script'; ?>
+>
+
+
 <input type="hidden" name="AS[leistungen_csv]" value="">
 <?php }
 }

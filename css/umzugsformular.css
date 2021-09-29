@@ -242,6 +242,7 @@ td label {
     height:25px;
     padding:4px;
     border-radius:2px;
+    line-height: 100%;
 }
 .itxt1col {
   width:49%;

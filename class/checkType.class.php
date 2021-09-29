@@ -119,6 +119,11 @@ class checkType
 				case "enum":
 				return $this->isInEnum($val, $size, $min, $max, $err);
 				break;
+
+                case "blob":
+                case "file":
+                    return true;
+                    break;
 			}
 	}
 	

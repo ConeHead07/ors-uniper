@@ -8,10 +8,16 @@
   margin: 0px 0px 0px 0px; /* 0px 0px 0px 0px */
   padding: 0px 0px 0px 0px; /* 0px 0px 0px 0px */
   border: none;
-  font-family: Arial, Verdana, Geneva, Helvetica, sans-serif;
+  x-font-family: Arial, Verdana, Geneva, Helvetica, sans-serif;
+  font-family: Arial, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
 }
-body {  
-  font-size: 69%;
+html, html body, body {
+  font-size: 16px;
+}
+body * {
+  font-size: .75rem;
+}
+body {
   line-height: 140%;
 }
 a,

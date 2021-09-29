@@ -65,7 +65,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
   </tr>
 
   <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Stra&szlig;e:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Stra&szlig;e &amp; Nr:</label></td>
     <td style="padding:0;"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['strasse'], ENT_QUOTES, 'ISO-8859-1', true);?>
 </td>
   </tr>
@@ -134,7 +134,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['nach_gebaeude_text'],
   </tr>
 </table>
 <br>
-<h2 style="margin:0;">Ansprechpartner vor Ort</h2> 
+<h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2>
 <table>
   <tr>
     <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname</label></td>

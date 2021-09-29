@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-09-22 11:35:58
+/* Smarty version 3.1.34-dev-7, created on 2021-09-22 12:40:25
   from '/var/www/html/html/kantraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_614b151e491c86_60930066',
+  'unifunc' => 'content_614b243995d576_99588815',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '82792695f456c4f71cbec8ff637c476489cc8409' => 
     array (
       0 => '/var/www/html/html/kantraege_liste.html',
-      1 => 1632310232,
+      1 => 1632311187,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_614b151e491c86_60930066 (Smarty_Internal_Template $_smarty_tpl) {
+function content_614b243995d576_99588815 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB BASIC MODULE (128585) BEGIN --> 
@@ -73,6 +73,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
 <h2>Es liegen <?php echo count($_smarty_tpl->tpl_vars['Umzuege']->value);?>
  <?php echo $_smarty_tpl->tpl_vars['catTitle']->value;?>
  Leistungsanforderungen vor</h2>
+  (kantraege_liste.html)
 <?php if ($_smarty_tpl->tpl_vars['ListBrowsing']->value) {
 echo $_smarty_tpl->tpl_vars['ListBrowsing']->value;
 }?>

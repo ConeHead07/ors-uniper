@@ -25,7 +25,7 @@ $LKConf = &$_CONF["leistungskatalog"];
 $Tpl = new myTplEngine();
 
 $sql = 'SELECT leistung_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
-      .' leistungskategorie kategorie, preis_pro_einheit '
+      .' leistungskategorie kategorie, preis_pro_einheit, image '
       .' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k ON l.leistungskategorie_id = k.leistungskategorie_id '
       .' WHERE l.aktiv = 1 '
       .' ORDER BY kategorie, Bezeichnung';

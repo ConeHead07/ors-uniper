@@ -47,28 +47,24 @@ isset($_POST["password"]) && !empty($_POST["password"]))
 }
 // Registrierung 
 if (isset($_GET["rg"]) && ($_CONF["allow_user_register"] || $user["gruppe"] == "admin")) {
-	// echo "#".__LINE__." ".basename(__FILE__)."<br>\n";
 	include(PATH_TO_LOGIN_MODUL."include/registrieren.php");
 	$show_form = true;
 }
 
 // Registrierung abschliessen
 if (isset($_GET["ac"])) {
-	// echo "#".__LINE__." ".basename(__FILE__)."<br>\n";
 	include(PATH_TO_LOGIN_MODUL."include/registrieren_ac.php");
 	$show_form = true;
 }
 
 // E-Mail
 if (isset($_GET["mc"])) {
-	// echo "#".__LINE__." ".basename(__FILE__)."<br>\n";
 	include(PATH_TO_LOGIN_MODUL."include/email_mc.php");
 	$show_form = true;
 }
 
 // Change PassWord
 if (isset($_GET["cpw"])) {
-	// echo "#".__LINE__." ".basename(__FILE__)."<br>\n";
 	include(PATH_TO_LOGIN_MODUL."include/password.php");
 	$show_form = true;
 }
@@ -98,9 +94,10 @@ if (!isset($redirect)) {
 		$redirect = "";
 }
 
+$_rpl['{theme}'] = $MConf['theme'];
 $_rpl["{username}"] = (isset($_POST["username"]) ? fb_htmlEntities(stripslashes($_POST["username"])) : "");
-$_rpl["<!-- {msg} -->"] = (!empty($msg)) ? "<div class=\"msg\">".$msg."</div>" : "";
-$_rpl["<!-- {error} -->"] = (!empty($error)) ? "<div class=\"err\">".$error."</div>" : "";
+//$_rpl["<!-- {msg} -->"] = (!empty($msg)) ? "<div class=\"msg\">".$msg."</div>" : "";
+//$_rpl["<!-- {error} -->"] = (!empty($error)) ? "<div class=\"err\">".$error."</div>" : "";
 $_rpl["{redirect}"] = (isset($redirect)) ? fb_htmlEntities($redirect) : "";
 $_rpl["{email}"] = (isset($_POST["email"]) ? fb_htmlEntities(stripslashes($_POST["email"])) : "");
 $_rpl["{HomepageTitle}"] = $_CONF["HomepageTitle"];
@@ -116,18 +113,11 @@ $_rpl["{action}"] = basename($_SERVER["PHP_SELF"])."?".$_SERVER["QUERY_STRING"];
 
 if (!empty($content)) {
 	$content = str_replace("{webPath}", $_CONF["LOGIN_WEBPATH_MODUL"], $content);
-	// echo "...<!-- #".__LINE__." ".basename(__FILE__)." -->\n";
 }
 
-// echo "#".__LINE__." |\n";
 if ($show_form) {
-	// echo "#".__LINE__." |\n";
-	// echo "#".__LINE__." _rpl: ".print_r($_rpl,true)."<br>\n";
-	// echo "#".__LINE__." _CONF: ".print_r($_CONF,true)."<br>\n";
 	if (empty($content)) {
-		// echo "#".__LINE__." |\n";
 		$content = implode("", file(PATH_TO_LOGIN_MODUL."html/login.html"));
-		// echo "...<!-- #".__LINE__." ".basename(__FILE__)." -->\n";
 	}
 	
 	if ($_CONF["regc_mail_tld_only"] && $_CONF["regc_mail_tld_check"]) {
@@ -137,32 +127,27 @@ if ($show_form) {
 	}
 	
 	if ($error) {
-		// echo "#".__LINE__." |\n";
 		$errorbox = implode("", file($_CONF["HTML"]["errorbox"]));
 		$errorbox = str_replace("{txt}", $error, $errorbox);
 		$content = str_replace("<!-- {error} -->", $errorbox, $content);
 	}
 	if ($msg) {
-		// echo "#".__LINE__." |\n";
 		$msgbox = implode("", file($_CONF["HTML"]["msgbox"]));
 		$msgbox = str_replace("{txt}", $msg, $msgbox);
 		$content = str_replace("<!-- {msg} -->", $msgbox, $content);
 	}
 	
 	if (empty($ausgabe)) {
-		// echo "#".__LINE__." |\n";
 		$ausgabe = implode("", file(PATH_TO_LOGIN_MODUL."html/index.html"));
 		$ausgabe = str_replace("<!-- {content} -->", $content, $ausgabe);
 		$ausgabe = str_replace("{content}", $content, $ausgabe);
 		$ausgabe = strtr($ausgabe, $_rpl);
 		$ausgabe = str_replace("{webPath}", $_CONF["LOGIN_WEBPATH_MODUL"], $ausgabe);
 	} else {
-		// echo "#".__LINE__." |\n";
-		// echo "...<!-- #".__LINE__." ".basename(__FILE__)." is_int(strpos(ausgabe,%addStyles%)".(is_int(strpos($ausgabe,"<!-- %addStyles% -->"))?"TRUE":"FALSE")."-->\n";
+		//
 	}
 	$ausgabe = str_replace("<!-- %addStyles% -->", '<link rel="stylesheet" type="text/css" media="screen" href="'.$_CONF["LOGIN_WEBPATH_MODUL"].'/style/property/loginbox.css"><!-- %addStyles% -->', $ausgabe);
-	
-	// echo "#".__LINE__." |\n";
+
 	if (isset($body_content)) {
 		$content = strtr($content, $_rpl);
 		$content = str_replace("{webPath}", $_CONF["LOGIN_WEBPATH_MODUL"], $content);

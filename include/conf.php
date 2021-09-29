@@ -41,11 +41,20 @@ function abs2WebPath($FileAbsPath, $WithDomain = true) {
 	global $_SERVER;
 	$R = $_SERVER["DOCUMENT_ROOT"];
 	$PR = (isset($_SERVER["HTTPS"]) && strtoupper($_SERVER["HTTPS"])=="ON") ? "https" : "http";
-        $Port = $_SERVER['SERVER_PORT']!="80"?':'.$_SERVER['SERVER_PORT']:'';
-	$H = $PR."://".$_SERVER["HTTP_HOST"]; //.$Port;
+        $Port = (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT']!="80")?':'.$_SERVER['SERVER_PORT']:'';
+        if (!empty($_SERVER["HTTP_HOST"])) {
+            $H = $PR."://".$_SERVER["HTTP_HOST"]; //.$Port;
+        } else {
+            $H = "http://localhost" . $Port;
+        }
+
 	$P = realpath($FileAbsPath)."/";
 	//echo "#".__LINE__." ".basename(__FILE__)." FileAbsPath:".$FileAbsPath."; R:$R; H:$H; P:$P<br>\n";
-        $s = str_replace("\\","/",substr($P, strlen($_SERVER["DOCUMENT_ROOT"])));
+    if (!empty($_SERVER["DOCUMENT_ROOT"])) {
+        $s = str_replace("\\", "/", substr($P, strlen($_SERVER["DOCUMENT_ROOT"])));
+    } else {
+        $s = __LINE__;
+    }
 	return ($WithDomain?$H:"")."/".ltrim($s,'/');
         
 }}
@@ -53,7 +62,7 @@ function abs2WebPath($FileAbsPath, $WithDomain = true) {
 $postmaster = '';
 $propertyName = 'Dussman';
 $MConf = array(
-	"AppTitle" => "Uniper ORS Order Request System",
+	"AppTitle" => "Uniper NewNormal Homeoffice",
 	"WebRoot" => abs2WebPath(dirname(__FILE__).DS."..".DS),
 	"AppRoot" => realpath(dirname(__FILE__).DS."..".DS).DS,
 	"Tpl_Dir" => "html".DS,
@@ -88,12 +97,14 @@ $MConf = array(
     "smtp_server"    => "mail.mertens.ag",
     "smtp_port"      => "25",
     'smtp_from_name' => 'Order Request System',
-    'smtp_from_addr' => 'uniperors@mertens.ag',
-    'smtp_auth_user' => 'mag\unipermove',
+    // ors-service@mertens.ag
+    // service-uniper@mertens.ag
+    'smtp_from_addr' => 'service-uniper@mertens.ag',
+    'smtp_auth_user' => 'mag\ors-service',
     'smtp_auth_pass' => 'merTens47877',
     'smtp_client_host' => gethostbyname(gethostname()),
 	'min_ma' => 0,
-	'webmaster' => 'uniperors@mertens.ag',
+	'webmaster' => 'service-uniper@mertens.ag',
 	'minWerktageVorlauf' => 0,
     'validateAntragOrt' => false,
     'validateAntragGebaeude' => false,

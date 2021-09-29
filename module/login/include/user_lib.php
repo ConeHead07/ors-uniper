@@ -63,12 +63,12 @@ function unique_fldval($user_connid, $fld, $val, $uid = "") {
 		MyDB::free_result($r);
 		return ($cnt == 0) ? true : false;
 	} else {
-		$sys_error.= "<pre>#".__LINE__." ".__FILE__."\n";
-		$sys_error.= "Funktion: ".__FUNCTION__."($email)\n";
-		$sys_error.= "connid: $user_connid\n";
+		$sys_error.= "<pre>#" . __LINE__ . " " . __FILE__ . "\n";
+		$sys_error.= "Funktion: " . __FUNCTION__ . "(connid, '$fld', '$val', '$uid')\n";
+		$sys_error.= 'connid: ' . gettype($user_connid) . "\n";
 		$sys_error.= "r: $r\n";
-		$sys_error.= "MYSQL: ".MyDB::error()."\n";
-		$sys_error.= "QUERY: ".$SQL."</pre>\n";
+		$sys_error.= "MYSQL: " . MyDB::error() . "\n";
+		$sys_error.= "QUERY: " . $SQL . "</pre>\n";
 	}
 	return false;
 }

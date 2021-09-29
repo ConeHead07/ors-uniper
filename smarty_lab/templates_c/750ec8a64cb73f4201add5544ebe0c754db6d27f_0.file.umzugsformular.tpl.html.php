@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-09-22 11:12:17
+/* Smarty version 3.1.34-dev-7, created on 2021-09-23 10:12:46
   from '/var/www/html/html/umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_614b0f91463d13_28429742',
+  'unifunc' => 'content_614c531e9b10f1_75312921',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '750ec8a64cb73f4201add5544ebe0c754db6d27f' => 
     array (
       0 => '/var/www/html/html/umzugsformular.tpl.html',
-      1 => 1632309134,
+      1 => 1632391884,
       2 => 'file',
     ),
   ),
@@ -25,7 +25,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:umzugsformular_attachments.tpl.read.html' => 1,
   ),
 ),false)) {
-function content_614b0f91463d13_28429742 (Smarty_Internal_Template $_smarty_tpl) {
+function content_614c531e9b10f1_75312921 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),1=>array('file'=>'/var/www/html/smarty3/plugins/function.html_radios.php','function'=>'smarty_function_html_radios',),));
 ?>
 
@@ -121,7 +121,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
             <table>
                 <tr>
                     <td style="padding:0;width:200px;">
-                        <label for="as_strasse" style="display:block;width:auto;">Stra&szlig;e<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['strasse']['required']) {?><span class="required">*</span><?php }?></span></label></td>
+                        <label for="as_strasse" style="display:block;width:auto;">Stra&szlig;e &amp; Nr<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['strasse']['required']) {?><span class="required">*</span><?php }?></span></label></td>
                     <td style="padding:0;width:250px;"><input type="text" id="as_strasse" autocomplete="off" xreadonly="true" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['strasse']['required']) {?>required="required"<?php }?> value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['strasse'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[strasse]" class="itxt itxt2col"></td>
                 </tr>
@@ -238,7 +238,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
             </table>
             <br>
             <div style="display:xnone">
-                <h2 style="margin:0;">Ansprechpartner vor Ort <span class="infolink" id="copyASDataToAPVorOrt">(Angaben vom Antragsteller übernehmen)</span></h2>
+                <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort <span class="infolink" id="copyASDataToAPVorOrt" style="display: none;">(Angaben vom Antragsteller übernehmen)</span></h2>
                 <table>
                     <tr>
                         <td style="padding:0;width:200px;"><label for="as_ansprechpartner" title="Ansprechpartner Name" style="display:block;width:auto;">Vor &amp; Nachname<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['ansprechpartner']['required']) {?><span class="required">*</span><?php }?></span></label></td>

@@ -2022,9 +2022,13 @@ class ItemEdit
 							$this->arrConf["PrimaryKey"],
 							(isset($this->arrInput[$this->arrConf["PrimaryKey"]]) ? $this->arrInput[$this->arrConf["PrimaryKey"]] : "")
 						);
-						if (!$isValid) $err = "Es existiert bereits ein Eintrag für: ".$this->arrInput[$fN]."!\n";
+						if (!$isValid) {
+						    $err = "Es existiert bereits ein Eintrag für: ".$this->arrInput[$fN]."!\n";
+                        }
 					}
-					if (!$isValid) $this->arrErrFlds[$fN] = $fC["label"].($err !== "" ? ": ".$err : "");
+					if (!$isValid) {
+					    $this->arrErrFlds[$fN] = $fC["label"] . ($err !== "" ? ": " . $err : "") . '#' . __LINE__;
+                    }
 				} else {
 					// Prüfe, ob Eingabe erforderlich
 					if ($fC["required"]) {
@@ -2049,19 +2053,20 @@ class ItemEdit
 			if (count($this->arrErrFlds) ) {
 				$this->Error.= "Es wurden einige Felder nicht korrekt ausgef&uuml;llt:<br>\n";
 				foreach($this->arrErrFlds as $fld => $err) {
-					$this->Error.= $err."<br>";
+					$this->Error.= $fld . ' ' . $err."<br>";
 				}
 				return false;
 			}
 			return true;
 		} else {
-			$this->Error.= "#".__LINE__." Eingabedaten wurden noch nicht übergeben / geladen!<br>";
+			$this->Error.= " Eingabedaten wurden noch nicht übergeben / geladen!<br>";
 			$this->Error.= "Fügen Sie die Eingabedaten mit object->inputLoad(Array Eingaben)<br>!";
 			return false;
 		}
 	}
 	
 	function save() { return $this->saveInput(); }
+
 	function saveInput() {
 		global $msg;
 		if (!$this->Error) {
@@ -2145,15 +2150,38 @@ class ItemEdit
 					
 					//String
 					default:
-					if (isset($this->arrInput[$fN]) && $this->arrInput[$fN] !== "") {
-						if ($SQL_SET) $SQL_SET.= ",\n";
-						$SQL_SET.= "`".$fC["dbField"]."` = \"".MyDB::escape_string($this->arrInput[$fN])."\"";
-					} else {
-					//} elseif ($this->editMode != "Insert") {
-						if ($SQL_SET) $SQL_SET.= ",\n";
-						$SQL_SET.= "`".$fC["dbField"]."` = ".($fC["null"] ? "NULL" : "''");
-					}
-					break;
+					    if ($fC['htmlType'] === 'file' ) {
+					        if (!empty($_FILES['eingabe']['name'][$fN])) {
+                                $PostData = $_POST;
+                                $FileData = $_FILES;
+                                $_file = [
+                                    'name' => $_FILES['eingabe']['name'][$fN],
+                                    'temp' => $_FILES['eingabe']['tmp_name'][$fN],
+                                    'type' => $_FILES['eingabe']['type'][$fN],
+                                    'size' => $_FILES['eingabe']['size'][$fN],
+                                    'error' => $_FILES['eingabe']['error'][$fN],
+                                ];
+                                if ($SQL_SET) {
+                                    $SQL_SET .= ",\n";
+                                }
+                                $SQL_SET .= '`' . $fC['dbField'] . '` = "' . MyDB::escape_string(file_get_contents($_file['temp'])) . '"';
+
+                                print_r(compact('PostData', 'FileData', '_file'));
+                            }
+                        }
+                        elseif (isset($this->arrInput[$fN]) && $this->arrInput[$fN] !== "") {
+                            if ($SQL_SET) {
+                                $SQL_SET.= ",\n";
+                            }
+                            $SQL_SET.= "`".$fC["dbField"]."` = \"".MyDB::escape_string($this->arrInput[$fN])."\"";
+                        } else {
+                        //} elseif ($this->editMode != "Insert") {
+                            if ($SQL_SET){
+                                $SQL_SET.= ",\n";
+                            }
+                            $SQL_SET.= "`".$fC["dbField"]."` = ".($fC["null"] ? "NULL" : "''");
+                        }
+					    break;
 				}
 			}
 			
@@ -2301,7 +2329,7 @@ class ItemEdit
 			if ($this->arrConf["Description"]) {
 				$form.= "<div class=\"formDesc\">".$this->arrConf["Description"]."</div>\n";
 			}
-			$form.= "<div class=\"formBox\"><form action=\"{action}\" method=\"post\" name=\"frmInput\">";
+			$form.= "<div class=\"formBox\"><form action=\"{action}\" enctype='multipart/form-data' method=\"post\" name=\"frmInput\">";
 		}
 		
 		if ($makePreview) {

@@ -73,7 +73,7 @@
             <table>
                 <tr>
                     <td style="padding:0;width:200px;">
-                        <label for="as_strasse" style="display:block;width:auto;">Stra&szlig;e<span class="right">{if $ASConf.strasse.required}<span class="required">*</span>{/if}</span></label></td>
+                        <label for="as_strasse" style="display:block;width:auto;">Stra&szlig;e &amp; Nr<span class="right">{if $ASConf.strasse.required}<span class="required">*</span>{/if}</span></label></td>
                     <td style="padding:0;width:250px;"><input type="text" id="as_strasse" autocomplete="off" xreadonly="true" {if $ASConf.strasse.required}required="required"{/if} value="{$AS.strasse|escape}" name="AS[strasse]" class="itxt itxt2col"></td>
                 </tr>
 
@@ -172,7 +172,7 @@
             </table>
             <br>
             <div style="display:xnone">
-                <h2 style="margin:0;">Ansprechpartner vor Ort <span class="infolink" id="copyASDataToAPVorOrt">(Angaben vom Antragsteller übernehmen)</span></h2>
+                <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort <span class="infolink" id="copyASDataToAPVorOrt" style="display: none;">(Angaben vom Antragsteller übernehmen)</span></h2>
                 <table>
                     <tr>
                         <td style="padding:0;width:200px;"><label for="as_ansprechpartner" title="Ansprechpartner Name" style="display:block;width:auto;">Vor &amp; Nachname<span class="right">{if $ASConf.ansprechpartner.required}<span class="required">*</span>{/if}</span></label></td>

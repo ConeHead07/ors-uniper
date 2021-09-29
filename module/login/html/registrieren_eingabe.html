@@ -32,44 +32,45 @@
 <!-- {error} -->
 <!-- {msg} -->
 <table class="tblRegister">
-<form action="" method="post">
-<tr>
-	<td><label errclass="anrede" for="eingabe_anrede_frau" id="InputLblanrede">Anrede:</label></td> 
-	<td><input type="radio" id="eingabe_anrede_frau" name="eingabe[anrede]" value="Frau" class="iRad" check_anrede="Frau">Frau
-	    <input type="radio" name="eingabe[anrede]" value="Herr" class="iRad" check_anrede="Herr">Herr</td>
-</tr>
-<tr>
-	<td><label errclass="vorname" for="eingabe_vorname" id="InputLblvorname">Vorname:</label></td> 
-	<td><input id="inputUser" id="eingabe_vorname" type="text" name="eingabe[vorname]" value="{eingabe[vorname]}" class="iTxt"></td>
-</tr>
-<tr>
-	<td><label errclass="nachname" for="eingabe_nachname" id="InputLblnachname">Nachname:</label></td> 
-	<td><input type="text" id="eingabe_nachname" name="eingabe[nachname]" value="{eingabe[nachname]}" class="iTxt"></td>
-</tr>
-
-<tr>
-	<td><label errclass="email" for="eingabe_email" id="InputLblemail">Benutzer / E-Mail:</label></td> 
-	<td><input type="text" id="eingabe_email" name="eingabe[email]" value="{eingabe[email]}" class="iTxt">{email_tld_only}</td>
-</tr>
-
+	<form action="" method="post">
+	<tr style="display: none">
+		<td><label errclass="anrede" for="eingabe_anrede_frau" id="InputLblanrede">Anrede:</label></td>
+		<td><input type="radio" id="eingabe_anrede_frau" name="eingabe[anrede]" value="Frau" class="iRad" check_anrede="Frau">Frau
+			<input type="radio" name="eingabe[anrede]" value="Herr" class="iRad" check_anrede="Herr">Herr</td>
+	</tr>
 	<tr>
-		<td><label errclass="personalnr" for="eingabe_personalnr" id="InputLblpersonalnr">Personalnr:</label></td>
-		<td><input type="text" id="eingabe_personalnr" name="eingabe[personalnr]" value="{eingabe[personalnr]}" class="iTxt"></td>
+		<td><label errclass="vorname" for="eingabe_vorname" id="InputLblvorname">Vorname:</label></td>
+		<td><input id="inputUser" id="eingabe_vorname" type="text" name="eingabe[vorname]" value="{eingabe[vorname]}" class="iTxt"></td>
+	</tr>
+	<tr>
+		<td><label errclass="nachname" for="eingabe_nachname" id="InputLblnachname">Nachname:</label></td>
+		<td><input type="text" id="eingabe_nachname" name="eingabe[nachname]" value="{eingabe[nachname]}" class="iTxt"></td>
 	</tr>
 
-<tr>
-	<td><label errclass="fon" for="eingabe_fon" id="InputLblfon">Telefon:</label></td> 
-	<td><input type="text" id="eingabe_fon" name="eingabe[fon]" value="{eingabe[fon]}" class="iTxt"></td>
-</tr>
 	<tr>
+		<td><label errclass="user" for="eingabe_user" id="InputLbluser">Benutzer / E-Mail:</label></td>
+		<td><input type="text" id="eingabe_user" name="eingabe[user]" value="{eingabe[user]}" class="iTxt">{email_tld_only}</td>
+	</tr>
+
+		<tr>
+			<td><label errclass="personalnr" for="eingabe_personalnr" id="InputLblpersonalnr">KID:</label></td>
+			<td><input type="text" id="eingabe_personalnr" name="eingabe[personalnr]" value="{eingabe[personalnr]}" class="iTxt"></td>
+		</tr>
+
+	<tr>
+		<td><label errclass="fon" for="eingabe_fon" id="InputLblfon">Telefon:</label></td>
+		<td><input type="text" id="eingabe_fon" name="eingabe[fon]" value="{eingabe[fon]}" class="iTxt"></td>
+	</tr>
+
+	<tr style="display:none;">
 		<td><label errclass="strasse" for="eingabe_strasse" id="InputLblstrasse">Strasse:</label></td>
 		<td><input type="text" id="eingabe_strasse" name="eingabe[strasse]" value="{eingabe[strasse]}" class="iTxt"></td>
 	</tr>
-	<tr>
+	<tr style="display:none;">
 		<td><label errclass="plz" for="eingabe_plz" id="InputLblplz">PLZ:</label></td>
 		<td><input type="text" id="eingabe_plz" name="eingabe[plz]" value="{eingabe[plz]}" class="iTxt"></td>
 	</tr>
-	<tr>
+	<tr style="display:none;">
 		<td><label errclass="ort" for="eingabe_ort" id="InputLblort">Ort:</label></td>
 		<td><input type="text" id="eingabe_ort" name="eingabe[ort]" value="{eingabe[ort]}" class="iTxt"></td>
 	</tr>

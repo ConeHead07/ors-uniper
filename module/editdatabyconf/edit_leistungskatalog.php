@@ -110,7 +110,7 @@ if (isset($confName) && isset($ConfRegData[$confName]) && file_exists($InclBaseD
             $editCmd = "Edit";
         }
 
-        echo '<pre>'
+        if (0) echo '<pre>'
             . json_encode(compact('editCmd', 'formAction', 'fieldVals', 'gotoNext'), JSON_PRETTY_PRINT)
             . '</pre>';
 

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-09-22 08:52:20
+/* Smarty version 3.1.34-dev-7, created on 2021-09-22 12:41:09
   from '/var/www/html/html/admin_umzugsformular_gruppierung.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_614aeec43a4868_96394034',
+  'unifunc' => 'content_614b2465b484f6_11586708',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '8775cd7ecbbffdf8712b524fd5b2d10fecbf88fc' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular_gruppierung.tpl.html',
-      1 => 1632300692,
+      1 => 1632310232,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_614aeec43a4868_96394034 (Smarty_Internal_Template $_smarty_tpl) {
+function content_614b2465b484f6_11586708 (Smarty_Internal_Template $_smarty_tpl) {
 echo '<script'; ?>
  src="js/auftraege_gruppieren.js?201704250208"><?php echo '</script'; ?>
 >
@@ -50,13 +50,13 @@ echo '<script'; ?>
             <td style="width:14px;padding:0;"> X </td>
             <td>ID</td>
             <td>Termin</td>
-            <td>Auftragsort</td>
-            <td>Etage</td>
-            <td>Raumnr</td>
-            <td>Mit Umzug</td>
+            <td>Lieferort</td>
+            <td>PLZ</td>
+            <td>Stra&szlig;e &amp; Nr</td>
+            <td>Service</td>
             <td>Auftragseingang</td>
-            <td>G</td>
-            <td>M</td>
+            <td>Genehmigt</td>
+            <td>Avisiert</td>
 			<td>Abgeschlossen</td>
         </tr>
     </thead>

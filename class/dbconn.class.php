@@ -213,7 +213,7 @@ class DbConnStatement extends mysqli_result {
 }
 
 class dbconn {
-    var $conn = false;
+    var $conn = null;
     var $dbconn = false;
     var $connected = false;
     var $errors = "";
@@ -228,7 +228,7 @@ class dbconn {
         try {
             $this->conn = new mysqli($Host, $User, $Pass, $Db, $Port);
         } finally {
-            $this->connect_error = $this->conn->connect_error;
+            $this->connect_error = isset($this->conn->connect_error) ? $this->conn->connect_error : '';
         }
 
         if (!$this->connect_error) {
@@ -330,7 +330,8 @@ class dbconn {
     }
 
     function affected_rows() {
-        return @$this->conn->affected_rows($this->conn);
+
+        return @$this->conn->affected_rows; //($this->conn);
     }
 
     function free_result($r) {
@@ -682,7 +683,7 @@ if (basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
     //echo "#".__LINE__." ".basename(__FILE__)."<pre> getMethods:".print_r($modelReflector->getMethods(),1)."</pre><br>\n";
 
     //$db = new DBConn("localhost", "mt_move", "root", "");
-    $db = new DBConn("localhost", "mt_move_bayer", "root", "geheim3");
+    $db = new DBConn("localhost", "mt_move_uniper", "root", "geheim3");
     //$db->close();
 
     echo "#".__LINE__." ".print_r($db->get_table_statuslist("%benutzer"),1)."<br>\n";

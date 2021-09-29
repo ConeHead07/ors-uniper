@@ -33,7 +33,7 @@ $sql = 'SELECT l.*, '
 
 //  preismatrix_id 	leistung_id 	preis 	preiseinheit 	mengen_von 	mengen_bis 
 $sql = 'SELECT l.leistung_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
-      .' leistungskategorie kategorie, preis_pro_einheit, '
+      .' leistungskategorie kategorie, preis_pro_einheit, image, '
       .' m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis'
       .' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k '
       .'  ON l.leistungskategorie_id = k.leistungskategorie_id '

@@ -39,7 +39,7 @@ $sql = 'SELECT l.*, '
       .' ORDER BY kategorie, kategorie2, leistung, mengen_von';
 
 $sql = 'SELECT l.leistung_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
-      .' leistungskategorie kategorie, preis_pro_einheit, '
+      .' leistungskategorie kategorie, preis_pro_einheit, image, '
       .' m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis'
       .' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k '
       .'  ON l.leistungskategorie_id = k.leistungskategorie_id '
@@ -70,6 +70,8 @@ foreach($lkItems as $k => $v) {
     );
 }
 
+echo var_export($lkTreeItems, false);
+exit;
 $Tpl->assign('lktreeItems', $lkTreeItems);
 $Tpl->assign('lkTreeItemsJson', json_encode($lkTreeItemsJson) );
 $Tpl->assign('lkmByIdJson', json_encode($lkmById) );
