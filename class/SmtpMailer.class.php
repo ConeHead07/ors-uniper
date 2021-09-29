@@ -908,7 +908,7 @@ Machen Sie mit! Wir freuen uns auf Ihren Besuch unter www.mertens.ag<br>
     echo "<pre><a href=\"../log/".basename($MoveSmtp->logfile).'">'.$MoveSmtp->logfile."</a></pre>\n<br>\n";
     echo "<pre>less ".$MoveSmtp->logfile."</pre>\n<br>\n";
 	echo '<pre>' . PHP_EOL;
-	readfile($MoveSmtp->logfile);
+	echo htmlentities(file_get_contents($MoveSmtp->logfile));
     // ENDE: TESTVERSAND
 }
 
