@@ -27,7 +27,7 @@ $aSmtpConn = array(
     "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".txt",
     "tat"       => "" // Transaktionstext mit SERVER
 );
-if(SMTP_MAILER_DEBUG === 1) $aSmtpConn = array(
+if(SMTP_MAILER_DEBUG === 10) $aSmtpConn = array(
         "server"    => 'smtp.gmail.com',
         "port"      => 25,
         "encrypt"   => 'tls',
