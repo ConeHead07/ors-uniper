@@ -100,21 +100,24 @@ if (0) die(
 class SmtpMailer {
 
     var $aSmtpConn = array();
-    var $log = "";
-    var $logfile = "";
-    var $server = "";
-    var $socket = "";
-    var $logsmtp = "";
-    var $timeIn = "";
-    var $tat = "";
+    var $log = '';
+    var $logfile = '';
+    var $server = '';
+    var $from_name = '';
+    var $from_addr = '';
+    var $encrypt = '';
+    var $socket = '';
+    var $logsmtp = '';
+    var $timeIn = '';
+    var $tat = '';
     var $command = '';
     var $antwort = "";
-    var $port = "";
-    var $helofrom = "";
-    var $postfach_from = "";
-    var $auth_user = "";
-    var $auth_pass = "";
-    var $limitOffset = ""; // Formular-Duchreiche-Wert in stichtag_test.php
+    var $port = '';
+    var $helofrom = '';
+    var $postfach_from = '';
+    var $auth_user = '';
+    var $auth_pass = '';
+    var $limitOffset = ''; // Formular-Duchreiche-Wert in stichtag_test.php
     var $connection_timeout = 10;
     var $constHeader = array();
 
@@ -179,7 +182,6 @@ class SmtpMailer {
         if (isset($aSmtpConn["connection_timeout"]))     $this->connection_timeout =     $aSmtpConn["connection_timeout"]; // Formular-Duchreiche-Wert in stichtag_test.php
 
         $this->constHeader = array(
-            "From" => 'ors <ors@mertens-henk.de>',
         );
     }
 
