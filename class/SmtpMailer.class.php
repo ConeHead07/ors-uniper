@@ -897,7 +897,7 @@ Machen Sie mit! Wir freuen uns auf Ihren Besuch unter www.mertens.ag<br>
         ]
     ];
     $MoveSmtp = SmtpMailer::getNewInstance();
-    $numRecipients = $MoveSmtp->sendMultiMail($arrayTo, $subject, $htmlBody, $textBody, $aAttachments, []);
+    $numRecipients = $MoveSmtp->sendMultiMail($arrayTo, $subject, $htmlBody, $textBody, $aAttachments, $aHeader);
 
     if ($numRecipients) {
         echo "E-Mails wurden an $numRecipients Empfänger verschickt";
