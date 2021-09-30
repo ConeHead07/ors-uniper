@@ -527,7 +527,7 @@ class SmtpMailer {
                 . PHP_EOL . 'AUTH_USER: ' . $this->auth_user
                 . PHP_EOL . 'AUTH_PASS: ' . $this->auth_pass
                 . PHP_EOL . $this->logger[0]->dump()
-                . PHP_EOL . 'Result: ' . $result
+                . PHP_EOL . 'Result (Num Accepted Recipients): ' . $result
                 . PHP_EOL . 'Error : ' . $error
                 . PHP_EOL . 'TRACE : ' . $stackTrace, FILE_APPEND);
         }
@@ -981,18 +981,22 @@ Machen Sie mit! Wir freuen uns auf Ihren Besuch unter www.mertens.ag<br>
 <div style='font-style: italic'>Ihr Move-Management-Team</div>
 ";
 
-    $aAttachments = [
-        [
-            'quelle' => 'file',
-            'file' => dirname(__DIR__) . '/hilfetexte/terminwunsch.php',
-        ],
-        [
-            'quelle' => 'data',
-            'file' => dirname(__DIR__) . '/hilfetexte/terminwunsch.php',
-            'fname' => 'TestAnhang.html',
-            'fmime' => 'text/html',
-        ]
-    ];
+    if (0) {
+        $aAttachments = [
+            [
+                'quelle' => 'file',
+                'file' => dirname(__DIR__) . '/hilfetexte/terminwunsch.php',
+            ],
+            [
+                'quelle' => 'data',
+                'file' => dirname(__DIR__) . '/hilfetexte/terminwunsch.php',
+                'fname' => 'TestAnhang.html',
+                'fmime' => 'text/html',
+            ]
+        ];
+    } else {
+        $aAttachments = [];
+    }
     $MoveSmtp = SmtpMailer::getNewInstance();
     $numRecipients = $MoveSmtp->sendMultiMail($arrayTo, $subject, $htmlBody, $textBody, $aAttachments, $aHeader);
 
