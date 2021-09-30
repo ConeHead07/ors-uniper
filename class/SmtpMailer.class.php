@@ -9,6 +9,7 @@ if ( basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
 define('SMTP_MAILER_REALSEND', 1);
 $smtpSender = 'default';
 $aValidDebugSender = [
+    'default',
     'bayerors',
     'bcsors',
     'dussmannors',
@@ -46,24 +47,20 @@ $aSmtpConn = array(
     "tat"       => "" // Transaktionstext mit SERVER
 );
 
-if(SMTP_MAILER_DEBUG === 1) $aSmtpConn = array(
-        "server"    => 'smtp.gmail.com',
-        "port"      => 25,
-        "encrypt"   => 'tls',
-        "from_name" => 'Mertens ORS Uniper',
-        "from_addr" => 'mertens.ors.uniper@gmail.com',
-        "from"      => '"Mertens ORS Uniper" <mertens.ors.uniper@gmail.com>',
-        "postfach_from" => '<mertens.ors.uniper@gmail.com>',
-        "auth_user" => 'mertens.ors.uniper@gmail.com',
-        "auth_pass" => 'aDjSoNHQQKzT7',
-        "socket"    => "",
-        "connection_timeout" => 5,
-        "timeIn"    => time(),
-        "antwort"   => "",
-        "logsmtp"   => 1,
-        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".gmail.txt",
-        "tat"       => "" // Transaktionstext mit SERVER
-    ) + $aSmtpConn;
+if(SMTP_MAILER_DEBUG > 0 && $smtpSender === 'gmail') {
+    $aSmtpConn = array_merge($aSmtpConn, array(
+            "server"    => 'smtp.gmail.com',
+            "port"      => 25,
+            "encrypt"   => 'tls',
+            "from_name" => 'Mertens ORS Uniper',
+            "from_addr" => 'mertens.ors.uniper@gmail.com',
+            "from"      => '"Mertens ORS Uniper" <mertens.ors.uniper@gmail.com>',
+            "postfach_from" => '<mertens.ors.uniper@gmail.com>',
+            "auth_user" => 'mertens.ors.uniper@gmail.com',
+            "auth_pass" => 'aDjSoNHQQKzT7',
+            "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
+        ));
+}
 
 if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'bayerors') {
     $aSmtpConn = array_merge($aSmtpConn, array(
@@ -148,6 +145,10 @@ if((SMTP_MAILER_DEBUG > 0 && $smtpSender === 'projectgmail')) {
 
 if(SMTP_MAILER_DEBUG > 0 ) {
     echo 'smtpSender: ' . $smtpSender . "<br>\n";
+    echo '| ';
+    foreach( $aValidDebugSender as $_sender) {
+        echo '<a href="?sender=' . $_sender . '">' . $_sender . '</a> | ';
+    }
     echo '<pre>' . json_encode($aSmtpConn, JSON_PRETTY_PRINT) . '</pre>';
 }
 
