@@ -503,7 +503,7 @@ class SmtpMailer {
                 foreach($aAllHeraderNames as $_headername) {
                     $_list = $swiftMessageHeaders->getAll($_headername);
                     foreach($_list as $_header) {
-                        $this->lastHeaders[] = '[' . $_headername . '] ' . $_header . "\n";
+                        $this->lastHeaders[] = $_header;
                     }
                 }
                 if (0) echo '<pre>' . print_r([
@@ -532,8 +532,7 @@ class SmtpMailer {
                 . PHP_EOL . 'Result (Num Accepted Recipients): ' . $result
                 . PHP_EOL . 'Error . : ' . $error
                 . PHP_EOL . 'TRACE . : ' . $stackTrace
-                . PHP_EOL . 'HEADERS : ' . implode("\n", $this->lastHeaders
-                ),
+                . PHP_EOL . 'HEADERS : ' . "\n" . implode("\n", $this->lastHeaders),
                 FILE_APPEND
             );
         }
