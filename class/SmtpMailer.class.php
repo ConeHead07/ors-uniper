@@ -36,6 +36,7 @@ $aSmtpConn = array(
     "from_addr" => $MConf['smtp_from_addr'],
     "from"      => '"'.$MConf['smtp_from_name'] . '" <' . $MConf['smtp_from_addr'].'>',
     "postfach_from" => '<' . $MConf['smtp_from_addr'].'>',
+    'helofrom' => gethostbyname(gethostname()),
     "auth_user" => $MConf['smtp_auth_user'],
     "auth_pass" => $MConf['smtp_auth_pass'],
     "socket"    => "",
@@ -73,7 +74,7 @@ if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'bayerors') {
         'postfach_from' => '<bayerors@mertens.ag>',
         'auth_user' => 'mag\bayermove',
         'auth_pass' => 'merTens47877',
-        'helofrom' => gethostbyname(gethostname()),
+        'helofrom' => 'bayer.mertens.ag',
         "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
     ));
 }
@@ -89,7 +90,7 @@ if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'bcsors') {
         'postfach_from' => '<bcsors@mertens.ag>',
         'auth_user' => 'mag\bcsmove',
         'auth_pass' => 'merTens47877',
-        'helofrom' => gethostbyname(gethostname()),
+        'helofrom' => 'bcs.mertens.ag',
         "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
     ));
 }
@@ -105,7 +106,7 @@ if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'dussmannors') {
         'postfach_from' => '<ors@mertens-henk.de>',
         'auth_user' => 'mag\ors', // Alter Eintrag: "wp154616-bewerbung",
         'auth_pass' => 'Mh#14!',
-        'helofrom' => gethostbyname(gethostname()),
+        'helofrom' => 'dsd.mertens-henk.de',
         "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
     ));
 }
@@ -121,7 +122,7 @@ if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'vodafoneors') {
         'postfach_from' => '<move@mertens.ag>',
         'auth_user' => 'mag\move',
         'auth_pass' => 'move2010',
-        'helofrom' => gethostbyname(gethostname()),
+        'helofrom' => 'vodafone.mertens.ag',
         "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
     ));
 }
@@ -702,6 +703,7 @@ class SmtpMailer {
         )
             ->setUsername($this->auth_user)
             ->setPassword($this->auth_pass);
+        $this->transport->setLocalDomain($this->helofrom);
 
         return $this;
     }
