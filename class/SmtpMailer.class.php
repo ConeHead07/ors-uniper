@@ -531,8 +531,11 @@ class SmtpMailer {
                 . PHP_EOL . $this->logger[0]->dump()
                 . PHP_EOL . 'Result (Num Accepted Recipients): ' . $result
                 . PHP_EOL . 'Error . : ' . $error
-                . PHP_EOL . 'TRACE . : ' . $stackTrace, FILE_APPEND)
-                . PHP_EOL . 'HEADERS : ' . implode("\n", $this->lastHeaders);
+                . PHP_EOL . 'TRACE . : ' . $stackTrace
+                . PHP_EOL . 'HEADERS : ' . implode("\n", $this->lastHeaders
+                ),
+                FILE_APPEND
+            );
         }
 
         return $numAcceptedRecipients;
