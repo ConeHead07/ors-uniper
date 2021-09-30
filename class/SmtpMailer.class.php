@@ -2,10 +2,28 @@
 require_once __DIR__ . '/../module/Swift-5.0.0/lib/swift_required.php';
 if ( basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
     require __DIR__ . '/../include/conf.php';
+    define('SMTP_MAILER_DEBUG', 1);
 }
 
-define('SMTP_MAILER_DEBUG', APP_ENVIRONMENT === 'DEVELOPMENT' ? 1 : 0);
+!defined('SMTP_MAILER_DEBUG') || define('SMTP_MAILER_DEBUG', APP_ENVIRONMENT === 'DEVELOPMENT' ? 1 : 0);
 define('SMTP_MAILER_REALSEND', 1);
+$smtpSender = 'default';
+$aValidDebugSender = [
+    'bayerors',
+    'bcsors',
+    'dussmannors',
+    'vodafoneors',
+    'gmail',
+    'projectgmail',
+];
+
+if (!empty($_REQUEST['sender']) && $_REQUEST['sender'] !== 'default' ) {
+    if (in_array($_REQUEST['sender'], $aValidDebugSender)) {
+        $smtpSender = $_REQUEST['sender'];
+    } else {
+        die('INVALID COMFIG-NAME FOR SENDER: ' . $_REQUEST['sender']);
+    }
+}
 
 
 $aSmtpConn = array(
@@ -27,6 +45,7 @@ $aSmtpConn = array(
     "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".txt",
     "tat"       => "" // Transaktionstext mit SERVER
 );
+
 if(SMTP_MAILER_DEBUG === 1) $aSmtpConn = array(
         "server"    => 'smtp.gmail.com',
         "port"      => 25,
@@ -42,34 +61,103 @@ if(SMTP_MAILER_DEBUG === 1) $aSmtpConn = array(
         "timeIn"    => time(),
         "antwort"   => "",
         "logsmtp"   => 1,
-        "logfile"   => dirname(__FILE__) . "/../log/log_smtp_".date("YmdHis").".gmail.txt",
+        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".gmail.txt",
         "tat"       => "" // Transaktionstext mit SERVER
     ) + $aSmtpConn;
 
-if(SMTP_MAILER_DEBUG === 2) $aSmtpConn = array(
-    "server"    => 'smtp.gmail.com',
-    "port"      => 25,
-    "encrypt"   => 'tls',
-    "from_name" => 'Mertens Projekt-Tickets',
-    "from_addr" => 'mertens.openproject@gmail.com',
-    "from"      => '"Mertens Projekt-Tickets" <mertens.openproject@gmail.com>',
-    "postfach_from" => '<mertens.openproject@gmail.com>',
-    "auth_user" => 'mertens.openproject@gmail.com',
-    "auth_pass" => 'CersrDzC4b',
-    "socket"    => "",
-    "connection_timeout" => 5,
-    "timeIn"    => time(),
-    "antwort"   => "",
-    "logsmtp"   => 1,
-    "logfile"   => dirname(__FILE__) . "/../log/log_smtp_".date("YmdHis").".gmail.txt",
-    "tat"       => "" // Transaktionstext mit SERVER
-);
+if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'bayerors') {
+    $aSmtpConn = array_merge($aSmtpConn, array(
+        'server'    => "mail.mertens.ag",
+        'port'      => "25",
+        'encrypt'   => 'tls',
+        'from_name' => 'Order Request System',
+        'from_addr' => 'bayerors@mertens.ag',
+        'from' => '"Order Request System" <bayerors@mertens.ag>',
+        'postfach_from' => '<bayerors@mertens.ag>',
+        'auth_user' => 'mag\bayermove',
+        'auth_pass' => 'merTens47877',
+        'helofrom' => gethostbyname(gethostname()),
+        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
+    ));
+}
+
+if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'bcsors') {
+    $aSmtpConn = array_merge($aSmtpConn, array(
+        "server"    => "mail.mertens.ag",
+        "port"      => "25",
+        'encrypt'   => 'tls',
+        'from_name' => 'Order Request System',
+        'from_addr' => 'bcsors@mertens.ag',
+        'from' => '"Order Request System" <bcsors@mertens.ag>',
+        'postfach_from' => '<bcsors@mertens.ag>',
+        'auth_user' => 'mag\bcsmove',
+        'auth_pass' => 'merTens47877',
+        'helofrom' => gethostbyname(gethostname()),
+        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
+    ));
+}
+
+if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'dussmannors') {
+    $aSmtpConn = array_merge($aSmtpConn, array(
+        "smtp_server"    => 'mail.mertens.ag', // '10.30.2.100', '10.30.2.101' "10.10.1.69",
+        "smtp_port"      => "25",
+        'encrypt'   => 'tls',
+        'from_name' => 'Order Request System',
+        'from_addr' => 'ors@mertens-henk.de',
+        'from' => '"Order Request System" <ors@mertens-henk.de>',
+        'postfach_from' => '<ors@mertens-henk.de>',
+        'auth_user' => 'mag\ors', // Alter Eintrag: "wp154616-bewerbung",
+        'auth_pass' => 'Mh#14!',
+        'helofrom' => gethostbyname(gethostname()),
+        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
+    ));
+}
+
+if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'vodafoneors') {
+    $aSmtpConn = array_merge($aSmtpConn, array(
+        "server"    => "mail.mertens.ag",
+        "port"      => "25",
+        'encrypt'   => 'tls',
+        'from_name' => 'Order Request System',
+        'from_addr' => 'move@mertens.ag',
+        'from' => '"Order Request System" <move@mertens.ag>',
+        'postfach_from' => '<move@mertens.ag>',
+        'auth_user' => 'mag\move',
+        'auth_pass' => 'move2010',
+        'helofrom' => gethostbyname(gethostname()),
+        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
+    ));
+}
+
+
+if((SMTP_MAILER_DEBUG > 0 && $smtpSender === 'projectgmail')) {
+    $aSmtpConn = array_merge($aSmtpConn, array(
+        "server"    => 'smtp.gmail.com',
+        "port"      => 25,
+        "encrypt"   => 'tls',
+        "from_name" => 'Mertens Projekt-Tickets',
+        "from_addr" => 'mertens.openproject@gmail.com',
+        "from"      => '"Mertens Projekt-Tickets" <mertens.openproject@gmail.com>',
+        "postfach_from" => '<mertens.openproject@gmail.com>',
+        "auth_user" => 'mertens.openproject@gmail.com',
+        "auth_pass" => 'CersrDzC4b',
+        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
+    ));
+}
 
 $aSmtpDebugTo = [
-	[
-		'email' => 'frank.barthold@gmail.com',
-		'anrede' => 'Herr Barthold',
-	],
+    [
+        'email' => 'frank.barthold@gmail.com',
+        'anrede' => 'Herr Barthold',
+    ],
+    [
+        'email' => 'ors-service@mertens.ag',
+        'anrede' => 'ORS Service',
+    ],
+    [
+        'email' => 'f.barthold@mertens.ag',
+        'anrede' => 'Herr Barthold',
+    ],
 /*
 	[
 		'email' => 'o.kowalski@mertens.ag',
