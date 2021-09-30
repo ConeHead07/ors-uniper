@@ -179,7 +179,7 @@ $aSmtpDebugTo = [
 ];
 
 $aHeader = array(
-    "From"        => $aSmtpConn['from'],
+    // "From"        => $aSmtpConn['from'],
     "Reply-To"    => $aSmtpConn['from_addr'],
     "Errors-To"   => $aSmtpConn['from_addr'],
     "BCC"         => 'f.barthold@mertens.ag',
