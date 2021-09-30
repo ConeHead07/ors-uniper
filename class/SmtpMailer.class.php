@@ -130,6 +130,7 @@ if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'vodafoneors') {
 }
 
 
+
 if((SMTP_MAILER_DEBUG > 0 && $smtpSender === 'projectgmail')) {
     $aSmtpConn = array_merge($aSmtpConn, array(
         "server"    => 'smtp.gmail.com',
@@ -143,6 +144,11 @@ if((SMTP_MAILER_DEBUG > 0 && $smtpSender === 'projectgmail')) {
         "auth_pass" => 'CersrDzC4b',
         "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
     ));
+}
+
+if(SMTP_MAILER_DEBUG > 0 ) {
+    echo 'smtpSender: ' . $smtpSender . "<br>\n";
+    echo '<pre>' . json_encode($aSmtpConn, JSON_PRETTY_PRINT) . '</pre>';
 }
 
 $aSmtpDebugTo = [
