@@ -216,6 +216,7 @@ class SmtpMailer {
     var $limitOffset = ''; // Formular-Duchreiche-Wert in stichtag_test.php
     var $connection_timeout = 10;
     var $constHeader = array();
+    var $lastHeaders = array();
 
     /** @var Swift_SmtpTransport  */
     protected $transport = null;
@@ -464,14 +465,6 @@ class SmtpMailer {
             $this->textBody = $this->renderTplVars( $sTxtBody, false);
             $this->htmlBody = $this->renderTplVars( $sHtmlBody, true );
 
-            //            $thisSubject = $this->subject;
-            //            $thisTplVars = $this->tplVars;
-            //            $thisTextBody = $this->textBody;
-            //
-            //            ob_end_flush();
-            //            echo '<pre>' . print_r(compact('thisSubject', 'thisTextBody', 'thisTplVars'), 1) . '</pre>';
-            //            exit;
-
             $this->createMessage();
             $type = $this->message->getHeaders()->get('Content-Type');
             $type->setValue('text/plain');
@@ -504,13 +497,22 @@ class SmtpMailer {
             $error = '';
             $result = 0;
             try {
-
+                $this->lastHeaders = [];
+                $swiftMessageHeaders = $this->message->getHeaders();
+                $aAllHeraderNames = $swiftMessageHeaders->listAll();
+                foreach($aAllHeraderNames as $_headername) {
+                    $_list = $swiftMessageHeaders->getAll($_headername);
+                    foreach($_list as $_header) {
+                        $this->lastHeaders[] = '[' . $_headername . '] ' . $_header . "\n";
+                    }
+                }
                 if (0) echo '<pre>' . print_r([
                         'to' => $_to['email'],
                         'anrede' => $_to['anrede'] ?? '',
                         'subject' => $this->subject,
                         'textBody' => $this->textBody,
                         'htmlBody' => $this->htmlBody,
+                        'swiftHeaders' => $this->lastHeaders,
                 ], 1) . '</pre>' . "\n";
                 $result = $this->send();
 
@@ -529,7 +531,8 @@ class SmtpMailer {
                 . PHP_EOL . $this->logger[0]->dump()
                 . PHP_EOL . 'Result (Num Accepted Recipients): ' . $result
                 . PHP_EOL . 'Error : ' . $error
-                . PHP_EOL . 'TRACE : ' . $stackTrace, FILE_APPEND);
+                . PHP_EOL . 'TRACE : ' . $stackTrace, FILE_APPEND)
+                . PHP_EOL . 'HEADERS : ' . implode("\n", $this->lastHeaders);
         }
 
         return $numAcceptedRecipients;
