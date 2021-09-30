@@ -150,7 +150,7 @@ if(SMTP_MAILER_DEBUG > 0 ) {
     foreach( $aValidDebugSender as $_sender) {
         echo '<a href="?sender=' . $_sender . '">' . $_sender . '</a> | ';
     }
-    echo '<pre>' . json_encode($aSmtpConn, JSON_PRETTY_PRINT) . '</pre>';
+    echo '<pre>' . htmlentities(json_encode($aSmtpConn, JSON_PRETTY_PRINT)) . '</pre>';
 }
 
 $aSmtpDebugTo = [
