@@ -1544,16 +1544,18 @@ class ItemEdit
 				}
 				// echo "<div>" . json_encode(compact('fN', 'val', 'needle')) . "</div>\n";
 				if (!empty($fC["formatEingabeFunction"]) && function_exists($fC["formatEingabeFunction"])) {
-					call_user_func(
+					call_user_func_array(
 						$fC["formatEingabeFunction"],
-						$this->editCmd,
-						$fN,
-						$val,
-						$fC,
-						$this->arrDbdata, 
-						$this->arrInput,
-						$this->tplForm, 
-						$needle
+						[
+						    $this->editCmd,
+                            $fN,
+                            $val,
+                            $fC,
+                            $this->arrDbdata,
+                            $this->arrInput,
+                            &$this->tplForm,
+                            $needle,
+                            ]
 					);
 					// echo "<div style=\"border:1px solid #00f;\">#".__LINE__." tplForm AfterReplace:".fb_htmlEntities($this->tplForm)."</div>\n";
 				}
