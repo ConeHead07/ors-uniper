@@ -184,7 +184,7 @@ function umzugsantrag_speichern() {
 	global $error;
 	global $msg;
 	global $_CONF;
-        global $MConf;
+    global $MConf;
 	global $connid;
 	global $user;
 	
@@ -247,7 +247,7 @@ function umzugsantrag_speichern() {
 	$MAPostItems = get_ma_post_items();
 	if ($AID && $MConf['min_ma'] && (!is_array($MAPostItems) || !count($MAPostItems)) ) {
 		$error.= "Es wurden keine Mitarbeiter für den Umzug ausgewählt.<br>\n";
-		if (!empty($AS->itemsExists)) {
+		if ($AS->itemsExists) {
 			$error.= "Falls Sie den Auftrag stornieren möchten, klicken Sie den 'Stornieren'-Button.<br>\n";
 		}
 		return false;
@@ -256,30 +256,34 @@ function umzugsantrag_speichern() {
 	if (!$userIsAdmin) $ASPostItem["antragsstatus"] = "bearbeitung";
 	$AS->loadInput($ASPostItem);
 	if (($cntAS > 0 && $cmd !== 'status') && !$AS->checkInput()) {
-            $error.= "Überprüfen Sie die Angaben zum Antragssteller!<br>\n";
-            $error.= $AS->Error;
-            foreach($AS->arrErrFlds as $field => $err) $error.= $field.":".$err."<br>\n";
-            $error.= $AS->Warning;
-            return false;
+        $error.= "Überprüfen Sie die Angaben zum Antragssteller!<br>\n";
+        $error.= $AS->Error;
+        foreach($AS->arrErrFlds as $field => $err) $error.= $field.":".$err."<br>\n";
+        $error.= $AS->Warning;
+        return false;
 	} else {
-            if ($addBemerkung) {
-                $AS->arrInput["bemerkungen"] = "Bemerkung von ".$user["user"]." am ".date("d.m.Y")." um ".date("H:i")."\n";
-                if ($cmd === 'status') $AS->arrInput["bemerkungen"].= $name . ' ' . $value . " - Grund:\n";
-                $AS->arrInput["bemerkungen"].= trim($addBemerkung);
-                if (!empty($AS->arrDbdata["bemerkungen"])) $AS->arrInput["bemerkungen"].= "\n\n".$AS->arrDbdata["bemerkungen"];
-            } else {
-                $AS->arrInput["bemerkungen"] = (!empty($AS->arrDbdata["bemerkungen"])) ? $AS->arrDbdata["bemerkungen"] : "";
+        if ($addBemerkung) {
+            $AS->arrInput["bemerkungen"] = "Bemerkung von ".$user["user"]." am ".date("d.m.Y")." um ".date("H:i")."\n";
+            if ($cmd === 'status') {
+                $AS->arrInput["bemerkungen"].= $name . ' ' . $value . " - Grund:\n";
             }
-            // @ob_end_flush();
-            // echo '#' . __LINE__ . ' ' . __FILE__ . "\n" . var_export($AS->arrInput, 1);
-            // exit;
-            $AS->save();
-            if (!$AID) {
-                $AID = $AS->id;
-                $UpdateToken = $AS->arrInput["token"]; //substr(md5($AID.time()),0,10);
+            $AS->arrInput["bemerkungen"].= trim($addBemerkung);
+            if (!empty($AS->arrDbdata["bemerkungen"])) {
+                $AS->arrInput["bemerkungen"].= "\n\n".$AS->arrDbdata["bemerkungen"];
             }
-            $error.= $AS->Error;
-            $error.= $AS->dbError;
+        } else {
+            $AS->arrInput["bemerkungen"] = (!empty($AS->arrDbdata["bemerkungen"])) ? $AS->arrDbdata["bemerkungen"] : "";
+        }
+        // @ob_end_flush();
+        // echo '#' . __LINE__ . ' ' . __FILE__ . "\n" . var_export($AS->arrInput, 1);
+        // exit;
+        $AS->save();
+        if (!$AID) {
+            $AID = $AS->id;
+            $UpdateToken = $AS->arrInput["token"]; //substr(md5($AID.time()),0,10);
+        }
+        $error.= $AS->Error;
+        $error.= $AS->dbError;
 	}
 	
 	if (!$AID) {
@@ -356,5 +360,13 @@ function umzugsantrag_speichern() {
             $error.= "Es konnten nicht alle Mitarbeiterdaten gespeichert werden!<br>\n".$save_errors;
             return false;
 	}
+    if ($addBemerkung) {
+        $enrichedBemerkung = $AS->arrInput["bemerkungen"];
+        if (umzugsantrag_mailinform($AID, "neuebemerkung", $enrichedBemerkung)) {
+            $msg.= "Mail mit neuer Bemerkung wurde gesendet!<br>\n";
+        } else {
+            $error.= "Fehler beim Mailversand!<br>\n";
+        }
+    }
 	return $AID;
 }

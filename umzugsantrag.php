@@ -68,7 +68,9 @@ switch($cmd) {
 		$reID = umzugsantrag_speichern();
 		if ($reID) {
 			$msg.= "Die Daten wurden aktualisiert!<br>\n";
-			if ($reID!=$id) $LoadScript.= "if (typeof(umzugsformular_set_id)==\"function\") umzugsformular_set_id('".$reID."'); else alert(\"Fehler beim Setzen der Antrags-ID!\");\n";
+			if ($reID!=$id) {
+			    $LoadScript.= "if (typeof(umzugsformular_set_id)==\"function\") umzugsformular_set_id('".$reID."'); else alert(\"Fehler beim Setzen der Antrags-ID!\");\n";
+            }
 			$LoadScript.= "if (typeof(umzugsantrag_auto_reload)==\"function\") umzugsantrag_auto_reload('".$reID."');\n";
 		}
 	} else {

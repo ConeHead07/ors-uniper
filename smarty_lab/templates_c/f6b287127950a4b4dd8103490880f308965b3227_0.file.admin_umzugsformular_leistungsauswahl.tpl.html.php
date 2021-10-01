@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-09-22 08:43:22
+/* Smarty version 3.1.34-dev-7, created on 2021-10-01 10:25:44
   from '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_614aecaa8962d5_97752575',
+  'unifunc' => 'content_6156e2287b3f30_82764309',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f6b287127950a4b4dd8103490880f308965b3227' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1631632302,
+      1 => 1633083937,
       2 => 'file',
     ),
   ),
@@ -20,8 +20,9 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_614aecaa8962d5_97752575 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6156e2287b3f30_82764309 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div style="display:block;margin-top:15px;">
+    <!-- admin_umzugsformular_leistungsauswahl.tpl.html -->
 <span style="margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="add_Leistung();return false;">
     Leistung hinzuf&uuml;gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
 </div>
@@ -317,7 +318,7 @@ if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['L']->value) {
 ?>
         <tr class="row inputRowVon">
-            <td style="padding:0;"><span onclick="drop_Leistung(this)" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></td>
+            <td style="padding:0;"><span onclick="drop_Leistung(this)" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""></span></td>
             <td class="ktg1" onclick="get_Kategorie(this)"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'ISO-8859-1', true);?>
 </td>
             <td class="lstg" onclick="get_Leistung(this)" data-p="<?php echo $_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'];?>

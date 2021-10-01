@@ -45,7 +45,7 @@ if ($NLInput) {
 			//echo '#' . __LINE__ . ' aNlVerteiler: ' . print_r($aNlVerteiler,1) . '<br/>' . PHP_EOL;
 			if ($aNlVerteiler) {
 				
-				$hd = "Reply-To:".(!empty($rplVars["Reply-To"])?$rplVars["Reply-To"]:"bayerors@mertens.ag")."";
+				$hd = "Reply-To:".(!empty($rplVars["Reply-To"])?$rplVars["Reply-To"]:"service-uniper@mertens.ag")."";
 				$suTpl = "Es wurde eine neue Nebenleistung beauftrag. ID #".$NID;
 				$nlStatusTxtTpl = trim(file_get_contents("textfiles/statusmail_nebenleistung_neu.txt"));
 				

@@ -268,37 +268,6 @@ $(function(){
 </script>
 <table class="MitarbeierItem" style="width:100%;">
     <thead>
-    <tr>
-        <td style="width:14px;padding:0;"> X </td>
-        <td>Kategorie</td>
-        <td>Leistung</td>
-    </tr>
-    </thead>
-    <tbody>
-    {foreach name=LList item=L from=$Umzugsleistungen}
-    <tr class="row inputRowVon">
-        <td style="padding:0;">
-            <input name="check[{$L.kategorie|escape}]" type="radio" value="{$L.leistung_id}">
-            <span onclick="drop_Leistung(this)"
-                  style="cursor:pointer;margin:0;padding:0;display:none;">
-                <img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt="">
-            </span>
-        </td>
-        <td class="ktg1" onclick="get_Kategorie(this)">{$L.kategorie|escape}</td>
-        <td class="lstg" onclick="get_Leistung(this)" data-p="{$L.preis_pro_einheit}" data-sum="{$L.gesamtpreis}">{$L.leistung|escape}
-            <input class="ilstg" name="L[leistung_id][]" value="{$L.leistung_id}" type="hidden"><!--
-             --><input
-                class="menge {if $creator !== 'property'}readonly{else}editable{/if}"
-                name="L[menge_property][]"
-                {if $creator !== 'property'} readonly="readonly"{/if}
-            value="{if is_numeric($L.menge_property)}{$L.menge_property|escape|number_format:2:",":"."}{/if}"
-            type="hidden"></td>
-    </tr>
-    {/foreach}
-    </tbody>
-</table>
-<table class="MitarbeierItem" style="width:100%;">
-    <thead>
         <tr>
             <td style="width:14px;padding:0;"> X </td>
             <td>Kategorie</td>

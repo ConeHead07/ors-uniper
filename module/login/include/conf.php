@@ -8,7 +8,7 @@ $LoginBaseDir = "./login/";
 if (!defined("PATH_TO_LOGIN_MODUL")) define("PATH_TO_LOGIN_MODUL", realpath(dirname(__FILE__)."./"));
 
 // if (!isset(PATH_TO_LOGIN_MODUL)) define('PATH_TO_LOGIN_MODUL', realpath(dirname(__FILE__)."/../")."/");
-if (empty($_CONF["email"]["webmaster"])) $_CONF["email"]["webmaster"] = "bayerors@mertens.ag";
+if (empty($_CONF["email"]["webmaster"])) $_CONF["email"]["webmaster"] = "service-unipers@mertens.ag";
 if (empty($MConf["WebRoot"])) $MConf["WebRoot"] = "https://".$_SERVER["HTTP_HOST"]."/".dirname($_SERVER["PHP_SELF"])."/";
 $_CONF["WebRoot"] = $MConf["WebRoot"];
 $_CONF["user_tbl_prefix"] = $MConf["DB_TblPrefix"];

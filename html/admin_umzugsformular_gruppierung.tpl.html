@@ -58,7 +58,7 @@
     {/if}
 	</tbody>
 </table>
-<input id="gruppierteauftraege" name="gruppierteauftraege" type="hidden" value="{$UmzugsGruppierungsIds}">
+<input id="gruppierteauftraege" name="gruppierteauftraege" type="hidden" value="{if !empty($UmzugsGruppierungsIds)}{$UmzugsGruppierungsIds}{/if}">
 
 
 <table id="TplGruppierungsTable" style="display:none;">

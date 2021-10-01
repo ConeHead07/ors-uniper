@@ -333,7 +333,7 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false) 
 		foreach($rplVars as $k => $v) $body = str_replace("{".$k."}", $v, $body);
 		foreach($rplVars as $k => $v) $su = str_replace("{".$k."}", $v, $su);
 		
-		$hd = "Reply-To:".(!empty($rplVars["Reply-To"])?$rplVars["Reply-To"]:"bayerors@mertens.ag")."\n";
+		$hd = "Reply-To:".(!empty($rplVars["Reply-To"])?$rplVars["Reply-To"]:"service-uniper@mertens.ag")."\n";
 		$hd.= "BCC: frank.barthold@googlemail.com";
 		
 		if (!fbmail($to, $su, $body, $hd)) $success = false;

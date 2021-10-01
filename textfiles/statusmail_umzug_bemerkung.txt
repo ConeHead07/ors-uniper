@@ -1,0 +1,20 @@
+Betreff=Umzug ID {AID} - Neue Bemerkung
+
+Hallo {Vorname} {Name},
+
+es liegt eine neue Bemerkung zur Leistungsanforderung mit der ID {AID} vor.
+
+Antragsteller:  {vorname} {name}
+SAP Nr.         {kostenstell}	
+Ticket Nr.      {planonnr}
+
+Neue Bemerkung
+{neuebemerkung}
+
+Sie können den  Vorgang  unter folgendem Link  bearbeiten:
+{StatusLink}
+
+Mit freundlichen Grüßen
+
+Ihr
+{HomepageTitle}

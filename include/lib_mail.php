@@ -214,11 +214,11 @@ if (basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
 	$priority = "";
 	$header="";
 	if ($cc) $header.="CC: ".$cc;
-	$header.="\nFROM: <bayerors@mertens.ag>";
+	$header.="\nFROM: <service-uniper@mertens.ag>";
 	if ($bc) $header.="\nBCC: ".$bc;
 	if ($priority) $header.="\nX-Priority: ".$priority;
-	$header.="\nReply-To: bayerors@mertens.ag";
-	$header.="\nReturn-Path: bayerors@mertens.ag";
+	$header.="\nReply-To: service-uniper@mertens.ag";
+	$header.="\nReturn-Path: service-uniper@mertens.ag";
 	$header.="\nX-Entwickler: Frank Barthold";
         $aHeader = SmtpMailer::mimeHeaderTxtToArray($header);
 	

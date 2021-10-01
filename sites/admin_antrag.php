@@ -66,8 +66,6 @@ foreach($lkItems as $k => $v) {
     );
 }
 
-echo var_export($lkTreeItems, false);
-exit;
 $Tpl->assign('lktreeItems', $lkTreeItems);
 $Tpl->assign('lkTreeItemsJson', json_encode($lkTreeItemsJson) );
 $Tpl->assign('lkmByIdJson', json_encode($lkmById) );

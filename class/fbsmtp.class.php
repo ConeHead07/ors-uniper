@@ -91,7 +91,7 @@ class fbsmtp {
 		if (isset($aSmtpConn["limitOffset"]))     $this->limitOffset =   $aSmtpConn["limitOffset"]; // Formular-Duchreiche-Wert in stichtag_test.php
 		if (isset($aSmtpConn["connection_timeout"])) 	$this->connection_timeout = 	$aSmtpConn["connection_timeout"]; // Formular-Duchreiche-Wert in stichtag_test.php
 		$this->constHeader = array(
-			"From" => 'ors <bayerors@mertens.ag>',
+			"From" => 'ors <service-uniper@mertens.ag>',
 		);
 	}
 	

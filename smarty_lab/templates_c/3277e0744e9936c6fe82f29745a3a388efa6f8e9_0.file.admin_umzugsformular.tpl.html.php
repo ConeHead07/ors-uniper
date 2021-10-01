@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-09-22 12:41:09
+/* Smarty version 3.1.34-dev-7, created on 2021-10-01 10:45:45
   from '/var/www/html/html/admin_umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_614b24658f84e7_32253124',
+  'unifunc' => 'content_6156e6d9310be9_42425619',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3277e0744e9936c6fe82f29745a3a388efa6f8e9' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular.tpl.html',
-      1 => 1632308430,
+      1 => 1633085130,
       2 => 'file',
     ),
   ),
@@ -28,7 +28,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_614b24658f84e7_32253124 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6156e6d9310be9_42425619 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -134,7 +134,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
 ">
 <table>
   <tr>
-      <td style="padding:0;width:200px;"><label for="mitarbeiter" style="width:180px;">Vor<?php if ($_smarty_tpl->tpl_vars['ASConf']->value['vorname']['required']) {?><span class="required">*</span><?php }?> &amp; Nachname<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['name']['required']) {?><span class="required">*</span><?php }?></span></label></td>
+      <td style="padding:0;"><label for="mitarbeiter" style="width:180px;">Vor<?php if ($_smarty_tpl->tpl_vars['ASConf']->value['vorname']['required']) {?><span class="required">*</span><?php }?> &amp; Nachname<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['name']['required']) {?><span class="required">*</span><?php }?></span></label></td>
     <td style="padding:0;width:250px;"><input type="text" readonly="true" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['vorname'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" readonly="true" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['name'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
@@ -154,8 +154,8 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
   <h2 style="margin:0;">Lieferadresse</h2>
   <table>
   <tr>
-    <td style="padding:0;width:200px;">
-      <label for="as_strasse" style="display:block;width:auto;">Stra&szlig;e<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['strasse']['required']) {?><span class="required">*</span><?php }?></span></label></td>
+    <td style="padding:0;">
+      <label for="as_strasse" style="display:block;width:180px;">Stra&szlig;e &amp; Nr<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['strasse']['required']) {?><span class="required">*</span><?php }?></span></label></td>
     <td style="padding:0;width:250px;"><input type="text" id="as_strasse" autocomplete="off" xreadonly="true" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['strasse']['required']) {?>required="required"<?php }?> value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['strasse'], ENT_QUOTES, 'ISO-8859-1', true);?>
 " name="AS[strasse]" class="itxt itxt2col"></td>
   </tr>
@@ -336,46 +336,63 @@ if ($_smarty_tpl->tpl_vars['AS']->value['genehmigt_br'] == 'Ja' || $_smarty_tpl-
   <tr class="inputRowVon">
 	<td class="nn"><input type="hidden" name="MA[mid][]" value=""><!-- 
  	 --><input type="hidden" name="MA[maid][]" value=""><!-- 
-	 --><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['name'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" id="mitarbeiter"  xonclick="get_mitarbeiter(this)"  class="AutoFill UpperCase" type="text" name="MA[name][]"></td>
-    <td class="vn"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['vorname'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="itxt itxt1col UpperCase AutoFill" type="text" name="MA[vorname][]"></td>
-	<td class="xf"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['extern_firma'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" onclick="get_extern_firma(this)" class="itxt itxt1col AutoFill" size=15 type="text" name="MA[extern_firma][]"></td>
+	 --><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['name'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" id="mitarbeiter"  xonclick="get_mitarbeiter(this)"  class="AutoFill UpperCase" type="text" name="MA[name][]"></td>
+    <td class="vn"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['vorname'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="itxt itxt1col UpperCase AutoFill" type="text" name="MA[vorname][]"></td>
+	<td class="xf"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['extern_firma'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" onclick="get_extern_firma(this)" class="itxt itxt1col AutoFill" size=15 type="text" name="MA[extern_firma][]"></td>
 	
-	<td class="abt"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['abteilung'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_abteilung(this)" class="itxt AutoFill" size=4 type="text" name="MA[abteilung][]"></td>
-	<td class="geb"><input  autocomplete="off" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['gebaeude'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col AutoFill" type="text" name="MA[gebaeude][]"></td>
-    <td class="etg"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['etage'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" onclick="get_etage(this)" readonly="true" class="itxt AutoFill" type="text" name="MA[etage][]"></td>
-    <td class="rnr"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['raumnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" onclick="get_raumnr(this)" readonly="true" class="itxt AutoFill" size=8 type="text" name="MA[raumnr][]"></td>
-    <td class="apnr"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['apnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" onclick="get_apnr(this)" class="itxt AutoFill" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
+	<td class="abt"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['abteilung'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_abteilung(this)" class="itxt AutoFill" size=4 type="text" name="MA[abteilung][]"></td>
+	<td class="geb"><input  autocomplete="off" value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['gebaeude'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col AutoFill" type="text" name="MA[gebaeude][]"></td>
+    <td class="etg"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['etage'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" onclick="get_etage(this)" readonly="true" class="itxt AutoFill" type="text" name="MA[etage][]"></td>
+    <td class="rnr"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['raumnr'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" onclick="get_raumnr(this)" readonly="true" class="itxt AutoFill" size=8 type="text" name="MA[raumnr][]"></td>
+    <td class="apnr"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['apnr'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" onclick="get_apnr(this)" class="itxt AutoFill" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
     
-    <td class="fon"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['fon'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="itxt" type="text" name="MA[fon][]"></td>
-    <td class="pcnr"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['pcnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="itxt" type="text" name="MA[pcnr][]"></td>
-    <td class="festeip"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['festeip'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="itxt" type="text" name="MA[festeip][]"></td>
+    <td class="fon"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['fon'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="itxt" type="text" name="MA[fon][]"></td>
+    <td class="pcnr"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['pcnr'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="itxt" type="text" name="MA[pcnr][]"></td>
+    <td class="festeip"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['festeip'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="itxt" type="text" name="MA[festeip][]"></td>
 </tr>
   <tr class="inputRowZiel">
     <td class="ziel" align=right>Anforderungsart</td>
-	<td class="uart"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['umzugsart'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="UserInput" readonly="true" onclick="get_umzugsart(this)" type="text" name="MA[umzugsart][]"></td>
+	<td class="uart"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['umzugsart'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="UserInput" readonly="true" onclick="get_umzugsart(this)" type="text" name="MA[umzugsart][]"></td>
     <td class="ziel" align=right> Nach:</td>
-    <td class="etg"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zabteilung'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" type="text" name="MA[zabteilung][]"></td>
-	<td class="zort"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zgebaeude'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_gebaeude(this)" class="itxt UserInput" type="text" name="MA[zgebaeude][]"></td>
-    <td class="geb"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zetage'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_etage(this)" class="itxt UserInput" type="text" name="MA[zetage][]"></td>
-    <td class="rnr"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zraumnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_raumnr(this)" class="itxt UserInput" type="text" name="MA[zraumnr][]"></td>
-    <td class="rnr"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zapnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="itxt" type="text" name="MA[zapnr][]"></td>
+    <td class="etg"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zabteilung'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" type="text" name="MA[zabteilung][]"></td>
+	<td class="zort"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zgebaeude'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_gebaeude(this)" class="itxt UserInput" type="text" name="MA[zgebaeude][]"></td>
+    <td class="geb"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zetage'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_etage(this)" class="itxt UserInput" type="text" name="MA[zetage][]"></td>
+    <td class="rnr"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zraumnr'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_raumnr(this)" class="itxt UserInput" type="text" name="MA[zraumnr][]"></td>
+    <td class="rnr"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zapnr'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="itxt" type="text" name="MA[zapnr][]"></td>
     <td class="zspace" colspan=3></td>
 </tr>
 </tbody>
@@ -411,46 +428,63 @@ if ($_smarty_tpl->tpl_vars['AS']->value['genehmigt_br'] == 'Ja' || $_smarty_tpl-
   <tr class="inputRowVon">
 	<td class="nn"><input type="hidden" name="MA[mid][]" value=""><!-- 
  	 --><input type="hidden" name="MA[maid][]" value=""><!-- 
-	 --><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['name'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" id="mitarbeiter" xonclick="get_mitarbeiter(this)"  class="itxt itxt1col UpperCase UserInput" type="text" name="MA[name][]"></td>
-    <td class="vn"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['vorname'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="itxt itxt1col UpperCase UserInput" type="text" name="MA[vorname][]"></td>
-	<td class="xf"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['extern_firma'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" onclick="get_extern_firma(this)" class="itxt itxt1col UserInput" size=15 type="text" name="MA[extern_firma][]"></td>
+	 --><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['name'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" id="mitarbeiter" xonclick="get_mitarbeiter(this)"  class="itxt itxt1col UpperCase UserInput" type="text" name="MA[name][]"></td>
+    <td class="vn"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['vorname'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="itxt itxt1col UpperCase UserInput" type="text" name="MA[vorname][]"></td>
+	<td class="xf"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['extern_firma'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" onclick="get_extern_firma(this)" class="itxt itxt1col UserInput" size=15 type="text" name="MA[extern_firma][]"></td>
 	
-	<td class="abt"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['abteilung'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" size=4 type="text" name="MA[abteilung][]"></td>
-	<td class="geb"><input  autocomplete="off" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['gebaeude'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col UserInput" type="text" name="MA[gebaeude][]"></td>
-    <td class="etg"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['etage'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" onclick="get_etage(this)" readonly="true" class="itxt UserInput" type="text" name="MA[etage][]"></td>
-    <td class="rnr"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['raumnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" onclick="get_raumnr(this)" readonly="true" class="itxt UserInput" size=8 type="text" name="MA[raumnr][]"></td>
-    <td class="apnr"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['apnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="itxt UserInput" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
+	<td class="abt"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['abteilung'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" size=4 type="text" name="MA[abteilung][]"></td>
+	<td class="geb"><input  autocomplete="off" value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['gebaeude'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col UserInput" type="text" name="MA[gebaeude][]"></td>
+    <td class="etg"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['etage'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" onclick="get_etage(this)" readonly="true" class="itxt UserInput" type="text" name="MA[etage][]"></td>
+    <td class="rnr"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['raumnr'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" onclick="get_raumnr(this)" readonly="true" class="itxt UserInput" size=8 type="text" name="MA[raumnr][]"></td>
+    <td class="apnr"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['apnr'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="itxt UserInput" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
     
-    <td class="fon"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['fon'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="itxt" type="text" name="MA[fon][]"></td>
-    <td class="pcnr"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['pcnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="itxt" type="text" name="MA[pcnr][]"></td>
-    <td class="festeip"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['festeip'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="itxt" type="text" name="MA[festeip][]"></td>
+    <td class="fon"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['fon'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="itxt" type="text" name="MA[fon][]"></td>
+    <td class="pcnr"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['pcnr'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="itxt" type="text" name="MA[pcnr][]"></td>
+    <td class="festeip"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['festeip'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="itxt" type="text" name="MA[festeip][]"></td>
 	</tr>
   <tr class="inputRowZiel">
     <td class="ziel" align=right>Anforderungsart</td>
-	<td class="uart"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['umzugsart'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="UserInput" readonly="true" onclick="get_umzugsart(this)" type="text" name="MA[umzugsart][]"></td>
+	<td class="uart"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['umzugsart'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="UserInput" readonly="true" onclick="get_umzugsart(this)" type="text" name="MA[umzugsart][]"></td>
     <td class="ziel" align=right> Nach:</td>
-    <td class="abt"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zabteilung'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" type="text" name="MA[zabteilung][]"></td>
-	<td class="geb"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zgebaeude'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_gebaeude(this)" class="itxt UserInput" type="text" name="MA[zgebaeude][]"></td>
-    <td class="etg"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zetage'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_etage(this)" class="itxt UserInput" type="text" name="MA[zetage][]"></td>
-    <td class="rnr"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zraumnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" readonly="true" onclick="get_raumnr(this)" class="itxt UserInput" type="text" name="MA[zraumnr][]"></td>
-    <td class="apnr"><input value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zapnr'], ENT_QUOTES, 'ISO-8859-1', true);?>
-" class="itxt UserInput" type="text" name="MA[zapnr][]"></td>
+    <td class="abt"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zabteilung'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" type="text" name="MA[zabteilung][]"></td>
+	<td class="geb"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zgebaeude'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_gebaeude(this)" class="itxt UserInput" type="text" name="MA[zgebaeude][]"></td>
+    <td class="etg"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zetage'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_etage(this)" class="itxt UserInput" type="text" name="MA[zetage][]"></td>
+    <td class="rnr"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zraumnr'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" readonly="true" onclick="get_raumnr(this)" class="itxt UserInput" type="text" name="MA[zraumnr][]"></td>
+    <td class="apnr"><input value="<?php if (!empty($_smarty_tpl->tpl_vars['MA']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['MA']->value['zapnr'], ENT_QUOTES, 'ISO-8859-1', true);
+}?>" class="itxt UserInput" type="text" name="MA[zapnr][]"></td>
     <td class="zspace" colspan=3></td>
 </tr>
 </tbody>

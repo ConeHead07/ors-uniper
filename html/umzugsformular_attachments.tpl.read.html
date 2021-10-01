@@ -64,7 +64,7 @@
 <fieldset><legend><strong>Dateianhänge</strong></legend>
 <div id="attachments_list" data-url="sites/umzugsantrag_attachements_list.php?aid={$AS.aid}" style="padding:5px;">
 
-    <div class="row names{if count($UmzugsAnlagen)==0} hidden{/if}">
+    <div class="row names{if empty($UmzugsAnlagen)} hidden{/if}">
     <span class="col fname">Datei</span><span class="col fsize">Gr&ouml;&szlig;e</span><span class="col fdate">Upload vom</span>
 </div>
 

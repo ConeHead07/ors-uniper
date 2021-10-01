@@ -63,7 +63,7 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
 <input type="hidden" name="AS[token]" value="{$AS.token}">
 <table>
   <tr>
-      <td style="padding:0;width:200px;"><label for="mitarbeiter" style="width:180px;">Vor{if $ASConf.vorname.required}<span class="required">*</span>{/if} &amp; Nachname<span class="right">{if $ASConf.name.required}<span class="required">*</span>{/if}</span></label></td>
+      <td style="padding:0;"><label for="mitarbeiter" style="width:180px;">Vor{if $ASConf.vorname.required}<span class="required">*</span>{/if} &amp; Nachname<span class="right">{if $ASConf.name.required}<span class="required">*</span>{/if}</span></label></td>
     <td style="padding:0;width:250px;"><input type="text" readonly="true" value="{$AS.vorname|escape}" name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" readonly="true" value="{$AS.name|escape}" name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
   </tr>
   <tr>
@@ -79,8 +79,8 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   <h2 style="margin:0;">Lieferadresse</h2>
   <table>
   <tr>
-    <td style="padding:0;width:200px;">
-      <label for="as_strasse" style="display:block;width:auto;">Stra&szlig;e &amp; Nr<span class="right">{if $ASConf.strasse.required}<span class="required">*</span>{/if}</span></label></td>
+    <td style="padding:0;">
+      <label for="as_strasse" style="display:block;width:180px;">Stra&szlig;e &amp; Nr<span class="right">{if $ASConf.strasse.required}<span class="required">*</span>{/if}</span></label></td>
     <td style="padding:0;width:250px;"><input type="text" id="as_strasse" autocomplete="off" xreadonly="true" {if $ASConf.strasse.required}required="required"{/if} value="{$AS.strasse|escape}" name="AS[strasse]" class="itxt itxt2col"></td>
   </tr>
 
@@ -298,29 +298,29 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   <tr class="inputRowVon">
 	<td class="nn"><input type="hidden" name="MA[mid][]" value=""><!-- 
  	 --><input type="hidden" name="MA[maid][]" value=""><!-- 
-	 --><input value="{$MA.name|escape}" id="mitarbeiter"  xonclick="get_mitarbeiter(this)"  class="AutoFill UpperCase" type="text" name="MA[name][]"></td>
-    <td class="vn"><input value="{$MA.vorname|escape}" class="itxt itxt1col UpperCase AutoFill" type="text" name="MA[vorname][]"></td>
-	<td class="xf"><input value="{$MA.extern_firma|escape}" onclick="get_extern_firma(this)" class="itxt itxt1col AutoFill" size=15 type="text" name="MA[extern_firma][]"></td>
+	 --><input value="{if !empty($MA)}{$MA.name|escape}{/if}" id="mitarbeiter"  xonclick="get_mitarbeiter(this)"  class="AutoFill UpperCase" type="text" name="MA[name][]"></td>
+    <td class="vn"><input value="{if !empty($MA)}{$MA.vorname|escape}{/if}" class="itxt itxt1col UpperCase AutoFill" type="text" name="MA[vorname][]"></td>
+	<td class="xf"><input value="{if !empty($MA)}{$MA.extern_firma|escape}{/if}" onclick="get_extern_firma(this)" class="itxt itxt1col AutoFill" size=15 type="text" name="MA[extern_firma][]"></td>
 	
-	<td class="abt"><input value="{$MA.abteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt AutoFill" size=4 type="text" name="MA[abteilung][]"></td>
-	<td class="geb"><input  autocomplete="off" value="{$MA.gebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col AutoFill" type="text" name="MA[gebaeude][]"></td>
-    <td class="etg"><input value="{$MA.etage|escape}" onclick="get_etage(this)" readonly="true" class="itxt AutoFill" type="text" name="MA[etage][]"></td>
-    <td class="rnr"><input value="{$MA.raumnr|escape}" onclick="get_raumnr(this)" readonly="true" class="itxt AutoFill" size=8 type="text" name="MA[raumnr][]"></td>
-    <td class="apnr"><input value="{$MA.apnr|escape}" onclick="get_apnr(this)" class="itxt AutoFill" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
+	<td class="abt"><input value="{if !empty($MA)}{$MA.abteilung|escape}{/if}" readonly="true" onclick="get_abteilung(this)" class="itxt AutoFill" size=4 type="text" name="MA[abteilung][]"></td>
+	<td class="geb"><input  autocomplete="off" value="{if !empty($MA)}{$MA.gebaeude|escape}{/if}" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col AutoFill" type="text" name="MA[gebaeude][]"></td>
+    <td class="etg"><input value="{if !empty($MA)}{$MA.etage|escape}{/if}" onclick="get_etage(this)" readonly="true" class="itxt AutoFill" type="text" name="MA[etage][]"></td>
+    <td class="rnr"><input value="{if !empty($MA)}{$MA.raumnr|escape}{/if}" onclick="get_raumnr(this)" readonly="true" class="itxt AutoFill" size=8 type="text" name="MA[raumnr][]"></td>
+    <td class="apnr"><input value="{if !empty($MA)}{$MA.apnr|escape}{/if}" onclick="get_apnr(this)" class="itxt AutoFill" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
     
-    <td class="fon"><input value="{$MA.fon|escape}" class="itxt" type="text" name="MA[fon][]"></td>
-    <td class="pcnr"><input value="{$MA.pcnr|escape}" class="itxt" type="text" name="MA[pcnr][]"></td>
-    <td class="festeip"><input value="{$MA.festeip|escape}" class="itxt" type="text" name="MA[festeip][]"></td>
+    <td class="fon"><input value="{if !empty($MA)}{$MA.fon|escape}{/if}" class="itxt" type="text" name="MA[fon][]"></td>
+    <td class="pcnr"><input value="{if !empty($MA)}{$MA.pcnr|escape}{/if}" class="itxt" type="text" name="MA[pcnr][]"></td>
+    <td class="festeip"><input value="{if !empty($MA)}{$MA.festeip|escape}{/if}" class="itxt" type="text" name="MA[festeip][]"></td>
 </tr>
   <tr class="inputRowZiel">
     <td class="ziel" align=right>Anforderungsart</td>
-	<td class="uart"><input value="{$MA.umzugsart|escape}" class="UserInput" readonly="true" onclick="get_umzugsart(this)" type="text" name="MA[umzugsart][]"></td>
+	<td class="uart"><input value="{if !empty($MA)}{$MA.umzugsart|escape}{/if}" class="UserInput" readonly="true" onclick="get_umzugsart(this)" type="text" name="MA[umzugsart][]"></td>
     <td class="ziel" align=right> Nach:</td>
-    <td class="etg"><input value="{$MA.zabteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" type="text" name="MA[zabteilung][]"></td>
-	<td class="zort"><input value="{$MA.zgebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt UserInput" type="text" name="MA[zgebaeude][]"></td>
-    <td class="geb"><input value="{$MA.zetage|escape}" readonly="true" onclick="get_etage(this)" class="itxt UserInput" type="text" name="MA[zetage][]"></td>
-    <td class="rnr"><input value="{$MA.zraumnr|escape}" readonly="true" onclick="get_raumnr(this)" class="itxt UserInput" type="text" name="MA[zraumnr][]"></td>
-    <td class="rnr"><input value="{$MA.zapnr|escape}" class="itxt" type="text" name="MA[zapnr][]"></td>
+    <td class="etg"><input value="{if !empty($MA)}{$MA.zabteilung|escape}{/if}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" type="text" name="MA[zabteilung][]"></td>
+	<td class="zort"><input value="{if !empty($MA)}{$MA.zgebaeude|escape}{/if}" readonly="true" onclick="get_gebaeude(this)" class="itxt UserInput" type="text" name="MA[zgebaeude][]"></td>
+    <td class="geb"><input value="{if !empty($MA)}{$MA.zetage|escape}{/if}" readonly="true" onclick="get_etage(this)" class="itxt UserInput" type="text" name="MA[zetage][]"></td>
+    <td class="rnr"><input value="{if !empty($MA)}{$MA.zraumnr|escape}{/if}" readonly="true" onclick="get_raumnr(this)" class="itxt UserInput" type="text" name="MA[zraumnr][]"></td>
+    <td class="rnr"><input value="{if !empty($MA)}{$MA.zapnr|escape}{/if}" class="itxt" type="text" name="MA[zapnr][]"></td>
     <td class="zspace" colspan=3></td>
 </tr>
 </tbody>
@@ -356,29 +356,29 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   <tr class="inputRowVon">
 	<td class="nn"><input type="hidden" name="MA[mid][]" value=""><!-- 
  	 --><input type="hidden" name="MA[maid][]" value=""><!-- 
-	 --><input value="{$MA.name|escape}" id="mitarbeiter" xonclick="get_mitarbeiter(this)"  class="itxt itxt1col UpperCase UserInput" type="text" name="MA[name][]"></td>
-    <td class="vn"><input value="{$MA.vorname|escape}" class="itxt itxt1col UpperCase UserInput" type="text" name="MA[vorname][]"></td>
-	<td class="xf"><input value="{$MA.extern_firma|escape}" onclick="get_extern_firma(this)" class="itxt itxt1col UserInput" size=15 type="text" name="MA[extern_firma][]"></td>
+	 --><input value="{if !empty($MA)}{$MA.name|escape}{/if}" id="mitarbeiter" xonclick="get_mitarbeiter(this)"  class="itxt itxt1col UpperCase UserInput" type="text" name="MA[name][]"></td>
+    <td class="vn"><input value="{if !empty($MA)}{$MA.vorname|escape}{/if}" class="itxt itxt1col UpperCase UserInput" type="text" name="MA[vorname][]"></td>
+	<td class="xf"><input value="{if !empty($MA)}{$MA.extern_firma|escape}{/if}" onclick="get_extern_firma(this)" class="itxt itxt1col UserInput" size=15 type="text" name="MA[extern_firma][]"></td>
 	
-	<td class="abt"><input value="{$MA.abteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" size=4 type="text" name="MA[abteilung][]"></td>
-	<td class="geb"><input  autocomplete="off" value="{$MA.gebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col UserInput" type="text" name="MA[gebaeude][]"></td>
-    <td class="etg"><input value="{$MA.etage|escape}" onclick="get_etage(this)" readonly="true" class="itxt UserInput" type="text" name="MA[etage][]"></td>
-    <td class="rnr"><input value="{$MA.raumnr|escape}" onclick="get_raumnr(this)" readonly="true" class="itxt UserInput" size=8 type="text" name="MA[raumnr][]"></td>
-    <td class="apnr"><input value="{$MA.apnr|escape}" class="itxt UserInput" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
+	<td class="abt"><input value="{if !empty($MA)}{$MA.abteilung|escape}{/if}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" size=4 type="text" name="MA[abteilung][]"></td>
+	<td class="geb"><input  autocomplete="off" value="{if !empty($MA)}{$MA.gebaeude|escape}{/if}" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col UserInput" type="text" name="MA[gebaeude][]"></td>
+    <td class="etg"><input value="{if !empty($MA)}{$MA.etage|escape}{/if}" onclick="get_etage(this)" readonly="true" class="itxt UserInput" type="text" name="MA[etage][]"></td>
+    <td class="rnr"><input value="{if !empty($MA)}{$MA.raumnr|escape}{/if}" onclick="get_raumnr(this)" readonly="true" class="itxt UserInput" size=8 type="text" name="MA[raumnr][]"></td>
+    <td class="apnr"><input value="{if !empty($MA)}{$MA.apnr|escape}{/if}" class="itxt UserInput" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
     
-    <td class="fon"><input value="{$MA.fon|escape}" class="itxt" type="text" name="MA[fon][]"></td>
-    <td class="pcnr"><input value="{$MA.pcnr|escape}" class="itxt" type="text" name="MA[pcnr][]"></td>
-    <td class="festeip"><input value="{$MA.festeip|escape}" class="itxt" type="text" name="MA[festeip][]"></td>
+    <td class="fon"><input value="{if !empty($MA)}{$MA.fon|escape}{/if}" class="itxt" type="text" name="MA[fon][]"></td>
+    <td class="pcnr"><input value="{if !empty($MA)}{$MA.pcnr|escape}{/if}" class="itxt" type="text" name="MA[pcnr][]"></td>
+    <td class="festeip"><input value="{if !empty($MA)}{$MA.festeip|escape}{/if}" class="itxt" type="text" name="MA[festeip][]"></td>
 	</tr>
   <tr class="inputRowZiel">
     <td class="ziel" align=right>Anforderungsart</td>
-	<td class="uart"><input value="{$MA.umzugsart|escape}" class="UserInput" readonly="true" onclick="get_umzugsart(this)" type="text" name="MA[umzugsart][]"></td>
+	<td class="uart"><input value="{if !empty($MA)}{$MA.umzugsart|escape}{/if}" class="UserInput" readonly="true" onclick="get_umzugsart(this)" type="text" name="MA[umzugsart][]"></td>
     <td class="ziel" align=right> Nach:</td>
-    <td class="abt"><input value="{$MA.zabteilung|escape}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" type="text" name="MA[zabteilung][]"></td>
-	<td class="geb"><input value="{$MA.zgebaeude|escape}" readonly="true" onclick="get_gebaeude(this)" class="itxt UserInput" type="text" name="MA[zgebaeude][]"></td>
-    <td class="etg"><input value="{$MA.zetage|escape}" readonly="true" onclick="get_etage(this)" class="itxt UserInput" type="text" name="MA[zetage][]"></td>
-    <td class="rnr"><input value="{$MA.zraumnr|escape}" readonly="true" onclick="get_raumnr(this)" class="itxt UserInput" type="text" name="MA[zraumnr][]"></td>
-    <td class="apnr"><input value="{$MA.zapnr|escape}" class="itxt UserInput" type="text" name="MA[zapnr][]"></td>
+    <td class="abt"><input value="{if !empty($MA)}{$MA.zabteilung|escape}{/if}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" type="text" name="MA[zabteilung][]"></td>
+	<td class="geb"><input value="{if !empty($MA)}{$MA.zgebaeude|escape}{/if}" readonly="true" onclick="get_gebaeude(this)" class="itxt UserInput" type="text" name="MA[zgebaeude][]"></td>
+    <td class="etg"><input value="{if !empty($MA)}{$MA.zetage|escape}{/if}" readonly="true" onclick="get_etage(this)" class="itxt UserInput" type="text" name="MA[zetage][]"></td>
+    <td class="rnr"><input value="{if !empty($MA)}{$MA.zraumnr|escape}{/if}" readonly="true" onclick="get_raumnr(this)" class="itxt UserInput" type="text" name="MA[zraumnr][]"></td>
+    <td class="apnr"><input value="{if !empty($MA)}{$MA.zapnr|escape}{/if}" class="itxt UserInput" type="text" name="MA[zapnr][]"></td>
     <td class="zspace" colspan=3></td>
 </tr>
 </tbody>

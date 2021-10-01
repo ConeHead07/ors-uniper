@@ -47,8 +47,8 @@
     <div id="Umzugsantrag" class="divInlay">
         <h2 style="margin:0;">Antragsteller (umzugsformular.tpl.html)</h2>
         <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
-            <input type="hidden" name="AS[aid]" value="{$AS.aid}">
-            <input type="hidden" name="AS[token]" value="{$AS.token}">
+            <input type="hidden" name="AS[aid]" value="{!empty($AS)}{$AS.aid}{/if}">
+            <input type="hidden" name="AS[token]" value="{!empty($AS)}{$AS.token}{/if}">
             <span class="required-label">* Erforderliche Angaben</span>
             <table>
                 <tr>
@@ -57,15 +57,15 @@
                             Vor{if $ASConf.vorname.required}<span class="required">*</span>{/if} &amp; Nachname<span class="right">{if $ASConf.name.required}<span class="required">*</span>{/if}</span>
                         </label></td>
 
-                    <td style="padding:0;width:250px;"><input type="text" id="as_vornachname" readonly="true" value="{$AS.vorname|escape}" {if $ASConf.name.required}required="required"{/if} name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" id="as_name" readonly="true" value="{$AS.name|escape}" name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
+                    <td style="padding:0;width:250px;"><input type="text" id="as_vornachname" readonly="true" value="{!empty($AS)}{$AS.vorname|escape}{/if}" {if $ASConf.name.required}required="required"{/if} name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" id="as_name" readonly="true" value="{!empty($AS)}{$AS.name|escape}{/if}" name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_email" style="display:block;width:auto;">E-Mail<span class="right">{if $ASConf.email.required}<span class="required">*</span>{/if}</span></label></td>
-                    <td style="padding:0;"><input type="text" autocomplete="email" id="as_email" value="{$AS.email|escape}" name="AS[email]" {if $ASConf.email.required}required="required"{/if} readonly="true" class="itxt itxt2col" title="E-Mail"></td>
+                    <td style="padding:0;"><input type="text" autocomplete="email" id="as_email" value="{!empty($AS)}{$AS.email|escape}{/if}" name="AS[email]" {if $ASConf.email.required}required="required"{/if} readonly="true" class="itxt itxt2col" title="E-Mail"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_fon" style="display:block;width:auto;">Telefon<span class="right">{if $ASConf.fon.required}<span class="required">*</span>{/if}</span></label></td>
-                    <td style="padding:0;"><input type="text" autocomplete="tel" id="as_fon" value="{$AS.fon|escape}" {if $ASConf.fon.required}required="required"{/if} name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
+                    <td style="padding:0;"><input type="text" autocomplete="tel" id="as_fon" value="{!empty($AS)}{$AS.fon|escape}{/if}" {if $ASConf.fon.required}required="required"{/if} name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
                 </tr>
             </table>
 
@@ -92,7 +92,7 @@
                 <tr style="display:none">
                     <td style="padding:0">
                         <label for="gebaeude" style="display:block;width:auto;">Wirtschaftseinheit<span class="right">{if $ASConf.gebaeude.required}<span class="required">*</span>{/if}</span></label>
-                        <input type="hidden" id="gebaeude" value="{$AS.gebaeude|escape}" {if $ASConf.gebaeude.required}required="required"{/if} name="AS[gebaeude]">
+                        <input type="hidden" id="gebaeude" value="{if !empty($AS)}{$AS.gebaeude|escape}{/if}" {if $ASConf.gebaeude.required}required="required"{/if} name="AS[gebaeude]">
                     </td>
                     <td style="padding:0;"><input type="text" readonly="true" {if $ASConf.gebaeude.required}required="required"{/if} id="ASGebaeudeUsrInput" onclick="get_standort_gebaeude(this, O('gebaeude'))" value="{$AS.gebaeude_text|escape}" name="AS[gebaeude_text]" class="itxt itxt2col"></td>
                 </tr>
@@ -100,7 +100,7 @@
                 <tr style="display:none">
                     <td style="padding:0;">
                         <label for="etage" style="display:block;width:auto;">Etage<span class="right">{if $ASConf.etage.required}<span class="required">*</span>{/if}</span></label>
-                        <input type="hidden" id="etage" value="{$AS.etage|escape}" {if $ASConf.etage.required}required="required"{/if} name="AS[etage]">
+                        <input type="hidden" id="etage" value="{if !empty($AS)}{$AS.etage|escape}{/if}" {if $ASConf.etage.required}required="required"{/if} name="AS[etage]">
                     </td>
                     <td style="padding:0;">
                         <input type="text" readonly="true" {if $ASConf.etage.required}required="required"{/if}
@@ -118,13 +118,13 @@
                     <td style="padding:0;">
                         <label for="as_kostenstelle" style="display:block;width:auto;">{$ASConf.kostenstelle.label}<span class="right">{if $ASConf.kostenstelle.required}<span class="required">*</span>{/if}</span></label>
                     </td>
-                    <td style="padding:0;"><input type="text" id="as_kostenstelle" value="{$AS.kostenstelle|escape}" name="AS[kostenstelle]"{if $ASConf.kostenstelle.required} required="required"{/if} class="itxt itxt2col"></td>
+                    <td style="padding:0;"><input type="text" id="as_kostenstelle" value="{if !empty($AS)}{$AS.kostenstelle|escape}{/if}" name="AS[kostenstelle]"{if $ASConf.kostenstelle.required} required="required"{/if} class="itxt itxt2col"></td>
                 </tr>
                 <tr style="display:none">
                     <td style="padding:0;">
                         <label for="as_planonnr" style="display:block;width:auto;">{$ASConf.planonnr.label}<span class="right">{if $ASConf.planonnr.required}<span class="required">*</span>{/if}</span></label>
                     </td>
-                    <td style="padding:0;"><input type="text" id="as_planonnr" value="{$AS.planonnr|escape}"{if $ASConf.planonnr.required} required="required"{/if} name="AS[planonnr]" class="itxt itxt2col">
+                    <td style="padding:0;"><input type="text" id="as_planonnr" value="{if !empty($AS)}{$AS.planonnr|escape}{/if}"{if $ASConf.planonnr.required} required="required"{/if} name="AS[planonnr]" class="itxt itxt2col">
                     </td>
                 </tr>
 
@@ -132,7 +132,7 @@
                     <td style="padding:0;">
                         <label for="as_terminwunsch" style="display:block;width:auto;">Terminwunsch<span class="right">{if $ASConf.terminwunsch.required}<span class="required">*</span>{/if}</span></label>
                     </td>
-                    <td style="padding:0;"><input type="text" id="as_terminwunsch" value="{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}" {if $ASConf.terminwunsch.required}required="required"{/if}
+                    <td style="padding:0;"><input type="text" id="as_terminwunsch" value="{if !empty($AS)}{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}{/if}" {if $ASConf.terminwunsch.required}required="required"{/if}
                         onfocus="showDtPicker(this)" id="terminwunsch" name="AS[terminwunsch]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/terminwunsch.php"></td>
                 </tr>
 
@@ -141,7 +141,7 @@
                         <label for="as_umzugszeit" style="display:block;width:auto;">Uhrzeit<span class="right">{if $ASConf.umzugszeit.required}<span class="required">*</span>{/if}</span></label>
                     </td>
                     <td style="padding:0;">
-                        <input type="text" id="as_umzugszeit" value='{$AS.umzugszeit|escape|substr:0:5}' {if $ASConf.umzugszeit.required}required="required"{/if}
+                        <input type="text" id="as_umzugszeit" value='{if !empty($AS)}{$AS.umzugszeit|escape|substr:0:5}{/if}' {if $ASConf.umzugszeit.required}required="required"{/if}
                         id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col">
                     </td>
                 </tr>
@@ -154,18 +154,18 @@
                         value="{$AS.von_gebaeude_id|escape}" name="AS[von_gebaeude_id]">
                     </td>
                     <td class="ort">
-                        <input onclick="get_gebaeude(this, O('von_gebaeude_id'))" id="von_gebaeude_text" type="text" value="{$AS.von_gebaeude_text|escape}" xreadonly="readonly" class="itxt itxt2col">
+                        <input onclick="get_gebaeude(this, O('von_gebaeude_id'))" id="von_gebaeude_text" type="text" value="{if !empty($AS)}{$AS.von_gebaeude_text|escape}{/if}" xreadonly="readonly" class="itxt itxt2col">
                     </td>
                 </tr>
                 <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
 
                 <tr style="display:none">
                     <td style="padding:0;"><label for="nach_gebaeude_text" style="display:block;width:auto;">Nach<span class="right">{if $ASConf.nach_gebaeude_id.required}<span class="required">*</span>{/if}</span></label>
-                        <input type="hidden" id="nach_gebaeude_id" value="{$AS.nach_gebaeude_id|escape}" {if $ASConf.nach_gebaeude_id.required}required="required"{/if}
+                        <input type="hidden" id="nach_gebaeude_id" value="{if !empty($AS)}{$AS.nach_gebaeude_id|escape}{/if}" {if $ASConf.nach_gebaeude_id.required}required="required"{/if}
                         name="AS[nach_gebaeude_id]">
                     </td>
                     <td class="zort">
-                        <input onclick="get_gebaeude(this, O('nach_gebaeude_id'))" id="nach_gebaeude_text" type="text" value="{$AS.nach_gebaeude_text|escape}" xreadonly="readonly" class="itxt itxt2col">
+                        <input onclick="get_gebaeude(this, O('nach_gebaeude_id'))" id="nach_gebaeude_text" type="text" value="{if !empty($AS)}{$AS.nach_gebaeude_text|escape}{/if}" xreadonly="readonly" class="itxt itxt2col">
                     </td>
                 </tr>
 
@@ -176,7 +176,7 @@
                 <table>
                     <tr>
                         <td style="padding:0;width:200px;"><label for="as_ansprechpartner" title="Ansprechpartner Name" style="display:block;width:auto;">Vor &amp; Nachname<span class="right">{if $ASConf.ansprechpartner.required}<span class="required">*</span>{/if}</span></label></td>
-                        <td style="padding:0;width:250px;"><input type="text" id="as_ansprechpartner" value="{$AS.ansprechpartner|escape}" {if $ASConf.ansprechpartner.required}required="required"{/if} name="AS[ansprechpartner]" class="itxt itxt2col" title="Ansprechpartner"></td>
+                        <td style="padding:0;width:250px;"><input type="text" id="as_ansprechpartner" value="{if !empty($AS)}{$AS.ansprechpartner|escape}{/if}" {if $ASConf.ansprechpartner.required}required="required"{/if} name="AS[ansprechpartner]" class="itxt itxt2col" title="Ansprechpartner"></td>
                         <td rowspan="3" class="cell-buttons">
                             <div style="display:none">
                                 {literal}
@@ -192,11 +192,11 @@
                     </tr>
                     <tr>
                         <td style="padding:0;"><label for="as_ansprech_email" title="Ansprechpartner E-Mail" style="display:block;width:auto;">E-Mail<span class="right">{if $ASConf.ansprechpartner_email.required}<span class="required">*</span>{/if}</span></label></td>
-                        <td style="padding:0;"><input type="text" id="as_ansprech_email" value="{$AS.ansprechpartner_email|escape}" {if $ASConf.ansprechpartner_email.required}required="required"{/if} name="AS[ansprechpartner_email]" class="itxt itxt2col" title="Ansprechpartner E-Mail"></td>
+                        <td style="padding:0;"><input type="text" id="as_ansprech_email" value="{if !empty($AS)}{$AS.ansprechpartner_email|escape}{/if}" {if $ASConf.ansprechpartner_email.required}required="required"{/if} name="AS[ansprechpartner_email]" class="itxt itxt2col" title="Ansprechpartner E-Mail"></td>
                     </tr>
                     <tr>
                         <td style="padding:0;"><label for="as_ansprech_fon" title="Ansprechpartner Fon" style="display:block;width:auto;">Fon<span class="right">{if $ASConf.ansprechpartner_fon.required}<span class="required">*</span>{/if}</span></label></td>
-                        <td style="padding:0;"><input type="text" id="as_ansprech_fon" value="{$AS.ansprechpartner_fon|escape}" {if $ASConf.ansprechpartner_fon.required}required="required"{/if} name="AS[ansprechpartner_fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
+                        <td style="padding:0;"><input type="text" id="as_ansprech_fon" value="{if !empty($AS)}{$AS.ansprechpartner_fon|escape}{/if}" {if $ASConf.ansprechpartner_fon.required}required="required"{/if} name="AS[ansprechpartner_fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
                     </tr>
                 </table>
 
