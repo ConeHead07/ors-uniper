@@ -3,9 +3,12 @@ require_once __DIR__ . '/../module/Swift-5.0.0/lib/swift_required.php';
 if ( basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
     require __DIR__ . '/../include/conf.php';
     define('SMTP_MAILER_DEBUG', 1);
+    $IsStandaloneTest = true;
+} else {
+    $IsStandaloneTest = false;
 }
 
-!defined('SMTP_MAILER_DEBUG') || define('SMTP_MAILER_DEBUG', APP_ENVIRONMENT === 'DEVELOPMENT' ? 1 : 0);
+defined('SMTP_MAILER_DEBUG') || define('SMTP_MAILER_DEBUG', APP_ENVIRONMENT === 'DEVELOPMENT' ? 1 : 0);
 define('SMTP_MAILER_REALSEND', 1);
 $smtpSender = 'default';
 $aValidDebugSender = [
@@ -18,7 +21,7 @@ $aValidDebugSender = [
     'projectgmail',
 ];
 
-if (!empty($_REQUEST['sender']) && $_REQUEST['sender'] !== 'default' ) {
+if ($IsStandaloneTest && !empty($_REQUEST['sender']) && $_REQUEST['sender'] !== 'default' ) {
     if (in_array($_REQUEST['sender'], $aValidDebugSender)) {
         $smtpSender = $_REQUEST['sender'];
     } else {
@@ -144,7 +147,7 @@ if((SMTP_MAILER_DEBUG > 0 && $smtpSender === 'projectgmail')) {
     ));
 }
 
-if(SMTP_MAILER_DEBUG > 0 ) {
+if($IsStandaloneTest && SMTP_MAILER_DEBUG > 0 ) {
     echo 'smtpSender: ' . $smtpSender . "<br>\n";
     echo '| ';
     foreach( $aValidDebugSender as $_sender) {

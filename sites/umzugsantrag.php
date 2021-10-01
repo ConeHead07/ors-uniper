@@ -24,16 +24,9 @@ if ('property' == $creator) {
 if (empty($db)) $db = new dbconn($MConf['DB_Host'], $MConf['DB_Name'], $MConf['DB_User'], $MConf['DB_Pass']);
 $sql = 'SELECT * FROM ' . $LKConf['Table'] . ' ORDER BY kategorie, kategorie2, leistung, mengen_von';
 
-$sql = 'SELECT l.*, '
-      .'m.preismatrix_id, m.preis mx_preis, m.preiseinheit mx_preiseinheit, '
-      .'m.mengen_von mx_von, m.mengen_bis mx_bis '
-      .' FROM mm_leistungskatalog l LEFT JOIN mm_leistungspreismatrix m '
-      .'  ON(l.leistung_id = m.leistung_id) '
-      .' ORDER BY kategorie, kategorie2, leistung, mengen_von';
-
 //  preismatrix_id 	leistung_id 	preis 	preiseinheit 	mengen_von 	mengen_bis 
-$sql = 'SELECT l.leistung_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
-      .' leistungskategorie kategorie, preis_pro_einheit, image, '
+$sql = 'SELECT l.leistung_id, l.leistung_ref_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
+      .' leistungskategorie AS kategorie, l.leistungskategorie_id AS kategorie_id, preis_pro_einheit, image, '
       .' m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis'
       .' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k '
       .'  ON l.leistungskategorie_id = k.leistungskategorie_id '

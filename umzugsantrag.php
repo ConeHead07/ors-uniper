@@ -80,8 +80,9 @@ switch($cmd) {
 	$ua_errors = umzugsantrag_fehler();
 	if (!$ua_errors) {
 		//die('#'.__LINE__ . ' ' . __FILE__ . PHP_EOL . ' No-Errors ' . PHP_EOL . print_r($_REQUEST,1));
-                // umzugsantrag_senden.php --> umzugsantrag_senden()
-                $reID = umzugsantrag_senden();
+        // umzugsantrag_senden.php --> umzugsantrag_senden()
+        $reID = umzugsantrag_senden();
+
 		if ($reID) {
 			$msg.= "<strong>Ihre Umzugsdaten wurden zur Genehmingung und Bearbeitung gesendet!</strong><br>\n";
 			$msg.= "Den Status Ihres Antrags können Sie über das Menü 'Umzugsantrag->Meine Anträge' einsehen!<br>\n";

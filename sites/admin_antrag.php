@@ -33,13 +33,9 @@ $TplMaListItem = array("ID"=>1, "nachname"=>"", "vorname"=>"", "ort"=>"", "gebae
 $PreiseAnzeigen = ($user['darf_preise_sehen'] === 'Ja') ? 1 : 0;
 // die('<pre>' . print_r($user,1));
 $Tpl->assign('PreiseAnzeigen', $PreiseAnzeigen);
-$sql = 'SELECT l.*, '
-      .'m.preismatrix_id, m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis '
-      .' FROM mm_leistungskatalog l LEFT JOIN mm_leistungspreismatrix m ON(l.leistung_id = m.leistung_id) '
-      .' ORDER BY kategorie, kategorie2, leistung, mengen_von';
 
-$sql = 'SELECT l.leistung_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
-      .' leistungskategorie kategorie, preis_pro_einheit, image, '
+$sql = 'SELECT l.leistung_id, l.leistung_ref_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
+      .' leistungskategorie AS kategorie, l.leistungskategorie_id AS kategorie_id, preis_pro_einheit, image, '
       .' m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis'
       .' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k '
       .'  ON l.leistungskategorie_id = k.leistungskategorie_id '

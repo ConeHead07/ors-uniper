@@ -22,6 +22,68 @@ function umzugsleistungen_laden($AID) {
     return $db->query_rows($sql, 0, array('aid'=>$AID));
 }
 
+function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
+    global $db;
+    // Annahme: leistung_ref_id in leistungen bezieht sich auf automatisch anzupassende Shipping-Positionen
+
+    $arr = $aInputLeistungen['leistung_id'];
+    $aLIds = array_map('intval', array_filter($arr, 'is_numeric'));
+    if (!count($aLIds)) {
+        return [];
+    }
+
+    $rowsById = [];
+    $iNumLeistungen = count($arr);
+    for($i = 0; $i < $iNumLeistungen; $i++) {
+        $_id = (int)$aInputLeistungen['leistung_id'][$i];
+        if (!$_id) continue;
+        $rowsById[$_id] = [
+            'aid' => $AID,
+            'leistung_id' => $_id,
+            'menge_property' => $aInputLeistungen['menge_property'][$i],
+            'menge2_property' => $aInputLeistungen['menge2_property'][$i],
+            'menge_mertens' => $aInputLeistungen['menge_mertens'][$i],
+            'menge2_mertens' => $aInputLeistungen['menge2_mertens'][$i],
+        ];
+    }
+
+    $rows = $db->query_rows(
+        'SELECT leistung_id, leistung_ref_id '
+        . ' FROM mm_leistungskatalog '
+        . ' WHERE leistung_id IN (' . implode(', ', $aLIds) . ') AND IFNULL(leistung_ref_id, 0) > 0'
+    );
+    $lastQuery = $db->lastQuery;
+    $rowsByRefId = [];
+    if (count($rows)) {
+        foreach ($rows as $_row) {
+            $_id = $_row['leistung_id'];
+            $_refId = $_row['leistung_ref_id'];
+            if (!isset($rowsByRefId[$_refId])) {
+                $rowsByRefId[$_refId] = [
+                    'aid' => $AID,
+                    'leistung_id' => $_refId,
+                    'menge_property' => 0,
+                    'menge2_property' => 1,
+                    'menge_mertens' => 0,
+                    'menge2_mertens' => 1,
+                ];
+            }
+            if (isset($rowsById[$_refId])) {
+                unset($rowsById[$_refId]);
+            }
+            $rowsByRefId[$_refId]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
+            $rowsByRefId[$_refId]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
+        }
+    }
+
+    $rowsList = array_values($rowsById);
+    $rowsRefList = array_values($rowsByRefId);
+    $result = array_merge(array_values($rowsById), array_values($rowsByRefId));
+    // die(print_r(compact('lastQuery', 'rows', 'rowsList', 'rowsRefList', 'result'), 1));
+    return $result;
+
+}
+
 function umzugsleistungen_speichern($AID) {
     //umzugsleistungen_leeren($AID);
     global $db;
@@ -33,27 +95,34 @@ function umzugsleistungen_speichern($AID) {
     $creator = (preg_match('/umzugsteam|admin/', $user['gruppe'] ) ? 'mertens' : 'property' );
     $data = array();
     $lst = getRequest('L');
-    
-    
-//    if (empty($lst['leistung_id']) || !is_array($lst['leistung_id'])) {
-//        die('<pre>#' . __LINE__ . ' ' . __FILE__ . ' return true</pre>');
-//        return true;
-//    }
-    
+    $data = umzugsleistungen_inputWithShipping($AID, $lst);
+    $data = array_map(function($item) use($creator) {
+        $item['createdby'] = $creator;
+        return $item;
+        },
+        $data
+    );
+    $edit_ids = array_column($data, 'leistung_id');
+
+    /*
     $edit_ids = array();
-    if (!empty($lst['leistung_id'])) for($i = 0; $i < count($lst['leistung_id']); ++$i) {
-        if (!intval($lst['leistung_id'][$i])) continue;
-        $edit_ids[] = $lst['leistung_id'][$i];
-        $data[] = array(
-            'aid' => $AID,
-            'leistung_id' => $lst['leistung_id'][$i],
-            'menge_property' => $lst['menge_property'][$i],
-            'menge2_property' => $lst['menge2_property'][$i],
-            'menge_mertens' => $lst['menge_mertens'][$i],
-            'menge2_mertens' => $lst['menge2_mertens'][$i],
-            'createdby' => $creator,
-        );
+    $iNumLeistungen = count($lst['leistung_id']);
+    if (!$iNumLeistungen) {
+        for($i = 0; $i < $iNumLeistungen; ++$i) {
+            if (!(int)$lst['leistung_id'][$i]) continue;
+            $edit_ids[] = $lst['leistung_id'][$i];
+            $data[] = array(
+                'aid' => $AID,
+                'leistung_id' => $lst['leistung_id'][$i],
+                'menge_property' => $lst['menge_property'][$i],
+                'menge2_property' => $lst['menge2_property'][$i],
+                'menge_mertens' => $lst['menge_mertens'][$i],
+                'menge2_mertens' => $lst['menge2_mertens'][$i],
+                'createdby' => $creator,
+            );
+        }
     }
+    */
     //die('#'.__LINE__ . ' ' . __FILE__ . ' ' . print_r($lst,1) . '<br>' . PHP_EOL . 'data: ' . print_r($data,1) );
     
     $delete_ids = array_diff($existing_ids, $edit_ids);
