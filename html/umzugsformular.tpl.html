@@ -47,8 +47,8 @@
     <div id="Umzugsantrag" class="divInlay">
         <h2 style="margin:0;">Antragsteller (umzugsformular.tpl.html)</h2>
         <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
-            <input type="hidden" name="AS[aid]" value="{!empty($AS)}{$AS.aid}{/if}">
-            <input type="hidden" name="AS[token]" value="{!empty($AS)}{$AS.token}{/if}">
+            <input type="hidden" name="AS[aid]" value="{if !empty($AS)}{$AS.aid}{/if}">
+            <input type="hidden" name="AS[token]" value="{if !empty($AS)}{$AS.token}{/if}">
             <span class="required-label">* Erforderliche Angaben</span>
             <table>
                 <tr>
@@ -57,15 +57,15 @@
                             Vor{if $ASConf.vorname.required}<span class="required">*</span>{/if} &amp; Nachname<span class="right">{if $ASConf.name.required}<span class="required">*</span>{/if}</span>
                         </label></td>
 
-                    <td style="padding:0;width:250px;"><input type="text" id="as_vornachname" readonly="true" value="{!empty($AS)}{$AS.vorname|escape}{/if}" {if $ASConf.name.required}required="required"{/if} name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" id="as_name" readonly="true" value="{!empty($AS)}{$AS.name|escape}{/if}" name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
+                    <td style="padding:0;width:250px;"><input type="text" id="as_vornachname" readonly="true" value="{if !empty($AS)}{$AS.vorname|escape}{/if}" {if $ASConf.name.required}required="required"{/if} name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" id="as_name" readonly="true" value="{if !empty($AS)}{$AS.name|escape}{/if}" name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_email" style="display:block;width:auto;">E-Mail<span class="right">{if $ASConf.email.required}<span class="required">*</span>{/if}</span></label></td>
-                    <td style="padding:0;"><input type="text" autocomplete="email" id="as_email" value="{!empty($AS)}{$AS.email|escape}{/if}" name="AS[email]" {if $ASConf.email.required}required="required"{/if} readonly="true" class="itxt itxt2col" title="E-Mail"></td>
+                    <td style="padding:0;"><input type="text" autocomplete="email" id="as_email" value="{if !empty($AS)}{$AS.email|escape}{/if}" name="AS[email]" {if $ASConf.email.required}required="required"{/if} readonly="true" class="itxt itxt2col" title="E-Mail"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_fon" style="display:block;width:auto;">Telefon<span class="right">{if $ASConf.fon.required}<span class="required">*</span>{/if}</span></label></td>
-                    <td style="padding:0;"><input type="text" autocomplete="tel" id="as_fon" value="{!empty($AS)}{$AS.fon|escape}{/if}" {if $ASConf.fon.required}required="required"{/if} name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
+                    <td style="padding:0;"><input type="text" autocomplete="tel" id="as_fon" value="{if !empty($AS)}{$AS.fon|escape}{/if}" {if $ASConf.fon.required}required="required"{/if} name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
                 </tr>
             </table>
 
