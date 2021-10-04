@@ -325,6 +325,9 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false)
 	$iNumSentTo = 0;
 
 	for ($i = 0; $i < $iNumRecipients; $i++) {
+	    if (empty($aUserTo[$i])) {
+	        continue;
+        }
         $to = $aUserTo[$i]["email"];
         $su = $tplSu;
         $body = $tplBody;

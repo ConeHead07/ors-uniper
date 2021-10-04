@@ -3,10 +3,10 @@
 <div class="divTabbedList" style="width:100%;"> 
 
 <ul> 
-        <li {if $cat eq "neue"}class="activeTab"{/if}><a href="?s={$s}&cat=neue{if $allusers}&allusers=1{/if}" style="width:90px">Neue Anträge</a></li>
-        <li {if $cat eq "angeboten"}class="activeTab"{/if}><a href="?s={$s}&cat=angeboten{if $allusers}&allusers=1{/if}" style="width:125px">zur Genehmigung</a></li>
+        <li {if $cat eq "neue"}class="activeTab"{/if}><a href="?s={$s}&cat=neue{if $allusers}&allusers=1{/if}" style="width:90px">Bestellungen</a></li>
+        <li {if $cat eq "angeboten"}class="activeTab"{/if} style="display:none"><a href="?s={$s}&cat=angeboten{if $allusers}&allusers=1{/if}" style="width:125px">zur Genehmigung</a></li>
         <li {if $cat eq "aktive"}class="activeTab"{/if}><a href="?s={$s}&cat=aktive{if $allusers}&allusers=1{/if}" style="width:105px">Aktive Anträge</a></li>
-        <li {if $cat eq "abgeschlossene"}class="activeTab"{/if}><a href="?s={$s}&cat=abgeschlossene{if $allusers}&allusers=1{/if}" style="width:150px">Abgeschlossene Anträge</a></li>
+        <li {if $cat eq "abgeschlossene"}class="activeTab"{/if}><a href="?s={$s}&cat=abgeschlossene{if $allusers}&allusers=1{/if}" style="width:150px">Abgeschlossen</a></li>
         <li {if $cat eq "temp"}class="activeTab"{/if}><a href="?s={$s}&cat=temp{if $allusers}&allusers=1{/if}" style="width:30px">Tmp</a></li>
         <li {if $cat eq "zurueckgegeben"}class="activeTab"{/if}><a href="?s={$s}&cat=zurueckgegeben{if $allusers}&allusers=1{/if}" style="width:60px;color:#ffd700;">Zur&uuml;ck</a></li>
         <li {if $cat eq "abgelehnte"}class="activeTab"{/if}><a href="?s={$s}&cat=abgelehnte{if $allusers}&allusers=1{/if}" style="width:60px;color:#ffd700;">Abgelehnt</a></li>

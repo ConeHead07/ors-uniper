@@ -14,7 +14,7 @@ $limit = getRequest("limit", 100);
 $ofld = getRequest("ofld", "");
 $odir = getRequest("odir", "");
 $cat = getRequest("cat", "neue");
-$allusers = (int)getRequest("allusers", 0);
+$allusers = (int)getRequest("allusers", 1);
 
 if (empty($s)) $s = getRequest("s", "");
 if (!in_array($cat, array('temp','zurueckgegeben','angeboten','abgelehnte','neue', 'gepruefte', 'genehmigte', 'aktive', 'abgeschlossene', 'stornierte'))) $cat = 'neue';
