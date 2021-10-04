@@ -45,7 +45,7 @@
 <link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN -->
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
-    <h1><span class="spanTitle">Leistungsanforderung - Neuer Auftrag</span></h1>
+    <h1><span class="spanTitle">Neuer Auftrag</span></h1>
     <p>
     <div id="Umzugsantrag" class="divInlay">
         <h2 style="margin:0;">Antragsteller (umzugsformular.tpl.html)</h2>
@@ -69,6 +69,10 @@
                 <tr>
                     <td style="padding:0;"><label for="as_fon" style="display:block;width:auto;">Telefon<span class="right">{if $ASConf.fon.required}<span class="required">*</span>{/if}</span></label></td>
                     <td style="padding:0;"><input type="text" autocomplete="tel" id="as_fon" value="{if !empty($AS)}{$AS.fon|escape}{/if}" {if $ASConf.fon.required}required="required"{/if} name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
+                </tr>
+                <tr>
+                    <td style="padding:0;"><label for="as_kid" style="display:block;width:auto;">KID</label></td>
+                    <td style="padding:0;"><input type="text" id="as_kid" name="U[personalnr]"  readonly value="{if !empty($AS)}{$U.personalnr|escape}{/if}" class="itxt itxt2col" ></td>
                 </tr>
             </table>
 
@@ -217,7 +221,7 @@
 
                 <table style="display:none">
                     <tr>
-                        <td style="padding:0;width:200px;"><label title="Umzug" style="display:block;width:auto;">Service<span class="right">{if $ASConf.umzug.required}<span class="required">*</span>{/if}</span></label></td>
+                        <td style="padding:0;width:200px;"><label title="Auftrag" style="display:block;width:auto;">Service<span class="right">{if $ASConf.umzug.required}<span class="required">*</span>{/if}</span></label></td>
                         <td style="padding:0;width:250px;" class="options-onoff">
                             {html_radios name="AS[umzug]" options=$umzug_options checked=$AS.umzug separator=" "}
                         </td>

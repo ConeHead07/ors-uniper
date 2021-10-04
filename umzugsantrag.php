@@ -86,18 +86,15 @@ switch($cmd) {
         $reID = umzugsantrag_senden();
 
 		if ($reID) {
-			$msg.= "<strong>Ihre Umzugsdaten wurden zur Genehmingung und Bearbeitung gesendet!</strong><br>\n";
-			$msg.= "Den Status Ihres Antrags können Sie über das Menü 'Umzugsantrag->Meine Anträge' einsehen!<br>\n";
+			$msg.= "<strong>Ihre Bestellung wurde erfolgreich gesendet und wird von uns weiter bearbeitet.</strong><br>\n";
+			$msg.= "Den Status Ihres Auftrags können Sie über das Menü 'Bestellungen->Meine Bestellungen' einsehen!<br>\n";
 			$msg.= "<br>\n";
-			$msg.= "<strong>Was m&ouml;chten Sie als N&auml;chstes tun?</strong><br>\n";
-			$msg.= "<li><a href=\"?s=Umzug\">Einen weiteren Umzugsantrag anlegen</a></li>\n";
-			$msg.= "<li><a href=\"?s=Umzug&id=".urlencode($reID)."\">Gesendeten Umzugsantrag aufrufen</a></li>\n";
-			$msg.= "<li><a href=\"?s=kantraege\">Zur &Uuml;bersicht: Meine Antr&auml;ge</a></li>\n";
+			$msg.= "<strong><a href=\"?s=Umzug\">Zur&uuml;ck zur &Uuml;bersicht</a></strong><br>\n";
 			$LoadScript.= "if (typeof(umzugsantrag_close)==\"function\") umzugsantrag_close(\"".json_escape($msg)."\");\n";
-			$msg = ""; //"Ihre Umzugsdaten wurden zur Genehmingung und Bearbeitung gesendet!<br>\n";
+			$msg = "";
 		}
 	} else {
-		$hdErr = "<h4 class=\"hdErr\" style=\"color:#f00;\">Achtung - Antrag konnte nicht gesendet werden!</h4>\n";
+		$hdErr = "<h4 class=\"hdErr\" style=\"color:#f00;\">Achtung - Ihre Bestellung konnte nicht abgesendet werden!</h4>\n";
 		$error.= $hdErr.$ua_errors;
 	}
 	break;

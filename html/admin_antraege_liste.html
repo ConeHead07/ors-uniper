@@ -7,10 +7,10 @@
         <li {if $cat eq "angeboten"}class="activeTab"{/if} style="display:none"><a href="?s={$s}&cat=angeboten{if $allusers}&allusers=1{/if}" style="width:125px">zur Genehmigung</a></li>
         <li {if $cat eq "aktive"}class="activeTab"{/if}><a href="?s={$s}&cat=aktive{if $allusers}&allusers=1{/if}" style="width:105px">Aktive Anträge</a></li>
         <li {if $cat eq "abgeschlossene"}class="activeTab"{/if}><a href="?s={$s}&cat=abgeschlossene{if $allusers}&allusers=1{/if}" style="width:150px">Abgeschlossen</a></li>
-        <li {if $cat eq "temp"}class="activeTab"{/if}><a href="?s={$s}&cat=temp{if $allusers}&allusers=1{/if}" style="width:30px">Tmp</a></li>
-        <li {if $cat eq "zurueckgegeben"}class="activeTab"{/if}><a href="?s={$s}&cat=zurueckgegeben{if $allusers}&allusers=1{/if}" style="width:60px;color:#ffd700;">Zur&uuml;ck</a></li>
-        <li {if $cat eq "abgelehnte"}class="activeTab"{/if}><a href="?s={$s}&cat=abgelehnte{if $allusers}&allusers=1{/if}" style="width:60px;color:#ffd700;">Abgelehnt</a></li>
-        <li {if $cat eq "stornierte"}class="activeTab"{/if}><a href="?s={$s}&cat=stornierte{if $allusers}&allusers=1{/if}" style="width:60px;color:#ffd700;">Storno</a></li>
+        <li {if $cat eq "temp"}class="activeTab"{/if}><a href="?s={$s}&cat=temp{if $allusers}&allusers=1{/if}" style="width:30px;display:none;">Tmp</a></li>
+        <li {if $cat eq "zurueckgegeben"}class="activeTab"{/if}><a href="?s={$s}&cat=zurueckgegeben{if $allusers}&allusers=1{/if}" style="width:60px;color:#ffd700;display:none;">Zur&uuml;ck</a></li>
+        <li {if $cat eq "abgelehnte"}class="activeTab"{/if}><a href="?s={$s}&cat=abgelehnte{if $allusers}&allusers=1{/if}" style="width:60px;color:#ffd700;display:none;">Abgelehnt</a></li>
+        <li {if $cat eq "stornierte"}class="activeTab"{/if}><a href="?s={$s}&cat=stornierte{if $allusers}&allusers=1{/if}" style="width:60px;color:#ffd700;display:none;">Storno</a></li>
         <li {if $cat eq "suche"}class="activeTab"{/if}><a href="?s=umzugssuche{if $allusers}&allusers=1{/if}" style="width:60px">Suche</a></li>
         <!-- <li><a href="#ID128586" style="width:60px">&nbsp;</a></li> -->
 </ul><br clear="all">
@@ -24,14 +24,14 @@
 
 <!-- Add-On Fließtext(dyn) ID: 128588 BEGIN --> 
 <div class="divInlay borderTop">
-    <div style="float:right;padding:10px 20px 0 0;">
-        <a href="{$ListBaseLink}&ofld=id&odir={$odir}&allusers={if $allusers}0{else}1{/if}">Wechsel zu {if $allusers}meine Antr&auml;ge{else}Antr&auml;gen aller User{/if}</a>
+    <div style="float:right;padding:10px 20px 0 0;display:none">
+        <a href="{$ListBaseLink}&ofld=id&odir={$odir}&allusers={if $allusers}0{else}1{/if}">Wechsel zu {if $allusers}meine Auftr&auml;ge{else}Auftr&auml;gen aller User{/if}</a>
     </div>
 
 {if $cat eq "angeboten"}
-<h2>Es liegen {$num_all} von Mertens gestellte Leistungsanforderungen vor</h2>
+<h2>Es liegen {$num_all} von Mertens gestellte Aufträge vor</h2>
 {else}
-<h2>Es liegen {$num_all} {$cat} Leistungsanforderungen vor</h2>
+<h2>Es liegen {$num_all} {$cat} Aufträge vor</h2>
 {/if}
     (admin_antraege_liste.html)
 <div style="clear:both"></div>
@@ -44,7 +44,8 @@
       <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=ort{if $ofld eq "ort" && $odir ne "DESC"}&odir=DESC{/if}">Lieferort</a></div>
   <div style="float:left;display:block;width:50px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=plz{if $ofld eq "plz" && $odir ne "DESC"}&odir=DESC{/if}">PLZ</a></div>
   <div style="float:left;display:block;width:200px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=strasse{if $ofld eq "strasse" && $odir ne "DESC"}&odir=DESC{/if}">Stra&szlig;e</a></div>
-  <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=umzug{if $ofld eq "umzug" && $odir ne "DESC"}&odir=DESC{/if}">Service</a></div>
+      <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=personalnr{if $ofld eq "personalnr" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
+  <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=umzug{if $ofld eq "umzug" && $odir ne "DESC"}&odir=DESC{/if}">Kategorie</a></div>
   <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Bestelleingang</a></div>
   <div style="float:left;display:none;width:35px;font-weight:bold;color:#00869c;" title="Von Property genehmigt"><a href="{$ListBaseLink}&ofld=genehmigt{if $ofld eq "genehmigt_br" && $odir ne "DESC"}&odir=DESC{/if}">Gen</a></div>
   <div style="float:left;display:block;width:35px;font-weight:bold;color:#00869c;" title="Von merTens geprueft / Avisisiert"><a href="{$ListBaseLink}&ofld=bestaetigt{if $ofld eq "bestaetigt" && $odir ne "DESC"}&odir=DESC{/if}">Avi</a></div>
@@ -58,7 +59,8 @@
       <div style="float:left;display:block;width:100px;">{$U.ort}&nbsp</div>
   <div style="float:left;display:block;width:50px;">{$U.plz}&nbsp;</div>
   <div style="float:left;display:block;width:200px;">{$U.strasse}&nbsp;</div>
-  <div style="float:left;display:block;width:75px;" >{$U.umzug}&nbsp;</div>
+      <div style="float:left;display:block;width:75px;" >&nbsp;&nbsp;</div>
+  <div style="float:left;display:block;width:75px;" >&nbsp;&nbsp;</div>
   <div style="float:left;display:block;width:100px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
   <div style="float:left;display:none;width:35px;">{$U.Genehmigt}&nbsp;</div>
   <div style="float:left;display:block;width:35px;">{$U.Geprueft}&nbsp;</div>

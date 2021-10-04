@@ -1,13 +1,11 @@
-Betreff=Umzug ID {AID} - Abgelehnt
+Betreff=Auftrag ID {AID} - Abgelehnt
 
 Hallo {Vorname} {Name},
 
-die Leistungsanforderung mit der ID {AID} wurde abgelehnt mit der Begründung:
+der Auftrag mit der ID {AID} wurde abgelehnt mit der Begründung:
 {Bemerkung}
 
 Antragsteller:  {vorname} {name}
-SAP Nr.         {kostenstelle}	
-Ticket Nr.      {planonnr}
 
 Sie können den  Vorgang  unter folgendem Link bearbeiten:
 {StatusLink}

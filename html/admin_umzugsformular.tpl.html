@@ -19,7 +19,7 @@ admin_umzugsformular.tpl.html
 <link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-<h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1> 
+<h1><span class="spanTitle">Auftrag #{$AS.aid}</span></h1>
 <p>
 <div id="Umzugsantrag" class="divInlay"> 
 <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
@@ -27,11 +27,11 @@ admin_umzugsformular.tpl.html
 Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
 <table border=1 cellspacing=1 cellpadding=1>
   <tr>
-    <td style="padding:0;height:auto;width:auto;"><label for="termin" style="width:180px;">Umzugstermin:</label></td>
+    <td style="padding:0;height:auto;width:auto;"><label for="termin" style="width:180px;">Liefertermin:</label></td>
     <td style="padding:0;width:250px;"><input id="termin" type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
     onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
   </tr>
-  <tr>
+  <tr style="display: none;">
     <td style="padding:0;height:auto;width:auto;"><label for="AS[Umzugszeit]" style="width:180px;">Uhrzeit:</label></td>
     <td style="padding:0;width:250px;"><input id="AS[Umzugszeit]" type="text" value='{$AS.umzugszeit|escape|substr:0:5}'
     id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>

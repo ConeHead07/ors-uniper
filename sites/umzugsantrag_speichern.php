@@ -32,6 +32,11 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
         return [];
     }
 
+    $aHasPos = [
+        'Stuhl' => 0,
+        'Schreibtisch' => 0,
+        'Leuchte' => 0,
+    ];
     $rowsById = [];
     $iNumLeistungen = count($arr);
     for($i = 0; $i < $iNumLeistungen; $i++) {
@@ -48,7 +53,7 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
     }
 
     $rows = $db->query_rows(
-        'SELECT leistung_id, leistung_ref_id '
+        'SELECT leistung_id, leistung_ref_id, leistungskategorie_id '
         . ' FROM mm_leistungskatalog '
         . ' WHERE leistung_id IN (' . implode(', ', $aLIds) . ') AND IFNULL(leistung_ref_id, 0) > 0'
     );
@@ -58,6 +63,14 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
         foreach ($rows as $_row) {
             $_id = $_row['leistung_id'];
             $_refId = $_row['leistung_ref_id'];
+            $_ktgId = (int)$_row['leistungskategorie_id'];
+            if ($_ktgId === 21) {
+                $aHasPos['Stuhl']++;
+            } elseif ($_ktgId === 22) {
+                $aHasPos['Schreibtisch']++;
+            } elseif ($_ktgId === 23) {
+                $aHasPos['Leuchte']++;
+            }
             if (!isset($rowsByRefId[$_refId])) {
                 $rowsByRefId[$_refId] = [
                     'aid' => $AID,
@@ -73,6 +86,18 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
             }
             $rowsByRefId[$_refId]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
             $rowsByRefId[$_refId]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
+        }
+        if ($aHasPos['Stuhl'] > 0 && $aHasPos['Schreibtisch'] > 0 && $aHasPos['Leuchte'] > 0) {
+            // Füge Rabatt für Komplettpaket (Stuhl, Schreibtisch und Leutchte) von 25Euro hinzu
+            $_lstgId = 237;
+            $rowsByRefId[$_lstgId] = [
+                'aid' => $AID,
+                'leistung_id' => $_lstgId,
+                'menge_property' => 1,
+                'menge2_property' => 1,
+                'menge_mertens' => 1,
+                'menge2_mertens' => 1,
+            ];
         }
     }
 
@@ -246,7 +271,7 @@ function umzugsantrag_speichern() {
 	
 	$MAPostItems = get_ma_post_items();
 	if ($AID && $MConf['min_ma'] && (!is_array($MAPostItems) || !count($MAPostItems)) ) {
-		$error.= "Es wurden keine Mitarbeiter für den Umzug ausgewählt.<br>\n";
+		$error.= "Es wurden keine Mitarbeiter für den Auftrag ausgewählt.<br>\n";
 		if ($AS->itemsExists) {
 			$error.= "Falls Sie den Auftrag stornieren möchten, klicken Sie den 'Stornieren'-Button.<br>\n";
 		}

@@ -1,13 +1,11 @@
-Betreff=Umzug ID {AID} - Storniert
+Betreff=Auftrag ID {AID} - Storniert
 
 Sehr geehrter Anwender,
 sehr geehrte Anwenderin,
 
-die Leistungsanforderung mit der ID {AID} wurde storniert und wird geschlossen.
+der Auftrag mit der ID {AID} wurde storniert und wird geschlossen.
 
 Antragsteller:  {vorname} {name}
-SAP Nr.         {kostenstelle}
-Ticket Nr.      {planonnr}
 
 Sie können den  Vorgang  unter folgendem Link einsehen:
 {StatusLink}

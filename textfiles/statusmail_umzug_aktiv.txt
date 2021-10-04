@@ -1,14 +1,12 @@
-Betreff=Umzug ID {AID} - Genehmigt
+Betreff=Auftrag ID {AID} - Bestaetigt
 
 Hallo {Vorname} {Name},
 
-die Leistungsanforderung mit der ID {AID} wurde genehmigt und befindet sich 
+der Auftrag mit der ID {AID} wurde bestaetigt und befindet sich
 im Durchführungsstatus.
 
 Antragsteller:  {vorname} {name}
-Ausführungszeit {ausgefuehrtam}
-SAP Nr.         {kostenstelle}	
-Ticket Nr.      {planonnr}
+Liefertermin {ausgefuehrtam}
 
 Sie können den  Vorgang  unter folgendem Link  einesehen:
 {StatusLink}

@@ -511,13 +511,14 @@ $(function(){
                         if (chckRadio.prop("checked")) {
                             toggleBundleauswahl(ktg, ktgId, ktgBundleName, ktgBundleId);
                             var checkedRows = boxLeistungen.find(".row .chck label input:checked");
-                            if (checkedRows.length > 2) {
+                            var maxCheckedPositionen = 9999;
+                            if (checkedRows.length > maxCheckedPositione) {
                                 var isStuhlChecked = checkedRows.find("[data-ktg=Stuhl],[data-ktgId=21]").length > 0;
                                 var isTischChecked = checkedRows.find("[data-ktg=Tisch],[data-ktg=22]").length > 0;
                                 var isLampeChecked = checkedRows.find("[data-ktg=Schreibtischlampe],[data-ktg=23]").length > 0;
                                 console.log("Auswahlkontrolle ", { isStuhlChecked, isTischChecked, isLampeChecked});
 
-                                alert("Es können maximal zwei Einzelpositionen ausgewählt werden oder ein Komplettpaket!");
+                                alert("Es können maximal " + maxCheckedPositione + " Einzelpositionen ausgewählt werden oder ein Komplettpaket!");
                                 chckRadio.prop("checked", false);
                             }
                         }

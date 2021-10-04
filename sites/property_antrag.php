@@ -225,7 +225,7 @@ $AS->loadDbdata();
 
 if ($export === 'csv') {
     header('Content-Type: text/csv; charset="iso-8859-1"');
-    header('Content-Disposition: attachment; filename="Leistungsanforderung_' . $AID . '.csv"');
+    header('Content-Disposition: attachment; filename="Auftrag_' . $AID . '.csv"');
     $Tpl->display('umzugsformular.tpl.csv');
     exit;
 }

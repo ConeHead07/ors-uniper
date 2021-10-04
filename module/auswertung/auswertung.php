@@ -305,38 +305,3 @@ switch($s) {
 	break;
 	
 }
-
-/*",
-    $_e["pid"] => "1",
-    $_e["Status"] => "Angebot",
-    $_e["Verloren_Grund"] => "",
-    $_e["Angebotsabgabetermin"] => "2009-03-26",
-    $_e["lfd_nr"] => "1",
-    $_e["Planung_IAB"] => "P",
-    $_e["Kuerzel"] => "",
-    $_e["vorl_nr"] => "184568",
-    $_e["Eingangsdatum"] => "2009-03-18",
-    $_e["ADM"] => "Schmeing",
-    $_e["NL"] => "Neuss",
-    $_e["Angebot_weitergeleitet_am"] => "2009-03-18",
-    $_e["Angebot_weitergeleitet_an"] => "Hojczyk + Hallscheidt",
-    $_e["Angebot_zurueck_am"] => "",
-    $_e["Angebot_erstellt_am"] => "",
-    $_e["Auftragsvolumen"] => "0.00",
-    $_e["Angebot_durch"] => "",
-    $_e["Vorgangsnr"] => "0",
-    $_e["Auftrag_erteilt_am"] => "",
-    $_e["Projekt"] => "Umzug und neue Räume müssen ausgestattet werden",
-    $_e["Kunde"] => "SKP Dr. Stoebe, Kern & P.",
-    $_e["Mitarbeiter"] => "",
-    $_e["Bemerkung"] => "",
-    $_e["Sollstunden"] => "0.00",
-    $_e["Fertigstellungstermin"] => "0000-00-00",
-    $_e["created"] => "0000-00-00 00:00:00",
-    $_e["created_by"] => "",
-    $_e["created_uid"] => "0",
-    $_e["modified"] => "",
-    $_e["modified_by"] => "",
-    $_e["modified_uid"] => "
-*/
-?>

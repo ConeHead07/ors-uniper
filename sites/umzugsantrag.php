@@ -81,6 +81,13 @@ $Tpl->assign('PreiseAnzeigen', $PreiseAnzeigen);
 $Tpl->assign('lktreeItems', $lkTreeItems);
 $Tpl->assign('lkTreeItemsJson', json_encode($lkTreeItemsJson) );
 $Tpl->assign('lkmByIdJson', json_encode($lkmById) );
+
+$userTplData = $user;
+unset($userTplData['pw']);
+unset($userTplData['authentcode']);
+unset($userTplData['authentcode']);
+$Tpl->assign('U', $userTplData);
+
 // If AID: Bearbeitungsformular mit DB-Daten
 if ($AID) {
     $AS->loadDbdata();
@@ -132,6 +139,7 @@ if ($AID) {
     );
     $AS->loadInput($defaultAS, false);
     $MA->loadInput(array(), false);
+    $as->arrInput['personalnr'] = $user['personalnr'];
     $Tpl->assign("AS", array($AS->arrInput));
 
     //$aMaItems = array($MA->arrInput);

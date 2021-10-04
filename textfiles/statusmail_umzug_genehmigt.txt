@@ -1,13 +1,11 @@
-Betreff=Umzug ID {AID} - Genehmigt
+Betreff=Auftrag ID {AID} - Genehmigt
 
 Hallo {Vorname} {Name},
 
-es liegt eine neue genehmigte Leistungsanforderung mit der ID {AID} zur Durchführung vor.
+es liegt ein neuer genehmigter Auftrag mit der ID {AID} zur Durchführung vor.
 
 Antragsteller:  {vorname} {name}
 Ausführungszeit {ausgefuehrtam}
-SAP Nr.         {kostenstelle}	
-Ticket Nr.      {planonnr}
 
 Sie können den  Vorgang  unter folgendem Link  bearbeiten:
 {StatusLink}

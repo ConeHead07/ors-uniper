@@ -112,7 +112,7 @@ if (!empty($aGItems) && count($aGItems)) $Tpl->assign("Geraeteliste", $aGItems);
 
 //die("#".__LINE__." aAtItems: ".print_r($aAtItems,1)."<br>\n");
 
-$mainmenu = "Class-Active-Umzug"; //Umzug" xclass="liActive
+$mainmenu = "Class-Active-Umzug";
 $topmenu = implode("", file($MConf["AppRoot"]."/sites/mitarbeiter_topmenu.tpl.html"));
 
 $AS->loadDbdata();

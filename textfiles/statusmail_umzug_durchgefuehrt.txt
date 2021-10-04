@@ -1,14 +1,12 @@
-Betreff=Umzug ID {AID} - Durchführung
+Betreff=Auftrag ID {AID} - Durchführung
 
 Sehr geehrter Anwender,
 sehr geehrte Anwenderin,
 
-Ihre Leistungsanforderung mit der ID {AID} wurde durchgeführt und wird geschlossen.
+Ihr Auftrag mit der ID {AID} wurde durchgeführt und wird geschlossen.
 
 Antragsteller:  {vorname} {name}
 Ausführungszeit {ausgefuehrtam}
-SAP Nr.         {kostenstelle}	
-Ticket Nr.      {planonnr}
 
 Sie können den  Vorgang  unter folgendem Link  einsehen:
 {StatusLink}

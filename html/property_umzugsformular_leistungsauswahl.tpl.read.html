@@ -58,12 +58,7 @@ function blurBox(callback, hide) {
         <tr>
             <td>Kategorie</td>
             <td>Leistung</td>
-            <td>Menge 1 DSD</td>
-            <td>Einheit 1</td>
-            <td>Menge 2 DSD</td>
-            <td>Einheit 2</td>
-            <td>Menge1 M</td>
-            <td>Menge2 M</td>
+            <td>Menge</td>
             {if $PreiseAnzeigen}<td>Preis/Einh.</td>
             <td>Gesamt</td>
             {/if}
@@ -74,12 +69,7 @@ function blurBox(callback, hide) {
         <tr class="row inputRowVon">
             <td class="ktg1">{$L.kategorie|escape}</td>
             <td class="lstg">{$L.leistung|escape}</td>
-            <td>{if is_numeric($L.menge_property)}{$L.menge_property|escape|number_format:2:",":"."}{/if}</td>
-            <td class="unit">{$L.leistungseinheit|escape}</td>
-            <td class="menge menge2">{if is_numeric($L.menge2_property)}{$L.menge2_property|escape|number_format:2:",":"."}{/if}</td>
-            <td class="unit unit2">{$L.leistungseinheit2|escape}</td>
-            <td class="menge">{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:2:",":"."}{/if}</td>
-            <td class="menge menge2">{if is_numeric($L.menge2_mertens)}{$L.menge2_mertens|escape|number_format:2:",":"."}{/if}</td>
+            <td>{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:2:",":"."}{/if}</td>
             {if $PreiseAnzeigen}<td class="preis">{if $L.preis_pro_einheit}{$L.preis_pro_einheit|number_format:2:",":"."}{/if}</td>
             <td class="preis sum">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|escape|number_format:2:",":"."}{/if}</td>
             {/if}
@@ -87,7 +77,7 @@ function blurBox(callback, hide) {
     {/foreach}
     <tr id="summary">
     {if $PreiseAnzeigen}
-        <td colspan="{if $PreiseAnzeigen}11{else}9{/if}"><span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
+        <td colspan="{if $PreiseAnzeigen}6{else}4{/if}"><span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
         {/if}
     </tr>
     </tbody>

@@ -1,13 +1,10 @@
-Betreff=Umzug ID {AID} - Bearbeitung
+Betreff=Auftrag ID {AID} - Bearbeitung
 
-Sehr geehrter Anwender,
-sehr geehrte Anwenderin,
+Sehr geehrte(r) {Vorname} {Name},
 
-Ihre Leistungsanforderung mit der ID {AID} wurde zur Überarbeitung an Sie zurückgegeben.
+Ihr Auftrag mit der ID {AID} wurde zur Überarbeitung an Sie zurückgegeben.
 
 Antragsteller:  {vorname} {name}
-SAP Nr.         {kostenstelle}	
-Ticket Nr.      {planonnr}
 
 Sie können den Auftrag unter folgendem Link einsehen und bearbeiten:
 {StatusLink}

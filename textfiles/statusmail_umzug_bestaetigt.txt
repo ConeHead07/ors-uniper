@@ -1,14 +1,12 @@
-Betreff=Umzug ID {AID} - Bearbeitung
+Betreff=Auftrag ID {AID} - Bearbeitung
 
 Sehr geehrter Anwender,
 sehr geehrte Anwenderin,
 
-Ihre Leistungsanforderung  mit der ID {AID}  wurde bearbeitet und freigegeben.
+Ihr Auftrag  mit der ID {AID}  wurde bearbeitet und freigegeben.
 
 Antragsteller:  {vorname} {name}
 Ausführungszeit {ausgefuehrtam}
-SAP Nr.         {kostenstelle}	
-Ticket Nr.      {planonnr}
 
 Sie können den Status Ihres Auftrags unter folgendem Link einsehen:
 {StatusLink}

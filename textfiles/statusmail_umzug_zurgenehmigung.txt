@@ -1,12 +1,10 @@
-Betreff=Umzug ID {AID} - Zur Freigabe
+Betreff=Auftrag ID {AID} - Zur Freigabe
 
 Hallo {Vorname} {Name},
 
-es liegt eine neue Leistungsanforderung mit der ID {AID} zur Freigabe vor.
+es liegt ein neuer Auftrag mit der ID {AID} zur Freigabe vor.
 
 Antragsteller:  {vorname} {name}
-SAP Nr.         {kostenstelle}
-Ticket Nr.      {planonnr}
 
 Sie können den  Vorgang  unter folgendem Link  bearbeiten:
 {StatusLink}

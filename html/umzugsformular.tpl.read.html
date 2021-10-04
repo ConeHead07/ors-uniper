@@ -7,13 +7,13 @@
 <link rel="stylesheet" type="text/css" href="../css/umzugsformular.css">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-<h1><span class="spanTitle">Leistungsanforderung {if $AS.aid}#{$AS.aid}{/if}</span></h1> 
+<h1><span class="spanTitle">Auftrag {if $AS.aid}#{$AS.aid}{/if}</span></h1>
 <p>
 <div id="Umzugsantrag" class="divInlay"> 
-<h2 style="margin:0;">Antragsteller</h2>
+<h2 style="margin:0;">Auftragsteller</h2>
 <table>
   <tr>
-    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
+    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Auftragsdatum:</label></td>
     <td style="padding:0;width:250px;">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
   </tr>
   <tr>
@@ -73,7 +73,7 @@
     <td style="padding:0;">{$AS.umzugszeit|escape}</td>
   </tr>
   <tr>
-    <td style="padding:0;"><label style="background:#f00;border:0;display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
+    <td style="padding:0;"><label style="background:#f00;border:0;display:block;width:auto;">Lieferungstermin:</label></td>
     <td style="padding:0;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</td>
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
@@ -104,12 +104,14 @@
   </tr>
 </table>
 
-<table>
+{*
+<table style="display:none">
   <tr>
     <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Umzug</label></td>
     <td style="padding:0;width:300px;" class="options-onoff"><label class='{if $AS.umzug eq "Ja"}on{else}off{/if} active'>{$AS.umzug}</label></td>
   </tr>
 </table>
+*}
 <br clear="all" >
 
 {if 0}

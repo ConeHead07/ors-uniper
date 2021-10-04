@@ -1,8 +1,8 @@
-Betreff=Umzug ID {AID} - Aufhebung
+Betreff=Auftrag ID {AID} - Aufhebung
 
 Guten Tag,
 
-die Leistungsanforderung mit der ID {AID} wurde aufgehoben. 
+der Auftrag mit der ID {AID} wurde aufgehoben.
 Sie werden erneut informiert, wenn die Leistung durchgeführt werden soll.
 
 Mit freundlichen Grüßen

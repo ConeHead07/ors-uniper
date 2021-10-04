@@ -194,8 +194,8 @@ function send_umzugsblatt($AID, $antragsOrt, $antragsGebaeude, $aData) {
 	//echo "aMailTo: ".print_r($aMailTo,1)."\n\n";
 	$umzugsblatt = get_umzugsblatt($AID);
 	
-	$subject = "Umzug ID ".$AID." - Umzugsdatenblatt";
-	$plaintext = "Guten Tag,\n\nanbei erhalten Sie das Umzugsdatenblatt für den Umzug mit der ID ".$AID.".\n\nMit freundlichen Grüßen\n\nIhr\n".$MConf["AppTitle"];
+	$subject = "Auftrag ID ".$AID." - Lieferschein";
+	$plaintext = "Guten Tag,\n\nanbei erhalten Sie den Lieferschein für den Auftrag mit der ID ".$AID.".\n\nMit freundlichen Grüßen\n\nIhr\n".$MConf["AppTitle"];
 	$htmltext = "";
 	$header = "";
 	$specs = "";
@@ -210,7 +210,7 @@ function send_umzugsblatt($AID, $antragsOrt, $antragsGebaeude, $aData) {
 	$attachement[0]["fmime"]="text/html";
 	
 	if ($AtList) {
-		$htmltext = "Guten Tag,<br>\n<br>\nanbei erhalten Sie das Umzugsdatenblatt für den Umzug mit der ID ".$AID.".<br>\n<br>\n";
+		$htmltext = "Guten Tag,<br>\n<br>\nanbei erhalten Sie den Lieferschein für den Auftrag mit der ID ".$AID.".<br>\n<br>\n";
 		$htmltext.= "Dem Auftrag wurden ".count($aAtItems)." Dateianh&auml;nge zum Download beigef&uuml;gt:<br>\n";
 		$htmltext.= "<ol>".$AtList."</ol>\n";
 		$htmltext.= "<br>\n<br>\nMit freundlichen Gr&uuml;&szlig;en<br>\n<br>\nIhr<br>\n".$MConf["AppTitle"];

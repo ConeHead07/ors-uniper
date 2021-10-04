@@ -55,7 +55,7 @@ function umzugsantrag_senden() {
     $MAPostItems = get_ma_post_items();
     
     if ($MConf['min_ma'] && (!is_array($MAPostItems) || !count($MAPostItems))) {
-        $error.= "Es wurden keine Mitarbeiter für den Umzug ausgewählt.<br>\n";
+        $error.= "Es wurden keine Mitarbeiter für den Auftrag ausgewählt.<br>\n";
         if ($AS->itemExists) {
             $error.= "Falls Sie den Auftrag stornieren möchten, klicken Sie den 'Stornieren'-Button.<br>\n";
         }
