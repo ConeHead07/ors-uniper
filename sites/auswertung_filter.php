@@ -1,19 +1,32 @@
 <?php
 $Tpl = new myTplEngine();
 
-$kwvon = (!empty($_REQUEST['kwvon']))   ? $_REQUEST['kwvon'] : '';
-$kwbis = (!empty($_REQUEST['kwbis']))   ? $_REQUEST['kwbis'] : '';
+
+$datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
+$datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
+
+
 $order = (!empty($_REQUEST['order']))   ? $_REQUEST['order'] : '';
 $queriedorder = (!empty($_REQUEST['queriedorder'])) ? $_REQUEST['queriedorder'] : '';
 $queriedodir  = (!empty($_REQUEST['queriedodir']))  ? $_REQUEST['queriedodir']  : '';
 $query = (!empty($_REQUEST['q']))   ? $_REQUEST['q'] : array();
 $s = $_REQUEST['s'];
 
-$timeVon = (preg_match('/^(\d{4})W(\d{2})$/', $kwvon, $m)) ? strtotime($kwvon) : strtotime(date('Y').'W'.substr('0'.date('W'),-2) );
-$timeBis = (preg_match('/^(\d{4})W(\d{2})$/', $kwbis, $m)) ? strtotime($kwbis) : $timeVon + (7*24*3600);
+if (!empty($_REQUEST['kwvon'])) {
+    $kwvon = (!empty($_REQUEST['kwvon'])) ? $_REQUEST['kwvon'] : '';
+    $kwbis = (!empty($_REQUEST['kwbis'])) ? $_REQUEST['kwbis'] : '';
+    $timeVon = (preg_match('/^(\d{4})W(\d{2})$/', $kwvon, $m)) ? strtotime($kwvon) : strtotime(date('Y') . 'W' . substr('0' . date('W'), -2));
+    $timeBis = (preg_match('/^(\d{4})W(\d{2})$/', $kwbis, $m)) ? strtotime($kwbis) : $timeVon + (7 * 24 * 3600);
+} else {
+    $timeVon = (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $datumvon, $m)) ? strtotime($datumvon) : strtotime(date('Y-m-01'));
+    $timeBis = (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $datumbis, $m)) ? strtotime($datumbis) : $timeVon + (7 * 24 * 3600);
+}
+
 
 $kwvon = date('Y\WW', $timeVon);
 $kwbis = date('Y\WW', $timeBis);
+
+
 
 $sql = 'SELECT date_format(umzugstermin, "%Y\W%u") kw '
       .' FROM mm_umzuege '
@@ -128,6 +141,8 @@ $Tpl->assign('Auftraege', $rows);
 $Tpl->assign('kw_options', $kw_options);
 $Tpl->assign('kwvon', $kwvon);
 $Tpl->assign('kwbis', $kwbis);
+$Tpl->assign('datumvon', $datumvon);
+$Tpl->assign('datumbis', $datumbis);
 $Tpl->assign('order', $order);
 $Tpl->assign('odir', $odir);
 $Tpl->assign('s', $s);

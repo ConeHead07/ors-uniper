@@ -20,15 +20,19 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
     }
 {/literal}</style>
 <form id="frmStat" name="frmStat" method="get" action="?">
-<span style="border:0;font-weight:bold;font-size:12px;">Kalenderwoche 
-<select onchange="document.forms['frmStat'].submit()" selected="{$kwvon}" name="kwvon" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
+<span style="border:0;font-weight:bold;font-size:12px;">Zeitraum
+    Von: <input type="date" name="datumvon" value="{$datumvon}" onchange="document.forms['frmStat'].submit()">
+    Bis: <input type="date" name="datumbis" value="{$datumbis}" onchange="document.forms['frmStat'].submit()">
+{*
+    <select onchange="document.forms['frmStat'].submit()" selected="{$kwvon}" name="kwvon" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
 <option value="">auswählen</option>
         {html_options options=$kw_options selected=$kwvon}
 </select> bis 
 <select onchange="document.forms['frmStat'].submit()" selected="{$kwbis}" name="kwbis" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
 <option value="">auswählen</option>
         {html_options options=$kw_options selected=$kwbis}
-</select> 
+</select>
+    *}
 <input type="hidden" name="s" value="{$s}">
 <input type="hidden" name="order" value="" id="orderby">
 <input type="hidden" name="queriedorder" value="{$order}">
@@ -72,18 +76,18 @@ $(function(){
             <th class="order" data-fld="summe">Summe</th>
         </tr>
         <tr>
-            <th><input name="q[aid]" style="width:100%" value="{$q.aid}"></th>
-            <th><input name="q[vorgangsnummer]" style="width:100%" value="{$q.vorgangsnummer}"></th>
-            <th><input name="q[nachname]" style="width:100%" value="{$q.nachname}"></th>
-            <th><input name="q[bundesland]" style="width:100%" value="{$q.bundesland}"></th>
-            <th><input name="q[stadtname]" style="width:100%" value="{$q.stadtname}"></th>
-            <th><input name="q[Wirtschaftseinheit]" style="width:100%" value="{$q.Wirtschaftseinheit}"></th>
-            <th><input name="q[kostenstelle]" style="width:100%" value="{$q.kostenstelle}"></th>
-            <th><input name="q[planonnr]" style="width:100%" value="{$q.planonnr}"></th>
-            <th><input name="q[umzugstermin]" style="width:100%" value="{$q.umzugstermin}"></th>
-            <th><input name="q[abgeschlossen_am]" style="width:100%" value="{$q.abgeschlossen_am}"></th>
-            <th><input name="q[berechnet_am]" style="width:100%" value="{$q.berechnet_am}"></th>
-            <th><input name="q[summe]" style="width:100%" value="{$q.summe}"></th>
+            <th><input name="q[aid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></th>
+            <th><input name="q[vorgangsnummer]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.vorgangsnummer}{/if}"></th>
+            <th><input name="q[nachname]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.nachname}{/if}"></th>
+            <th><input name="q[bundesland]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.bundesland}{/if}"></th>
+            <th><input name="q[stadtname]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.stadtname}{/if}"></th>
+            <th><input name="q[Wirtschaftseinheit]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.Wirtschaftseinheit}{/if}"></th>
+            <th><input name="q[kostenstelle]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.kostenstelle}{/if}"></th>
+            <th><input name="q[planonnr]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.planonnr}{/if}"></th>
+            <th><input name="q[umzugstermin]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.umzugstermin}{/if}"></th>
+            <th><input name="q[abgeschlossen_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.abgeschlossen_am}{/if}"></th>
+            <th><input name="q[berechnet_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.berechnet_am}{/if}"></th>
+            <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.summe}{/if}"></th>
         </tr>
     </thead>
     <tbody>

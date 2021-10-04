@@ -1,69 +1,126 @@
-{literal}
 <link rel="STYLESHEET" type="text/css" href="{WebRoot}css/suchformular.css" />
 <script src="{WebRoot}js/suchformular.antreage.easy.js" type="text/javascript"></script>	
 <script src="{WebRoot}js/SelBox.easy.js" type="text/javascript"></script>	
 <script src="{WebRoot}js/ObjectHandler.js" type="text/javascript"></script>
 <link rel="STYLESHEET" type="text/css" href="{WebRoot}css/SelBox.easy.css" />
-{/literal}
+<link rel="stylesheet" type="text/css" href="{WebRoot}css/umzugsformular.css">
+
 <style>
 .frmSuche input.qField { width:200px; }
-.frmSuche label { width:100px; margin-left:10px; }
+.frmSuche label { width:100px; margin-left:0; }
 </style>
 
 <form name="frmSuche" class="frmSuche">
-<table>
+	<table>
+		<tr>
+			<td style="padding:0;width:200px;">
+				<label for="as_vornachname" style="display:block;width:auto;">
+					Vor &amp; Nachname
+				</label></td>
+
+			<td style="padding:0;width:250px;">
+				<input type="text" id="as_vornachname" value="{q[a.vorname]}" name="q[a.vorname]" class="itxt itxt1col floatLeft">
+				<input type="text" id="as_name" value="{q[a.name]}" name="q[a.name]" class="itxt itxt1col floatRight" title="Name">
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:0;"><label for="q_aid" style="display:block;width:auto;">Ticket-ID</label></td>
+			<td style="padding:0;"><input type="text" id="q_aid" value="{q[a.aid]}" name="q[a.aid]" class="itxt itxt2col" title="Ticket-ID"></td>
+		</tr>
+		<tr>
+			<td style="padding:0;"><label for="q_kid" style="display:block;width:auto;">KID</label></td>
+			<td style="padding:0;"><input type="text" id="q_kid" value="{q[u.kid]}" name="q[u.kid]" class="itxt itxt2col" title="KID"></td>
+		</tr>
+		<tr>
+			<td style="padding:0;"><label for="q_ort" style="display:block;width:auto;">Ort</label></td>
+			<td style="padding:0;"><input type="text" id="q_ort" value="{q[a.ort]}" name="q[a.ort]" class="itxt itxt2col" title="Ort"></td>
+		</tr>
+		<tr>
+			<td style="padding:0;"><label for="q_plz" style="display:block;width:auto;">PLZ</label></td>
+			<td style="padding:0;"><input type="text" id="q_plz" value="{q[a.plz]}" name="q[a.plz]" class="itxt itxt2col" title="Postleitzahl"></td>
+		</tr>
+		<tr>
+			<td style="padding:0;"><label for="q_strasse" style="display:block;width:auto;">Strasse</label></td>
+			<td style="padding:0;"><input type="text" id="q_strasse" value="{q[a.strasse]}" name="q[a.strasse]" class="itxt itxt2col" title="Postleitzahl"></td>
+		</tr>
+		<tr>
+			<td style="padding:0;"><label for="q_land" style="display:block;width:auto;">Land</label></td>
+			<td style="padding:0;"><input type="text" id="q_land" value="{q[a.land]}" name="q[a.land]" class="itxt itxt2col" title="Land" list="laenderauswahl"></td>
+		</tr>
+		<datalist id="laenderauswahl">
+			<option>Deutschland</option>
+			<option>Niederlande</option>
+			<option>Ungarn</option>
+		</datalist>
+		<tr>
+			<td style="padding:0;"><label for="q_umzugsstatus" style="display:block;width:auto;">Status</label></td>
+			<td style="padding:0;"><select id="q_umzugsstatus" value="{q[a.umzugsstatus]}" name="q[a.umzugsstatus]" class="iselect" title="Status">
+				<option value=""></option>
+				<option value="beantragt">beantragt / bestellt</option>
+				<option value="geprueft">geprueft / avisiert</option>
+				<option value="abgeschlossen">abgeschlossen</option>
+			</select></td>
+		</tr>
+	</table>
+	<script>
+		var selectedUmzugsstatus = "{q[a.umzugsstatus]}";
+		$("#q_umzugsstatus").find("option[value="+selectedUmzugsstatus+"]").prop("selected", true);
+	</script>
+
+	<!--
+<table style="display: none;">
 	<tr><td valign="top">
 	<strong>Leistungsanforderung</strong>
 	<table>
-	<tr>
-		<td><label>Antrags-ID</label></td>
-		<td><input class="qField" name="q[a.aid]" value="{q[a.aid]}"></td>
-	</tr>
-	<tr>
-		<td><label>Antragsteller</label></td>
-		<td><input class="qField" name="q[a.name]" value="{q[a.name]}" xxonclick="get_fieldindex_mitarbeiter(this)"></td>
-	</tr>
-	<tr>
-		<td><label>Standort</label></td>
-		<td><input class="qField" name="q[a.ort]" value="{q[a.ort]}" xxonclick="get_fieldindex_nutzung(this)"></td>
-	</tr>
-	<tr>
-		<td><label>Geb&auml;ude</label></td>
-		<td><input class="qField" name="q[a.gebaeude]" value="{q[a.gebaeude]}" xxonclick="get_fieldindex_gebaeude(this)"></td>
-	</tr>
-	<tr>
-		<td><label>Termin</label></td>
-		<td><input class="qField" name="q[a.umzugstermin]" value="{q[a.umzugstermin]}" xxonclick="get_fieldindex_nutzung(this)"></td>
-	</tr>
-	<tr>
-		<td><label>Status</label></td>
-		<td><input class="qField" name="q[a.umzugsstatus]" value="{q[a.umzugsstatus]}" xxonclick="get_fieldindex_nutzung(this)"></td>
-	</tr>
+		<tr>
+			<td><label>Antrags-ID</label></td>
+			<td><input class="qField" name="q[a.aid]" value="{q[a.aid]}"></td>
+		</tr>
+		<tr>
+			<td><label>Antragsteller</label></td>
+			<td><input class="qField" name="q[a.name]" value="{q[a.name]}" xxonclick="get_fieldindex_mitarbeiter(this)"></td>
+		</tr>
+		<tr>
+			<td><label>Standort</label></td>
+			<td><input class="qField" name="q[a.ort]" value="{q[a.ort]}" xxonclick="get_fieldindex_nutzung(this)"></td>
+		</tr>
+		<tr>
+			<td><label>Geb&auml;ude</label></td>
+			<td><input class="qField" name="q[a.gebaeude]" value="{q[a.gebaeude]}" xxonclick="get_fieldindex_gebaeude(this)"></td>
+		</tr>
+		<tr>
+			<td><label>Termin</label></td>
+			<td><input class="qField" name="q[a.umzugstermin]" value="{q[a.umzugstermin]}" xxonclick="get_fieldindex_nutzung(this)"></td>
+		</tr>
+		<tr>
+			<td><label>Status</label></td>
+			<td><input class="qField" name="q[a.umzugsstatus]" value="{q[a.umzugsstatus]}" xxonclick="get_fieldindex_nutzung(this)"></td>
+		</tr>
 	</table>
 </td>
 	<td valign="top">
 	<strong>Umziehende Mitarbeiter</strong>
 	<table>
-	<tr>
-		<td><label>Name</label></td>
-		<td><input class="qField" name="q[m.name]" value="{q[m.name]}" xxonclick="get_fieldindex_mitarbeiter(this)"></td>
-	</tr>
-	<tr>
-		<td><label>Vorname</label></td>
-		<td><input class="qField" name="q[m.vorname]" value="{q[m.vorname]}"></td>
-	</tr>
-	<tr>
-		<td><label>Nutzung</label></td>
-		<td><input class="qField" name="q[m.nutzung]" value="{q[m.nutzung]}" xxonclick="get_fieldindex_nutzung(this)"></td>
-	</tr>
-	<tr>
-		<td><label>Ext. Firma</label></td>
-		<td><input class="qField" name="q[m.extern_firma]" value="{q[m.extern_firma]}" xxonclick="get_fieldindex_extern_firma(this)"></td>
-	</tr>
-	<tr>
-		<td><label>Anforderungsarten</label></td>
-		<td><input class="qField" name="q[m.umzugsart]" value="{q[m.umzugsart]}" xxonclick="get_fieldindex_extern_firma(this)"></td>
-	</tr>
+		<tr>
+			<td><label>Name</label></td>
+			<td><input class="qField" name="q[m.name]" value="{q[m.name]}" xxonclick="get_fieldindex_mitarbeiter(this)"></td>
+		</tr>
+		<tr>
+			<td><label>Vorname</label></td>
+			<td><input class="qField" name="q[m.vorname]" value="{q[m.vorname]}"></td>
+		</tr>
+		<tr>
+			<td><label>Nutzung</label></td>
+			<td><input class="qField" name="q[m.nutzung]" value="{q[m.nutzung]}" xxonclick="get_fieldindex_nutzung(this)"></td>
+		</tr>
+		<tr>
+			<td><label>Ext. Firma</label></td>
+			<td><input class="qField" name="q[m.extern_firma]" value="{q[m.extern_firma]}" xxonclick="get_fieldindex_extern_firma(this)"></td>
+		</tr>
+		<tr>
+			<td><label>Anforderungsarten</label></td>
+			<td><input class="qField" name="q[m.umzugsart]" value="{q[m.umzugsart]}" xxonclick="get_fieldindex_extern_firma(this)"></td>
+		</tr>
 	</table>
 	</td></tr>
 <tr><td colspan=2 style="height:20px;">&nbsp;</td></tr>
@@ -101,39 +158,41 @@
 	<td valign="top">
 	<strong>Umzug nach</strong>
 	<table>
-	<tr>
-		<td><label>Ort</label></td>
-		<td><input class="qField" name="q[m.ziel_ort]" value="{q[m.ziel_ort]}" xxonclick="get_fieldindex_ort(this)"></td>
-	</tr>
-	<tr>
-		<td><label>Gebäude</label></td>
-		<td><input class="qField" name="q[m.ziel_gebaeude]" value="{q[m.ziel_gebaeude]}" xxonclick="get_fieldindex_gebaeude(this)"></td>
-	</tr>
-	<tr>
-		<td><label>Etage</label></td>
-		<td><input class="qField" name="q[m.ziel_etage]" value="{q[m.ziel_etage]}" xxonclick="get_fieldindex_etage(this)"></td>
-	</tr>
-	<tr>
-		<td><label>Raumnr</label></td>
-		<td><input class="qField" name="q[m.ziel_raumnr]" value="{q[m.ziel_raumnr]}" xxonclick="get_fieldindex_raumnr(this)"></td>
-	</tr>
-	<tr>
-		<td><label>GF</label></td>
-		<td><input class="qField" name="q[m.ziel_gf]" value="{q[m.ziel_gf]}" xxonclick="get_fieldindex_gf(this)"></tr>
-	<tr>
-		<td><label>Bereich</label></td>
-		<td><input class="qField" name="q[m.ziel_bereich]" value="{q[m.ziel_bereich]}" xxonclick="get_fieldindex_bereich(this)"></tr>
-	<tr>
-		<td><label>Abteilung</label></td>
-		<td><input class="qField" name="q[m.ziel_abteilung]" value="{q[m.ziel_abteilung]}" xxonclick="get_fieldindex_abteilung(this)"></td>
-	</tr>
+		<tr>
+			<td><label>Ort</label></td>
+			<td><input class="qField" name="q[m.ziel_ort]" value="{q[m.ziel_ort]}" xxonclick="get_fieldindex_ort(this)"></td>
+		</tr>
+		<tr>
+			<td><label>Gebäude</label></td>
+			<td><input class="qField" name="q[m.ziel_gebaeude]" value="{q[m.ziel_gebaeude]}" xxonclick="get_fieldindex_gebaeude(this)"></td>
+		</tr>
+		<tr>
+			<td><label>Etage</label></td>
+			<td><input class="qField" name="q[m.ziel_etage]" value="{q[m.ziel_etage]}" xxonclick="get_fieldindex_etage(this)"></td>
+		</tr>
+		<tr>
+			<td><label>Raumnr</label></td>
+			<td><input class="qField" name="q[m.ziel_raumnr]" value="{q[m.ziel_raumnr]}" xxonclick="get_fieldindex_raumnr(this)"></td>
+		</tr>
+		<tr>
+			<td><label>GF</label></td>
+			<td><input class="qField" name="q[m.ziel_gf]" value="{q[m.ziel_gf]}" xxonclick="get_fieldindex_gf(this)"></tr>
+		<tr>
+			<td><label>Bereich</label></td>
+			<td><input class="qField" name="q[m.ziel_bereich]" value="{q[m.ziel_bereich]}" xxonclick="get_fieldindex_bereich(this)"></tr>
+		<tr>
+			<td><label>Abteilung</label></td>
+			<td><input class="qField" name="q[m.ziel_abteilung]" value="{q[m.ziel_abteilung]}" xxonclick="get_fieldindex_abteilung(this)"></td>
+		</tr>
 	</table></td>
 	</tr>
 </table>
 Ansicht: <input type="radio" name="View" value="Antraege" chck_View="Antraege">Antr&auml;ge
 <input type="radio" name="View" value="Mitarbeiter" chck_View="Mitarbeiter">Umziehende Mitarbeiter
-<input type="submit" class="qSubmit" value="Suche starten">
 <input type="button" class="qSubmit" xxonclick="qFelderLeeren()" value="Felder leeren">
+ -->
+	<input type="hidden" name="View" value="Antraege">
+<input type="submit" class="qSubmit" value="Suche starten">
 <input type="hidden" name="sendquery" value="1">
 <input type="hidden" name="s" value="{s}">
 <!-- {hiddenFields} -->

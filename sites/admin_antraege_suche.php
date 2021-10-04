@@ -9,16 +9,21 @@ require_once($InclBaseDir."parse_userquery.php");
 
 $searchFields = array(
 	"a.aid" => "",
-	"a.name" => "",
+    "a.vorname" => "",
+    "a.name" => "",
 	"a.ort" => "",
+    "a.plz" => "",
+    "a.strasse" => "",
+    "a.land" => "",
 	"a.gebaeude" => "",
 	"a.umzugstermin" => "",
 	"a.umzugsstatus" => "",
+	"u.kid" => "",
 	"m.name" => "",
 	"m.vorname" => "",
 	"m.nutzung" => "",
 	"m.extern_firma" => "",
-	"m.ort" => "",
+    "m.ort" => "",
 	"m.gebaeude" => "",
 	"m.etage" => "",
 	"m.raumnr" => "",
@@ -48,7 +53,9 @@ $trackGetQuery = "";
 
 //echo "<pre>".print_r($q,1)."</pre>\n";
 //if (is_array($q)) foreach($q as $k => $v) echo "case \"".$k."\":<br>\n";
-
+if ($ofld === 'TicketID') {
+    $ofld = 'a.aid';
+}
 if ($ofld && isset($searchFields[$ofld])) {
 	$orderBy = "ORDER BY ".$ofld." ".($odir!="DESC" ? "ASC" : "DESC");
 } else {
@@ -66,6 +73,7 @@ $ListBaseLink = "?s=$s".$trackGetQuery."&View=".urlencode($View);
 if ($sendquery) {
 	$sqlWhereMa = "";
 	$sqlWhereUA = "";
+    $sqlWhereUsr = "";
 	if (!empty($q)) {
 		foreach($searchFields as $qField => $userQuery) {
 			if ($userQuery) {
@@ -73,7 +81,13 @@ if ($sendquery) {
 				switch($qField) {
 					case "a.aid":
 					case "a.name":
-					case "a.ort":
+                    case "a.ort":
+                    case "a.plz":
+                    case "a.strasse":
+                    case "a.land":
+                    case "a.vorname":
+                    case "a.name":
+                    case "a.umzugsstatus":
 					case "a.gebaeude":
 					case "a.umzugstermin":
 					case "a.umzugsstatus":
@@ -109,6 +123,15 @@ if ($sendquery) {
 					$sqlWhereMa.= userquery_parts2sql($aUQueryParts, $dbField);
 					$sqlWhereMa.= ")\n";
 					break;
+
+                    case "u.kid":
+                    case "u.personalnr":
+                        $dbField = "u.personalnr";
+                        $sqlWhereUsr.= ($sqlWhereUsr ? "AND " : "") . " (";
+                        $aUsrQueryParts = userquery_parse($userQuery, "Both");
+                        $sqlWhereUsr.= userquery_parts2sql($aUsrQueryParts, $dbField);
+                        $sqlWhereUsr.= ")\n";
+                        break;
 					
 					default:
 					$dbField;
@@ -121,21 +144,33 @@ if ($sendquery) {
 	if ($View == "Antraege") {
 		$sql = "Select COUNT(*) count\n";
 		$sql.= "FROM `".$_TABLE["umzugsantrag"]."` a LEFT JOIN `".$_TABLE["umzugsmitarbeiter"]."` m USING(aid) \n";
+
 		$sql.= "WHERE 1\n";
-		if ($sqlWhereUA) $sql.= " AND ".$sqlWhereUA."\n";
-		if ($sqlWhereMa) $sql.= "AND a.aid IN(SELECT aid FROM `".$_TABLE["umzugsmitarbeiter"]."` m WHERE $sqlWhereMa)\n";
+		if ($sqlWhereUA) {
+		    $sql.= " AND ".$sqlWhereUA."\n";
+        }
+		if ($sqlWhereMa) {
+		    $sql.= "AND a.aid IN(SELECT aid FROM `".$_TABLE["umzugsmitarbeiter"]."` m WHERE $sqlWhereMa)\n";
+        }
 		$row = $db->query_singlerow($sql);
 		$num_all = $row["count"];
 		
-		$sql = "Select a.aid, a.umzugstermin, a.ort, a.gebaeude, a.umzugsstatus, count(m.aid) mitarbeiter\n";
+		$sql = "Select a.aid, a.aid AS \"TicketID\", a.umzugstermin, a.ort, a.plz, a.strasse, a.land, a.name, a.umzugsstatus\n";
 		$sql.= "FROM `".$_TABLE["umzugsantrag"]."` a LEFT JOIN `".$_TABLE["umzugsmitarbeiter"]."` m USING (aid) \n";
 		$sql.= "WHERE 1\n";
-		if ($sqlWhereUA) $sql.= " AND ".$sqlWhereUA."\n";
-		if ($sqlWhereMa) $sql.= "AND a.aid IN(SELECT aid FROM `".$_TABLE["umzugsmitarbeiter"]."` m WHERE $sqlWhereMa)\n";
+		if ($sqlWhereUA) {
+		    $sql.= " AND ".$sqlWhereUA."\n";
+        }
+		if ($sqlWhereMa) {
+		    $sql.= "AND a.aid IN(SELECT aid FROM `".$_TABLE["umzugsmitarbeiter"]."` m WHERE $sqlWhereMa)\n";
+        }
+        if ($sqlWhereUsr) {
+            $sql.= "AND a.antragsteller_uid IN(SELECT uid FROM `".$_TABLE["user"]."` u WHERE $sqlWhereUsr)\n";
+        }
 		$sql.= "GROUP BY a.aid\n";
 		$sql.= $orderBy."\n";
 		$sql.= "LIMIT $offset, $limit";
-		
+
 		$rows = $db->query_rows($sql);
 		$num = count($rows);
 		//echo "<pre>".print_r($rows,1)."</pre>\n";
@@ -143,16 +178,24 @@ if ($sendquery) {
 		$sql = "Select COUNT(*) count\n";
 		$sql.= "FROM `".$_TABLE["umzugsmitarbeiter"]."` m LEFT JOIN `".$_TABLE["umzugsantrag"]."` a USING(aid) \n";
 		$sql.= "WHERE 1\n";
-		if ($sqlWhereMa) $sql.= " AND ".$sqlWhereMa."\n";
-		if ($sqlWhereUA) $sql.= " AND ".$sqlWhereUA."\n";
+		if ($sqlWhereMa) {
+		    $sql.= " AND ".$sqlWhereMa."\n";
+        }
+		if ($sqlWhereUA) {
+		    $sql.= " AND ".$sqlWhereUA."\n";
+        }
 		$row = $db->query_singlerow($sql);
 		$num_all = $row["count"];
 		
 		$sql = "Select a.aid, a.umzugstermin, a.umzugsstatus, m.name, m.vorname, m.ort, m.gebaeude, m.etage, m.raumnr, m.ziel_ort, m.ziel_gebaeude, m.ziel_etage, m.ziel_raumnr\n";
 		$sql.= "FROM `".$_TABLE["umzugsmitarbeiter"]."` m LEFT JOIN `".$_TABLE["umzugsantrag"]."` a USING (aid) \n";
 		$sql.= "WHERE 1\n";
-		if ($sqlWhereMa) $sql.= " AND ".$sqlWhereMa."\n";
-		if ($sqlWhereUA) $sql.= " AND ".$sqlWhereUA."\n";
+		if ($sqlWhereMa) {
+		    $sql.= " AND ".$sqlWhereMa."\n";
+        }
+		if ($sqlWhereUA) {
+		    $sql.= " AND ".$sqlWhereUA."\n";
+        }
 		$sql.= $orderBy."\n";
 		$sql.= "LIMIT $offset, $limit";
 		
@@ -164,7 +207,7 @@ if ($sendquery) {
 $op.= $queryForm;
 
 if ($sendquery) {
-	if (count($rows)) {
+	if (is_array($rows) && count($rows)) {
 		$rlist_nav = new listbrowser(array(
 			"offset"     => $offset,
 			"limit"      => $limit,
@@ -172,8 +215,10 @@ if ($sendquery) {
 			"num_all"    => $num_all,
 			"baselink"   => $ListBaseLink."&offset={offset}&limit={limit}&ofld=$ofld&odir=$odir"));
 		$rlist_nav->render_browser();
-		
-		$rows2Tbl = $rlist_nav->get_nav("all")."<br>\n"; 
+
+        $rows2Tbl = '';
+		// $rows2Tbl.= '<pre>' . htmlentities($sql) . '</pre>';
+		$rows2Tbl.= $rlist_nav->get_nav("all")."<br>\n";
 		//if ($db->error()) 
 		//$rows2Tbl.= $db->error()."<br>\nsql:".$sql."<br>\n";
 		$wz = "";
@@ -200,10 +245,14 @@ if ($sendquery) {
 		$op.= "<br>\n".$rows2Tbl;
 	} else {#
 		$op.= "Ihre Suche ergab keine Treffer!<br>\n";
-		$op.= $db->error()."<br>\nsql:".$sql."<br>\n";
+		if ($db->error()) {
+            $op .= $db->error() . "<br>\nsql:" . $sql . "<br>\n";
+        }
 	}
 }
-if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) echo $op;
+if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) {
+    echo $op;
+}
 
 $body_content.= "<div class=\"divModuleBasic padding6px width5Col heightAuto colorContentMain\"> 
 <h1><span class=\"spanTitle\">Suche in Umzugsantr&auml;gen:</span></h1> 

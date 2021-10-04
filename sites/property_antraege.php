@@ -18,7 +18,7 @@ $limit = getRequest("limit", 50);
 $ofld = getRequest("ofld", "");
 $odir = getRequest("odir", "");
 $cat = getRequest("cat", "neue");
-$allusers = (int)  getRequest('allusers', 0);
+$allusers = (int)  getRequest('allusers', 1);
 
 if (empty($s)) $s = getRequest("s", "");
 if (!in_array($cat, array("neue", "bearbeitung", "gepruefte", "genehmigte", "aktive", "abgelehnte", "abgeschlossene", "stornierte"))) $cat = "neue";
@@ -67,6 +67,11 @@ $sqlFrom= "FROM `".$CUA["Table"]."` U LEFT JOIN `".$CUM["Table"]."` M USING(aid)
 //'abgeschlossen'
  
 switch($cat) {
+    case 'neue':
+        $sqlWhere= "WHERE (umzugsstatus = 'beantragt')\n";
+        // $sqlWhere= "WHERE ((umzugsstatus = 'beantrag' and usr.gruppe NOT LIKE \"admin%\")\n";
+        break;
+
 	case "zurgenehmigung":
         case 'neue':
 	$sqlWhere= "WHERE ((umzugsstatus = 'angeboten' OR "
@@ -143,6 +148,7 @@ $row = $db->query_singlerow($sql);
 $num_all = $row["count"];
 
 
+
 $sql = 'SELECT U.*, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude' ."\n";
 $sql.= $sqlFrom.$sqlWhere;
 $sql.= "GROUP BY aid\n";
@@ -151,6 +157,7 @@ $sql.= "LIMIT $offset, $limit";
 $all = $db->query_rows($sql);
 //echo $db->error()."<br>\nsql: $sql <br>\n";
 $num = count($all);
+// die('<pre>' . print_r(compact('sql', 'num' ), 1));
 
 if ($num_all > $num) {
 	$rlist_nav = new listbrowser(array(
