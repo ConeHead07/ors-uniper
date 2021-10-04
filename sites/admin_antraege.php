@@ -81,7 +81,7 @@ switch($cat) {
 	break;
 	
 	case "aktive":
-	$sqlWhere.= "AND (umzugsstatus IN ('bestaetigt','genehmigt') OR (umzug='Nein' AND umzugsstatus='angeboten'))\n";
+	$sqlWhere.= "AND (umzugsstatus IN ('geprueft', 'bestaetigt','genehmigt') OR (umzug='Nein' AND umzugsstatus='angeboten'))\n";
 	break;
 	
 	case "abgeschlossene":
