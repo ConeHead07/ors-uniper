@@ -52,11 +52,16 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
         ];
     }
 
-    $rows = $db->query_rows(
-        'SELECT leistung_id, leistung_ref_id, leistungskategorie_id '
-        . ' FROM mm_leistungskatalog '
-        . ' WHERE leistung_id IN (' . implode(', ', $aLIds) . ') AND IFNULL(leistung_ref_id, 0) > 0'
-    );
+    $sql = 'SELECT l.leistung_id, l.leistung_ref_id, l.leistungskategorie_id, k.leistungskategorie '
+        . ' FROM mm_leistungskatalog AS l'
+        . ' JOIN mm_leistungskategorie AS k ON (l.leistungskategorie_id = k.leistungskategorie_id) '
+        . ' WHERE leistung_id IN (' . implode(', ', $aLIds) . ') '
+        . ' AND l.leistungskategorie_id NOT IN (18, 25) '
+        . ' AND k.leistungskategorie NOT IN("Transport", "Rabatt")'
+//        . ' AND IFNULL(leistung_ref_id, 0) > 0'
+        ;
+
+    $rows = $db->query_rows( $sql );
     $lastQuery = $db->lastQuery;
     $rowsByRefId = [];
     if (count($rows)) {
@@ -70,6 +75,9 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
                 $aHasPos['Schreibtisch']++;
             } elseif ($_ktgId === 23) {
                 $aHasPos['Leuchte']++;
+            }
+            if (!$_refId) {
+                continue;
             }
             if (!isset($rowsByRefId[$_refId])) {
                 $rowsByRefId[$_refId] = [
@@ -87,6 +95,7 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
             $rowsByRefId[$_refId]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
             $rowsByRefId[$_refId]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
         }
+
         if ($aHasPos['Stuhl'] > 0 && $aHasPos['Schreibtisch'] > 0 && $aHasPos['Leuchte'] > 0) {
             // Füge Rabatt für Komplettpaket (Stuhl, Schreibtisch und Leutchte) von 25Euro hinzu
             $_lstgId = 237;
@@ -100,6 +109,7 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
             ];
         }
     }
+    // echo json_encode(compact('sql', 'rows', 'rowsByRefId', 'aHasPos'));
 
     $rowsList = array_values($rowsById);
     $rowsRefList = array_values($rowsByRefId);

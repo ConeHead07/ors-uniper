@@ -425,7 +425,7 @@ $(function(){
             }
             var ktgItems = Object.values(lkItemsByKtg[ktg]);
 
-            if (ktg === "Transportpositionen") {
+            if (ktg === "Transportpositionen" || ktg === "Rabatt") {
 
                 for (var it of ktgItems) {
                     var _data = {leistung_id: it.leistung_id};
@@ -455,6 +455,8 @@ $(function(){
             var boxTitle = $("<h3/>").text("Auswahl: " + ktg);
             var ktgBundleName = "Komplettpaket";
             var ktgBundleId = 18;
+            var ktgRabatName = "Rabatt";
+            var ktgRabatId = 25;
             boxTitle.appendTo(box);
             for (var it of ktgItems) {
                 console.log({it});
