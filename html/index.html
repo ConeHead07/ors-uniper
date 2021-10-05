@@ -17,8 +17,104 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/mertens.global.v2.css" /> 
     <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/cms.global.v2.css" /> 
     <link rel="stylesheet" type="text/css" media="print" href="{WebRoot}themes/{theme}/css/print.global.v2.css" /> 
-    <link rel="stylesheet" type="text/css" href="{WebRoot}themes/{theme}/css/tabbed.ul.navigation.css" /> 
+    <link rel="stylesheet" type="text/css" href="{WebRoot}themes/{theme}/css/tabbed.ul.navigation.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/header.css" />
 
+    <style>
+      /* Override property_old/css/mertens.global.v2.css */
+      div.divHeader {
+        background: none;
+        background-color: white;
+      }
+      div.divHeader .header-title {
+        position:absolute;
+        left:10px;
+        top:10px;
+        font-family:Arial,sans-serif;
+        font-size:24px;
+      }
+      ul.ulNavigationMain {
+        x-height: 35px;
+        x-margin-left: 10px;
+        x-margin-bottom: -2px;
+        background: none;
+        background-color: #ffffff;
+      }
+      ul.ulNavigationMain li {
+        x-height: 35px;
+        x-float: left;
+        position: relative;
+        background: none;
+        background-color: #ffffff;
+      }
+
+      div.divHeader .header-title,
+      ul.ulNavigationMain,
+      ul.ulNavigationMain li,
+      ul.ulNavigationMain li a,
+      ul.ulNavigationMain li a:link,
+      ul.ulNavigationMain li a:hover,
+      ul.ulNavigationMain li a:active,
+      ul.ulNavigationMain li a:visited
+      {
+        color: #333333;
+      }
+      ul.ulNavigationMain li a,
+      ul.ulNavigationMain li a:link,
+      ul.ulNavigationMain li a:hover,
+      ul.ulNavigationMain li a:active,
+      ul.ulNavigationMain li a:visited
+      {
+        color: #333333;
+        border: 0;
+      }
+
+      ul.ulNavigationMain li a:hover {
+        background: #fff;
+        border:0;
+        border-bottom: 2px solid #C80000;
+      }
+      ul.ulNavigationMain li.liActive {
+        background: none;
+      }
+      ul.ulNavigationMain li.liActive a,
+      ul.ulNavigationMain li.liActive a:hover,
+      ul.ulNavigationMain li.liActive a:link,
+      ul.ulNavigationMain li.liActive a:visited {
+        color: #0078dc;
+        border-right: 0;
+        margin: 0 0 0 4px;
+        padding: 10px 15px 0 11px;
+        background: none;
+      }
+      ul.ulNavigationMain li.liActive:after,
+      ul.ulNavigationMain li:hover:after {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 3px;
+        content: "";
+        position: absolute;
+        background-color: #0078dc;
+      }
+      ul.ulNavigationTop li a:hover {
+        color: #0078dc;
+        text-decoration: underline;
+      }
+      div#divSubNavigationHeader {
+        width: 956px;
+        background: #ffffff;
+        background-color: #ffffff;
+        position: relative;
+        height: 25px;
+        border-top: 1px solid rgba(51, 51, 51,0.1);
+        display: inline-block;
+        margin-left: 3px;
+      }
+      ul.ulNavigationMain li:first-child a {
+        padding-left: .5rem;
+      }
+    </style>
     <!-- Mertens GLOBAL CSS END --> 
 	
     <!-- MoveManagement-Extensions BEGIN -->
@@ -95,9 +191,9 @@
     <div class="divMatrix"> 
       <!-- HEADER - BEGIN -->         
       <div class="divHeader"> 
-        <div style="position:absolute;left:10px;top:10px;font-family:Arial,sans-serif;font-size:24px;color:#fff;">
-	{AppTitle}
-	</div>
+        <div class="header-title">
+          {AppTitle}
+        </div>
         <!-- LOGO - BEGIN -->
         <a href="#"><img class="" style="display:none;" alt=""></a>
         <!-- LOGO - END -->
@@ -121,55 +217,57 @@
       </div> 
       <!-- HEADER - END -->      
       <!-- CONTENT - BEGIN --> 
-      <div id="divContentID" class="divContent"> 
-        <!-- NAVIGATION TOP - BEGIN -->		
+      <div id="divContentID" class="divContent">
+        <div id="divSubNavigationHeader">
+        <!-- NAVIGATION TOP - BEGIN -->
         <ul class="ulNavigationTop">
 		<!-- Erstes li-Element sollte die class liFirstItem erhalten -->
         <!-- {topmenu} -->
 	<!-- {MenuGroup:top:Sub} -->
-        </ul> 
+        </ul>
+        </div>
         <!-- NAVIGATION TOP - END -->
         <!-- LOGIN & REGISTER - BEGIN -->
         <ul class="ulLogin">
-          <!-- SSI DISABLED --><!-- 
+          <!-- SSI DISABLED --><!--
           <li id="xliLoginID"><a class="aLink iconLogin" href="login.php">Login</a></li>
           <li id="liLogoutID"><a class="aLink iconLogout" href="?logout=1">Logout</a></li>  -->
-		  <!-- {MenuGroup:login} --> 
+		  <!-- {MenuGroup:login} -->
                   <li id="ulWhoami">{user.name}</li>
         </ul>
         <!-- LOGIN & REGISTER - END -->
 	<li id="liLogoutID" style="list-style: none;list-style-type:none;"><a class="aLink xiconLogout" href="?logout=1">&nbsp;</a></li>
-        <!-- CONTENTPAGE 1+DYN COLUMN - BEGIN --> 
+        <!-- CONTENTPAGE 1+DYN COLUMN - BEGIN -->
         <!-- box_left.tpl.html -->
-        <div class="divContent5Col" xclass="divContent3Col"> 
-<!--startindex--> 
-<!-- CONTENT MIDDLE - BEGIN --> 
+        <div class="divContent5Col" xclass="divContent3Col">
+<!--startindex-->
+<!-- CONTENT MIDDLE - BEGIN -->
 <div class="Menu MenuMain"><!-- {MenuGroup:main} --></div>
 <!-- {pageTitle}<br> -->
-<!-- <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
+<!-- <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
 <h1><span class="spanTitle">{pageTitle}</span></h1></div> -->
 {content}
-<!-- ARTICLE (65384) BEGIN --> 
+<!-- ARTICLE (65384) BEGIN -->
 
 <!-- headandsubheadlines.tp.html -->
 
 <!-- box_text.tpl.html -->
 
 <!-- box_tabs.tpl.html -->
- 
+
 <!-- box_text_and_morelinks.tpl.html -->
 
 
- 
- 
-<!-- CONTENT MIDDLE - END --> 
-<!--stopindex--> 
-          <br/><!-- IE6 FLOAT BUGFIX --> 
+
+
+<!-- CONTENT MIDDLE - END -->
+<!--stopindex-->
+          <br/><!-- IE6 FLOAT BUGFIX -->
         </div>
-        
+
 <!-- box_right.tpl.html -->
-        <!-- CONTENTPAGE 1+DYN COLUMN - END --> 
-      </div> 
+        <!-- CONTENTPAGE 1+DYN COLUMN - END -->
+      </div>
       <!-- CONTENT - END --> 
        
       <div class="divContent5Col"> 

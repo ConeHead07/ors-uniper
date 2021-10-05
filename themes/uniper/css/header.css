@@ -1,0 +1,93 @@
+/* Override property_old/css/mertens.global.v2.css */
+div.divHeader {
+    background: none;
+    background-color: white;
+}
+div.divHeader .header-title {
+    position:absolute;
+    left:10px;
+    top:10px;
+    font-family:Arial,sans-serif;
+    font-size:24px;
+}
+ul.ulNavigationMain {
+    x-height: 35px;
+    x-margin-left: 10px;
+    x-margin-bottom: -2px;
+    background: none;
+    background-color: #ffffff;
+}
+ul.ulNavigationMain li {
+    x-height: 35px;
+    x-float: left;
+    position: relative;
+    background: none;
+    background-color: #ffffff;
+}
+
+div.divHeader .header-title,
+ul.ulNavigationMain,
+ul.ulNavigationMain li,
+ul.ulNavigationMain li a,
+ul.ulNavigationMain li a:link,
+ul.ulNavigationMain li a:hover,
+ul.ulNavigationMain li a:active,
+ul.ulNavigationMain li a:visited
+{
+    color: #333333;
+}
+ul.ulNavigationMain li a,
+ul.ulNavigationMain li a:link,
+ul.ulNavigationMain li a:hover,
+ul.ulNavigationMain li a:active,
+ul.ulNavigationMain li a:visited
+{
+    color: #333333;
+    border: 0;
+}
+
+ul.ulNavigationMain li a:hover {
+    background: #fff;
+    border:0;
+    border-bottom: 2px solid #C80000;
+}
+ul.ulNavigationMain li.liActive {
+    background: none;
+}
+ul.ulNavigationMain li.liActive a,
+ul.ulNavigationMain li.liActive a:hover,
+ul.ulNavigationMain li.liActive a:link,
+ul.ulNavigationMain li.liActive a:visited {
+    color: #0078dc;
+    border-right: 0;
+    margin: 0 0 0 4px;
+    padding: 10px 15px 0 11px;
+    background: none;
+}
+ul.ulNavigationMain li.liActive:after,
+ul.ulNavigationMain li:hover:after {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    content: "";
+    position: absolute;
+    background-color: #0078dc;
+}
+ul.ulNavigationTop li a:hover {
+    color: #0078dc;
+    text-decoration: underline;
+}
+div#divSubNavigationHeader {
+    width: 956px;
+    background: #ffffff;
+    background-color: #ffffff;
+    position: relative;
+    height: 25px;
+    border-top: 1px solid rgba(51, 51, 51,0.1);
+    display: inline-block;
+    margin-left: 3px;
+}
+ul.ulNavigationMain li:first-child a {
+    padding-left: .5rem;
+}
