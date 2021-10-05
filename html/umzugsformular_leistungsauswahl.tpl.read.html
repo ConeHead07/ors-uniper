@@ -17,39 +17,53 @@ td.unit {
 td.menge, td.menge, input.menge, td.preis, td.sum {
     text-align:right;
 }
+.hideForUniper {
+    display:none;
+}
+.MitarbeierItem.table-leistungen  .inputRowVon td,
+.MitarbeierItem.table-leistungen  .inputRowZiel td,
+.table-leistungen thead td,
+.table-leistungen tbody td,
+.table-leistungen td {
+    padding-left:.5rem;
+    padding-right: .5rem;
+}
 {/literal}
 </style>
 {if count($Umzugsleistungen)}
 <h2 style="margin:0;padding:0">Leistungen</h2>
-<table class="MitarbeierItem" style="margin-top:0;padding-top:0;width:100%;">
+<table class="MitarbeierItem table-leistungen" style="margin-top:0;padding-top:0;width:100%;">
     <thead>
         <tr>
             <td>Kategorie</td>
             <td>Leistung</td>
-            <td>Menge 1 DSD</td>
-            <td>Einheit 1</td>
-            <td>Menge 2 DSD</td>
-            <td>Einheit 2</td>
-            <td>Menge1 M</td>
-            <td>Menge2 M</td>
-            {if $PreiseAnzeigen}<td class="preis">Preis/Einh.</td>
-            <td class="sum">Gesamt</td>
+            <td>Menge<span class="hideForUniper"> 1 DSD</span></td>
+            <td class="hideForUniper">Einheit 1</td>
+            <td class="hideForUniper">Menge 2 DSD</td>
+            <td class="hideForUniper">Einheit 2</td>
+            <td class="hideForUniper">Menge1 M</td>
+            <td class="hideForUniper">Menge2 M</td>
+            {if $PreiseAnzeigen}<td class="hideForUniper" class="preis">Preis/Einh.</td>
+            <td class="sum hideForUniper">Gesamt</td>
             {/if}
         </tr>
     </thead>
     <tbody id="TblLeistungenBody">
     {foreach name=GList item=L from=$Umzugsleistungen}
+        {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" }
+            {continue}
+        {/if}
         <tr class="row inputRowVon">
             <td class="ktg1">{$L.kategorie|escape}</td>
             <td class="lstg">{$L.leistung|escape}</td>
-            <td>{if is_numeric($L.menge_property)}{$L.menge_property|escape|number_format:2:",":"."}{/if}</td>
-            <td class="unit">{$L.leistungseinheit|escape}</td>
-            <td>{if is_numeric($L.menge2_property)}{$L.menge2_property|escape|number_format:2:",":"."}{/if}</td>
-            <td class="unit">{$L.leistungseinheit2|escape}</td>
-            <td class="menge">{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:2:",":"."}{/if}</td>
-            <td class="menge">{if is_numeric($L.menge2_mertens)}{$L.menge2_mertens|escape|number_format:2:",":"."}{/if}</td>
-            {if $PreiseAnzeigen}<td class="preis">{$L.preis_pro_einheit}</td>
-            <td class="sum">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|escape|number_format:2:",":"."}{/if}</td>
+            <td class="menge">{if is_numeric($L.menge_property)}{$L.menge_property|escape|number_format:0:",":"."}{/if}</td>
+            <td class="unit hideForUniper">{$L.leistungseinheit|escape}</td>
+            <td class=" hideForUniper">{if is_numeric($L.menge2_property)}{$L.menge2_property|escape|number_format:2:",":"."}{/if}</td>
+            <td class="unit hideForUniper">{$L.leistungseinheit2|escape}</td>
+            <td class="menge hideForUniper">{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:2:",":"."}{/if}</td>
+            <td class="menge hideForUniper">{if is_numeric($L.menge2_mertens)}{$L.menge2_mertens|escape|number_format:2:",":"."}{/if}</td>
+            {if $PreiseAnzeigen}<td class="preis hideForUniper">{$L.preis_pro_einheit}</td>
+            <td class="sum hideForUniper">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|escape|number_format:2:",":"."}{/if}</td>
             {/if}
         </tr>
     {/foreach}

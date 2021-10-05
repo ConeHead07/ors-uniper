@@ -21,8 +21,9 @@ if ('property' == $creator) {
 }
 
 /** @var $db dbconn $db */
-if (empty($db)) $db = new dbconn($MConf['DB_Host'], $MConf['DB_Name'], $MConf['DB_User'], $MConf['DB_Pass']);
-$sql = 'SELECT * FROM ' . $LKConf['Table'] . ' ORDER BY kategorie, kategorie2, leistung, mengen_von';
+if (empty($db)) {
+    $db = new dbconn($MConf['DB_Host'], $MConf['DB_Name'], $MConf['DB_User'], $MConf['DB_Pass']);
+}
 
 //  preismatrix_id 	leistung_id 	preis 	preiseinheit 	mengen_von 	mengen_bis 
 $sql = 'SELECT l.leistung_id, l.leistung_ref_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
@@ -204,7 +205,7 @@ for ($i = 0; $i < count($CsvLines); $i++) {
 $SumBase = 'MH';
 $sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_property, '
       .' ul.menge_mertens, ul.menge2_mertens, '
-      .' l.Bezeichnung leistung, lk.leistungskategorie kategorie, '
+      .' l.Bezeichnung leistung, lk.leistungskategorie kategorie, lk.leistungskategorie_id kategorie_id, l.image, '
       .' l.leistungseinheit, l.leistungseinheit2, if(lm.preis, lm.preis, preis_pro_einheit) preis_pro_einheit ' . "\n"
       .' FROM mm_umzuege_leistungen ul ' . "\n"
       .' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
@@ -223,13 +224,36 @@ $sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_
       $sql.= ' )' . PHP_EOL;
       $sql.= ' WHERE ul.aid = :aid';
 $aLItems = $db->query_rows($sql, 0, array('aid'=>$AID));
-if ($db->error()) die($db->error() . '<br>' . PHP_EOL . $db->lastQuery);
+$lastQuery = $db->lastQuery;
+if (0 && $AID && !$aLItems) {
+    echo json_encode(compact('lastQuery', 'aLItems'), JSON_PRETTY_PRINT);
+    exit;
+}
+
+if ($db->error()) {
+    die($db->error() . '<br>' . PHP_EOL . $db->lastQuery);
+}
 
 $hideMHMengen  = ($creator !== 'mertens' && in_array($AS->arrInput['umzugsstatus'], array('temp','beantragt')));
 $hideDusMengen = $AS->arrInput['umzugsstatus'] == 'angeboten';
 
 $Gesamtsumme =  0.0;
-foreach($aLItems as &$_it) {
+$aLItemsForJson = [];
+$iNumLItems = count($aLItems);
+for($i = 0; $i < $iNumLItems; $i++) {  // as $i => &$_it) {
+    $_it = &$aLItems[$i];
+    $aLItemsForJson[$i] = $_it;
+    $_utf8EncL = utf8_encode($_it['leistung']);
+    $aLItemsForJson[$i]['leistung'] = ($_utf8EncL) ? $_utf8EncL : '???';
+
+    $_utf8EncK = utf8_encode($_it['kategorie']);
+    $aLItemsForJson[$i]['kategorie'] = ($_utf8EncK) ? $_utf8EncK : '???';
+
+    $_utf8EncLE2 = utf8_encode($_it['leistungseinheit2']);
+    $aLItemsForJson[$i]['leistungseinheit2'] = ($_utf8EncLE2) ? $_utf8EncLE2 : 'Stck';
+
+    $_utf8EncLE = utf8_encode($_it['leistungseinheit']);
+    $aLItemsForJson[$i]['leistungseinheit'] = ($_utf8EncLE) ? $_utf8EncLE : 'Stck';
     if (false !== stripos($_it['leistungseinheit'], 'prozent')) {
         $_it['gesamtpreis'] = '';
         continue;
@@ -248,10 +272,17 @@ foreach($aLItems as &$_it) {
     if ($hideMHMengen) {
         $_it['menge_mertens'] = $_it['menge2_mertens'] = null;
     }
+
     $Gesamtsumme+= $_it['gesamtpreis'];
 }
 
-if (!empty($aLItems) && count($aLItems)) $Tpl->assign("Umzugsleistungen", $aLItems);
+if (!empty($aLItems) && count($aLItems)) {
+    $Tpl->assign("Umzugsleistungen", $aLItems);
+    $Tpl->assign("UmzugsleistungenJson",     json_encode($aLItemsForJson, JSON_PRETTY_PRINT) );
+} else {
+    $Tpl->assign("Umzugsleistungen", []);
+    $Tpl->assign("UmzugsleistungenJson",     json_encode([]));
+}
 $Tpl->assign("Gesamtsumme", $Gesamtsumme);
 if (!empty($aGItems) && count($aGItems)) $Tpl->assign("Geraeteliste", $aGItems);
 if (!empty($aMaItems) && count($aMaItems)) $Tpl->assign("Mitarbeiterliste", $aMaItems);

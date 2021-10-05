@@ -134,6 +134,8 @@ if ($num_all > $num) {
 } else {
 	$ListBrowsing = ""; 
 }
+$ListBrowsing = "<div style='border:1px solid gray;border-radius: 5px;padding:.8rem;'>
+<pre style='background-color: #c9c9c9;color: #626262;padding:.8rem;'>" . $sql . "</pre>Num-Result: " . count($all) . "</div>" . $ListBrowsing;
 
 if (!function_exists("get_iconStatus")) { function get_iconStatus($statVal, $date, $von ='', $statKey ='') {
         $alt = '';

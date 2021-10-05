@@ -2,6 +2,7 @@
     Umzugsleistungen werden serverseitig verarbeitet unter:
     sites/umzugsantrag_speichern.php in #25 function umzugsleistungen_speichern($AID)
 *}
+
 <div style="display:block;margin-top:15px;">
     <!-- umzugsformular_leistungsauswahl.tpl.html -->
 </div>
@@ -118,9 +119,29 @@ label.container  .checkmark:after {
 }
 {/literal}
 </style>
+{*
+var UZ = [];
+{foreach name=LList item=L from=$Umzugsleistungen}
+UZ.push({literal}{{/literal}
+    leistung_id: {$L.leistung_id},
+    leistung: "{$L.leistung|escape}",
+    kategorie: "{$L.kategorie|escape}",
+    leistungseinheit: "{$L.leistungseinheit|escape}",
+    menge_property: {$L.menge_property},
+    menge2_property: {$L.menge2_property},
+    leistungseinheit2: {$L.leistungseinheit2},
+    menge_mertens: {$L.menge_mertens},
+    menge2_mertens: {$L.menge2_mertens},
+    preis_pro_einheit: {$L.preis_pro_einheit},
+    gesamtpreis: {$L.gesamtpreis}
+{literal}}{/literal});
+{/foreach}
+*}
 <script>
 var lkItems = {$lkTreeItemsJson};
 var lkmById = {$lkmByIdJson};
+var umzugsleistungen = {$UmzugsleistungenJson};
+
 
 {literal}
 $("body").append( $("<select/>" ).css({width:"220px",position:"absolute", zIndex:99, minWidth:250}).attr({id: "lktgselect", size:5}).hide()    );
@@ -410,13 +431,101 @@ $(function(){
         }
     };
 
-    var renderAuswahlliste = function() {
+    var renderBestellListe = function() {
         var boxLeistungenSel = "div#auswahlUmzugsleistungenBox";
         var boxLeistungen = $(boxLeistungenSel);
         if (!boxLeistungen.length) {
             alert("NOT FOUND " + boxLeistungenSel);
         }
         boxLeistungen.html("");
+
+        var liste = umzugsleistungen;
+        alert("render #442 umzugsleistungen.length: " + umzugsleistungen.length);
+        for (var i = 0; i < liste.length; i++) {
+
+            var it = liste[i];
+            var ktg = it.kategorie;
+            var ktgId = +it.kategorie_id;
+            if (ktgId === 18 || ktgId === 25) {
+                continue;
+            }
+            alert(JSON.stringify(it));
+
+            console.log({ktg});
+            var box = $("<div/>");
+            var boxTitle = $("<h3/>").text("Auswahl: " + ktg);
+            boxTitle.appendTo(box);
+
+                var lstId = it.leistung_id;
+                var tr = $("<div/>").addClass("row ktg-" + ktgId).attr({
+                    "data-ktg": ktg,
+                    "data-ktgId": ktgId,
+                    "data-id": lstId
+                });
+                var tdBild = $("<div/>").addClass('bild').appendTo(tr);
+                var tdLstg = $("<div/>").addClass('lstg').appendTo(tr);
+                var tdChck = $("<div/>").addClass('chck').appendTo(tr);
+
+                if (it.image) {
+                    var bildHref = $("<a/>").attr("href", "images/leistungskatalog/" + it.image).css({
+                        border: 0
+                    });
+                    bildHref.appendTo(tdBild);
+                    var bild = $("<img/>")
+                        .attr({
+                            src: "images/leistungskatalog/" + it.image
+                        })
+                        .appendTo(bildHref);
+                }
+
+                tdLstg.text(it.leistung).off("click").on("click", function () {
+                    var tr = $(this).closest(".row");
+                    // tr.find(".chck label")[0].click();
+                    console.log('click leistung');
+                });
+
+                var labelChck = $("<label/>").addClass("container");
+                var inputChck = $("<input/>").attr({
+                    name: "check[" + it.kategorie_id + "]",
+                    type: "radio",
+                    value: it.leistung_id
+                }).prop("checked", true);
+
+                var spanChck = $("<span/>").addClass("checkmark");
+                labelChck.append(inputChck).append(spanChck);
+                tdChck.append(labelChck);
+                var _ldata = {leistung_id: it.leistung_id};
+                var _lclss = ' group-leistungid-' + it.leistung_id;
+                tdChck
+                    .append(
+                        createHiddenLstgInput('L[leistung_id][]', it.leistung_id, true, 'leistung_id' + _lclss, _ldata)
+                    )
+                    .append(
+                        createHiddenLstgInput('L[menge_property][]', 0, true, 'menge menge_property' + _lclss, _ldata)
+                    )
+                    .append(
+                        createHiddenLstgInput('L[menge2_property][]', 0, true, 'menge menge2_property' + _lclss, _ldata)
+                    )
+                    .append(
+                        createHiddenLstgInput('L[menge_mertens][]', 0, true, 'menge menge_mertens' + _lclss, _ldata)
+                    )
+                    .append(
+                        createHiddenLstgInput('L[menge2_mertens][]', 0, true, 'menge menge2_mertens' + _lclss, _ldata)
+                    );
+
+                box.append(tr);
+
+            box.appendTo(boxLeistungen);
+        }
+    };
+    var renderAuswahlListe = function() {
+        var boxLeistungenSel = "div#auswahlUmzugsleistungenBox";
+        var boxLeistungen = $(boxLeistungenSel);
+        if (!boxLeistungen.length) {
+            alert("NOT FOUND " + boxLeistungenSel);
+        }
+        boxLeistungen.html("");
+
         var lkItemsByKtg = lkItems;
         for (var ktg in lkItemsByKtg) {
 
@@ -567,8 +676,13 @@ $(function(){
             }
             box.appendTo(boxLeistungen);
         }
+    };
+    if (!umzugsleistungen) {
+        renderAuswahlListe();
+    } else {
+        alert("renderBestellListe()");
+        renderBestellListe();
     }
-    renderAuswahlliste();
 
 </script>
 {/literal}
