@@ -440,7 +440,6 @@ $(function(){
         boxLeistungen.html("");
 
         var liste = umzugsleistungen;
-        alert("render #442 umzugsleistungen.length: " + umzugsleistungen.length);
         for (var i = 0; i < liste.length; i++) {
 
             var it = liste[i];
@@ -680,7 +679,6 @@ $(function(){
     if (!umzugsleistungen) {
         renderAuswahlListe();
     } else {
-        alert("renderBestellListe()");
         renderBestellListe();
     }
 
