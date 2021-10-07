@@ -4,7 +4,7 @@ if (!function_exists('fb_htmlEntities')) {
     function fb_htmlEntities($str, $flags = null, $charset = null)
 	{
         $f = (null === $flags) ? ENT_COMPAT : $flags;
-        $c = (null === $charset) ? 'ISO-8859-1' : $charset;
+        $c = (null === $charset) ? 'UTF-8' : $charset;
 
         // echo "/* htmlentities($str, $f, $c): " . htmlentities($str, $f, $c) . "<br>\n */";
 
