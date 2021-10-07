@@ -38,14 +38,16 @@
 .cluetip-default #cluetip-outer {
   position: relative;
   margin: 0;
-  background-color: #f60000;
+  background-color: #0078dc;
+  previous-background-color: #f60000;
 }
 .cluetip-default h3#cluetip-title {
   margin: 0 0 5px;
   padding: 8px 10px 4px;
   font-size: 1.1em;
   font-weight: normal;
-  background-color: #f60000;
+  background-color: #0078dc;
+  previous-background-color: #f60000;
   color: #fff;
 }
 .cluetip-default #cluetip-title a {
@@ -58,7 +60,8 @@
 .cluetip-default div#cluetip-close { 
   text-align: right;
   margin: 0 5px 5px;
-  color: #900;
+  color: #0078dc;
+  previous-color: #900;
 }
 
 /* default arrows */
@@ -95,7 +98,8 @@
   background-color: transparent;
 }
 .cluetip-jtip #cluetip-outer {
-  border: 1px solid #f60000;
+  border: 1px solid #0078dc;
+  previous-border-color: #f60000;
   position: relative;
   background-color: #fff;
 }
@@ -105,7 +109,8 @@
   padding: 2px 5px;
   font-size: 16px;
   font-weight: normal;
-  background-color: #f60000;
+  background-color: #0078dc;
+  previous-background-color: #f60000;
   color: #fff;
 }
 
@@ -116,21 +121,22 @@
 .cluetip-jtip div#cluetip-close { 
   text-align: right;
   margin: 0 5px 5px;
-  color: #900;
+  color: #0078dc;
+  previous-color: #900;
 }
 
 /* jtip arrows */
 
 .clue-right-jtip .cluetip-arrows {
-  background-image: url(images/redarrowleft.gif);
+  background-image: url(images/bluearrowleft.gif);
 }
 .clue-left-jtip .cluetip-arrows {
-  background-image: url(images/redarrowright.gif);
+  background-image: url(images/bluearrowright.gif);
   left: 100%;
   margin-right: -11px;
 }
 .clue-top-jtip .cluetip-arrows {
-  background-image: url(images/redarrowdown.gif);
+  background-image: url(images/bluearrowdown.gif);
   top: 100%;
   left: 50%;
   margin-left: -11px;
@@ -138,7 +144,7 @@
   width: 22px;  
 }  
 .clue-bottom-jtip .cluetip-arrows {
-  background-image: url(images/redarrowup.gif);
+  background-image: url(images/bluearrowup.gif);
   top: -11px;
   left: 50%;
   margin-left: -11px;

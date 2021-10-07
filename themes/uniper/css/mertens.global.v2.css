@@ -430,7 +430,8 @@ ul.ulNavigationMain li.liActive a,
 ul.ulNavigationMain li.liActive a:hover,
 ul.ulNavigationMain li.liActive a:link,
 ul.ulNavigationMain li.liActive a:visited {
-  color:#c80000;
+  color: #0078dc;
+  previous-color: #c80000;
   border-right: 0;
   margin: 0 0 0 4px;
   padding: 10px 15px 0 11px;
@@ -495,13 +496,15 @@ ul.ulNavigationTop li a:visited {
   text-decoration: none;
 }
 ul.ulNavigationTop li a:hover {
-  color:#c80000;
+  color: #0078dc;
+  previous-color:#c80000;
   text-decoration: underline;
 }
 ul.ulNavigationTop li a.aActive,
 ul.ulNavigationTop li a.aActive:link,
 ul.ulNavigationTop li a.aActive:visited {
-  color:#c80000;
+  color: #0078dc;
+  previous-color: #c80000;
   font-weight: bold;
 }
 /*
@@ -722,7 +725,8 @@ div.divModuleBasic strong.headline a:hover,
 div.divModuleBasic strong.headline a:link,
 div.divModuleBasic strong.headline a:visited {
   text-decoration: none;
-  color: #C80000;
+  color:  #0078dc;
+  previous-color: #C80000;
 }
 div.divModuleBasic h1 a:hover,
 div.divModuleBasic h2 a:hover,
@@ -732,7 +736,8 @@ div.divModuleBasic h5 a:hover,
 div.divModuleBasic h6 a:hover,
 div.divModuleBasic strong.headline a:hover {
   text-decoration: underline;
-  color: #C80000;
+  color:  #0078dc;
+  previous-color: #C80000;
 }
 /* IMG OVERLAY */
 div.divWrapperOverlay { /* 2009/08/10 sl */
@@ -1420,7 +1425,8 @@ table.tableBasic tr td.tdContent ul table.tableBasic tbody tr td.tdContent ul {
 .tabs-nav a:active {
   text-decoration: underline;
   cursor: pointer;
-  color:#C80000;
+  color: #0078dc;
+  previous-color: #C80000;
 }
 .tabs-nav .tabs-selected a:hover,
 .tabs-nav .tabs-selected a:focus,
@@ -1565,7 +1571,8 @@ div.divLoginBoxSSI {
   overflow:hidden;
 }
 #MVLoginTabs .tabs-selected a {
-  color:#C80000;
+  color: #0078dc;
+  previous-color: #C80000;
 }
 #MVLoginTabs .tabs-nav li.tabs-selected {
   border-right:0px none;
@@ -2101,7 +2108,8 @@ a:visited {
   color: #333333;
 }
 a:hover {
-  color: #C80000;
+  color:  #0078dc;
+  previous-color: #C80000;
 }
 body {
   background-color: #F4F4F4;
@@ -2131,7 +2139,8 @@ div.divModuleBasic h4,
 div.divModuleBasic h5,
 div.divModuleBasic h6,
 div.divModuleBasic strong.headline {
-  color: #C80000;
+  color: #0078dc;
+  previous-color: #C80000;
 }
 .width1Col,
 .width2Col,
@@ -2153,7 +2162,8 @@ div.divModuleBasic div.divInlay h4 {
   color: #333333;
 }
 div.divModuleBasic div.divInlay h5 {
-  color: #C80000;
+  color: #0078dc;
+  previous-color: #C80000;
 }
 div.divInlay p {
   color: #333333;
@@ -2177,7 +2187,8 @@ ul.ulNavigationLeft li a:visited {
   color: #333333;
 }
 ul.ulNavigationLeft li a:hover {
-  color: #c80000;
+  color: #0078dc;
+  previous-color: #c80000;
 }
 /* NAVIGATION LEFT LEVEL 4 */
 ul.ulNavigationLeft li ul li a,
@@ -2188,7 +2199,8 @@ ul.ulNavigationLeft li ul li a:visited {
   color: #333333;
 }
 ul.ulNavigationLeft li ul li a:hover {
-  color: #c80000;
+  color: #0078dc;
+  previous-color: #c80000;
 }
 /* NAVIGATION LEFT LEVEL 5 */
 ul.ulNavigationLeft li ul li ul li a,
@@ -2199,7 +2211,8 @@ ul.ulNavigationLeft li ul li ul li a:visited {
   color: #333333;
 }
 ul.ulNavigationLeft li ul li ul li a:hover {
-  color: #c80000;
+  color: #0078dc;
+  previous-color: #c80000;
 }
 /* NAVIGATION LEFT LEVEL 6 */
 ul.ulNavigationLeft li ul li ul li ul li a,
@@ -2210,7 +2223,8 @@ ul.ulNavigationLeft li ul li ul li ul li a:visited {
   color: #333333;
 }
 ul.ulNavigationLeft li ul li ul li ul li a:hover {
-  color: #c80000;
+  color: #0078dc;
+  previous-color: #c80000;
 }
 /* NAVIGATION LEFT LEVEL 3/4/5 ACTIVE + SELECTED */
 ul.ulNavigationLeft li a,
@@ -2249,7 +2263,8 @@ ul.ulNavigationLeft li a:hover,
 ul.ulNavigationLeft li ul li a:hover,
 ul.ulNavigationLeft li ul li ul li a:hover,
 ul.ulNavigationLeft li ul li ul li ul li a:hover {
-  color: #c80000;
+  color: #0078dc;
+  previous-color: #c80000;
   background-color:#EDEDED;
 }
 ul.ulNavigationLeft li a.aActive,
@@ -2289,7 +2304,8 @@ a.aLink:visited {
   color: #333333;
 }
 a.aLink:hover {
-  color: #c80000;
+  color: #0078dc;
+  previous-color: #c80000;
 }
 /* LINK LISTS */
 ul.ulLinkList {
@@ -2306,7 +2322,8 @@ ul.ulLinkList li a:visited {
   color: #333333;
 }
 ul.ulLinkList li a:hover {
-  color: #c80000;
+  color: #0078dc;
+  previous-color: #c80000;
 }
 /* BUTTONS */
 a.aButton span {
@@ -2317,7 +2334,8 @@ a.bgComprehensive span {
 }
 /* ARTICLE */
 div.divArticleBasic h1 {
-  color: #c80000;
+  color: #0078dc;
+  previous-color: #c80000;
 }
 div.divArticleBasic h2 {
   color: #333333;
@@ -2329,10 +2347,12 @@ div.divArticleBasic p {
   color: #333333;
 }
 div.divArticleBasic h2.colorFirstHeadline {
-  color: #C80000;
+  color: #0078dc;
+  previous-color: #C80000;
 }
 div.divArticleBasic p.colored {
-  color: #C80000;
+  color: #0078dc;
+  previous-color: #C80000;
 }
 /* FORMS */
 form.formBasic label {

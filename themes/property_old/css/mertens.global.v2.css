@@ -3733,7 +3733,7 @@ line-height: 14px;
   overflow: hidden;
   text-align: left;
   /*white-space: nowrap;*/
-color: #C80000;
+  color: #C80000;
   padding:3px 6px 3px 12px;
 }
 /* Do not use absolute positioning... it breaks the scroll feature. */
