@@ -352,7 +352,7 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false)
         // exit;
 
         $mailer = SmtpMailer::getNewInstance();
-        $mailer->setTplVars($rplVars, 'ISO-8859-1');
+        $mailer->setTplVars($rplVars, 'UTF-8');
         $iNumSentTo+= $mailer->sendMultiMail([ ['email' => $to, 'anrede' => ''] ], $su, null, $body, [], $aUserHeader);
 
         // print_r(compact('iNumRecipients', 'aUserTo', 'iNumSentTo', 'to', 'su', 'body', 'cc', 'rplVars'));
@@ -691,7 +691,7 @@ function umzugsantrag_mailinform($AID, $status="neu", $value) {
 //			echo "#".__LINE__." bestaetigt Ja<br />\n";
 			if ($value == "Ja") {
 				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_bestaetigt.txt");
-				// Benachrichtige UmzugsTeam über best�tigten Umzugsauftrag
+				// Benachrichtige UmzugsTeam über bestätigten Auftrag
 				send_umzugsblatt($AID, $AS->arrInput["ort"], $AS->arrInput["gebaeude"], $AS->arrInput);
 			} else {
 				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_aufhebung.txt");

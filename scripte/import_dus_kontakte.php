@@ -14,7 +14,7 @@ require_once dirname(__FILE__)."/functions.php";
 // we,standort,funktion,region_bank,dus_mitarbeiter,dus_mobil,dus_email,dsd_nl,mh_rm,mh_rm_mobil,mh_rm_tel,mh_rm_email 
 $file = '../import_csv/Dussmann_Kontakte_RM_STOM.csv';
 
-$sqlÍnsert = 'INSERT IGNORE INTO mm_helper_dus_kontakte (we,stadtname,adresse,standort,funktion,region_bank,dus_mitarbeiter,dus_mobil,dus_email,dsd_nl,mh_rm,mh_rm_mobil,mh_rm_tel,mh_rm_email) ' . PHP_EOL
+$sqlInsert = 'INSERT IGNORE INTO mm_helper_dus_kontakte (we,stadtname,adresse,standort,funktion,region_bank,dus_mitarbeiter,dus_mobil,dus_email,dsd_nl,mh_rm,mh_rm_mobil,mh_rm_tel,mh_rm_email) ' . PHP_EOL
             .' VALUES(:we,:stadtname,:adresse,:standort,:funktion,:region_bank,:dus_mitarbeiter,:dus_mobil,:dus_email,:dsd_nl,:mh_rm,:mh_rm_mobil,:mh_rm_tel,:mh_rm_email)';
 
 $sqlDus = 'SELECT g.id, stadtname, adresse, regionalmanager_uid, standortmanager_uid, CONCAT(ru.nachname, ", ", ru.vorname) rm, CONCAT(su.nachname, ", ", su.vorname) stom FROM mm_stamm_gebaeude g ' . PHP_EOL
@@ -70,14 +70,14 @@ if ($fp) {
                 }
                 
                 
-                $db->query($sqlÍnsert, $row);
+                $db->query($sqlInsert, $row);
                 if ($db->error()) {
                     die('#' . __LINE__ . ' ' . $db->error() . '<br>' . PHP_EOL . $db->lastQuery);
                 }
                 
                 $checkGebRow = $db->query_row($sqlDus, $row);
                 if (!$checkGebRow) {
-                    $error.= "Für den Standort " . $row['standort'] . "(".$row['we'].") wurde kein Gebäudeeintrag gefunden!<br>" . PHP_EOL;
+                    $error.= "FÃ¼r den Standort " . $row['standort'] . "(".$row['we'].") wurde kein GebÃ¤udeeintrag gefunden!<br>" . PHP_EOL;
                     $db->query($sqlInsertGebaeude, $row);                    
                     if ($db->error()) {
                         die('#' . __LINE__ . ' ' . $db->error() . '<br>' . PHP_EOL . $db->lastQuery);

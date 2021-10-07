@@ -8,8 +8,6 @@ $_ConfMenu["main"]["MenuDeep"] = 3;
 $_ConfMenu["main"]["MenuNeedle"] = "{navbar}";
 $_ConfMenu["main"]["Tpl"]["BaseFile"] = $ModulBaseDir."seitenbereiche/html/vorlage_seitennavigation.html";
 $_ConfMenu["main"]["Tpl"]["MenuFile"] = $ModulBaseDir."seitenbereiche/html/vorlage_navigation_links.html";
-//$_ConfMenu["main"]["Tpl"]["BaseFile"] = $ModulBaseDir."seitenbereiche/html/vorlage_nav_listitems.html";
-//$_ConfMenu["main"]["Tpl"]["MenuFile"] = $ModulBaseDir."seitenbereiche/html/vorlage_nav_container_blank.html";
 $_ConfMenu["main"]["Tpl"]["DynLevel"][0]["WithSub"] = "";
 $_ConfMenu["main"]["Tpl"]["DynLevel"][0]["NoSub"]   = "";
 $_ConfMenu["main"]["Tpl"]["DynLevel"][1]["WithSub"] = "";
@@ -35,24 +33,6 @@ $_ConfMenu["header"] = $_ConfMenu["list"];
 $_ConfMenu["footer"] = $_ConfMenu["list"];
 
 $_ConfMenu["default"] = $_ConfMenu["list"];
-
-/*
-$_ConfMenu["header"] = ["msbBaselink"] = "index.php?srv={srv}";
-$_ConfMenu["header"]["MenuDeep"] = 1;
-$_ConfMenu["header"]["MenuFile"] = $ModulBaseDir."seitenbereiche/html/inline_navigation_header.html";
-$_ConfMenu["header"]["MenuNeedle"] = "{navbar}";
-$_ConfMenu["header"]["Tpl"]["BaseFile"] = $ModulBaseDir."seitenbereiche/html/vorlage_seitennavigation_header.html";
-$_ConfMenu["header"]["Tpl"]["MenuFile"] = $ModulBaseDir."seitenbereiche/html/vorlage_navigation_header.html";
-$_ConfMenu["header"]["Tpl"]["DynLevel"][0]["NoSub"]   = "";
-
-$_ConfMenu["footer"]["msbBaselink"] = "index.php?srv={srv}";
-$_ConfMenu["footer"]["MenuDeep"] = 1;
-$_ConfMenu["footer"]["MenuFile"] = $ModulBaseDir."seitenbereiche/html/inline_navigation_footer.html";
-$_ConfMenu["footer"]["MenuNeedle"] = "{navbar}";
-$_ConfMenu["footer"]["Tpl"]["BaseFile"] = $ModulBaseDir."seitenbereiche/html/vorlage_seitennavigation_footer.html";
-$_ConfMenu["footer"]["Tpl"]["MenuFile"] = $ModulBaseDir."seitenbereiche/html/vorlage_navigation_footer.html";
-$_ConfMenu["footer"]["Tpl"]["DynLevel"][0]["NoSub"]   = "";
-*/
 
 $_ConfMenu["partnerlinks"] = $_ConfMenu["main"];
 function check_menucreator() {
@@ -93,7 +73,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"content" => array(
-		"label" => "Content-Menü (CMS)",
+		"label" => "Content-MenÃ¼ (CMS)",
 		"type" => "enum('Ja','Nein')",
 		"default" => "Ja",
 		"required" => true,
@@ -103,7 +83,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"gruppen" => array(
-		"label" => "Zugang für Gruppen",
+		"label" => "Zugang fÃ¼r Gruppen",
 		"type" => "text",
 		"default" => "",
 		"required" => false,
@@ -143,7 +123,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"visibility_condition" => array(
-		"label" => "Anzeige abhängig von Login",
+		"label" => "Anzeige abhÃ¤ngig von Login",
 		"type" => "set('login','logout','loginas:gruppe','loginas:gleicherechte','loginas:mindestrechte','loginas:admin')",
 		"default" => "none",
 		"required" => true,
@@ -173,7 +153,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"create_menu_function" => array(
-		"label" => "Php-Funtion für Menüausgabe",
+		"label" => "Php-Funtion fÃ¼r MenÃ¼ausgabe",
 		"type"  => "char(200)",
 		"default"  => "",
 		"required" => false,
@@ -183,7 +163,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"create_menu_script" => array(
-		"label" => "Php-Script für Menüausgabe",
+		"label" => "Php-Script fÃ¼r MenÃ¼ausgabe",
 		"type"  => "char(200)",
 		"default"  => "",
 		"required" => false,
@@ -233,7 +213,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"name_translations" => array(
-		"label" => "Übersetzungen (Derzeit nur nach englisch) z.B. für Start \"EN=Home\" ",
+		"label" => "Ãœbersetzungen (Derzeit nur nach englisch) z.B. fÃ¼r Start \"EN=Home\" ",
 		"type"  => "char(100)",
 		"default"  => "EN=",
 		"required" => false,
@@ -283,7 +263,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"menu_groupname" => array(
-		"label" => "Menügruppe",
+		"label" => "MenÃ¼gruppe",
 		"type"  => "char(32)",
 		"default"  => "main",
 		"required" => true,
@@ -293,7 +273,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"menu_icon" => array(
-		"label" => "Menü-Icon",
+		"label" => "MenÃ¼-Icon",
 		"type"  => "char(50)",
 		"default"  => "",
 		"required" => false,
@@ -303,7 +283,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"menu_title" => array(
-		"label" => "Menü-Titel",
+		"label" => "MenÃ¼-Titel",
 		"type" => "char(50)",
 		"default"  => "",
 		"required" => false,
@@ -313,7 +293,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"menu_behaviour" => array(
-		"label" => "Menü-Verhalten",
+		"label" => "MenÃ¼-Verhalten",
 		"type" => "enum('openSubMenu','openLink')",
 		"default"  => "openSubMenu",
 		"required" => true,
@@ -323,7 +303,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"submenu_behaviour" => array(
-		"label" => "Menü-Verhalten",
+		"label" => "MenÃ¼-Verhalten",
 		"type" => "enum('visible','hidden')",
 		"default"  => "visible",
 		"required" => true,
@@ -333,7 +313,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"menu_target" => array(
-		"label" => "Menü-Target",
+		"label" => "MenÃ¼-Target",
 		"type" => "char(15)",
 		"default"  => "_self",
 		"required" => false,
@@ -363,7 +343,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"menu_onclick" => array(
-		"label" => "Menü-OnClick",
+		"label" => "MenÃ¼-OnClick",
 		"type" => "char(100)",
 		"default" => "",
 		"required" => false,
@@ -383,7 +363,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"menu_html" => array(
-		"label" => "Menü-HTML",
+		"label" => "MenÃ¼-HTML",
 		"type" => "text",
 		"default" => "",
 		"required" => false,
@@ -393,7 +373,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"menu_div_attr" => array(
-		"label" => "DIV-Attribute(Menü-Umgebung)",
+		"label" => "DIV-Attribute(MenÃ¼-Umgebung)",
 		"type" => "text",
 		"default" => "",
 		"required" => false,
@@ -413,7 +393,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"menu_sub_attr" => array(
-		"label" => "Attribute für Container für Untermenüs",
+		"label" => "Attribute fÃ¼r Container fÃ¼r UntermenÃ¼s",
 		"type" => "text",
 		"default" => "",
 		"required" => false,
@@ -423,7 +403,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"menu_code_before" => array(
-		"label" => "Menü: HtmlCode-Before",
+		"label" => "MenÃ¼: HtmlCode-Before",
 		"type" => "text",
 		"default" => "",
 		"required" => false,
@@ -433,7 +413,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"menu_code_behind" => array(
-		"label" => "Menü: HTMLCode",
+		"label" => "MenÃ¼: HTMLCode",
 		"type" => "text",
 		"default" => "",
 		"required" => false,
@@ -453,7 +433,7 @@ $_CONF["seitenbereich"] = array(
 	),
 	
 	"modified" => array(
-		"label" => "Letzte Änderung",
+		"label" => "Letzte Ã„nderung",
 		"type" => "modified",
 		"default" => date("Y-m-d H:i:s"),
 		"required" => false,
@@ -486,7 +466,7 @@ $_SetFlag["visibility"]["never"] = "<span style=\"color:$color_set_on;\">Anzeige
 $_SetFlag["visibility"]["allways"]  = "<span style=\"color:$color_set_off;\">Verstecken</span>";
 $_SetFlag["visibility"]["conditional"]  = "<span style=\"color:$color_set_cond;\">Immer Anzeigen</span>";
 
-$_SetFlag["geschuetzt"]["Ja"]   = "<span style=\"color:$color_set_off;\">Schützen</span>";
+$_SetFlag["geschuetzt"]["Ja"]   = "<span style=\"color:$color_set_off;\">SchÃ¼tzen</span>";
 $_SetFlag["geschuetzt"]["Nein"] = "<span style=\"color:$color_set_on;\">Schutz aufheben</span>";
 
 $_GetFlag["webfreigabe"]["Ja"]   = "<span style=\"color:$color_on;\">".set_img_alt($img_schloss_gruen, "Freigegeben")."</span>";
@@ -497,6 +477,6 @@ $_GetFlag["visibility"]["never"]  = "<span style=\"color:$color_off;\">".set_img
 $_GetFlag["visibility"]["conditional"]  = "<span style=\"color:$color_cond;\">".set_img_alt($img_schloss_rot, "Bedingt")."</span>";
 
 $_GetFlag["geschuetzt"]["Ja"]   = "<span style=\"color:$color_off;\">".set_img_alt($img_schloss_rot, "Geschuetzt")."</span>";
-$_GetFlag["geschuetzt"]["Nein"] = "<span style=\"color:$color_on;\">".set_img_alt($img_schloss_gruen, "Öffentlich")."</span>";
+$_GetFlag["geschuetzt"]["Nein"] = "<span style=\"color:$color_on;\">".set_img_alt($img_schloss_gruen, "ï¿½ffentlich")."</span>";
 
 ?>

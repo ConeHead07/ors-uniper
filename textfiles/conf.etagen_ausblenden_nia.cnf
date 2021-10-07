@@ -1,5 +1,5 @@
 # Etagen, die nicht im NIA-Report aufgenommen werden sollen, muessen zeilenweise 
-# unter dem in eckigen Klammen gesetzten [Gebäudenamen] aufgeführt werden
+# unter dem in eckigen Klammen gesetzten [GebÃ¤udenamen] aufgefÃ¼hrt werden
 # Mit Raute beginnende Zeilen werden werden beim Auslesen der Konfiguration ignoriert
 
 [NO_BER_ATT_E]

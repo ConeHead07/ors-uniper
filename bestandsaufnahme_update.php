@@ -16,24 +16,24 @@ switch($cat) {
 	$sql = "DELETE FROM `".$_TABLE["mitarbeiter"]."` WHERE id = ".(int)$id;
 	$db->query($sql);
 	if (!$db->error()) {
-		$AjaxUpdates.= "<Update id=\"$boxid\"><![CDATA[Der Mitarbeiterdatensatz wurde gelöscht! ]]></Update>\n";
+		$AjaxUpdates.= "<Update id=\"$boxid\"><![CDATA[Der Mitarbeiterdatensatz wurde gelÃ¶scht! ]]></Update>\n";
 		$AjaxUpdates.= "<Delete id=\"{$rowid}i1\"></Delete>\n";
 		$AjaxUpdates.= "<Delete id=\"{$rowid}i2\"></Delete>\n";
 	} else {
-		$AjaxUpdates.= "<Update id=\"$boxid\"><![CDATA[Fehler beim Löschen! ]]></Update>\n";
+		$AjaxUpdates.= "<Update id=\"$boxid\"><![CDATA[Fehler beim LÃ¶schen! ]]></Update>\n";
 	}
 	break;
 	
 	default:
-		$AjaxUpdates.= "<Update id=\"$boxid\"><![CDATA[Ungültiger Aufruf! (cat:$cat) ]]></Update>\n";
+		$AjaxUpdates.= "<Update id=\"$boxid\"><![CDATA[UngÃ¼ltiger Aufruf! (cat:$cat) ]]></Update>\n";
 	
 }
 
 ob_get_contents();
 ob_end_clean();
 
-	header("Content-Type: text/xml; charset=ISO-8859-1");
-	echo '<?xml version="1.0" encoding="ISO-8859-1" ?>
+	header("Content-Type: text/xml; charset=UTF-8");
+	echo '<?xml version="1.0" encoding="UTF-8" ?>
 	<Result type="success">'."\n";
 	echo $AjaxUpdates;
 	echo '</Result>';

@@ -107,7 +107,7 @@ function closecmboBox() {
 	}
 }
 
-function get_ComboBox() { // Auswahl-Target, Rückgabemodus, Datenquelle
+function get_ComboBox() { // Auswahl-Target, RÃ¼ckgabemodus, Datenquelle
 	
 	var msg = "";
 	var aTrackArgs = new Array();
@@ -121,16 +121,16 @@ function get_ComboBox() { // Auswahl-Target, Rückgabemodus, Datenquelle
 		aTgt = arguments[0].split(":");
 		aTrackArgs[0] = arguments[0];
 		// Target-Type: aTgt[0] = "f" (Funktion) oder "id" (Input-Feld)
-		// Target-Ziel: aTgt[0] = Funktionsname für Typ "f" oder ID des Input-Feldes für Typ "i"
+		// Target-Ziel: aTgt[0] = Funktionsname fÃ¼r Typ "f" oder ID des Input-Feldes fÃ¼r Typ "i"
 	}
 	
 	if (arguments.length > 1 && arguments[1].indexOf(":")!=-1) {
-		// Rückgabemodus
+		// RÃ¼ckgabemodus
 		aRet = arguments[1].split(":");
 		aTrackArgs[1] = arguments[1];
-		// Übergabe der Auswahlbox an 
+		// Ãœbergabe der Auswahlbox an 
 		// Ausgabe-Type: aRet[0] = "f" (Funktion) oder "id"
-		// Ausgabe-Ziel: aRet[1] = Funktionsname an den die Ausgabe übergeben werden soll
+		// Ausgabe-Ziel: aRet[1] = Funktionsname an den die Ausgabe Ã¼bergeben werden soll
 		// oder ID des HTML-Ements id das der Kalender geschrieben werden soll!!
 	}
 	

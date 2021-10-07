@@ -17,8 +17,8 @@ function SelBox_capture(parentbox, SBConf, optionsData, defaultValue) {
 	parentbox.SBConf["OnSelectClass"] = (typeof(SBConf["OnSelectClass"])=="string") ? SBConf["OnSelectClass"] : "selectedItem";
 	parentbox.SBConf["OnHoverClass"] = (typeof(SBConf["OnHoverClass"])=="string") ? SBConf["OnHoverClass"] : "hoverItem";
 	parentbox.SBConf["OnEnterClose"] = (typeof(SBConf["OnEnterClose"])!="undefined") ? SBConf["OnEnterClose"] : true;
-	parentbox.SBConf["Multiple"] = (SBConf["Multiple"] && 1); // Wird (noch) nicht unterstützt!
-	parentbox.SBConf["MultipleSeparator"] = (typeof(SBConf["MultipleSeparator"])=="string") ? SBConf["MultipleSeparator"] : ","; // Wird (noch) nicht unterstützt!
+	parentbox.SBConf["Multiple"] = (SBConf["Multiple"] && 1); // Wird (noch) nicht unterstÃ¼tzt!
+	parentbox.SBConf["MultipleSeparator"] = (typeof(SBConf["MultipleSeparator"])=="string") ? SBConf["MultipleSeparator"] : ","; // Wird (noch) nicht unterstÃ¼tzt!
 	//alert(parentbox.SBConf["OnSelect"]);
 	
 	if (parentbox.SBConf["OnCapture"] && typeof(parentbox.SBConf["OnCapture"])=="function") {
@@ -245,7 +245,7 @@ function SelBox_checkBlur() {
 	if (this.SBConf["InputField"].hasFocus) return false;
 	var x = PageInfo.getMouseX();
 	var y = PageInfo.getMouseY();
-	var b = 3; // Toleranz über Div-Rahmen hinaus in Pixel
+	var b = 3; // Toleranz Ã¼ber Div-Rahmen hinaus in Pixel
 	
 	var SBT = PageInfo.getElementTop(this);
 	var SBL = PageInfo.getElementLeft(this);

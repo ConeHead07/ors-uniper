@@ -41,17 +41,17 @@ X-QUEUE-ID:1
 Hallo Stefan Laschewski,
 
 die Leistungsanforderung mit der ID 1916 wurde genehmigt und befindet sich 
-im Durchführungsstatus.
+im DurchfÃ¼hrungsstatus.
 
 Antragsteller:  Stefan Laschewski
-Ausführungszeit 16.12.2016 12:00
+AusfÃ¼hrungszeit 16.12.2016 12:00
 SAP Nr.         4501503620	
 Ticket Nr.      219191
 
-Sie können den  Vorgang  unter folgendem Link  einesehen:
+Sie kÃ¶nnen den  Vorgang  unter folgendem Link  einesehen:
 https://bayer.mertens.ag/bayer/?s=aantrag&id=1916
 
-Mit freundlichen Grüßen
+Mit freundlichen GrÃ¼ÃŸen
 
 Ihr
 ORS Order Request System
@@ -103,17 +103,17 @@ X-QUEUE-ID:1
 Hallo Peterhoff Umzugsteam,
 
 die Leistungsanforderung mit der ID 1916 wurde genehmigt und befindet sich 
-im Durchführungsstatus.
+im DurchfÃ¼hrungsstatus.
 
 Antragsteller:  Stefan Laschewski
-Ausführungszeit 16.12.2016 12:00
+AusfÃ¼hrungszeit 16.12.2016 12:00
 SAP Nr.         4501503620	
 Ticket Nr.      219191
 
-Sie können den  Vorgang  unter folgendem Link  einesehen:
+Sie kÃ¶nnen den  Vorgang  unter folgendem Link  einesehen:
 https://bayer.mertens.ag/bayer/?s=aantrag&id=1916
 
-Mit freundlichen Grüßen
+Mit freundlichen GrÃ¼ÃŸen
 
 Ihr
 ORS Order Request System
@@ -164,17 +164,17 @@ X-QUEUE-ID:1
 
 Hallo Order Request System ORS,
 
-es liegt eine neue genehmigte Leistungsanforderung mit der ID 1916 zur Durchführung vor.
+es liegt eine neue genehmigte Leistungsanforderung mit der ID 1916 zur Durchfï¿½hrung vor.
 
 Antragsteller:  Stefan Laschewski
-Ausführungszeit 16.12.2016 12:00
+Ausfï¿½hrungszeit 16.12.2016 12:00
 SAP Nr.         4501503620	
 Ticket Nr.      219191
 
-Sie können den  Vorgang  unter folgendem Link  bearbeiten:
+Sie kï¿½nnen den  Vorgang  unter folgendem Link  bearbeiten:
 https://bayer.mertens.ag/bayer/?s=aantrag&id=1916
 
-Mit freundlichen Grüßen
+Mit freundlichen Grï¿½ï¿½en
 
 Ihr
 ORS Order Request System
@@ -223,19 +223,19 @@ Bounce-To: bayerors@mertens.ag
 X-QUEUE-Date: 2016-12-14 06:57:51
 X-QUEUE-ID:1
 
-Hallo Bayer Umzüge,
+Hallo Bayer Umzï¿½ge,
 
-es liegt eine neue genehmigte Leistungsanforderung mit der ID 1916 zur Durchführung vor.
+es liegt eine neue genehmigte Leistungsanforderung mit der ID 1916 zur Durchfï¿½hrung vor.
 
 Antragsteller:  Stefan Laschewski
-Ausführungszeit 16.12.2016 12:00
+Ausfï¿½hrungszeit 16.12.2016 12:00
 SAP Nr.         4501503620	
 Ticket Nr.      219191
 
-Sie können den  Vorgang  unter folgendem Link  bearbeiten:
+Sie kï¿½nnen den  Vorgang  unter folgendem Link  bearbeiten:
 https://bayer.mertens.ag/bayer/?s=aantrag&id=1916
 
-Mit freundlichen Grüßen
+Mit freundlichen Grï¿½ï¿½en
 
 Ihr
 ORS Order Request System

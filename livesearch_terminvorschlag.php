@@ -64,8 +64,8 @@ $sql.= "LIMIT ".intval($LSOffset).", $LSLimit";
 $rows = $db->query_rows($sql);
 $Num = count($rows);
 //echo "#".__LINE__." ".MyDB::error()."<br>sql:".$sql."; rows:".$rows."<br>\n";
-header("Content-Type: text/xml; charset=ISO-8859-1");
-echo '<?xml version="1.0" encoding="ISO-8859-1" ?>
+header("Content-Type: text/xml; charset=UTF-8");
+echo '<?xml version="1.0" encoding="UTF-8" ?>
 <Result type="success">
 	<Attribute id="'.$LSBoxId.'" name="LSResultNum" value="'.$Num.'"></Attribute>
 	<Attribute id="'.$LSBoxId.'" name="LSResultNumAll" value="'.$NumAll.'"></Attribute>

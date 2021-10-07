@@ -189,18 +189,18 @@ function get_kalenderPicker() {
 	var sDate = "";
 	
 	if (arguments.length > 0 && arguments[0].indexOf(":")!=-1) {
-		// array Target für Datumsauswahl
+		// array Target fÃ¼r Datumsauswahl
 		aT = arguments[0].split(":");
 		aTrackArgs[0] = arguments[0];
 		// Target-Type: aT[0] = "f" (Funktion) oder "id" (Input-Feld)
-		// Target-Ziel: aT[0] = Funktionsname für Typ "f" oder ID des Input-Feldes für Typ "i"
+		// Target-Ziel: aT[0] = Funktionsname fÃ¼r Typ "f" oder ID des Input-Feldes fÃ¼r Typ "i"
 	}
 	if (arguments.length > 1 && arguments[1].indexOf(":")!=-1) {
 		// array Self-Identification
 		aS = arguments[1].split(":");
 		aTrackArgs[1] = arguments[1];
 		// Monatsbrowsing-Type: aS[0] = "f" (Funktion) oder "id"
-		// Monatsbrowsing-Ziel: aS[1] = Funktionsname an den das Monatsobjekt übergeben werden soll
+		// Monatsbrowsing-Ziel: aS[1] = Funktionsname an den das Monatsobjekt Ã¼bergeben werden soll
 		// oder ID des HTML-Ements id das der Kalender geschrieben werden soll!!
 	}
 	if (arguments.length > 2 && arguments[2].indexOf("-")!=-1) {
@@ -238,7 +238,7 @@ function get_kalenderPicker() {
 	kalender+= " </tr></thead><tbody>\n";
 	
 	var t;
-	// Kalender am Anfang auffüllen
+	// Kalender am Anfang auffÃ¼llen
 	var vorlauf = (SWT == 0) ? 6 : SWT-1;
 	kalender+= "<tr>";
 	for(i = 0; i < vorlauf; i++) kalender+= "<td> </td>";
@@ -268,7 +268,7 @@ function get_kalenderPicker() {
 		}
 	}
 	
-	// Kalender am Ende auffüllen
+	// Kalender am Ende auffÃ¼llen
 	var nachlauf = 7-((vorlauf + lastDayOfMonth) % 7);
 	if (nachlauf != 7) {
 		for(i = 0; i < nachlauf; i++) kalender+= "<td> </td>";

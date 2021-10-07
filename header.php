@@ -1,8 +1,8 @@
 <?php
 set_time_limit(90);
-header('Content-Type: text/html; charset=ISO-8859-1');
-
 require_once __DIR__ . '/include/conf.php';
+header('Content-Type: text/html; charset=' . $charset);
+
 require_once $MConf['AppRoot'] . $MConf['Inc_Dir'] . 'conf_lib.php';
 require_once $MConf['AppRoot'] . $MConf['Class_Dir'] . 'dbconn.class.php';
 require_once $MConf['AppRoot'] . $MConf['Class_Dir'] . 'SmtpMailer.class.php';

@@ -13,7 +13,7 @@ SBConfDefault["InputType"] = "";
 
 var optionsUmzugsarten = [
 	{value:"BOX", content:"Box-Move"},
-	{value:"MOEBEL", content:"Mit Möbel"}
+	{value:"MOEBEL", content:"Mit MÃ¶bel"}
 ];
 
 var optionsFon = [
@@ -108,7 +108,7 @@ function umzugsantrag_errors(AntragSenden) {
         }
 
 	if (as_err) {
-		error+= "<strong>Bitte vervollständigen Sie noch die Angaben zum Antragsteller:</strong><br>\n";
+		error+= "<strong>Bitte vervollstÃ¤ndigen Sie noch die Angaben zum Antragsteller:</strong><br>\n";
 		error+= as_err+"<br>\n";
 	}
 
@@ -145,7 +145,7 @@ function umzugsantrag_errors(AntragSenden) {
 			if (ma_err) ListMaErrors+= "<li>"+ma+ma_err+"</li>\n";
 		
 		}
-		if (ListMaErrors) error+= "Bitte vervollständigen Sie die fehlenden Angaben!<br>\n"+ListMaErrors;
+		if (ListMaErrors) error+= "Bitte vervollstÃ¤ndigen Sie die fehlenden Angaben!<br>\n"+ListMaErrors;
 	} else {
 		if (minMA) error+= "<strong>Es wurden noch keine Mitarbeiter in die Umzugsliste eingetragen!</strong>";
 	}
@@ -245,7 +245,7 @@ function umzugsantrag_storno() {
 }
 function umzugsantrag_loadingBar(msg) {
 	if (typeof(O("LoadingBar"))=="object") O("LoadingBar").parentNode.removeChild(O("LoadingBar"));
-	if (!msg) msg = "Daten werden übertragen ...";
+	if (!msg) msg = "Daten werden Ã¼bertragen ...";
 	var LoadingBar = "<div id=\"LoadingBar\" style=\"text-align:center;\">"+msg+"<br>\n<img src=\"images/loading.gif\"></div>";
 	var IBox = InfoBox(LoadingBar);
 	return IBox;
@@ -436,7 +436,7 @@ function umzugsantrag_set_status(name, value) {
         var plnInput = $("input[name='AS[planonnr]']");
         
         if ($.trim(bmk) === "" && name === "genehmigt" && value === "Nein" ) {
-            error+= "\nBitte geben Sie für die Ablehnung bei Bemerkungen einen Grund an!";
+            error+= "\nBitte geben Sie fÃ¼r die Ablehnung bei Bemerkungen einen Grund an!";
         }
         
         if (pspInput.length) {
@@ -450,7 +450,7 @@ function umzugsantrag_set_status(name, value) {
             if (0) {
                 if ($.trim(psp) === "") {
                     psp = prompt(
-                        "Für die Genehmigung ist noch die Angabe PSP-Elemente erforderlich!",
+                        "FÃ¼r die Genehmigung ist noch die Angabe PSP-Elemente erforderlich!",
                         ""
                     );
                     pspInput.val( psp );
@@ -458,7 +458,7 @@ function umzugsantrag_set_status(name, value) {
                 }
                 if ($.trim(pln) === "") {
                     pln = prompt(
-                        "Für die Genehmigung ist noch die Angabe Planon-Nr erforderlich!",
+                        "FÃ¼r die Genehmigung ist noch die Angabe Planon-Nr erforderlich!",
                         ""
                     );
                     plnInput.val(pln);
@@ -863,7 +863,7 @@ function get_gebaeude_etage(obj, valueTarget) {
 	var optionsEtagen;
         
         if (!o) {
-            alert("Wählen Sie bitte erst ein Gebäude aus");
+            alert("WÃ¤hlen Sie bitte erst ein GebÃ¤ude aus");
             return false;
         }
         
@@ -1045,7 +1045,7 @@ function get_etage(obj) {
 	SBConfEtagen["OnEnterClose"] = true;
 	
 	if (!InputFields[z+"gebaeude"].value) { 
-		alert("Wählen Sie erst ein Gebäude aus!");
+		alert("WÃ¤hlen Sie erst ein GebÃ¤ude aus!");
 		get_gebaeude(InputFields[z+"gebaeude"]);
 		return false; 
 	}
@@ -1110,8 +1110,8 @@ function get_raumnr(obj) {
 	SBConfRaumnr["InputType"] = "Raumnr";
 	SBConfRaumnr["OnEnterClose"] = true;
 	
-	if (!InputFields[z+"gebaeude"].value) { alert("Wählen Sie erst ein Gebäude aus!"); get_gebaeude(InputFields[z+"gebaeude"]); return false; }
-	if (!InputFields[z+"etage"].value) { alert("Wählen Sie erst eine Etage aus!"); get_gebaeude(InputFields[z+"etage"]); return false; }
+	if (!InputFields[z+"gebaeude"].value) { alert("WÃ¤hlen Sie erst ein GebÃ¤ude aus!"); get_gebaeude(InputFields[z+"gebaeude"]); return false; }
+	if (!InputFields[z+"etage"].value) { alert("WÃ¤hlen Sie erst eine Etage aus!"); get_gebaeude(InputFields[z+"etage"]); return false; }
 	
 	var g = InputFields[z+"gebaeude"].value;
 	var e = InputFields[z+"etage"].value;
@@ -1174,9 +1174,9 @@ function get_apnr(obj) {
 	SBConfRaumnr["InputType"] = "Raumnr";
 	SBConfRaumnr["OnEnterClose"] = true;
 	
-	if (!InputFields[z+"gebaeude"].value) { alert("Wählen Sie erst ein Gebäude aus!"); get_gebaeude(InputFields[z+"gebaeude"]); return false; }
-	if (!InputFields[z+"etage"].value) { alert("Wählen Sie erst eine Etage aus!"); get_gebaeude(InputFields[z+"etage"]); return false; }
-	if (!InputFields[z+"raumnr"].value) { alert("Wählen Sie erst einen Raum aus!"); get_raumnr(InputFields[z+"raumnr"]); return false; }
+	if (!InputFields[z+"gebaeude"].value) { alert("WÃ¤hlen Sie erst ein GebÃ¤ude aus!"); get_gebaeude(InputFields[z+"gebaeude"]); return false; }
+	if (!InputFields[z+"etage"].value) { alert("WÃ¤hlen Sie erst eine Etage aus!"); get_gebaeude(InputFields[z+"etage"]); return false; }
+	if (!InputFields[z+"raumnr"].value) { alert("WÃ¤hlen Sie erst einen Raum aus!"); get_raumnr(InputFields[z+"raumnr"]); return false; }
 	
 	var g = InputFields[z+"gebaeude"].value;
 	var e = InputFields[z+"etage"].value;
@@ -1660,9 +1660,9 @@ function mitarbeiter_check_reload(parentbox) {
 	var allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 ,.-_/&";
 	for(var i = 0; i < parentbox.SBConf["InputField"].value.length; i++) {
 		if (allowedChars.indexOf(parentbox.SBConf["InputField"].value.charAt(i))==-1) {
-			var m = "<strong>Achtung:</strong> Ihre Eingabe enthält Sonderzeichen ("+parentbox.SBConf["InputField"].value.charAt(i)+")<br>\n";
+			var m = "<strong>Achtung:</strong> Ihre Eingabe enthÃ¤lt Sonderzeichen ("+parentbox.SBConf["InputField"].value.charAt(i)+")<br>\n";
 			m+= "Die Namen liegen im einfachen Zeichensatz vor wie sie bei Emails verwendet werden.<br>\n";
-			m+= "Schreiben Sie MUELLER statt MÜLLER, E statt È, SS statt &szlig; etc.<br>\n";
+			m+= "Schreiben Sie MUELLER statt MÃœLLER, E statt Ãˆ, SS statt &szlig; etc.<br>\n";
 			m+= "Verwendete Zeichen: "+allowedChars;
 			myAlert = InfoBox(m, parentbox.SBConf["InputField"], "right", 5, 0);
 			myAlert.onmousemove = myAlert.close;
@@ -1749,7 +1749,7 @@ function mitarbeiter_loadDataByName(parentbox, optionsData) {
 	var CBoxSwitch = document.createElement("span");
 	CBoxSwitch.style.display="block";
 	CBoxSwitch.className = "SelBoxItem";
-	CBoxSwitch.innerHTML = "<strong>"+parentbox.SBConf["InputField"].nachname+"</strong> <em style=\"italic\">anderen Nachnamen auswählen</em>";
+	CBoxSwitch.innerHTML = "<strong>"+parentbox.SBConf["InputField"].nachname+"</strong> <em style=\"italic\">anderen Nachnamen auswÃ¤hlen</em>";
 	CBoxSwitch.onclick = function() { mitarbeiter_switchData(parentbox, "Nachname"); }
 	CBoxSwitch.onmouseover = function() { AC(this, "IsHoverItem"); }
 	CBoxSwitch.onmouseout = function() { RC(this, "IsHoverItem"); }
@@ -2224,7 +2224,7 @@ function request_query_ma_vorname(SBBoxId, nachname, input, limit) {
 }
 
 function request_query_ma_namecheck(SBBoxId, name, vorname, gebaeude, etage, raumnr, limit) {
-	igWShowLoadingBar(1, "Namensprüfung läuft!", SBBoxId);
+	igWShowLoadingBar(1, "NamensprÃ¼fung lÃ¤uft!", SBBoxId);
 	AjaxRequestUrl = "load_mitarbeiter_namecheck.php?";
 	AjaxRequestUrl+= '&name='+escape(name);
 	AjaxRequestUrl+= '&vorname='+escape(vorname);

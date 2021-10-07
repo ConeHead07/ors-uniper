@@ -152,13 +152,13 @@ h2 {
 
 {if $UmzugsAnlagen}
 <ul class="ulAttachements">
-<strong>Dateianh‰nge</strong><br>
+<strong>Dateianh√§nge</strong><br>
 {foreach name=ATList item=AT from=$UmzugsAnlagen}
 <li><a href="{$AT.datei_link}" target="_blank">{$AT.dok_datei}</a> {$AT.datei_groesse}</li>
 {/foreach}
 </ul>
 {else}
-<strong>Dateianh‰nge: </strong><em>Keine</em><br>
+<strong>Dateianh√§nge: </strong><em>Keine</em><br>
 {/if}
 <br>
 <h2 style="margin:6px 0">Bemerkungen</h2>

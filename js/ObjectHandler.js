@@ -4,17 +4,17 @@ function D(ElId /* [, Option SetVal]*/) { var o = O(ElId); if (arguments.length 
 function C(ElId /* [, Option SetVal [, Option RplVal]] */) {
 	// var o = document.getElementById(ElId);
 	var o = O(ElId); if (!o) return false;
-	// Falls nur ein Argument(Objekt-Id) übergeben wurde, zeige aktuelle className an
+	// Falls nur ein Argument(Objekt-Id) Ã¼bergeben wurde, zeige aktuelle className an
   if (arguments.length == 1) return o.className;
-  // Falls Objekt-Klasse leer oder nur zu zwei Argumente übergeben wurden weise className zu
+  // Falls Objekt-Klasse leer oder nur zu zwei Argumente Ã¼bergeben wurden weise className zu
   if (!o.className || arguments.length == 2) {o.className = arguments[1];return o.className;}
-  // Deklariere Variablen für Stringverarbeitung
+  // Deklariere Variablen fÃ¼r Stringverarbeitung
   var  s = new String(" "+o.className+" "); var t1 = new String(" "+arguments[1]+" "); var t2 = new String(" "+arguments[2]+" ");
   // Falls die Klasse schon gesetzt wurde, ist keine weitere  Operation erforderlich
   if (s.indexOf(t1) != -1) {if(s.indexOf(t2)){o.className = s.split(t2).join(" ");}return o.className;}
-  // Falls zu ersetzende Klasse nicht enthalten ist, füge neue Klasse hinzu
+  // Falls zu ersetzende Klasse nicht enthalten ist, fÃ¼ge neue Klasse hinzu
   if (s.indexOf(t2) == -1) {o.className+= " "+arguments[1];return o.className;}
-  // Führe Ersetzung durch
+  // FÃ¼hre Ersetzung durch
   s2 = s.split(t2).join(t1).substr(1); o.className = s2.substr(0, s2.length-1); return o.className; 
 }
 

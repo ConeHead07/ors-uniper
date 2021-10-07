@@ -52,9 +52,9 @@ function save_upload($aid) {
 	$saved = false;
 	
 	$aUploadErrCodes[0] = "";
-	$aUploadErrCodes[1] = 'Dateigroesse überschreitet Servervorgaben!';
-	$aUploadErrCodes[2] = 'Datei ist zu groß. MAX_FILE_SIZE ('.format_file_size($_POST["MAX_FILE_SIZE"]).') wurde überschritten!';
-	$aUploadErrCodes[3] = 'Datei wurde unvollständig übertragen!';
+	$aUploadErrCodes[1] = 'Dateigroesse Ã¼berschreitet Servervorgaben!';
+	$aUploadErrCodes[2] = 'Datei ist zu groÃŸ. MAX_FILE_SIZE ('.format_file_size($_POST["MAX_FILE_SIZE"]).') wurde Ã¼berschritten!';
+	$aUploadErrCodes[3] = 'Datei wurde unvollstÃ¤ndig Ã¼bertragen!';
 	$aUploadErrCodes[4] = 'Es wurde keine Datei hochgeladen!';
 	
 	if ($aid) {
@@ -72,7 +72,7 @@ function save_upload($aid) {
 					return $dokid;
 				}
 			} else {
-				$uploadError = "Hochgeladene Datei ist zu groß!\\nBitte nicht groesser als ".format_file_size($max_size).".";
+				$uploadError = "Hochgeladene Datei ist zu groÃŸ!\\nBitte nicht groesser als ".format_file_size($max_size).".";
 			}
 		} else {
 			if ($_FILES["uploadfile"]["error"]) $uploadError.= $aUploadErrCodes[$_FILES["uploadfile"]["error"]];

@@ -47,21 +47,21 @@
 </table>
 {if $UmzugsAnlagen}
 <ul class="ulAttachements">
-<strong>Dateianh‰nge</strong><br>
+<strong>Dateianh√§nge</strong><br>
 {foreach name=ATList item=AT from=$UmzugsAnlagen}
 <li><a href="{$AT.datei_link}" target="_blank">{$AT.dok_datei}</a> {$AT.datei_groesse}</li>
 {/foreach}
 </ul>
 {else}
-<strong>Dateianh‰nge: </strong><em>Keine</em><br>
+<strong>Dateianh√§nge: </strong><em>Keine</em><br>
 {/if}
 
 <strong>Aufgabe:</strong><br>
 <textarea class="iarea bemerkungen" name="NL[aufgabe]"></textarea>
 <br>
 
-<input type="submit" style="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Anmerkung hinzuf¸gen">
-<input type="button" onclick="nebenleistung_add_attachement({$NL.id});" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianh‰nge">
+<input type="submit" style="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Anmerkung hinzuf√ºgen">
+<input type="button" onclick="nebenleistung_add_attachement({$NL.id});" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianh√§nge">
 </form>
 <div id="BoxBemerkungen">
 <strong>Bisherige Angaben:</strong><br>

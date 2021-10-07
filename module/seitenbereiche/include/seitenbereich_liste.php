@@ -6,11 +6,11 @@ $activeMenuId = (isset($id) && $id) ? $id : 0;
 
 $numberOfAllMenus = get_numberOfAllMenus();
 
-// Anzeige Hierarchische Menüliste
-$body_content.= "<b>Untermenüs</b><br>\n";
+// Anzeige Hierarchische MenÃ¼liste
+$body_content.= "<b>UntermenÃ¼s</b><br>\n";
 $_MenuItems = get_menu_tree(0);
 if (is_array($_MenuItems) && count($_MenuItems)) {
-	$body_content.= "<br>Menüelemente auf dieser Ebene: ".count($_MenuItems)." | Alle: $numberOfAllMenus<br>\n";
+	$body_content.= "<br>MenÃ¼elemente auf dieser Ebene: ".count($_MenuItems)." | Alle: $numberOfAllMenus<br>\n";
 	$body_content.= "<style>\n";
 	$body_content.= ".tblSB * { \n";
 	$body_content.= "   font-size:12px;\n";
@@ -38,13 +38,13 @@ if (is_array($_MenuItems) && count($_MenuItems)) {
 	$body_content.= "</style>\n";
 	$body_content.= "<form action=\"".$msbBaselinkListe."\" method=\"post\" style=\"display:inline;margin:0px;\">\n";
 	$body_content.= "<table class=\"tblSB\">\n";
-	$body_content.= "<tr>\n";
-	$body_content.= "<td>Menü/Ebene</td>";
+	$body_content.= '<tr>\n';
+	$body_content.= '<td>MenÃ¼/Ebene</td>';
 	// $body_content.= "<td>Edit</td>";
-	$body_content.= "<td>Aktiviert</td>";
-	$body_content.= "<td>Menüanzeige</td>";
+	$body_content.= '<td>Aktiviert</td>';
+	$body_content.= '<td>MenÃ¼anzeige</td>';
 	//print_r($_CONF);
-	$body_content.= "<td><img src=\"".$_CONF["WebRoot"]."/images/usr_icon.png\" width=\"15\" height=\"14\" alt=\"Status, ob Frei zugänglich\">Passwortschutz</td>";
+	$body_content.= '<td>Passwortschutz</td>';
 	$body_content.= "<td>Pos</td>";
 	$body_content.= "<td>Kill</td>";
 	$body_content.= "</tr>";
@@ -95,8 +95,8 @@ if (is_array($_MenuItems) && count($_MenuItems)) {
 		$body_content.= " &raquo; <a href=\"".$msbBaselinkListe."&cmd=setfreigabe&wert=$invert_free&id=".$r_id."&pid=$r_pid\">";
 		$body_content.= "".$_SetFlag["webfreigabe"][$invert_free]."</a></td>\n";
 		
-		// Menüanzeige
-		$body_content.= "<td style=\"background:$r_visi_bg;\" title=\"Editierbarer Status: Menüanzeige\">";
+		// Menï¿½anzeige
+		$body_content.= "<td style=\"background:$r_visi_bg;\" title=\"Editierbarer Status: MenÃ¼anzeige\">";
 		$body_content.= $_GetFlag["visibility"][$r_visi];
 		$body_content.= " &raquo; <a href=\"".$msbBaselinkListe."&cmd=setvisibility&wert=$invert_visi&id=".$r_id."&pid=$r_pid\">";
 		$body_content.= "".$_SetFlag["visibility"][$invert_visi]."</a></td>\n";
@@ -112,7 +112,7 @@ if (is_array($_MenuItems) && count($_MenuItems)) {
 		$body_content.= "<a href=\"".$msbBaselinkListe."&cmd=pos&wert=first&id=".$r_id."&pid=$r_pid\">";
 		$body_content.= "<img src=\"{$webPathBaseUrl}/images/pfeil_nachganzoben.png\" width=\"10\" height=\"10\" title=\"An Anfang\"></a>";
 		$body_content.= "<a href=\"".$msbBaselinkListe."&cmd=pos&wert=higher&id=".$r_id."&pid=$r_pid\">";
-		$body_content.= "<img src=\"{$webPathBaseUrl}/images/pfeil_nachoben.png\" width=\"10\" height=\"10\" title=\"Eins höher\"></a>";
+		$body_content.= "<img src=\"{$webPathBaseUrl}/images/pfeil_nachoben.png\" width=\"10\" height=\"10\" title=\"Eins hï¿½her\"></a>";
 		$body_content.= "<a href=\"".$msbBaselinkListe."&cmd=pos&wert=lower&id=".$r_id."&pid=$r_pid\">";
 		$body_content.= "<img src=\"{$webPathBaseUrl}/images/pfeil_nachunten.png\" width=\"10\" height=\"10\" title=\"Eins tiefer\"></a>";
 		$body_content.= "<a href=\"".$msbBaselinkListe."&cmd=pos&wert=last&id=".$r_id."&pid=$r_pid\">";
@@ -122,10 +122,10 @@ if (is_array($_MenuItems) && count($_MenuItems)) {
 		$body_content.= "<input type=\"submit\" value=\"&raquo;\">";
 		$body_content.= "</td>\n";
 		
-		// Löschen
-		$body_content.= "<td title=\"Editierbarer Status: Sichtbarkeit im Menü\">";
+		// LÃ¶schen
+		$body_content.= "<td title=\"Editierbarer Status: Sichtbarkeit im MenÃ¼\">";
 		$body_content.= "<a href=\"".$msbBaselinkListe."&cmd=loeschen&wert=1&id=".$r_id."&pid=$r_pid\">";
-		$body_content.= "<img src=\"{$webPathBaseUrl}/images/kill_item.png\" width=\"10\" height=\"10\" alt=\"Menü löschen\"></a></td>\n";
+		$body_content.= "<img src=\"{$webPathBaseUrl}/images/kill_item.png\" width=\"10\" height=\"10\" alt=\"MenÃ¼ lÃ¶schen\"></a></td>\n";
 		
 		// Zeilenende
 		$body_content.= "</tr>\n";
@@ -135,7 +135,7 @@ if (is_array($_MenuItems) && count($_MenuItems)) {
 	$body_content.= "</table>\n";
 	$body_content.= "</form>\n";
 } else {
-	$body_content.= "Es existieren keine Untermenüs!<br>\n";
+	$body_content.= "Es existieren keine UntermenÃ¼s!<br>\n";
 }
 $body_content.= "<br>\n";
 /**/

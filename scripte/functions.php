@@ -2,10 +2,10 @@
 
 function fitUsername($name) {
     return strtr(strtolower($name), array(
-        'ä' => 'ae',
-        'ö' => 'oe',
-        'ü' => 'ue',
-        'ß' => 'ss',
+        'Ã¤' => 'ae',
+        'Ã¶' => 'oe',
+        'Ã¼' => 'ue',
+        'ÃŸ' => 'ss',
         ' ' => '',
         '-' => '',
     ));

@@ -6,7 +6,9 @@ $ConnDB = array(
 	"Host" => $MConf["DB_Host"],
 	"User" => $MConf["DB_User"],
 	"Pass" => $MConf["DB_Pass"],
-	"Database" => $MConf["DB_Name"],
+    "Database" => $MConf["DB_Name"],
+    "Port" => $MConf["DB_PORT"] ?? null,
+    "Charset" => $MConf["DB_CHARSET"] ?? null,
 	"connid" => "",
 	"conndbid" => "",
 	"connobj" => "",
@@ -21,14 +23,20 @@ $ConnDB = array(
 if (!isset($autoconnect)) $autoconnect = true;
 
 function db_connect(&$ConnAccessData) {
-        $db = dbconn::getInstance();
+    $db = dbconn::getInstance();
 	if ($db!== null && !$db->connect_error()) {
-            return $db;
-        }
+        return $db;
+    }
 	
 	$ConnData = &$ConnAccessData;
-	
-        $db = dbconn($ConnData["Host"], $ConnData["Database"], $ConnData["User"], $ConnData["Pass"]);
+
+	$port = $ConnData['Port'] ?? '3306';
+	$aOptions = [];
+	if (!empty($ConnData['Charset'])) {
+	    $aOptions['charset'] = $ConnData['Charset'];
+    }
+
+    $db = dbconn($ConnData["Host"], $ConnData["Database"], $ConnData["User"], $ConnData["Pass"], $port, $aOptions);
 	if (!$db->connect_error()) {
 		// echo "<pre>#".__LINE__." ".basename(__FILE__)." conn:$conn, connid:$connid, ConnDB:".print_r($ConnDB, true)."</pre>\n";
 		$ConnData["conndbid"]= $db->select_db($ConnData["Database"], $ConnData["connid"]);
@@ -37,7 +45,7 @@ function db_connect(&$ConnAccessData) {
 		}
 	} else {
 		die( $ConnData["error_Server"]);
-		echo "#".__LINE__." new mysqli({$ConnData[Host]} , {$ConnData[User]}, {$ConnData[Pass]}); <br>\n";
+		echo "#" . __LINE__ . " new mysqli({$ConnData[Host]} , {$ConnData[User]}, {$ConnData[Pass]}); <br>\n";
 	}
 	return $db;
 }

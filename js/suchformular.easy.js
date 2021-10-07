@@ -11,7 +11,7 @@ SBConfDefault["InputType"] = "";
 
 var optionsUmzugsarten = [
 	{value:"BOX", content:"Box-Move"},
-	{value:"MOEBEL", content:"Mit Möbel"}
+	{value:"MOEBEL", content:"Mit MÃ¶bel"}
 ];
 
 var optionsNachnamen = false;

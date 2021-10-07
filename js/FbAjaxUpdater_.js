@@ -1,5 +1,5 @@
 /*
-Vollständiges Beispiel für eine XML-Ausgabe, die von diesem Script weiterverarbeit werden kann
+VollstÃ¤ndiges Beispiel fÃ¼r eine XML-Ausgabe, die von diesem Script weiterverarbeit werden kann
 <?xml version="1.0" ?>
 <Result type="success">
 	<Update  id="Box1" options="InsertBefore|Replace(default)|Append"><![CDATA[Duisburg]]></Update>
@@ -14,22 +14,22 @@ Vollständiges Beispiel für eine XML-Ausgabe, die von diesem Script weiterverarbe
 </Result>
 
 AllXmlNodes2Data(myNode) wandelt alle XML-Knoten in Array um
-reduceXmlBasedData() wandelt Ergebnis aus AllXmlNodes2Data mit teilw. langen Pfaden in verkürzte Pfade
+reduceXmlBasedData() wandelt Ergebnis aus AllXmlNodes2Data mit teilw. langen Pfaden in verkÃ¼rzte Pfade
 igWNodeUpdate(nodeId, data) aktualisiert Elementeninhalt (innerHTML)
 replaceBoxByObj(objId, toObjId)
 replaceBoxByHtmlSource(htmlSource, toObjId)
 gWNodeInsert(toObj, data, pos)
-getChildElementsLength(obj) Gibt die Anzahl echter Elementknoten zurück, ohne Kommentare, Zeilenumbrüche etc.
-getChildElements(obj) Gibt ein Array mit Objekten echte Elementknoten zurück
-getObjPos(obj) Gibt die Sortier-Position eines Elements innerhalb seines Elternknoten zurück, wichtig für igWNodeMove()
+getChildElementsLength(obj) Gibt die Anzahl echter Elementknoten zurÃ¼ck, ohne Kommentare, ZeilenumbrÃ¼che etc.
+getChildElements(obj) Gibt ein Array mit Objekten echte Elementknoten zurÃ¼ck
+getObjPos(obj) Gibt die Sortier-Position eines Elements innerhalb seines Elternknoten zurÃ¼ck, wichtig fÃ¼r igWNodeMove()
 igWNodeMove(obj, toObj, pos) Verschiebt ein Objekt im DOM-Baum. Je nach pos-Angabe wird obj als Child eingeordnet oder auf gleicher Ebene (nur bei Next und Before)
-igWNodeDelete(obj) Löschen eines ElementKnoten
+igWNodeDelete(obj) LÃ¶schen eines ElementKnoten
 igWNodeAttribute(nodeId, attrName, attrValue) Setzen eines Attributs eines Elements
 igWNodeClassName(nodeId, className, replace) Setzen bzw. Ersetzen einer CSS-ClassName eines Elements
 igWNodeStyle(nodeId, styleName, styleValue) Setzen einer Style-Eigenschaft eines Elements
-igWDomUpdater(aData) finale Funktion in der Funktionskette: übernimmt das von AllXmlNodes2Data() erstellte Array aus dem Ajax-XML und führt automatisch alle darin enthaltenen Aktualisierungen durch
-fb_AjaxXmlUpdate(req) übernimmt das von AjaxHTTP empfangene Request-Objekt und gibt das umgewandelte Datenformat (Array aData) an igWDomUpdater()
-SendRequest(sUrl) Aufrufende Funktion aus einem Link onclick. Startet den Ajax-Request, die Loadingbar und gibt die zu verarbeitende CallBack-Funktion an, für die vom Ajax-Request zurückgelieferten Daten
+igWDomUpdater(aData) finale Funktion in der Funktionskette: Ã¼bernimmt das von AllXmlNodes2Data() erstellte Array aus dem Ajax-XML und fÃ¼hrt automatisch alle darin enthaltenen Aktualisierungen durch
+fb_AjaxXmlUpdate(req) Ã¼bernimmt das von AjaxHTTP empfangene Request-Objekt und gibt das umgewandelte Datenformat (Array aData) an igWDomUpdater()
+SendRequest(sUrl) Aufrufende Funktion aus einem Link onclick. Startet den Ajax-Request, die Loadingbar und gibt die zu verarbeitende CallBack-Funktion an, fÃ¼r die vom Ajax-Request zurÃ¼ckgelieferten Daten
 igWShowLoadingBar(mode,msg)
 */
 function O(ElId) { return ((typeof ElId == "string")?document.getElementById(ElId):ElId); }
@@ -251,7 +251,7 @@ function replaceBoxByObj(objId, toObjId) {
   toObj = O(toObjId);
   if (toObj) {
     parentObj = toObj.parentNode;
-    // Mit Clone ersetzen und Original anschl. löschen ist zuverlässiger
+    // Mit Clone ersetzen und Original anschl. lÃ¶schen ist zuverlÃ¤ssiger
     parentObj.replaceChild(obj.cloneNode(true), toObj);
     obj.parentNode.removeChild(obj);
     return true;
@@ -290,7 +290,7 @@ function igWNodeReplace(nodeId, data) {
 }
 
 function igWNodeInsert(toObj, data, pos) {
-  // Erzeuge und positioniere temporäres Element als Platzhalter
+  // Erzeuge und positioniere temporÃ¤res Element als Platzhalter
   var TempBox = document.createElement("div");
   var TempId = "TmpBoxRand"+Math.random().toString().substr(2,6)+"T"+(new Date().getTime().toString().substr(4,9))
   TempBox.id = TempId;
@@ -376,17 +376,17 @@ function igWNodeClassName(nodeId, className, replace) {
 function C(nodeId, className, replace) { // [, Option SetVal] [, Option RplVal]
 	// var o = O(ElId);
 	var o = O(nodeId); if (!o) return false;
-	// Falls nur ein Argument(Objekt-Id) übergeben wurde, zeige aktuelle className an
+	// Falls nur ein Argument(Objekt-Id) Ã¼bergeben wurde, zeige aktuelle className an
   if (arguments.length == 1) return o.className;
-  // Falls Objekt-Klasse leer oder nur zu zwei Argumente übergeben wurden weise className zu
+  // Falls Objekt-Klasse leer oder nur zu zwei Argumente Ã¼bergeben wurden weise className zu
   if (!o.className || arguments.length == 2) {o.className = arguments[1];return o.className;}
-  // Deklariere Variablen für Stringverarbeitung
+  // Deklariere Variablen fÃ¼r Stringverarbeitung
   var  s = new String(" "+o.className+" "); var t1 = new String(" "+arguments[1]+" "); var t2 = new String(" "+arguments[2]+" ");
   // Falls die Klasse schon gesetzt wurde, ist keine weitere  Operation erforderlich
   if (s.indexOf(t1) != -1) {if(s.indexOf(t2)){o.className = s.split(t2).join(" ");}return o.className;}
-  // Falls zu ersetzende Klasse nicht enthalten ist, füge neue Klasse hinzu
+  // Falls zu ersetzende Klasse nicht enthalten ist, fÃ¼ge neue Klasse hinzu
   if (s.indexOf(t2) == -1) {o.className+= " "+arguments[1];return o.className;}
-  // Führe Ersetzung durch
+  // FÃ¼hre Ersetzung durch
   s2 = s.split(t2).join(t1).substr(1); o.className = s2.substr(0, s2.length-1); return o.className; 
 }
 
@@ -495,7 +495,7 @@ function fb_AjaxXmlUpdate(req) {
 			} else {
 				// alert("type:"+type+"\n"+req.responseText);
 				if (aIgWData["Err"]) igWShowLoadingBar(0, "<span class=upErr>"+aIgWData["Err"]+"</span>");
-				else igWShowLoadingBar(0, "<span class=upErr>Unbekannter Fehler: Aktion konnte nicht ausgeführt werden!</span>");
+				else igWShowLoadingBar(0, "<span class=upErr>Unbekannter Fehler: Aktion konnte nicht ausgefÃ¼hrt werden!</span>");
 			}
 			if (aIgWData["JScript"]) eval(aIgWData["JScript"]);
 		} else {
@@ -524,7 +524,7 @@ function igWShowLoadingBar(mode, msg, parentElement) {
       LBar.style.display="none";
     } else {
       LBar.style.display="";
-      if (mode==1 && !msg) msg = "<span class=upMsg>Daten werden übertragen</span>"; 
+      if (mode==1 && !msg) msg = "<span class=upMsg>Daten werden Ã¼bertragen</span>"; 
 	    LBar.innerHTML = (mode == 1?"<img align=absmiddle src=\"loading.gif\">":"")+(msg && mode ? "":"")+(msg?msg:""); 
     }
   }
@@ -533,7 +533,7 @@ function igWShowLoadingBar(mode, msg, parentElement) {
 function SendRequest(sUrl) {
   igWShowLoadingBar(1, "<span class=upMsg>Lade Daten!</span>");
   //sUrl+= ((sUrl.indexOf("?") !== -1 ? "?":"&")+"AjaxRequest=1");
-  // Verzögerung von n Sek. nur zum Testen der Statusanzeige ingWShowLoadingBar
+  // VerzÃ¶gerung von n Sek. nur zum Testen der Statusanzeige ingWShowLoadingBar
   //setTimeout("fb_AjaxRequest('"+sUrl+"', 'get', 'fb_AjaxXmlUpdate(%req%)')", 1000);
   fb_AjaxRequest(sUrl, 'get', 'fb_AjaxXmlUpdate(%req%)');
 }

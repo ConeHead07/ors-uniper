@@ -49,7 +49,7 @@ if ($srcDB) {
 }
 
 if (!$srcDB) {
-	echo "Es wurde ".(!$srcDB_Request?"keine Datenbank":"eine ungültige Datenbank $srcDB_Request")." angegeben!<br>\n";
+	echo "Es wurde ".(!$srcDB_Request?"keine Datenbank":"eine ungÃ¼ltige Datenbank $srcDB_Request")." angegeben!<br>\n";
 }
 
 $sep = ";";
@@ -68,7 +68,7 @@ if ($srcDB) {
 	for($i = 0; $i < count($aGebaeude); $i++) {
 		$aGebKuerzel[$i] = $aGebaeude[$i]["gebaeude"];
 		$g = $aGebaeude[$i]["gebaeude"];
-		$aGebaeudeStat[$g] = array("Stadt"=>$aGebaeude[$i]["stadt"], "Etagen"=>"", "Räume"=>"", "Alle Mitarbeiter"=>"", "Neue Mitarbeiter"=>"", "Gelöschte Räume"=>"", "Gelöschte Mitarbeiter"=>"", "Adresse"=>$aGebaeude[$i]["adresse"]);
+		$aGebaeudeStat[$g] = array("Stadt"=>$aGebaeude[$i]["stadt"], "Etagen"=>"", "RÃ¤ume"=>"", "Alle Mitarbeiter"=>"", "Neue Mitarbeiter"=>"", "GelÃ¶schte RÃ¤ume"=>"", "GelÃ¶schte Mitarbeiter"=>"", "Adresse"=>$aGebaeude[$i]["adresse"]);
 	}
 	
 	$sql = "SELECT gebaeude, count(distinct(etage)) etagen, count(raumnr) raeume FROM `$srcDB`.`mm_stamm_immobilien` WHERE gebaeude IN(\"".implode("\",\"", $aGebKuerzel)."\") group by gebaeude order by gebaeude";
@@ -79,7 +79,7 @@ if ($srcDB) {
 		$e = $rows[$i];
 		$g = $e["gebaeude"];
 		$aGebaeudeStat[$g]["Etagen"] = $e["etagen"];
-		$aGebaeudeStat[$g]["Räume"] = $e["raeume"];
+		$aGebaeudeStat[$g]["RÃ¤ume"] = $e["raeume"];
 	}
 	
 	$sql = "SELECT gebaeude, count(raumnr) raeume_geloescht FROM `$srcDB`.`mm_stamm_immobilien_geloescht` WHERE gebaeude IN(\"".implode("\",\"", $aGebKuerzel)."\")";
@@ -89,28 +89,13 @@ if ($srcDB) {
 		if (empty($rows[$i]["gebaeude"])) continue;
 		$e = $rows[$i];
 		$g = $e["gebaeude"];
-		$aGebaeudeStat[$g]["Gelöschte Räume"] = $e["raeume_geloescht"];
+		$aGebaeudeStat[$g]["GelÃ¶schte RÃ¤ume"] = $e["raeume_geloescht"];
 	}
 	
 	for($i = 0; $i < count($aGebaeude); $i++) {
 		$e = $aGebaeude[$i];
 		$g = $e["gebaeude"];
-		/*
-		$aGebaeudeStat[$g] = array("Etagen"=>"", "Räume"=>"", "Alle Mitarbeiter"=>"", "Neue Mitarbeiter"=>"", "Gelöschte Räume"=>"", "Gelöschte Mitarbeiter"=>"");
-		
-		$sql = "SELECT gebaeude, count(distinct(etage)) etagen, count(distinct(raumnr)) raeume FROM `mm_stamm_immobilien` WHERE gebaeude = \"".$g."\"";
-		$row = $db->query_singlerow($sql);
-		if ($db->error()) echo $db->error()."\n".$sql."\n";
-		//else echo "row: ".print_r($row, 1)."\n";
-		$aGebaeudeStat[$g]["Etagen"] = $row["etagen"];
-		$aGebaeudeStat[$g]["Räume"]  = $row["raeume"];
-		
-		$sql = "SELECT count(distinct(raumnr)) raeume_geloescht FROM `mm_stamm_immobilien_geloescht` WHERE gebaeude = \"".$g."\"";
-		$row = $db->query_singlerow($sql);
-		if ($db->error()) echo $db->error()."\n".$sql."\n";
-		//else echo "row: ".print_r($row, 1)."\n";
-		$aGebaeudeStat[$g]["Gelöschte Räume"]  = $row["raeume_geloescht"];
-		*/
+
 		$sql = "SELECT count(*) mitarbeiter FROM `$srcDB`.`mm_stamm_mitarbeiter` WHERE immobilien_raum_id IN (SELECT id FROM `$srcDB`.`mm_stamm_immobilien` WHERE gebaeude = \"".$g."\")";
 		$row = $db->query_singlerow($sql);
 		//echo $sql."\n";
@@ -128,7 +113,7 @@ if ($srcDB) {
 		$row = $db->query_singlerow($sql);
 		if ($db->error()) echo $db->error()."\n".$sql."\n";
 		//else echo "row: ".print_r($row, 1)."\n";
-		$aGebaeudeStat[$g]["Gelöschte Mitarbeiter"]  = $row["mitarbeiter_geloescht"];
+		$aGebaeudeStat[$g]["GelÃ¶schte Mitarbeiter"]  = $row["mitarbeiter_geloescht"];
 	}
 }
 
@@ -144,7 +129,7 @@ $i =0;
 $wz=0;
 echo "<form id=\"chgDB\">Quell-DB: ".$selectDB."<noscript><input type=submit value=\"DB wechseln\"></noscript></form>\n";
 echo "<form action=\"?\" method=\"post\">";
-echo "<table class=\"tblList\"><thead><tr><td>#</td><td>Gebäude</td>";
+echo "<table class=\"tblList\"><thead><tr><td>#</td><td>GebÃ¤ude</td>";
 if (!empty($aGebaeudeStat)) {
 	$g = key($aGebaeudeStat);
 	foreach($aGebaeudeStat[$g] as $k => $v) echo "<td>$k</td>";
@@ -163,7 +148,7 @@ if (!empty($aGebaeudeStat)) {
 	echo "<input type=\"checkbox\" name=\"runImport\">Ausgespielte Daten von `$srcDB` nach `$dstDB` importieren\n";
 	echo "<input type=\"hidden\" name=\"srcDB\" value=\"".fb_htmlEntities($srcDB)."\">\n";
 	echo "<input type=\"submit\" name=\"runExport\" value=\"Daten ausspielen\">\n";
-	echo "(Gebäude, Räume, Mitarbeiter, Bereiche, Abteilungen, Gelöschte Räume u. Mitarbeiter)\n";
+	echo "(GebÃ¤ude, RÃ¤ume, Mitarbeiter, Bereiche, Abteilungen, GelÃ¶schte RÃ¤ume u. Mitarbeiter)\n";
 }
 echo "</form>\n";
 //echo print_r($aGebaeudeStat,1)."\n";
@@ -274,7 +259,7 @@ if ($runExport) {
 // Start-Import
 
 if ($runImport) {
-	// Wichtige Löschreihenfolge: Erst MA in Abängigkeit der Räume (Sub-Query), dann die Räume
+	// Wichtige LÃ¶schreihenfolge: Erst MA in AbÃ¤ngigkeit der RÃ¤ume (Sub-Query), dann die RÃ¤ume
 	// Leeren der Mitarbeiterdaten
 	$sql = "DELETE FROM `$dstDB`.`mm_stamm_mitarbeiter`
 	where immobilien_raum_id IN (SELECT id FROM `$dstDB`.mm_stamm_immobilien where gebaeude IN ('".implode("','", $aGebaeudeFilter)."') )";
@@ -364,7 +349,7 @@ if ($runImport) {
 	fclose($fp);
 	
 	
-	// Import-Gebäude
+	// Import-GebÃ¤ude
 	$sql = "DELETE  FROM `$dstDB`.mm_stamm_gebaeude where gebaeude IN ('".implode("','", $aGebaeudeFilter)."')";
 	$db->query($sql);
 	if ($db->error()) echo $db->error()."\n".$sql."\n";
@@ -396,17 +381,17 @@ if ($runImport) {
 					if ($db->error()) echo "#".__LINE__." DB-ERR: ".$db->error()."\n";
 					else $num_import++;
 				} else {
-					echo "Allready Exists: Gebäude".$e["gebaeude"]."\n";
+					echo "Allready Exists: GebÃ¤ude".$e["gebaeude"]."\n";
 				}
 				if ($i++ < 10) echo $sql."\n";
 			}
 		}
 	}
-	echo "Es wurden $num_import Gebäudedaten angelegt bzw. überschrieben falls schon vorhanden!\n";
+	echo "Es wurden $num_import GebÃ¤udedaten angelegt bzw. Ã¼berschrieben falls schon vorhanden!\n";
 	fclose($fp);
 	
 	
-	// Import-Räume
+	// Import-RÃ¤ume
 	$i = 0;
 	$num_import = 0;
 	$fp = fopen($aExportFiles["raeume"]["file"], "r");
@@ -433,7 +418,7 @@ if ($runImport) {
 			}
 		}
 	}
-	echo "Es wurden $num_import Räume importiert!\n";
+	echo "Es wurden $num_import RÃ¤ume importiert!\n";
 	fclose($fp);
 	
 	

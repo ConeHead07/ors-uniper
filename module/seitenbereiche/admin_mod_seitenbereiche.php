@@ -98,7 +98,7 @@ if (isset($_POST["poslist"])) {
 			}
 		}
 	}
-	$msg.= "Es wurden $countPosUpdates Menüpunkte neu positioniert!<br>\n";
+	$msg.= "Es wurden $countPosUpdates Menï¿½punkte neu positioniert!<br>\n";
 }
 
 //echo "#".__LINE__." ".basename(__FILE__)." ansicht:$ansicht<br>\n";
@@ -122,7 +122,7 @@ if (!empty($id) && !empty($cmd) && !empty($wert)) {
 		if (isset($_SetFlag["webfreigabe"][$wert])) {
 			edit_flag($id, "webfreigabe", $wert);
 		} else {
-			$error.= "Ungültige Eigenschaftswert für Webfreigabe: ".$wert."<br>\n";
+			$error.= "UngÃ¼ltige Eigenschaftswert fÃ¼r Webfreigabe: ".$wert."<br>\n";
 		}
 		break;
 		
@@ -130,7 +130,7 @@ if (!empty($id) && !empty($cmd) && !empty($wert)) {
 		if (isset($_SetFlag["visibility"][$wert])) {
 			edit_flag($id, "visibility", $wert);
 		} else {
-			$error.= "Ungültige Eigenschaftswert für Menüanzeige: ".$wert."<br>\n";
+			$error.= "UngÃ¼ltige Eigenschaftswert fÃ¼r MenÃ¼anzeige: ".$wert."<br>\n";
 		}
 		break;
 		
@@ -138,7 +138,7 @@ if (!empty($id) && !empty($cmd) && !empty($wert)) {
 		if (isset($_SetFlag["geschuetzt"][$wert])) {
 			edit_flag($id, "geschuetzt", $wert);
 		} else {
-			$error.= "Ungültige Eigenschaftswert für Passwortschutz: ".$wert."<br>\n";
+			$error.= "UngÃ¼ltige Eigenschaftswert fÃ¼r Passwortschutz: ".$wert."<br>\n";
 		}
 		break;
 		
@@ -154,16 +154,16 @@ if (!empty($id) && !empty($cmd) && !empty($wert)) {
 				$SQL.= " WHERE srv = \"".addslashes($_SavedData["srv"])."\"";
 				MyDB::query($SQL);
 				if (!MyDB::error()) {
-					$msg.= "Der Seitenbereich '".$_SavedData["srv"]."' wurde gelöscht!<br>\n";
+					$msg.= "Der Seitenbereich '".$_SavedData["srv"]."' wurde gelï¿½scht!<br>\n";
 				} else {
-					$error.= "Fehler beim Löschen: ".$_SavedData["srv"]."<br>\n";
+					$error.= "Fehler beim LÃ¶schen: ".$_SavedData["srv"]."<br>\n";
 				}
 			} else {
-				$error.= "Der Seitenbereich konnte nicht gelöscht werden, da ihm noch $num_stories Beiträge zugeordnet sind!<br>\n";
-				$error.= "Alternativ können Sie den Bereich sperren oder ausblenden!<br>\n";
+				$error.= "Der Seitenbereich konnte nicht gelÃ¶scht werden, da ihm noch $num_stories BeitrÃ¤ge zugeordnet sind!<br>\n";
+				$error.= "Alternativ kÃ¶nnen Sie den Bereich sperren oder ausblenden!<br>\n";
 			}
 		} else {
-			$error.= "Der Seitenbereich konnte nicht gelöscht werden, da er noch $num_childs Untermenüs hat!<br>\n";
+			$error.= "Der Seitenbereich konnte nicht gelÃ¶scht werden, da er noch $num_childs UntermenÃ¼s hat!<br>\n";
 		}
 		break;
 		
@@ -264,7 +264,7 @@ if (isset($id) && $id && isset($_SavedData) && is_array($_SavedData) && count($_
 		if (isset($_SetFlag["webfreigabe"][$wert])) {
 			edit_flag($id, "webfreigabe", $wert);
 		} else {
-			$error.= "Ungültige Eigenschaftswert für Webfreigabe: ".$wert."<br>\n";
+			$error.= "UngÃ¼ltige Eigenschaftswert fÃ¼r Webfreigabe: ".$wert."<br>\n";
 		}
 		$ansicht = "liste";
 	}
@@ -273,7 +273,7 @@ if (isset($id) && $id && isset($_SavedData) && is_array($_SavedData) && count($_
 		if (isset($_SetFlag["visibility"][$wert])) {
 			edit_flag($id, "visibility", $wert);
 		} else {
-			$error.= "Ungültige Eigenschaftswert für Menüanzeige: ".$wert."<br>\n";
+			$error.= "UngÃ¼ltige Eigenschaftswert fÃ¼r MenÃ¼anzeige: ".$wert."<br>\n";
 		}
 		$ansicht = "liste";
 	}
@@ -282,7 +282,7 @@ if (isset($id) && $id && isset($_SavedData) && is_array($_SavedData) && count($_
 		if (isset($_SetFlag["geschuetzt"][$wert])) {
 			edit_flag($id, "geschuetzt", $wert);
 		} else {
-			$error.= "Ungültige Eigenschaftswert für Passwortschutz: ".$wert."<br>\n";
+			$error.= "UngÃ¼ltige Eigenschaftswert fÃ¼r Passwortschutz: ".$wert."<br>\n";
 		}
 		$ansicht = "liste";
 	}
@@ -296,11 +296,11 @@ if (isset($id) && $id && isset($_SavedData) && is_array($_SavedData) && count($_
 			if (!$num_stories) {
 				kill_menu_byId($id);
 			} else {
-				$error.= "Der Seitenbereich konnte nicht gelöscht werden, da ihm noch $num_stories Beiträge zugeordnet sind!<br>\n";
-				$error.= "Alternativ können Sie den Bereich sperren oder ausblenden!<br>\n";
+				$error.= "Der Seitenbereich konnte nicht gelÃ¶scht werden, da ihm noch $num_stories BeitrÃ¤ge zugeordnet sind!<br>\n";
+				$error.= "Alternativ kÃ¶nnen Sie den Bereich sperren oder ausblenden!<br>\n";
 			}
 		} else {
-			$error.= "Der Seitenbereich konnte nicht gelöscht werden, da er noch $num_childs Untermenüs hat!<br>\n";
+			$error.= "Der Seitenbereich konnte nicht gelÃ¶scht werden, da er noch $num_childs UntermenÃ¼s hat!<br>\n";
 		}
 	}
 	if (isset($pid)) $id = $pid;

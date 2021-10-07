@@ -11,7 +11,7 @@ SBConfDefault["InputType"] = "";
 
 var optionsUmzugsarten = [
 	{value:"BOX", content:"Box-Move"},
-	{value:"MOEBEL", content:"Mit Mˆbel"}
+	{value:"MOEBEL", content:"Mit M√∂bel"}
 ];
 
 var optionsNachnamen = false;
@@ -75,7 +75,7 @@ function umzugsantrag_errors() {
 		if (!namedArray["AS[terminwunsch]"] || namedArray["AS[terminwunsch]"].value=="") as_err+= ""+(as_err?", ":"")+"Terminwunsch\n";
 	}
 	if (as_err) {
-		error+= "<strong>Bitte vervollst‰ndigen Sie noch die Angaben zum Antragsteller:</strong><br>\n";
+		error+= "<strong>Bitte vervollst√§ndigen Sie noch die Angaben zum Antragsteller:</strong><br>\n";
 		error+= as_err+"<br>\n";
 	}
 	var ListMaErrors = "";
@@ -106,7 +106,7 @@ function umzugsantrag_errors() {
 			if (ma_err) ListMaErrors+= "<li>"+ma+ma_err+"</li>\n";
 		
 		}
-		if (ListMaErrors) error+= "Bitte vervollst‰ndigen Sie die fehlenden Angaben!<br>\n"+ListMaErrors;
+		if (ListMaErrors) error+= "Bitte vervollst√§ndigen Sie die fehlenden Angaben!<br>\n"+ListMaErrors;
 	} else {
 		error+= "<strong>Es wurden noch keine Mitarbeiter in die Umzugsliste eingetragen!</strong>";
 	}
@@ -194,7 +194,7 @@ function umzugsantrag_storno() {
 }
 function umzugsantrag_loadingBar(msg) {
 	if (typeof(O("LoadingBar"))=="object") O("LoadingBar").parentNode.removeChild(O("LoadingBar"));
-	if (!msg) msg = "Daten werden ¸bertragen ...";
+	if (!msg) msg = "Daten werden √ºbertragen ...";
 	var LoadingBar = "<div id=\"LoadingBar\" style=\"text-align:center;\">"+msg+"<br>\n<img src=\"images/loading.gif\"></div>";
 	var IBox = InfoBox(LoadingBar);
 	return IBox;
@@ -807,7 +807,7 @@ function get_etage(obj) {
 	SBConfEtagen["OnEnterClose"] = true;
 	
 	if (!InputFields[z+"gebaeude"].value) { 
-		alert("W‰hlen Sie erst ein Geb‰ude aus!");
+		alert("W√§hlen Sie erst ein Geb√§ude aus!");
 		get_gebaeude(InputFields[z+"gebaeude"]);
 		return false; 
 	}
@@ -866,8 +866,8 @@ function get_raumnr(obj) {
 	SBConfRaumnr["InputType"] = "Raumnr";
 	SBConfRaumnr["OnEnterClose"] = true;
 	
-	if (!InputFields[z+"gebaeude"].value) { alert("W‰hlen Sie erst ein Geb‰ude aus!"); get_gebaeude(InputFields[z+"gebaeude"]); return false; }
-	if (!InputFields[z+"etage"].value) { alert("W‰hlen Sie erst eine Etage aus!"); get_gebaeude(InputFields[z+"etage"]); return false; }
+	if (!InputFields[z+"gebaeude"].value) { alert("W√§hlen Sie erst ein Geb√§ude aus!"); get_gebaeude(InputFields[z+"gebaeude"]); return false; }
+	if (!InputFields[z+"etage"].value) { alert("W√§hlen Sie erst eine Etage aus!"); get_gebaeude(InputFields[z+"etage"]); return false; }
 	
 	var g = InputFields[z+"gebaeude"].value;
 	var e = InputFields[z+"etage"].value;
@@ -926,9 +926,9 @@ function get_apnr(obj) {
 	SBConfRaumnr["InputType"] = "Raumnr";
 	SBConfRaumnr["OnEnterClose"] = true;
 	
-	if (!InputFields[z+"gebaeude"].value) { alert("W‰hlen Sie erst ein Geb‰ude aus!"); get_gebaeude(InputFields[z+"gebaeude"]); return false; }
-	if (!InputFields[z+"etage"].value) { alert("W‰hlen Sie erst eine Etage aus!"); get_gebaeude(InputFields[z+"etage"]); return false; }
-	if (!InputFields[z+"raumnr"].value) { alert("W‰hlen Sie erst einen Raum aus!"); get_raumnr(InputFields[z+"raumnr"]); return false; }
+	if (!InputFields[z+"gebaeude"].value) { alert("W√§hlen Sie erst ein Geb√§ude aus!"); get_gebaeude(InputFields[z+"gebaeude"]); return false; }
+	if (!InputFields[z+"etage"].value) { alert("W√§hlen Sie erst eine Etage aus!"); get_gebaeude(InputFields[z+"etage"]); return false; }
+	if (!InputFields[z+"raumnr"].value) { alert("W√§hlen Sie erst einen Raum aus!"); get_raumnr(InputFields[z+"raumnr"]); return false; }
 	
 	var g = InputFields[z+"gebaeude"].value;
 	var e = InputFields[z+"etage"].value;
@@ -1359,9 +1359,9 @@ function mitarbeiter_check_reload(parentbox) {
 	var allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 ,.-_/&";
 	for(var i = 0; i < parentbox.SBConf["InputField"].value.length; i++) {
 		if (allowedChars.indexOf(parentbox.SBConf["InputField"].value.charAt(i))==-1) {
-			var m = "<strong>Achtung:</strong> Ihre Eingabe enth‰lt Sonderzeichen ("+parentbox.SBConf["InputField"].value.charAt(i)+")<br>\n";
+			var m = "<strong>Achtung:</strong> Ihre Eingabe enth√§lt Sonderzeichen ("+parentbox.SBConf["InputField"].value.charAt(i)+")<br>\n";
 			m+= "Die Namen liegen im einfachen Zeichensatz vor wie sie bei Emails verwendet werden.<br>\n";
-			m+= "Schreiben Sie MUELLER statt M‹LLER, E statt », SS statt &szlig; etc.<br>\n";
+			m+= "Schreiben Sie MUELLER statt M&Uuml;LLER, AE statt &Aauml;, SS statt &szlig; etc.<br>\n";
 			m+= "Verwendete Zeichen: "+allowedChars;
 			myAlert = InfoBox(m, parentbox.SBConf["InputField"], "right", 5, 0);
 			myAlert.onmousemove = myAlert.close;
@@ -1448,7 +1448,7 @@ function mitarbeiter_loadDataByName(parentbox, optionsData) {
 	var CBoxSwitch = document.createElement("span");
 	CBoxSwitch.style.display="block";
 	CBoxSwitch.className = "SelBoxItem";
-	CBoxSwitch.innerHTML = "<strong>"+parentbox.SBConf["InputField"].nachname+"</strong> <em style=\"italic\">anderen Nachnamen ausw‰hlen</em>";
+	CBoxSwitch.innerHTML = "<strong>"+parentbox.SBConf["InputField"].nachname+"</strong> <em style=\"italic\">anderen Nachnamen ausw√§hlen</em>";
 	CBoxSwitch.onclick = function() { mitarbeiter_switchData(parentbox, "Nachname"); }
 	CBoxSwitch.onmouseover = function() { AC(this, "IsHoverItem"); }
 	CBoxSwitch.onmouseout = function() { RC(this, "IsHoverItem"); }
@@ -1752,7 +1752,7 @@ function request_query_ma_vorname(SBBoxId, nachname, input, limit) {
 }
 
 function request_query_ma_namecheck(SBBoxId, name, vorname, gebaeude, etage, raumnr, limit) {
-	igWShowLoadingBar(1, "Namenspr¸fung l‰uft!", SBBoxId);
+	igWShowLoadingBar(1, "Namenspr√ºfung l√§uft!", SBBoxId);
 	AjaxRequestUrl = "load_mitarbeiter_namecheck.php?";
 	AjaxRequestUrl+= '&name='+escape(name);
 	AjaxRequestUrl+= '&vorname='+escape(vorname);

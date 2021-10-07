@@ -11,20 +11,20 @@ function queryDomObjects(sSelektor) {
 		aDomQuery = new Array()
 		if (s.substr(0,1) == ".") aDomQuery[0] = {type: "class", value:s.substr(1)};
 		else if (s.substr(0,1) == "#") aDomQuery[0] = {type: "id", value:s.substr(1)};
-		else if (s.substr(0,1) == "§") aDomQuery[0] = {type: "name", value:s.substr(1)};
+		else if (s.substr(0,1) == "Â§") aDomQuery[0] = {type: "name", value:s.substr(1)};
 		else {
 			if (s.split(".").length == 2) 
 				aDomQuery = [{type: "tag", value:s.split(".")[0]}, {type: "class", value:s.split(".")[1]}];
 			else if (s.split("#").length == 2) 
 				aDomQuery = [{type: "tag", value:s.split("#")[0]}, {type: "id", value:s.split("#")[1]}];
-			else if (s.split("§").length == 2) 
-				aDomQuery = [{type: "tag", value:s.split("§")[0]}, {type: "name", value:s.split("§")[1]}];
+			else if (s.split("Â§").length == 2) 
+				aDomQuery = [{type: "tag", value:s.split("Â§")[0]}, {type: "name", value:s.split("Â§")[1]}];
 			else 
 				aDomQuery = [{type: "tag", value:s}];
 		}
 		
 		if (typeof(aDomRange[0]) != "object" || !aDomRange[0].getElementById) {
-			alert("#27 ungültiges object");
+			alert("#27 ungÃ¼ltiges object");
 			break;
 		}
 		
@@ -101,7 +101,7 @@ function SelBox_InputSelektor(sSelektor) {
 				}
 			}
 		} else if(iFilter["attrName"] && iFilter["attrValue"]) {
-			return false; // Unvollständige Filter
+			return false; // UnvollstÃ¤ndige Filter
 		} else {
 			return iElements[0];
 		}
@@ -156,7 +156,7 @@ function SelBox_initLSDefault(initInputObj, initLSName, initLSMultiple, initLSSe
 					alert(aPathToObj[initLSSearchFields[i]].value);
 		
 				} else {
-					alert("LSSearchField '"+initLSSearchFields[i]+"' wurde nicht gefunden. \nLivesearch für "+initLSName+" kann nicht initialisiert werden!");
+					alert("LSSearchField '"+initLSSearchFields[i]+"' wurde nicht gefunden. \nLivesearch fÃ¼r "+initLSName+" kann nicht initialisiert werden!");
 				}
 				// #MA1 input:name=MA[ort][]
 			}
@@ -168,7 +168,7 @@ function SelBox_initLSDefault(initInputObj, initLSName, initLSMultiple, initLSSe
 					if (!obj.InputResultFields) obj.InputResultFields = new Array();
 					obj.InputResultFields[0] = aPathToObj[initLSInputFields[i]];
 				} else {
-					alert("LSInputField '"+initLSInputFields[i]+"' wurde nicht gefunden. \nLivesearch für "+initLSName+" kann nicht initialisiert werden!");
+					alert("LSInputField '"+initLSInputFields[i]+"' wurde nicht gefunden. \nLivesearch fÃ¼r "+initLSName+" kann nicht initialisiert werden!");
 				}
 			}
 		}
@@ -354,7 +354,7 @@ function SelBox_insertSelection() {
 // Allgemeines Iteration-Object-ListItems in Livesearch-Box
 // Wird an Eingabebox gebunden z.B. durch show_ma() und wird aufgerufen 
 // von der ans Eingabefeld gebundenen Funktion SelBox_keyDown
-// SelBox_keyDown übergibt die Laufrichtung an Iteration-Object : up | down
+// SelBox_keyDown Ã¼bergibt die Laufrichtung an Iteration-Object : up | down
 // SelBox_initChilds(SelBoxId) muss von Ajax aufgerufen werden, damit die neuen Objekte ansprechbar sind
 
 function SelBox_liveSearch(e, trackObj) {
@@ -485,7 +485,7 @@ function SelBox_initChilds(SelBoxId) {
 		//alert("rsOffset:"+rsOffset+"; rsLimit:"+rsLimit+"; rsNum:"+rsNum+"; rsNumAll:"+rsNumAll);
 		nextResultStart= rsOffset+rsNum;
 		nextResultEnde = ((nextResultStart + rsLimit) < rsNumAll ? (nextResultStart + rsLimit): rsNumAll);
-		ElmtMore.innerHTML = "mehr Vorschläge: "+nextResultStart+"-"+nextResultEnde+"("+rsNumAll+")";
+		ElmtMore.innerHTML = "mehr VorschlÃ¤ge: "+nextResultStart+"-"+nextResultEnde+"("+rsNumAll+")";
 		ElmtMore.style["cursor"] = "pointer";
 		ElmtMore.onclick = function() { this.parentNode.inputField.SelBox_nextResult(); };
 		SelBox.appendChild(ElmtMore);

@@ -232,7 +232,7 @@ $.extend($.validator, {
         url: "Please enter a valid URL.",
         date: "Please enter a valid date.",
         dateISO: "Please enter a valid date (ISO).",
-        dateDE: "Bitte geben Sie ein gültiges Datum ein.",
+        dateDE: "Bitte geben Sie ein gÃ¼ltiges Datum ein.",
         number: "Please enter a valid number.",
         numberDE: "Bitte geben Sie eine Nummer ein.",
         digits: "Please enter only digits",

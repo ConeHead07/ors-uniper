@@ -4,6 +4,9 @@ error_reporting(E_ALL);
 if (isset($MConf) && $MConf["DB_Host"]) {
     $port = $MConf['DB_Port'] ?? '3306';
     $db = new dbconn($MConf["DB_Host"], $MConf["DB_Name"], $MConf["DB_User"], $MConf["DB_Pass"], $port);
+    if (!empty($MConf['DB_CHARSET'])) {
+        $db->query('SET NAMES "' . $MConf['DB_CHARSET'] . '"');
+    }
     $conn = null;
     $connid = null;
 }
@@ -113,6 +116,7 @@ class DbConnStatement extends mysqli_result {
     }
 
     public function __construct(mysqli $conn, mysqli_result $resultHandle) {
+        parent::__construct();
         $this->conn = $conn;
         $this->handle = $resultHandle;
     }
@@ -224,7 +228,7 @@ class dbconn {
     private static $instance = null;
     private $connect_error = true;
 
-    public function __construct($Host, $Db, $User, $Pass, $Port = 3306) {
+    public function __construct($Host, $Db, $User, $Pass, $Port = 3306, $aOptions = []) {
         try {
             $this->conn = new mysqli($Host, $User, $Pass, $Db, $Port);
         } finally {
@@ -235,8 +239,15 @@ class dbconn {
 //                    echo 'C O N N E C T E D ! ! !<br>' . PHP_EOL;
             self::$instance = $this;
             $this->connected = true;
-            $this->conn->query('SET NAMES "latin1"' );
+            $this->conn->set_charset("utf8");
+//            if (false && !empty($aOptions['charset'])) {
+//                $this->conn->set_charset($aOptions['charset']);
+//                $this->conn->query('SET NAMES "' . $aOptions['charset'] . '"' );
+//            } else {
+//                $this->conn->query('SET NAMES "latin1"' );
+//            }
             $this->conndb = $this->conn->select_db($Db);
+
         } else {
             $this->errors = "#".__LINE__." Error-DB-Conn: $Host:$Port, $Db <br>\n" . print_r($this->connect_error, 1);
             error_log($this->errors);

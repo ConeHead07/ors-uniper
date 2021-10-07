@@ -42,7 +42,7 @@
   </tr>
 
   <tr>
-    <td style="padding:0;"><label for="gebaeude" style="width:180px;">Gebäude:</label></td>
+    <td style="padding:0;"><label for="gebaeude" style="width:180px;">GebÃ¤ude:</label></td>
     <td style="padding:0;"><input type="text" onclick="get_standort_gebaeude(this)" value="{$AS.gebaeude|escape}" name="AS[gebaeude]" class="itxt itxt2col"></td>
   </tr>  
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
@@ -54,9 +54,9 @@
 
 <div class="SelBoxMitarbeiterWidth">
 <span style="float:left;margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="mapflege_new_search();return false;">
-Mitarbeiter aus Liste hinzufügen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
+Mitarbeiter aus Liste hinzufÃ¼gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
 <span style="float:right;margin-bottom:2px;color:#000;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="mapflege_neu_anlegen();return false;">
-Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" alt=""></span><br clear="all">
+Fehlende Mitarbeiter hÃ¤ndisch hinzuf&uuml;gen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" alt=""></span><br clear="all">
 <table class="MitarbeierItem" style="border:0;padding:0;margin:0 0 15px 0"><tr><td style="border:0;padding:0;margin:0">
 <input name="SelectMitarbeiter" id="SelectMitarbeiter" class="SelBoxMitarbeiterWidth UpperCase" style="border:1px solid #549e1a" onclick="get_mapflege(this)" ondblclick="mitarbeiter_new_search()"></div><br>
 </td></tr></table>
@@ -66,11 +66,11 @@ Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images
 {foreach name=MAList item=MA from=$Mitarbeiterliste}
 <table id="MA1" class="MitarbeierItem">
   <caption style="font-size:11px;padding:0px;height:18px;">
-  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;">{if $MA.maid}Aus Stammdaten{else}Händischer Eintrag!{/if}</span></div>
+  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;">{if $MA.maid}Aus Stammdaten{else}HÃ¤ndischer Eintrag!{/if}</span></div>
   <div style="float:right;">{if $MA.maid}{else}<a href="#" onclick="check_mitarbeiter(this);return false;"></a> &nbsp; {/if} 
   <img name="RaumStatImg" src="images/{$MA.critical_status_img}" align="absmiddle" style="border:0;" width=16 height=16 title="{$MA.critical_status_info}"><a href="" onclick="show_raum_mitarbeiter(this, 'ziel');return false;">[Raum-Neu: <span id="RaumStatInfo">{$MA.critical_status_info}</span> ]</a> &nbsp; 
   <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> 
-  <span onclick="dropMA(this)" style="cursor:pointer;">Aus Liste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
+  <span onclick="dropMA(this)" style="cursor:pointer;">Aus Liste lÃ¶schen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
 </caption>
   <thead>
   <tr>
@@ -152,7 +152,7 @@ Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images
 <br>
 <div style="margin-top:20px;width:100%;"><!-- 
  -->
-<input type="submit" onclick="mapflege_save()" style="padding:0 0 9px 0;background:url(images/BtnGreen_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="MA-Daten übernehmen">
+<input type="submit" onclick="mapflege_save()" style="padding:0 0 9px 0;background:url(images/BtnGreen_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="MA-Daten Ã¼bernehmen">
 </div>
 
 </form>
@@ -169,7 +169,7 @@ Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images
   <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;">Aus Stammdaten</span></div>
   <div style="float:right;">[Anzeigen/Bearbeiten] 
   <img name="RaumStatImg" src="" align="absmiddle" style="border:0;" width=16 height=16 title=""><a href="" onclick="show_raum_mitarbeiter(this, 'ziel');return false;">[Raum-Neu: <span class="RaumStatInfo"></span> ]</a> &nbsp; 
-  <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> <span onclick="dropMA(this)" style="cursor:pointer;">Aus Liste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
+  <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> <span onclick="dropMA(this)" style="cursor:pointer;">Aus Liste lÃ¶schen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
 </caption>
   <thead>
   <tr>
@@ -224,10 +224,10 @@ Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images
 <div style="display:none;">
 <table id="MA_INPUT" class="MitarbeierItem">
   <caption style="font-size:11px;padding:0px;height:18px;">
-  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;color:#f00;">Händischer Eintrag!</div>
-  <div style="float:right;">[Namen prüfen] 
+  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;color:#f00;">HÃ¤ndischer Eintrag!</div>
+  <div style="float:right;">[Namen prÃ¼fen]
   <img name="RaumStatImg" src="" align="absmiddle" style="border:0;" width=16 height=16 title=""><a href="" onclick="show_raum_mitarbeiter(this, 'ziel');return false;">[Raum-Neu: <span id="RaumStatInfo"></span> ]</a> &nbsp; 
-  <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> <span onclick="dropMA(this)" style="cursor:pointer;">Aus Liste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div><div style="clear:both;"></div>
+  <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> <span onclick="dropMA(this)" style="cursor:pointer;">Aus Liste lÃ¶schen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div><div style="clear:both;"></div>
 </caption>
   <thead>
   <tr>

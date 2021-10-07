@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Result type="success">
 	<Update  id="SelBoxMaItems"><![CDATA[
-<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Mueller;Karl;ort?;Gebäude1;B02.12;Grafik"> <strong>Mu</strong>eller, Karl Gebäude1, B02.12, Grafik</div>
-<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Musterfrau;Karl;ort?;Gebäude1;B04.03;Buchhaltung"> <strong>Mu</strong>sterfrau, Maria Gebäude1, B04.03, Buchhaltung</div>
-<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Mustermann;Max;ort?;Gebäude1;B02.12;GF"> <strong>Mu</strong>stermann, Max Gebäude1, B02.12, GF</div>
-<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Mueller1;Karl;ort?;Gebäude1;B02.12;Grafik"> <strong>Mu</strong>eller, Karl Gebäude1, B02.12, Grafik</div>
-<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Musterfrau;Maria;ort?;Gebäude1;B04.04;Buchhaltung"> <strong>Mu</strong>sterfrau, Maria Gebäude1, B04.04, Buchhaltung</div>
-<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Mustermann;Max;ort?;Gebäude1;B02.12;GF"> <strong>Mu</strong>stermann, Max Gebäude1, B02.12, GF</div>
+<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Mueller;Karl;ort?;GebÃ¤ude1;B02.12;Grafik"> <strong>Mu</strong>eller, Karl GebÃ¤ude1, B02.12, Grafik</div>
+<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Musterfrau;Karl;ort?;GebÃ¤ude1;B04.03;Buchhaltung"> <strong>Mu</strong>sterfrau, Maria GebÃ¤ude1, B04.03, Buchhaltung</div>
+<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Mustermann;Max;ort?;GebÃ¤ude1;B02.12;GF"> <strong>Mu</strong>stermann, Max GebÃ¤ude1, B02.12, GF</div>
+<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Mueller1;Karl;ort?;GebÃ¤ude1;B02.12;Grafik"> <strong>Mu</strong>eller, Karl GebÃ¤ude1, B02.12, Grafik</div>
+<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Musterfrau;Maria;ort?;GebÃ¤ude1;B04.04;Buchhaltung"> <strong>Mu</strong>sterfrau, Maria GebÃ¤ude1, B04.04, Buchhaltung</div>
+<div class="SelItem"><input xtype="checkbox" type="radio" name="mabox" value="Mustermann;Max;ort?;GebÃ¤ude1;B02.12;GF"> <strong>Mu</strong>stermann, Max GebÃ¤ude1, B02.12, GF</div>
 ]]></Update>
 <LoadScript language="javascript" src="cdata"><![CDATA[
 SelBox_initChilds("SelBoxMaItems");

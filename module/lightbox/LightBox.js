@@ -165,7 +165,7 @@
 		
 		// ShadowBox in DOM einbinden
 		
-		// ShadowBox: Transparente Hintergrundgrafik für ShadowBox
+		// ShadowBox: Transparente Hintergrundgrafik fÃ¼r ShadowBox
 		var si = document.createElement("img");
 		si.setStyle = styleAttribute;
 		si.id = "si";
@@ -192,7 +192,7 @@
 		ibx.setStyle("top", PageInfo.getScrollTop()+20+"px");
 		
 		lbx.appendChild(ibx);
-		// MenüBox: Close
+		// MenuBox: Close
 		var mbx = document.createElement("table");
 		mbx.setStyle = styleAttribute;
 		mbx.setAttribute("width", "1000");

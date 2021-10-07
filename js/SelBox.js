@@ -1,6 +1,6 @@
 // Livesearch-Box
 
-function SelBoxInit(initInputObj, aConf) { // Ursprüngl. Params statt aConf: initLSName, initSBCId, initIsLiveSearch, initMultiple) {
+function SelBoxInit(initInputObj, aConf) { // UrsprÃ¼ngl. Params statt aConf: initLSName, initSBCId, initIsLiveSearch, initMultiple) {
 	if (typeof(aConf) == "undefined") aConf = new Array();
 	obj = SelBox_InputSelektor(initInputObj);
 	//alert(typeof(obj));
@@ -204,7 +204,7 @@ function SelBox_InputSelektor(sSelektor) {
 				}
 			}
 		} else if(iFilter["attrName"] && iFilter["attrValue"]) {
-			return false; // Unvollständige Filter
+			return false; // UnvollstÃ¤ndige Filter
 		} else {
 			return iElements[0];
 		}
@@ -284,7 +284,7 @@ function SelBox_insertSelection() {
 // Allgemeines Iteration-Object-ListItems in Livesearch-Box
 // Wird an Eingabebox gebunden z.B. durch show_ma() und wird aufgerufen 
 // von der ans Eingabefeld gebundenen Funktion SelBox_keyDown
-// SelBox_keyDown übergibt die Laufrichtung an Iteration-Object : up | down
+// SelBox_keyDown Ã¼bergibt die Laufrichtung an Iteration-Object : up | down
 // SelBox_initChilds(SelBoxId) muss von Ajax aufgerufen werden, damit die neuen Objekte ansprechbar sind
 
 function SelBox_filterItems() {
@@ -448,7 +448,7 @@ function SelBox_initChilds(SelBoxId) {
 			//alert("rsOffset:"+rsOffset+"; rsLimit:"+rsLimit+"; rsNum:"+rsNum+"; rsNumAll:"+rsNumAll);
 			nextResultStart= rsOffset+rsNum;
 			nextResultEnde = ((nextResultStart + rsLimit) < rsNumAll ? (nextResultStart + rsLimit): rsNumAll);
-			ElmtMore.innerHTML = "mehr Vorschläge: "+nextResultStart+"-"+nextResultEnde+"("+rsNumAll+")";
+			ElmtMore.innerHTML = "mehr VorschlÃ¤ge: "+nextResultStart+"-"+nextResultEnde+"("+rsNumAll+")";
 			if (ElmtMore.style) ElmtMore.style["cursor"] = "pointer";
 			else alert("#389 "+ElmtMore+"; "+ElmtMore.style);
 			

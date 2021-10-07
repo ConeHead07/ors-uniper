@@ -163,14 +163,14 @@ property_umzugsformular.tpl.html
  --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
  --><input class="btn grey" type="submit" onclick="umzugsantrag_save()" xstyle="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Speichern"><!-- 
  --><input class="btn red" type="submit" onclick="umzugsantrag_reload()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Neu laden"><!-- 
- --><input class="btn red" type="submit" onclick="umzugsantrag_add_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhänge"> 
+ --><input class="btn red" type="submit" onclick="umzugsantrag_add_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="DateianhÃ¤nge">
 <br>
 <br>
 <strong>Status setzen: </strong> {$AS.umzugsstatus}
 <div class="statusConsole" xstyle="display:none;">
 {if $AS.umzugsstatus eq "geprueft" || $AS.umzugsstatus eq "angeboten"}
-<input id="btnStatZurueck"  class="btn blue"  type="submit"   {if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}class="cssHide"{/if} onclick="umzugsantrag_set_status( 'erneutpruefen','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:150px;height:24px;font-size:12px;color:#fff;font-weight:bold;" data-reCheckLabel="Erneut prüfen lassen" data-sendLabel="Senden" title="Erneut prüfen lassen" value="Zurück geben">
-<input id="btnStatGenJa"    class="btn green" type="submit"   {if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}class="cssHide"{/if} onclick="umzugsantrag_set_status( getLeistungenChanged() ? 'erneutpruefen' : 'genehmigt','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:150px;height:24px;font-size:12px;color:#fff;font-weight:bold;" data-reCheckLabel="Erneut prüfen lassen" data-sendLabel="Senden" title="Genehmigung senden" value="Senden">
+<input id="btnStatZurueck"  class="btn blue"  type="submit"   {if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}class="cssHide"{/if} onclick="umzugsantrag_set_status( 'erneutpruefen','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:150px;height:24px;font-size:12px;color:#fff;font-weight:bold;" data-reCheckLabel="Erneut prÃ¼fen lassen" data-sendLabel="Senden" title="Erneut prÃ¼fen lassen" value="ZurÃ¼ck geben">
+<input id="btnStatGenJa"    class="btn green" type="submit"   {if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}class="cssHide"{/if} onclick="umzugsantrag_set_status( getLeistungenChanged() ? 'erneutpruefen' : 'genehmigt','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:150px;height:24px;font-size:12px;color:#fff;font-weight:bold;" data-reCheckLabel="Erneut prÃ¼fen lassen" data-sendLabel="Senden" title="Genehmigung senden" value="Senden">
 <input id="btnStatGenNein"  class="btn red" type="submit" {if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}class="cssHide"{/if} onclick="umzugsantrag_set_status('genehmigt','Nein')" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Ablehnen">
 <input id="btnStatGenReset" type="submit" class="{if $AS.genehmigt_br eq 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if} onclick="umzugsantrag_set_status('genehmigt','Init')" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Genehmigung aufheben">
 {/if}</div>
@@ -195,6 +195,6 @@ property_umzugsformular.tpl.html
 <div class="SelTitle"><strong>Anforderungsarten</strong></div>
 <div id="SelBoxUartItems">
 <div class="SelItem"><input type="checkbox" name="uartbox" value="Box" checked=1> <strong>Box</strong>move</div>
-<div class="SelItem"><input type="checkbox" name="uartbox" value="Mit Möbel" checked=1> Mit <strong>Möbel</strong></div>
+<div class="SelItem"><input type="checkbox" name="uartbox" value="Mit MÃ¶bel" checked=1> Mit <strong>MÃ¶bel</strong></div>
 </div>
 </div>

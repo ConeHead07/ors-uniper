@@ -7,7 +7,7 @@ $activeMenuId = (isset($id) && $id) ? $id : 0;
 $numberOfAllMenus = get_numberOfAllMenus();
 
 $numberOfChilds = get_numberOfChilds($activeMenuId);
-$body_content.= "#".__LINE__."Menüs auf aktueller Ebene: $numberOfChilds<br>\n";
+$body_content.= "#".__LINE__."MenÃ¼s auf aktueller Ebene: $numberOfChilds<br>\n";
 
 // Hole MenuDaten
 if (!empty($activeId)) {
@@ -15,7 +15,7 @@ if (!empty($activeId)) {
 }
 
 // Anzeige MenuPath
-$body_content.= "<b>MenüPfad</b><br>\n";
+$body_content.= "<b>MenÃ¼-Pfad</b><br>\n";
 $body_content.= "<div><a href=\"".$msbBaselinkTree."\"><b>Top</b></a></div>\n";
 $_ParentItems = get_menu_parentItems($activeMenuId);
 $intendWidth = "20"; // px:Pixel
@@ -32,11 +32,11 @@ for ($i = 0; $i < count($_ParentItems); $i++) {
 $body_content.= "<br>\n";
 
 // Anzeige MenuChilds
-$body_content.= "<b>Untermenüs</b><br>\n";
+$body_content.= "<b>UntermenÃ¼s</b><br>\n";
 $_ItemsByParentid = get_menu_itemsByParentid($activeMenuId);
 if (is_array($_ItemsByParentid) && count($_ItemsByParentid)) {
 	
-	$body_content.= "<br>Menüelemente auf dieser Ebene: ".count($_ItemsByParentid)." | Alle: $numberOfAllMenus<br>\n";
+	$body_content.= "<br>MenÃ¼elemente auf dieser Ebene: ".count($_ItemsByParentid)." | Alle: $numberOfAllMenus<br>\n";
 	$body_content.= "<style>\n";
 	$body_content.= ".tblSB * { \n";
 	$body_content.= "   font-size:12px;\n";
@@ -65,11 +65,11 @@ if (is_array($_ItemsByParentid) && count($_ItemsByParentid)) {
 	
 	$body_content.= "<table class=\"tblSB\">\n";
 	$body_content.= "<tr>\n";
-	$body_content.= "<td>Menü/Ebene</td>";
+	$body_content.= "<td>MenÃ¼/Ebene</td>";
 	$body_content.= "<td>Edit</td>";
 	$body_content.= "<td>Aktiviert</td>";
-	$body_content.= "<td>Menüanzeige</td>";
-	$body_content.= "<td><img src=\"../images/usr_icon.gif\" width=\"15\" height=\"14\" alt=\"Status, ob Frei zugänglich\">Freier Zugang</td>";
+	$body_content.= "<td>MenÃ¼anzeige</td>";
+	$body_content.= "<td><img src=\"../images/usr_icon.gif\" width=\"15\" height=\"14\" alt=\"Status, ob Frei zugÃ¤nglich\">Freier Zugang</td>";
 	$body_content.= "<td>Pos</td>";
 	$body_content.= "<td>Kill</td>";
 	$body_content.= "</tr>";
@@ -103,8 +103,8 @@ if (is_array($_ItemsByParentid) && count($_ItemsByParentid)) {
 		$body_content.= " &raquo; <a href=\"".$msbBaselinkTree."&cmd=setfreigabe&wert=$invert_free&id=".$r_id."&pid=$r_pid\">";
 		$body_content.= "".$_SetFlag["webfreigabe"][$invert_free]."</a></td>\n";
 		
-		// Menüanzeige
-		$body_content.= "<td style=\"background:$r_visi_bg;\" title=\"Editierbarer Status: Menüanzeige\">";
+		// Menï¿½anzeige
+		$body_content.= "<td style=\"background:$r_visi_bg;\" title=\"Editierbarer Status: MenÃ¼anzeige\">";
 		$body_content.= $_GetFlag["visibility"][$r_visi];
 		$body_content.= " &raquo; <a href=\"".$msbBaselinkTree."&cmd=setvisibility&wert=$invert_visi&id=".$r_id."&pid=$r_pid\">";
 		$body_content.= "".$_SetFlag["visibility"][$invert_visi]."</a></td>\n";
@@ -127,9 +127,9 @@ if (is_array($_ItemsByParentid) && count($_ItemsByParentid)) {
 		$body_content.= "<img src=\"../images/pfeil_nachganzunten.gif\" width=\"10\" height=\"10\" alt=\"\"></a>";
 		$body_content.= "</td>\n";
 		
-		// Löschen
-		$body_content.= "<td title=\"Editierbarer Status: Sichtbarkeit im Menü\">";
-		$body_content.= "<a href=\"".$msbBaselinkTree."&cmd=loeschen&wert=1&id=".$r_id."&pid=$r_pid\"><img src=\"../images/kill_item.gif\" width=\"10\" height=\"10\" alt=\"Menü löschen\"></a></td>\n";
+		// Lï¿½schen
+		$body_content.= "<td title=\"Editierbarer Status: Sichtbarkeit im MenÃ¼\">";
+		$body_content.= "<a href=\"".$msbBaselinkTree."&cmd=loeschen&wert=1&id=".$r_id."&pid=$r_pid\"><img src=\"../images/kill_item.gif\" width=\"10\" height=\"10\" alt=\"Menï¿½ lÃ¶schen\"></a></td>\n";
 		
 		$body_content.= "</tr>\n";
 	}/**/
@@ -137,7 +137,7 @@ if (is_array($_ItemsByParentid) && count($_ItemsByParentid)) {
 	$body_content.= "</table>\n";
 	
 } else {
-	$body_content.= "Es existieren keine Untermenüs!<br>\n";
+	$body_content.= "Es existieren keine UntermenÃ¼s!<br>\n";
 }
 
 $body_content.= "<br>\n";

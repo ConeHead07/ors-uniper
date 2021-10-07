@@ -8,11 +8,13 @@ if (file_exists(__DIR__ . '/../etc/sysdef.local.php')) {
     require_once __DIR__ . '/../etc/sysdef.php';
 }
 
+// $charset = 'ISO-8859-1';
+$charset = 'UTF-8';
 // use iso-8859-1 as character encoding
 if (function_exists('mb_internal_charset')) {
-    mb_internal_charset('ISO-8859-1');
+    mb_internal_charset($charset);
 }
-define('SMARTY_RESOURCE_CHAR_SET', 'ISO-8859-1');
+define('SMARTY_RESOURCE_CHAR_SET', $charset);
 
 $msg = "";
 $error = "";
@@ -80,6 +82,7 @@ $MConf = array(
 	"DB_User" => DB_DUSS_USER,
     "DB_Pass" => DB_DUSS_PASS,
     "DB_Port" => DB_DUSS_PORT,
+	"DB_CHARSET" => "utf8", // Previous latin1
 	"DB_TblPrefix" => "mm_",
 	"Html_Ausgabe" => "index.html",
 	"Html_Body" => "index_body.html",

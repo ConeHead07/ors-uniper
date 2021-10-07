@@ -174,7 +174,7 @@ function blurBox(callback, hide) {
 }
 
 function get_Kategorie( obj ) {
-   $("#lktgselect").html( $("<option/>").text("Bitte ausw‰hlen") );
+   $("#lktgselect").html( $("<option/>").text("Bitte ausw√§hlen") );
    for(var ktg1 in lkItems) {
         $("#lktgselect").append( 
             $("<option/>").val(ktg1).text(ktg1).data("leistungen", lkItems[ktg1]).data("kategorie1", ktg1)
@@ -219,7 +219,7 @@ function get_Leistung( obj ) {
     }
     
     var leistungen = $( objKtg1 ).data( "leistungen" );
-    $("#ldescselect").html( $("<option/>").text("Bitte ausw‰hlen") );
+    $("#ldescselect").html( $("<option/>").text("Bitte ausw√§hlen") );
     for(var lstg in leistungen) {
         $("#ldescselect").append( 
             $("<option/>").val(lstg).text(lstg).data("leistung", leistungen[lstg])
@@ -229,8 +229,8 @@ function get_Leistung( obj ) {
         var data = $(this).find("option:selected").data("leistung");
         if ( lstgIsAllreadyInList(data.leistung_id, objInp) ) {
             alert("Die Leistung wurde bereits in die Liste aufgenommen!\n" + 
-                  "Bitte f¸gen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
-                  "Andernfalls werden bestehende Mengen ¸berschrieben."
+                  "Bitte f√ºgen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
+                  "Andernfalls werden bestehende Mengen √ºberschrieben."
             );
             objInp.blur();
             return false;
@@ -637,7 +637,7 @@ $(function(){
                                 var isLampeChecked = checkedRows.find("[data-ktg=Schreibtischlampe],[data-ktg=23]").length > 0;
                                 console.log("Auswahlkontrolle ", { isStuhlChecked, isTischChecked, isLampeChecked});
 
-                                alert("Es kˆnnen maximal " + mmaxCheckedPositionen + " Einzelpositionen ausgew‰hlt werden oder ein Komplettpaket!");
+                                alert("Es k√∂nnen maximal " + mmaxCheckedPositionen + " Einzelpositionen ausgew√§hlt werden oder ein Komplettpaket!");
                                 chckRadio.prop("checked", false);
                             }
                         }

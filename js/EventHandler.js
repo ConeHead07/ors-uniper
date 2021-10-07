@@ -25,7 +25,7 @@
 	}
 	function cancelXpWidgetEvent()
 	{
-		return false;	// Übergabe an obj.onselectstart = cancelXpWidgetEvent;
+		return false;	// Ãœbergabe an obj.onselectstart = cancelXpWidgetEvent;
 		
 	}
 	function addEvent(obj, eve, fnc) {

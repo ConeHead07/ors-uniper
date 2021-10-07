@@ -290,7 +290,7 @@ function AjaxFormSend(frm, selector, sConfirm) {
 	
 	function get_SearchInputListeGebaeude(obj) {
 		if (!O('ortsFilter').value) {
-			alert("Wählen Sie erst einenStandort aus!");
+			alert("WÃ¤hlen Sie erst einenStandort aus!");
 			O("ortsFilter").focus();
 			//get_SearchInputListeOrte(O('ortsFilter'));
 			return false;
@@ -315,13 +315,13 @@ function AjaxFormSend(frm, selector, sConfirm) {
 	
 	function get_SearchInputListeEtage(obj) {
 		if (!document.frmMAFilter.elements['ort'].value) {
-			alert("Wählen Sie erst einen Standort aus!");
+			alert("WÃ¤hlen Sie erst einen Standort aus!");
 			//O("ortsFilter").focus();
 			//get_SearchInputListeOrte();
 			return false;
 		}
 		if (!document.frmMAFilter.elements['gebaeude'].value) {
-			alert("Wählen Sie erst ein Gebaeude aus!");
+			alert("WÃ¤hlen Sie erst ein Gebaeude aus!");
 			//O("gebaeudeFilter").focus();
 			//get_SearchInputListeGebaeude();
 			return false;
@@ -342,9 +342,8 @@ function AjaxFormSend(frm, selector, sConfirm) {
 	}
 	
 	function dropMa(MaId, rowId) {
-		if (!confirm("Arbeitsplatzdaten löschen?")) return false;
+		if (!confirm("Arbeitsplatzdaten lÃ¶schen?")) return false;
 		
 		var sUrl = "bestandsaufnahme_loeschen.php?cat=mitarbeiter&id="+MaId+"&rowId="+rowId;
 		SendRequest(sUrl, 'frmEditData');
 	}
-	

@@ -251,7 +251,7 @@ class SmtpMailer {
      * @param array $aKeyValuePairs
      * @return $this
      */
-    public function setTplVars(array $aKeyValuePairs, $charset = 'ISO-8859-1') {
+    public function setTplVars(array $aKeyValuePairs, $charset = 'UTF-8') {
         $this->tplVars = [];
         $this->assign($aKeyValuePairs, null, $charset);
         return $this;
@@ -389,7 +389,7 @@ class SmtpMailer {
             $this->createMessage();
             $type = $this->message->getHeaders()->get('Content-Type');
             $type->setValue('text/plain');
-            $type->setParameter('charset', 'iso-8859-1');
+            $type->setParameter('charset', 'UTF-8');
             $this->message->setTo($_to['email'], $_to['anrede'] ?? '');
             $this->message->setSubject($this->subject);
 

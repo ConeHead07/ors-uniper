@@ -40,9 +40,18 @@ $db_conn = $connid;
 $addVars = "s=$s&";
 $formAction = basename($_SERVER["PHP_SELF"])."?".$addVars;
 
-function dbconn($db_host, $db_user, $db_pass, &$db_conn) {
+function dbconn($db_host, $db_user, $db_pass, &$db_conn, $port = '', $aOptions = []) {
 	
-	if (!is_resource($db_conn)) $db_conn = MyDB::connect($db_host, $db_user, $db_pass);
+	if (!is_resource($db_conn)) {
+	    if (!$port) {
+            $db_conn = MyDB::connect($db_host, $db_user, $db_pass);
+        } else {
+            $db_conn = MyDB::connect($db_host, $db_user, $db_pass, $port);
+        }
+    }
+	if ($db_conn && !empty($aOptions['Charset'])) {
+	    $db_conn->set_charset($aOptions['Charset']);
+    }
 	return is_resource($db_conn);
 }
 
@@ -50,7 +59,7 @@ function queryResultFirstColToArr($SQL, $db_conn, &$err) {
 	global $error;
 	// echo "#".__LINE__." r:$r, SQL:".fb_htmlEntities($SQL)."<br>\n";
 	if (!is_resource($db_conn)) {
-		$error.= "Ungültiger DB-Conn-Handler \$db_conn:$db_conn!<br>\n";
+		$error.= "UngÃ¼ltiger DB-Conn-Handler \$db_conn:$db_conn!<br>\n";
 		return false;
 	}
 	$reArr = array();
@@ -124,7 +133,7 @@ function getConfDataByCFile($cfile) {
 $aCnfForm = array("Database" => $db_only, "Table" => "", "DirName" => $dir_only, "ConfName" => "");
 
 if (!is_resource($db_conn)) {
-	die("Ungültige Zugangsdaten für DB-Server!<br>\n");
+	die("Ungï¿½ltige Zugangsdaten fï¿½r DB-Server!<br>\n");
 }
 
 foreach($aCnfForm as $k => $v) if (!empty($_GET["aCnfForm"][$k])) $aCnfForm[$k] = $_GET["aCnfForm"][$k];
@@ -173,14 +182,14 @@ if (!isset($_POST["resetSrc"]) && !empty($aCnfForm["Database"])) {
 		$dbAccessForm.= "<input type=\"hidden\" name=\"SetTbl\" value=\"".fb_htmlEntities($aCnfForm["Table"])."\">\n";
 	} else {
 		$dbAccessForm.= "Tabelle: <br>\n";
-		$dbAccessForm.= getFormSelectBySQL("SetTbl", "SHOW Tables FROM `".$aCnfForm["Database"]."`", $db_conn, false, false, "", "Tbl auswählen")."<br>\n";
+		$dbAccessForm.= getFormSelectBySQL("SetTbl", "SHOW Tables FROM `".$aCnfForm["Database"]."`", $db_conn, false, false, "", "Tbl auswï¿½hlen")."<br>\n";
 	}
 } else {
 	$dbAccessForm.= "Datenbank: ".($db_only? "(<strong>DbOnly:</strong>".$db_only.")" : "")."<br>\n";
-	$dbAccessForm.= getFormSelectBySQL("SetDb", "SHOW DATABASES", $db_conn, false, false, $default_db, "Db auswählen")."<br>\n";
+	$dbAccessForm.= getFormSelectBySQL("SetDb", "SHOW DATABASES", $db_conn, false, false, $default_db, "Db auswï¿½hlen")."<br>\n";
 }
 
-$dbAccessForm.= "Oberverzeichnis für $dirLib und $dirTpl ".($dir_only? "(<strong>DirOnly:</strong>".$dir_only.")" : "").":<br>\n";
+$dbAccessForm.= "Oberverzeichnis fï¿½r $dirLib und $dirTpl ".($dir_only? "(<strong>DirOnly:</strong>".$dir_only.")" : "").":<br>\n";
 if (isset($_POST["resetSrc"]) || empty($aCnfForm["DirName"])) {
 	$dbAccessForm.= "<input name=\"SetDir\" value=\"\"><br>\n";
 } else {
@@ -217,7 +226,7 @@ if (!isset($_POST["resetSrc"]) && $aCnfForm["Database"] && $aCnfForm["Table"] &&
 	$addVars2 = "";
 	foreach($aCnfForm as $k => $v) if ($v) $addVars2.= "&aCnfForm[$k]=".rawurlencode($v);
 	
-	// DB-Basisdaten für Conf-Erstellung
+	// DB-Basisdaten fï¿½r Conf-Erstellung
 	$conf_db = $aCnfForm["Database"];
 	$conf_tbl= $aCnfForm["Table"];
 	$conf_name = $aCnfForm["ConfName"];

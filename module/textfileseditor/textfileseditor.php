@@ -44,7 +44,7 @@ if (!$d || !$TFE_CNF["Dir"][$d] || !$f || !file_exists($TFE_CNF["Dir"][$d]."/".$
 	if ($fs) { // File-Action : save
 		$fc = stripslashes($_POST["fc"]);
 		file_put_contents($file, $fc);
-		$body_content.= "<div style=\"color:#008000;\">Datei wurde gespeichert. Letzte Änderung: ".format_fstat($file)."!</div><br>\n";
+		$body_content.= "<div style=\"color:#008000;\">Datei wurde gespeichert. Letzte nderung: ".format_fstat($file)."!</div><br>\n";
 	}
 
 	if ( substr(basename($file), 0, 11) === 'statusmail_' ) {

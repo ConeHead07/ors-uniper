@@ -246,7 +246,7 @@ $topmenu = implode("", file($MConf["AppRoot"]."/sites/mitarbeiter_topmenu.tpl.ht
 $AS->loadDbdata();
 
 if ($export === 'csv') {
-    header('Content-Type: text/csv; charset="iso-8859-1"');
+    header('Content-Type: text/csv; charset="' . $charset . '"');
     header('Content-Disposition: attachment; filename="Auftrag_' . $AID . '.csv"');
     $Tpl->display('umzugsformular.tpl.csv');
     exit;

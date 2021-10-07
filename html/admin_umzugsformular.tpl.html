@@ -212,7 +212,7 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
     </div>
 
     <div id="BoxLieferhinweise">
-        <strong>Lieferinweis (für Lieferschein):</strong><br>
+        <strong>Lieferinweis (fÃ¼r Lieferschein):</strong><br>
         <textarea class="iarea bemerkungen lieferhinweise" name="AS[lieferhinweise]"></textarea>
     </div>
 
@@ -220,8 +220,8 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
  --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
  --><input type="submit" class="btn grey" onclick="umzugsantrag_save()" xstyle="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Speichern"><!-- 
  --><input type="submit" class="btn red" onclick="umzugsantrag_reload()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Neu laden"><!-- 
- --><input type="submit" class="btn red" onclick="umzugsantrag_add_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhänge">
-{if $creator == "mertens"}<input type="submit" class="btn red" onclick="umzugsantrag_add_internal_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Interne Dateianhänge">{/if}
+ --><input type="submit" class="btn red" onclick="umzugsantrag_add_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhnge">
+{if $creator == "mertens"}<input type="submit" class="btn red" onclick="umzugsantrag_add_internal_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Interne DateianhÃ¤nge">{/if}
 <br>
 <br>
 {if $AS.umzugsstatus ne "temp"}
@@ -231,9 +231,9 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
 {if $AS.genehmigt_br eq 'Init'}
 <input id="btnStatGeprBackToUser" type="submit" class="{if $AS.geprueft eq 'Ja' || $AS.genehmigt_br ne 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if}" onclick="umzugsantrag_set_status('zurueckgeben','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Zurueckgeben">
 {if $AS.umzug eq "Ja"}
-<input id="btnStatGenJa" type="submit" class="{ if ($AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init' || $AS.geprueft ne 'Init') && $AS.umzugsstatus ne 'erneutpruefen'}cssHide{else}btn green{/if}" onclick="umzugsantrag_set_status('geprueft','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" title="Senden als Geprüft" value="Senden">
+<input id="btnStatGenJa" type="submit" class="{ if ($AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init' || $AS.geprueft ne 'Init') && $AS.umzugsstatus ne 'erneutpruefen'}cssHide{else}btn green{/if}" onclick="umzugsantrag_set_status('geprueft','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" title="Senden als GeprÃ¼ft" value="Senden">
 {else}
-<input id="btnStatGenJa" type="submit" class="btn green" {if $AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init'}class="cssHide"{/if} onclick="umzugsantrag_set_status('genehmigt','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" title="Bestätigung senden" value="Senden">
+<input id="btnStatGenJa" type="submit" class="btn green" {if $AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init'}class="cssHide"{/if} onclick="umzugsantrag_set_status('genehmigt','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" title="BestÃ¤tigung senden" value="Senden">
 {/if}
 {if 0}<input id="btnStatGenNein" type="submit" class="btn red" {if $AS.genehmigt_br eq 'Nein' || $AS.bestaetigt ne 'Init'}class="cssHide"{/if} onclick="umzugsantrag_set_status('genehmigt','Nein')" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Ablehnen">{/if}
 &nbsp;{/if}
@@ -248,7 +248,7 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
 {/if}
 </div>
 
-{if $AS.umzug eq "Nein"}Antrag ist ohne Umzug und kann direkt ausgeführt werden
+{if $AS.umzug eq "Nein"}Antrag ist ohne Umzug und kann direkt ausgefÃ¼hrt werden
 {else}Antrag ist mit Umzug und erfordert die Genehmigung durch Property
 {/if}
 <!-- Debug-Btn:
@@ -275,7 +275,7 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;">Aus Stammdaten</span></div>
   <div style="float:right;">[Anzeigen/Bearbeiten] 
   <img name="RaumStatImg" src="" align="absmiddle" style="border:0;" width=16 height=16 title=""><a href="" onclick="show_raum_mitarbeiter(this, 'ziel');return false;">[Raum-Neu: <span class="RaumStatInfo"></span> ]</a> &nbsp; 
-  <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> <span onclick="dropMA(this)" style="cursor:pointer;">Aus Umzugsliste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
+  <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> <span onclick="dropMA(this)" style="cursor:pointer;">Aus Umzugsliste lÃ¶schen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
 </caption>
   <thead>
   <tr>

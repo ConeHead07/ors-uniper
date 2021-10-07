@@ -1,7 +1,7 @@
 <?php
 
 if (false && date("Y-m-d H:i") > "2016-01-30 13:00" && date("Y-m-d H:i") < "2016-01-30 15:00") {
-    die("Das Umzugsportal ist vorübergehend bis voraussichtlich 13.30 Uhr wegen Wartungsarbeiten gesperrt!");
+    die("Das Umzugsportal ist vorÃ¼bergehend bis voraussichtlich 13.30 Uhr wegen Wartungsarbeiten gesperrt!");
 }
 
 // Delegate static file requests back to the PHP built-in webserver
@@ -73,7 +73,7 @@ if (is_array($ActiveMenu)
     {
         $M = $_ParentItems[$i];
 
-        $MenuAccess.= "Menü {$M['srv']} Rechte:{$M['rechte']} Gruppen:{$M['gruppen']} Geschützt:{$M['geschuetzt']}<br>\n";
+        $MenuAccess.= "MenÃ¼ {$M['srv']} Rechte:{$M['rechte']} Gruppen:{$M['gruppen']} GeschÃ¼tzt:{$M['geschuetzt']}<br>\n";
 
         if ($_ParentItems[$i]["webfreigabe"] == "Nein") {
             $srv_error = true;
@@ -82,14 +82,14 @@ if (is_array($ActiveMenu)
         if ($_ParentItems[$i]["geschuetzt"] == "Ja") {
             if (empty($user)) {
                 $srv_error = true;
-                $error.= "Zugang nur für Mitglieder!<br>\n";
+                $error.= "Zugang nur fÃ¼r Mitglieder!<br>\n";
                 $show_login = true;
             } else {
 
                 switch($_ParentItems[$i]["gruppen"]) {
                     case "admin":
                         if ($user["gruppe"] != "admin") {
-                            $error.= "Unzulässiger Seitenaufruf!<br>\n";
+                            $error.= "UnzulÃ¤ssiger Seitenaufruf!<br>\n";
                             $srv_error = true;
                         }
                         break;
@@ -125,10 +125,10 @@ if (is_array($ActiveMenu)
 
 if ($srv_error && empty($show_login)) {
     $body_content.= "<h3>Die angeforderte Seite wurde nicht gefunden.</h3>\n";
-    $body_content.= "Falls Sie die Adresse von Hand eingetippt haben, prüfen Sie bitte die korrekte Schreibweise!\n";
-    $body_content.= "Möglicherweise befindet sich die Seite derzeit in Bearbeitung und wurde gesperrt!<br>\n";
+    $body_content.= "Falls Sie die Adresse von Hand eingetippt haben, prÃ¼fen Sie bitte die korrekte Schreibweise!\n";
+    $body_content.= "MÃ¶glicherweise befindet sich die Seite derzeit in Bearbeitung und wurde gesperrt!<br>\n";
     $body_content.= "<br>\n";
-    $body_content.= "Bei Fragen zur Erreichbarkeit der gewünschten Informationen können Sie uns gerne eine E-Mail schreiben an <a href=\"mailto:$postmaster?subject=Seitenfehler:$srv\">$postmaster</a><br>\n";
+    $body_content.= "Bei Fragen zur Erreichbarkeit der gewÃ¼nschten Informationen kÃ¶nnen Sie uns gerne eine E-Mail schreiben an <a href=\"mailto:$postmaster?subject=Seitenfehler:$srv\">$postmaster</a><br>\n";
 } else {
 
     if ($ActiveMenu["cmd"]) {
@@ -150,7 +150,7 @@ if ($srv_error && empty($show_login)) {
             require($ActiveMenu["script"]);
         } else {
             $error.= "Interner Fehler:".$ActiveMenu["script"]." (id:".$ActiveMenu["id"].")<br>\n";
-            $error.= "Das Ausgabemodul für die Seite \"".$ActiveMenu["name"]."\" konnte nicht geladen werden!<br>\n";
+            $error.= "Das Ausgabemodul fÃ¼r die Seite \"".$ActiveMenu["name"]."\" konnte nicht geladen werden!<br>\n";
         }
     }
 }
