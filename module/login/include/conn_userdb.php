@@ -3,9 +3,9 @@
 $ConnUserDB = array(
 	// DB-Verbindungsdaten
 	"Host" => "localhost",
-	"User" => "ctvwebuser",
-	"Pass" => "enu6b92xev",
-	"Database" => "cms_bratwurst",
+	"User" => "",
+	"Pass" => "",
+	"Database" => "",
 	"connid" => "",
 	"conndbid" => "",
 	"error_Abfrage" => "<b>Abfragefehler</b>",
@@ -15,4 +15,3 @@ $ConnUserDB = array(
 	"error_update"  => "<b>Eintrag konnte nicht ge&auml;ndert werden</b>",
 	"error_beitraege" => "<b>Zur Zeit sind keine Eintr&auml;ge abrufbar</b>"
 );
-?>

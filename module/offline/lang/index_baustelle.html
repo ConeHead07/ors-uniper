@@ -16,7 +16,6 @@ html, body {
 	width: 900px;
 	height: 675px;
 	text-align: center;
-	background: #c6bc91 url(http://www.bratwurst.tv/bw/cms/cms_images/baustelle.jpg) no-repeat;
 	color: #fff;
 	position: absolute;
 	left: 50%;
@@ -82,21 +81,6 @@ html, body {
 
 </style> 
 
-<script type="text/javascript" src="http://www.bratwurst.tv/bw/cms/media/swfobject.js"></script>
-	<script type="text/javascript">
-	function init() {
-		return false;
-	}
-	
-	function initPlayer() {
-		var so = new SWFObject('http://www.bratwurst.tv/bw/cms/media/player.swf','mpl','470','20','9');
-		so.addParam('allowscriptaccess','always');
-		so.addParam('allowfullscreen','false');
-		so.addParam('flashvars','&duration=33&file=http://www.bratwurst.tv/bw/cms/media/sound/thebratwurstsong01.mp3&frontcolor=#867b5d&lightcolor=#867b5d&screencolor=#867b5d&volume=6');
-		so.write('player');
-	}
-	window.onload = init;
-</script>
 
 
 </head> 
@@ -105,7 +89,6 @@ html, body {
 <div id="center_content">
 
 	<div id="nav">
-	<a href="?ln=de">Deutsch</a> &nbsp; <a href="?ln=en">English</a> &nbsp; <a href="?ln=es">Espagnol</a>
 	</div>
 	<div id="content">
 {content}

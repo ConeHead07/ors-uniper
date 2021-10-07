@@ -4,12 +4,12 @@ Sie haben sich auf unserer Homepage registriert.
 Um Ihren Login zu aktivieren klicken Sie bitte den folgenden Link an:
 {AktivierungsLink}
 
-Sie können sich anschliessend mit Ihrer E-Mail und Ihrem Passwort einloggen.
+Sie kÃ¶nnen sich anschliessend mit Ihrer E-Mail und Ihrem Passwort einloggen.
 
-Falls Sie den Freischalt-Link in dieser Mail nicht direkt anklicken können, 
+Falls Sie den Freischalt-Link in dieser Mail nicht direkt anklicken kÃ¶nnen,
 kopieren Sie Ihn in die Adressleiste Ihres Browsers.
 
-Mit freundlichen Grüßen
+Mit freundlichen GrÃ¼ÃŸen
 
 Ihr Team von
 {HomepageTitle}

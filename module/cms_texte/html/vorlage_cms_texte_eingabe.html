@@ -29,11 +29,11 @@ function openAcmVideoauswahl(frm, el) {
 <tr>
 	<td><b>Kurzname/Notation: Benennung des Beitrags in Kurzform, kann auch als Link/Verweis auf den Eintrag verwendet werden</b><br>
 	<div style="font-size:11px;">
-	Die Notation ist eine beliebige alfanumerische Zeichenkette ohne Leer- u. Sonderzeichen wie z.B. ��?�/()=&amp;<br>
+	Die Notation ist eine beliebige alfanumerische Zeichenkette ohne Leer- u. Sonderzeichen wie z.B. äö?ß/()=&amp;<br>
 	F�r Ersatz von Leerzeichen empfiehlt sich die Verwendung von Unterstrichen.
 	Die Verlinkung kann mit &quot;<span style="color:blue;text-decoration:underline;"><em>n=MeineNotation</em></span>&quot; 
 	zusammengesetzt werden. 
-	Bsp: <span style="color:blue;text-decoration:underline;">http://www.bratwurst.tv/bw/cms/lib/?<em>n=MeineNotation</em></span><br>
+	Bsp: <span style="color:blue;text-decoration:underline;">/cms/lib/?<em>n=MeineNotation</em></span><br>
 	</div>
 	<input type="text" name="eingabe[notation]" value="%eingabe[notation]%" size="32" maxlength="32" style="width:550px; border: thin groove;">
 	</td>
@@ -45,11 +45,11 @@ function openAcmVideoauswahl(frm, el) {
 	</td>
 </tr>
 <tr>
-	<td><b>Gemeinsame sprach�bergreifende ID f�r �bersetzungen (Common Language Key)</b>
+	<td><b>Gemeinsame sprachübergreifende ID für Übersetzungen (Common Language Key)</b>
 	<div style="font-size:11px;">
-	<span style="color:green;">Wenn dieser Beitrag keine �bersetzung ist k�nnen Sie das Feld leer lassen, die ID wird dann generiert!</span><br>
-	Wenn Sie z.B. eine englische �bersetzung anlegen, muss in diesem Feld die gleiche ID wie im Deutschen stehen. <br>	
-	Die ID beginnt mit dem L�nderk�rzel des Originalbeitrags gefolgt von einem Bindestrich und der ID des Originalbeitrags (Bsp: DE-54). 
+	<span style="color:green;">Wenn dieser Beitrag keine Übersetzung ist können Sie das Feld leer lassen, die ID wird dann generiert!</span><br>
+	Wenn Sie z.B. eine englische Übersetzung anlegen, muss in diesem Feld die gleiche ID wie im Deutschen stehen. <br>
+	Die ID beginnt mit dem Länderkürzel des Originalbeitrags gefolgt von einem Bindestrich und der ID des Originalbeitrags (Bsp: DE-54).
 	</div>
 	<input type="text" name="eingabe[common_lang_key]" value="%eingabe[common_lang_key]%" size="32" maxlength="32" style="width:550px; border: thin groove;">
 	</td>
@@ -66,12 +66,12 @@ function openAcmVideoauswahl(frm, el) {
 </tr>
 <tr>
 	<td><b>Trailer: Titel</b><br>
-	<textarea type="text" name="eingabe[listentitel]" cols="30" rows="2" style="height:40; width:550px; border: thin groove;">%eingabe[listentitel]%</textarea>
+	<textarea type="text" name="eingabe[listentitel]" cols="30" rows="2" style="height:40px; width:550px; border: thin groove;">%eingabe[listentitel]%</textarea>
 	</td>
 </tr>
 <tr>
 	<td><b>Trailer: Kurzer Text</b><br>
-	<textarea type="text" name="eingabe[listentext]" cols="30" rows="10" style="height:200; width:550px; border: thin groove;">%eingabe[listentext]%</textarea><!-- txtedit_toolbar?groupid=edit1&formname=cmsform&inputname=eingabe[listentext]&width=550&height=250&class=content -->
+	<textarea type="text" name="eingabe[listentext]" cols="30" rows="10" style="height:200px; width:550px; border: thin groove;">%eingabe[listentext]%</textarea><!-- txtedit_toolbar?groupid=edit1&formname=cmsform&inputname=eingabe[listentext]&width=550&height=250&class=content -->
 	<br></td>
 </tr>
 
@@ -80,22 +80,22 @@ function openAcmVideoauswahl(frm, el) {
 </tr>
 <tr>
 	<td><b>Mediaquelle / Pfad [<a href="admin_cms_acmvideoauswahl.php?frmid=cmsform&elid=media_src" target="imgwin"
-	onclick="openAcmVideoauswahl('cmsform', 'media_src');return false;">Auswahl �ffnen</a>]</b><br>
+	onclick="openAcmVideoauswahl('cmsform', 'media_src');return false;">Auswahl öffnen</a>]</b><br>
 	<input type="text" name="eingabe[media_src]" value="%eingabe[media_src]%" size="32" maxlength="120" style="width:550px; border: thin groove;">
 	</td>
 </tr>
 <tr>
-	<td><b>Mediaattribute: H�he, Breite, Type, Autostart etc.</b><br>
+	<td><b>Mediaattribute: Höhe, Breite, Type, Autostart etc.</b><br>
 	Bsp: height=530&height=460&type=wmv&autostart=1
-	<textarea type="text" name="eingabe[media_params]" cols="30" rows="2" style="height:40; width:550px; border: thin groove;">%eingabe[media_params]%</textarea>
+	<textarea type="text" name="eingabe[media_params]" cols="30" rows="2" style="height:40px; width:550px; border: thin groove;">%eingabe[media_params]%</textarea>
 	<br></td>
 </tr>
 <tr>
 	<td class="titelbalken"><b>Volltext / Mehr-Text</b></td>
 </tr>
 <tr>
-	<td><b>mehr...-Text</b> f�r Verweis zum Volltext <br>
-	<textarea type="text" name="eingabe[text2mehr]" cols="30" rows="2" style="height:40; width:550px; border: thin groove;">%eingabe[text2mehr]%</textarea>
+	<td><b>mehr...-Text</b> für Verweis zum Volltext <br>
+	<textarea type="text" name="eingabe[text2mehr]" cols="30" rows="2" style="height:40px; width:550px; border: thin groove;">%eingabe[text2mehr]%</textarea>
 	</td>
 </tr>
 <tr>
@@ -120,7 +120,7 @@ function openAcmVideoauswahl(frm, el) {
 	<td class="titelbalken"><b>Verschlagwortung</b></td>
 </tr>
 <tr>
-	<td><b>Freie Schlagw�rter</b><br>
+	<td><b>Freie Schlagwörter</b><br>
 	<textarea type="text" name="eingabe[schlagwort]" cols="30" rows="2" style="height:40; width:550px; border: thin groove;">%eingabe[schlagwort]%</textarea>
 	</td>
 </tr>

@@ -1,15 +1,15 @@
 Hallo {vorname} {nachname},
 
-Sie möchten für Ihren Account Ihre E-Mail ändern?
+Sie mÃ¶chten fÃ¼r Ihren Account Ihre E-Mail Ã¤ndern?
 Um Ihre neue E-Mail zu aktivieren klicken Sie bitten den folgenden Link an:
 {AktivierungsLink}
 
-Sie können sich anschliessend mit Ihrer neuen E-Mail und Ihrem Passwort einloggen.
+Sie kÃ¶nnen sich anschliessend mit Ihrer neuen E-Mail und Ihrem Passwort einloggen.
 
-Falls Sie den Freischalt-Link in dieser Mail nicht direkt anklicken können, 
+Falls Sie den Freischalt-Link in dieser Mail nicht direkt anklicken kÃ¶nnen,
 kopieren Sie Ihn in die Adressleiste Ihres Browser.
 
-Mit freundlichen Grüßen
+Mit freundlichen GrÃ¼ÃŸen
 
 Ihr
 {HomepageTitle}
