@@ -64,7 +64,7 @@ if (isset($_POST['register'])) {
                 if ($mail_tld == $_CONF['regc_mail_tld_only']) {
                     $arrFormVars['email'] = substr($arrFormVars['email'], 0, $p);
                 } else {
-                    $errorFlds .= "<li>Ungültige E-Mail-Domaine: $mail_tld!</li>\n";
+                    $errorFlds .= "<li>UngÃ¼ltige E-Mail-Domaine: $mail_tld!</li>\n";
                     $arrErrFlds['email'] = 1;
                 }
             }
@@ -91,7 +91,7 @@ if (isset($_POST['register'])) {
             $errorFlds.= "<li>Bitte geben Sie einen Benutzernamen an!</li>\n";
             $arrErrFlds['user'] = 1;
         } elseif (!unique_fldval($user_connid, 'user', $arrFormVars['user'], $uid = '')) {
-            $errorFlds.= '<li>Bitte wählen Sie einen anderen Benutzernamen!</li>\n';
+            $errorFlds.= '<li>Bitte wÃ¤hlen Sie einen anderen Benutzernamen!</li>\n';
             $arrErrFlds['user'] = 1;
         }
 
@@ -99,11 +99,11 @@ if (isset($_POST['register'])) {
             $errorFlds.= "<li>Bitte geben Sie eine E-Mail-Adresse an!</li>\n";
             $arrErrFlds['email'] = 1;
         } elseif (!check_email($arrFormVars['email'].$_CONF['regc_mail_tld_only'])) {
-            $errorFlds.= '<li>Ungültige E-Mail-Angabe!</li>\n';
+            $errorFlds.= '<li>UngÃ¼ltige E-Mail-Angabe!</li>\n';
             $arrErrFlds['email'] = 1;
         } elseif (!unique_email($conn, $arrFormVars['email'].$_CONF['regc_mail_tld_only'])) {
             $errorFlds.= "<li>Es existiert bereits ein User mit dieser E-Mail!</li>\n";
-            $errorFlds.= "<li>Falls Sie Ihr Passwort vergessen haben, können Sie es sich an Ihr E-Mail-Postfach schicken lassen!</li>\n";
+            $errorFlds.= "<li>Falls Sie Ihr Passwort vergessen haben, kÃ¶nnen Sie es sich an Ihr E-Mail-Postfach schicken lassen!</li>\n";
             $arrErrFlds['email'] = 1;
         }
     }
@@ -137,7 +137,7 @@ if (isset($_POST['register'])) {
 		$arrErrFlds['gebaeude'] = 1;
 	}
 	if (!$arrFormVars['agb_confirm']) {
-		$errorFlds.= '<li>für die Anmeldung benötigen wir Ihre Zustimmung zu unseren AGB!</li>\n';
+		$errorFlds.= '<li>fÃ¼r die Anmeldung benÃ¶tigen wir Ihre Zustimmung zu unseren AGB!</li>\n';
 		$arrErrFlds['agb_confirm'] = 1;
 	}
 
@@ -149,10 +149,10 @@ if (isset($_POST['register'])) {
         $errorFlds.= "<li>Bitten geben Sie ein Passwort an!</li>\n";
         $arrErrFlds['pw'] = 1;
     } elseif($arrFormVars['user'] && $arrFormVars['user'] == $arrFormVars['pw']) {
-        $errorFlds.= "<li>Das Passwort darf nicht mit dem Benutzernamen übereinstimmen!</li>\n";
+        $errorFlds.= "<li>Das Passwort darf nicht mit dem Benutzernamen Ã¼bereinstimmen!</li>\n";
         $arrErrFlds['pw'] = 1;
     } elseif ($arrFormVars['pw'] <> $arrFormVars['pwc']) {
-        $errorFlds.= "<li>Die Passwortwiederholung stimmt nicht mit der Passwortangabe überein!</li>\n";
+        $errorFlds.= "<li>Die Passwortwiederholung stimmt nicht mit der Passwortangabe Ã¼berein!</li>\n";
         $arrErrFlds['pw'] = 1;
     } elseif (strlen($arrFormVars['pw']) < $_CONF['pw_min_length']) {
         $errorFlds.= "<li>Das Passwort muss mind. " . $_CONF['pw_min_length'] . " Zeichen lang sein!</li>\n";
@@ -160,7 +160,7 @@ if (isset($_POST['register'])) {
     }
 
     if ($errorFlds) {
-        $error.= "<h5>Einige Angaben sind leer oder unzulässig:</h5>\n";
+        $error.= "<h5>Einige Angaben sind leer oder unzulÃ¤ssig:</h5>\n";
         $error.= "<ul>\n"  .$errorFlds . "</ul>\n";
     }
 

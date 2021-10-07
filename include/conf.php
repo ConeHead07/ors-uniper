@@ -156,8 +156,8 @@ $_ADMIN_MODUL["editbyconf"] = $ModulBaseDir."editdatabyconf/edit_data.inc.php";
 $_ADMIN_MODUL["offline"] = $ModulBaseDir."offline/offline.php";
 /* ADMIN-MODULE: ENDE */
 
-if (file_exists( __DIR__ . 'conf.local.php')) {
-    include __DIR__ . 'conf.local.php';
+if (file_exists( __DIR__ . '/conf.local.php')) {
+    include __DIR__ . '/conf.local.php';
 }
 
 if (!function_exists('getAppConfigProperty')) {
