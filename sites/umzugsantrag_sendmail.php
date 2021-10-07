@@ -212,9 +212,7 @@ function get_propertyverteilerById($AID) {
 	return $verteiler;
 }
 
-function getRegionalmanager(){
-    
-}
+function getRegionalmanager(){}
 
 function send_umzugsblatt($AID, $antragsOrt, $antragsGebaeude, $aData) {
         die('#'.__LINE__ . ' ' . __FUNCTION__ . '(' . print_r(func_get_args(),1) . ')');
@@ -233,7 +231,8 @@ function send_umzugsblatt($AID, $antragsOrt, $antragsGebaeude, $aData) {
 	$aATs = $db->query_rows($sql);
 	
 	$AtList = "";
-	for($i = 0; $i < count($aATs); $i++) {
+	$iNumAnlangen = count($aATs);
+	for($i = 0; $i < $iNumAnlangen; $i++) {
 		$DOKID = $aATs[$i]["dokid"];
 		$AT = new ItemEdit($ATConf, $connid, $user, $DOKID);
 		$AT->dbdataToInput();
@@ -277,8 +276,9 @@ function send_umzugsblatt($AID, $antragsOrt, $antragsGebaeude, $aData) {
 	}
 	
 	$specs="";
-	
-	for($i = 0; $i < count($aMailTo); $i++) {
+
+	$iNumMailTos = count($aMailTo);
+	for($i = 0; $i < $iNumMailTos; $i++) {
 		if (!trim($aMailTo[$i])) continue;
 		$name = str_replace(".", " ", current(explode("@", $aMailTo[$i])));
 		$mailTo = array(array("email"=>$aMailTo[$i], "Name"=>$name, "Vorname"=>"", 'anrede' => $name));
@@ -582,9 +582,9 @@ function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
 }
 
 function umzugsantrag_mailinform($AID, $status="neu", $value) {
-        return umzugsantrag_mailinform_dussmann($AID, $status, $value);
-        
-        die('#'.__LINE__ . ' ' . __FUNCTION__ . '(' . print_r(func_get_args(),1) . ')');
+    return umzugsantrag_mailinform_dussmann($AID, $status, $value);
+
+    die('#'.__LINE__ . ' ' . __FUNCTION__ . '(' . print_r(func_get_args(),1) . ')');
 	global $db;
 	global $error;
 	global $msg;
@@ -595,7 +595,7 @@ function umzugsantrag_mailinform($AID, $status="neu", $value) {
 	global $user;
 	
         
-        $users = get_usersByAid($AID);
+    $users = get_usersByAid($AID);
 	$TextBaseDir = $MConf["AppRoot"].$MConf["Texte_Dir"];
 	
 	if (!$AID) {
@@ -619,13 +619,17 @@ function umzugsantrag_mailinform($AID, $status="neu", $value) {
 	$userMailTo[] = array("email"=>$AS->arrInput["email"], "Name"=>$AS->arrInput["name"], "Vorname"=>$AS->arrInput["vorname"]);
 	
 	// Alte Abfrage des Verteiler an der Basisdaten des Umzugsantrags
-	$aPropertyMailTo = get_standort_property_mail($AS->arrInput["ort"], $AS->arrInput["gebaeude"]);
+    $usePropertyStandortMailer = false;
+    if ($usePropertyStandortMailer) {
+        $aPropertyMailTo = get_standort_property_mail($AS->arrInput["ort"], $AS->arrInput["gebaeude"]);
+    } else {
         $aPropertyMailTo = array(
             $users['antragsteller'],
 //            $users['regionalmanager'],
 //            $users['standortmanager'],
 //            $users['objektleiter'],
         );
+    }
         
 	$aAdminMailTo = get_standort_admin_mail($AS->arrInput["ort"], $AS->arrInput["gebaeude"]);
 	
@@ -635,7 +639,8 @@ function umzugsantrag_mailinform($AID, $status="neu", $value) {
 	$propertyVerteiler = get_propertyverteilerById($AID);
 	
 	$aAdminVerteilerTo = array();
-	for($i = 0; $i < count($adminVerteiler); $i++) {
+	$iNumAdminVerteiler = count($adminVerteiler);
+    for($i = 0; $i < $iNumAdminVerteiler; $i++) {
 		if (!trim($adminVerteiler[$i])) continue;
 		$name = str_replace(".", " ", array_shift(explode("@", $adminVerteiler[$i])));
 		$aAdminVerteilerTo[] = array("email"=>$adminVerteiler[$i], "Name"=>$name, "Vorname"=>"");
@@ -722,7 +727,8 @@ function umzugsantrag_mailinform($AID, $status="neu", $value) {
 				if ($AS->arrInput["bestaetigt"]=="Ja") {
 					$verteiler = get_umzugsverteilerById($AID);
 					$aMailTo = (is_array($verteiler)) ? $verteiler : explode("\n", $verteiler);
-					for($i = 0; $i < count($aMailTo); $i++) {
+					$iNumMailTos = count($aMailTo);
+					for($i = 0; $i < $iNumMailTos; $i++) {
 						$name = str_replace(".", " ", array_shift(explode("@", $aMailTo[$i])));
 						$userMailTo[] = array("email"=>$aMailTo[$i], "Name"=>$name, "Vorname"=>"");
 					}
@@ -764,7 +770,8 @@ if (1 && basename($_SERVER["PHP_SELF"]) == basename(__FILE__)) {
     );
 
     echo "<pre>";
-    for ($i = 0; $i < count($aStatus); $i++) {
+    $iNumStatus = count($aStatus);
+    for ($i = 0; $i < $iNumStatus; $i++) {
             echo "#".__LINE__." umzugsantrag_mailinform($AID, ".$aStatus[$i]["status"].", ".$aStatus[$i]["wert"].")<br>\n";
             umzugsantrag_mailinform($AID,$aStatus[$i]["status"], $aStatus[$i]["wert"]);
             exit;

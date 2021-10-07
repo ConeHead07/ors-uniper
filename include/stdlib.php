@@ -257,5 +257,3 @@ function domainOfUrl($strUrl) {
 	}
 	return $refDomain;
 }}
-
-?>

@@ -187,5 +187,3 @@ if (!empty($LoadScript)) echo TAB.'<LoadScript language="javascript" src="cdata"
 //echo TAB.'<POST><![CDATA['.print_r($_POST,1).']]></POST>'.NEWLINE;
 //echo TAB.'<GET><![CDATA['.print_r($_GET,1).']]></GET>'.NEWLINE;
 echo '</Result>';
-
-?>

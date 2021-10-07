@@ -81,4 +81,3 @@ function save_upload($aid) {
 		$uploadError = "Unauthorisierter Upload!";
 	}
 }
-?>

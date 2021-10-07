@@ -1,34 +1,15 @@
 <?php
 require_once __DIR__ . '/../module/Swift-5.0.0/lib/swift_required.php';
 if ( basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
-    require __DIR__ . '/../include/conf.php';
-    define('SMTP_MAILER_DEBUG', 1);
     $IsStandaloneTest = true;
+    require __DIR__ . '/../include/conf.php';
+    defined('SMTP_MAILER_DEBUG') || define('SMTP_MAILER_DEBUG', 1);
 } else {
     $IsStandaloneTest = false;
 }
 
 defined('SMTP_MAILER_DEBUG') || define('SMTP_MAILER_DEBUG', APP_ENVIRONMENT === 'DEVELOPMENT' ? 1 : 0);
-define('SMTP_MAILER_REALSEND', 1);
-$smtpSender = 'default';
-$aValidDebugSender = [
-    'default',
-    'bayerors',
-    'bcsors',
-    'dussmannors',
-    'vodafoneors',
-    'gmail',
-    'projectgmail',
-];
-
-if ($IsStandaloneTest && !empty($_REQUEST['sender']) && $_REQUEST['sender'] !== 'default' ) {
-    if (in_array($_REQUEST['sender'], $aValidDebugSender)) {
-        $smtpSender = $_REQUEST['sender'];
-    } else {
-        die('INVALID COMFIG-NAME FOR SENDER: ' . $_REQUEST['sender']);
-    }
-}
-
+defined('SMTP_MAILER_REALSEND') || define('SMTP_MAILER_REALSEND', 1);
 
 $aSmtpConn = array(
     "server"    => $MConf['smtp_server'], //"10.10.1.70",
@@ -51,146 +32,70 @@ $aSmtpConn = array(
     "tat"       => "" // Transaktionstext mit SERVER
 );
 
-if(SMTP_MAILER_DEBUG > 0 && $smtpSender === 'gmail') {
-    $aSmtpConn = array_merge($aSmtpConn, array(
-            "server"    => 'smtp.gmail.com',
-            "port"      => 25,
-            "encrypt"   => 'tls',
-            "from_name" => 'Mertens ORS Uniper',
-            "from_addr" => 'mertens.ors.uniper@gmail.com',
-            "from"      => '"Mertens ORS Uniper" <mertens.ors.uniper@gmail.com>',
-            "postfach_from" => '<mertens.ors.uniper@gmail.com>',
-            "auth_user" => 'mertens.ors.uniper@gmail.com',
-            "auth_pass" => 'aDjSoNHQQKzT7',
-            "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
-        ));
-}
-
-if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'bayerors') {
-    $aSmtpConn = array_merge($aSmtpConn, array(
-        'server'    => "mail.mertens.ag",
-        'port'      => "25",
-        'encrypt'   => 'tls',
-        'from_name' => 'Order Request System',
-        'from_addr' => 'bayerors@mertens.ag',
-        'from' => '"Order Request System" <bayerors@mertens.ag>',
-        'postfach_from' => '<bayerors@mertens.ag>',
-        'auth_user' => 'mag\bayermove',
-        'auth_pass' => 'merTens47877',
-        'helofrom' => 'bayer.mertens.ag',
-        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
-    ));
-}
-
-if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'bcsors') {
-    $aSmtpConn = array_merge($aSmtpConn, array(
-        "server"    => "mail.mertens.ag",
-        "port"      => "25",
-        'encrypt'   => 'tls',
-        'from_name' => 'Order Request System',
-        'from_addr' => 'bcsors@mertens.ag',
-        'from' => '"Order Request System" <bcsors@mertens.ag>',
-        'postfach_from' => '<bcsors@mertens.ag>',
-        'auth_user' => 'mag\bcsmove',
-        'auth_pass' => 'merTens47877',
-        'helofrom' => 'bcs.mertens.ag',
-        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
-    ));
-}
-
-if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'dussmannors') {
-    $aSmtpConn = array_merge($aSmtpConn, array(
-        "smtp_server"    => 'mail.mertens.ag', // '10.30.2.100', '10.30.2.101' "10.10.1.69",
-        "smtp_port"      => "25",
-        'encrypt'   => 'tls',
-        'from_name' => 'Order Request System',
-        'from_addr' => 'ors@mertens-henk.de',
-        'from' => '"Order Request System" <ors@mertens-henk.de>',
-        'postfach_from' => '<ors@mertens-henk.de>',
-        'auth_user' => 'mag\ors', // Alter Eintrag: "wp154616-bewerbung",
-        'auth_pass' => 'Mh#14!',
-        'helofrom' => 'dsd.mertens-henk.de',
-        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
-    ));
-}
-
-if (SMTP_MAILER_DEBUG > 0 && $smtpSender === 'vodafoneors') {
-    $aSmtpConn = array_merge($aSmtpConn, array(
-        "server"    => "mail.mertens.ag",
-        "port"      => "25",
-        'encrypt'   => 'tls',
-        'from_name' => 'Order Request System',
-        'from_addr' => 'move@mertens.ag',
-        'from' => '"Order Request System" <move@mertens.ag>',
-        'postfach_from' => '<move@mertens.ag>',
-        'auth_user' => 'mag\move',
-        'auth_pass' => 'move2010',
-        'helofrom' => 'vodafone.mertens.ag',
-        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
-    ));
-}
-
-
-
-if((SMTP_MAILER_DEBUG > 0 && $smtpSender === 'projectgmail')) {
-    $aSmtpConn = array_merge($aSmtpConn, array(
-        "server"    => 'smtp.gmail.com',
-        "port"      => 25,
-        "encrypt"   => 'tls',
-        "from_name" => 'Mertens Projekt-Tickets',
-        "from_addr" => 'mertens.openproject@gmail.com',
-        "from"      => '"Mertens Projekt-Tickets" <mertens.openproject@gmail.com>',
-        "postfach_from" => '<mertens.openproject@gmail.com>',
-        "auth_user" => 'mertens.openproject@gmail.com',
-        "auth_pass" => 'CersrDzC4b',
-        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".$smtpSender.txt",
-    ));
+if ($IsStandaloneTest && !empty($_REQUEST['sender']) && $_REQUEST['sender'] !== 'default' ) {
+    if (isset($SmtpConf) && is_array($SmtpConf) && in_array($_REQUEST['sender'], $SmtpConf)) {
+        $smtpSender = $_REQUEST['sender'];
+        $aSmtpConn = $SmtpConf[$smtpSender];
+    } else {
+        die('INVALID COMFIG-NAME FOR SENDER: ' . $_REQUEST['sender']);
+    }
 }
 
 if($IsStandaloneTest && SMTP_MAILER_DEBUG > 0 ) {
     echo 'smtpSender: ' . $smtpSender . "<br>\n";
     echo '| ';
-    foreach( $aValidDebugSender as $_sender) {
+    foreach( $SmtpConf as $_sender) {
         echo '<a href="?sender=' . $_sender . '">' . $_sender . '</a> | ';
     }
     echo '<pre>' . htmlentities(json_encode($aSmtpConn, JSON_PRETTY_PRINT)) . '</pre>';
 }
 
-$aSmtpDebugTo = [
-    [
-        'email' => 'frank.barthold@gmail.com',
-        'anrede' => 'Herr Barthold',
-    ],
-    [
-        'email' => 'ors-service@mertens.ag',
-        'anrede' => 'ORS Service',
-    ],
-    [
-        'email' => 'f.barthold@mertens.ag',
-        'anrede' => 'Herr Barthold',
-    ],
-/*
-	[
-		'email' => 'o.kowalski@mertens.ag',
-		'anrede' => 'Herr Kowalski',
-	],
-	[
-		'email' => 'd.koenig@mertens.ag',
-		'anrede' => 'Herr Koenig',
-	],
-*/
-];
+if (!isset($aSmtpDebugTo)) {
+    $aSmtpDebugTo = [
+        [
+            'email' => 'frank.barthold@gmail.com',
+            'anrede' => 'Herr Barthold',
+        ],
+        [
+            'email' => 'ors-service@mertens.ag',
+            'anrede' => 'ORS Service',
+        ],
+        [
+            'email' => 'f.barthold@mertens.ag',
+            'anrede' => 'Herr Barthold',
+        ],
+    ];
+}
 
-$aHeader = array(
-    // "From"        => $aSmtpConn['from'],
-    "Reply-To"    => $aSmtpConn['from_addr'],
-    "Errors-To"   => $aSmtpConn['from_addr'],
-    "BCC"         => 'f.barthold@mertens.ag',
-    'Return-Path' => $aSmtpConn['from_addr'],
-    'Bounce-To'   => $aSmtpConn['from_addr'],
-    "multipart_data" => "",
-	'X-LINES' => '#' . __LINE__,
-);
+if (!isset($aHeader)) {
+    $aHeader = array(
+        // "From"        => $aSmtpConn['from'],
+        "Reply-To"    => $aSmtpConn['from_addr'],
+        "Errors-To"   => $aSmtpConn['from_addr'],
+        "BCC"         => 'f.barthold@mertens.ag',
+        'Return-Path' => $aSmtpConn['from_addr'],
+        'Bounce-To'   => $aSmtpConn['from_addr'],
+        "multipart_data" => "",
+        'X-LINES' => '#' . __LINE__,
+    );
+}
+
+if (!isset($aBccAddAlways)) {
+    $aBccAddAlways = [];
+}
+
+if (!isset($aBccAddToOps)) {
+    $aBccAddToOps = [];
+}
+
+if (!isset($aBccAddToProps)) {
+    $aBccAddToProps = [];
+}
+
+if (!isset($aBccAddToOrderer )) {
+    $aBccAddToOrderer = [];
+}
+
 $LINE = __LINE__;
 if (0) die(
     json_encode(compact('LINE', 'aSmtpConn', 'aHeader'), JSON_PRETTY_PRINT)
@@ -389,6 +294,7 @@ class SmtpMailer {
         global $aHeader;
         global $aSmtpConn;
         global $aSmtpDebugTo;
+        global $aBccAddAlways;
 
         if (preg_match('#ID\s*(?P<id>\d+)\b#', $sSubject, $m)) {
             $this->logfile = str_replace("log_smtp", "log_".$m['id'].'_smtp', $this->logfile);
@@ -403,20 +309,32 @@ class SmtpMailer {
         }
 
         if (isset($aUseHeaders['BCC'])) {
-		    $bcc = trim($aUseHeaders['BCC']);
+		    $bcc = is_array($aUseHeaders['BCC']) ? $aUseHeaders['BCC'] : explode(',', trim($aUseHeaders['BCC']));
             unset($aUseHeaders['BCC']);
         } else {
-            $bcc = '';
+            $bcc = [];
+        }
+
+        if (!empty($aBccAddAlways) && is_array($aBccAddAlways) ) {
+            if (empty($bcc)) {
+                $bcc = $aBccAddAlways;
+            } else {
+                foreach ($aBccAddAlways as $_m) {
+                    if (in_array($_m, $bcc) === false) {
+                        $bcc[] = $_m;
+                    }
+                }
+            }
         }
 
         if (isset($aUseHeaders['CC'])) {
-		    $cc = trim($aUseHeaders['CC']);
+		    $cc = is_array($aUseHeaders['CC']) ? $aUseHeaders['CC'] : explode(',', trim($aUseHeaders['CC']));
             unset($aUseHeaders['CC']);
         } else {
-            $cc = '';
+            $cc = [];
         }
 
-        if (defined('SMTP_MAILER_DEBUG') && SMTP_MAILER_DEBUG === 1) {
+        if (defined('SMTP_MAILER_DEBUG') && SMTP_MAILER_DEBUG === 1 && !empty($aSmtpDebugTo)) {
 
             if ($sHtmlBody) {
                 $sHtmlBody .= "<br>\n<br>\n"
@@ -963,8 +881,6 @@ class SmtpMailer {
 
 }
 
-
-$IsStandaloneTest = true;
 // TESTVERSAND: Wenn IsStandaloneTest = true, WIRD DAS SCRIPT STAND-ALONE AUGERUFEN
 if ($IsStandaloneTest && basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
     // START: TESTVERSAND

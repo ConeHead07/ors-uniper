@@ -88,4 +88,3 @@ switch($resultFormat) {
 	echo "//m=\"\"; for(i in optionsRaeume) m+=i+\":\"+optionsMaByGER[\"$gebaeude\"][\"$etage\"][\"$raumnr\"][i]+\"\\n\"; alert(m);\n";
 	echo "SelBox_loadData('".$SBBoxId."', optionsMaByGER[\"$gebaeude\"][\"$etage\"][\"$raumnr\"]);\n";
 }
-?>

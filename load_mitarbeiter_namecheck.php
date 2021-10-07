@@ -126,4 +126,3 @@ switch($resultFormat) {
 	echo "};\n";
 	echo "namecheck_loadData('".$SBBoxId."', optionsMaNameCheck[\"Data\"]);\n";
 }
-?>

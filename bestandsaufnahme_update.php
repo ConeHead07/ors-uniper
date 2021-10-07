@@ -37,4 +37,3 @@ ob_end_clean();
 	<Result type="success">'."\n";
 	echo $AjaxUpdates;
 	echo '</Result>';
-?>

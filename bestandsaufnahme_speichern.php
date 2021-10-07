@@ -37,4 +37,3 @@ foreach($SentRows as $e) {
 }
 if (count($RowsError)) $error.= "Beim Speichern sind Fehler in ".count($RowsError)." Zeilen aufgetreten!<br>\n";
 
-?>

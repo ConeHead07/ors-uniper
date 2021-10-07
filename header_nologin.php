@@ -16,5 +16,3 @@ $userlogin = false; //
 //require_once $MConf["AppRoot"].$MConf["Modul_Dir"]."login/login.php";
 require_once $MConf["AppRoot"]."smarty/Smarty.class.php";
 require_once($MConf["AppRoot"].$MConf["Class_Dir"]."myTplEngine.class.php");
-
-?>

@@ -14,4 +14,3 @@ if ($dp) {
   closedir($dp);
 }
 echo $html;
-?>

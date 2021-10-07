@@ -51,4 +51,3 @@ switch($resultFormat) {
 	echo "//m=\"\"; for(i in optionsExterneFirmen) m+=i+\":\"+optionsExterneFirmen[i].value+\"\\n\"; alert(m);\n";
 	if ($SBBoxId) echo "SelBox_loadData('".$SBBoxId."', optionsExterneFirmen);\n";
 }
-?>

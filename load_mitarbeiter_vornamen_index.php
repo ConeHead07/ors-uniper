@@ -67,4 +67,3 @@ switch($resultFormat) {
 	echo "};\n";
 	echo "SelBox_loadData('".$SBBoxId."', optionsNachnamen[\"Data\"]);\n";
 }
-?>

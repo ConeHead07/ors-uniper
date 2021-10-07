@@ -64,8 +64,9 @@ if ($AID) {
 	$AS->dbdataToInput();
 	$sql = "SELECT mid FROM `".$MAConf["Table"]."` WHERE aid = ".intval($AID);
 	$aMIDs = $db->query_rows($sql);
-	
-	for($i = 0; $i < count($aMIDs); $i++) {
+
+	$iNumMIDs = count($aMIDs);
+	for($i = 0; $i < $iNumMIDs; $i++) {
             $MID = $aMIDs[$i]["mid"];
             $MA = new ItemEdit($MAConf, $connid, $user, $MID);
             $MA->dbdataToInput();
@@ -91,8 +92,9 @@ if ($AID) {
               ." or token = " . $db->quote($AS->arrDbdata['token']);
         $aATs = $db->query_rows($sql);
 	echo $db->error();
-	
-	for($i = 0; $i < count($aATs); $i++) {
+
+	$iNumAnlagen = count($aATs);
+	for($i = 0; $i < $iNumAnlagen; $i++) {
 		$DOKID = $aATs[$i]["dokid"];
 		$AT = new ItemEdit($_CONF["umzugsanlagen"], $connid, $user, $DOKID);
 		$AT->dbdataToInput();
@@ -122,40 +124,58 @@ $DL = new ItemEdit($_CONF["dienstleister"], $connid, $user, $dl_id);
 $DL->loadDbdata();
 $DL->dbdataToInput();
 $Tpl->assign("DL", $DL->arrInput);
-$Tpl->assign("ASConf", $ASConf['Fields']);
 $Tpl->assign("MAConf", $MAConf['Fields']);
 
 $AS->arrInput['gebaeude_text'] = '';
 $AS->arrInput['von_gebaeude_text'] = '';
 $AS->arrInput['nach_gebaeude_text'] = '';
-if (intval($AS->arrInput['gebaeude'])) {
+if ((int)$AS->arrInput['gebaeude']) {
     $AS->arrInput['gebaeude_text'] = $db->query_one(
         'SELECT CONCAT(adresse, ", ", stadtname, " [", id, "]") adr '
-       .'FROM mm_stamm_gebaeude WHERE id = ' . intval($AS->arrInput['gebaeude']));
+       .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['gebaeude']);
 }
-if (intval($AS->arrInput['von_gebaeude_id'])) {
+if ((int)$AS->arrInput['von_gebaeude_id']) {
     $AS->arrInput['von_gebaeude_text'] = $db->query_one(
         'SELECT CONCAT(adresse, ", ", stadtname ) adr '
-       .'FROM mm_stamm_gebaeude WHERE id = ' . intval($AS->arrInput['von_gebaeude_id']));
+       .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['von_gebaeude_id']);
 }
-if (intval($AS->arrInput['nach_gebaeude_id'])) {
+if ((int)$AS->arrInput['nach_gebaeude_id']) {
     $AS->arrInput['nach_gebaeude_text'] = $db->query_one(
         'SELECT CONCAT(adresse, ", ", stadtname ) adr '
-       .'FROM mm_stamm_gebaeude WHERE id = ' . intval($AS->arrInput['nach_gebaeude_id']));
+       .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['nach_gebaeude_id']);
 }
-//die('<pre>' . print_r($AS->arrInput,1) . '</pre>');
-$Tpl->assign("AS", $AS->arrInput);
-$Tpl->assign('creator', $creator);
-$Tpl->assign("propertyName", $propertyName);
 $Tpl->assign("s", $s);
-if (!empty($MAItems) && count($MAItems)) $Tpl->assign("Mitarbeiterliste", $MAItems);
-if (!empty($aAtItems) && count($aAtItems)) $Tpl->assign("UmzugsAnlagen", $aAtItems);
+$Tpl->assign('AID', $AID);
+$Tpl->assign('AIDJson', json_encode($AID));
+$Tpl->assign("ASConf", $ASConf['Fields']);$Tpl->assign("AS", $AS->arrInput);
+$Tpl->assign("ASJson", json_encode($AS->arrInput));
+$Tpl->assign("umzugsstatus", $AS->arrInput['umzugsstatus']);
+$Tpl->assign("umzugsstatusJson", json_encode($AS->arrInput['umzugsstatus']));
+$Tpl->assign("creator", $creator);
+$Tpl->assign("creatorJson", json_encode($creator));
+$Tpl->assign("user", $user);
+$userForJson = $user;
+unset($userForJson['pw']);
+unset($userForJson['authentcode']);
+unset($userForJson['authentcode']);
+$Tpl->assign('userJson', json_encode($userForJson));
+
+//die('<pre>' . print_r($AS->arrInput,1) . '</pre>');
+$Tpl->assign("propertyName", $propertyName);
+
+if (!empty($MAItems) && count($MAItems)) {
+    $Tpl->assign("Mitarbeiterliste", $MAItems);
+}
+if (!empty($aAtItems) && count($aAtItems)) {
+    $Tpl->assign("UmzugsAnlagen", $aAtItems);
+}
 
 // Erzeuge GeraeteListe (Array) für Smarty-Template
 $CsvLines = explode("\n", $AS->arrInput["geraete_csv"]);
 $aGItems = array();
 $aGCols = array();
-for ($i = 0; $i < count($CsvLines); $i++) {
+$iNumCsvLines = count($CsvLines);
+for ($i = 0; $i < $iNumCsvLines; $i++) {
     $aGCols = explode("\t", $CsvLines[$i]);
     if (count($aGCols) != 4) continue;
     $aGItems[$i] = array(
@@ -165,7 +185,9 @@ for ($i = 0; $i < count($CsvLines); $i++) {
         "Nach" => $aGCols[3]
     );
 }
-if (!empty($aGItems) && count($aGItems)) $Tpl->assign("Geraeteliste", $aGItems);
+if (!empty($aGItems) && count($aGItems)) {
+    $Tpl->assign("Geraeteliste", $aGItems);
+}
 
 $SumBase = 'MH';
 $sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_property, '

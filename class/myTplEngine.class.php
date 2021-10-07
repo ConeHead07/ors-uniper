@@ -31,4 +31,3 @@ if (basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
 	$html = $Tpl->fetch("errorbox.html");
 	echo $html;
 }
-?>

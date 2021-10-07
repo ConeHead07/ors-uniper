@@ -86,6 +86,7 @@ $MConf = array(
 	"Html_MsgBox" => "msgbox.html",
 	"Html_ErrBox" => "errorbox.html",
 	"theme" => "uniper",
+
 	"propertyName" => $propertyName,
 //	"smtp_server"    => "mail.mertens.ag",
 //	"smtp_port"      => "25",
@@ -151,6 +152,10 @@ $_ADMIN_MODUL["formcreator"] = $ModulBaseDir."formbuilder/create_any_forms.php";
 $_ADMIN_MODUL["editbyconf"] = $ModulBaseDir."editdatabyconf/edit_data.inc.php";
 $_ADMIN_MODUL["offline"] = $ModulBaseDir."offline/offline.php";
 /* ADMIN-MODULE: ENDE */
+
+if (file_exists( __DIR__ . 'conf.local.php')) {
+    include __DIR__ . 'conf.local.php';
+}
 
 if (!function_exists('getAppConfigProperty')) {
     function getAppConfigProperty(string $key, $default = null) {

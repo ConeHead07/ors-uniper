@@ -120,21 +120,35 @@ function getLeistungenError() {
     $creator = (preg_match('/admin|umzugsteam/', $user['gruppe']) ? 'mertens' : 'property');
     $menge_key  = 'menge_' . $creator;
     $menge2_key = 'menge2_' . $creator;
-    $menge_lbl = ('property' == $creator ? 'Menge 1 DSD' : 'Menge 1 MH');
-    $menge2_lbl = ('property' == $creator ? 'Menge 2 DSD' : 'Menge 2 MH');
+    $menge_lbl = ('property' == $creator ? 'Menge 1 Property' : 'Menge 1 M');
+    $menge2_lbl = ('property' == $creator ? 'Menge 2 Property' : 'Menge 2 M');
     
     $positionen = array();
     $lst = getRequest('L');
+    $aLstDefaults = [
+        'menge_' . $creator => 1,
+        'menge2_' . $creator => 1,
+    ];
+
     if (empty($lst['leistung_id']) || !is_array($lst['leistung_id'])) {
         return true;
     }
-    
-    for($i = 0; $i < count($lst['leistung_id']); ++$i) {
-        $lst[ $menge_key ][$i] = getFormattedNumber( $lst[ $menge_key ][$i] );
-        $lst[ $menge2_key][$i] = getFormattedNumber( $lst[ $menge2_key ][$i]);
-//        $lst[ $menge_key ][$i] = str_replace(',', '.', $lst[ $menge_key ][$i]);
-//        $lst[ $menge2_key ][$i] = str_replace(',', '.', $lst[ $menge2_key ][$i]);
-        if (!intval($lst['leistung_id'][$i]) && !floatval($lst['leistung_id'][$i])) continue;
+
+    $iNumLeistungen = count($lst['leistung_id']);
+    for ($i = 0; $i < $iNumLeistungen; $i++) {
+        foreach($aLstDefaults as $_k => $_defaultVal) {
+            if (!isset($lst[$_k][$i])) {
+                $lst[$_k][$i] = $_defaultVal;
+            }
+        }
+    }
+
+    for($i = 0; $i < $iNumLeistungen; ++$i) {
+        $lst[ $menge_key ][$i] = getFormattedNumber( $lst[ $menge_key ][$i]  ?? 1 );
+        $lst[ $menge2_key][$i] = getFormattedNumber( $lst[ $menge2_key ][$i] ?? 1);
+        if (!(int)$lst['leistung_id'][$i] && !(float)$lst['leistung_id'][$i]) {
+            continue;
+        }
         
         $e2 = leistung_einheit2($lst['leistung_id'][$i]);
         $err = '';
@@ -145,7 +159,9 @@ function getLeistungenError() {
         if ($e2 && !is_numeric($lst[ $menge2_key ][$i]) ) {
             $err2 = $menge2_lbl . ' (' . $e2 . ')';
         }
-        if ($err || $err2) $positionen[] = 'Pos' . ($i+1) . ': ' . $err . ($err && $err2 ? ', ' : '') . $err2;
+        if ($err || $err2) {
+            $positionen[] = 'Pos' . ($i+1) . ': ' . $err . ($err && $err2 ? ', ' : '') . $err2;
+        }
         
     }
     if (count($positionen)) {

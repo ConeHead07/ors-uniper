@@ -17,7 +17,6 @@ if (function_exists("activity_log")) {
 
 $topmenu = "";
 $bodby_content = "";
-$s = (isset($_GET["s"]) ? $_GET["s"] : (isset($_POST["s"]) ? $_POST["s"] : ""));
 
 // Seitenbereiche
 require_once $MConf["AppRoot"].$MConf["Inc_Dir"]."lib_admin_cms.php";

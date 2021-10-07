@@ -72,4 +72,3 @@ if (!$d || !$TFE_CNF["Dir"][$d] || !$f || !file_exists($TFE_CNF["Dir"][$d]."/".$
 	<input type=\"hidden\" name=\"f\" value=\"".fb_htmlEntities($f)."\">
 	</form>\n";
 }
-?>

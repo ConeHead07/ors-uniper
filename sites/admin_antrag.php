@@ -11,11 +11,11 @@ if (strpos($user["gruppe"], "admin") === false) {
     die("UNERLAUBTER ZUGRIFF! Zugriff nur für Administratoren");
 }
 
-require_once($InclBaseDir."umzugsantrag.inc.php");
-require_once($InclBaseDir."umzugsmitarbeiter.inc.php");
-require_once($InclBaseDir."umzugsanlagen.inc.php");
-require_once($InclBaseDir."leistungskatalog.inc.php");
-require_once($InclBaseDir."dienstleister.inc.php");
+require_once($InclBaseDir . "umzugsantrag.inc.php");
+require_once($InclBaseDir . "umzugsmitarbeiter.inc.php");
+require_once($InclBaseDir . "umzugsanlagen.inc.php");
+require_once($InclBaseDir . "leistungskatalog.inc.php");
+require_once($InclBaseDir . "dienstleister.inc.php");
 
 $ATConf = &$_CONF["umzugsanlagen"];
 $ASConf = &$_CONF["umzugsantrag"];
@@ -86,8 +86,9 @@ if ($AID) {
 	
 	$sql = "SELECT mid FROM `".$MAConf["Table"]."` WHERE aid = ".intval($AID);
 	$aMIDs = $db->query_rows($sql);
-	
-	for($i = 0; $i < count($aMIDs); $i++) {
+
+	$iNumMIDs = count($aMIDs);
+	for($i = 0; $i < $iNumMIDs; $i++) {
             $MID = $aMIDs[$i]["mid"];
             $MA = new ItemEdit($MAConf, $connid, $user, $MID);
             $MA->dbdataToInput();
@@ -134,7 +135,6 @@ if ($AID) {
 	);
 	$AS->loadInput($defaultAS, false);
 	$MA->loadInput(array(), false);
-	$Tpl->assign("AS", array($AS->arrInput));
 }
 
 // Lade Dienstleister
@@ -143,43 +143,68 @@ $DL = new ItemEdit($_CONF["dienstleister"], $connid, $user, $dl_id);
 $DL->loadDbdata();
 $DL->dbdataToInput();
 $Tpl->assign("DL", $DL->arrInput);
-$Tpl->assign("ASConf", $ASConf['Fields']);
 $Tpl->assign("MAConf", $MAConf['Fields']);
 
 $AS->arrInput['gebaeude_text'] = '';
 $AS->arrInput['von_gebaeude_text'] = '';
 $AS->arrInput['nach_gebaeude_text'] = '';
-if (intval($AS->arrInput['gebaeude'])) {
+if ((int)$AS->arrInput['gebaeude']) {
     $AS->arrInput['gebaeude_text'] = $db->query_one(
         'SELECT CONCAT(adresse, ", ", stadtname, " [", id, "]") adr '
-       .'FROM mm_stamm_gebaeude WHERE id = ' . intval($AS->arrInput['gebaeude']));
+       .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['gebaeude']);
 }
-if (intval($AS->arrInput['von_gebaeude_id'])) {
+if ((int)$AS->arrInput['von_gebaeude_id']) {
     $AS->arrInput['von_gebaeude_text'] = $db->query_one(
         'SELECT CONCAT(adresse, ", ", stadtname) adr '
-       .'FROM mm_stamm_gebaeude WHERE id = ' . intval($AS->arrInput['von_gebaeude_id']));
+       .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['von_gebaeude_id']);
 }
-if (intval($AS->arrInput['nach_gebaeude_id'])) {
+if ((int)$AS->arrInput['nach_gebaeude_id']) {
     $AS->arrInput['nach_gebaeude_text'] = $db->query_one(
         'SELECT CONCAT(adresse, ", ", stadtname) adr '
-       .'FROM mm_stamm_gebaeude WHERE id = ' . intval($AS->arrInput['nach_gebaeude_id']));
+       .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['nach_gebaeude_id']);
 }
-//die('<pre>#'.__LINE__ . ' ' . print_r($AS->arrInput,1) . '</pre>');
+
+$Tpl->assign("s", $s);
+$Tpl->assign('AID', $AID);
+$Tpl->assign('AIDJson', json_encode($AID));
 $Tpl->assign("AS", $AS->arrInput);
+$Tpl->assign("ASJson", json_encode($AS->arrInput));
+$Tpl->assign("ASConf", $ASConf['Fields']);$Tpl->assign("AS", $AS->arrInput);
 $Tpl->assign('creator', 'mertens');
-if (!empty($aMaItems) && count($aMaItems)) $Tpl->assign("Mitarbeiterliste", $aMaItems);
-if (!empty($aAtItems) && count($aAtItems)) $Tpl->assign("UmzugsAnlagen", $aAtItems);
-if (!empty($aAtIntItems) && count($aAtIntItems)) $Tpl->assign("UmzugsAnlagenIntern", $aAtIntItems);
-if (!empty($aGroupItems) && count($aGroupItems)) $Tpl->assign("UmzugsGruppierungen", $aGroupItems);
+$Tpl->assign("creatorJson", json_encode('mertens'));
+$Tpl->assign("user", $user);
+$userForJson = $user;
+unset($userForJson['pw']);
+unset($userForJson['authentcode']);
+unset($userForJson['authentcode']);
+$Tpl->assign('userJson', json_encode($userForJson));
+$Tpl->assign("umzugsstatus", $AS->arrInput['umzugsstatus']);
+$Tpl->assign("umzugsstatusJson", json_encode($AS->arrInput['umzugsstatus']));
+
+if (!empty($aMaItems) && count($aMaItems)) {
+    $Tpl->assign("Mitarbeiterliste", $aMaItems);
+}
+if (!empty($aAtItems) && count($aAtItems)) {
+    $Tpl->assign("UmzugsAnlagen", $aAtItems);
+}
+if (!empty($aAtIntItems) && count($aAtIntItems)) {
+    $Tpl->assign("UmzugsAnlagenIntern", $aAtIntItems);
+}
+if (!empty($aGroupItems) && count($aGroupItems)) {
+    $Tpl->assign("UmzugsGruppierungen", $aGroupItems);
+}
 
 $aids = array_map(function($a) { return $a['aid']; }, $aGroupItems);
-if (!empty($aids) && count($aids)) $Tpl->assign("UmzugsGruppierungsIds", implode(',', $aids));
+if (!empty($aids) && count($aids)) {
+    $Tpl->assign("UmzugsGruppierungsIds", implode(',', $aids));
+}
 
 // Erzeuge GeraeteListe (Array) für Smarty-Template
 $CsvLines = explode("\n", $AS->arrInput["geraete_csv"]);
 $aGItems = array();
 $aGCols = array();
-for ($i = 0; $i < count($CsvLines); $i++) {
+$iNumCsvLines = count($CsvLines);
+for ($i = 0; $i < $iNumCsvLines; $i++) {
     $aGCols = explode("\t", $CsvLines[$i]);
     if (count($aGCols) != 4) continue;
     $aGItems[$i] = array(
@@ -189,7 +214,9 @@ for ($i = 0; $i < count($CsvLines); $i++) {
         "Nach" => $aGCols[3]
     );
 }
-if (!empty($aGItems) && count($aGItems)) $Tpl->assign("Geraeteliste", $aGItems);
+if (!empty($aGItems) && count($aGItems)) {
+    $Tpl->assign("Geraeteliste", $aGItems);
+}
 
 $SumBase = 'MH';
 $sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_property, '
@@ -213,7 +240,9 @@ $sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_
       $sql.= ' )' . PHP_EOL;
       $sql.= ' WHERE ul.aid = :aid';
 $aLItems = $db->query_rows($sql, 0, array('aid'=>$AID));
-if ($db->error()) die($db->error() . '<br>' . PHP_EOL . $db->lastQuery);
+if ($db->error()) {
+    die($db->error() . '<br>' . PHP_EOL . $db->lastQuery);
+}
 
 $hideDusMengen = 0; // $AS->arrInput['umzugsstatus'] == 'angeboten';
 
@@ -238,7 +267,9 @@ foreach($aLItems as &$_it) {
     $Gesamtsumme+= $_it['gesamtpreis'];
 }
 
-if (!empty($aLItems) && count($aLItems)) $Tpl->assign("Umzugsleistungen", $aLItems);
+if (!empty($aLItems) && count($aLItems)) {
+    $Tpl->assign("Umzugsleistungen", $aLItems);
+}
 $Tpl->assign("Gesamtsumme", $Gesamtsumme);
 
 //die("#".__LINE__." aAtItems: ".print_r($aAtItems,1)."<br>\n");
@@ -257,4 +288,3 @@ if ($AS->arrDbdata["antragsstatus"]!="storniert" && (!$AS->arrDbdata["abgeschlos
 if (DEBUG && basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
 	echo $body_content;
 }
-?>

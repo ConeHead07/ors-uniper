@@ -66,4 +66,3 @@ switch($resultFormat) {
 	echo "BereicheByGF = ".$JsonBe.";\n";
 	//echo 'alert(Orte["Düsseldorf"]["ZV_SEE_1"]+"\n"+Gebaeude["ZV_SEE_1"]["Etagen"].join(", "));'."\n";
 }
-?>

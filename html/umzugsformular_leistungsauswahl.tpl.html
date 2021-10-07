@@ -138,9 +138,11 @@ UZ.push({literal}{{/literal}
 {/foreach}
 *}
 <script>
+var aid = {$AIDJson};
 var lkItems = {$lkTreeItemsJson};
 var lkmById = {$lkmByIdJson};
 var umzugsleistungen = {$UmzugsleistungenJson};
+var umzugsstatus = {$umzugsstatusJson};
 
 
 {literal}
@@ -520,10 +522,16 @@ $(function(){
     var renderAuswahlListe = function() {
         var boxLeistungenSel = "div#auswahlUmzugsleistungenBox";
         var boxLeistungen = $(boxLeistungenSel);
+        var selectedLIds = [];
         if (!boxLeistungen.length) {
             alert("NOT FOUND " + boxLeistungenSel);
         }
         boxLeistungen.html("");
+
+
+        for(var i = 0; i < umzugsleistungen.length; i++) {
+            selectedLIds.push(umzugsleistungen[i].leistung_id);
+        }
 
         var lkItemsByKtg = lkItems;
         for (var ktg in lkItemsByKtg) {
@@ -570,6 +578,7 @@ $(function(){
                 console.log({it});
                 var ktgId = it.kategorie_id;
                 var lstId = it.leistung_id;
+                var isSelected = selectedLIds.indexOf(lstId) > -1;
                 var tr = $("<div/>").addClass("row ktg-" + ktgId).attr({
                     "data-ktg": ktg,
                     "data-ktgId": ktgId,
@@ -672,11 +681,20 @@ $(function(){
                     );
 
                 box.append(tr);
+
+
+                if (isSelected) {
+                    inputChck.prop('checked', true);
+                    tr.addClass("checked");
+                    tdChck.find("input.lstg-input").prop("disabled", false);
+                    tdChck.find("input.lstg-input.menge").val(1);
+                }
             }
             box.appendTo(boxLeistungen);
         }
     };
-    if (!umzugsleistungen) {
+
+    if (!umzugsleistungen || umzugsstatus === 'temp' || umzugsstatus === 'zurueckgegeben') {
         renderAuswahlListe();
     } else {
         renderBestellListe();

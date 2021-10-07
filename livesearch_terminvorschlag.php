@@ -102,4 +102,3 @@ SelBox_initChilds("'.$LSBoxId.'");
 //alert(document.getElementById("'.$LSBoxId.'"));
 ]]></LoadScript>
 </Result>';
-?>

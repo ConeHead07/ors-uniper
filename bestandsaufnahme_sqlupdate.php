@@ -115,5 +115,3 @@ foreach($CSV as $C) {
 	if (isset($db) && is_object($db)) { $db->query($sql); if ($db->error()) die($db->error()."<br>\nSQL:".$sql."<br>\n"); }
 	else echo $sql.";<br>\n";
 }
-
-?>

@@ -78,16 +78,11 @@ $MA = new ItemEdit($_CONF["umzugsmitarbeiter"], $connid, $user, false);
 $Tpl = new myTplEngine();
 $TplMaListItem = array("ID"=>1, "nachname"=>"", "vorname"=>"", "ort"=>"", "gebaeude"=>"", "raumnr"=>"");
 $PreiseAnzeigen = ($user['darf_preise_sehen'] === 'Ja') ? 1 : 0;
+
 $Tpl->assign('PreiseAnzeigen', $PreiseAnzeigen);
 $Tpl->assign('lktreeItems', $lkTreeItems);
 $Tpl->assign('lkTreeItemsJson', json_encode($lkTreeItemsJson) );
 $Tpl->assign('lkmByIdJson', json_encode($lkmById) );
-
-$userTplData = $user;
-unset($userTplData['pw']);
-unset($userTplData['authentcode']);
-unset($userTplData['authentcode']);
-$Tpl->assign('U', $userTplData);
 
 // If AID: Bearbeitungsformular mit DB-Daten
 if ($AID) {
@@ -106,21 +101,23 @@ if ($AID) {
         }
     }
 
-    $sql = "SELECT mid FROM `".$MAConf["Table"]."` WHERE aid = ".intval($AID);
+    $sql = "SELECT mid FROM `" . $MAConf["Table"] . "` WHERE aid = " . (int)$AID;
     $aMIDs = $db->query_rows($sql);
 
-    for($i = 0; $i < count($aMIDs); $i++) {
+    $iNumMIDs = count($aMIDs);
+    for($i = 0; $i < $iNumMIDs; $i++) {
         $MID = $aMIDs[$i]["mid"];
         $MA = new ItemEdit($MAConf, $connid, $user, $MID);
         $MA->dbdataToInput();
         $aMaItems[$i] = $MA->arrInput;
     }
     
-    $sql = "SELECT dokid FROM `".$ATConf["Table"]."` WHERE aid = ".intval($AID)
+    $sql = "SELECT dokid FROM `" . $ATConf["Table"] . "` WHERE aid = " . ((int)$AID)
           ." or token = " . $db->quote($AS->arrDbdata['token']);
     $aATs = $db->query_rows($sql);
 
-    for($i = 0; $i < count($aATs); $i++) {
+    $iNumAnlagen = count($aATs);
+    for($i = 0; $i < $iNumAnlagen; $i++) {
         $DOKID = $aATs[$i]["dokid"];
         $AT = new ItemEdit($ATConf, $connid, $user, $DOKID);
         $AT->dbdataToInput();
@@ -141,36 +138,46 @@ if ($AID) {
     $AS->loadInput($defaultAS, false);
     $MA->loadInput(array(), false);
     $as->arrInput['personalnr'] = $user['personalnr'];
-    $Tpl->assign("AS", array($AS->arrInput));
 
     //$aMaItems = array($MA->arrInput);
 }
 $AS->arrInput['gebaeude_text'] = '';
 $AS->arrInput['von_gebaeude_text'] = '';
 $AS->arrInput['nach_gebaeude_text'] = '';
-if (intval($AS->arrInput['gebaeude'])) {
+if ((int)$AS->arrInput['gebaeude']) {
     $AS->arrInput['gebaeude_text'] = $db->query_one(
         'SELECT CONCAT(adresse, ", ", stadtname, " [", id, "]") adr '
-       .'FROM mm_stamm_gebaeude WHERE id = ' . intval($AS->arrInput['gebaeude']));
+       .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['gebaeude']);
 }
-if (intval($AS->arrInput['von_gebaeude_id'])) {
+if ((int)$AS->arrInput['von_gebaeude_id']) {
     $AS->arrInput['von_gebaeude_text'] = $db->query_one(
         'SELECT CONCAT(adresse, ", ", stadtname) adr '
-       .'FROM mm_stamm_gebaeude WHERE id = ' . intval($AS->arrInput['von_gebaeude_id']));
+       .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['von_gebaeude_id']);
 }
-if (intval($AS->arrInput['nach_gebaeude_id'])) {
+if ((int)$AS->arrInput['nach_gebaeude_id']) {
     $AS->arrInput['nach_gebaeude_text'] = $db->query_one(
         'SELECT CONCAT(adresse, ", ", stadtname) adr '
-       .'FROM mm_stamm_gebaeude WHERE id = ' . intval($AS->arrInput['nach_gebaeude_id']));
+       .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['nach_gebaeude_id']);
 }
+
 //die('<pre>' . print_r($ASConf['Fields'],1));
 $umzug_optionvals = explode("','", trim($ASConf['Fields']['umzug']['size'], "'"));
 $Tpl->assign("s", $s);
-$Tpl->assign("ASConf", $ASConf['Fields']);
-$Tpl->assign("AS", $AS->arrInput);
+$Tpl->assign('AID', $AID);
+$Tpl->assign('AIDJson', json_encode($AID));
+$Tpl->assign("ASConf", $ASConf['Fields']);$Tpl->assign("AS", $AS->arrInput);
+$Tpl->assign("ASJson", json_encode($AS->arrInput));
+$Tpl->assign("umzugsstatus", $AS->arrInput['umzugsstatus']);
+$Tpl->assign("umzugsstatusJson", json_encode($AS->arrInput['umzugsstatus']));
 $Tpl->assign("umzug_options", array_combine($umzug_optionvals, $umzug_optionvals));
 $Tpl->assign("creator", $creator);
+$Tpl->assign("creatorJson", json_encode($creator));
 $Tpl->assign("user", $user);
+$userForJson = $user;
+unset($userForJson['pw']);
+unset($userForJson['authentcode']);
+unset($userForJson['authentcode']);
+$Tpl->assign('userJson', json_encode($userForJson));
 
 if ('property' == $creator
     && (
@@ -191,7 +198,8 @@ if ('property' == $creator
 $CsvLines = explode("\n", $AS->arrInput["geraete_csv"]);
 $aGItems = array();
 $aGCols = array();
-for ($i = 0; $i < count($CsvLines); $i++) {
+$iNumCsvLines = count($CsvLines);
+for ($i = 0; $i < $iNumCsvLines; $i++) {
     $aGCols = explode("\t", $CsvLines[$i]);
     if (count($aGCols) != 4) continue;
     $aGItems[$i] = array(

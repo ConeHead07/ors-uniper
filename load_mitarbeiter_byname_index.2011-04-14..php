@@ -87,4 +87,3 @@ switch($resultFormat) {
 	echo "};\n";
 	echo "mitarbeiter_loadDataByName('".$SBBoxId."', optionsMaByName[\"Data\"]);\n";
 }
-?>

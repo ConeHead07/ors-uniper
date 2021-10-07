@@ -116,10 +116,10 @@ function get_userByLogin($uname, $upass, $m = "") {
 	$SQL.= " WHERE user LIKE \"".$db->escape($uname)."\" \n";
 	$SQL.= " AND pw = \"".$db->escape($upass)."\" \n";
 	$SQL.= " LIMIT 1";
-        $result = $db->query($SQL);
-        if (!$result || !is_object($result) || !$result->num_rows) {
-            return null;
-        }
+    $result = $db->query($SQL);
+    if (!$result || !is_object($result) || !$result->num_rows) {
+        return null;
+    }
         
 	$user= single_resultquery($SQL);
 	// echo "<pre>#".__LINE__." m:$m, ConnDB[connid]:{$ConnUserDB['connid']} uname:$uname, upass:$upass, ".MyDB::error()."\n".fb_htmlEntities($SQL)."</pre>\n";
@@ -134,7 +134,9 @@ function get_userById($uid) {
 	$SQL.= " WHERE uid like \"".$db->escape($uid)."\" \n";
 	$SQL.= " LIMIT 1";
 	$user=single_resultquery($SQL);
-	if (MyDB::error()) echo "<pre>#".__LINE__." DB-ERROR:".MyDB::error()."\nDB-QUERY(connid:$user_connid):".fb_htmlEntities($SQL)."</pre>\n";
+	if (MyDB::error()) {
+	    echo "<pre>#".__LINE__." DB-ERROR:".MyDB::error()."\nDB-QUERY:".fb_htmlEntities($SQL)."</pre>\n";
+    }
 	return $user;
 }
 

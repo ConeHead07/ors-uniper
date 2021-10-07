@@ -221,4 +221,3 @@ if ($sSelect && $sFrom) {
 	]]></LoadScript>
 	</Result>';
 }
-?>

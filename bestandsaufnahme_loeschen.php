@@ -70,4 +70,3 @@ if ($sendXML) {
 	echo $AjaxUpdates;
 	echo '</Result>';
 }
-?>

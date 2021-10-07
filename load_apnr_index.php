@@ -54,4 +54,3 @@ switch($resultFormat) {
 	header("Content-Type: text/javascript; charset=ISO-8859-1");
 	echo "optionsApnr = ".$JsonData.";\n";
 }
-?>

@@ -43,4 +43,3 @@ switch($resultFormat) {
 	echo "if (typeof(SelBox_loadData)==\"function\") SelBox_loadData('".$SBBoxId."', BereichIndex);\n";
 	//echo 'alert(Orte["Düsseldorf"]["ZV_SEE_1"]+"\n"+Gebaeude["ZV_SEE_1"]["Etagen"].join(", "));'."\n";
 }
-?>

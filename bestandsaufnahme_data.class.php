@@ -724,5 +724,3 @@ class mitarbeiter {
 	// Keine Pflichtfelder bei Bestandaufnahme
 	// Flag: Was wurde angelegt: Abteilung, Hauptabteilung, Geschäftsbereich
 }
-
-?>

@@ -55,4 +55,3 @@ switch($resultFormat) {
 	echo "AbteilungenByBe = ".$JsonAb.";\n";
 	//echo 'alert(Orte["Düsseldorf"]["ZV_SEE_1"]+"\n"+Gebaeude["ZV_SEE_1"]["Etagen"].join(", "));'."\n";
 }
-?>
