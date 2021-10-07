@@ -1,13 +1,13 @@
 Hallo {vorname} {nachname},
 
-Sie haben sich auf unserer Homepage registriert.
+Sie haben sich auf unserer Webseite {HomepageTitle}  registriert.
 Um Ihren Login zu aktivieren klicken Sie bitte den folgenden Link an:
 {AktivierungsLink}
 
 Sie können sich anschliessend mit Ihrer E-Mail und Ihrem Passwort einloggen.
 
 Falls Sie den Freischalt-Link in dieser Mail nicht direkt anklicken können,
-kopieren Sie Ihn in die Adressleiste Ihres Browsers.
+kopieren Sie ihn in die Adressleiste Ihres Browsers.
 
 Mit freundlichen Grüßen
 
