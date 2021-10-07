@@ -47,7 +47,7 @@ if (!$sLogErr) {
 		MyDB::free_result($r);
 	} else echo MyDB::error()." || $SQL <br>\n";
 	
-	$DbgMsg.= "#".__LINE__." Mandanten-Updatesuche für ".count($aWwsIds)." Projekteinträge!<br>\n";
+	$DbgMsg.= "#".__LINE__." Mandanten-Updatesuche fï¿½r ".count($aWwsIds)." Projekteintrï¿½ge!<br>\n";
 	
 	if (!$errno) {
 		$wws = new WWW_DB();
@@ -56,7 +56,7 @@ if (!$sLogErr) {
     if (empty($aWwsStatien) ) $aWwsStatien = array();
 		file_put_contents($wws_upd_mid_logfile, serialize($aWwsStatien));
 		
-    $DbgMsg.= "#".__LINE__." Es wurden ".count($aWwsIds)." WWS-Einträge gefunden!<br>\n";
+    $DbgMsg.= "#".__LINE__." Es wurden ".count($aWwsIds)." WWS-EintrÃ¤ge gefunden!<br>\n";
 	  
     $aUniqueChckWwsids = array();
     
@@ -79,13 +79,13 @@ if (!$sLogErr) {
         if (empty($GroupUpdateByIds[$r_mid])) $GroupUpdateByIds[$r_mid] = "\"".MyDB::escape_string($r_wwsid)."\"";
         else $GroupUpdateByIds[$r_mid].= ",\"".MyDB::escape_string($r_wwsid)."\"";
         
-        // Fürs Log-Protokoll
+        // Fï¿½rs Log-Protokoll
         $num_updates_soll++;
         $num_unique_ids++;
         $sEindeutigeWwsIds.= "# WWSID=$r_wwsid: MandantenID=$r_mid, Firma=$r_fa<br>\n";
       } else {
         
-        // Fürs Log-Protokoll
+        // Fï¿½rs Log-Protokoll
         $num_notunique_ids++;
         $sUneindeutigeWwsIds.= "# WWSID=$r_wwsid: MandantenID=$r_mid, Firma=$r_fa, WWS-Eintr&auml;ge mit dieser ID:".$aUniqueChckWwsids[$r_wwsid]."<br>\n";
       }
@@ -99,24 +99,24 @@ if (!$sLogErr) {
       }
     }
     
-    $DbgMsg.= "#".__LINE__." <strong>Auswertung: Abgleich der Projekt-DB-Einträge ohne Mandanten-ID mit WWS-Einträge</strong><br>\n";
+    $DbgMsg.= "#".__LINE__." <strong>Auswertung: Abgleich der Projekt-DB-EintrÃ¤ge ohne Mandanten-ID mit WWS-EintrÃ¤ge</strong><br>\n";
     $DbgMsg.= "#".__LINE__." <strong>Zusammenfassung:</strong> <br>\n<br>\n";
-    $DbgMsg.= "#".__LINE__." Es liegen $num_notunique_ids Einträge mit uneindeutiger WwsId vor:<br>\n";
-    $DbgMsg.= "#".__LINE__." Es liegen $num_unique_ids Einträge mit eindeutiger WwsId vor:<br>\n";
-    $DbgMsg.= "#".__LINE__." Es liegen $num_no_wwsentries Projekt-Einträge Ohne WWS-Eintrag vor<br>\n";
+    $DbgMsg.= "#".__LINE__." Es liegen $num_notunique_ids EintrÃ¤ge mit uneindeutiger WwsId vor:<br>\n";
+    $DbgMsg.= "#".__LINE__." Es liegen $num_unique_ids EintrÃ¤ge mit eindeutiger WwsId vor:<br>\n";
+    $DbgMsg.= "#".__LINE__." Es liegen $num_no_wwsentries Projekt-EintrÃ¤ge Ohne WWS-Eintrag vor<br>\n";
     
     $DbgMsg.= "#<br>\n";
     $DbgMsg.= "#".__LINE__." <strong>Details:</strong> <br>\n<br>\n";
-    $DbgMsg.= "#".__LINE__." Es liegen $num_notunique_ids Einträge mit uneindeutiger WwsId vor:<br>\n";
+    $DbgMsg.= "#".__LINE__." Es liegen $num_notunique_ids EintrÃ¤ge mit uneindeutiger WwsId vor:<br>\n";
     $DbgMsg.= $sUneindeutigeWwsIds;
     
     $DbgMsg.= "#<br>\n";
-    $DbgMsg.= "#".__LINE__." Es liegen $num_unique_ids Einträge mit eindeutiger WwsId vor:<br>\n";
+    $DbgMsg.= "#".__LINE__." Es liegen $num_unique_ids EintrÃ¤ge mit eindeutiger WwsId vor:<br>\n";
     $DbgMsg.= $sEindeutigeWwsIds;
     
     $DbgMsg.= "#<br>\n";
     $DbgMsg.= "#<br>\n";
-    $DbgMsg.= "#".__LINE__." Es liegen $num_no_wwsentries Projekt-Einträge Ohne WWS-Eintrag vor<br>\n";
+    $DbgMsg.= "#".__LINE__." Es liegen $num_no_wwsentries Projekt-EintrÃ¤ge Ohne WWS-Eintrag vor<br>\n";
     $DbgMsg.= $sProjekteOhneWwsGegenPart;
     
 		$DbgMsg.= "#".__LINE__." GroupUpdateByIds:<pre>".print_r($GroupUpdateByIds,true)."</pre>\n";
@@ -131,7 +131,7 @@ if (!$sLogErr) {
         list($num_found) = MyDB::fetch_assoc($r);
         MyDB::free_result($r);
       }
-      $DbgMsg.= "#".__LINE__." Update-Check - Gefundene Datensätze: $num_found!<br>\n";
+      $DbgMsg.= "#".__LINE__." Update-Check - Gefundene DatensÃ¤tze: $num_found!<br>\n";
       $DbgMsg.= "#".__LINE__." Update-Check - ".(MyDB::error()?"ERROR:".MyDB::error():" No-Error!")."<br>\n";
       $DbgMsg.= "#".__LINE__." Update-Check - SQL:<pre>".fb_htmlEntities($SQL)."</pre>\n";
       
@@ -140,15 +140,15 @@ if (!$sLogErr) {
 			$SQL.= "WHERE vorgangsnr IN (".$r_in_wwsids.") AND (mid IS NULL OR mid = NULL OR length(mid) = 0 OR mid = 0)\n";
       
       if ($DoUpdConfirm) {
-        // Update-SQL-Ausführung
+        // Update-SQL-AusfÃ¼hrung
   			$r = MyDB::query($SQL, $connid);
   			$n = MyDB::affected_rows();
   			$num_updates_done+= $n;
-        $DbgMsg.= "#".__LINE__." Update-Ausführung - aktualisierte Datensätze: $n!<br>\n";
-        $DbgMsg.= "#".__LINE__." Update-Ausführung - ".(MyDB::error()?"ERROR:".MyDB::error():" No-Error!")."<br>\n";
+        $DbgMsg.= "#".__LINE__." Update-AusfÃ¼hrung - aktualisierte DatensÃ¤tze: $n!<br>\n";
+        $DbgMsg.= "#".__LINE__." Update-AusfÃ¼hrung - ".(MyDB::error()?"ERROR:".MyDB::error():" No-Error!")."<br>\n";
       } else {
-        $DbgMsg.= "#".__LINE__." Update-Simulation - UPDATE wurde NICHT ausgeführt!<br>\n";
-        $DbgMsg.= "#".__LINE__." Update-Simulation - Zur Update-Ausführung, klicke bitte <a href=\"".$_SERVER["PHP_SELF"]."?DoUpdConfirm=1\">hier</a>!<br>\n";
+        $DbgMsg.= "#".__LINE__." Update-Simulation - UPDATE wurde NICHT ausgefÃ¼hrt!<br>\n";
+        $DbgMsg.= "#".__LINE__." Update-Simulation - Zur Update-AusfÃ¼hrung, klicke bitte <a href=\"".$_SERVER["PHP_SELF"]."?DoUpdConfirm=1\">hier</a>!<br>\n";
       }
       $DbgMsg.= "#".__LINE__." SQL Update-MID:<pre>".fb_htmlEntities($SQL)."</pre>\n";
 		}

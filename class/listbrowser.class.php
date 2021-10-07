@@ -30,23 +30,22 @@ class listbrowser {
 		$this->tplVar["offset"] = "{offset}";
 		$this->tplVar["limit"] = "{limit}";
 		$this->tplVar["navall_trenner"] = " &nbsp; ";
-		$this->tplVar["baselink"] = "&offset=".$this->tplVar["offset"]."&limit=".$this->tplVar["limit"];
-		$this->tplVar["baselink"] = "&offset=".$this->tplVar["offset"]."&limit=".$this->tplVar["limit"];
+		$this->tplVar["baselink"] = '&offset='.$this->tplVar['offset'].'&limit='.$this->tplVar['limit'];
 		
 		$this->nav = array();
-		$this->nav["all"] = "";
-		$this->nav["start"] = "";
-		$this->nav["previous"] = "";
-		$this->nav["next"] = "";
-		$this->nav["end"] = "";
+		$this->nav["all"] = '';
+		$this->nav["start"] = '';
+		$this->nav["previous"] = '';
+		$this->nav["next"] = '';
+		$this->nav["end"] = '';
 		
 		$this->navTpl = array();
-		$this->navTpl["StartText"] = "";
-		$this->navTpl["PrevText"] = "";
-		$this->navTpl["NextText"] = "";
-		$this->navTpl["EndeText"] = "";
-		$this->navTpl["AllText"] = "";
-		$this->navTpl["SearchForm"] = "";
+		$this->navTpl["StartText"] = '';
+		$this->navTpl["PrevText"]  = '';
+		$this->navTpl["NextText"]  = '';
+		$this->navTpl["EndeText"]  = '';
+		$this->navTpl["AllText"]   = '';
+		$this->navTpl["SearchForm"] = '';
 		$this->navTpl["defaultStartText"] = "|&lt;";
 		$this->navTpl["defaultPrevText"] = "&lt;&lt;";
 		$this->navTpl["defaultNextText"] = "&gt;&gt;";
@@ -57,7 +56,7 @@ class listbrowser {
 		$this->navTpl["previous"] = " <a href=\"{navLink}\" class=\"lbnav\" title=\"Zurueck\">{PrevText}</a> ";
 		$this->navTpl["next"]     = " <a href=\"{navLink}\" class=\"lbnav\" title=\"Vor\">{NextText}</a> ";
 		$this->navTpl["end"]      = " <a href=\"{navLink}\" class=\"lbnav\" title=\"Ans Ende\">{EndeText}</a> ";
-		$this->navTpl["showall"]      = " <a href=\"{navLink}\" class=\"lbnav\" title=\"Alle Eintr&auml;ge anzeigen\">{AllText}</a> ";
+		$this->navTpl["showall"]  = " <a href=\"{navLink}\" class=\"lbnav\" title=\"Alle Einträe anzeigen\">{AllText}</a> ";
 		
 		if (count($_ListResults)) {
 			$this->set_listRslt($_ListResults);
@@ -146,11 +145,11 @@ class listbrowser {
 		$num = &$this->listRslt["num_result"];
 		$numall = &$this->listRslt["num_all"];
 		
-		if ($this->navTpl["StartText"] === "") $this->navTpl["StartText"] = $this->navTpl["defaultStartText"];
-		if ($this->navTpl["PrevText"]  === "") $this->navTpl["PrevText"]  = $this->navTpl["defaultPrevText"];
-		if ($this->navTpl["NextText"]  === "") $this->navTpl["NextText"]  = $this->navTpl["defaultNextText"];
-		if ($this->navTpl["EndeText"]  === "") $this->navTpl["EndeText"]  = $this->navTpl["defaultEndeText"];
-		if ($this->navTpl["AllText"]  === "") $this->navTpl["AllText"]  = $this->navTpl["defaultAllText"];
+		if ($this->navTpl["StartText"] === '') $this->navTpl["StartText"] = $this->navTpl["defaultStartText"];
+		if ($this->navTpl["PrevText"]  === '') $this->navTpl["PrevText"]  = $this->navTpl["defaultPrevText"];
+		if ($this->navTpl["NextText"]  === '') $this->navTpl["NextText"]  = $this->navTpl["defaultNextText"];
+		if ($this->navTpl["EndeText"]  === '') $this->navTpl["EndeText"]  = $this->navTpl["defaultEndeText"];
+		if ($this->navTpl["AllText"]  === '') $this->navTpl["AllText"]  = $this->navTpl["defaultAllText"];
 		// echo "#".__LINE__." ".$this->navTpl["StartText"]." | ".$this->navTpl["defaultStartText"]."<br>\n";
 		
 		$this->row_von = ($num) ? $o+1 : 0;
@@ -200,13 +199,13 @@ class listbrowser {
 		
 		$this->navTpl["page"]      = $this->page;
 		
-		$this->navTpl["all"] = "";
+		$this->navTpl["all"] = '';
 		$this->navTpl["all"].= $this->navTpl["start"];
 		$this->navTpl["all"].= $this->tplVar["navall_trenner"].$this->navTpl["previous"];
 		$this->navTpl["all"].= $this->tplVar["navall_trenner"].$this->navTpl["next"];
 		$this->navTpl["all"].= $this->tplVar["navall_trenner"].$this->navTpl["end"];
 		$this->navTpl["all"].= $this->tplVar["navall_trenner"].$this->navTpl["showall"];
-		$this->navTpl["all"].= "<span class=\"lbnavinfobox\">Eintr�ge: ".$this->row_von." - ".$this->row_bis." // ".$numall." &nbsp; ";
+		$this->navTpl["all"].= "<span class=\"lbnavinfobox\">Einträge: ".$this->row_von." - ".$this->row_bis." // ".$numall." &nbsp; ";
 		$this->navTpl["all"].= "Seite: ".$this->page." / ".$this->pages."  </span>";
 		
 		$this->navTpl["compact"] = "<div class=\"lbnav-compact\">";
@@ -216,7 +215,7 @@ class listbrowser {
 			$this->navTpl["compact"].= $this->navTpl["SearchForm"];
 			$this->navTpl["compact"].= "</div>";
 		}
-		$this->navTpl["compact"].= "";
+		$this->navTpl["compact"].= '';
 		$this->navTpl["compact"].= "<div class=\"lbnav-back\">";
 		$this->navTpl["compact"].= $this->navTpl["start"];
 		if ($this->page > 2) $this->navTpl["compact"].= $this->tplVar["navall_trenner"].$this->navTpl["previous"];

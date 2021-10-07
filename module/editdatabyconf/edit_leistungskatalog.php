@@ -131,11 +131,11 @@ if (isset($confName) && isset($ConfRegData[$confName]) && file_exists($InclBaseD
             $show_list = true;
             switch($inputItem->autorun_status) {
                 case 1:
-                    $body_content.= "Eintrag wurde gel�scht!<br>\n";
+                    $body_content.= "Eintrag wurde gelöscht!<br>\n";
                     break;
 
                 case -1:
-                    $body_content.= "Interner Fehler beim L�schen des Katalogeintrags!<br>\n";
+                    $body_content.= "Interner Fehler beim Löschen des Katalogeintrags!<br>\n";
                     break;
 
                 case 2:

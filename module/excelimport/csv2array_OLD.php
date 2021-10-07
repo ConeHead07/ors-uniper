@@ -12,13 +12,13 @@ function fit_colnames4mysql($colname) {
 		"." => "",
 		"," => "",
 		"#" => "",
-		"ä" => "ae",
-		"Ä" => "ae",
-		"ö" => "oe",
-		"Ö" => "oe",
-		"Ü" => "ue",
-		"ü" => "ue",
-		"ß" => "ss"
+		"ï¿½" => "ae",
+		"ï¿½" => "ae",
+		"ï¿½" => "oe",
+		"ï¿½" => "oe",
+		"ï¿½" => "ue",
+		"ï¿½" => "ue",
+		"ï¿½" => "ss"
 	);
 	$colname = ucfirst(strtolower(strtr($colname, $a)));
 	return $colname;
@@ -63,13 +63,13 @@ $aZeMysqlFields = get_mysqlFields($_TABLE["p_entries"]);
 
 function get_tableOfField($fld) {
 	//lfd.-Nr.:
-	//A-geändert von:	A-Std.	A-Datum	
-	//B-geändert von:	B-Std.	B-Datum	
-	//C-geändert von:	C-Std.	C-Datum	
-	//D-geändert von:	D-Std.	D-Datum	
-	//E-geändert von:	E-Std.
+	//A-geï¿½ndert von:	A-Std.	A-Datum	
+	//B-geï¿½ndert von:	B-Std.	B-Datum	
+	//C-geï¿½ndert von:	C-Std.	C-Datum	
+	//D-geï¿½ndert von:	D-Std.	D-Datum	
+	//E-geï¿½ndert von:	E-Std.
 	//
-	if (substr($fld, 1, strlen("-geändert von:")) == "-geändert von:"
+	if (substr($fld, 1, strlen("-geï¿½ndert von:")) == "-geï¿½ndert von:"
 	 || substr($fld, 1, strlen("-Std.")) == "-Std."
 	 || substr($fld, 1, strlen("-Datum")) == "-Datum") {
 		return "p_entries";
@@ -80,7 +80,7 @@ function get_tableOfField($fld) {
 
 function pentry_colname2MyDB::fldname($colname) {
 	switch(substr($colname, 1)) {
-		case "-geändert von:":
+		case "-geï¿½ndert von:":
 		return "Mitarbeiter";
 		break;
 		
@@ -177,7 +177,7 @@ if (isset($_FILES[$fuploadname])) {
 			break;
 			
 			default:
-			$msg.= "#".__LINE__." Ungültige Dateierweiterung: ".strtolower(implode(".",array_slice($t,-1)))."<br>\n";
+			$msg.= "#".__LINE__." Ungï¿½ltige Dateierweiterung: ".strtolower(implode(".",array_slice($t,-1)))."<br>\n";
 		}
 		$tmp_nr = 2;
 		$max_nr = 100;
@@ -195,8 +195,8 @@ if (isset($_FILES[$fuploadname])) {
 $show_csv_files = (!empty($_GET["show_csv_files"]) || !$csv_file && !file_exists($csv_dir.$csv_file)) ? true : false;
 if ($del_file) {
 	if (file_exists($csv_dir."/".$del_file)) {
-		if (unlink($csv_dir."/".$del_file)) $msg.= "Datei <strong>$del_file</strong> wurde gelöscht!<br>\n";
-		else $msg.= "Datei <strong>$del_file</strong> konnte <strong>nicht</strong> gelöscht werden!<br>\n";
+		if (unlink($csv_dir."/".$del_file)) $msg.= "Datei <strong>$del_file</strong> wurde gelï¿½scht!<br>\n";
+		else $msg.= "Datei <strong>$del_file</strong> konnte <strong>nicht</strong> gelï¿½scht werden!<br>\n";
 	} else  $msg.= "Datei <strong>$del_file</strong> existiert <strong>nicht</strong>!<br>\n";
 }
 
@@ -213,7 +213,7 @@ if ($show_csv_files) {
 					<td align=right>".$fs."</td>
 					<td>"."<a href=\"?".$trackVars."&csv_file=".urlencode($file)."\">".$file." </a> </td>
 					<td>"."<a href=\"".$csv_dir.$file."\" target=_blank style=\"color:#00f;\">Anzeigen </a> </td>
-					<td>"."<a href=\"?".$trackVars."&del_file=".urlencode($file)."\" style=\"color:#f00;\">Löschen </a> </td>
+					<td>"."<a href=\"?".$trackVars."&del_file=".urlencode($file)."\" style=\"color:#f00;\">Lï¿½schen </a> </td>
 				</tr>\n";
 				$aCsvFiles[] = $file;
 			}
@@ -261,10 +261,10 @@ if ($show_csv_files) {
 	if (isset($_POST["cleanProjektTables"])) {
 		$SQL = "DELETE FROM `".$_TABLE["projects"]."`";
 		MyDB::query($SQL, $connid);
-		if (!MyDB::error()) $msg.= "Die Tabelle `".$_TABLE["projects"]."` (".MyDB::affected_rows()."Einträge) wurde geleert!<br>\n";
+		if (!MyDB::error()) $msg.= "Die Tabelle `".$_TABLE["projects"]."` (".MyDB::affected_rows()."EintrÃ¤ge) wurde geleert!<br>\n";
 		$SQL = "DELETE FROM `".$_TABLE["p_entries"]."`";
 		MyDB::query($SQL, $connid);
-		if (!MyDB::error())$msg.= "Die Tabelle `".$_TABLE["p_entries"]."` (".MyDB::affected_rows()."Einträge) wurde geleert!<br>\n";
+		if (!MyDB::error())$msg.= "Die Tabelle `".$_TABLE["p_entries"]."` (".MyDB::affected_rows()."EintrÃ¤ge) wurde geleert!<br>\n";
 	}
 	
 	if (!isset($_POST["ft"])) {
@@ -303,7 +303,7 @@ if ($show_csv_files) {
 	for($i = 0; $i<count($aFitTitles); $i++) {
 		$r_tbl = get_tableOfField($aTitles[$i]);
 		$isColOfProject[$i] = ($r_tbl == "projects");
-		if ($XD) $csvToTbl.= "#".__LINE__." ".$aTitles[$i]." gehört zu Tabelle $r_tbl<br>\n";
+		if ($XD) $csvToTbl.= "#".__LINE__." ".$aTitles[$i]." gehÃ¶rt zu Tabelle $r_tbl<br>\n";
 		if ($isColOfProject[$i]) {
 			$SQL.= ($i?",":"")."`".MyDB::escape_string($aFitTitles[$i])."`";
 		}
@@ -407,7 +407,7 @@ if ($show_csv_files) {
 if ($db_import) {
 	// Importiere Projektdaten
 	MyDB::query($SQL, $connid);
-	$msg.= "Es wurden ".MyDB::affected_rows()." Projekt-Datensätze eingefügt!<br>\n";
+	$msg.= "Es wurden ".MyDB::affected_rows()." Projekt-DatensÃ¤tze eingefÃ¼gt!<br>\n";
 	if (MyDB::error() || $XD) {
 		if (MyDB::error()) $msg.= MyDB::error()."<br>\n";
 		$msg.= "<pre>".fb_htmlEntities($SQL)."</pre>\n";
@@ -473,7 +473,7 @@ if ($db_import) {
 	if ($num_loops) {
 		MyDB::query($SQL_SUB, $connid);
 		
-		$msg.= "Es wurden ".MyDB::affected_rows()." Zeiterfassungen eingefügt!<br>\n";
+		$msg.= "Es wurden ".MyDB::affected_rows()." Zeiterfassungen eingefÃ¼gt!<br>\n";
 		if (MyDB::error() || $XD) {
 			if (MyDB::error()) $msg.= MyDB::error()."<br>\n";
 			$msg.= "<pre>".fb_htmlEntities($SQL_SUB)."</pre>\n";
@@ -518,7 +518,7 @@ if ($db_import) {
 	
 	if ($loopNr) {
 		MyDB::query($SQL, $connid);
-		$msg.= "Es wurden ".MyDB::affected_rows()." Mitarbeiter eingefügt!<br>\n";
+		$msg.= "Es wurden ".MyDB::affected_rows()." Mitarbeiter eingefÃ¼gt!<br>\n";
 		if (MyDB::error() || $XD) {
 			if (MyDB::error()) $msg.= MyDB::error()."<br>\n";
 			$msg.= "<pre>".fb_htmlEntities($SQL_SUB)."</pre>\n";
@@ -564,9 +564,9 @@ if ($db_import) {
 <body>
 <?php
 if (!empty($aMitarbeiter)) $msg.= "<pre> Mitarbeiter: ".print_r($aMitarbeiter, true)."</pre>\n";
-$msg.= "<a href=\"?".$trackVars."&show_csv_files=1\">CSV-Datei auswählen ...</a> oder Neue Datei für Import hochladen<br>\n";
+$msg.= "<a href=\"?".$trackVars."&show_csv_files=1\">CSV-Datei auswÃ¤hlen ...</a> oder Neue Datei fÃ¼r Import hochladen<br>\n";
 if ($file_liste) $msg.= $file_liste."<br>\n";
-$msg.= "Vor dem Import müssen Excel-Dateien als CSV-Dateien exportiert und mit der Dateiendung .csv versehen worden sein!<br>\n";
+$msg.= "Vor dem Import mÃ¼ssen Excel-Dateien als CSV-Dateien exportiert und mit der Dateiendung .csv versehen worden sein!<br>\n";
 $msg.= "<form enctype=\"multipart/form-data\" method=\"post\" style=\"margin:0px;display:inline;\">\n";
 $msg.= "<input type=\"file\" name=\"$fuploadname\"><input type=\"submit\" value=\"Senden\"><br>\n";
 $msg.= "</form>\n";

@@ -59,14 +59,14 @@ function zzz_parseTag($tname, $tag, &$_CFT) {
 	$_NewTagAttr = array();
 	$fitStyle = ";";
 	
-	// Filtern gültiger Attribut-Eigenschafts-NAMEN
+	// Filtern gï¿½ltiger Attribut-Eigenschafts-NAMEN
 	while(list($ak, $av) = each($a)) {
 		if (in_array($ak, $_CFT["AT"])) {
 			$_NewTagAttr[$ak] = $av;
 		} 
 	}
 	
-	// Ausfiltern ungültiger Attribut-WERTE
+	// Ausfiltern ungï¿½ltiger Attribut-WERTE
 	if (isset($_CFT["ATCK"])) {
 		reset($_NewTagAttr);
 		while (list($r_attr, $r_wert) = each($_NewTagAttr)) {
@@ -86,7 +86,7 @@ function zzz_parseTag($tname, $tag, &$_CFT) {
 		}
 	}
 	
-	// Filtern gültiger Style-Eigenschafts-NAMEN 
+	// Filtern gï¿½ltiger Style-Eigenschafts-NAMEN 
 	if (isset($astyle) && is_array($astyle) && count($astyle)) {
 		reset($astyle);
 		while(list($k_astyle, $v_astyle) = each($astyle)) {
@@ -310,9 +310,9 @@ function cms_strip_tags($v, $allowableTags = "/default", $_CONF_CTAGS = "") {
 			$v=substr($v, $tagLen);
 			
 			// Und was passiert hier
-			// Hier werden ausgeschriebene Internetadressen so präpariert,
+			// Hier werden ausgeschriebene Internetadressen so prï¿½pariert,
 			// dass der Browser bei langen Adressen automatisch bei Slash selbst
-			// den nötigen Zeilenumbruch vornehmen kann, damit die Seite nicht auseinanderplatzt
+			// den nï¿½tigen Zeilenumbruch vornehmen kann, damit die Seite nicht auseinanderplatzt
 			/**/
 			if ($tname == "a") {
 				$posOfClosingTag = strpos($v,"</$tagname>");
@@ -476,7 +476,7 @@ function parse_htmlTag($tag) {
 			// Hier wird der PhrasenOpener erkannt, der folgenden Wert haben kann
 			// => '
 			// => "
-			// => =		Attributwert ist nicht in Anführungszeichen
+			// => =		Attributwert ist nicht in Anfï¿½hrungszeichen
 			// Und hier werden alleinstehende Attribute ohne Wertzuweisung erkannt
 			case "":
 			if ($z == "=") {
@@ -500,7 +500,7 @@ function parse_htmlTag($tag) {
 				$phrasenOpener=$z;
 				break;
 				
-				case " ": // Prüfe, ob Attribut einzeln im Tag steht => ohne Wertzuweisung
+				case " ": // Prï¿½fe, ob Attribut einzeln im Tag steht => ohne Wertzuweisung
 				$temp = substr($tag,$i+1);
 				$nextNonBlindChar = substr(trim($temp), 0, 1);
 				
@@ -589,7 +589,7 @@ function cms_extract_part($vorlage,$cms_part_name) {
 	return $re;
 }
 
-// Funktion erledigt diverse Vorarbeiten für die Ausgabe
+// Funktion erledigt diverse Vorarbeiten fï¿½r die Ausgabe
 // einer komfortablen Editier-Umgebung
 function get_cms_items($str,$tagStart,$tagEnd,$setUniqueNeedle) {
 	$xbug=1;
@@ -617,12 +617,12 @@ function get_cms_items($str,$tagStart,$tagEnd,$setUniqueNeedle) {
 		$ausgabe=substr($ausgabe,0,$a).$needle.substr($ausgabe,$a+strlen($cmstag));
 		// Blockbeginn: CMS-Tag durch eindeutigen String ersetzen (erledigt)
 
-		// Blockbeginn Buffern der Rückgabewerte
+		// Blockbeginn Buffern der Rï¿½ckgabewerte
 		$cms_items[$tVar]["cmstag"]=$cmstag;
 		$cms_items[$tVar]["varstr"]=$varstr;
 		$cms_items[$tVar]["vararr"]=$vararr;
 		$cms_items[$tVar]["needle"]=($setUniqueNeedle)?$needle:"";
-		// Blockende Buffern der Rückgabewerte
+		// Blockende Buffern der Rï¿½ckgabewerte
 
 	}
 	if ($setUniqueNeedle) {
@@ -704,9 +704,9 @@ function set_cms_editbar($body_content,$ausgabe) {
 		$objSourceItems.="'$groupName,$formName,$inputName'";
 		$groupNeedle=$cmsitems_arr[$i]["needle"];
 		$editBlock=str_replace("%GROUPID%",$groupName,$editBlockVorlage);
-		// Maße des Eingabefeldes
+		// Maï¿½e des Eingabefeldes
 		$editBlock=str_replace("/*styleSize*/",$styleSize,$editBlock);
-		// Breite der Schaltflächenleiste
+		// Breite der Schaltflï¿½chenleiste
 		$editBlock=str_replace("/*styleWidth*/",$styleWidth,$editBlock);
 		$editBlock=str_replace("%class%",$inputClass,$editBlock);
 		$editJs=str_replace("%GROUPID%",$groupName,$editJsVorlage);
@@ -783,7 +783,7 @@ function set_mysql_orderid($tbl,$orderFld,$Ord,$idFld,$ID) {
 							MyDB::query($SQL);
 							
 							if (MyDB::error()) { $error.=""; }
-							$msg.="Die Reihenfolge für ".MyDB::affected_rows()." weitere Einträge wurde korrigiert!<br>\n";
+							$msg.="Die Reihenfolge fÃ¼r ".MyDB::affected_rows()." weitere EintrÃ¤ge wurde korrigiert!<br>\n";
 							$SQL = "UPDATE $tbl SET $orderFld = $Ord WHERE $idFld = '$ID'";
 							MyDB::query($SQL);
 							if (MyDB::error()) $error.="#104 ERR:".MyDB::error()."<br>SQL:$SQL<br>\n";
