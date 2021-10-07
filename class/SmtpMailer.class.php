@@ -11,37 +11,30 @@ if ( basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
 defined('SMTP_MAILER_DEBUG') || define('SMTP_MAILER_DEBUG', APP_ENVIRONMENT === 'DEVELOPMENT' ? 1 : 0);
 defined('SMTP_MAILER_REALSEND') || define('SMTP_MAILER_REALSEND', 1);
 
-$aSmtpConn = array(
-    "server"    => $MConf['smtp_server'], //"10.10.1.70",
-    "port"      => $MConf['smtp_port'], //"25",
-    "encrypt"   => 'tls',
-    "helofrom"  => $MConf['smtp_client_host'], //getenv('HTTP_HOST'),
-    "from_name" => $MConf['smtp_from_name'],
-    "from_addr" => $MConf['smtp_from_addr'],
-    "from"      => '"'.$MConf['smtp_from_name'] . '" <' . $MConf['smtp_from_addr'].'>',
-    "postfach_from" => '<' . $MConf['smtp_from_addr'].'>',
-    'helofrom' => gethostbyname(gethostname()),
-    "auth_user" => $MConf['smtp_auth_user'],
-    "auth_pass" => $MConf['smtp_auth_pass'],
-    "socket"    => "",
-    "connection_timeout" => 5,
-    "timeIn"    => time(),
-    "antwort"   => "",
-    "logsmtp"   => 1,
-    "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".txt",
-    "tat"       => "" // Transaktionstext mit SERVER
-);
-
-if ($IsStandaloneTest && !empty($_REQUEST['sender']) && $_REQUEST['sender'] !== 'default' ) {
-    if (isset($SmtpConf) && is_array($SmtpConf) && in_array($_REQUEST['sender'], $SmtpConf)) {
-        $smtpSender = $_REQUEST['sender'];
-        $aSmtpConn = $SmtpConf[$smtpSender];
-    } else {
-        die('INVALID COMFIG-NAME FOR SENDER: ' . $_REQUEST['sender']);
-    }
+if (empty($aSmtpConn)) {
+    $aSmtpConn = array(
+        "server"    => $MConf['smtp_server'], //"10.10.1.70",
+        "port"      => $MConf['smtp_port'], //"25",
+        "encrypt"   => 'tls',
+        "helofrom"  => $MConf['smtp_client_host'], //getenv('HTTP_HOST'),
+        "from_name" => $MConf['smtp_from_name'],
+        "from_addr" => $MConf['smtp_from_addr'],
+        "from"      => '"'.$MConf['smtp_from_name'] . '" <' . $MConf['smtp_from_addr'].'>',
+        "postfach_from" => '<' . $MConf['smtp_from_addr'].'>',
+        'helofrom' => gethostbyname(gethostname()),
+        "auth_user" => $MConf['smtp_auth_user'],
+        "auth_pass" => $MConf['smtp_auth_pass'],
+        "socket"    => "",
+        "connection_timeout" => 5,
+        "timeIn"    => time(),
+        "antwort"   => "",
+        "logsmtp"   => 1,
+        "logfile"   => __DIR__ . "/../log/log_smtp_".date("YmdHis").".txt",
+        "tat"       => "" // Transaktionstext mit SERVER
+    );
 }
 
-if($IsStandaloneTest && SMTP_MAILER_DEBUG > 0 ) {
+if(false && $IsStandaloneTest && SMTP_MAILER_DEBUG > 0 ) {
     echo 'smtpSender: ' . $smtpSender . "<br>\n";
     echo '| ';
     foreach( $SmtpConf as $_sender) {
@@ -234,7 +227,7 @@ class SmtpMailer {
      * @param string|null $val
      * @return $this
      */
-    public function assign($key, $val = null, $charset = 'ISO-8859-1') {
+    public function assign($key, $val = null, $charset = 'UTF-8') {
         if (is_array($key)) {
             foreach($key as $_k => $_v) {
                 $this->tplVars[ (string) $_k] = is_numeric($_v) ? $_v : $this->toUtf8((string) $_v, $charset);
@@ -257,7 +250,7 @@ class SmtpMailer {
         return $this;
     }
 
-    public static function toUtf8(string $str, string $fromCharset = 'ISO-8859-1') {
+    public static function toUtf8(string $str, string $fromCharset = 'UTF-8') {
         // $_detectedCS = mb_detect_encoding($str);
         if (!$fromCharset) {
             $fromCharset = mb_detect_encoding($str);
