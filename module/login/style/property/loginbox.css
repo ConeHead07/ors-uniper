@@ -31,12 +31,15 @@ div.page-login .LoginBox,
 .LoginBox {
 	width:530px;
 	margin-top:0px;
-	border:1px solid #f50000;
+	border:1px solid #0078dc;
+	previous-border-color: #f50000;
 }
 div.page-login .LoginBox .hdCell,
 .LoginBox .hdCell {
-	border-bottom:0px solid #f50000;
-	background:#f50000;
+	border-bottom:0px solid #0078dc;
+	previous-border-color: #f50000;
+	background: #0078dc;
+	previous-background: #f50000;
 	padding:4px;
 	color:#fff;
 	font-size:15px;
@@ -63,7 +66,8 @@ div.page-login .LoginAdLinks,
 }
 .LoginBox * a:hover,
 .LoginAdLinks a:hover {
-	color:#f50000;
+	color: #0078dc;
+	previous-color: #f50000;
 }
 
 div.page-login .tdLbl,
@@ -83,7 +87,8 @@ div.page-login .topCell .msg,
 .LoginBox .msg,
 .topCell .msg
  {
-	color:#f50000;
+	color: #0078dc;
+	previous-color: #f50000;
 	background:#000;
 	font-size:12px;
 	padding:4px;
