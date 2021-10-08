@@ -2,7 +2,9 @@
 
 <html>
 <head>
-	<meta http-equiv="Refresh" content="3; url=%redirect%">
+	<meta http-equiv="Refresh" content="300; url=%redirect%">
+	<meta name="xxxviewport" xxxcontent="width=device-width, maximum-scale=1, minimum-scale=1, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{HomepageTitle}</title>
 	<style>
 	body, td {
@@ -15,15 +17,18 @@
 	}
 	</style>
 	<script>function init(){}</script>
-<link rel="stylesheet" href="{UrlToLoginModul}/style/property/loginbox.css" media="screen">
+	<link rel="stylesheet" href="{UrlToHomepage}themes/{theme}/css/mertens.global.v2.css" media="screen"/>
+	<link rel="stylesheet" href="{UrlToLoginModul}/style/property/loginbox.css" media="screen">
 <!-- %addStyles% -->
 <!-- %addHeader% -->
 </head>
 
 <body onload=init()>
+<div class="page-login">
+	<div class="page-login-box" align="center">
 <!-- {msg} -->
 <!-- {error} -->
-<table class="LoginBox" align=center style="margin:60px auto 20px auto;">
+<table class="LoginBox" align=center xstyle="margin:60px auto 20px auto;">
 	<tr><td class="topCell">
 		<table style="margin:40px;">
 		<tr>
@@ -39,6 +44,7 @@
 </table>
 
 
-
+	</div>
+</div>
 </body>
 </html>

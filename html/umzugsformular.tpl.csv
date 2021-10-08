@@ -27,7 +27,7 @@ E-Mail;"{$AS.ansprechpartner_email|escape}
 Fon:{$AS.ansprechpartner_fon|escape} 
  
  
-Dateianh‰nge 
+Dateianh√§nge
 {include file="umzugsformular_attachments.tpl.csv"} 
  
  

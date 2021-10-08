@@ -195,7 +195,7 @@ function send_umzugsblatt($AID, $antragsOrt, $antragsGebaeude, $aData) {
 	$umzugsblatt = get_umzugsblatt($AID);
 	
 	$subject = "Auftrag ID ".$AID." - Lieferschein";
-	$plaintext = "Guten Tag,\n\nanbei erhalten Sie den Lieferschein für den Auftrag mit der ID ".$AID.".\n\nMit freundlichen Grüßen\n\nIhr\n".$MConf["AppTitle"];
+	$plaintext = "Guten Tag,\n\nanbei erhalten Sie den Lieferschein fÃ¼r den Auftrag mit der ID ".$AID.".\n\nMit freundlichen GrÃ¼ÃŸen\n\nIhr\n".$MConf["AppTitle"];
 	$htmltext = "";
 	$header = "";
 	$specs = "";
@@ -210,7 +210,7 @@ function send_umzugsblatt($AID, $antragsOrt, $antragsGebaeude, $aData) {
 	$attachement[0]["fmime"]="text/html";
 	
 	if ($AtList) {
-		$htmltext = "Guten Tag,<br>\n<br>\nanbei erhalten Sie den Lieferschein für den Auftrag mit der ID ".$AID.".<br>\n<br>\n";
+		$htmltext = "Guten Tag,<br>\n<br>\nanbei erhalten Sie den Lieferschein fÃ¼r den Auftrag mit der ID ".$AID.".<br>\n<br>\n";
 		$htmltext.= "Dem Auftrag wurden ".count($aAtItems)." Dateianh&auml;nge zum Download beigef&uuml;gt:<br>\n";
 		$htmltext.= "<ol>".$AtList."</ol>\n";
 		$htmltext.= "<br>\n<br>\nMit freundlichen Gr&uuml;&szlig;en<br>\n<br>\nIhr<br>\n".$MConf["AppTitle"];
@@ -256,16 +256,16 @@ function get_standort_property_mail($antragsOrt, $antragsGebaeude) {
 		$aPropertyMailTo[] = array("to"=>"Sigrid.Hilbig@demo.com", "Name"=>"Hilbig", "Vorname"=>"Sigrid");
 		
 	} elseif ($antragsOrt == "Hamburg") {
-		$aPropertyMailTo[] = array("to"=>"Barbara.Schoening@demo.com", "Name"=>"Schöning", "Vorname"=>"Barbara");
+		$aPropertyMailTo[] = array("to"=>"Barbara.Schoening@demo.com", "Name"=>"Schï¿½ning", "Vorname"=>"Barbara");
 		
 	} elseif ($antragsOrt == "Berlin") {
 		$aPropertyMailTo[] = array("to"=>"Alexander.Voigt@demo.com", "Name"=>"Voigt", "Vorname"=>"Alexander");
 		
-	} elseif ($antragsOrt == "Stuttgart" || $antragsOrt == "Mannheim" || $antragsOrt == "Freiburg" || $antragsOrt == "Saarbrücken") {
+	} elseif ($antragsOrt == "Stuttgart" || $antragsOrt == "Mannheim" || $antragsOrt == "Freiburg" || $antragsOrt == "SaarbrÃ¼cken") {
 		$aPropertyMailTo[] = array("to"=>"Katja.Rabe@demo.com", "Name"=>"Rabe", "Vorname"=>"Katja");
 		$aPropertyMailTo[] = array("to"=>"Veronica.Strobel@demo.com", "Name"=>"Strobel", "Vorname"=>"Veronica");
 		
-	} elseif ($antragsOrt == "Nürnberg" || $antragsOrt == "München") {
+	} elseif ($antragsOrt == "NÃ¼rnberg" || $antragsOrt == "MÃ¼nchen") {
 		$aPropertyMailTo[] = array("to"=>"Jutta.Jaquet@demo.com", "Name"=>"Jaquet", "Vorname"=>"Jutta");
 		$aPropertyMailTo[] = array("to"=>"Helmut.Brandstetter@demo.com", "Name"=>"Brandstetter", "Vorname"=>"Helmut");
 		
@@ -292,19 +292,19 @@ function get_standort_admin_mail($antragsOrt, $antragsGebaeude) {
 		$aAdminMailTo[] = array("to"=>"u.kelber@mertens.ag", "Name"=>"Kelber", "Vorname"=>"Ulf");
 		break;
 		
-		case "München":
-		case "Nürnberg":
+		case "MÃ¼nchen":
+		case "NÃ¼rnberg":
 		case "Stuttgart":
 		case "Mannheim":
 		case "Sulzbach":
 		case "Eschborn":
 		case "Freiburg":
-		case "Saarbrücken":
+		case "SaarbrÃ¼cken":
 		$aAdminMailTo[] = array("to"=>"j.ickstadt@mertens.ag", "Name"=>"Ickstadt", "Vorname"=>"Jens");
 		$aAdminMailTo[] = array("to"=>"m.schiller@mertens.ag", "Name"=>"Schiller", "Vorname"=>"Markus");
 		break;
 		
-		case "Düsseldorf":
+		case "DÃ¼sseldorf":
 		case "Ratingen":
 		case "Essen":
 		case "Dortmund":

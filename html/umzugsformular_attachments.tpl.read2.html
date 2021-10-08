@@ -1,7 +1,7 @@
 {if empty($noOuterBox)}
 {if empty($noCss)}<link rel="stylesheet" type="text/css" href="{if !empty($WebRoot)}{$WebRoot}{/if}css/umzugsformular_attachements.css" />{/if}
 
-<fieldset><legend><strong>{if !empty($internal)}Interne {/if}Dateianh‰nge</strong></legend>
+<fieldset><legend><strong>{if !empty($internal)}Interne {/if}Dateianh√§nge</strong></legend>
 	<div class="attachements_list" id="attachments{if !empty($internal)}_internal{/if}_list" data-url="sites/umzugsantrag_attachements_list.php?aid={$AS.aid}&internal={$internal}" style="padding:5px;">
 	{/if}
 		<div class="row names{if count($UmzugsAnlagen)==0} hidden{/if}">

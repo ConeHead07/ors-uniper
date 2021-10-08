@@ -86,13 +86,13 @@ td label {
 </table><br>
 {if $UmzugsAnlagen}
 <ul class="ulAttachements" style="margin:0;padding:0;display:block;">
-<strong>Dateianh‰nge</strong><br>
+<strong>Dateianh√§nge</strong><br>
 {foreach name=ATList item=AT from=$UmzugsAnlagen}
 <li><a href="{$AT.datei_link}" target="_blank">{$AT.dok_datei}</a> {$AT.datei_groesse}</li>
 {/foreach}
 </ul><br>
 {else}
-<strong>Dateianh‰nge: </strong><em>Keine</em><br><br>
+<strong>Dateianh√§nge: </strong><em>Keine</em><br><br>
 {/if}
 <div id="BoxBemerkungen">
 <strong>Aufgabe:</strong><br>

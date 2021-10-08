@@ -39,7 +39,7 @@ if ($viewForm) {
 	$NLAnlagenListe = "";
 	
 	if (is_array($aATs) && count($aATs)) {
-		$NLAnlagenListe.= "<ul class=\"ulAttachements\">\n<strong>Dateianh‰nge</strong><br>\n";
+		$NLAnlagenListe.= "<ul class=\"ulAttachements\">\n<strong>Dateianh√§nge</strong><br>\n";
 		for($i = 0; $i < count($aATs); $i++) {
 			$DOKID = $aATs[$i]["dokid"];
 			$NAT = new ItemEdit($NATConf, $connid, $user, $DOKID);
@@ -49,10 +49,9 @@ if ($viewForm) {
 		}
 		$NLAnlagenListe.= "</ul>\n";
 	} else {
-		$NLAnlagenListe = "<strong>Dateianh‰nge: </strong><em>keine</em><br>\n";
+		$NLAnlagenListe = "<strong>Dateianh√§nge: </strong><em>keine</em><br>\n";
 	}
 	$body_content = str_replace("{NLAnlagenListe}", $NLAnlagenListe, $body_content);
 } else {
 	
 }
-?>

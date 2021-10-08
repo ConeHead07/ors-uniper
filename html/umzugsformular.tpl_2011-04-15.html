@@ -46,7 +46,7 @@
   </tr>
 
   <tr>
-    <td style="padding:0;"><label for="gebaeude">Gebäude:</label></td>
+    <td style="padding:0;"><label for="gebaeude">Gebï¿½ude:</label></td>
     <td style="padding:0;"><input type="text" readonly="true" onclick="get_standort_gebaeude(this)" value="{$AS.gebaeude|escape}" name="AS[gebaeude]" class="itxt itxt2col"></td>
   </tr>
 
@@ -70,9 +70,9 @@
 
 <div class="SelBoxMitarbeiterWidth">
 <span style="float:left;margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="mitarbeiter_new_search();return false;">
-Mitarbeiter aus Liste hinzufügen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
+Mitarbeiter aus Liste hinzufï¿½gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
 <span style="float:right;margin-bottom:2px;color:#000;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="mitarbeiter_neu_anlegen();return false;">
-Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" alt=""></span><br clear="all">
+Fehlende Mitarbeiter hï¿½ndisch hinzuf&uuml;gen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" alt=""></span><br clear="all">
 <table class="MitarbeierItem" style="border:0;padding:0;margin:0 0 15px 0"><tr><td style="border:0;padding:0;margin:0">
 <input name="name" id="SelectMitarbeiter" class="SelBoxMitarbeiterWidth UpperCase" style="border:1px solid #549e1a" onclick="get_mitarbeiter(this)" ondblclick="mitarbeiter_new_search()"></div><br>
 </td></tr></table>
@@ -85,9 +85,9 @@ Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images
   {if $MA.maid}
   <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;">Sind die Daten korrekt? Anmerkungen und abweichende Zuordnungen (Raum,Abtlg) bitte unten ins Feld <span style="text-decoration:underline;">Bemerkungen</span> eintragen</div></div>
   {else}
-  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;color:#f00;">Bitte nur händisch eintragen, wenn der Mitarbeiter nicht ausgewählt werden kann!</div></div>
+  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;color:#f00;">Bitte nur hï¿½ndisch eintragen, wenn der Mitarbeiter nicht ausgewï¿½hlt werden kann!</div></div>
   {/if}
-  <div style="float:right;"><span onclick="dropMA(this)" style="cursor:pointer;">Aus Anforderungsliste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
+  <div style="float:right;"><span onclick="dropMA(this)" style="cursor:pointer;">Aus Anforderungsliste lï¿½schen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
 </caption>
   <thead>
   <tr>
@@ -201,13 +201,13 @@ Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images
 
 {if $UmzugsAnlagen}
 <ul class="ulAttachements">
-<strong>Dateianhänge</strong><br>
+<strong>DateianhÃ¤nge</strong><br>
 {foreach name=ATList item=AT from=$UmzugsAnlagen}
 <li><a href="{$AT.datei_link}" target="_blank">{$AT.dok_datei}</a> {$AT.datei_groesse}</li>
 {/foreach}
 </ul>
 {else}
-<strong>Dateianhänge: </strong><em>Keine</em><br>
+<strong>DateianhÃ¤nge: </strong><em>Keine</em><br>
 {/if}
 
 <!-- <div style="color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="addMa();return false;">Weiteren Mitarbeiter ausw&auml;hlen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></div><br> -->
@@ -222,7 +222,7 @@ Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images
 <input type="submit" onclick="umzugsantrag_send()" style="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Abschicken">
 <input type="submit" onclick="umzugsantrag_storno()" style="padding:0 0 9px 0;background:url(images/BtnRed_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Antrag stornieren">
 <input type="submit" onclick="umzugsantrag_reload()" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Neu laden">
-<input type="submit" onclick="umzugsantrag_add_attachement()" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhänge"></div>
+<input type="submit" onclick="umzugsantrag_add_attachement()" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="DateianhÃ¤nge"></div>
 <!-- Debug-Btn:
 <input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">
 <input type="submit" onclick="return umzugsantrag_submit_debug('senden')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="senden">
@@ -245,7 +245,7 @@ Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images
 <table id="MA_SELECT" class="MitarbeierItem">
   <caption style="font-size:11px;padding:0px;height:18px;">
   <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;">Sind die Daten korrekt? Anmerkungen und abweichende Zuordnungen (Raum,Abtlg) bitte unten ins Feld <span style="text-decoration:underline;">Bemerkungen</span> eintragen</div></div>
-  <div style="float:right;"><span onclick="dropMA(this)" style="cursor:pointer;">Aus Anforderungsliste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
+  <div style="float:right;"><span onclick="dropMA(this)" style="cursor:pointer;">Aus Anforderungsliste lï¿½schen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
 </caption>
   <thead>
   <tr>
@@ -300,8 +300,8 @@ Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images
 <div style="display:none;">
 <table id="MA_INPUT" class="MitarbeierItem">
   <caption style="font-size:11px;padding:0px;height:18px;">
-  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;color:#f00;">Bitte nur händisch eintragen, wenn der Mitarbeiter nicht ausgewählt werden kann!</div>
-  <div style="float:right;"><span onclick="dropMA(this)" style="cursor:pointer;">Aus Anforderungsliste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div><div style="clear:both;"></div>
+  <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;color:#f00;">Bitte nur hï¿½ndisch eintragen, wenn der Mitarbeiter nicht ausgewï¿½hlt werden kann!</div>
+  <div style="float:right;"><span onclick="dropMA(this)" style="cursor:pointer;">Aus Anforderungsliste lï¿½schen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div><div style="clear:both;"></div>
 </caption>
   <thead>
   <tr>
@@ -358,6 +358,6 @@ Fehlende Mitarbeiter händisch hinzuf&uuml;gen <img align="absmiddle" src="images
 <div class="SelTitle"><strong>Anforderungsarten</strong></div>
 <div id="SelBoxUartItems">
 <div class="SelItem"><input type="checkbox" name="uartbox" value="Box" checked=1> <strong>Box</strong>move</div>
-<div class="SelItem"><input type="checkbox" name="uartbox" value="Mit Möbel" checked=1> Mit <strong>Möbel</strong></div>
+<div class="SelItem"><input type="checkbox" name="uartbox" value="Mit Mï¿½bel" checked=1> Mit <strong>Mï¿½bel</strong></div>
 </div>
 </div>

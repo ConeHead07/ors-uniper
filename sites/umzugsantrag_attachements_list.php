@@ -31,8 +31,8 @@ if (!isset($int)) {
 if (!$aid) die("<strong>Es wurde keine AntragsID &uuml;bergeben!</strong> <br>
 <br>
 <strong>Wie erhalte ich eine AntragsID?</strong><br>
-Eine ID erhält Ihr Antrag mit dem ersten erfolgreichen (Zwischen-)Speichern
-mit mind. einem vollständigen Mitarbeitereintrag in der Umzugsliste.<br>
+Eine ID erhÃ¤lt Ihr Antrag mit dem ersten erfolgreichen (Zwischen-)Speichern
+mit mind. einem vollstÃ¤ndigen Mitarbeitereintrag in der Umzugsliste.<br>
 <br>
 Anschlie&szlig;end k&ouml;nnen Sie Dateien hinzuf&uuml;gen!<br>\n");
 
@@ -61,7 +61,7 @@ if (!empty($drop)) {
 		drop_attachement($aid, $drop);
 		if ($dropError) $uploadError.= ($uploadError?"<br>\n":"").$dropError;
 	} else {
-		$uploadError.= "Nur Administratoren dürfen Dateianhänge l&ouml;schen!<br>\n";
+		$uploadError.= "Nur Administratoren dÃ¼rfen DateianhÃ¤nge l&ouml;schen!<br>\n";
 	}
 }
 

@@ -31,7 +31,7 @@ $response = getRequest("response","");
 if (!$token && $aid) {
     switch($response) {
         case 'json':
-            $custom_error['jquery-upload-file-error']="Es wurde kein Token übergeben";
+            $custom_error['jquery-upload-file-error']="Es wurde kein Token ï¿½bergeben";
             echo json_encode($custom_error);
             //exit;
             break;
@@ -40,7 +40,7 @@ if (!$token && $aid) {
     die("<strong>Es wurde kein token &uuml;bergeben!</strong> <br>"
         ."<br>"
         ."<strong>Wie erhalte ich einen Token</strong>"
-        ."Einen Token erhalten Sie automatisch beim Öffnen eines Leistungsformulars.<br>"
+        ."Einen Token erhalten Sie automatisch beim ï¿½ffnen eines Leistungsformulars.<br>"
         ."<br>"
         ."Anschlie&szlig;end k&ouml;nnen Sie Dateien hinzuf&uuml;gen!<br>\n");
     }
@@ -81,9 +81,9 @@ if (!empty($drop)) {
 	if ($isAdmin) {
 		drop_attachement($token, $drop);
 		if ($dropError) $uploadError.= ($uploadError?"<br>\n":"").$dropError;
-                else $uploadMsg = "Datei wurde gelöscht!";
+                else $uploadMsg = "Datei wurde gelï¿½scht!";
 	} else {
-		$uploadError.= "Nur Administratoren dürfen Dateianhänge l&ouml;schen!<br>\n";
+		$uploadError.= "Nur Administratoren dÃ¼rfen DateianhÃ¼nge l&ouml;schen!<br>\n";
 	}
 }
 

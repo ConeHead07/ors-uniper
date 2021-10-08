@@ -3,6 +3,13 @@ div.page-login, div.page-login * {
 	padding: revert;
 	font-size: 1rem;
 }
+div.page-login .page-login-box {
+	x-width:520px;
+	x-text-align:left;
+	margin:60px auto 20px auto;
+	font-family:Arial,sans-serif;
+	box-sizing: border-box;
+}
 div.page-login .msg-Box h2,
 div.page-login .msg-Box h3,
 div.page-login .msg-Box h4,
@@ -31,7 +38,9 @@ table.LoginBox {
 }
 div.page-login .LoginBox,
 .LoginBox {
-	width:530px;
+	width: 100%;
+	max-width:530px;
+	box-sizing: border-box;
 	margin-top:0px;
 	border:1px solid #0078dc;
 	previous-border-color: #f50000;
@@ -80,9 +89,10 @@ div.page-login .tdLbl,
 }
 input,
 div.page-login input {
+	box-sizing: border-box;
 	border: 1px solid gray;
 	padding-left: 0.5rem;
-	box-sizing: content-box;
+	width: 10rem;
 }
 div.page-login .LoginBox .msg,
 div.page-login .topCell .msg,
@@ -107,4 +117,29 @@ div.page-login .topCell .err,
 	font-size:1rem;
 	padding:4px;
 	margin:2px 0px 10px 0px;
+}
+
+@media screen and (max-width: 460px) {
+	div.page-login table.LoginBox, table.LoginBox {
+		height: 100vh;
+		background-color: #fff;
+		box-sizing: border-box;
+	}
+
+	div.page-login .page-login-box {
+		margin-top: 0;
+	}
+
+	div.page-login .tdLbl, .tdLbl {
+		text-align: left;
+	}
+
+	div.page-login td {
+		display: block;
+		text-align: left;
+	}
+	div.page-login .LoginBox .topCell,
+	.LoginBox .topCell {
+		padding:1rem;
+	}
 }
