@@ -696,7 +696,10 @@ $(function(){
 
     if (!umzugsleistungen || umzugsstatus === 'temp' || umzugsstatus === 'zurueckgegeben') {
         renderAuswahlListe();
+    } else if (umzugsstatus !== 'abgeschlossen') {
+        renderBestellListe();
     } else {
+        // @ToDo Mit Option Reklamation / Umtausch für gelieferte Artikel anzufordern
         renderBestellListe();
     }
 

@@ -15,22 +15,22 @@ if ($r) {
                     $SQL.= " authentcode = \"".MyDB::real_escape_string($_GET["ac"])."\"";
                     MyDB::query($SQL, $ConnUserDB["connid"]);
                     if (!MyDB::error()) {
-                            //$msg.= "Die automatische Freischaltung wurde vorübergehend deaktiviert!<br>\n";
-                            //$msg.= "Ihre E-Mail wurde bestätigt. Die Freigabe wird in Kürze von einem Mitarbeiter bearbeitet!";
-                            $msg.= "Ihr Account wurde angelegt und freigeschaltet. Sie können sich ab sofort am System anmelden.";
+                            //$msg.= "Die automatische Freischaltung wurde vorÃ¼bergehend deaktiviert!<br>\n";
+                            //$msg.= "Ihre E-Mail wurde bestÃ¤tigt. Die Freigabe wird in KÃ¼rze von einem Mitarbeiter bearbeitet!";
+                            $msg.= "Ihr Account wurde angelegt und freigeschaltet. Sie kÃ¶nnen sich ab sofort am System anmelden.";
                     } else {
-                            $error.= "Ihr Account konnte leider nicht angelegt werden. Bitte probieren Sie es zu einem späteren Zeitpunkt nocheinmal!<br>\n";
+                            $error.= "Ihr Account konnte leider nicht angelegt werden. Bitte probieren Sie es zu einem spÃ¤teren Zeitpunkt nocheinmal!<br>\n";
                     }
 		} else {
                     if ($e["freigegeben"] == "Nein") {
                             $msg.= "Der Account wurde bereits aktiviert, ist aber zur Zeit gesperrt!<br>\n";
                     } else {
-                            $msg.= "Der Account wurde bereits aktiviert. Sie können sich einloggen!<br>\n";
+                            $msg.= "Der Account wurde bereits aktiviert. Sie kÃ¶nnen sich einloggen!<br>\n";
                     }
 		}
 	}
 } else {
-	$error.= "Ungültiger oder abgelaufener Freischaltlink!<br>\n";
+	$error.= "UngÃ¼ltiger oder abgelaufener Freischaltlink!<br>\n";
 }
 
 
