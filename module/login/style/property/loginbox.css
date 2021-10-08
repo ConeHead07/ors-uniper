@@ -1,6 +1,7 @@
 div.page-login, div.page-login * {
 	margin: revert;
 	padding: revert;
+	font-size: 1rem;
 }
 div.page-login .msg-Box h2,
 div.page-login .msg-Box h3,
@@ -8,7 +9,8 @@ div.page-login .msg-Box h4,
 div.page-login .msg-Box h5,
 div.page-login .msg-Box h6 {
 	margin: 0.5rem;
-	color: #14802b;
+	color: #0078dc;
+	previous-color: #14802b;
 }
 div.page-login .error-Box h2,
 div.page-login .error-Box h3,
@@ -42,7 +44,7 @@ div.page-login .LoginBox .hdCell,
 	previous-background: #f50000;
 	padding:4px;
 	color:#fff;
-	font-size:15px;
+	font-size:1rem;
 	font-weight:bold;
 }
 
@@ -90,7 +92,7 @@ div.page-login .topCell .msg,
 	color: #0078dc;
 	previous-color: #f50000;
 	background:#000;
-	font-size:12px;
+	font-size:1rem;
 	padding:4px;
 	margin:2px 0px 10px 0px;
 }
@@ -102,7 +104,7 @@ div.page-login .topCell .err,
 {
 	color:red;
 	background:#000;
-	font-size:12px;
+	font-size:1rem;
 	padding:4px;
 	margin:2px 0px 10px 0px;
 }
