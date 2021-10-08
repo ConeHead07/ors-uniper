@@ -66,7 +66,7 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'truncate', 
 </style>
 '; ?>
 
-<fieldset><legend><strong>Dateianhänge</strong></legend>
+<fieldset><legend><strong>DateianhÃ¤nge</strong></legend>
 <div id="attachments_list" data-url="sites/umzugsantrag_attachements_list.php?aid=<?php echo $this->_tpl_vars['AS']['aid']; ?>
 " style="padding:5px;">
 

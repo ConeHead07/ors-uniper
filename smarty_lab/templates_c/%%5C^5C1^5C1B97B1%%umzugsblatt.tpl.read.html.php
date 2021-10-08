@@ -194,7 +194,7 @@ unset($_smarty_tpl_vars);
 
 <?php if ($this->_tpl_vars['UmzugsAnlagen']): ?>
 <ul class="ulAttachements">
-<strong>Dateianhänge</strong><br>
+<strong>DateianhÃ¤nge</strong><br>
 <?php $_from = $this->_tpl_vars['UmzugsAnlagen']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }$this->_foreach['ATList'] = array('total' => count($_from), 'iteration' => 0);
 if ($this->_foreach['ATList']['total'] > 0):
     foreach ($_from as $this->_tpl_vars['AT']):
@@ -207,7 +207,7 @@ if ($this->_foreach['ATList']['total'] > 0):
 <?php endforeach; endif; unset($_from); ?>
 </ul>
 <?php else: ?>
-<strong>Dateianhänge: </strong><em>Keine</em><br>
+<strong>DateianhÃ¤nge: </strong><em>Keine</em><br>
 <?php endif; ?>
 <br>
 <h2 style="margin:6px 0">Bemerkungen</h2>

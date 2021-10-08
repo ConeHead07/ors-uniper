@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-10-01 10:36:48
+/* Smarty version 3.1.34-dev-7, created on 2021-10-08 10:17:10
   from '/var/www/html/html/umzugsformular_attachments.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_6156e4c044d0a5_53985762',
+  'unifunc' => 'content_61601aa6470bd8_08094968',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '43a5b32506c4f315a9d77c18bee32ad5cf57ef2d' => 
     array (
       0 => '/var/www/html/html/umzugsformular_attachments.tpl.read.html',
-      1 => 1633084597,
+      1 => 1633687896,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6156e4c044d0a5_53985762 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61601aa6470bd8_08094968 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.truncate.php','function'=>'smarty_modifier_truncate',),));
 ?>
 
@@ -86,7 +86,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
     }
 </style>
 
-<fieldset><legend><strong>Dateianhänge</strong></legend>
+<fieldset><legend><strong>DateianhÃ¤nge</strong></legend>
 <div id="attachments_list" data-url="sites/umzugsantrag_attachements_list.php?aid=<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
 " style="padding:5px;">
 

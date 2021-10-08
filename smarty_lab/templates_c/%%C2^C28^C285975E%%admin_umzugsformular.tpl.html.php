@@ -282,8 +282,8 @@ unset($_smarty_tpl_vars);
  --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
  --><input type="submit" class="btn grey" onclick="umzugsantrag_save()" xstyle="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Speichern"><!-- 
  --><input type="submit" class="btn red" onclick="umzugsantrag_reload()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Neu laden"><!-- 
- --><input type="submit" class="btn red" onclick="umzugsantrag_add_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhänge"> 
-<?php if ($this->_tpl_vars['creator'] == 'mertens'): ?><input type="submit" class="btn red" onclick="umzugsantrag_add_internal_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Interne Dateianhänge"><?php endif; ?>
+ --><input type="submit" class="btn red" onclick="umzugsantrag_add_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="DateianhÃ¤nge">
+<?php if ($this->_tpl_vars['creator'] == 'mertens'): ?><input type="submit" class="btn red" onclick="umzugsantrag_add_internal_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Interne DateianhÃ¤nge"><?php endif; ?>
 <br>
 <br>
 <?php if ($this->_tpl_vars['AS']['umzugsstatus'] != 'temp'): ?>
@@ -293,9 +293,9 @@ unset($_smarty_tpl_vars);
 <?php if ($this->_tpl_vars['AS']['genehmigt_br'] == 'Init'): ?>
 <input id="btnStatGeprBackToUser" type="submit" class="<?php if ($this->_tpl_vars['AS']['geprueft'] == 'Ja' || $this->_tpl_vars['AS']['genehmigt_br'] != 'Init' || $this->_tpl_vars['AS']['bestaetigt'] != 'Init'): ?>cssHide<?php else: ?>btn blue<?php endif; ?>" onclick="umzugsantrag_set_status('zurueckgeben','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Zurueckgeben">
 <?php if ($this->_tpl_vars['AS']['umzug'] == 'Ja'): ?>
-<input id="btnStatGenJa" type="submit" class="<?php if (( $this->_tpl_vars['AS']['genehmigt_br'] == 'Ja' || $this->_tpl_vars['AS']['bestaetigt'] != 'Init' || $this->_tpl_vars['AS']['geprueft'] != 'Init' ) && $this->_tpl_vars['AS']['umzugsstatus'] != 'erneutpruefen'): ?>cssHide<?php else: ?>btn green<?php endif; ?>" onclick="umzugsantrag_set_status('geprueft','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" title="Senden als Geprüft" value="Senden">
+<input id="btnStatGenJa" type="submit" class="<?php if (( $this->_tpl_vars['AS']['genehmigt_br'] == 'Ja' || $this->_tpl_vars['AS']['bestaetigt'] != 'Init' || $this->_tpl_vars['AS']['geprueft'] != 'Init' ) && $this->_tpl_vars['AS']['umzugsstatus'] != 'erneutpruefen'): ?>cssHide<?php else: ?>btn green<?php endif; ?>" onclick="umzugsantrag_set_status('geprueft','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" title="Senden als Geprï¿½ft" value="Senden">
 <?php else: ?>
-<input id="btnStatGenJa" type="submit" class="btn green" <?php if ($this->_tpl_vars['AS']['genehmigt_br'] == 'Ja' || $this->_tpl_vars['AS']['bestaetigt'] != 'Init'): ?>class="cssHide"<?php endif; ?> onclick="umzugsantrag_set_status('genehmigt','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" title="Bestätigung senden" value="Senden">
+<input id="btnStatGenJa" type="submit" class="btn green" <?php if ($this->_tpl_vars['AS']['genehmigt_br'] == 'Ja' || $this->_tpl_vars['AS']['bestaetigt'] != 'Init'): ?>class="cssHide"<?php endif; ?> onclick="umzugsantrag_set_status('genehmigt','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" title="Bestï¿½tigung senden" value="Senden">
 <?php endif; ?>
 <?php if (0): ?><input id="btnStatGenNein" type="submit" class="btn red" <?php if ($this->_tpl_vars['AS']['genehmigt_br'] == 'Nein' || $this->_tpl_vars['AS']['bestaetigt'] != 'Init'): ?>class="cssHide"<?php endif; ?> onclick="umzugsantrag_set_status('genehmigt','Nein')" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Ablehnen"><?php endif; ?>
 &nbsp;<?php endif; ?>
@@ -310,7 +310,7 @@ unset($_smarty_tpl_vars);
 <?php endif; ?>
 </div>
 <?php endif; ?>
-<?php if ($this->_tpl_vars['AS']['umzug'] == 'Nein'): ?>Antrag ist ohne Umzug und kann direkt ausgefährt werden
+<?php if ($this->_tpl_vars['AS']['umzug'] == 'Nein'): ?>Antrag ist ohne Umzug und kann direkt ausgefï¿½hrt werden
 <?php else: ?>Antrag ist mit Umzug und erfordert die Genehmigung durch Property
 <?php endif; ?>
 <!-- Debug-Btn:
@@ -338,7 +338,7 @@ unset($_smarty_tpl_vars);
   <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;">Aus Stammdaten</span></div>
   <div style="float:right;">[Anzeigen/Bearbeiten] 
   <img name="RaumStatImg" src="" align="absmiddle" style="border:0;" width=16 height=16 title=""><a href="" onclick="show_raum_mitarbeiter(this, 'ziel');return false;">[Raum-Neu: <span class="RaumStatInfo"></span> ]</a> &nbsp; 
-  <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> <span onclick="dropMA(this)" style="cursor:pointer;">Aus Umzugsliste löschen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
+  <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> <span onclick="dropMA(this)" style="cursor:pointer;">Aus Umzugsliste lï¿½schen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div>
 </caption>
   <thead>
   <tr>
@@ -487,6 +487,6 @@ unset($_smarty_tpl_vars);
 <div class="SelTitle"><strong>Anforderungsarten</strong></div>
 <div id="SelBoxUartItems">
 <div class="SelItem"><input type="checkbox" name="uartbox" value="Box" checked=1> <strong>Box</strong>move</div>
-<div class="SelItem"><input type="checkbox" name="uartbox" value="Mit Möbel" checked=1> Mit <strong>M&ouml;bel</strong></div>
+<div class="SelItem"><input type="checkbox" name="uartbox" value="Mit Mï¿½bel" checked=1> Mit <strong>M&ouml;bel</strong></div>
 </div>
 </div>

@@ -197,7 +197,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/application/smarty3/plugins
                 </tr>
             </table>
             <br>
-            <h2 style="margin:0;">Ansprechpartner vor Ort <span class="infolink" id="copyASDataToAPVorOrt">(Angaben vom Antragsteller übernehmen)</span></h2>
+            <h2 style="margin:0;">Ansprechpartner vor Ort <span class="infolink" id="copyASDataToAPVorOrt">(Angaben vom Antragsteller ï¿½bernehmen)</span></h2>
             <table>
                 <tr>
                     <td style="padding:0;width:200px;"><label for="as_ansprechpartner" title="Ansprechpartner Name" style="display:block;width:auto;">Vor &amp; Nachname<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['ansprechpartner']['required']) {?><span class="required">*</span><?php }?></span></label></td>
@@ -336,7 +336,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/application/smarty3/plugins
 
                 <input type="submit" onclick="umzugsantrag_storno()" class="<?php if (empty($_smarty_tpl->tpl_vars['AS']->value['aid'])) {?>hide-not-saved<?php } else { ?>btn red <?php }?>" xstyle="padding:0 0 9px 0;background:url(images/BtnRed_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Antrag stornieren">
                 <input type="submit" onclick="umzugsantrag_reload()" class="<?php if (empty($_smarty_tpl->tpl_vars['AS']->value['aid'])) {?>hide-not-saved<?php } else { ?>btn blue<?php }?>" xtyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Neu laden">
-                <input type="submit" onclick="umzugsantrag_add_attachement()" class="<?php if (empty($_smarty_tpl->tpl_vars['AS']->value['aid'])) {?>hide-not-saved<?php } else { ?>btn grey<?php }?>" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhänge"></div>
+                <input type="submit" onclick="umzugsantrag_add_attachement()" class="<?php if (empty($_smarty_tpl->tpl_vars['AS']->value['aid'])) {?>hide-not-saved<?php } else { ?>btn grey<?php }?>" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="DateianhÃ¤nge"></div>
 
             <!-- Debug-Btn:
             <input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">

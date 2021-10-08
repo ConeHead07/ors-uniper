@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-09-22 08:42:29
+/* Smarty version 3.1.34-dev-7, created on 2021-10-05 07:51:06
   from '/var/www/html/html/umzugsformular.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_614aec75b70f49_82550656',
+  'unifunc' => 'content_615c03eacd2a14_29278805',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '70dca96a2d731a19c2923c16f02feb0ec13717c9' => 
     array (
       0 => '/var/www/html/html/umzugsformular.tpl.read.html',
-      1 => 1632300142,
+      1 => 1633355866,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:umzugsformular_attachments.tpl.read.html' => 1,
   ),
 ),false)) {
-function content_614aec75b70f49_82550656 (Smarty_Internal_Template $_smarty_tpl) {
+function content_615c03eacd2a14_29278805 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <link rel="STYLESHEET" type="text/css" href="../css/SelBox.easy.css">
@@ -36,14 +36,14 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
 <link rel="stylesheet" type="text/css" href="../css/umzugsformular.css">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-<h1><span class="spanTitle">Leistungsanforderung <?php if ($_smarty_tpl->tpl_vars['AS']->value['aid']) {?>#<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];
-}?></span></h1> 
+<h1><span class="spanTitle">Auftrag <?php if ($_smarty_tpl->tpl_vars['AS']->value['aid']) {?>#<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];
+}?></span></h1>
 <p>
 <div id="Umzugsantrag" class="divInlay"> 
-<h2 style="margin:0;">Antragsteller</h2>
+<h2 style="margin:0;">Auftragsteller</h2>
 <table>
   <tr>
-    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
+    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Auftragsdatum:</label></td>
     <td style="padding:0;width:250px;"><?php echo smarty_modifier_date_format(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['antragsdatum'], ENT_QUOTES, 'ISO-8859-1', true),"%d.%m.%Y");?>
 </td>
   </tr>
@@ -110,7 +110,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
 </td>
   </tr>
   <tr>
-    <td style="padding:0;"><label style="background:#f00;border:0;display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
+    <td style="padding:0;"><label style="background:#f00;border:0;display:block;width:auto;">Lieferungstermin:</label></td>
     <td style="padding:0;"><?php echo smarty_modifier_date_format(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugstermin'], ENT_QUOTES, 'ISO-8859-1', true),"%d.%m.%Y");?>
 </td>
   </tr>
@@ -153,13 +153,6 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['nach_gebaeude_text'],
   </tr>
 </table>
 
-<table>
-  <tr>
-    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Umzug</label></td>
-    <td style="padding:0;width:300px;" class="options-onoff"><label class='<?php if ($_smarty_tpl->tpl_vars['AS']->value['umzug'] == "Ja") {?>on<?php } else { ?>off<?php }?> active'><?php echo $_smarty_tpl->tpl_vars['AS']->value['umzug'];?>
-</label></td>
-  </tr>
-</table>
 <br clear="all" >
 
 <?php if (0) {?>

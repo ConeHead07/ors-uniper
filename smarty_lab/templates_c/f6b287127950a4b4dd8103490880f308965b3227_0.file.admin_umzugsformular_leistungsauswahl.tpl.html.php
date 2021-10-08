@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-10-01 10:25:44
+/* Smarty version 3.1.34-dev-7, created on 2021-10-05 05:15:45
   from '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_6156e2287b3f30_82764309',
+  'unifunc' => 'content_615bdf812d1997_30461920',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f6b287127950a4b4dd8103490880f308965b3227' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1633083937,
+      1 => 1633360500,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6156e2287b3f30_82764309 (Smarty_Internal_Template $_smarty_tpl) {
+function content_615bdf812d1997_30461920 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div style="display:block;margin-top:15px;">
     <!-- admin_umzugsformular_leistungsauswahl.tpl.html -->
 <span style="margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="add_Leistung();return false;">
@@ -299,12 +299,7 @@ $(function(){
             <td style="width:14px;padding:0;"> X </td>
             <td>Kategorie</td>
             <td>Leistung</td>
-            <td>Menge&nbsp;1&nbsp;P</td>
-            <td>Einh.&nbsp;1</td>
-            <td>Menge&nbsp;2&nbsp;P</td>
-            <td>Einh.&nbsp;2</td>
-            <td>Menge1&nbsp;M</td>
-            <td>Menge2&nbsp;M</td>
+            <td>Menge</td>
             <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?><td>Preis</td>
             <td class="sum">Gesamt</td>
             <?php }?>
@@ -327,22 +322,9 @@ foreach ($_from as $_smarty_tpl->tpl_vars['L']->value) {
 </td>
             <td><input class="ilstg" name="L[leistung_id][]" value="<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
 " type="hidden"><!-- 
-             --><input class="menge <?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property") {?>readonly<?php } else { ?>editable<?php }?>" name="L[menge_property][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property") {?> readonly="readonly"<?php }?> value="<?php if (is_numeric($_smarty_tpl->tpl_vars['L']->value['menge_property'])) {
-echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge_property'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");
-}?>" type="text"></td>
-            <td class="unit"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['leistungseinheit'], ENT_QUOTES, 'ISO-8859-1', true);?>
-</td>
-            <td><input class="menge menge2 <?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property") {?>readonly<?php } else { ?>editable<?php }?>" name="L[menge2_property][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property" || empty($_smarty_tpl->tpl_vars['L']->value['leistungseinheit2'])) {?> readonly="readonly"<?php }?> value="<?php if (is_numeric($_smarty_tpl->tpl_vars['L']->value['menge2_property'])) {
-echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge2_property'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");
-}?>" type="text"></td>
-            <td class="unit unit2"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['leistungseinheit2'], ENT_QUOTES, 'ISO-8859-1', true);?>
-</td>
-            <td><input class="menge<?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?> creator editable<?php } else { ?> readonly<?php }?>" name="L[menge_mertens][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "mertens") {?> readonly="readonly"<?php }?> value="<?php if (is_numeric($_smarty_tpl->tpl_vars['L']->value['menge_mertens'])) {
-echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge_mertens'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");
-}?>" type="text"></td>
-            <td><input class="menge menge2<?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?> creator editable<?php } else { ?> readonly<?php }?>" name="L[menge2_mertens][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "mertens" || empty($_smarty_tpl->tpl_vars['L']->value['leistungseinheit2'])) {?> readonly="readonly"<?php }?> value="<?php if (is_numeric($_smarty_tpl->tpl_vars['L']->value['menge2_mertens'])) {
-echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge2_mertens'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");
-}?>" type="text"></td>
+             --><input class="menge name="L[menge_mertens][]" value="<?php echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge_property'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");?>
+" type="text">
+            </td>
             <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?><td class="preis"><?php if ($_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit']) {
 echo number_format($_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'],2,",",".");
 }?></td>
@@ -357,7 +339,7 @@ echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['gesamtpr
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         <tr id="summary">
     <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>
-            <td colspan="<?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>11<?php } else { ?>9<?php }?>"><span id="allsum" data-allsum="0"><?php echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['Gesamtsumme']->value, ENT_QUOTES, 'ISO-8859-1', true),2,",",".");?>
+            <td colspan="<?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>6<?php } else { ?>4<?php }?>"><span id="allsum" data-allsum="0"><?php echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['Gesamtsumme']->value, ENT_QUOTES, 'ISO-8859-1', true),2,",",".");?>
 </span><span style="margin-left:5px">&euro;</span></td>
     <?php }?>
         </tr>

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-10-01 10:45:45
+/* Smarty version 3.1.34-dev-7, created on 2021-10-05 05:15:44
   from '/var/www/html/html/admin_umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_6156e6d9310be9_42425619',
+  'unifunc' => 'content_615bdf80dcc072_10588769',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3277e0744e9936c6fe82f29745a3a388efa6f8e9' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular.tpl.html',
-      1 => 1633085130,
+      1 => 1633355889,
       2 => 'file',
     ),
   ),
@@ -28,7 +28,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_6156e6d9310be9_42425619 (Smarty_Internal_Template $_smarty_tpl) {
+function content_615bdf80dcc072_10588769 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -68,8 +68,8 @@ admin_umzugsformular.tpl.html
 <link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-<h1><span class="spanTitle">Leistungsanforderung #<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
-</span></h1> 
+<h1><span class="spanTitle">Auftrag #<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
+</span></h1>
 <p>
 <div id="Umzugsantrag" class="divInlay"> 
 <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
@@ -79,12 +79,12 @@ Angeboten: <?php echo $_smarty_tpl->tpl_vars['AS']->value['angeboten_am'];?>
 
 <table border=1 cellspacing=1 cellpadding=1>
   <tr>
-    <td style="padding:0;height:auto;width:auto;"><label for="termin" style="width:180px;">Umzugstermin:</label></td>
+    <td style="padding:0;height:auto;width:auto;"><label for="termin" style="width:180px;">Liefertermin:</label></td>
     <td style="padding:0;width:250px;"><input id="termin" type="text" value='<?php echo smarty_modifier_date_format(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugstermin'], ENT_QUOTES, 'ISO-8859-1', true),"%d.%m.%Y");?>
 '
     onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
   </tr>
-  <tr>
+  <tr style="display: none;">
     <td style="padding:0;height:auto;width:auto;"><label for="AS[Umzugszeit]" style="width:180px;">Uhrzeit:</label></td>
     <td style="padding:0;width:250px;"><input id="AS[Umzugszeit]" type="text" value='<?php echo substr(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugszeit'], ENT_QUOTES, 'ISO-8859-1', true),0,5);?>
 '

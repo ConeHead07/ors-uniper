@@ -6,7 +6,7 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'truncate', 
 <?php if (empty ( $this->_tpl_vars['noCss'] )): ?><link rel="stylesheet" type="text/css" href="<?php if (! empty ( $this->_tpl_vars['WebRoot'] )): ?><?php echo $this->_tpl_vars['WebRoot']; ?>
 <?php endif; ?>css/umzugsformular_attachements.css" /><?php endif; ?>
 
-<fieldset><legend><strong><?php if (! empty ( $this->_tpl_vars['internal'] )): ?>Interne <?php endif; ?>Dateianhänge</strong></legend>
+<fieldset><legend><strong><?php if (! empty ( $this->_tpl_vars['internal'] )): ?>Interne <?php endif; ?>DateianhÃ¤nge</strong></legend>
 	<div class="attachements_list" id="attachments<?php if (! empty ( $this->_tpl_vars['internal'] )): ?>_internal<?php endif; ?>_list" data-url="sites/umzugsantrag_attachements_list.php?aid=<?php echo $this->_tpl_vars['AS']['aid']; ?>
 &internal=<?php echo $this->_tpl_vars['internal']; ?>
 " style="padding:5px;">

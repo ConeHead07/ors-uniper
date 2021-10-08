@@ -208,7 +208,7 @@ unset($_smarty_tpl_vars);
  --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
  --><input type="submit" onclick="umzugsantrag_save()" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Speichern"><!-- 
  --><input type="submit" onclick="umzugsantrag_reload()" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Neu laden"><!-- 
- --><input type="submit" onclick="umzugsantrag_add_attachement()" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhänge"> 
+ --><input type="submit" onclick="umzugsantrag_add_attachement()" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="DateianhÃ¤nge">
 <br>
 <?php endif; ?>
 <br>
@@ -222,7 +222,7 @@ unset($_smarty_tpl_vars);
 </div>
 <br>
 <div id="BoxBemerkungen">
-<strong>Bemerkungen / Grund für Ablehnung:</strong><br>
+<strong>Bemerkungen / Grund fï¿½r Ablehnung:</strong><br>
 <textarea class="iarea bemerkungen" name="AS[bemerkungen]"></textarea>
 </div>
 </form>

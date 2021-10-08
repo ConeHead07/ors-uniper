@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-10-01 08:48:21
+/* Smarty version 3.1.34-dev-7, created on 2021-10-08 07:17:28
   from '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_6156cb553076b8_67140966',
+  'unifunc' => 'content_615ff0884731b6_24494483',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '346d952b773372d484fde33cfdf99fd837ff0bb3' => 
     array (
       0 => '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1633078090,
+      1 => 1633621739,
       2 => 'file',
     ),
   ),
@@ -20,8 +20,9 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6156cb553076b8_67140966 (Smarty_Internal_Template $_smarty_tpl) {
-?><div style="display:block;margin-top:15px;">
+function content_615ff0884731b6_24494483 (Smarty_Internal_Template $_smarty_tpl) {
+?>
+<div style="display:block;margin-top:15px;">
     <!-- umzugsformular_leistungsauswahl.tpl.html -->
 </div>
 <style>
@@ -139,10 +140,17 @@ label.container  .checkmark:after {
 </style>
 <?php echo '<script'; ?>
 >
+var aid = <?php echo $_smarty_tpl->tpl_vars['AIDJson']->value;?>
+;
 var lkItems = <?php echo $_smarty_tpl->tpl_vars['lkTreeItemsJson']->value;?>
 ;
 var lkmById = <?php echo $_smarty_tpl->tpl_vars['lkmByIdJson']->value;?>
 ;
+var umzugsleistungen = <?php echo $_smarty_tpl->tpl_vars['UmzugsleistungenJson']->value;?>
+;
+var umzugsstatus = <?php echo $_smarty_tpl->tpl_vars['umzugsstatusJson']->value;?>
+;
+
 
 
 $("body").append( $("<select/>" ).css({width:"220px",position:"absolute", zIndex:99, minWidth:250}).attr({id: "lktgselect", size:5}).hide()    );
@@ -173,7 +181,7 @@ function blurBox(callback, hide) {
 }
 
 function get_Kategorie( obj ) {
-   $("#lktgselect").html( $("<option/>").text("Bitte auswählen") );
+   $("#lktgselect").html( $("<option/>").text("Bitte auswÃ¤hlen") );
    for(var ktg1 in lkItems) {
         $("#lktgselect").append( 
             $("<option/>").val(ktg1).text(ktg1).data("leistungen", lkItems[ktg1]).data("kategorie1", ktg1)
@@ -218,7 +226,7 @@ function get_Leistung( obj ) {
     }
     
     var leistungen = $( objKtg1 ).data( "leistungen" );
-    $("#ldescselect").html( $("<option/>").text("Bitte auswählen") );
+    $("#ldescselect").html( $("<option/>").text("Bitte auswÃ¤hlen") );
     for(var lstg in leistungen) {
         $("#ldescselect").append( 
             $("<option/>").val(lstg).text(lstg).data("leistung", leistungen[lstg])
@@ -228,8 +236,8 @@ function get_Leistung( obj ) {
         var data = $(this).find("option:selected").data("leistung");
         if ( lstgIsAllreadyInList(data.leistung_id, objInp) ) {
             alert("Die Leistung wurde bereits in die Liste aufgenommen!\n" + 
-                  "Bitte fügen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
-                  "Andernfalls werden bestehende Mengen überschrieben."
+                  "Bitte fÃ¼gen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
+                  "Andernfalls werden bestehende Mengen Ã¼berschrieben."
             );
             objInp.blur();
             return false;
@@ -434,13 +442,106 @@ $(function(){
         }
     };
 
-    var renderAuswahlliste = function() {
+    var renderBestellListe = function() {
         var boxLeistungenSel = "div#auswahlUmzugsleistungenBox";
         var boxLeistungen = $(boxLeistungenSel);
         if (!boxLeistungen.length) {
             alert("NOT FOUND " + boxLeistungenSel);
         }
         boxLeistungen.html("");
+
+        var liste = umzugsleistungen;
+        for (var i = 0; i < liste.length; i++) {
+
+            var it = liste[i];
+            var ktg = it.kategorie;
+            var ktgId = +it.kategorie_id;
+            if (ktgId === 18 || ktgId === 25) {
+                continue;
+            }
+            alert(JSON.stringify(it));
+
+            console.log({ktg});
+            var box = $("<div/>");
+            var boxTitle = $("<h3/>").text("Auswahl: " + ktg);
+            boxTitle.appendTo(box);
+
+                var lstId = it.leistung_id;
+                var tr = $("<div/>").addClass("row ktg-" + ktgId).attr({
+                    "data-ktg": ktg,
+                    "data-ktgId": ktgId,
+                    "data-id": lstId
+                });
+                var tdBild = $("<div/>").addClass('bild').appendTo(tr);
+                var tdLstg = $("<div/>").addClass('lstg').appendTo(tr);
+                var tdChck = $("<div/>").addClass('chck').appendTo(tr);
+
+                if (it.image) {
+                    var bildHref = $("<a/>").attr("href", "images/leistungskatalog/" + it.image).css({
+                        border: 0
+                    });
+                    bildHref.appendTo(tdBild);
+                    var bild = $("<img/>")
+                        .attr({
+                            src: "images/leistungskatalog/" + it.image
+                        })
+                        .appendTo(bildHref);
+                }
+
+                tdLstg.text(it.leistung).off("click").on("click", function () {
+                    var tr = $(this).closest(".row");
+                    // tr.find(".chck label")[0].click();
+                    console.log('click leistung');
+                });
+
+                var labelChck = $("<label/>").addClass("container");
+                var inputChck = $("<input/>").attr({
+                    name: "check[" + it.kategorie_id + "]",
+                    type: "radio",
+                    value: it.leistung_id
+                }).prop("checked", true);
+
+                var spanChck = $("<span/>").addClass("checkmark");
+                labelChck.append(inputChck).append(spanChck);
+                tdChck.append(labelChck);
+                var _ldata = {leistung_id: it.leistung_id};
+                var _lclss = ' group-leistungid-' + it.leistung_id;
+                tdChck
+                    .append(
+                        createHiddenLstgInput('L[leistung_id][]', it.leistung_id, true, 'leistung_id' + _lclss, _ldata)
+                    )
+                    .append(
+                        createHiddenLstgInput('L[menge_property][]', 0, true, 'menge menge_property' + _lclss, _ldata)
+                    )
+                    .append(
+                        createHiddenLstgInput('L[menge2_property][]', 0, true, 'menge menge2_property' + _lclss, _ldata)
+                    )
+                    .append(
+                        createHiddenLstgInput('L[menge_mertens][]', 0, true, 'menge menge_mertens' + _lclss, _ldata)
+                    )
+                    .append(
+                        createHiddenLstgInput('L[menge2_mertens][]', 0, true, 'menge menge2_mertens' + _lclss, _ldata)
+                    );
+
+                box.append(tr);
+
+            box.appendTo(boxLeistungen);
+        }
+    };
+    var renderAuswahlListe = function() {
+        var boxLeistungenSel = "div#auswahlUmzugsleistungenBox";
+        var boxLeistungen = $(boxLeistungenSel);
+        var selectedLIds = [];
+        if (!boxLeistungen.length) {
+            alert("NOT FOUND " + boxLeistungenSel);
+        }
+        boxLeistungen.html("");
+
+
+        for(var i = 0; i < umzugsleistungen.length; i++) {
+            selectedLIds.push(umzugsleistungen[i].leistung_id);
+        }
+
         var lkItemsByKtg = lkItems;
         for (var ktg in lkItemsByKtg) {
 
@@ -449,7 +550,7 @@ $(function(){
             }
             var ktgItems = Object.values(lkItemsByKtg[ktg]);
 
-            if (ktg === "Transportpositionen") {
+            if (ktg === "Transportpositionen" || ktg === "Rabatt") {
 
                 for (var it of ktgItems) {
                     var _data = {leistung_id: it.leistung_id};
@@ -479,11 +580,14 @@ $(function(){
             var boxTitle = $("<h3/>").text("Auswahl: " + ktg);
             var ktgBundleName = "Komplettpaket";
             var ktgBundleId = 18;
+            var ktgRabatName = "Rabatt";
+            var ktgRabatId = 25;
             boxTitle.appendTo(box);
             for (var it of ktgItems) {
                 console.log({it});
                 var ktgId = it.kategorie_id;
                 var lstId = it.leistung_id;
+                var isSelected = selectedLIds.indexOf(lstId) > -1;
                 var tr = $("<div/>").addClass("row ktg-" + ktgId).attr({
                     "data-ktg": ktg,
                     "data-ktgId": ktgId,
@@ -535,13 +639,14 @@ $(function(){
                         if (chckRadio.prop("checked")) {
                             toggleBundleauswahl(ktg, ktgId, ktgBundleName, ktgBundleId);
                             var checkedRows = boxLeistungen.find(".row .chck label input:checked");
-                            if (checkedRows.length > 2) {
+                            var maxCheckedPositionen = 9999;
+                            if (checkedRows.length > maxCheckedPositionen) {
                                 var isStuhlChecked = checkedRows.find("[data-ktg=Stuhl],[data-ktgId=21]").length > 0;
                                 var isTischChecked = checkedRows.find("[data-ktg=Tisch],[data-ktg=22]").length > 0;
                                 var isLampeChecked = checkedRows.find("[data-ktg=Schreibtischlampe],[data-ktg=23]").length > 0;
                                 console.log("Auswahlkontrolle ", { isStuhlChecked, isTischChecked, isLampeChecked});
 
-                                alert("Es können maximal zwei Einzelpositionen ausgewählt werden oder ein Komplettpaket!");
+                                alert("Es kÃ¶nnen maximal " + mmaxCheckedPositionen + " Einzelpositionen ausgewÃ¤hlt werden oder ein Komplettpaket!");
                                 chckRadio.prop("checked", false);
                             }
                         }
@@ -585,11 +690,27 @@ $(function(){
                     );
 
                 box.append(tr);
+
+
+                if (isSelected) {
+                    inputChck.prop('checked', true);
+                    tr.addClass("checked");
+                    tdChck.find("input.lstg-input").prop("disabled", false);
+                    tdChck.find("input.lstg-input.menge").val(1);
+                }
             }
             box.appendTo(boxLeistungen);
         }
+    };
+
+    if (!umzugsleistungen || umzugsstatus === 'temp' || umzugsstatus === 'zurueckgegeben') {
+        renderAuswahlListe();
+    } else if (umzugsstatus !== 'abgeschlossen') {
+        renderBestellListe();
+    } else {
+        // @ToDo Mit Option Reklamation / Umtausch fÃ¼r gelieferte Artikel anzufordern
+        renderBestellListe();
     }
-    renderAuswahlliste();
 
 <?php echo '</script'; ?>
 >

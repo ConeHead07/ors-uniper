@@ -86,7 +86,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/application/smarty3/plugins
     }
 </style>
 
-<fieldset><legend><strong>Dateianhänge</strong></legend>
+<fieldset><legend><strong>DateianhÃ¤nge</strong></legend>
 <div id="attachments_list" data-url="sites/umzugsantrag_attachements_list.php?aid=<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
 " style="padding:5px;">
 
