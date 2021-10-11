@@ -85,6 +85,7 @@ function insert_reguser($user_connid, $tbl, &$arrFormVars, &$authentcode) {
 	$SQL.= " anrede = \"".MyDB::escape_string($arrFormVars["anrede"])."\",\n";
 	$SQL.= " vorname = \"".MyDB::escape_string($arrFormVars["vorname"])."\",\n";
 	$SQL.= " nachname = \"".MyDB::escape_string($arrFormVars["nachname"])."\",\n";
+	$SQL.= " personalnr = \"".MyDB::escape_string($arrFormVars["personalnr"])."\",\n";
 	$SQL.= " strasse = \"".MyDB::escape_string($arrFormVars["strasse"])."\",\n";
 	$SQL.= " plz = \"".MyDB::escape_string($arrFormVars["plz"])."\",\n";
 	$SQL.= " ort = \"".MyDB::escape_string($arrFormVars["ort"])."\",\n";

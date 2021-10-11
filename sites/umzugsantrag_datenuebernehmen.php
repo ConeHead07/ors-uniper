@@ -11,7 +11,7 @@ Es konnten nicht alle Umzugsdaten übernommen werden!
 1054: Unknown column 'id' in 'where clause'
 UPDATE `mm_umzuege_arbeitsplaetze` SET maid="9565" WHERE id=""
 Mail wurde gesendet!
-Umzugsauftrag wurde abgeschlossen und in die Bestandsdaten �bernommen!
+Umzugsauftrag wurde abgeschlossen und in die Bestandsdaten übernommen!
 OK
 
 */
@@ -186,4 +186,3 @@ if (basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
 	$p = get_path_byAbt($a);
 	echo "#".__LINE__." Pfadrückgabe für Abt. $a: ".print_r($p,1)."<hr>\n";
 }
-?>

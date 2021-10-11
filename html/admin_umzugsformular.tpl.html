@@ -80,7 +80,8 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   <table>
   <tr>
     <td style="padding:0;">
-      <label for="as_strasse" style="display:block;width:180px;">Stra&szlig;e &amp; Nr<span class="right">{if $ASConf.strasse.required}<span class="required">*</span>{/if}</span></label></td>
+      <label for="as_strasse" style="display:block;width:180px;">Stra&szlig;e &amp; Nr<span class="right">{if $ASConf.strasse.required}<span class="required">*</span>{/if}</span></label>
+    </td>
     <td style="padding:0;width:250px;"><input type="text" id="as_strasse" autocomplete="off" xreadonly="true" {if $ASConf.strasse.required}required="required"{/if} value="{$AS.strasse|escape}" name="AS[strasse]" class="itxt itxt2col"></td>
   </tr>
 
@@ -162,7 +163,7 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   </tr>
 </table>
 
-<table>
+<table style="display:none;">
   <tr>
     <td style="padding:0;width:180px;"><label style="display:block;width:auto;">{$ASConf.umzug.label}</label></td>
     <td style="padding:0;width:300px;" class="options-onoff"><label class='{if $AS.umzug eq "Ja"}on{else}off{/if} active'>{$AS.umzug}</label></td>
@@ -221,35 +222,79 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
  --><input type="submit" class="btn grey" onclick="umzugsantrag_save()" xstyle="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Speichern"><!-- 
  --><input type="submit" class="btn red" onclick="umzugsantrag_reload()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Neu laden"><!-- 
  --><input type="submit" class="btn red" onclick="umzugsantrag_add_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhnge">
-{if $creator == "mertens"}<input type="submit" class="btn red" onclick="umzugsantrag_add_internal_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Interne Dateianhänge">{/if}
+{if $creator == "mertens"}
+  <input
+          type="submit" class="btn red"
+          onclick="umzugsantrag_add_internal_attachement()"
+          xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;"
+          value="Interne Dateianhänge">{/if}
 <br>
 <br>
 {if $AS.umzugsstatus ne "temp"}
 <strong>Status setzen: </strong> 
 <div class="statusConsole">
-{if $AS.umzugsstatus ne "angeboten"}
-{if $AS.genehmigt_br eq 'Init'}
-<input id="btnStatGeprBackToUser" type="submit" class="{if $AS.geprueft eq 'Ja' || $AS.genehmigt_br ne 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if}" onclick="umzugsantrag_set_status('zurueckgeben','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Zurueckgeben">
-{if $AS.umzug eq "Ja"}
-<input id="btnStatGenJa" type="submit" class="{ if ($AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init' || $AS.geprueft ne 'Init') && $AS.umzugsstatus ne 'erneutpruefen'}cssHide{else}btn green{/if}" onclick="umzugsantrag_set_status('geprueft','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" title="Senden als Geprüft" value="Senden">
-{else}
-<input id="btnStatGenJa" type="submit" class="btn green" {if $AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init'}class="cssHide"{/if} onclick="umzugsantrag_set_status('genehmigt','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" title="Bestätigung senden" value="Senden">
-{/if}
-{if 0}<input id="btnStatGenNein" type="submit" class="btn red" {if $AS.genehmigt_br eq 'Nein' || $AS.bestaetigt ne 'Init'}class="cssHide"{/if} onclick="umzugsantrag_set_status('genehmigt','Nein')" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Ablehnen">{/if}
-&nbsp;{/if}
-{if $AS.genehmigt_br eq 'Ja'}
-<input id="btnStatGenReset" type="submit" class={if $AS.genehmigt_br eq 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if}" onclick="umzugsantrag_set_status('genehmigt','Init')" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Genehmigung aufheben">
-&nbsp;{/if}
-{if  $AS.genehmigt_br eq 'Ja' or $AS.bestaetigt eq 'Ja'}
-<input id="btnStatAbgJa" type="submit" class="btn green" {if $AS.abgeschlossen ne 'Init'}class="cssHide"{/if} onclick="umzugsantrag_set_status('abgeschlossen','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Umzug ist abgeschlossen">
-&nbsp;{/if}
-<input id="btnStatAbgReset" type="submit" class="{if $AS.abgeschlossen eq 'Init'}cssHide{else}btn blue{/if}" onclick="umzugsantrag_set_status('abgeschlossen','Init')"      xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Abschluss aufheben">
-<input id="btnStatAbgStorno" type="submit" class="{if $AS.abgeschlossen ne 'Init'}cssHide{else}btn red{/if}" onclick="umzugsantrag_set_status('abgeschlossen','Storniert')" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Stornieren"></div>
+  {if $AS.umzugsstatus eq "beantragt"}
+    <input
+          id="btnStatGeprBackToUser" type="submit"
+          class="{if $AS.geprueft eq 'Ja' || $AS.genehmigt_br ne 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if}"
+          onclick="umzugsantrag_set_status('zurueckgeben','Ja')"
+          value="Zurueckgeben">
+
+    <input
+            id="btnStatGenJa" type="submit"
+            class="btn green"
+            onclick="umzugsantrag_set_status('geprueft','Ja')"
+            title="Senden als Bestätigt"
+            value="Auftrag bestätigen">
+  {/if}
+  {if 0}
+    <input
+            id="btnStatGenJa" type="submit"
+            {if $AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init'}class="cssHide"{else}class="btn green"{/if}
+            onclick="umzugsantrag_set_status('genehmigt','Ja')"
+            title="Bestätigung senden" value="Senden">
+
+    <input
+            id="btnStatGenNein" type="submit"
+            {if $AS.genehmigt_br eq 'Nein' || $AS.bestaetigt ne 'Init'}class="cssHide"{else}class="btn red"{/if}
+            onclick="umzugsantrag_set_status('genehmigt','Nein')"
+          value="Ablehnen">
+  {/if}
+  {if $AS.genehmigt_br eq 'Ja'}
+    <input
+            id="btnStatGenReset" type="submit"
+            class={if $AS.genehmigt_br eq 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if}"
+            onclick="umzugsantrag_set_status('genehmigt','Init')"
+            value="Genehmigung aufheben">
+&nbsp; {/if}
+  {if  $AS.umzugsstatus eq 'bestaetigt' or $AS.umzugsstatus eq 'geprueft'}
+    <input
+            id="btnStatAbgJa" type="submit"
+            {if $AS.abgeschlossen ne 'Init'}class="cssHide"{else}class="btn green"{/if}
+            onclick="umzugsantrag_set_status('abgeschlossen','Ja')"
+            value="Auftrag ist abgeschlossen">
+&nbsp; {/if}
+  {if $user.gruppe eq "admin" and $user.adminmode eq "superadmin"}
+  <input id="btnStatAbgReset" type="submit"
+         class="{if $AS.abgeschlossen eq 'Init'}cssHide{else}btn blue{/if}"
+         onclick="umzugsantrag_set_status('abgeschlossen','Init')"
+         value="Abschluss aufheben">
+  <input id="btnStatAbgStorno" type="submit"
+         class="{if $AS.abgeschlossen ne 'Init'}cssHide{else}btn red{/if}"
+         onclick="umzugsantrag_set_status('abgeschlossen','Storniert')"
+         value="Stornieren">
+  {/if}
+</div>
+
 {/if}
 </div>
 
-{if $AS.umzug eq "Nein"}Antrag ist ohne Umzug und kann direkt ausgeführt werden
-{else}Antrag ist mit Umzug und erfordert die Genehmigung durch Property
+{if 0}
+  {if $AS.umzug eq "Nein"}
+    Antrag ist ohne Umzug und kann direkt ausgeführt werden
+  {else}
+    Antrag ist mit Umzug und erfordert die Genehmigung durch Property
+  {/if}
 {/if}
 <!-- Debug-Btn:
 <input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">

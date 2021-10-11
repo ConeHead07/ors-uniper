@@ -135,11 +135,11 @@ switch($cmd) {
 				if (!$error) {
 					umzugsantrag_status($id, $name, $value);
 				}
-				$msg.= "Umzugsauftrag wurde abgeschlossen und in die Bestandsdaten übernommen!<br>\n";
+				$msg.= "Aauftrag wurde abgeschlossen!<br>\n";
 				$LoadScript.= "if (typeof(umzugsantrag_auto_reload)==\"function\") umzugsantrag_auto_reload(\"$id\");\n";
 			} else {
 				if (umzugsantrag_status($id, $name, $value)) {
-					$msg.= "Der Umzugsstatus wurde aktualisiert $name:$value!<br>\n";
+					$msg.= "Der Auftragsstatus wurde aktualisiert $name:$value!<br>\n";
 					$JsonData = umzugsantrag_status_laden($id);
 					if ($JsonData) {
 						$LoadScript.= $JsonData;
@@ -149,7 +149,6 @@ switch($cmd) {
 			}
 		}
 	} else {
-        //die('#'.__LINE__ . ' ' . __FILE__ . ' ua_errors: ' . $ua_errors);
         $request = $_REQUEST;
         $error.= $ua_errors;
 	}
@@ -177,11 +176,7 @@ if ($msg || $error) {
 		if ($error) $LoadScript.= "\nif (typeof(ErrorBox)==\"function\") ErrorBox(\"".json_escape($error.($msg&&$error?"<br>\n":"").$msg)."\");\n";
 		elseif ($cmd!="autoreload" && $msg) $LoadScript.= "\nif (typeof(InfoBox)==\"function\") InfoBox(\"".json_escape($msg)."\");\n";
 	}
-	//if ($cmd!="autoreload" || $error) $LoadScript.= "\nif (typeof(InfoBox)==\"function\") InfoBox(\"".json_escape($msg.($msg&&$error?"<br>\n":"").$error)."\");\n";
 }
-
-//if (empty($formHtml)) $formHtml.= ob_get_contents();
-//ob_end_clean();
 
 if (!defined("NEWLINE")) define("NEWLINE", "\n");
 if (!defined("TAB")) define("TAB", "\n");

@@ -72,7 +72,7 @@ function umzugsantrag_datenuebernehmen($AID) {
 	global $_TABLE;
 	
 	if (!$AID) {
-		$error.= "Fehlende AuftragsID f�r Daten�bernahme!<br>\n";
+		$error.= "Fehlende AuftragsID für Datenübernahme!<br>\n";
 	}
 	$userIsAdmin = (strpos($user["gruppe"], "kunde_report")!==false || strpos($user["gruppe"], "admin")!==false);
 	
@@ -83,7 +83,7 @@ function umzugsantrag_datenuebernehmen($AID) {
 	$AS = new ItemEdit($ASConf, $connid, $user, $AID);
 	
 	if (!$AS->itemExists) {
-		$error.= "Es wurde kein Umzugsantrag mit der �bermittelten Antrags-ID gefunden!<br>\n";
+		$error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
 		return false;
 	}
 	
@@ -168,4 +168,3 @@ function umzugsantrag_datenuebernehmen($AID) {
 	return $AID;
 }
 
-?>
