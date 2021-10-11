@@ -191,6 +191,8 @@ if (!empty($aAtItems) && count($aAtItems)) {
 }
 if (!empty($aAtIntItems) && count($aAtIntItems)) {
     $Tpl->assign("UmzugsAnlagenIntern", $aAtIntItems);
+} else {
+    $Tpl->assign("UmzugsAnlagenIntern", []);
 }
 if (!empty($aGroupItems) && count($aGroupItems)) {
     $Tpl->assign("UmzugsGruppierungen", $aGroupItems);
@@ -223,7 +225,7 @@ if (!empty($aGItems) && count($aGItems)) {
 $SumBase = 'MH';
 $sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_property, '
       .' ul.menge_mertens, ul.menge2_mertens, '
-      .' l.Bezeichnung leistung, lk.leistungskategorie kategorie, '
+      .' l.Bezeichnung leistung, lk.leistungskategorie kategorie, lk.leistungskategorie_id kategorie_id, '
       .' l.leistungseinheit, l.leistungseinheit2, if(lm.preis, lm.preis, preis_pro_einheit) preis_pro_einheit ' . "\n"
       .' FROM mm_umzuege_leistungen ul ' . "\n"
       .' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"

@@ -13,36 +13,36 @@
 <h2 style="margin:0;">Auftrags-Status</h2>
 <table border=0 cellspacing=1 cellpadding=1>
   <tr>
-    <td style="padding:0;height:auto;width:200px;"><label for="termin" style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
+    <td style="padding:0;height:auto;width:200px;"><label style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
     <td style="padding:0;width:250px;"><input type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
 	onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td style="padding:0;height:auto;"><label for="umzugszeitt" style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
+    <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
     <td style="padding:0;"><input type="text" value='{$AS.umzugszeit|escape}'
 	id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td style="padding:0;height:auto;"><label for="termin" style="display:block;width:auto;">Antragsdatum:</label></td>
+    <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
     <td style="padding:0;">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
   </tr>
   {if $AS.angeboten_am}
   <tr>
-    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">Genehmigt:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Genehmigt:</label></td>
     <td style="padding:0;" class="status_{$AS.genehmigt_br}"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></td>
   </tr>
   {else}
   <tr>
-    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">Best‰tigt:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Best√§tigt:</label></td>
     <td style="padding:0;" class="status_{$AS.genehmigt_br}"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></td>
   </tr>
   {/if}
   <tr>
-    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">Abgeschlossen:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Abgeschlossen:</label></td>
     <td style="padding:0;" class="status_{$AS.abgeschlossen}"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></td>
   </tr>
   <tr>
-    <td style="padding:0;"><label for="umzugsstatus" style="display:block;width:auto;">Status:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Status:</label></td>
     <td style="padding:0;">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</td>
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
@@ -72,7 +72,7 @@
   </tr>
 
   <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Geb‰ude:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Geb√§ude:</label></td>
     <td style="padding:0;" data-fld="AS[gebauede]">{$AS.gebaeude|escape}</td>
   </tr>
   
@@ -124,10 +124,13 @@
 {if 1}
     {include file="umzugsformular_leistungsauswahl.tpl.read.html"}
 {/if}
-
-{include file="umzugsformular_attachments.tpl.read.html" internal=1}
+{if !empty($UmzugsAnlagen)}
+  {include file="umzugsformular_attachments.tpl.read.html" internal=1}
+{/if}
 <br>
-{include file="umzugsformular_attachments.tpl.read2.html" UmzugsAnlagen=$UmzugsAnlagenIntern internal=1}
+{if !empty($UmzugsAnlagenIntern)}
+  {include file="umzugsformular_attachments.tpl.read2.html" UmzugsAnlagen=$UmzugsAnlagenIntern internal=1}
+{/if}
 
 {if 1}
 <div style="width:100%">
