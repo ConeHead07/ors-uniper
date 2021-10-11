@@ -697,10 +697,12 @@ $(function(){
     };
 
     if (!umzugsleistungen || (antragsstatus === 'bearbeitung' && umzugsstatus === 'temp') || umzugsstatus === 'zurueckgegeben') {
-        alert("renderAuswahlliste() " +
-            "\n umzugsstatus: "  + umzugsstatus  +
-            "\n antragsstatus: " + antragsstatus +
-            "\n umzugsleistungen:\n" + JSON.stringify(umzugsleistungen));
+        if (0) {
+            alert("renderAuswahlliste() " +
+                "\n umzugsstatus: " + umzugsstatus +
+                "\n antragsstatus: " + antragsstatus +
+                "\n umzugsleistungen:\n" + JSON.stringify(umzugsleistungen));
+        }
         renderAuswahlListe();
     } else if (umzugsstatus !== 'abgeschlossen') {
         alert("renderBestellListe() " +

@@ -516,7 +516,7 @@ function fb_AjaxXmlUpdate(req, selector, cmd) {
 	    cmd = "";
     }
 	//alert("cmd:"+cmd);
-	var debug = true; //(cmd == "senden");
+	var debug = false; //(cmd == "senden");
 
 	if (debug) {
 	    alert("#480 Status:"+req.status+"\n\nresponseText:\n"+req.responseText);
