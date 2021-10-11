@@ -2,11 +2,9 @@ Betreff=Umzug ID {AID} - Neue Bemerkung
 
 Hallo {Vorname} {Name},
 
-es liegt eine neue Bemerkung zur Leistungsanforderung mit der ID {AID} vor.
+es liegt eine neue Bemerkung zum Auftrag mit der ID {AID} vor.
 
 Antragsteller:  {vorname} {name}
-SAP Nr.         {kostenstell}	
-Ticket Nr.      {planonnr}
 
 Neue Bemerkung
 {neuebemerkung}

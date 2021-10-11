@@ -3,8 +3,7 @@ Betreff=Auftrag ID {AID} - Abgelehnt
 Sehr geehrter Anwender,
 sehr geehrte Anwenderin,
 
-Ihr Auftrag mit der ID {AID} wurde
-abgelehnt und geschlossen.
+Ihr Auftrag mit der ID {AID} wurde abgelehnt und geschlossen.
 
 Begründung:
 {Bemerkung}
