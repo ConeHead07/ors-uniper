@@ -453,7 +453,7 @@ function igWDomUpdater(aData, s, debug) {
   var msgj;
   if (!debug) debug = false;
   for (i in aData) {
-    if (debug) alert("#295 igWDomUpdater() i:"+i);
+    if (debug) alert("#456 igWDomUpdater() i:"+i);
     switch(i) {
       case "Update":
 	  if (aData[i]["id"]) { igWNodeUpdate(s?s:aData[i]["id"], aData[i]["CDATA"], (aData[i]["options"]?aData[i]["options"]:"")); }
