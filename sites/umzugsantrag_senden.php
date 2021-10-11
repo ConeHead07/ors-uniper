@@ -129,7 +129,7 @@ function umzugsantrag_senden() {
     $db->query($sql);
 
     $save_count = 0;
-    $save_errors = "#132 ";
+    $save_errors = "";
     foreach($MAPostItems as $i => $MAItem) {
         $MA = new ItemEdit($MAConf, $connid, $user, false);
         $MAItem["aid"] = $AID;

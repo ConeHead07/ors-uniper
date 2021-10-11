@@ -162,7 +162,7 @@ function umzugsantrag_datenuebernehmen($AID) {
 	}
 	
 	if ($save_errors) {
-		$error.= "Es konnten nicht alle Umzugsdaten �bernommen werden!<br>\n".$save_errors;
+		$error.= "Es konnten nicht alle Umzugsdaten übernommen werden!<br>\n".$save_errors;
 		return false;
 	}
 	return $AID;
