@@ -31,9 +31,8 @@ $resultFormat = getRequest("resultFormat", "JS");
 switch($resultFormat) {
 	case "XML":
 	default:
-	header("Content-Type: text/xml; charset=ISO-8859-1");
-	echo "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>\n";
-	echo "<Result type=\"success\">\n";
+	header("Content-Type: text/xml; charset=UTF-8");
+	echo "<?xml version=\"1.0\" encoding=\"UTF-8
 	echo "<LoadScript language=\"javascript\" src=\"cdata\"><![CDATA[\n";
 	echo "AbteilungIndex = ".$JsonData.";\n";
 	echo "if (typeof(SelBox_loadData)==\"function\") SelBox_loadData('".$SBBoxId."', AbteilungIndex);\n";
@@ -43,8 +42,7 @@ switch($resultFormat) {
 	
 	case "JS":
 	default:
-	header("Content-Type: text/javascript; charset=ISO-8859-1");
+	header("Content-Type: text/javascript; charset=UTF-8");
 	echo "AbteilungIndex = ".$JsonData.";\n";
 	echo "if (typeof(SelBox_loadData)==\"function\") SelBox_loadData('".$SBBoxId."', AbteilungIndex);\n";
-	//echo 'alert(Orte["Düsseldorf"]["ZV_SEE_1"]+"\n"+Gebaeude["ZV_SEE_1"]["Etagen"].join(", "));'."\n";
 }

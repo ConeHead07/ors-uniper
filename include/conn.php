@@ -37,6 +37,7 @@ function db_connect(&$ConnAccessData) {
     }
 
     $db = dbconn($ConnData["Host"], $ConnData["Database"], $ConnData["User"], $ConnData["Pass"], $port, $aOptions);
+	// die('#' . __LINE__ . ' ' . __FILE__);
 	if (!$db->connect_error()) {
 		// echo "<pre>#".__LINE__." ".basename(__FILE__)." conn:$conn, connid:$connid, ConnDB:".print_r($ConnDB, true)."</pre>\n";
 		$ConnData["conndbid"]= $db->select_db($ConnData["Database"], $ConnData["connid"]);

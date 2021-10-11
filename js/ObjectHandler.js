@@ -225,6 +225,7 @@ function InfoBoxClose() {
 	}
 }
 function ErrorBox(sHtml, dockToObj, dockAlign, hspace, vspace) {
+	console.log('#228 app/js/ObjectHandler.js MyInfoxBox', { sHtml });
 	MyInfoBox("Es sind Fehler aufgetreten!", sHtml, dockToObj, dockAlign, hspace, vspace);
 }
 
@@ -261,7 +262,16 @@ function MyInfoBox(sTitle, sHtml, dockToObj, dockAlign, hspace, vspace) {
 	InfoBox.innerHTML = "<h3 id=\"MyInfoBoxTitle\">"+sTitle+"</h3>\n";
 	InfoBox.innerHTML+= "<div id=\"MyInfoBoxText\" class=\"InfoText\">"+sHtml+"</div>\n";
 	InfoBox.innerHTML+= "<div id=\"MyInfoBoxBtn\" class=\"CloseBtn\" onclick=\"document.getElementById('"+InfoBoxId+"').close();\">OK</div>\n";
-	InfoBox.close = function() { this.style.display=""; if (this.ShadowBox && this.ShadowBox.parentNode) this.ShadowBox.parentNode.removeChild(this.ShadowBox); if (this.parentNode) this.parentNode.removeChild(this); }
+	console.log('#264app/js/ObjectHandler.js MyInfoxBox', { InfoBoxId, sTitle, sHtml });
+	InfoBox.close = function() {
+		this.style.display="";
+		if (this.ShadowBox && this.ShadowBox.parentNode) {
+			this.ShadowBox.parentNode.removeChild(this.ShadowBox);
+		}
+		if (this.parentNode) {
+			this.parentNode.removeChild(this);
+		}
+	}
 	InfoBox.InfoType = "";
 	if (typeof(O(dockToObj))=="object") dockBox(dockToObj, InfoBox, dockAlign, hspace, vspace);
 	else {

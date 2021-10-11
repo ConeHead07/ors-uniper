@@ -52,7 +52,7 @@ if ($dstDB) {
 }
 
 if (!$dstDB) {
-	echo "Es wurde ".(!$dstDB_Request?"keine Datenbank":"eine ungültige Datenbank $dstDB_Request")." angegeben!<br>\n";
+	echo "Es wurde ".(!$dstDB_Request?"keine Datenbank":"eine ungï¿½ltige Datenbank $dstDB_Request")." angegeben!<br>\n";
 }
 $db->query("USE `$dstDB`");
 
@@ -95,15 +95,15 @@ if (!empty($_FILES["upload"])) {
 	} else echo "Fehler beim Dateiupload!\n";
 }
 
-echo "<strong>Hinweis für den Import:</strong>
-Import-Daten werden hinzugef&uuml;gt. Bestehende Daten werden nicht gelöscht!
+echo "<strong>Hinweis fÃ¼r den Import:</strong>
+Import-Daten werden hinzugef&uuml;gt. Bestehende Daten werden nicht gelÃ¶scht!
 Nicht vorhandene Abteilungen und R&auml;ume werden automatisch angelegt.
 Nach dem Import sehen Sie eine Liste neu angelegter R&auml;me und Abteilungen.\n\n";
 if ($dstDB) {
 	$dp = opendir($importDir);
 	while($file = readdir($dp)) 
 		if (strpos("..",$file)===false)
-			echo "<li>import <a href=\"?dstDB=$dstDB&importFile=".urlencode($file)."&runImport=1\">Daten hinzufügen</a> <a href=\"?dstDB=$dstDB&importFile=".urlencode($file)."&runImport=1&clearTbl=1\">Daten ersetzen</a> $file</li>";
+			echo "<li>import <a href=\"?dstDB=$dstDB&importFile=".urlencode($file)."&runImport=1\">Daten hinzufÃ¼gen</a> <a href=\"?dstDB=$dstDB&importFile=".urlencode($file)."&runImport=1&clearTbl=1\">Daten ersetzen</a> $file</li>";
 }
 
 function csv_getFields($line, $sep = ";", $quot = '"') {
@@ -194,9 +194,9 @@ function check_create_abteilung_byMaData($MA) {
 	
 	if (!$g && !$b && !$a) return false;
 	
-	if (!$g) die("CanNot Find GF! Unvollständige Angaben -> GF:".($g?$g:"?")."; B:".($b?$b:"?")."; A:".($a?$a:"?")."<br>\n");
-	if ($a && !$b) die("CanNot Create Abteilung! Unvollständige Angaben -> GF:".($g?$g:"?")."; B:".($b?$b:"?")."; A:".($a?$a:"?")."<br>\n");
-	if ($b && !$g) die("CanNot Create Bereich! Unvollständige Angaben -> GF:".($g?$g:"?")."; B:".($b?$b:"?")."<br>\n");
+	if (!$g) die("CanNot Find GF! UnvollstÃ¤ndige Angaben -> GF:".($g?$g:"?")."; B:".($b?$b:"?")."; A:".($a?$a:"?")."<br>\n");
+	if ($a && !$b) die("CanNot Create Abteilung! UnvollstÃ¤ndige Angaben -> GF:".($g?$g:"?")."; B:".($b?$b:"?")."; A:".($a?$a:"?")."<br>\n");
+	if ($b && !$g) die("CanNot Create Bereich! UnvollstÃ¤ndige Angaben -> GF:".($g?$g:"?")."; B:".($b?$b:"?")."<br>\n");
 	
 	if ($g && !$db->query_count("`".$_TABLE["gf"]."` WHERE `organisationseinheit` LIKE \"$g\" LIMIT 1")) {
 		$db->query("INSERT `".$_TABLE["gf"]."` SET organisationseinheit=\"".$db->escape($g)."\", name=\"\", personalbelegschaft=0, verrechenbare_flaeche=0");
@@ -258,7 +258,7 @@ function check_umzugsmitarbeiter_links() {
 				break;
 				
 				default:
-				$MaLinkLog["MultipleMas"].= "<span style=\"color:#f00;\">Es wurden mehrere (".count($ma_ids).") MAs für die Suche  ".$ma["name"].", ".$ma["vorname"]." (aid:".$ma["aid"].", maid:".$ma["maid"].", mid:".$ma["mid"].")</span>\n";
+				$MaLinkLog["MultipleMas"].= "<span style=\"color:#f00;\">Es wurden mehrere (".count($ma_ids).") MAs fï¿½r die Suche  ".$ma["name"].", ".$ma["vorname"]." (aid:".$ma["aid"].", maid:".$ma["maid"].", mid:".$ma["mid"].")</span>\n";
 			}
 		}
 	}
@@ -302,7 +302,7 @@ if (empty($row)) {
 
 // Start-Import
 if ($runImport) {
-	// Wichtige Löschreihenfolge: Erst MA in Abängigkeit der Räume (Sub-Query), dann die Räume
+	// Wichtige Lï¿½schreihenfolge: Erst MA in Abï¿½ngigkeit der Rï¿½ume (Sub-Query), dann die Rï¿½ume
 	// Leeren der Mitarbeiterdaten
 	if ($clearTbl) {
 		$sql = "DELETE FROM `$dstDB`.`mm_stamm_mitarbeiter` \n";
@@ -391,14 +391,14 @@ if ($runImport) {
 					else $num_import++;
 					//if ($i++ < 10) { echo $sql."\n"; print_r($e); }
 				} else {
-					die("Anzahl Spalten ".count($aValues)." stimmt nicht mit Felddefinition in erster Zeile (".count($aFields)." überein!\nSpalten:\n$line\n".print_r($aValues,1)."\n Importvorgabe:".implode(";",$aFields)."<br>\n");
+					die("Anzahl Spalten ".count($aValues)." stimmt nicht mit Felddefinition in erster Zeile (".count($aFields)." Ã¼berein!\nSpalten:\n$line\n".print_r($aValues,1)."\n Importvorgabe:".implode(";",$aFields)."<br>\n");
 				}
 			}
 			fclose($fp);
 		}
 		echo "Es wurden $num_import Mitarbeiter importiert!\n";
 		
-		echo "<strong>Neue Räume:</strong>\n".print_r($aNeueRaeume,1)."\n\n";
+		echo "<strong>Neue RÃ¤ume:</strong>\n".print_r($aNeueRaeume,1)."\n\n";
 		echo "<strong>Neue Abteilungen:</strong>\n".print_r($aNeueAbteilungen,1)."\n\n";
 	}
 }

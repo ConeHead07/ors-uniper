@@ -180,6 +180,8 @@ unset($userForJson['authentcode']);
 $Tpl->assign('userJson', json_encode($userForJson));
 $Tpl->assign("umzugsstatus", $AS->arrInput['umzugsstatus']);
 $Tpl->assign("umzugsstatusJson", json_encode($AS->arrInput['umzugsstatus']));
+$Tpl->assign("antragsstatus", $AS->arrInput['antragsstatus']);
+$Tpl->assign("antragsstatusJson", json_encode($AS->arrInput['antragsstatus']));
 
 if (!empty($aMaItems) && count($aMaItems)) {
     $Tpl->assign("Mitarbeiterliste", $aMaItems);

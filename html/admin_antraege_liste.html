@@ -44,7 +44,7 @@
       <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=ort{if $ofld eq "ort" && $odir ne "DESC"}&odir=DESC{/if}">Lieferort</a></div>
   <div style="float:left;display:block;width:50px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=plz{if $ofld eq "plz" && $odir ne "DESC"}&odir=DESC{/if}">PLZ</a></div>
   <div style="float:left;display:block;width:200px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=strasse{if $ofld eq "strasse" && $odir ne "DESC"}&odir=DESC{/if}">Stra&szlig;e</a></div>
-      <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=personalnr{if $ofld eq "personalnr" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
+      <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=kid{if $ofld eq "kid" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
   <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=umzug{if $ofld eq "umzug" && $odir ne "DESC"}&odir=DESC{/if}">Kategorie</a></div>
   <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Bestelleingang</a></div>
   <div style="float:left;display:none;width:35px;font-weight:bold;color:#00869c;" title="Von Property genehmigt"><a href="{$ListBaseLink}&ofld=genehmigt{if $ofld eq "genehmigt_br" && $odir ne "DESC"}&odir=DESC{/if}">Gen</a></div>
@@ -55,11 +55,11 @@
   <div>
   <div style="float:left;display:block;width:30px;font-weight:bold;">{$U.aid}&nbsp;</div>
   <div style="float:left;display:block;width:100px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
-      <div style="float:left;display:block;width:60px;">{if $U.land == "Deutschland"}DE{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if} &nbsp;</div>
-      <div style="float:left;display:block;width:100px;">{$U.ort}&nbsp</div>
+  <div style="float:left;display:block;width:60px;">{if $U.land == "Deutschland"}DE{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if} &nbsp;</div>
+  <div style="float:left;display:block;width:100px;">{$U.ort}&nbsp</div>
   <div style="float:left;display:block;width:50px;">{$U.plz}&nbsp;</div>
   <div style="float:left;display:block;width:200px;">{$U.strasse}&nbsp;</div>
-      <div style="float:left;display:block;width:75px;" >&nbsp;&nbsp;</div>
+  <div style="float:left;display:block;width:75px;" >{$U.kid}&nbsp;&nbsp;</div>
   <div style="float:left;display:block;width:75px;" >&nbsp;&nbsp;</div>
   <div style="float:left;display:block;width:100px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
   <div style="float:left;display:none;width:35px;">{$U.Genehmigt}&nbsp;</div>

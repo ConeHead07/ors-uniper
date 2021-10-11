@@ -1,5 +1,5 @@
 <?php
-header("Content-Type: text/html; charset=ISO-8859-1");
+header("Content-Type: text/html; charset=UTF-8");
 
 require_once(dirname(__FILE__)."/include/conf.php");
 require_once($MConf["AppRoot"].$MConf["Class_Dir"]."dbconn.class.php");

@@ -31,7 +31,7 @@ td.menge, td.menge, input.menge, td.preis, td.sum {
 {/literal}
 </style>
 {if count($Umzugsleistungen)}
-<h2 style="margin:0;padding:0">Leistungen</h2>
+<h2 style="margin:0;padding:0" data-src="umzugsformular_leistungsauswahl.tpl.read.html">Leistungen</h2>
 <table class="MitarbeierItem table-leistungen" style="margin-top:0;padding-top:0;width:100%;">
     <thead>
         <tr>
@@ -45,6 +45,9 @@ td.menge, td.menge, input.menge, td.preis, td.sum {
             <td class="hideForUniper">Menge2 M</td>
             {if $PreiseAnzeigen}<td class="hideForUniper" class="preis">Preis/Einh.</td>
             <td class="sum hideForUniper">Gesamt</td>
+            {/if}
+            {if $umzugsstatus eq "abgeschlossen"}
+            <td class="hideForUniper">Rekla</td>
             {/if}
         </tr>
     </thead>
@@ -65,11 +68,18 @@ td.menge, td.menge, input.menge, td.preis, td.sum {
             {if $PreiseAnzeigen}<td class="preis hideForUniper">{$L.preis_pro_einheit}</td>
             <td class="sum hideForUniper">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|escape|number_format:2:",":"."}{/if}</td>
             {/if}
+            {if $umzugsstatus eq "abgeschlossen"}
+            <td class="hideForUniper">Rekla</td>
+            {/if}
         </tr>
     {/foreach}
         <tr id="summary">
         {if $PreiseAnzeigen}
-            <td colspan="{if $PreiseAnzeigen}11{else}9{/if}"><span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
+            <td {if $umzugsstatus ne "abgeschlossen"}
+                colspan="11"
+                {else}
+                colspan="10"
+            {/if}><span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
         {/if}
         </tr>
     </tbody>

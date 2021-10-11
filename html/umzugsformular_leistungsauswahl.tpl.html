@@ -143,6 +143,7 @@ var lkItems = {$lkTreeItemsJson};
 var lkmById = {$lkmByIdJson};
 var umzugsleistungen = {$UmzugsleistungenJson};
 var umzugsstatus = {$umzugsstatusJson};
+var antragsstatus = {$antragsstatusJson};
 
 
 {literal}
@@ -433,7 +434,8 @@ $(function(){
         }
     };
 
-    var renderBestellListe = function() {
+    var renderBestellListe = function(umzugsstatus) {
+        alert("renderBestellListe()\n" + JSON.stringify(arguments));
         var boxLeistungenSel = "div#auswahlUmzugsleistungenBox";
         var boxLeistungen = $(boxLeistungenSel);
         if (!boxLeistungen.length) {
@@ -694,11 +696,20 @@ $(function(){
         }
     };
 
-    if (!umzugsleistungen || umzugsstatus === 'temp' || umzugsstatus === 'zurueckgegeben') {
+    if (!umzugsleistungen || (antragsstatus === 'bearbeitung' && umzugsstatus === 'temp') || umzugsstatus === 'zurueckgegeben') {
+        alert("renderAuswahlliste() " +
+            "\n umzugsstatus: "  + umzugsstatus  +
+            "\n antragsstatus: " + antragsstatus +
+            "\n umzugsleistungen:\n" + JSON.stringify(umzugsleistungen));
         renderAuswahlListe();
     } else if (umzugsstatus !== 'abgeschlossen') {
+        alert("renderBestellListe() " +
+            "\n umzugsstatus: "  + umzugsstatus  +
+            "\n antragsstatus: " + antragsstatus +
+            "\n umzugsleistungen:\n" + JSON.stringify(umzugsleistungen));
         renderBestellListe();
     } else {
+        // Umzugsstatus: abgeschlossen
         // @ToDo Mit Option Reklamation / Umtausch für gelieferte Artikel anzufordern
         renderBestellListe();
     }

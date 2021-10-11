@@ -47,11 +47,7 @@ if (!$d || !$TFE_CNF["Dir"][$d] || !$f || !file_exists($TFE_CNF["Dir"][$d]."/".$
 		$body_content.= "<div style=\"color:#008000;\">Datei wurde gespeichert. Letzte nderung: ".format_fstat($file)."!</div><br>\n";
 	}
 
-	if ( substr(basename($file), 0, 11) === 'statusmail_' ) {
-	    $acceptCharset = 'UTF-8';
-    } else {
-	    $acceptCharset = 'ISO-8859-1';
-    }
+	$acceptCharset = 'UTF-8';
 
 	$content = file_get_contents($file);
 	

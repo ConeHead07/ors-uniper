@@ -47,22 +47,21 @@ $resultFormat = getRequest("resultFormat", "JS");
 
 switch($resultFormat) {
 	case "XML":
-	header("Content-Type: text/xml; charset=ISO-8859-1");
-	echo "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>\n";
+	header("Content-Type: text/xml; charset=UTF-8");
+	echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 	echo "<Result type=\"success\">\n";
 	echo "<LoadScript language=\"javascript\" src=\"cdata\"><![CDATA[\n";
 	echo "GF = ".$JsonGF.";\n";
 	echo "BereicheByGF = ".$JsonBe.";\n";
 	//echo "alert(\"".basename(__FILE__)." GF:\"+GF);\n";
-	//echo 'alert(Orte["Düsseldorf"]["ZV_SEE_1"]+"\n"+Gebaeude["ZV_SEE_1"]["Etagen"].join(", "));'."\n";
+	//echo 'alert(Orte["Dï¿½sseldorf"]["ZV_SEE_1"]+"\n"+Gebaeude["ZV_SEE_1"]["Etagen"].join(", "));'."\n";
 	echo "]]></LoadScript>\n";
 	echo "</Result>";
 	break;
 	
 	case "JS":
 	default:
-	header("Content-Type: text/javascript; charset=ISO-8859-1");
+	header("Content-Type: text/javascript; charset=UTF-8");
 	echo "GF = ".$JsonGF.";\n";
 	echo "BereicheByGF = ".$JsonBe.";\n";
-	//echo 'alert(Orte["Düsseldorf"]["ZV_SEE_1"]+"\n"+Gebaeude["ZV_SEE_1"]["Etagen"].join(", "));'."\n";
 }

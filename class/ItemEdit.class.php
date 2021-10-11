@@ -2113,7 +2113,7 @@ class ItemEdit
 					case "decimal":
 					if (isset($this->arrInput[$fN]) && is_numeric($this->arrInput[$fN]) ) {
 						if ($SQL_SET) $SQL_SET.= ",\n";
-						$SQL_SET.= "`".$fC["dbField"]."` = \"".MyDB::escape_string($this->arrInput[$fN])."\"";
+						$SQL_SET.= "`".$fC["dbField"]."` = \"" . MyDB::escape_string($this->arrInput[$fN]) . "\"";
 					} elseif ($this->editMode != "Insert") {
 						 if ($SQL_SET) $SQL_SET.= ",\n";
 						 $SQL_SET.= "`".$fC["dbField"]."` = NULL";
@@ -2168,7 +2168,7 @@ class ItemEdit
                                 }
                                 $SQL_SET .= '`' . $fC['dbField'] . '` = "' . MyDB::escape_string(file_get_contents($_file['temp'])) . '"';
 
-                                print_r(compact('PostData', 'FileData', '_file'));
+                                // print_r(compact('PostData', 'FileData', '_file'));
                             }
                         }
                         elseif (isset($this->arrInput[$fN]) && $this->arrInput[$fN] !== "") {
@@ -2241,7 +2241,9 @@ class ItemEdit
 				
 				if (0) $msg.= "<pre>#".__LINE__." SQL:\n".fb_htmlEntities($SQL)."\nERROR:".MyDB::error()."</pre>\n";
 				
-				if (!MyDB::error()) return true;
+				if (!MyDB::error()) {
+				    return true;
+                }
 				else {
 					$this->Error.= "Fehler beim Speichern (".$this->editMode.") der Daten!<br>\n";
 					$this->dbError.= "#".__LINE__." ".basename(__FILE__)."\n";
@@ -2252,7 +2254,7 @@ class ItemEdit
 			}
 			
 		} else {
-			$this->Error.= "Datensatz kann nicht gespeichert, wenn bei der Prüfung Fehler aufgetreten sind!<br>\n";
+			$this->Error.= "Datensatz kann nicht gespeichert, wenn bei der Pruefung Fehler aufgetreten sind!<br>\n";
 		}
 		
 		return false;
@@ -2298,14 +2300,15 @@ class ItemEdit
 	function db_query($SQL, $line = "?") 
 	{
 		$r = @MyDB::query($SQL, $this->dbConnId);
+		if (MyDB::error()) {
+		    $error = MyDB::error();
+		    $this->db_error = "#$line error: $error.\nSQL: $SQL\n";
+		    echo $this->db_error;
+		    exit;
+		    return false;
+        }
 		if ($r) {
 			return $r;
-		} else {
-                    $this->db_error = "#$line "
-                        . ", r:$r, Err:"
-                        . MyDB::error()."\nQUERY:" 
-                        . fb_htmlEntities($SQL)."\n";
-                    // die($this->db_error);
 		}
 	}
 	

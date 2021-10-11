@@ -25,7 +25,8 @@ $orderFields = array(
 	"termin" => array("field"=>"umzugstermin", "defaultOrder"=>"ASC"),
 	"von" => array("field"=>"M.gebaeude", "defaultOrder"=>"ASC"),
 	"nach" => array("field"=>"M.ziel_gebaeude", "defaultOrder"=>"ASC"),
-	"ort" => array("field"=>"ort", "defaultOrder"=>"ASC"),
+    "ort" => array("field"=>"ort", "defaultOrder"=>"ASC"),
+    "kid" => array("field"=>"user.personalnr", "defaultOrder"=>"ASC"),
 	"umzug" => array("field"=>"umzug", "defaultOrder"=>"ASC"),
 	"mitarbeiter" => array("field"=>"mitarbeiter_num", "defaultOrder"=>"ASC"),
 	"antragsdatum" => array("field"=>"antragsdatum", "defaultOrder"=>"ASC"),
@@ -43,7 +44,8 @@ if ($ofld && isset($orderFields[$ofld])) {
 
 $ListBaseLink = "?s=".urlencode($s)."&cat=".urlencode($cat).($allusers ? '&allusers=1' : '');
 
-$sqlFrom  = "FROM `".$CUA["Table"]."` U LEFT JOIN `".$CUM["Table"]."` M USING(aid)\n" 
+$sqlFrom  = "FROM `".$CUA["Table"]."` U LEFT JOIN `".$CUM["Table"]."` M USING(aid)\n"
+           ." LEFT JOIN mm_user user ON U.antragsteller_uid = user.uid \n "
            ." LEFT JOIN mm_stamm_gebaeude g  ON U.gebaeude = g.id \n"
            ." LEFT JOIN mm_stamm_gebaeude vg ON U.von_gebaeude_id = vg.id \n"
            ." LEFT JOIN mm_stamm_gebaeude ng ON U.nach_gebaeude_id = ng.id \n";
@@ -113,7 +115,7 @@ $row = $db->query_singlerow($sql);
 //echo $db->error()."<br>\nsql: $sql <br>\n";
 $num_all = $row["count"];
 
-$sql = 'SELECT U.*, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude ' . PHP_EOL;
+$sql = 'SELECT U.*, user.personalnr AS kid, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude ' . PHP_EOL;
 $sql.= $sqlFrom.$sqlWhere;
 $sql.= "GROUP BY aid\n";
 $sql.= $orderBy."\n";

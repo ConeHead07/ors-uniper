@@ -524,7 +524,7 @@ function igWShowLoadingBar(mode, msg, parentElement) {
       LBar.style.display="none";
     } else {
       LBar.style.display="";
-      if (mode==1 && !msg) msg = "<span class=upMsg>Daten werden übertragen</span>"; 
+      if (mode==1 && !msg) msg = "<span class=upMsg>Daten werden &uuml;bertragen</span>";
 	    LBar.innerHTML = (mode == 1?"<img align=absmiddle src=\"loading.gif\">":"")+(msg && mode ? "":"")+(msg?msg:""); 
     }
   }

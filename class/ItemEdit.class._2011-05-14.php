@@ -1,6 +1,6 @@
 <?php 
 // echo "#".__LINE__." ".date("H:i:s")." <br>\n";
-// Idee der 7 Benutzerstufen: Jede nächste Stufe hat voreingestellt mind. die Rechte der niederen Stufen
+// Idee der 7 Benutzerstufen: Jede nï¿½chste Stufe hat voreingestellt mind. die Rechte der niederen Stufen
 // 0: Jeder | Unbekannter Webuser | Kein Account erforderlich
 // 1: Registrierter User: Nur Leserechte
 // 2: Registrierter User: Darf neuen Inhalt arstellen, aber nicht bearbeiten
@@ -9,7 +9,7 @@
 // 5: Registrierter User: Darf alle Inhalte bearbeiten
 // 6: Administrator
 
-// Die Benutzerrechte können auf Datensatz und Feldebene frei überschrieben werden
+// Die Benutzerrechte kÃ¶nnen auf Datensatz und Feldebene frei Ã¼berschrieben werden
 // echo "#".__LINE__." ".basename(__FILE__)." ".date("H:i:s")."<br>\n";
 
 class ItemListClass 
@@ -27,7 +27,7 @@ class ItemListClass
 	var $strJoin    = "";
 	var $strGroup   = "";
 	var $selectFlds = "*";
-	var $searchFlds = ""; // default für Suche in 'allen Feldern': Wenn leer wie selectFlds
+	var $searchFlds = ""; // default fï¿½r Suche in 'allen Feldern': Wenn leer wie selectFlds
 	var $strSQL = "";
 	var $strSqlNumAll = "";
 	var $arrListJoins = array();
@@ -172,7 +172,7 @@ class ItemListClass
 				
 				if (isset($this->ItemConf["Joins"][$joinName])) {
 					$joinProps = &$this->ItemConf["Joins"][$joinName];
-					// echo "#".__LINE__." Found ListAutoJoin in _CONF für $joinName <br>\n";
+					// echo "#".__LINE__." Found ListAutoJoin in _CONF fï¿½r $joinName <br>\n";
 					// "listFields"   => "",
 					// "listHideKey"  => true,
 					// "listHideFlds" => array(),
@@ -224,7 +224,7 @@ class ItemListClass
 				$tmp2 = "`".$objJoin["foreignTbl"]."`.* ";
 				$keyIsSelected = true;
 			} else {
-				echo "#".__LINE__." KONFLIKT: Doppelte Feldauswahl für Tabelle `".$objJoin["foreignTbl"]."`";
+				echo "#".__LINE__." KONFLIKT: Doppelte Feldauswahl fï¿½r Tabelle `".$objJoin["foreignTbl"]."`";
 				echo " in this->selectFlds u. joinListFlds!<br>\n";
 			}
 		} else {
@@ -272,7 +272,7 @@ class ItemListClass
 			$jTbl = "";
 			$jFld = $fldDbPath[0];
 			if (0 == count($arrListJoins)) {
-				echo "#".__LINE__." Unidentifizierbares Join-Feld:$joinField. Es wurden keine Joins für die Listenausgabe vorgegeben!<br>\n";
+				echo "#".__LINE__." Unidentifizierbares Join-Feld:$joinField. Es wurden keine Joins fÃ¼r die Listenausgabe vorgegeben!<br>\n";
 			}
 			
 			// Suche findet nur in Joins statt, die im Listen-Objekt angemeldet wurden
@@ -282,7 +282,7 @@ class ItemListClass
 					$tblConfKey = $arrProps["confkey"];
 					
 					if (!isset($_CONF[$tblConfKey])) {
-						echo "#".__LINE__." Ungültiger Conf-Key (_CONF[$tblConfKey]) für Tabellen-Join!<br>\n";
+						echo "#".__LINE__." UngÃ¼ltiger Conf-Key (_CONF[$tblConfKey]) fÃ¼r Tabellen-Join!<br>\n";
 					}
 					
 					foreach($_CONF[$tblConfKey]["Fields"] as $fN => $fC) {
@@ -300,8 +300,8 @@ class ItemListClass
 			
 			case 2:
 			// Es wurde Tabellen- u. Feldname angegeben
-			// Es wird geprüft, ob Join-Tabelle im Listen-Objekt angemeldet wurde
-			// Weitere Prüfungen, ob Feld tatsächlich in Tabelle enthalten ist, findet nicht statt
+			// Es wird geprï¿½ft, ob Join-Tabelle im Listen-Objekt angemeldet wurde
+			// Weitere Prï¿½fungen, ob Feld tatsï¿½chlich in Tabelle enthalten ist, findet nicht statt
 			$jTbl = $fldDbPath[0];
 			$jFld = $fldDbPath[1];
 			if (!isset($this->arrListJoinsTbl2Name[$jTbl])) {
@@ -311,13 +311,13 @@ class ItemListClass
 				$getArrJoinProps["Field"] = $jFld;
 				return true;
 			} else {
-				echo "#".__LINE__." Unbekannte Join-Tabelle:$jTbl. Es wurden kein Join für diese Tabelle registriert oder es liegt keine Conf!<br>\n";
+				echo "#".__LINE__." Unbekannte Join-Tabelle:$jTbl. Es wurden kein Join fï¿½r diese Tabelle registriert oder es liegt keine Conf!<br>\n";
 			}
 			break;
 			
 			default:
 			// FEHLER: Evtll. wurde noch ein Datenbankname angegeben
-			// Ungültige Option, da Abfragen nur in der Hauptdatenbank stattfinden !!!
+			// Ungï¿½ltige Option, da Abfragen nur in der Hauptdatenbank stattfinden !!!
 			echo "#".__LINE_." ".basename(__FILE__)." ERROR IN -> class ".__CLASSNAME__." -> function ".__FUNCTION__."() ";
 			echo "Zu viele Pfadpunkte(".count($fldDbPath).") in SearchField-Angabe: &quot;$searchField&quot;!<br>\n";
 		}			
@@ -468,9 +468,9 @@ class ItemListClass
 	}
 	
 	function set_defaultListButtons() {
-		$AttrDel = " class=\"btnDelete\" onclick=\"return confirm('Möchten Sie den Datensatz wirklich löschen?')\"";
+		$AttrDel = " class=\"btnDelete\" onclick=\"return confirm('Mï¿½chten Sie den Datensatz wirklich lï¿½schen?')\"";
 		$this->addButton("open", "", "Bearbeiten", "&view=edit&{trackVars}", "");
-		$this->addButton("kill", "", "Löschen", "&view=del&{trackVars}", "", $AttrDel);
+		$this->addButton("kill", "", "Lï¿½schen", "&view=del&{trackVars}", "", $AttrDel);
 	}
 	
 	function edit_listButton($btnName, $key, $val) {
@@ -500,7 +500,7 @@ class ItemListClass
 		$strOptions = "";
 		$selected = " selected=\"true\"";
 		
-		// Feldauswahl für Maintable
+		// Feldauswahl fï¿½r Maintable
 		
 		if (count($this->arrListJoins)) {
 			$strOptions.= "<optgroup label=\"".$this->ItemClass->arrConf["Title"]."\">\n";
@@ -515,7 +515,7 @@ class ItemListClass
 		$strOptions.= implode("",$aOptions);
 		if (count($this->arrListJoins)) $strOptions.= "</optgroup>";
 		
-		// Feldauswahl für Join-Tables
+		// Feldauswahl fï¿½r Join-Tables
 		foreach($this->arrListJoins as $joinName => $joinProps) {
 			$cnfkey = $this->ItemConf["Joins"][$joinName]["confkey"];
 			$strOptions.= "<optgroup label=\"{$joinName}-Felder\">\n";
@@ -594,7 +594,7 @@ class ItemListClass
 					$strWhere = " `{$searchTbl}`.`".$_CONF[$tblConfKey]["Fields"][$searchField]["dbField"]."`";
 					// echo "#".__LINE__." searchArea:{$searchArea}; tblConfKey:$tblConfKey; searchTbl:$searchTbl; strWhere = $strWhere<br>\n";
 				} else {
-					echo "Ungültige Feldauswahl: $searchField!<br>\n";
+					echo "UngÃ¼ltige Feldauswahl: $searchField!<br>\n";
 					return false;
 				}
 				
@@ -692,7 +692,7 @@ class ItemListClass
 			return $this->e[$this->tmpZahl];
 		}
 		
-		echo "#".__LINE__." Ungültiger Index für Ergebnis: e[".$this->tmpZahl."] fld:$fld, tbl:$tbl existiert nicht!<br>\n";
+		echo "#".__LINE__." Ungï¿½ltiger Index fï¿½r Ergebnis: e[".$this->tmpZahl."] fld:$fld, tbl:$tbl existiert nicht!<br>\n";
 		return false;
 	}
 	
@@ -920,7 +920,7 @@ class ItemListClass
 									$nr
 								);
 							} else {
-								echo "#".__LINE__." Error undefined Function '".$btnVals["createByFunction"]."()' für ListButton!<br>\n";
+								echo "#".__LINE__." Error undefined Function '".$btnVals["createByFunction"]."()' fï¿½r ListButton!<br>\n";
 							}
 						} else {
 							$link = "#";
@@ -975,7 +975,7 @@ class ItemListClass
 									$nr
 								);
 							} else {
-								echo "#".__LINE__." Error undefined Function '".$el["createByFunction"]."()' für ListInput!<br>\n";
+								echo "#".__LINE__." Error undefined Function '".$el["createByFunction"]."()' fÃ¼r ListInput!<br>\n";
 							}
 						} else {
 							$rplEl = array();
@@ -1014,7 +1014,7 @@ class ItemListClass
 								$this->strItemList.= "<td {$cellClass} {$cellAttr}>".$val."</td>\n";
 								$SetRawDbVal = false;
 							} else {
-								echo "#".__LINE__." ".__FILE__." Funktion ".$this->arrColumnHandler[$fld]." für Feld $fld nicht gefunden!<br>\n";
+								echo "#".__LINE__." ".__FILE__." Funktion ".$this->arrColumnHandler[$fld]." fï¿½r Feld $fld nicht gefunden!<br>\n";
 							}
 						}
 						if ($SetRawDbVal) {
@@ -1132,7 +1132,7 @@ class ItemEdit
 				}
 			}
 			return true;
-		} else { $this->Error.= "#".__LINE__." Ungültige oder leere Konf-Daten!<br>\n"; }
+		} else { $this->Error.= "#".__LINE__." Ungï¿½ltige oder leere Konf-Daten!<br>\n"; }
 		return false;
 	}
 	
@@ -1167,7 +1167,7 @@ class ItemEdit
 			}
 			$this->Error.= "Es wurde kein Eintrag mit der ID:".$this->id." gefunden!<br>\n";
 			
-		} else $this->Error.= "Fehlende ID:".$this->id." für Datenabfrage!<br>\n";
+		} else $this->Error.= "Fehlende ID:".$this->id." fÃ¼r Datenabfrage!<br>\n";
 		return false;
 	}
 	
@@ -1203,17 +1203,17 @@ class ItemEdit
 				}
 				//$msg.= print_r($this->arrConf,1)."<br>\r\n";
 				if (count($this->arrInput)) { return true; }
-				else { $this->Error.= "Es konnten keine DB-Daten übernommen werden!<br>\n"; }
+				else { $this->Error.= "Es konnten keine DB-Daten ï¿½bernommen werden!<br>\n"; }
 			} else { $this->Error.= "Es wurde keine Feldkonfiguration geladen werden!<br>\n"; }
 		} else { $this->Error.= "Eintrag aus Datenbank konnte nicht geladen werden!<br>\n"; }
 		return false;
 	}
 	
-	// überschreibbare Werte. 
-	// Mit setValue gesetzte Werte dürfen erst nach 
+	// Ã¼berschreibbare Werte.
+	// Mit setValue gesetzte Werte dÃ¼rfen erst nach
 	// -loadInput()
 	// -dbdataToInput()
-	// gesetzt, da sie sonst wieder überschrieben werden
+	// gesetzt, da sie sonst wieder Ã¼berschrieben werden
 	function setValue($f, $v) {
 		$this->arrInput[$f] = $v;
 		if (count($this->arrDbdata)) {
@@ -1229,7 +1229,7 @@ class ItemEdit
 		}
 	}
 	
-	// Fest voreingestellte Werte, die durch Posts nicht überschrieben werden können,
+	// Fest voreingestellte Werte, die durch Posts nicht ï¿½berschrieben werden kï¿½nnen,
 	// aber von dbdataToInput
 	function presetValue($f, $v) {
 		$this->arrPresetValues[$f] = true;
@@ -1257,7 +1257,7 @@ class ItemEdit
 					break;
 					
 					default:
-					$this->SysError.= "#".__LINE__." ".basename(__FILE__)." für Daten ".$this->arrConf["Title"]."!<br>\n";
+					$this->SysError.= "#".__LINE__." ".basename(__FILE__)." fÃ¼r Daten ".$this->arrConf["Title"]."!<br>\n";
 					$this->Error.= "Interner Fehler: <br>\n";
 				}
 			}
@@ -1275,7 +1275,7 @@ class ItemEdit
 				$this->tplFormFile = $path;
 				$this->tplForm = implode("", file($this->tplFormFile));
 			} else $this->Error.= "Template-Datei existiert nicht:{$path}!<br>\n";
-		} else $this->Error.= "Es wurde keine Template Datei zum öffnen angegeben!<br>\n";
+		} else $this->Error.= "Es wurde keine Template Datei zum Ã¶ffnen angegeben!<br>\n";
 	}
 	
 	function loadTplForm($text) {
@@ -1458,8 +1458,8 @@ class ItemEdit
 									$needle = "check_".$fN."=\"".$aSetVal[$i]."\"";
 									$this->tplForm = str_replace( $needle, $checked, $this->tplForm );
 									
-									//check_standortverwaltung="Düsseldorf"
-									//check_standortverwaltung="Düsseldorf"
+									//check_standortverwaltung="Dï¿½sseldorf"
+									//check_standortverwaltung="Dï¿½sseldorf"
 								}
 							}
 						} else {
@@ -1632,7 +1632,7 @@ class ItemEdit
 	}
 	
 	// Hierarchische Benutzerkennzahlen
-	// für vierstufigen Zugriff: 
+	// fï¿½r vierstufigen Zugriff: 
 	// - readMinAccess
 	// - insertMinAccess
 	// - updateMinAccess
@@ -1661,7 +1661,7 @@ class ItemEdit
 		
 		//echo "#".__LINE__." ".basename(__FILE__)." editMode:$editMode; accessKey:$accessKey; rC[$accessKey]:".$rC[$accessKey]."<br>\n";
 		// echo "#".__LINE__." rC[$accessKey]:".$rC[$accessKey].", this->uid:".$this->uid.", this-->userRechte:".$this->userRechte." <br>\n";
-		if (empty($rC[$accessKey]) || $rC[$accessKey] == 0) return true;  // Wenn Zugriff für Jeder (gleich: 0) return true
+		if (empty($rC[$accessKey]) || $rC[$accessKey] == 0) return true;  // Wenn Zugriff fÃ¼r Jeder (gleich: 0) return true
 		elseif (empty($this->uid)) return false; // Andernfalls, wenn user nicht registriert ist return false
 		if ($rC[$accessKey] && $rC[$accessKey] > $this->userRechte) return false;
 		if ($this->dokRechte && $this->dokRechte > $this->userRechte) return false;
@@ -1683,7 +1683,7 @@ class ItemEdit
 		
 		//echo "#".__LINE__." ".basename(__FILE__)." editMode:$editMode; accessKey:$accessKey; rC[$accessKey]:".$rC[$accessKey]."<br>\n";
 		//echo "#".__LINE__." rC[$accessKey]:".$rC[$accessKey].", this->uid:".$this->uid.", this-->dokRechte:".$this->dokRechte.", this-->userRechte:".$this->userRechte." <br>\n";
-		if (empty($rC[$accessKey]) || $rC[$accessKey] == 0) return true;  // Wenn Zugriff für Jeder (gleich: 0) return true
+		if (empty($rC[$accessKey]) || $rC[$accessKey] == 0) return true;  // Wenn Zugriff fÃ¼r Jeder (gleich: 0) return true
 		elseif (empty($this->uid)) return false; // Andernfalls, wenn user nicht registriert ist return false
 		if ($rC[$accessKey] && $rC[$accessKey] > $this->userRechte) return false;
 		if ($this->dokRechte && $this->dokRechte > $this->userRechte) return false;
@@ -1701,23 +1701,23 @@ class ItemEdit
 						if ($fC["required"]) $this->arrInput[$fN] = $fC["default"];
 						else {
 							if (isset($this->arrInput[$fN]) )
-								$this->Warning.= "Sie haben nicht die erforderlichen Insert-Rechte für ".$fC['label']."!<br>\n";
+								$this->Warning.= "Sie haben nicht die erforderlichen Insert-Rechte fÃ¼r ".$fC['label']."!<br>\n";
 							continue;
 						}
 					} else {
 						if (isset($this->arrInput[$fN]) )
-							$this->Warning.= "Sie haben nicht die erforderlichen Update-Rechte für ".$fC['label']."!<br>\n";
+							$this->Warning.= "Sie haben nicht die erforderlichen Update-Rechte fÃ¼r ".$fC['label']."!<br>\n";
 						continue;
 					}
 				}
 				
-				// Prüfe, ob ein bzw. kein leerer Wert übergeben wurde
+				// Prï¿½fe, ob ein bzw. kein leerer Wert ï¿½bergeben wurde
 				if ($fC["editByRuntime"]) continue;
 				if (preg_match("/created|modified/", $fC["sysType"])) continue;
 				if (preg_match("/PRI/", $fC["key"]))  continue;
 				if ($fC["sysType"] == "password") {
 					if (isset($this->arrInput[$fN."_wh"]) && $this->arrInput[$fN."_wh"] != $this->arrInput[$fN]) {
-						$err = "Passwort stimmt nicht mit Wiederholung überein!<br>\n";
+						$err = "Passwort stimmt nicht mit Wiederholung Ã¼berein!<br>\n";
 						$this->Error.= $err;
 						$this->arrErrFlds[$fN] = $fC["label"].($err !== "" ? ": ".$err : "");
 					}
@@ -1735,15 +1735,15 @@ class ItemEdit
 						//$isValid = call_user_func($fC["checkByFunction"], $fN, $this->arrInput, $this->arrConf, $err);
 						if (!$isValid) $this->arrErrFlds[$fN] = $fC["label"].": ".$err;
 					} else {
-						$this->SysError.= basename(__FILE__)." Fehlende userdefined-Prüffunktion in ".$this->arrConf["Title"].": ".$fC["checkByFunction"]." für Feld $fN!<br>\n";
+						$this->SysError.= basename(__FILE__)." Fehlende userdefined-PrÃ¼ffunktion in ".$this->arrConf["Title"].": ".$fC["checkByFunction"]." fÃ¼r Feld $fN!<br>\n";
 						$this->arrErrFlds[$fN] = $fC["label"].": Interner Systemfehler";
 						return false;
 					}
 				} elseif (empty($createByFunction) && isset($this->arrInput[$fN]) && !empty($this->arrInput[$fN]) ) {
-					// Prüfe Eingabe auf Typ und Länge
+					// Prï¿½fe Eingabe auf Typ und LÃ¤nge
 					$err = "";
 					$isValid = $this->checkType->isValidType( $this->arrInput[$fN], $fC["type"], $fC["size"], $fC["min"], $fC["max"], $err);
-					// Unique-Prüfung
+					// Unique-Prï¿½fung
 					// echo "#".__LINE__." print_r(fC):".print_r($fC, true)." <br>\n";
 					// echo "#".__LINE__." this->arrConf[PrimaryKey]:".$this->arrConf["PrimaryKey"]." <br>\n";
 					// echo "#".__LINE__." this->arrInput[".$this->arrConf['PrimaryKey']."]:".$this->arrInput[$this->arrConf["PrimaryKey"]]." <br>\n";
@@ -1757,11 +1757,11 @@ class ItemEdit
 							$this->arrConf["PrimaryKey"],
 							(isset($this->arrInput[$this->arrConf["PrimaryKey"]]) ? $this->arrInput[$this->arrConf["PrimaryKey"]] : "")
 						);
-						if (!$isValid) $err = "Es existiert bereits ein Eintrag für: ".$this->arrInput[$fN]."!\n";
+						if (!$isValid) $err = "Es existiert bereits ein Eintrag fï¿½r: ".$this->arrInput[$fN]."!\n";
 					}
 					if (!$isValid) $this->arrErrFlds[$fN] = $fC["label"].($err !== "" ? ": ".$err : "");
 				} else {
-					// Prüfe, ob Eingabe erforderlich
+					// Prï¿½fe, ob Eingabe erforderlich
 					if ($fC["required"]) {
 						$this->arrErrFlds[$fN] = $fC["label"].": Fehlende Eingabe";
 					}
@@ -1782,7 +1782,7 @@ class ItemEdit
 			}
 			
 			if (count($this->arrErrFlds) ) {
-				$this->Error.= "Es wurden einige Felder nicht korrekt ausgefüllt:<br>\n";
+				$this->Error.= "Es wurden einige Felder nicht korrekt ausgefÃ¼llt:<br>\n";
 				foreach($this->arrErrFlds as $fld => $err) {
 					$this->Error.= $err."<br>";
 				}
@@ -1790,8 +1790,8 @@ class ItemEdit
 			}
 			return true;
 		} else {
-			$this->Error.= "#".__LINE__." Eingabedaten wurden noch nicht übergeben / geladen!<br>";
-			$this->Error.= "Fügen Sie die Eingabedaten mit object->inputLoad(Array Eingaben)<br>!";
+			$this->Error.= "#".__LINE__." Eingabedaten wurden noch nicht Ã¼bergeben / geladen!<br>";
+			$this->Error.= "Fï¿½gen Sie die Eingabedaten mit object->inputLoad(Array Eingaben)<br>!";
 			return false;
 		}
 	}
@@ -1810,7 +1810,7 @@ class ItemEdit
 				
 				if (!$this->userHasFldAccess($fN, $this->editMode)) {
 					if ($this->editMode == "Insert" && $fC["required"]) {
-						$this->Error.= "#".__LINE__." Es ist ein Konflikt in der Konfiguratation des Feldes $fN aufgetreten, da Sie keine Eingaberechte für eine erforderliche Angabe haben!<br>\n";
+						$this->Error.= "#".__LINE__." Es ist ein Konflikt in der Konfiguratation des Feldes $fN aufgetreten, da Sie keine Eingaberechte fï¿½r eine erforderliche Angabe haben!<br>\n";
 						return false;
 					}
 					continue;
@@ -1954,7 +1954,7 @@ class ItemEdit
 			}
 			
 		} else {
-			$this->Error.= "Datensatz kann nicht gespeichert, wenn bei der Prüfung Fehler aufgetreten sind!<br>\n";
+			$this->Error.= "Datensatz kann nicht gespeichert, wenn bei der PrÃ¼fung Fehler aufgetreten sind!<br>\n";
 		}
 		
 		return false;
@@ -1966,7 +1966,7 @@ class ItemEdit
 		$this->db_query($SQL, __LINE__);
 		if (!MyDB::error()) return true;
 		else {
-			$this->Error.= "Fehler beim Löschen des Datensatzes!<br>\n";
+			$this->Error.= "Fehler beim LÃ¶schen des Datensatzes!<br>\n";
 			$this->dbError.= "#".__LINE__." ".basename(__FILE__)."\n";
 			$this->dbError.= "MYSQL:".MyDB::error()."\n";
 			$this->dbError.= "QUERY:".$SQL."\n";
@@ -2271,7 +2271,7 @@ class ItemEdit
 			break;
 			
 			default;
-			$this->Error.= "Error In Line #".__LINE__." ".basename(__FILE__).": Unbekannte FormBuilder-Wert '$mode', zulässig sind 'file','html','render'!<br>\n";
+			$this->Error.= "Error In Line #".__LINE__." ".basename(__FILE__).": Unbekannte FormBuilder-Wert '$mode', zulï¿½ssig sind 'file','html','render'!<br>\n";
 			return false;
 		}
 	}
@@ -2309,7 +2309,7 @@ class ItemEdit
 			break;
 			
 			default:
-			$this->Error.= "#".__LINE__." Ungültiger Wert für autoFormBuilder '".$this->autoFormBuilder."!<br>\n";
+			$this->Error.= "#".__LINE__." Ungï¿½ltiger Wert fï¿½r autoFormBuilder '".$this->autoFormBuilder."!<br>\n";
 			return false;
 		}
 		return true;
@@ -2426,9 +2426,9 @@ class ItemEdit
 				if ($this->itemExists) {
 					if ($this->killItem()) {
 						$this->autorun_status = 1;
-						$this->Msg.= "Datensatz wurde gelöscht!<br>\n";
+						$this->Msg.= "Datensatz wurde gelï¿½scht!<br>\n";
 					}
-				} else $this->Error.= "Zu löschender Datensatz existiert nicht (mehr)!<br>\n";
+				} else $this->Error.= "Zu lï¿½schender Datensatz existiert nicht (mehr)!<br>\n";
 			}
 			break;
 		}

@@ -237,7 +237,7 @@ function umzugsantrag_storno() {
 		document.forms["frmUmzugsantrag"].action = "umzugsantrag.php";
 		var selector = "MyInfoBoxTxt";
 		umzugsantrag_loadingBar('');
-                frmSerializeGeraete();
+		frmSerializeGeraete();
 		AjaxFormSend(document.forms["frmUmzugsantrag"], selector, "", "cmd=stornieren&id="+id);
 	} else {
 		umzugsantrag_clear();
@@ -245,7 +245,7 @@ function umzugsantrag_storno() {
 }
 function umzugsantrag_loadingBar(msg) {
 	if (typeof(O("LoadingBar"))=="object") O("LoadingBar").parentNode.removeChild(O("LoadingBar"));
-	if (!msg) msg = "Daten werden übertragen ...";
+	if (!msg) msg = "Daten werden &uuml;bertragen ...";
 	var LoadingBar = "<div id=\"LoadingBar\" style=\"text-align:center;\">"+msg+"<br>\n<img src=\"images/loading.gif\"></div>";
 	var IBox = InfoBox(LoadingBar);
 	return IBox;
@@ -425,64 +425,69 @@ function umzugsantrag_close(text) {
 function umzugsantrag_set_status(name, value) {
 	if (!document.forms["frmUmzugsantrag"]) return false;
 	var error = umzugsantrag_errors();
-        
-        var additionalHttpVars = '';
-        
-        var bmk = $("textarea[name='AS[bemerkungen]']").val();
-        var psp = $("span[data-fld='AS[kostenstelle]']").text();
-        var pln = $("span[data-fld='AS[planonnr]']").text();
-        
-        var pspInput = $("input[name='AS[kostenstelle]']");
-        var plnInput = $("input[name='AS[planonnr]']");
-        
-        if ($.trim(bmk) === "" && name === "genehmigt" && value === "Nein" ) {
-            error+= "\nBitte geben Sie für die Ablehnung bei Bemerkungen einen Grund an!";
-        }
-        
-        if (pspInput.length) {
-            psp = pspInput.val();
-        }
-        if (plnInput.length) {
-            pln = plnInput.val();
-        }
-        
+
+	var additionalHttpVars = '';
+
+	var bmk = $("textarea[name='AS[bemerkungen]']").val();
+	var psp = $("span[data-fld='AS[kostenstelle]']").text();
+	var pln = $("span[data-fld='AS[planonnr]']").text();
+
+	var pspInput = $("input[name='AS[kostenstelle]']");
+	var plnInput = $("input[name='AS[planonnr]']");
+
+	if ($.trim(bmk) === "" && name === "genehmigt" && value === "Nein" ) {
+		error+= "\nBitte geben Sie für die Ablehnung bei Bemerkungen einen Grund an!";
+	}
+
+	if (pspInput.length) {
+		psp = pspInput.val();
+	}
+	if (plnInput.length) {
+		pln = plnInput.val();
+	}
+
 	if ( name === "genehmigt" && value === "Ja" ) {
-            if (0) {
-                if ($.trim(psp) === "") {
-                    psp = prompt(
-                        "Für die Genehmigung ist noch die Angabe PSP-Elemente erforderlich!",
-                        ""
-                    );
-                    pspInput.val( psp );
-                    additionalHttpVars+= '&AS[kostenstelle]=' + escape(psp);
-                }
-                if ($.trim(pln) === "") {
-                    pln = prompt(
-                        "Für die Genehmigung ist noch die Angabe Planon-Nr erforderlich!",
-                        ""
-                    );
-                    plnInput.val(pln);
-                }
-                additionalHttpVars+= '&AS[planonnr]=' + escape(pln);
-                if (!psp || !pln) {
-                    error+= "\nGenehmigung kann ohne Angabe von PSP-Element und Planon-Nr nicht gesendet werden!";
-                }
-            }
-        }
+		if (0) {
+			if ($.trim(psp) === "") {
+				psp = prompt(
+					"Für die Genehmigung ist noch die Angabe PSP-Elemente erforderlich!",
+					""
+				);
+				pspInput.val( psp );
+				additionalHttpVars+= '&AS[kostenstelle]=' + escape(psp);
+			}
+			if ($.trim(pln) === "") {
+				pln = prompt(
+					"Für die Genehmigung ist noch die Angabe Planon-Nr erforderlich!",
+					""
+				);
+				plnInput.val(pln);
+			}
+			additionalHttpVars+= '&AS[planonnr]=' + escape(pln);
+			if (!psp || !pln) {
+				error+= "\nGenehmigung kann ohne Angabe von PSP-Element und Planon-Nr nicht gesendet werden!";
+			}
+		}
+	}
         
 	if (error) {
-            InfoBox(error);
-            return false;
+		InfoBox(error);
+		return false;
 	}
 	
 	var aid = umzugsantrag_id();
-	if (!aid) { InfoBox("Fehlende Antrags-Id! Wurde der Antrag bereits gespeichert?<br>\n"); return false; }
+	if (!aid) {
+		InfoBox("Fehlende Antrags-Id! Wurde der Antrag bereits gespeichert?<br>\n");
+		return false;
+	}
 	
 	//alert("Antrag wird neu geladen AID:"+aid+"!");
 	document.forms["frmUmzugsantrag"].action = "umzugsantrag.php";
 	var selector = "MyInfoBoxTxt";
 	umzugsantrag_loadingBar('');
-        if (typeof(frmSerializeGeraete) == "function") frmSerializeGeraete();
+	if (typeof(frmSerializeGeraete) == "function") {
+		frmSerializeGeraete();
+	}
 	AjaxFormSend(document.forms["frmUmzugsantrag"], selector, "", "cmd=status&name="+escape(name)+"&value="+escape(value)+"&id="+escape(aid)+additionalHttpVars);
 }
 

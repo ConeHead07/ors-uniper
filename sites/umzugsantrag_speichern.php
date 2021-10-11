@@ -97,7 +97,7 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
         }
 
         if ($aHasPos['Stuhl'] > 0 && $aHasPos['Schreibtisch'] > 0 && $aHasPos['Leuchte'] > 0) {
-            // Füge Rabatt für Komplettpaket (Stuhl, Schreibtisch und Leutchte) von 25Euro hinzu
+            // FÃ¼ge Rabatt fÃ¼r Komplettpaket (Stuhl, Schreibtisch und Leutchte) von 25Euro hinzu
             $_lstgId = 237;
             $rowsByRefId[$_lstgId] = [
                 'aid' => $AID,
@@ -228,9 +228,9 @@ function umzugsantrag_speichern() {
 	$setStatus = false;
 	$addBemerkung = "";
 	
-        $cntAS = count(array_diff(array_keys($ASPostItem), array('aid', 'bemerkungen')));
+    $cntAS = count(array_diff(array_keys($ASPostItem), array('aid', 'bemerkungen')));
 	if ( ($cntAS > 0 && $cmd !== 'status') && !isset($ASPostItem["name"])) {
-		$error.= "Es wurden keine Daten zum Antragsteller übermittelt. Daten konnten nicht gespeichert werden![sp]<br>\n";
+		$error.= "Es wurden keine Daten zum Antragsteller Ã¼bermittelt. Daten konnten nicht gespeichert werden![sp]<br>\n";
 		return false;
 	}
 	
@@ -242,6 +242,10 @@ function umzugsantrag_speichern() {
 	$userIsAdmin = (strpos($user["gruppe"], "kunde_report")!==false || strpos($user["gruppe"], "admin")!==false);
 	
 	if (!$AID && !empty($ASPostItem["aid"])) $AID = $ASPostItem["aid"];
+
+	if (!$AID) {
+	    $ASPostItem['personalnr'] = $user['personalnr'];
+    }
 	
 	$ASConf = $_CONF["umzugsantrag"];
 	$USERConf = $_CONF["user"];
@@ -258,27 +262,27 @@ function umzugsantrag_speichern() {
 		//foreach($ASConf["Fields"] as $field => $fConf) $ASConf["Fields"][$field]["required"] = false;
 	}
 	
-        $AS->arrConf["Fields"]["umzugstermin"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
-        $AS->arrConf["Fields"]["umzugszeit"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
+    $AS->arrConf["Fields"]["umzugstermin"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
+    $AS->arrConf["Fields"]["umzugszeit"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
 	
 	if ($AID) {
 		if (!$AS->itemExists) {
-			$error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
+			$error.= "Es wurde kein Umzugsantrag mit der Ã¼bermittelten Antrags-ID gefunden!<br>\n";
 			return false;
 		}
 		
 		if ($AS->arrDbdata["umzugsstatus"] != "temp" && $AS->arrDbdata["umzugsstatus"] != "zurueckgegeben"  && !$userIsAdmin) {
 			$error.= "Der Antrag wurde bereits zur Genehmigung und Bearbeitung gesendet!<br>\n";
-			$error.= "Wenden Sie sich für Änderungen an die Bearbeitungsstelle!<br>\n";
+			$error.= "Wenden Sie sich fÃ¼r Ã„nderungen an die Bearbeitungsstelle!<br>\n";
 			return false;
 		}
 	}
 	
 	$MAPostItems = get_ma_post_items();
 	if ($AID && $MConf['min_ma'] && (!is_array($MAPostItems) || !count($MAPostItems)) ) {
-		$error.= "Es wurden keine Mitarbeiter für den Auftrag ausgewählt.<br>\n";
+		$error.= "Es wurden keine Mitarbeiter fÃ¼r den Auftrag ausgewÃ¤hlt.<br>\n";
 		if ($AS->itemsExists) {
-			$error.= "Falls Sie den Auftrag stornieren möchten, klicken Sie den 'Stornieren'-Button.<br>\n";
+			$error.= "Falls Sie den Auftrag stornieren mÃ¶chten, klicken Sie den 'Stornieren'-Button.<br>\n";
 		}
 		return false;
 	}
@@ -286,7 +290,7 @@ function umzugsantrag_speichern() {
 	if (!$userIsAdmin) $ASPostItem["antragsstatus"] = "bearbeitung";
 	$AS->loadInput($ASPostItem);
 	if (($cntAS > 0 && $cmd !== 'status') && !$AS->checkInput()) {
-        $error.= "Überprüfen Sie die Angaben zum Antragssteller!<br>\n";
+        $error.= "ÃœberprÃ¼fen Sie die Angaben zum Antragssteller!<br>\n";
         $error.= $AS->Error;
         foreach($AS->arrErrFlds as $field => $err) $error.= $field.":".$err."<br>\n";
         $error.= $AS->Warning;
@@ -304,10 +308,10 @@ function umzugsantrag_speichern() {
         } else {
             $AS->arrInput["bemerkungen"] = (!empty($AS->arrDbdata["bemerkungen"])) ? $AS->arrDbdata["bemerkungen"] : "";
         }
-        // @ob_end_flush();
-        // echo '#' . __LINE__ . ' ' . __FILE__ . "\n" . var_export($AS->arrInput, 1);
-        // exit;
-        $AS->save();
+
+        if (!$AS->save()) {
+
+        }
         if (!$AID) {
             $AID = $AS->id;
             $UpdateToken = $AS->arrInput["token"]; //substr(md5($AID.time()),0,10);
@@ -317,20 +321,20 @@ function umzugsantrag_speichern() {
 	}
 	
 	if (!$AID) {
-            $error.= "Systemfehler: Antrag konnte nicht angelegt werden (Antrags->id:".$AS->id.")!<br>\n";
-            return false;
+        $error.= "Systemfehler: Antrag konnte nicht angelegt werden (Antrags->id:".$AS->id.")!<br>\n";
+        return false;
 	}
         
-        $save_ul_count = 0;
-        if ($cntAS > 0 || $cmd !== 'status') {
-            umzugsleistungen_speichern($AID);
-            $ulrows = umzugsleistungen_laden($AID);
-            foreach($ulrows as $row) {
-                if ($row['leistungseinheit'] === 'AP') {
-                    $save_ul_count+= (int)(is_numeric($row['menge_mertens']) ? $row['menge_mertens'] : $row['menge_property']);                    
-                }
+    $save_ul_count = 0;
+    if ($cntAS > 0 || $cmd !== 'status') {
+        umzugsleistungen_speichern($AID);
+        $ulrows = umzugsleistungen_laden($AID);
+        foreach($ulrows as $row) {
+            if ($row['leistungseinheit'] === 'AP') {
+                $save_ul_count+= (int)(is_numeric($row['menge_mertens']) ? $row['menge_mertens'] : $row['menge_property']);
             }
         }
+    }
 	
 	$MAConf = $_CONF["umzugsmitarbeiter"];
 	//if (!$doValidate) foreach($MAConf["Fields"] as $field => $fConf) $MAConf["Fields"][$field]["required"] = false;
@@ -355,7 +359,7 @@ function umzugsantrag_speichern() {
             if (!$MA->save()) {
                 $save_errors.= "Der ".($i+1).". Mitarbeitereintrag ".$MAItem["name"]." ".$MAItem["vorname"]." konnte nicht gespeichert werden!<br>\n";
                 $save_errors.= "Error: ".$MA->Error;
-                $save_errors.= "dbError: ".$MA->dbError;
+                $save_errors.= "#362 dbError: ".$MA->dbError;
             } else {
                 $save_count++;
                 if ($MAItem["umzugsart"]) {
@@ -369,26 +373,43 @@ function umzugsantrag_speichern() {
 	if (count($Umzugsarten)) {
 		foreach($Umzugsarten as $art_name => $art_num) $sNumUmzugsarten.= ($sNumUmzugsarten?", ":"").$art_num."x".$art_name;
 	}
-	
-	$sql = "UPDATE `".$USERConf["Table"]."` SET `fon` = \"".$db->escape($AS->arrInput["fon"])
-                ."\", `standort`=\"".$db->escape($AS->arrInput["ort"])
-                ."\", `gebaeude` = \"".$db->escape($AS->arrInput["gebaeude"] ?? '')."\" \n";
-	$sql.= "\n WHERE uid = \"".$db->escape($AS->arrInput["antragsteller_uid"])."\"";
+
+//	echo "DÃ¼sseldorf => arrInput[ort]: " . $AS->arrInput["ort"]
+//        . ' => strcmp: ' . strcmp("DÃ¼sseldorf", $AS->arrInput["ort"] );
+//	exit;
+	$sql = "UPDATE `".$USERConf["Table"]
+         . "` SET `fon` = \""  . $db->escape($AS->arrInput["fon"]) . "\",\n"
+         . " `standort` = \""  . $db->escape($AS->arrInput["ort"]) . "\",\n" // DÃ¼sseldorf\",\n " //
+         . " `gebaeude` = \""  . $db->escape($AS->arrInput["gebaeude"] ?? '')."\" \n";
+	$sql.= "\n WHERE uid = \"" . $db->escape($AS->arrInput["antragsteller_uid"]) . "\"";
 	$db->query($sql);
-	if ($db->error()) $save_errors.= $db->error()."<br>\n".$sql."<br>\n";
+	$_err = $db->error();
+	if ($_err) {
+        $row = $db->query_row('show variables like "character_set_database"');
+	    $save_errors.= '#383 ' . $_err
+            . "<br>\n" . $sql . "<br>\n"
+            . print_r(compact('_err', 'sql', 'row'), 1);
+    }
 	
 	$sql = "UPDATE `".$ASConf["Table"]."` SET `mitarbeiter_num` = $save_ul_count,"
-              ." `bearbeiter_bemerkung` = \"".$db->escape($sNumUmzugsarten)."\" \n";
-	if ($setStatus) $sql.= ", `umzugsstatus`='$setStatus', `umzugsstatus_vom`=NOW()";
-	if ($UpdateToken) $sql.= ",\n token = \"".$db->escape($UpdateToken)."\"";
+          ." `bearbeiter_bemerkung` = \"".$db->escape($sNumUmzugsarten)."\" \n";
+
+	if ($setStatus) {
+	    $sql.= ", `umzugsstatus`='$setStatus', `umzugsstatus_vom`=NOW()";
+    }
+	if ($UpdateToken) {
+	    $sql.= ",\n token = \"".$db->escape($UpdateToken)."\"";
+    }
 	$sql.= "\n WHERE aid = \"".$db->escape($AS->id)."\"";
-        //die('#'.__LINE__ . ' ' . __FILE__ . PHP_EOL . __FUNCTION__ . PHP_EOL . 'Before exec sql' . PHP_EOL . $sql);
-        $db->query($sql);
-	if ($db->error()) $save_errors.= $db->error()."<br>\n".$sql."<br>\n";
+    //die('#'.__LINE__ . ' ' . __FILE__ . PHP_EOL . __FUNCTION__ . PHP_EOL . 'Before exec sql' . PHP_EOL . $sql);
+    $db->query($sql);
+	if ($db->error()) {
+	    $save_errors.= '#392 ' . $db->error()."<br>\n".$sql."<br>\n";
+    }
 	
 	if ($save_errors) {
-            $error.= "Es konnten nicht alle Mitarbeiterdaten gespeichert werden!<br>\n".$save_errors;
-            return false;
+        $error.= "#396 Es konnten nicht alle Mitarbeiterdaten gespeichert werden!<br>\n".$save_errors;
+        return false;
 	}
     if ($addBemerkung) {
         $enrichedBemerkung = $AS->arrInput["bemerkungen"];

@@ -7,11 +7,11 @@ require_once($InclBaseDir."umzugsmitarbeiter.inc.php");
 
 /*
 Es sind Fehler aufgetreten!
-Es konnten nicht alle Umzugsdaten übernommen werden!
+Es konnten nicht alle Umzugsdaten Ã¼bernommen werden!
 1054: Unknown column 'id' in 'where clause'
 UPDATE `mm_umzuege_arbeitsplaetze` SET maid="9565" WHERE id=""
 Mail wurde gesendet!
-Umzugsauftrag wurde abgeschlossen und in die Bestandsdaten übernommen!
+Umzugsauftrag wurde abgeschlossen und in die Bestandsdaten ï¿½bernommen!
 OK
 
 */
@@ -75,7 +75,7 @@ function umzugsantrag_datenuebernehmen($AID) {
 	global $_TABLE;
 	
 	if (!$AID) {
-		$error.= "Fehlende AuftragsID für Datenübernahme!<br>\n";
+		$error.= "Fehlende AuftragsID fï¿½r Datenï¿½bernahme!<br>\n";
 	}
 	$userIsAdmin = (strpos($user["gruppe"], "kunde_report")!==false || strpos($user["gruppe"], "admin")!==false);
 	
@@ -86,7 +86,7 @@ function umzugsantrag_datenuebernehmen($AID) {
 	$AS = new ItemEdit($ASConf, $connid, $user, $AID);
 	
 	if (!$AS->itemExists) {
-		$error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
+		$error.= "Es wurde kein Umzugsantrag mit der ï¿½bermittelten Antrags-ID gefunden!<br>\n";
 		return false;
 	}
 	
@@ -167,7 +167,7 @@ function umzugsantrag_datenuebernehmen($AID) {
 	}
 	
 	if ($save_errors) {
-		$error.= "Es konnten nicht alle Umzugsdaten übernommen werden!<br>\n".$save_errors;
+		$error.= "Es konnten nicht alle Umzugsdaten Ã¼bernommen werden!<br>\n".$save_errors;
 		return false;
 	}
 	return $AID;
@@ -176,14 +176,14 @@ function umzugsantrag_datenuebernehmen($AID) {
 if (basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
 	$a = "PPF";
 	$p = get_path_byAbt($a);
-	echo "#".__LINE__." Pfadrückgabe für Abt. $a: ".print_r($p,1)."<hr>\n";
+	echo "#".__LINE__." Pfadrï¿½ckgabe fï¿½r Abt. $a: ".print_r($p,1)."<hr>\n";
 	
 	$a = "PP";
 	$p = get_path_byAbt($a);
-	echo "#".__LINE__." Pfadrückgabe für Abt. $a: ".print_r($p,1)."<hr>\n";
+	echo "#".__LINE__." Pfadrï¿½ckgabe fï¿½r Abt. $a: ".print_r($p,1)."<hr>\n";
 	
 	$a = "P";
 	$p = get_path_byAbt($a);
-	echo "#".__LINE__." Pfadrückgabe für Abt. $a: ".print_r($p,1)."<hr>\n";
+	echo "#".__LINE__." Pfadrï¿½ckgabe fï¿½r Abt. $a: ".print_r($p,1)."<hr>\n";
 }
 ?>

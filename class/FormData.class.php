@@ -175,7 +175,7 @@ class FormData {
 		if (isset($this->Fields[$field]["onValidate"])) {
 			if (function_exists($this->Fields[$field]["onValidate"])) return call_user_function($this->Fields[$field]["onValidate"], $this->Input[$field], $this);
 			else {
-				$this->FieldErros[$field] = "Fehlende Prüffunktion ".$this->Fields[$field]["onValidate"]."!";
+				$this->FieldErros[$field] = "Fehlende Prï¿½ffunktion ".$this->Fields[$field]["onValidate"]."!";
 				return false;
 			}
 		}
@@ -224,10 +224,10 @@ class FormData {
 				if (intval($m) < 10) $m = "0".intval($m);
 				$mysqldate = "$y-$m-$d";
 			} else {
-				$err.= "Ungültiges Datumsangabe: $dt<br>\n";
+				$err.= "UngÃ¼ltiges Datumsangabe: $dt<br>\n";
 			}
 		} else {
-			$err.= "Ungültiges Datumsformat: $dt (Erlaubte Formate: JJJJ-MM-TT oder TT.MM.JJJJ)<br>\n";
+			$err.= "UngÃ¼ltiges Datumsformat: $dt (Erlaubte Formate: JJJJ-MM-TT oder TT.MM.JJJJ)<br>\n";
 		}
 		if ($time) $mysqldate.= " ".$time;
 		return $mysqldate;
@@ -245,7 +245,7 @@ class FormData {
 		
 		if ($AsNew) $this->ID = 0;
 		if (!$this->validate()) {
-			$this->Errors.= "Ungültige Daten. Datensatz kann nicht gespeichert werden!<br>\n";
+			$this->Errors.= "UngÃ¼ltige Daten. Datensatz kann nicht gespeichert werden!<br>\n";
 			return false;
 		}
 		$SaveMode = (!$this->id()) ? "INSERT" : "UPDATE";
@@ -258,12 +258,12 @@ class FormData {
 			$val = (isset($this->Input[$field])) ? $this->Input[$field] : "";
 			$typ = $fConf["type"];
 			
-			// Check Systemverwaltete Felder für SaveMode-Insert
+			// Check Systemverwaltete Felder fï¿½r SaveMode-Insert
 			if ($fConf["sysType"]=="created")    if ($SaveMode=="INSERT") { $typ="function"; $val = "NOW()";} else continue;
 			elseif ($fConf["sysType"]=="createdby")  if ($SaveMode=="INSERT") { $val = (!empty($this->user))?$this->user:"";} else continue;
 			elseif ($fConf["sysType"]=="createduid") if ($SaveMode=="INSERT") { $val = (!empty($this->uid))?$this->uid:"";} else continue;
 			
-			// Check Systemverwaltete Felder für SaveMode-UPDATE
+			// Check Systemverwaltete Felder fï¿½r SaveMode-UPDATE
 			elseif ($fConf["sysType"]=="modified")    { $typ="function"; $val = "NOW()";}
 			elseif ($fConf["sysType"]=="modifiedby")  $val = (!empty($this->user))?$this->user:"";
 			elseif ($fConf["sysType"]=="modifieduid") $val = (!empty($this->uid))?$this->uid:"";
@@ -301,7 +301,7 @@ class FormData {
 				
 				if ($fConf["key"]=="PRI" && $val && $val!=$this->id()) $NewID = $val;
 				
-				// Check Systemverwaltete Felder für SaveMode-UPDATE
+				// Check Systemverwaltete Felder fÃ¼r SaveMode-UPDATE
 				if ($fConf["sysType"]=="modified")    { $typ="function"; $val = "NOW()";}
 				elseif ($fConf["sysType"]=="modifiedby")  $val = (!empty($this->user))?$this->user:"";
 				elseif ($fConf["sysType"]=="modifieduid") $val = (!empty($this->uid))?$this->uid:"";
@@ -491,7 +491,7 @@ class FormData {
 		if (!$this->onDelete()) return false;
 		
 		if (!$this->id()) {
-			$this->addSysError("Fehlende Datensatz-ID: Datensatz konnte nicht gelöscht werden!", "Löschfehler");
+			$this->addSysError("Fehlende Datensatz-ID: Datensatz konnte nicht gelÃ¶scht werden!", "LÃ¶schfehler");
 			return false;
 		}
 		$sql = "DELETE FROM `".$this->Conf["Table"]."` WHERE `".$this->KEY."` = \"".$this->db->escape($this->id())."\"";
@@ -499,7 +499,7 @@ class FormData {
 		
 		if (!$this->db->error()) $this->onAfterDelete();
 		else {
-			$this->addDbError("Datensatz konnte nicht gelöscht werden!", $this->db->error(), $sql);
+			$this->addDbError("Datensatz konnte nicht gelÃ¶scht werden!", $this->db->error(), $sql);
 			return false;
 		}
 	}
@@ -529,4 +529,3 @@ class FormData {
 	}
 }
 
-?>

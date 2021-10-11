@@ -5,7 +5,8 @@ if (isset($MConf) && $MConf["DB_Host"]) {
     $port = $MConf['DB_Port'] ?? '3306';
     $db = new dbconn($MConf["DB_Host"], $MConf["DB_Name"], $MConf["DB_User"], $MConf["DB_Pass"], $port);
     if (!empty($MConf['DB_CHARSET'])) {
-        $db->query('SET NAMES "' . $MConf['DB_CHARSET'] . '"');
+        $sql_set_charset = 'SET NAMES "' . $MConf['DB_CHARSET'] . '"';
+        $db->query($sql_set_charset);
     }
     $conn = null;
     $connid = null;
@@ -335,6 +336,11 @@ class dbconn {
         } catch(Exception $e) {
             echo $e->getMessage() . '<br>';
             echo $e->getTraceAsString();
+        }
+        if ($this->conn->error) {
+            error_log('#' . __LINE__ . ' ' . __FILE__ . ' ' . $this->conn->error . "\nsql: " . $sql);
+            echo "#342 Interner Systemfehler";
+            exit;
         }
 
         return $r;

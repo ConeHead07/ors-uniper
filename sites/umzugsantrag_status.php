@@ -15,7 +15,7 @@ function umzugsantrag_status($AID, $name, $value) {
 	global $user;
 	
 	if(!$AID) {
-            $error.= "Fehlende Antrags-ID für Storniervorgang!<br>\n";
+            $error.= "Fehlende Antrags-ID fÃ¼r Storniervorgang!<br>\n";
             return false;
 	}
 	
@@ -38,7 +38,7 @@ function umzugsantrag_status($AID, $name, $value) {
 		$ASError.= "Email: fehlende Eingabe!<br>\n";
 	}
 	if($ASError) {
-		$error.= "Es wurden noch nicht alle erforderlichen Felder ausgefüllt!<br>\n";
+		$error.= "Es wurden noch nicht alle erforderlichen Felder ausgefÃ¼llt!<br>\n";
 		$error.= $ASError;
 		//$error.= $AS->Warning;
 		return false;
@@ -47,9 +47,9 @@ function umzugsantrag_status($AID, $name, $value) {
 	
 	$MAPostItems = get_ma_post_items();
 	if ($MConf['min_ma'] && (!is_array($MAPostItems) || !count($MAPostItems))) {
-		$error.= "Es wurden keine Mitarbeiter für den Auftrag ausgewählt.<br>\n";
+		$error.= "Es wurden keine Mitarbeiter fÃ¤r den Auftrag ausgewÃ¤hlt.<br>\n";
 		if ($AS->itemExists) {
-			$error.= "Falls Sie den Auftrag stornieren möchten, klicken Sie den 'Stornieren'-Button.<br>\n";
+			$error.= "Falls Sie den Auftrag stornieren mÃ¶chten, klicken Sie den 'Stornieren'-Button.<br>\n";
 		}
 		return false;
 	}
@@ -71,13 +71,13 @@ function umzugsantrag_status($AID, $name, $value) {
 	
 	$errIstAbgeschlossen = (!$AS->arrDbdata["abgeschlossen"] || $AS->arrDbdata["abgeschlossen"]=="Init") ? "" : "Der Auftrag wurde bereits abgeschlossen (".$AS->arrDbdata["abgeschlossen"].")!";
 	$errIstGenehmigt     = ($AS->arrDbdata["genehmigt"]=="Init") ? "" : "Der Auftrag wurde bereits ".($AS->arrDbdata["genehmigt"]=="Ja"?"genehmigt":"abgelehnt")."!";
-	$errIstBestaetigt    = ($AS->arrDbdata["bestaetigt"]!="Ja") ? "" : "Der Auftrag wurde bereits bestätigt!";
+	$errIstBestaetigt    = ($AS->arrDbdata["bestaetigt"]!="Ja") ? "" : "Der Auftrag wurde bereits bestï¿½tigt!";
 	
 	$sendmail_newstatus = "";
 	$new_status = "";
 	if ($AID) {
 		if (!$AS->itemExists) {
-			$error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
+			$error.= "Es wurde kein Umzugsantrag mit der ï¿½bermittelten Antrags-ID gefunden!<br>\n";
 			return false;
 		}
 		
@@ -85,10 +85,10 @@ function umzugsantrag_status($AID, $name, $value) {
 			case "gesendet":
 			break;
                     
-                        case "erneutpruefen":
-                            $sendmail_newstatus = "erneutpruefen";
-                            $newstatus = "erneutpruefen"; 
-                        break;
+            case "erneutpruefen":
+                $sendmail_newstatus = "erneutpruefen";
+                $newstatus = "erneutpruefen";
+            break;
 			
 			case "geprueft":
 			if (!$errIstAbgeschlossen && $AS->arrDbdata["antragsstatus"]!="bearbeitung") {
@@ -126,7 +126,7 @@ function umzugsantrag_status($AID, $name, $value) {
 			} else {
                             if ($errIstAbgeschlossen) $error.= $errIstAbgeschlossen."<br>\n";
                             if (0 && $errIstBestaetigt) $error.= $errIstBestaetigt."<br>\n";
-                            if ($AS->arrDbdata["geprueft"] != "Ja") $error.= "Antrag kann erst nach Prüfung genehmigt werden!";
+                            if ($AS->arrDbdata["geprueft"] != "Ja") $error.= "Antrag kann erst nach Prï¿½fung genehmigt werden!";
                             return false;
 			}
 			break;
@@ -138,7 +138,7 @@ function umzugsantrag_status($AID, $name, $value) {
 				$newstatus = "bestaetigt";
 			} else {
 				if ($errIstAbgeschlossen) $error.= $errIstAbgeschlossen."<br>\n";
-				if ($AS->arrDbdata["genehmigt_br"] != "Ja") $error.= "Antrag kann erst nach Genehmigung bestätigt werden!";
+				if ($AS->arrDbdata["genehmigt_br"] != "Ja") $error.= "Antrag kann erst nach Genehmigung bestï¿½tigt werden!";
 				return false;
 			}
 			break;
@@ -155,7 +155,7 @@ function umzugsantrag_status($AID, $name, $value) {
 			break;
 			
 			default:
-			$error.= "Ungültiger Statusaufruf $name!";
+			$error.= "Ungï¿½ltiger Statusaufruf $name!";
 			return false;
 		}
 		

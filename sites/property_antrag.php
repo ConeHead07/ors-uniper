@@ -151,6 +151,8 @@ $Tpl->assign("ASConf", $ASConf['Fields']);$Tpl->assign("AS", $AS->arrInput);
 $Tpl->assign("ASJson", json_encode($AS->arrInput));
 $Tpl->assign("umzugsstatus", $AS->arrInput['umzugsstatus']);
 $Tpl->assign("umzugsstatusJson", json_encode($AS->arrInput['umzugsstatus']));
+$Tpl->assign("antragsstatus", $AS->arrInput['antragsstatus']);
+$Tpl->assign("antragsstatusJson", json_encode($AS->arrInput['antragsstatus']));
 $Tpl->assign("creator", $creator);
 $Tpl->assign("creatorJson", json_encode($creator));
 $Tpl->assign("user", $user);

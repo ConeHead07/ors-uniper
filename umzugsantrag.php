@@ -39,7 +39,7 @@ switch($cmd) {
 			if (!$error) {
 				umzugsantrag_status($reID, "abgeschlossen", "Ja");
 			}
-			$msg.= "MA-Daten wurden in die Bestandsdaten übernommen!<br>\n";
+			$msg.= "MA-Daten wurden in die Bestandsdaten Ã¼bernommen!<br>\n";
 			$LoadScript.= "if (typeof(umzugsantrag_auto_reload)==\"function\") umzugsantrag_auto_reload(\"$id\");\n";
 		}
 	} else {
@@ -53,7 +53,7 @@ switch($cmd) {
 		$reID = umzugsantrag_speichern();
 		if ($reID) {
 			$msg.= "Ihre Umzugsdaten wurden gespeichert!<br>\n";
-			$msg.= "Sie können sie zu einem späteren Zeitpunkt über das Menü 'Umzugsantrag->Meine Anträge' öffnen und bearbeiten!<br>\n";
+			$msg.= "Sie kÃ¶nnen sie zu einem spÃ¤teren Zeitpunkt Ã¼ber das MenÃ¼ 'Umzugsantrag->Meine AntrÃ¤ge' Ã¶ffnen und bearbeiten!<br>\n";
 			if ($reID!=$id) $LoadScript.= "if (typeof(umzugsformular_set_id)==\"function\") umzugsformular_set_id('".$reID."'); else alert(\"Fehler beim Setzen der Antrags-ID!\");\n";
 			$LoadScript.= "if (typeof(umzugsantrag_auto_reload)==\"function\") umzugsantrag_auto_reload('".$reID."');\n";
 		}
@@ -87,7 +87,7 @@ switch($cmd) {
 
 		if ($reID) {
 			$msg.= "<strong>Ihre Bestellung wurde erfolgreich gesendet und wird von uns weiter bearbeitet.</strong><br>\n";
-			$msg.= "Den Status Ihres Auftrags können Sie über das Menü 'Bestellungen->Meine Bestellungen' einsehen!<br>\n";
+			$msg.= "Den Status Ihres Auftrags kÃ¶nnen Sie Ã¼ber das MenÃ¼ 'Bestellungen->Meine Bestellungen' einsehen!<br>\n";
 			$msg.= "<br>\n";
 			$msg.= "<strong><a href=\"?s=Umzug\">Zur&uuml;ck zur &Uuml;bersicht</a></strong><br>\n";
 			$LoadScript.= "if (typeof(umzugsantrag_close)==\"function\") umzugsantrag_close(\"".json_escape($msg)."\");\n";
@@ -135,7 +135,7 @@ switch($cmd) {
 				if (!$error) {
 					umzugsantrag_status($id, $name, $value);
 				}
-				$msg.= "Umzugsauftrag wurde abgeschlossen und in die Bestandsdaten übernommen!<br>\n";
+				$msg.= "Umzugsauftrag wurde abgeschlossen und in die Bestandsdaten Ã¼bernommen!<br>\n";
 				$LoadScript.= "if (typeof(umzugsantrag_auto_reload)==\"function\") umzugsantrag_auto_reload(\"$id\");\n";
 			} else {
 				if (umzugsantrag_status($id, $name, $value)) {
@@ -149,20 +149,29 @@ switch($cmd) {
 			}
 		}
 	} else {
-            //die('#'.__LINE__ . ' ' . __FILE__ . ' ua_errors: ' . $ua_errors);
-            $error.= $ua_errors;
+        //die('#'.__LINE__ . ' ' . __FILE__ . ' ua_errors: ' . $ua_errors);
+        $request = $_REQUEST;
+        $error.= $ua_errors;
 	}
 	break;
 	
 	default:
-	$error.= "Ungültiger Seitenaufruf!<br>\n";
+	$error.= "UngÃ¼ltiger Seitenaufruf!<br>\n";
 }
 
 
 if ($msg || $error) {
-	if ($msg) $formHtml.= $msg;
-	if ($error) $formHtml.= $error;
-	if ($error && $XDBG) $formHtml.= "<div style=\"border:1px solid #f00;\">".print_r($_POST,1)."</div>\n";
+	if ($msg) {
+	    $formHtml.= $msg;
+    }
+	if ($error) {
+	    $formHtml.= $error;
+    }
+	if ($error && $XDBG) {
+	    $formHtml.= "<div style=\"border:1px solid #f00;\">"
+            . htmlentities(print_r($_POST,1))
+            . "</div>\n";
+    }
 	
 	if ($error || $msg) {
 		if ($error) $LoadScript.= "\nif (typeof(ErrorBox)==\"function\") ErrorBox(\"".json_escape($error.($msg&&$error?"<br>\n":"").$msg)."\");\n";
@@ -176,8 +185,8 @@ if ($msg || $error) {
 
 if (!defined("NEWLINE")) define("NEWLINE", "\n");
 if (!defined("TAB")) define("TAB", "\n");
-header("Content-Type: text/xml; charset=ISO-8859-1");
-echo '<?xml version="1.0" encoding="ISO-8859-1" ?>';
+header("Content-Type: text/xml; charset=UTF-8");
+echo '<?xml version="1.0" encoding="UTF-8" ?>';
 echo '<Result type="success">'.NEWLINE;
 echo TAB.'<Success>'.(!$error?"TRUE":"FALSE").'</Success>'.NEWLINE;
 echo TAB.'<Error><![CDATA['.$error.']]></Error>'.NEWLINE;

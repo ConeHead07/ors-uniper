@@ -26,11 +26,11 @@ switch($cat) {
 	$sql = "DELETE FROM `".$_TABLE["mitarbeiter"]."` WHERE id = ".(int)$id;
 	$db->query($sql);
 	if (!$db->error()) {
-		$msg_loeschen = "Der Mitarbeiterdatensatz wurde gelöscht!<br>\n";
+		$msg_loeschen = "Der Mitarbeiterdatensatz wurde gelÃ¶scht!<br>\n";
 		$AjaxUpdates.= "<Delete id=\"{$rowid}i1\"></Delete>\n";
 		$AjaxUpdates.= "<Delete id=\"{$rowid}i2\"></Delete>\n";
 	} else {
-		$err_loeschen.= "Fehler beim Löschen!<br>\n";
+		$err_loeschen.= "Fehler beim LÃ¶schen!<br>\n";
 	}
 	break;
 	
@@ -42,17 +42,17 @@ switch($cat) {
 		$db->query("INSERT INTO `mm_stamm_immobilien_geloescht` ".$sql);
 		$db->query_export_csv($sql, $backUpDir."geloeschte_raeume.csv", ";", "\"", "\"\"", true);
 		if ($RaumData->delete($id)) {
-			$msg_loeschen.= "Der Raumdatensatz wurde gelöscht!<br>\n";
+			$msg_loeschen.= "Der Raumdatensatz wurde gelï¿½scht!<br>\n";
 		} else {
-			$err_loeschen.= "Fehler beim Löschen! ".$RaumData->error."<br>\n";
+			$err_loeschen.= "Fehler beim LÃ¶schen! ".$RaumData->error."<br>\n";
 		}
 	} else {
-		$err_loeschen.= "Raum kann nicht gelöscht werden! Dem Raum sind noch Mitarbeiter zugeordnet!<br>\n";
+		$err_loeschen.= "Raum kann nicht gelÃ¶scht werden! Dem Raum sind noch Mitarbeiter zugeordnet!<br>\n";
 	}
 	break;
 	
 	default:
-		$err_loeschen.= "Ungültiger Aufruf! (cat:$cat)<br>\n";
+		$err_loeschen.= "UngÃ¼ltiger Aufruf! (cat:$cat)<br>\n";
 	
 }
 
@@ -64,8 +64,8 @@ if ($sendXML) {
 	if ($msg_loeschen) $AjaxUpdates.= "<div class=\"msg\">".$msg_loeschen."</div>\n";
 	if ($err_loeschen) $AjaxUpdates.= "<div class=\"err\">".$err_loeschen."</div>\n";
 	$AjaxUpdates.= "]]></Update>\n";
-	header("Content-Type: text/xml; charset=ISO-8859-1");
-	echo '<?xml version="1.0" encoding="ISO-8859-1" ?>
+	header("Content-Type: text/xml; charset=UTF-8");
+	echo '<?xml version="1.0" encoding="UTF-8" ?>
 	<Result type="success">'."\n";
 	echo $AjaxUpdates;
 	echo '</Result>';

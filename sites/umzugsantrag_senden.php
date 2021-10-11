@@ -22,7 +22,7 @@ function umzugsantrag_senden() {
     $AID = getRequest("id","");
     $ASPostItem = getRequest("AS",false);
     if (empty($ASPostItem) || !isset($ASPostItem["name"])) {
-        $error.= "Es wurden keine Daten zum Antragsteller übermittelt. Daten konnten nicht gespeichert werden! [sd]<br>\n";
+        $error.= "Es wurden keine Daten zum Antragsteller Ã¼bermittelt. Daten konnten nicht gespeichert werden! [sd]<br>\n";
         return false;
     }
 
@@ -42,12 +42,12 @@ function umzugsantrag_senden() {
 
     if ($AID) {
         if (!$AS->itemExists) {
-            $error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
+            $error.= "Es wurde kein Umzugsantrag mit der Ã¼bermittelten Antrags-ID gefunden!<br>\n";
             return false;
         }
         if (!in_array($AS->arrDbdata["umzugsstatus"], array('temp','angeboten','erneutpruefen','zurueckgegeben')) && !$userIsAdmin) {
             $error.= "Der Antrag wurde bereits zur Genehmigung und Bearbeitung gesendet!<br>\n";
-            $error.= "Wenden Sie sich für Änderungen an die Bearbeitungsstelle!<br>\n";
+            $error.= "Wenden Sie sich fÃ¼r Ã„nderungen an die Bearbeitungsstelle!<br>\n";
             return false;
         }
     }
@@ -55,9 +55,9 @@ function umzugsantrag_senden() {
     $MAPostItems = get_ma_post_items();
     
     if ($MConf['min_ma'] && (!is_array($MAPostItems) || !count($MAPostItems))) {
-        $error.= "Es wurden keine Mitarbeiter für den Auftrag ausgewählt.<br>\n";
+        $error.= "Es wurden keine Mitarbeiter fÃ¼r den Auftrag ausgewÃ¤hlt.<br>\n";
         if ($AS->itemExists) {
-            $error.= "Falls Sie den Auftrag stornieren möchten, klicken Sie den 'Stornieren'-Button.<br>\n";
+            $error.= "Falls Sie den Auftrag stornieren mÃ¶chten, klicken Sie den 'Stornieren'-Button.<br>\n";
         }
         if ($MConf['min_ma']) return false;
     }
@@ -83,7 +83,7 @@ function umzugsantrag_senden() {
     $AS->loadInput($ASPostItem);
     $AS->Error = "";
     if (!$AS->checkInput()) {
-        $error.= "Überprüfen Sie Ihre Basis-Angaben als Antragssteller!<br>\n";
+        $error.= "ÃœberprÃ¼fen Sie Ihre Basis-Angaben als Antragssteller!<br>\n";
         $error.= $AS->Error;
         return false;
     } else {
@@ -129,7 +129,7 @@ function umzugsantrag_senden() {
     $db->query($sql);
 
     $save_count = 0;
-    $save_errors = "";
+    $save_errors = "#132 ";
     foreach($MAPostItems as $i => $MAItem) {
         $MA = new ItemEdit($MAConf, $connid, $user, false);
         $MAItem["aid"] = $AID;
@@ -144,7 +144,7 @@ function umzugsantrag_senden() {
         if ($MA->checkInput()) {
             if (!$MA->save()) {
                 $save_errors.= "Der ".($i+1).". Mitarbeitereintrag ".$MAItem["name"]." ".$MAItem["vorname"]." konnte nicht gespeichert werden!<br>\n";
-                $save_errorr.= $MA->Errors;
+                $save_errors.= $MA->Errors;
             } else {
                 $save_count++;
                 if ($MAItem["umzugsart"]) {
@@ -188,7 +188,9 @@ function umzugsantrag_senden() {
     $sql.= "\n WHERE aid = \"".$db->escape($AS->id)."\"";
     /// die('#'.__LINE__ . ' ' . __FILE__ . PHP_EOL . __FUNCTION__ . PHP_EOL . ' next step exec sql: ' . $sql . PHP_EOL . print_r($_REQUEST,1));
     $db->query($sql);
-    if ($db->error()) $msg.= $db->error()."<br>\n".$sql."<br>\n";
+    if ($db->error()) {
+        $msg.= '#192 ' . $db->error()."<br>\n".$sql."<br>\n";
+    }
     
     if ($save_errors) {
         $error.= "Es konnten nicht alle Mitarbeiterdaten gespeichert werden!<br>\n".$save_errors;

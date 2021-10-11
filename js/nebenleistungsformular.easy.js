@@ -36,7 +36,7 @@ function init_nebenleistungsantrag() {
 
 function umzugsantrag_loadingBar(msg) {
 	if (typeof(O("LoadingBar"))=="object") O("LoadingBar").parentNode.removeChild(O("LoadingBar"));
-	if (!msg) msg = "Daten werden übertragen ...";
+	if (!msg) msg = "Daten werden &uuml;bertragen ...";
 	var LoadingBar = "<div id=\"LoadingBar\" style=\"text-align:center;\">"+msg+"<br>\n<img src=\"images/loading.gif\"></div>";
 	var IBox = InfoBox(LoadingBar);
 	return IBox;

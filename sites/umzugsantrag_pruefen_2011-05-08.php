@@ -118,7 +118,7 @@ function umzugsantrag_fehler() {
 	$AID = getRequest("id","");
 	$ASPostItem = getRequest("AS",false);
 	if (empty($ASPostItem) || !isset($ASPostItem["name"])) {
-		$error.= "Es wurden keine Daten zum Antragsteller übermittelt [P2]!<br>\n";
+		$error.= "Es wurden keine Daten zum Antragsteller Ã¼bermittelt [P2]!<br>\n";
 		return $error;
 	}
 	
@@ -128,7 +128,7 @@ function umzugsantrag_fehler() {
 	
 	if ($AID) {
 		if (!$AS->itemExists) {
-			$error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
+			$error.= "Es wurde kein Umzugsantrag mit der Ã¼bermittelten Antrags-ID gefunden!<br>\n";
 			return $error;
 		} else {
 			$AS->loadDbdata();
@@ -137,9 +137,9 @@ function umzugsantrag_fehler() {
 	
 	$MAPostItems = get_ma_post_items();
 	if (!is_array($MAPostItems) || !count($MAPostItems)) {
-		$error.= "Es wurden keine Mitarbeiter für den Auftrag ausgewählt.<br>\n";
+		$error.= "Es wurden keine Mitarbeiter fÃ¼r den Auftrag ausgewÃ¤hlt.<br>\n";
 		if ($AS->itemExists) {
-			$error.= "Falls Sie den Auftrag stornieren möchten, klicken Sie den 'Stornieren'-Button.<br>\n";
+			$error.= "Falls Sie den Auftrag stornieren mÃ¶chten, klicken Sie den 'Stornieren'-Button.<br>\n";
 		}
 		return $error;
 	}
@@ -154,7 +154,7 @@ function umzugsantrag_fehler() {
 		if (!empty($rows_dubletten) && is_array($rows_dubletten) && count($rows_dubletten)) {
 			foreach($rows_dubletten as $dub) {
 				$lnkDub = (strpos($user["gruppe"], "admin") === false) ? $dub["antragsdatum"] : "<a href=\"?s=aantrag&id=".urlencode($dub["aid"])."\" target=\"winDub\">".$dub["antragsdatum"]." ".($dub["umzugsstatus"]!="beantragt"?$dub["umzugsstatus"]." am ".format_dbDate($dub["umzugsstatus_vom"],"d.m"):"")." (ID:".$dub["aid"].")</a>";
-				$errDubletten.= "Für den Mitarbeiter existiert bereits ein Antrag vom ".$lnkDub."!<br>\n";
+				$errDubletten.= "FÃ¼r den Mitarbeiter existiert bereits ein Antrag vom ".$lnkDub."!<br>\n";
 				
 			}
 		}
@@ -173,14 +173,14 @@ function umzugsantrag_fehler() {
 	$AS->loadInput($ASPostItem);
 	$AS->Error = "";
 	if (!$AS->checkInput()) {
-		$error.= "Überprüfen Sie die Basis-Angaben zum Antragssteller!<br>\n";
+		$error.= "ÃœberprÃ¼fen Sie die Basis-Angaben zum Antragssteller!<br>\n";
 		$error.= $AS->Error;
 		return $error;
 	}
 	
 	if (getRequest("umzugsart") != "Datenpflege") {
-		if (!$AID || $AS->arrDbdata["umzugsstatus"] == "temp") {
-			if (!check_minWerktage($ASPostItem["terminwunsch"], 8 )) {
+		if ($_CONF['minWerktageVorlauf'] > 0 && ($AID || $AS->arrDbdata["umzugsstatus"] == "temp")) {
+			if (!check_minWerktage($ASPostItem["terminwunsch"], $_CONF['minWerktageVorlauf'] )) {
 				$error.= "Umzugstermin ist zu kurzfristig. Planen Sie eine Vorlaufzeit von mind. 8 Arbeitstagen ein!<br>\n";
 			}
 		}
@@ -195,10 +195,10 @@ function umzugsantrag_get_zuordnungs_fehler($ASItem, $MAItems) {
 	$ma_error = "";
 	
 	if (empty($ASItem["ort"]) || !ort_exists($ASItem["ort"]))
-		$as_error.= "Ungültige Ortsauswahl ".$ASItem["ort"]."!<br>\n";
+		$as_error.= "Ungï¿½ltige Ortsauswahl ".$ASItem["ort"]."!<br>\n";
 	
 	if (empty($ASItem["gebaeude"]) || !gebaeude_exists($ASItem["gebaeude"]))
-		$as_error.= "Ungültige Gebäudeauswahl ".$ASItem["gebaeude"]."!<br>\n";
+		$as_error.= "Ungï¿½ltige Gebï¿½udeauswahl ".$ASItem["gebaeude"]."!<br>\n";
 	
 	if ($as_error) $as_error = "<strong>Fehlerhafte Angaben beim Antragsteller:</strong><br>\n".$as_error."<br>\n";
 	
@@ -207,25 +207,25 @@ function umzugsantrag_get_zuordnungs_fehler($ASItem, $MAItems) {
 		$n = $i+1;
 		
 		if (empty($MA["abteilung"]) || !abteilung_exists($MA["abteilung"]))
-			$ma_error.= "[MA $n] Ungültige Abteilungsauswahl: von ".$ASItem["abteilung"]."!<br>\n";
+			$ma_error.= "[MA $n] Ungï¿½ltige Abteilungsauswahl: von ".$ASItem["abteilung"]."!<br>\n";
 		
 		if (empty($MA["gebaeude"]) || !gebaeude_exists($MA["gebaeude"]))
-			$ma_error.= "[MA $n] Ungültige Gebäudeauswahl: von ".$ASItem["gebaeude"]."!<br>\n";
+			$ma_error.= "[MA $n] Ungï¿½ltige Gebï¿½udeauswahl: von ".$ASItem["gebaeude"]."!<br>\n";
 		elseif (empty($MA["gebaeude"]) || !etage_exists($MA["gebaeude"], $MA["etage"]))
-			$ma_error.= "[MA $n] Ungültige Etagenauswahl: von ".$MA["etage"]." in ".$MA["gebaeude"]."!<br>\n";
+			$ma_error.= "[MA $n] Ungï¿½ltige Etagenauswahl: von ".$MA["etage"]." in ".$MA["gebaeude"]."!<br>\n";
 		elseif (empty($MA["raumnr"]) || !etage_exists($MA["gebaeude"], $MA["etage"], $MA["raumnr"]))
-			$ma_error.= "[MA $n] Ungültige Raumauswahl: von ".$MA["raumnr"]." in ".$MA["gebaeude"]." ".$MA["etage"]."!<br>\n";
+			$ma_error.= "[MA $n] Ungï¿½ltige Raumauswahl: von ".$MA["raumnr"]." in ".$MA["gebaeude"]." ".$MA["etage"]."!<br>\n";
 		
 		
 		if (empty($MA["zabteilung"]) || !abteilung_exists($MA["zabteilung"]))
-			$ma_error.= "[MA $n] Ungültige Abteilungsauswahl: nach ".$ASItem["zabteilung"]."!<br>\n";
+			$ma_error.= "[MA $n] Ungï¿½ltige Abteilungsauswahl: nach ".$ASItem["zabteilung"]."!<br>\n";
 		
 		if (empty($MA["zgebaeude"]) || !gebaeude_exists($MA["zgebaeude"]))
-			$ma_error.= "[MA $n] Ungültige Gebäudeangabe: nach ".$ASItem["zgebaeude"]."!<br>\n";
+			$ma_error.= "[MA $n] Ungï¿½ltige Gebï¿½udeangabe: nach ".$ASItem["zgebaeude"]."!<br>\n";
 		elseif (empty($MA["zgebaeude"]) || !etage_exists($MA["zgebaeude"], $MA["zetage"]))
-			$ma_error.= "[MA $n] Ungültige Etagenauswahl: nach ".$MA["zetage"]." in ".$MA["zgebaeude"]."!<br>\n";
+			$ma_error.= "[MA $n] Ungï¿½ltige Etagenauswahl: nach ".$MA["zetage"]." in ".$MA["zgebaeude"]."!<br>\n";
 		elseif (empty($MA["zraumnr"]) || !etage_exists($MA["zgebaeude"], $MA["zetage"], $MA["zraumnr"]))
-			$ma_error.= "[MA $n] Ungültige Raumauswahl: nach ".$MA["zraumnr"]." in ".$MA["zgebaeude"]." ".$MA["zetage"]."!<br>\n";
+			$ma_error.= "[MA $n] Ungï¿½ltige Raumauswahl: nach ".$MA["zraumnr"]." in ".$MA["zgebaeude"]." ".$MA["zetage"]."!<br>\n";
 		
 	}
 	if ($ma_error) $ma_error = "<strong>Fehlerhafte Angaben in der Mitarbeiterliste:</strong><br>\n".$ma_error."<br>\n";

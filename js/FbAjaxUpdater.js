@@ -39,9 +39,10 @@ igWShowLoadingBar(mode,msg)
 	}
 
   function fb_AjaxRequest(reqUrl, reqMethod, callBackFn, reqPostData) {
-	//alert("#7 fb_AjaxRequest("+reqUrl+", "+reqMethod+", "+callBackFn+")");
+    console.log('#43 fb_AjaxRequest', { reqUrl, reqMethod, reqPostData});
 	if ((typeof callBackFn) == "undefined" || callBackFn=="") callBackFn = "fb_AjaxXmlUpdate(%req%)";
 	if ((typeof reqPostData) == "undefined" || reqPostData=="") reqPostData = null;
+	console.log('#45 FbAjaxUpdater.js ', { reqUrl, reqMethod, reqPostData });
 	var msxml = [
 		"MSXML2.XMLHTTP.5.0",
 		"MSXML2.XMLHTTP.4.0",
@@ -49,6 +50,36 @@ igWShowLoadingBar(mode,msg)
 		"MSXML2.XMLHTTP",
 		"Microsoft.XMLHTTP"
 	];
+
+	var ajaxSettings = {
+        url: reqUrl,
+        type: reqMethod,
+        data: reqPostData,
+        success: function(oData, sStatus, req) {
+            var cType = req.getResponseHeader("Content-Type"); // "text/plain", "text/html", "text/html", "application/xml"
+            if (cType.indexOf("/xml") > -1) {
+                if (!req.responseXML) {
+                    req.responseXML = jQuery.parseXML(req.responseText); // $("<xml/>").html(req.responseText);
+                    console.log('#516 req is missing responseXML', {req});
+                }
+            }
+            var callback = fb_str_replace("%req%", "req", callBackFn);
+            console.log('#60 jQuery.ajax.success function()', { req, callBackFn, callback });
+            eval(callback);
+        }
+    };
+	if (reqMethod.toUpperCase() === 'POST') {
+	    ajaxSettings.header = {
+            "Content-type": "application/x-www-form-urlencoded;charset=UTF-8",
+            "Content-length": reqPostData.length,
+            "Connection": "close"
+        };
+	    ajaxSettings.dataType = "xml";
+	    ajaxSettings.beforeSend = function(xhr, settings) {
+	        xhr.overrideMimeType('text/html');
+        };
+    }
+	return jQuery.ajax(ajaxSettings);
 	
 	// alert("23");
 	var req = false;
@@ -67,11 +98,13 @@ igWShowLoadingBar(mode,msg)
 		req.onreadystatechange = function() {
 			
 			if (req.readyState == 4) {
+                var callback = fb_str_replace("%req%", "req", callBackFn);
+                console.log('#102 jQuery.ajax.success function()', { req, callBackFn, callback });
 				eval(fb_str_replace("%req%", "req", callBackFn));
 			}
-		}
+		};
 		if (reqMethod.toUpperCase() == "POST") {
-			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
 			req.setRequestHeader("Content-length", reqPostData.length);
 			req.setRequestHeader("Connection", "close");
 		}
@@ -476,18 +509,30 @@ function igWDomUpdater(aData, s, debug) {
 
 function fb_AjaxXmlUpdate(req, selector, cmd) {
 	//alert("#341 fb_AjaxXmlUpdate(req)");
-	if (typeof(selector)!="string") selector = "";
-	if (typeof(cmd)!="string") cmd = "";
+	if (typeof(selector)!="string") {
+	    selector = "";
+    }
+	if (typeof(cmd)!="string") {
+	    cmd = "";
+    }
 	//alert("cmd:"+cmd);
-	var debug = false; //(cmd == "senden");
+	var debug = true; //(cmd == "senden");
 
-	if (debug) alert("#480 Status:"+req.status+"\n\nresponseText:\n"+req.responseText);
+	if (debug) {
+	    alert("#480 Status:"+req.status+"\n\nresponseText:\n"+req.responseText);
+    }
 	if (req && req.status == 200) {
-    	if (debug) alert("#482 Content-Type:"+req.getResponseHeader("Content-Type"));
+    	if (debug) {
+    	    alert("#482 Content-Type:"+req.getResponseHeader("Content-Type"));
+        }
 		//if (selector == "SysInfoBox") alert(req.responseText);
 		cType = req.getResponseHeader("Content-Type"); // "text/plain", "text/html", "text/html", "application/xml"
 		// alert("53 cType:"+cType)
 		if (cType.indexOf("/xml") > -1) {
+		    if (!req.responseXML) {
+                req.responseXML = jQuery.parseXML(req.responseText); // $("<xml/>").html(req.responseText);
+		        console.log('#516 req is missing responseXML', { req });
+            }
 			xmlDoc = req.responseXML;
 			var responseNode = xmlDoc.documentElement;
 			//aIgWData = fbXml2Data(responseNode);
@@ -553,7 +598,7 @@ function igWShowLoadingBar(mode, msg, parentElement) {
 		LBar.style.display="none";
 	} else {
 		LBar.style.display="";
-		if (mode==1 && !msg) msg = "<span class=upMsg>Daten werden übertragen</span>"; 
+		if (mode==1 && !msg) msg = "<span class=upMsg>Daten werden &uuml;bertragen</span>";
 		LBar.innerHTML = (mode == 1?"<img align=absmiddle width=16 height=16 src=\"images/loading.gif\" style=\"display:none;\" onload=\"this.style.display=''\">":"")+(msg && mode ? "":"")+(msg?msg:""); 
 	}
 }
@@ -570,20 +615,70 @@ function SendRequest(sUrl, selector) {
   fb_AjaxRequest(sUrl, 'get', 'fb_AjaxXmlUpdate(%req%, "'+selector+'")');
 }
 
+function getUrlParamsArray(sUrl) {
+    if (jQuery.trim(sUrl) === '') {
+        return {};
+    }
+    var sURLVariables = sUrl.split('&'), i, sParameterName, k, v, data = {};
+
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+        k = decodeURIComponent(sParameterName[0]);
+        v = decodeURIComponent(sParameterName[1]);
+        data[k] = v;
+    }
+    return data;
+};
+
+function AjaxFormSend_ZZZ(frm, selector, sConfirm, addData, cmd) {
+    frm = getFormObj(frm);
+    if (typeof(frm) !== "object" || typeof(frm.tagName) !== "string" || frm.tagName.toUpperCase() !== "FORM") {
+        return false;
+    }
+
+    if (typeof(sConfirm) === "string" && sConfirm.length) {
+        if (!confirm(sConfirm)) {
+            return false;
+        }
+    }
+
+    var aPostData = jQuery(frm).serializeArray();
+    var aExtraData = getUrlParamsArray(addData);
+    var aData = jQuery.extend({}, aPostData, aExtraData);
+
+    if (frm.method.toUpperCase() === 'POST') {
+        return jQuery.post(sUrl, aData, function( oData, sTextStatus, jqXHR ) {
+            fb_AjaxXmlUpdate(jqXHR, selector, cmd);
+        });
+    } else {
+        return jQuery.get(sUrl, aData, function( oData, sTextStatus, jqXHR ) {
+            fb_AjaxXmlUpdate(jqXHR, selector, cmd);
+        });
+    }
+}
+
 function AjaxFormSend(frm, selector, sConfirm, addData, cmd) {
 	frm = getFormObj(frm);
 	if (typeof(frm) !== "object" || typeof(frm.tagName) !== "string" || frm.tagName.toUpperCase() !== "FORM") {
             return false;
         }
-	if (typeof(sConfirm) === "string" && sConfirm.length) if (!confirm(sConfirm)) return false;
-	if (typeof(cmd) !== "string") cmd = "";
+	if (typeof(sConfirm) === "string" && sConfirm.length) {
+	    if (!confirm(sConfirm)) {
+	        return false;
+        }
+    }
+	if (typeof(cmd) !== "string") {
+	    cmd = "";
+    }
 	
-        var sUrl = frm.action;
+    var sUrl = frm.action;
 	var sPostData = "";
 	var sAjaxAdds = "&AjaxRequest=1&boxid="+selector+"&refresh="+(new Date()).getTime();
-	//alert(frmSerialize(frm));
+
 	if (frm.method.toUpperCase() === "POST") {
-		sPostData = frmSerialize(frm);
+	    sPostData = jQuery(frm).serialize();
+		// sPostData = frmSerialize(frm);
 		sPostData+= sAjaxAdds+"&"+addData;
 	} else {
 		sUrl+= (sUrl.indexOf("?") === -1 ? "?":"&")+frmSerialize(frm);
