@@ -105,9 +105,11 @@ $_rpl["{UrlToHomepage}"] = $_CONF["WebRoot"];
 $_rpl["{UrlToLoginModul}"] = $_CONF["UrlToLoginModul"];
 $_rpl["{login_hint}"] = (!empty($MConf['module_login_hint']) ? $MConf['module_login_hint'] : '');
 
-$_rpl["{LnkRegister}"] = ($_CONF["allow_user_register"]) ? $_CONF["LnkRegister"] : "";
-$_rpl["{LnkForgetPw}"] = ($_CONF["allow_user_forgetpass"]) ? $_CONF["LnkForgetPw"] : "";
-$_rpl["{LnkChgEmail}"] = ($_CONF["allow_user_changemail"]) ? $_CONF["LnkChgEmail"] : "";
+$_rpl["{LnkStartseite}"] = $_CONF["LnkStartseite"];
+$_rpl["{LnkLogin}"]      = $_CONF["LnkLogin"];
+$_rpl["{LnkRegister}"]   = ($_CONF["allow_user_register"])   ? $_CONF["LnkRegister"] : "";
+$_rpl["{LnkForgetPw}"]   = ($_CONF["allow_user_forgetpass"]) ? $_CONF["LnkForgetPw"] : "";
+$_rpl["{LnkChgEmail}"]   = ($_CONF["allow_user_changemail"]) ? $_CONF["LnkChgEmail"] : "";
 
 $_rpl["{action}"] = basename($_SERVER["PHP_SELF"])."?".$_SERVER["QUERY_STRING"];
 

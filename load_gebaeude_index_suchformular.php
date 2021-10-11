@@ -40,4 +40,5 @@ switch($resultFormat) {
 	header("Content-Type: text/javascript; charset=UTF-8");
 	echo "GebaeudeIndex = ".$JsonData.";\n";
 	echo "if (typeof(SelBox_loadData)==\"function\") SelBox_loadData('".$SBBoxId."', GebaeudeIndex);\n";
+	//echo 'alert(Orte["D�sseldorf"]["ZV_SEE_1"]+"\n"+Gebaeude["ZV_SEE_1"]["Etagen"].join(", "));'."\n";
 }

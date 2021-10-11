@@ -61,25 +61,26 @@
 </div>
 <!-- {msg} -->
 <!-- {error} -->
-<table>
+<table style="100%">
 <form action="{UrlToHomepage}login.php" method="post">
-<tr>
-	<td align=right class="tdLbl"><label for="inputUser">Benutzername</label></td>
-	<td><input id="inputUser" type="text" name="username" value="{username}">{email_tld_only}</td>
+<tr class="form-group">
+	<td align=right class="tdLbl"><label for="inputUser" class="col-form-label">Benutzername</label></td>
+	<td><input id="inputUser" type="text" name="username" value="{username}" class="form-control"> <span class="info info-email-tld-only">{email_tld_only}</span></td>
 </tr>
-<tr>
-	<td align=right class="tdLbl"><label for="inputPassword">Passwort</label></td>
-	<td><input id="inputPassword" type="password" name="password" value=""></td>
+<tr class="form-group">
+	<td align=right class="tdLbl"><label for="inputPassword" class="col-form-label">Passwort</label></td>
+	<td><input id="inputPassword" type="password" name="password" value="" class="form-control"></td>
 </tr>
 <tr>
 	<td></td>
-	<td><input type="submit" name="login" value="Anmelden"></td>
+	<td><input class="btn btn-primary" type="submit" name="login" value="Anmelden"></td>
 </tr>
 <input type="hidden" name="redirect" value="{redirect}">
 </form>
 </table>
 <div>{login_hint}</div>
 <div class="LoginAdLinks">
-{LnkRegister} 
-{LnkForgetPw}</div>
+	{LnkStartseite}
+	{LnkRegister}
+	{LnkForgetPw}</div>
 </td></tr></table>

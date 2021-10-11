@@ -3,7 +3,7 @@ $fpwSuccess = false;
 
 // Freischaltcode anfordern
 if (isset($_POST["send_fpwmail"]) ) {
-	if (isset($_POST["email"])) {
+	if (!empty($_POST["email"])) {
 		$SQL = "SELECT * FROM `".$_TABLE["user"]."` \n";
 		$SQL.= "WHERE email LIKE \"".MyDB::escape_string($_POST["email"])."\" \n";
 		$SQL.= "LIMIT 1";
@@ -34,9 +34,10 @@ if (isset($_POST["send_fpwmail"]) ) {
 			}
 		} else {
 			$error.= "Interner Fehler bei Accountabfrage mittel E-Mail!<br>\n";
-			echo "<pre>".MyDB::error()."\n".$SQL."</pre>";
 		}
-	}
+	} else {
+        $error.= "Bitte geben Sie Ihre Mailadresse an!<br>\n";
+    }
 }
 
 // Neues Passwort mit Freischaltcode anlegen
@@ -62,7 +63,7 @@ if (isset($_POST["create_fpw"]) ) {
 								$SQL = "DELETE FROM `".$_TABLE["newpw"]."` WHERE uid = \"".$user["uid"]."\" ";
 								@MyDB::query($SQL, $ConnUserDB["connid"]);
 								$msg = "Das Passwort wurde erfolgreich aktualisiert.<br>\n";
-								$msg = "Sie können sich ab sofort einloggen!<br>\n";
+								$msg.= "Sie kÃ¶nnen sich ab sofort einloggen!<br>\n";
 								$fpwSuccess = true;
 							}
 						} else {
@@ -72,10 +73,10 @@ if (isset($_POST["create_fpw"]) ) {
 						$error.= "Das Passwort darf nur aus Zahlen und Buchstaben bestehen!<br>\n";
 					}
 				} else {
-					$error.= "Passwortwiederholung stimmt nicht überein!<br>\n";
+					$error.= "Passwortwiederholung stimmt nicht Ã¼berein!<br>\n";
 				}
 			} else {
-				$error.= "Freischaltcode oder E-Mail sind ungültig!<br>\n";
+				$error.= "Freischaltcode oder E-Mail sind ungÃ¼ltig!<br>\n";
 			}
 		} else {
 			$syserr.= "<pre>#".__LINE__." ".basename(__FILE__)." MYSQL:".MyDB::error()."\nQUERY:".$SQL."</pre>";
@@ -103,4 +104,4 @@ if (!$fpwSuccess) {
 } else {
 	$content = implode("", file($_CONF["HTML"]["login"]));
 }
-?>
+

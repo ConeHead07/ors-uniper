@@ -34,45 +34,45 @@
 <table class="tblRegister">
 	<form action="" method="post">
 	<tr style="display: none">
-		<td><label errclass="anrede" for="eingabe_anrede_frau" id="InputLblanrede">Anrede:</label></td>
+		<td><label errclass="anrede" for="eingabe_anrede_frau" id="InputLblanrede" class="col-form-label">Anrede:</label></td>
 		<td><input type="radio" id="eingabe_anrede_frau" name="eingabe[anrede]" value="Frau" class="iRad" check_anrede="Frau">Frau
 			<input type="radio" name="eingabe[anrede]" value="Herr" class="iRad" check_anrede="Herr">Herr</td>
 	</tr>
-	<tr>
-		<td><label errclass="vorname" for="eingabe_vorname" id="InputLblvorname">Vorname:</label></td>
-		<td><input id="inputUser" id="eingabe_vorname" type="text" name="eingabe[vorname]" value="{eingabe[vorname]}" class="iTxt"></td>
+	<tr class="form-group">
+		<td><label errclass="vorname" for="eingabe_vorname" id="InputLblvorname" class="col-form-label">Vorname:</label></td>
+		<td><input id="inputUser" id="eingabe_vorname" type="text" name="eingabe[vorname]" value="{eingabe[vorname]}" class="iTxt form-control"></td>
 	</tr>
-	<tr>
-		<td><label errclass="nachname" for="eingabe_nachname" id="InputLblnachname">Nachname:</label></td>
-		<td><input type="text" id="eingabe_nachname" name="eingabe[nachname]" value="{eingabe[nachname]}" class="iTxt"></td>
-	</tr>
-
-	<tr>
-		<td><label errclass="user" for="eingabe_user" id="InputLbluser">Benutzer / E-Mail:</label></td>
-		<td><input type="text" id="eingabe_user" name="eingabe[user]" value="{eingabe[user]}" class="iTxt">{email_tld_only}</td>
+	<tr class="form-group">
+		<td><label errclass="nachname" for="eingabe_nachname" id="InputLblnachname" class="col-form-label">Nachname:</label></td>
+		<td><input type="text" id="eingabe_nachname" name="eingabe[nachname]" value="{eingabe[nachname]}" class="iTxt form-control"></td>
 	</tr>
 
-		<tr>
-			<td><label errclass="personalnr" for="eingabe_personalnr" id="InputLblpersonalnr">KID:</label></td>
-			<td><input type="text" id="eingabe_personalnr" name="eingabe[personalnr]" value="{eingabe[personalnr]}" class="iTxt"></td>
-		</tr>
+	<tr class="form-group">
+		<td><label errclass="user" for="eingabe_user" id="InputLbluser" class="col-form-label">Benutzer / E-Mail:</label></td>
+		<td><input type="text" id="eingabe_user" name="eingabe[user]" value="{eingabe[user]}" class="iTxt form-control"><span class="info info-email-tld-only"> {email_tld_only}</span></td>
+	</tr>
 
-	<tr>
+	<tr class="form-group">
+		<td><label errclass="personalnr" for="eingabe_personalnr" id="InputLblpersonalnr" class="col-form-label">KID:</label></td>
+		<td><input type="text" id="eingabe_personalnr" name="eingabe[personalnr]" value="{eingabe[personalnr]}" class="iTxt form-control"></td>
+	</tr>
+
+	<tr class="form-group">
 		<td><label errclass="fon" for="eingabe_fon" id="InputLblfon">Telefon:</label></td>
-		<td><input type="text" id="eingabe_fon" name="eingabe[fon]" value="{eingabe[fon]}" class="iTxt"></td>
+		<td><input type="text" id="eingabe_fon" name="eingabe[fon]" value="{eingabe[fon]}" class="iTxt form-control"></td>
 	</tr>
 
-	<tr style="display:none;">
-		<td><label errclass="strasse" for="eingabe_strasse" id="InputLblstrasse">Strasse:</label></td>
-		<td><input type="text" id="eingabe_strasse" name="eingabe[strasse]" value="{eingabe[strasse]}" class="iTxt"></td>
+	<tr class="form-group" style="display:none;">
+		<td><label errclass="strasse" for="eingabe_strasse" id="InputLblstrasse" class="col-form-label">Strasse:</label></td>
+		<td><input type="text" id="eingabe_strasse" name="eingabe[strasse]" value="{eingabe[strasse]}" class="iTxt form-control"></td>
 	</tr>
-	<tr style="display:none;">
-		<td><label errclass="plz" for="eingabe_plz" id="InputLblplz">PLZ:</label></td>
-		<td><input type="text" id="eingabe_plz" name="eingabe[plz]" value="{eingabe[plz]}" class="iTxt"></td>
+	<tr class="form-group" style="display:none;">
+		<td><label errclass="plz" for="eingabe_plz" id="InputLblplz" class="col-form-label">PLZ:</label></td>
+		<td><input type="text" id="eingabe_plz" name="eingabe[plz]" value="{eingabe[plz]}" class="iTxt form-control"></td>
 	</tr>
-	<tr style="display:none;">
-		<td><label errclass="ort" for="eingabe_ort" id="InputLblort">Ort:</label></td>
-		<td><input type="text" id="eingabe_ort" name="eingabe[ort]" value="{eingabe[ort]}" class="iTxt"></td>
+	<tr class="form-group" style="display:none;">
+		<td><label errclass="ort" for="eingabe_ort" id="InputLblort" class="col-form-label">Ort:</label></td>
+		<td><input type="text" id="eingabe_ort" name="eingabe[ort]" value="{eingabe[ort]}" class="iTxt form-control"></td>
 	</tr>
 <!-- 
 <tr>
@@ -87,13 +87,13 @@
 	<td><label errclass="user" for="eingabe[user]" id="InputLbluser">Benutzername:</label></td> 
 	<td><input type="text" name="eingabe[user]" value="{eingabe[user]}" class="iTxt"></td>
 </tr> -->
-<tr>
-	<td><label errclass="pw" for="eingabe_pw" id="InputLblpw">Passwort:</label></td> 
-	<td><input type="password" id="eingabe_pw" name="eingabe[pw]" value="{eingabe[pw]}"  class="iPass"> mind. {pw_min_length} Zeichen</td>
+<tr class="form-group">
+	<td><label errclass="pw" for="eingabe_pw" id="InputLblpw" class="col-form-label">Passwort:</label></td>
+	<td><input type="password" id="eingabe_pw" name="eingabe[pw]" value="{eingabe[pw]}"  class="iPass form-control"><span class="info"> mind. {pw_min_length} Zeichen</span></td>
 </tr>
-<tr>
-	<td><label errclass="pwc" for="eingabe_pwc" id="InputLblpwc">PW wiederholen:</label></td> 
-	<td><input type="password" id="eingabe_pwc" name="eingabe[pwc]" value="{eingabe[pwc]}" class="iPass"></td>
+<tr class="form-group">
+	<td><label errclass="pwc" for="eingabe_pwc" id="InputLblpwc" class="col-form-label">PW wiederholen:</label></td>
+	<td><input type="password" id="eingabe_pwc" name="eingabe[pwc]" value="{eingabe[pwc]}" class="iPass form-control"></td>
 </tr>
 <!-- <tr>
 	<td><label errclass="agb_confirm" for="eingabe[agb_confirm]" id="InputLblagb_confirm">AGB:</label></td> 
@@ -101,13 +101,16 @@
 	Ja, ich stimme den <a target="winAGB" onclick="openPp(this.href, this.target, 450, 420);return false"; href="{webPath}/agb.php">AGB</a> zu</td>
 </tr> -->
 <tr>
-	<td colspan=2>
-	<input type="submit" name="register" value="Registierung senden" class="iSubmit">
-		<input type="submit" name="reset" value="Zurücksetzen" class="iSubmit"></td>
+	<td></td>
+	<td>
+	<input type="submit" name="register" value="Registieren" class="btn btn-primary iSubmit">
+	<input style="display:none" type="submit" name="reset" value="Zurücksetzen" class="btn iSubmit"></td>
 </tr>
 <input type="hidden" name="eingabe[agb_confirm]" value="Ja">
 </form>
 </table>
-<!-- <div class="LoginAdLinks">
-{LnkForgetPw}</div> -->
+	<div class="LoginAdLinks">
+		{LnkStartseite}
+		{LnkLogin}
+		{LnkForgetPw}</div>
 </td></tr></table>

@@ -6,62 +6,66 @@
 	}
 	</script>
 <table width="350" height="200" class="LoginBox" align=center>
+	<tr>
+		<td class="hdCell">Passwort wiederherstellen für {HomepageTitle}</td>
+	</tr>
+	</thead>
 <tr><td class="topCell">
 <!-- {msg} -->
 <!-- {error} -->
 <strong>Sie haben Ihr Passwort vergessen?</strong><br>
 <br>
-Kein Problem! Wir benötigen lediglich Ihre E-Mail mit der Sie sich
-auf <strong>{HomepageTitle}</strong> registriert haben.<br>
-<br>
-An diese Adresse senden wir einen neuen Freischaltlink, über den
+	<strong>Schritt 1: Freischaltcode anfordern</strong><br>
+Bitte geben Sie uns im ersten Schritt Ihre Mailadresse mit der Sie sich
+auf <strong>{HomepageTitle}</strong> registriert haben.
+An diese Adresse senden wir Ihnen einen Freischaltcode, mit dem
 Sie sich ein neues Passwort anlegen können.
-<table style="max-width:350px;">
-<tr><td>
-<table>
+
+	<table style="margin-top:.8rem">
 <form action="{action}" method="post">
-<tr>
-	<td width=130 class="tdLbl"><label for="inputUser">E-Mail</label></td>
-	<td><input id="inputUser" type="text" name="email" value="{email}"></td>
+<tr class="form-group">
+	<td width=130 class="xtdLbl"><label for="inputUser" class="col-form-label">E-Mail</label></td>
+	<td><input id="inputUser" type="text" name="email" value="{email}" class="form-control"></td>
 </tr>
-<tr>
+	<tr class="form-group">
 	<td></td>
-	<td><input type="submit" name="send_fpwmail" value="Freischaltcode zusenden"></td>
+	<td><input type="submit" name="send_fpwmail" value="Senden" class="btn btn-primary"></td>
 </tr>
 <input type="hidden" name="redirect" value="{redirect}">
 </form>
 </table>
 <br>
-<strong>Sie haben bereits einen neuen Freischaltcode angefordert und per Mail erhalten?</strong>
-<table>
-<form action="{action}" method="post">
-<tr>
-	<td width=130 class="tdLbl">Freischaltcode</td>
-	<td><input type="text" name="code" value="{code}"></td>
-</tr>
-<tr>
-	<td class="tdLbl">E-Mail</td>
-	<td><input type="text" name="email" value="{email}"></td>
-</tr>
-<tr>
-	<td class="tdLbl">Neues Passwort</td>
-	<td><input type="password" name="pw" value=""></td>
-</tr>
-<tr>
-	<td class="tdLbl">Passwort wiederholen</td>
-	<td><input type="password" name="pwc" value=""></td>
-</tr>
-<tr>
-	<td></td>
-	<td><input type="submit" name="create_fpw" value="Neues Passwort erstellen"></td>
-</tr>
-<input type="hidden" name="redirect" value="{redirect}">
-</form>
+<strong>Schritt 2: Neues Passwort anlegen</strong><br>
+	Bitte geben Sie hierfür zur Identifikation auch den erhaltenen Freischaltcode und Ihre Mailadresse an.
+<table style="margin-top:.8rem">
+	<form action="{action}" method="post">
+		<tr class="form-group">
+			<td width=130 class="xtdLbl"><label class="col-form-label">Freischaltcode</label></td>
+			<td><input type="text" name="code" value="{code}" class="form-control"></td>
+		</tr>
+		<tr class="form-group">
+			<td class="xtdLbl"><label class="col-form-label">E-Mail</label></td>
+			<td><input type="text" name="email" value="{email}" class="form-control"></td>
+		</tr>
+		<tr class="form-group">
+			<td class="xtdLbl"><label class="col-form-label">Neues Passwort</label></td>
+			<td><input type="password" name="pw" value="" class="form-control"></td>
+		</tr>
+		<tr class="form-group">
+			<td class="xtdLbl"><label class="col-form-label">Passwort wiederholen</label></td>
+			<td><input type="password" name="pwc" value="" class="form-control"></td>
+		</tr>
+		<tr class="form-group">
+			<td></td>
+			<td><input type="submit" name="create_fpw" value="Senden" class="btn btn-primary"></td>
+		</tr>
+		<input type="hidden" name="redirect" value="{redirect}">
+	</form>
 </table>
 <div class="LoginAdLinks">
+{LnkStartseite}
 {LnkRegister}
 <a href="{UrlToHomepage}login.php">Zum Login</a></div>
-</td></tr></table>
 
 </td>
 </tr>

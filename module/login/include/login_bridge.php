@@ -10,7 +10,6 @@ if (empty($redirect)) {
     else $redirect = $_CONF["redirectAfterLogin"];
 }
 
-// die("#".__LINE__." ".basename(__FILE__));
 $m = __LINE__;
 $l = "";
 $content = "";
@@ -33,7 +32,6 @@ isset($_POST["password"]) && !empty($_POST["password"]))
 			$m = __LINE__;
 			$test = "test";
 	        if (function_exists("session_start")) {
-	            // die("#".__LINE__." ".basename(__FILE__)." username:{$_POST['username']}; password:{$_POST['password']}; md5(pw):".md5(trim($_POST["password"]))."; user:".print_r($user,true));
 				$m = __LINE__;
 				$SESS_CName = $_CONF["CAuthSessionName"];
 	            
@@ -53,15 +51,13 @@ isset($_POST["password"]) && !empty($_POST["password"]))
 					set_lastlogin($ConnUserDB["connid"], $_TABLE["user"], $user["uid"], SET_NEW_VISIT);
 				}
 				
-				// COOKIES ÜBER LOGIN-BRÜCKE INITIALISIEREN
+				// COOKIES UEBER LOGIN-BRUECKE INITIALISIEREN
 				if (!strchr($redirect,"?")) $redirect.="?";
 				$ausgabe=implode("",file(PATH_TO_LOGIN_MODUL."html/login_bridge.html"));
 				$ausgabe=str_replace("%redirect%", $redirect, $ausgabe);
 				$ausgabe=str_replace("%name%", $user["vorname"]." ".$user["nachname"], $ausgabe);
-				// $ausgabe=str_replace("<!-- {session} -->", $redirect."<br>\n".arraytoVarString("_SESSION", $_SESSION), $ausgabe);
 				db_close();
 				clearstatcache();
-				// die($ausgabe);
 				$show_form = false;
 	        } else {
 	            $error.= "Session konnte nicht gestartet werden!<br>\n";
@@ -72,12 +68,10 @@ isset($_POST["password"]) && !empty($_POST["password"]))
 			$error.= "Der Zugang zu diesem Account ist zur Zeit nicht freigegeben!<br>\n";
 		}
 	} else {
-		// echo "#".__LINE__." ".basename(__FILE__)." <br>\n";
 		$m = __LINE__;
-		$error.= "Ungültige Zugangsdaten!<br>\n";
+		$error.= "UngÃ¼ltige Zugangsdaten!<br>\n";
 	}
 } else {
 	$m = __LINE__;
-	// die("#".__LINE__." ".basename(__FILE__));
 	$error.= "Geben Sie E-Mail und Passwort an!<br>\n";
 }

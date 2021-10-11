@@ -10,22 +10,25 @@ div.page-login .page-login-box {
 	font-family:Arial,sans-serif;
 	box-sizing: border-box;
 }
-div.page-login .msg-Box h2,
-div.page-login .msg-Box h3,
-div.page-login .msg-Box h4,
-div.page-login .msg-Box h5,
-div.page-login .msg-Box h6 {
+div.page-login .msg-box h2,
+div.page-login .msg-box h3,
+div.page-login .msg-box h4,
+div.page-login .msg-box h5,
+div.page-login .msg-box h6 {
 	margin: 0.5rem;
 	color: #0078dc;
 	previous-color: #14802b;
 }
-div.page-login .error-Box h2,
-div.page-login .error-Box h3,
-div.page-login .error-Box h4,
-div.page-login .error-Box h5,
-div.page-login .error-Box h6 {
+div.page-login .error-box h2,
+div.page-login .error-box h3,
+div.page-login .error-box h4,
+div.page-login .error-box h5,
+div.page-login .error-box h6 {
 	margin: 0.5rem;
-	color: red;
+	color: #c40505;
+}
+div.page-login .error-box {
+	color: #c40505;
 }
 
 div.page-login td {
@@ -60,25 +63,28 @@ div.page-login .LoginBox .hdCell,
 div.page-login .LoginBox .topCell,
 .LoginBox .topCell {
 	background:#fff;
-	color:#000;
+	color:#0078dc;
 	padding:40px;
 }
 
 div.page-login .LoginAdLinks,
 .LoginAdLinks {
 	margin-top:20px;
-	border:1px dotted #000;
-	padding:5px 10px 5px 15px;
-	width:60%;
+	previous-border:1px dotted #000;
+	padding:5px 10px 5px 5px;
+	previous-width:60%;
 }
 .LoginBox * a,
 .LoginAdLinks a {
-	color:#00f;
+	color: #0078dc;
+	font-size: .8rem;
+	text-decoration: none;
 }
 .LoginBox * a:hover,
 .LoginAdLinks a:hover {
-	color: #0078dc;
+	color: #0060bf;
 	previous-color: #f50000;
+	text-decoration: underline;
 }
 
 div.page-login .tdLbl,
@@ -86,6 +92,7 @@ div.page-login .tdLbl,
 	padding-right:5px;
 	font-weight:bold;
 	text-align:right;
+	max-width: 125px;
 }
 input,
 div.page-login input {
@@ -119,6 +126,11 @@ div.page-login .topCell .err,
 	margin:2px 0px 10px 0px;
 }
 
+div.page-login label,
+div.page-login * label {
+	color: #0078dc;
+}
+
 @media screen and (max-width: 460px) {
 	div.page-login table.LoginBox, table.LoginBox {
 		height: 100vh;
@@ -142,4 +154,140 @@ div.page-login .topCell .err,
 	.LoginBox .topCell {
 		padding:1rem;
 	}
+}
+
+div.page-login .col-form-label {
+	display: inline-block;
+	padding-top: calc(.375rem + 1px);
+	padding-bottom: calc(.375rem + 1px);
+	margin-bottom: 0;
+	font-size: inherit;
+	line-height: 1.5;
+}
+
+div.page-login .btn:not(:disabled):not(.disabled) {
+	cursor: pointer;
+}
+
+div.page-login [type=reset],
+div.page-login [type=submit],
+div.page-login button,
+div.page-login html [type=button] {
+	-webkit-appearance: button;
+}
+
+div.page-login .btn-primary {
+	color: #fff;
+	background-color: #007bff;
+	border-color: #007bff;
+}
+
+div.page-login .btn {
+	display: inline-block;
+	font-weight: 400;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	border: 1px solid transparent;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+div.page-login button {
+	text-transform: none;
+}
+div.page-login button,
+div.page-login input {
+	overflow: visible;
+}
+
+div.page-login button,
+div.page-login input,
+div.page-login optgroup,
+div.page-login select,
+div.page-login textarea {
+	margin: 0;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+div.page-login button {
+	border-radius: 0;
+}
+div.page-login *,
+div.page-login ::after,
+div.page-login ::before {
+	box-sizing: border-box;
+}
+
+div.page-login .btn-primary:hover {
+	color: #fff;
+	background-color: #0069d9;
+	border-color: #0062cc;
+}
+
+div.page-login .btn:focus, .btn:hover {
+	text-decoration: none;
+}
+
+div.page-login .btn-primary:not(:disabled):not(.disabled).active,
+div.page-login .btn-primary:not(:disabled):not(.disabled):active,
+div.page-login .show>.btn-primary.dropdown-toggle {
+	color: #fff;
+	background-color: #0062cc;
+	border-color: #005cbf;
+}
+
+div.page-login .btn:not(:disabled):not(.disabled).active,
+div.page-login .btn:not(:disabled):not(.disabled):active {
+	background-image: none;
+}
+
+div.page-login .btn-primary.focus,
+div.page-login .btn-primary:focus {
+	box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 50%);
+}
+
+div.page-login .btn.focus,
+div.page-login .btn:focus {
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+}
+div.page-login .btn:focus,
+div.page-login .btn:hover {
+	text-decoration: none;
+}
+
+div.page-login .form-control:focus {
+	color: #495057;
+	background-color: #fff;
+	border-color: #80bdff;
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+}
+
+div.page-login .form-control {
+	x-display: block;
+	x-width: 100%;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+div.page-login .info,
+div.page-login .info-email-tld-only {
+	color: #818a91;
 }
