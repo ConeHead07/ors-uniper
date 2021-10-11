@@ -332,11 +332,13 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false)
         $su = $tplSu;
         $body = $tplBody;
         if (!isset($aUserTo[$i]["emails_cc"])) {
+            echo 'Missing field emails_cc in aUserTo: ';
             print_r(compact('aUserTo'));
             exit;
         }
         $cc = trim($aUserTo[$i]["emails_cc"]);
 
+        $rplVars['UserTo'] = json_encode($aUserTo[$i]);
         $rplVars['Vorname'] = $aUserTo[$i]["vorname"] ?? '';
         $rplVars['Name'] =  $aUserTo[$i]["nachname"] ?? '';
         $rplVars['ausgefuehrtam'] = date('d.m.Y', strtotime($rplVars['umzugstermin'] ) );
@@ -346,10 +348,6 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false)
         }
 
         $aUserHeader['Reply-To'] = $rplVars['Reply-To'] ?? 'service-uniper@mertens.ag';
-
-//        ob_end_flush();
-//        echo '<pre>' . print_r(compact('body', 'rplVars'), 1) . '</pre>';
-        // exit;
 
         $mailer = SmtpMailer::getNewInstance();
         $mailer->setTplVars($rplVars, 'UTF-8');
@@ -430,8 +428,8 @@ function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
 	$aAdminMailTo[] = array(
 	    "to"=>"service-uniper@mertens.ag",
         "email"=>"service-uniper@mertens.ag",
-        "Name"=>"ORS Uniper",
-        "Vorname"=>"NewNormalOffice",
+        "nachname"=>"ORS Uniper",
+        "vorname"=>"NewNormalOffice",
         'emails_cc' => ''
     );
 	if ($users['mertenshenk'] && $users['mertenshenk']['uid']) {
@@ -465,7 +463,7 @@ function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
 			$tplFile = $TextBaseDir."statusmail_umzug_zurpruefung.txt";
 			if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
 			$tplMail = file_get_contents($tplFile);
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
+			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=" . $AID;
 			return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
             
 		case "erneutpruefen":

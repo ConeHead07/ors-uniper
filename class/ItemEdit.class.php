@@ -2034,7 +2034,7 @@ class ItemEdit
 				} else {
 					// Prüfe, ob Eingabe erforderlich
 					if ($fC["required"]) {
-						$this->arrErrFlds[$fN] = $fC["label"].": Fehlende Eingabe \$this->arrInput[".$fN."]".$this->arrInput[$fN];
+						$this->arrErrFlds[$fN] = $fC["label"] . ": Fehlende Eingabe";
 					}
 				}
 			}
@@ -2042,8 +2042,8 @@ class ItemEdit
 			foreach($this->arrConf["Fields"] as $fN => $fC) {
 				if ($this->editMode == "Insert" && isset($fC["createByFunction"]) && $fC["createByFunction"] !== "") {
 					if (function_exists($fC["createByFunction"]) ) {
-						if (!call_user_func($fC["createByFunction"], $fN, $this->arrInput, $this->arrConf, $this-> $err)) {
-							$this->arrErrFlds[$fN] = $fC["label"].": ".$err;
+						if (!call_user_func($fC["createByFunction"], $fN, $this->arrInput, $this->arrConf, $err)) {
+							$this->arrErrFlds[$fN] = $fC["label"].": " . $err;
 						}
 					} else {
 						$this->Error.= basename(__FILE__)." Create-Funktion wurde nicht gefunden: ".$fC["createByFunction"]."()<br>\n";
@@ -2055,7 +2055,7 @@ class ItemEdit
 			if (count($this->arrErrFlds) ) {
 				$this->Error.= "Es wurden einige Felder nicht korrekt ausgef&uuml;llt:<br>\n";
 				foreach($this->arrErrFlds as $fld => $err) {
-					$this->Error.= $fld . ' ' . $err."<br>";
+					$this->Error.= '#2068 ' . $fld . ' ' . $err."<br>";
 				}
 				return false;
 			}

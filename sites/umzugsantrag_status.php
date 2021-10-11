@@ -10,40 +10,43 @@ function umzugsantrag_status($AID, $name, $value) {
 	global $error;
 	global $msg;
 	global $_CONF;
-        global $MConf;
+    global $MConf;
 	global $connid;
 	global $user;
 	
 	if(!$AID) {
-            $error.= "Fehlende Antrags-ID für Storniervorgang!<br>\n";
-            return false;
+        $error.= "Fehlende Antrags-ID für Storniervorgang!<br>\n";
+        return false;
 	}
 	
 	$sql_set = "";
 	$ASConf = $_CONF["umzugsantrag"];
 	$MAConf = $_CONF["umzugsmitarbeiter"];
-        $userIsAdmin = preg_match('/admin|umzugsteam/', $user["gruppe"]);
+    $userIsAdmin = preg_match('/admin|umzugsteam/', $user["gruppe"]);
 	
 	$ASError = "";
 	$AS = new ItemEdit($ASConf, $connid, $user, $AID);
 	$AS->loadDbdata();
 	$AS->dbdataToInput();
+
 	if (!$AS->arrInput["umzugstermin"]) {
 		$ASError.= "Der Umzugstermin wurde noch nicht festgesetzt!<br>\n";
 	}
+
 	if (!$AS->arrInput["fon"]) {
-            $ASError.= "Telefon: fehlende Eingabe!<br>\n";
-        }
+        $ASError.= "Telefon: fehlende Eingabe!<br>\n";
+    }
+
 	if (!$AS->arrInput["email"]) {
 		$ASError.= "Email: fehlende Eingabe!<br>\n";
 	}
+
 	if($ASError) {
 		$error.= "Es wurden noch nicht alle erforderlichen Felder ausgefüllt!<br>\n";
 		$error.= $ASError;
 		//$error.= $AS->Warning;
 		return false;
 	}
-	
 	
 	$MAPostItems = get_ma_post_items();
 	if ($MConf['min_ma'] && (!is_array($MAPostItems) || !count($MAPostItems))) {
@@ -77,7 +80,7 @@ function umzugsantrag_status($AID, $name, $value) {
 	$new_status = "";
 	if ($AID) {
 		if (!$AS->itemExists) {
-			$error.= "Es wurde kein Umzugsantrag mit der �bermittelten Antrags-ID gefunden!<br>\n";
+			$error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
 			return false;
 		}
 		
@@ -155,7 +158,7 @@ function umzugsantrag_status($AID, $name, $value) {
 			break;
 			
 			default:
-			$error.= "Ung�ltiger Statusaufruf $name!";
+			$error.= "Ungültiger Statusaufruf $name!";
 			return false;
 		}
 		
@@ -168,9 +171,7 @@ function umzugsantrag_status($AID, $name, $value) {
 			$db->query($sql);
 			if ($db->error()) {
 				$error.= "Beim Setzen des Umzugsstatus ist ein Fehler aufgetreten!<br>\n";
-				$error.= $db->error()."<br>\n".$sql."<br>\n";
 			}
-			//$msg.= $sql;
 		}
 	}
 	

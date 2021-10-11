@@ -46,23 +46,16 @@ if(false && $IsStandaloneTest && SMTP_MAILER_DEBUG > 0 ) {
 if (!isset($aSmtpDebugTo)) {
     $aSmtpDebugTo = [
         [
-            'email' => 'frank.barthold@gmail.com',
-            'anrede' => 'Herr Barthold',
-        ],
-        [
-            'email' => 'ors-service@mertens.ag',
-            'anrede' => 'ORS Service',
-        ],
-        [
             'email' => 'f.barthold@mertens.ag',
             'anrede' => 'Herr Barthold',
+            'vorname' => 'Frank',
+            'nachname' => 'Barthold mertens.ag',
         ],
     ];
 }
 
 if (!isset($aHeader)) {
     $aHeader = array(
-        // "From"        => $aSmtpConn['from'],
         "Reply-To"    => $aSmtpConn['from_addr'],
         "Errors-To"   => $aSmtpConn['from_addr'],
         "BCC"         => 'f.barthold@mertens.ag',
@@ -332,9 +325,9 @@ class SmtpMailer {
             if ($sHtmlBody) {
                 $sHtmlBody .= "<br>\n<br>\n"
                     . str_repeat('*', 50)
-                    . "<br>\nOriginal aTo: <pre>"
+                    . '<br>\nOriginal aTo: <pre>'
                     . print_r($aTo, 1)
-                    . "</pre>";
+                    . '</pre>';
             }
 
             if ($sTxtBody) {
@@ -356,7 +349,7 @@ class SmtpMailer {
                 'aHeader' =>  $aHeader,
                 'aSmtpConn' => $aSmtpConn,
                 'aUseHeaders' =>  $aUseHeaders,
-                'rplVars' => $this->subject,
+                'tplVars' => $this->tplVars,
             ],1),
             FILE_APPEND
         );
