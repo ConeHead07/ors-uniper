@@ -44,14 +44,7 @@ if(false && $IsStandaloneTest && SMTP_MAILER_DEBUG > 0 ) {
 }
 
 if (!isset($aSmtpDebugTo)) {
-    $aSmtpDebugTo = [
-        [
-            'email' => 'f.barthold@mertens.ag',
-            'anrede' => 'Herr Barthold',
-            'vorname' => 'Frank',
-            'nachname' => 'Barthold mertens.ag',
-        ],
-    ];
+    $aSmtpDebugTo = [];
 }
 
 if (!isset($aHeader)) {

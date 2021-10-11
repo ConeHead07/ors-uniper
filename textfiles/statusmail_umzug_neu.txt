@@ -6,7 +6,6 @@ sehr geehrte Anwenderin,
 es liegt ein neuer Auftrag  mit der ID {AID} vor.
 
 Antragsteller:  {vorname} {name}
-Liefertermin: {ausgefuehrtam}
 
 Sie können den Status des Auftrags unter folgendem Link einsehen:
 {StatusLink}
