@@ -21,7 +21,9 @@ if (!in_array($cat, array("bearbeitung", "zurueckgegeben", "gesendet", "genehmig
 
 $defaultOrder = "ORDER BY antragsdatum ASC";
 $orderFields = array(
-	"id" => array("field"=>"U.aid", "defaultOrder"=>"ASC"),
+    "id" => array("field"=>"U.aid", "defaultOrder"=>"ASC"),
+    "kid" => array("field"=>"user.personalnr", "defaultOrder"=>"ASC"),
+    "personalnr" => array("field"=>"user.personalnr", "defaultOrder"=>"ASC"),
 	"termin" => array("field"=>"umzugstermin", "defaultOrder"=>"ASC"),
 	"von" => array("field"=>"M.gebaeude", "defaultOrder"=>"ASC"),
 	"nach" => array("field"=>"M.ziel_gebaeude", "defaultOrder"=>"ASC"),
@@ -44,11 +46,13 @@ if ($ofld && isset($orderFields[$ofld])) {
 $ListBaseLink = "?s=".urlencode($s)."&cat=".urlencode($cat);
 $user["uid"];
 
-$sql = 'SELECT U.*, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude' . "\n";
-$sqlFrom = "FROM `".$ASConf["Table"]."` U LEFT JOIN `".$MAConf["Table"]."` M USING(aid)\n" 
-           ." LEFT JOIN mm_stamm_gebaeude g  ON U.gebaeude = g.id \n"
-           ." LEFT JOIN mm_stamm_gebaeude vg ON U.von_gebaeude_id = vg.id \n"
-           ." LEFT JOIN mm_stamm_gebaeude ng ON U.nach_gebaeude_id = ng.id \n";
+$sql = 'SELECT U.*, user.personalnr, user.personalnr AS kid, '
+    . 'CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude' . "\n";
+$sqlFrom = "FROM `".$ASConf["Table"]."` U LEFT JOIN `".$MAConf["Table"]."` M USING(aid)\n"
+    ." LEFT JOIN mm_user user  ON U.antragsteller_uid = user.uid \n"
+    ." LEFT JOIN mm_stamm_gebaeude g  ON U.gebaeude = g.id \n"
+    ." LEFT JOIN mm_stamm_gebaeude vg ON U.von_gebaeude_id = vg.id \n"
+    ." LEFT JOIN mm_stamm_gebaeude ng ON U.nach_gebaeude_id = ng.id \n";
 $sqlWhere= "WHERE 1 \n";
 
 if (!$allusers) {
@@ -104,7 +108,7 @@ if ($db->error()) {
 $num_all = $row["count"];
 
 
-$sql = 'SELECT U.*, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude ' ."\n";
+$sql = 'SELECT U.*, user.personalnr AS kid, user.personalnr, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude ' ."\n";
 $sql.= $sqlFrom.$sqlWhere;
 $sql.= "GROUP BY aid\n";
 $sql.= $orderBy;
@@ -123,6 +127,11 @@ if ($num_all > $num) {
 	$ListBrowsing = $rlist_nav->get_nav("all")."<br>\n";
 } else {
 	$ListBrowsing = ""; 
+}
+$showSQL = false;
+if ($showSQL) {
+    $ListBrowsing = "<div style='border:1px solid gray;border-radius: 5px;padding:.8rem;'>
+<pre style='background-color: #c9c9c9;color: #626262;padding:.8rem;'>" . $sql . "</pre>Num-Result: " . count($all) . "</div>" . $ListBrowsing;
 }
 
 if (!function_exists("get_iconStatus")) { function get_iconStatus($statVal, $date, $von ='', $statKey ='') {
