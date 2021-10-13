@@ -8,9 +8,9 @@
 	margin-top:5px;
 	border-collapse:collapse;
 	border-spacing:0px;
-	border-right:1px solid #0078dc;
-	border-bottom:1px solid #0078dc;
-        border-radius:2px;
+	previous-border-right:1px solid #0078dc;
+	previous-border-bottom:1px solid #0078dc;
+	border-radius:2px;
 }
 
 .tblList td,
@@ -19,8 +19,8 @@
 .tblList thead tr td,
 .tblList thead tr th,
 .tblList tbody tr td {
-	border-left:1px solid #0078dc;
-	border-top:1px solid #0078dc;
+	previous-border-left:1px solid #0078dc;
+	previous-border-top:1px solid #0078dc;
 	padding:1px 3px 1px 3px;
 	border-collapse: collapse;
 }
@@ -28,11 +28,13 @@
 .tblList thead tr td,
 .tblList thead tr th,
 .tblList td.thead {
-	background:#0078dc;
-        border:#0078dc;
-	color:#fff;
+	previous-background:#0078dc;
+	border:#0078dc;
+	color:#333;
+	font-size: 0.75rem;
 	font-weight:bold;
 	padding:4px 2px;
+	text-decoration: underline;
 }
 .tblList thead a,
 .tblList thead a:visited {
@@ -45,12 +47,23 @@
 .tblList tbody a:visited {
     text-decoration:none;
 }
+.tblList thead th:hover,
+.tblList thead td:hover,
 .tblList thead a:hover,
 .tblList tbody a:hover {
+	color: #0078dc;
     text-decoration: underline;
+}
+.tblList thead input,
+.tblList thead textarea,
+.tblList thead select {
+	background-color: #e2f2ff;
 }
 .tblList tbody {
     background:#fff;
+}
+.tblList tbody tr {
+	border-top: 1px solid #ededed;
 }
 .tblList .wz1,
 .tblList .wz1 * {

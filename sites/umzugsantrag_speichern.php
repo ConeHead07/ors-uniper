@@ -301,8 +301,8 @@ function umzugsantrag_speichern() {
             if ($cmd === 'status') {
                 $AS->arrInput["bemerkungen"].= $name . ' ' . $value . " - Grund:\n";
             }
-            $AS->arrInput["bemerkungen"].= trim($addBemerkung);
-            if (!empty($AS->arrDbdata["bemerkungen"])) {
+            $AS->arrInput["bemerkungen"].= $addBemerkung;
+            if (!empty($AS->arrDbdata["bemerkungen"]) && trim($AS->arrDbdata["bemerkungen"])) {
                 $AS->arrInput["bemerkungen"].= "\n\n".$AS->arrDbdata["bemerkungen"];
             }
         } else {

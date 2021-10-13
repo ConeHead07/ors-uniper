@@ -176,8 +176,8 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
     {include file="admin_umzugsformular_lieferauswahl.tpl.html"}
 </div>
 {/if}
-<br clear= "all">
-<div style="clear:all;"></div>
+<br>
+<div style="clear:both;"></div>
 
 {if 0}
     {include file="admin_umzugsformular_mitarbeiterauswahl.tpl.html"}
@@ -199,7 +199,7 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
 {include file="umzugsformular_attachments.tpl.read2.html" UmzugsAnlagen=$UmzugsAnlagenIntern internal=1}
 {/if}
 <br>
-{if 1}
+{if 0}
 <div style="width:100%">
     {include file="admin_umzugsformular_gruppierung.tpl.html"}
 </div>
@@ -219,14 +219,19 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
 
 <div style="margin-top:20px;width:100%;"><!-- 
  --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
- --><input type="submit" class="btn grey" onclick="umzugsantrag_save()" xstyle="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Speichern"><!-- 
- --><input type="submit" class="btn red" onclick="umzugsantrag_reload()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Neu laden"><!-- 
- --><input type="submit" class="btn red" onclick="umzugsantrag_add_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhnge">
+ --><input type="submit" class="btn grey"
+           onclick="umzugsantrag_save()"
+           value="Speichern"><!--
+ -->{if 0}<input type="submit" class="btn red d-none"
+           onclick="umzugsantrag_reload()"
+           value="Neu laden">{/if}<!--
+ --><input type="submit" class="btn red"
+           onclick="umzugsantrag_add_attachement()"
+           value="Dateianhnge">
 {if $creator == "mertens"}
   <input
           type="submit" class="btn red"
           onclick="umzugsantrag_add_internal_attachement()"
-          xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;"
           value="Interne Dateianhänge">{/if}
 <br>
 <br>
@@ -250,27 +255,27 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   {if 0}
     <input
             id="btnStatGenJa" type="submit"
-            {if $AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init'}class="cssHide"{else}class="btn green"{/if}
+            class="{if $AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init'}cssHide{else}btn green{/if}"
             onclick="umzugsantrag_set_status('genehmigt','Ja')"
             title="Bestätigung senden" value="Senden">
 
     <input
             id="btnStatGenNein" type="submit"
-            {if $AS.genehmigt_br eq 'Nein' || $AS.bestaetigt ne 'Init'}class="cssHide"{else}class="btn red"{/if}
+            class="{if $AS.genehmigt_br eq 'Nein' || $AS.bestaetigt ne 'Init'}cssHide{else}btn red{/if}"
             onclick="umzugsantrag_set_status('genehmigt','Nein')"
           value="Ablehnen">
   {/if}
   {if $AS.genehmigt_br eq 'Ja'}
     <input
             id="btnStatGenReset" type="submit"
-            class={if $AS.genehmigt_br eq 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if}"
+            class="{if $AS.genehmigt_br eq 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if}"
             onclick="umzugsantrag_set_status('genehmigt','Init')"
             value="Genehmigung aufheben">
 &nbsp; {/if}
   {if  $AS.umzugsstatus eq 'bestaetigt' or $AS.umzugsstatus eq 'geprueft'}
     <input
             id="btnStatAbgJa" type="submit"
-            {if $AS.abgeschlossen ne 'Init'}class="cssHide"{else}class="btn green"{/if}
+            class="{if $AS.abgeschlossen ne 'Init'}cssHide{else}btn green{/if}"
             onclick="umzugsantrag_set_status('abgeschlossen','Ja')"
             value="Auftrag ist abgeschlossen">
 &nbsp; {/if}
@@ -377,7 +382,7 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   <caption style="font-size:11px;padding:0px;height:18px;">
   <div style="float:left;"><strong>Mitarbeiter</strong> <span name="aktionsstatus" style="margin-left:40px;color:#f00;">H&auml;ndischer Eintrag!</div>
   <div style="float:right;">[Namen pr&uuml;fen] 
-  <img name="RaumStatImg" src="" align="absmiddle" style="border:0;" width=16 height=16 title=""><a href="" onclick="show_raum_mitarbeiter(this, 'ziel');return false;">[Raum-Neu: <span id="RaumStatInfo"></span> ]</a> &nbsp; 
+  <img name="RaumStatImg" src="" align="absmiddle" style="border:0;" width=16 height=16 title=""><a href="" onclick="show_raum_mitarbeiter(this, 'ziel');return false;">[Raum-Neu: <span id="RaumStatInfo"></span> ]</a> &nbsp;
   <a href="" onclick="show_raum_mitarbeiter(this,'');return false;">[Raum-Alt]</a> <span onclick="dropMA(this)" style="cursor:pointer;">Aus Anforderungsliste l&ouml;schen <img align="absmiddle" src="images/loeschen_off.png" width="14" alt=""><span></div><div style="clear:both;"></div>
 </caption>
   <thead>
@@ -401,14 +406,46 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   <tr class="inputRowVon">
 	<td class="nn"><input type="hidden" name="MA[mid][]" value=""><!-- 
  	 --><input type="hidden" name="MA[maid][]" value=""><!-- 
-	 --><input value="{if !empty($MA)}{$MA.name|escape}{/if}" id="mitarbeiter" xonclick="get_mitarbeiter(this)"  class="itxt itxt1col UpperCase UserInput" type="text" name="MA[name][]"></td>
-    <td class="vn"><input value="{if !empty($MA)}{$MA.vorname|escape}{/if}" class="itxt itxt1col UpperCase UserInput" type="text" name="MA[vorname][]"></td>
-	<td class="xf"><input value="{if !empty($MA)}{$MA.extern_firma|escape}{/if}" onclick="get_extern_firma(this)" class="itxt itxt1col UserInput" size=15 type="text" name="MA[extern_firma][]"></td>
+	 --><input
+            value="{if !empty($MA)}{$MA.name|escape}{/if}"
+            id="mitarbeiter" xonclick="get_mitarbeiter(this)"
+            class="itxt itxt1col UpperCase UserInput"
+            type="text" name="MA[name][]"></td>
+    <td class="vn"><input
+            value="{if !empty($MA)}{$MA.vorname|escape}{/if}"
+            class="itxt itxt1col UpperCase UserInput"
+            type="text" name="MA[vorname][]"></td>
+	<td class="xf"><input
+            value="{if !empty($MA)}{$MA.extern_firma|escape}{/if}"
+            onclick="get_extern_firma(this)"
+            class="itxt itxt1col UserInput" size=15
+            type="text" name="MA[extern_firma][]"></td>
 	
-	<td class="abt"><input value="{if !empty($MA)}{$MA.abteilung|escape}{/if}" readonly="true" onclick="get_abteilung(this)" class="itxt UserInput" size=4 type="text" name="MA[abteilung][]"></td>
-	<td class="geb"><input  autocomplete="off" value="{if !empty($MA)}{$MA.gebaeude|escape}{/if}" readonly="true" onclick="get_gebaeude(this)" class="itxt itxt1col UserInput" type="text" name="MA[gebaeude][]"></td>
-    <td class="etg"><input value="{if !empty($MA)}{$MA.etage|escape}{/if}" onclick="get_etage(this)" readonly="true" class="itxt UserInput" type="text" name="MA[etage][]"></td>
-    <td class="rnr"><input value="{if !empty($MA)}{$MA.raumnr|escape}{/if}" onclick="get_raumnr(this)" readonly="true" class="itxt UserInput" size=8 type="text" name="MA[raumnr][]"></td>
+	<td class="abt"><input
+            value="{if !empty($MA)}{$MA.abteilung|escape}{/if}"
+            readonly="true"
+            onclick="get_abteilung(this)"
+            class="itxt UserInput" size=4
+            type="text" name="MA[abteilung][]"></td>
+	<td class="geb"><input
+            autocomplete="off"
+            value="{if !empty($MA)}{$MA.gebaeude|escape}{/if}"
+            readonly="true"
+            onclick="get_gebaeude(this)"
+            class="itxt itxt1col UserInput"
+            type="text" name="MA[gebaeude][]"></td>
+    <td class="etg"><input
+            value="{if !empty($MA)}{$MA.etage|escape}{/if}"
+            onclick="get_etage(this)"
+            readonly="true"
+            class="itxt UserInput"
+            type="text" name="MA[etage][]"></td>
+    <td class="rnr"><input
+            value="{if !empty($MA)}{$MA.raumnr|escape}{/if}"
+            onclick="get_raumnr(this)"
+            readonly="true"
+            class="itxt UserInput" size=8
+            type="text" name="MA[raumnr][]"></td>
     <td class="apnr"><input value="{if !empty($MA)}{$MA.apnr|escape}{/if}" class="itxt UserInput" readonly="true" size=8 type="text" name="MA[apnr][]"></td>
     
     <td class="fon"><input value="{if !empty($MA)}{$MA.fon|escape}{/if}" class="itxt" type="text" name="MA[fon][]"></td>

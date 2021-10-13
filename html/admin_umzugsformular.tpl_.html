@@ -11,12 +11,12 @@
 <input type="hidden" name="AS[aid]" value="{$AS.aid}">
 <table>
   <tr>
-    <td style="padding:0;"><label for="mitarbeiter">Vor &amp; Nachname:</label></td>
-    <td style="padding:0;width:200px;"><input type="text" value="{$AS.vorname|escape}" name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" value="{$AS.name|escape}" name="AS[name]" class="itxt itxt1col floatRight"></td>
+    <td style="padding:0;"><label for="as_mitarbeiter">Vor &amp; Nachname:</label></td>
+    <td style="padding:0;width:200px;"><input type="text" value="{$AS.vorname|escape}" id="as_mitarbeiter" name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" value="{$AS.name|escape}" name="AS[name]" class="itxt itxt1col floatRight"></td>
   </tr>
   <tr>
-    <td style="padding:0;"><label for="termin">E-Mail:</label></td>
-    <td style="padding:0;"><input type="text" value="{$AS.email|escape}" name="AS[email]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><label for="as_termin">E-Mail:</label></td>
+    <td style="padding:0;"><input type="text" value="{$AS.email|escape}" id="as_termin" name="AS[email]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="as_fon">Telefon:</label></td>
@@ -24,29 +24,34 @@
   </tr>
 
   <tr>
-    <td style="padding:0;"><label for="ort">Standort:</label></td>
-    <td style="padding:0;"><input type="text" value="{$AS.ort|escape}" name="AS[ort]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><label for="as_ort">Standort:</label></td>
+    <td style="padding:0;"><input type="text" value="{$AS.ort|escape}" id="as_ort" name="AS[ort]" class="itxt itxt2col"></td>
   </tr>
 
   <tr>
-    <td style="padding:0;"><label for="gebaeude">Gebäude:</label></td>
-    <td style="padding:0;"><input type="text" value="{$AS.gebaeude|escape}" name="AS[gebaeude]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><label for="as_gebaeude">GebÃ¤ude:</label></td>
+    <td style="padding:0;"><input type="text" value="{$AS.gebaeude|escape}" id="as_gebaeude" name="AS[gebaeude]" class="itxt itxt2col"></td>
   </tr>
 
   <tr>
-    <td style="padding:0;"><label for="kostenstell">Kostenstelle:</label></td>
-    <td style="padding:0;"><input type="text" value="{$AS.kostenstelle|escape}" name="AS[kostenstelle]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><label for="as_kostenstelle">Kostenstelle:</label></td>
+    <td style="padding:0;"><input type="text" value="{$AS.kostenstelle|escape}" id="as_kostenstelle" name="AS[kostenstelle]" class="itxt itxt2col"></td>
   </tr>
   
   <tr>
-    <td style="padding:0;"><label for="termin">Terminwunsch:</label></td>
-    <td style="padding:0;"><input type="text" value="{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}" xonclick="show_date(this)" id="terminwunsch" name="AS[terminwunsch]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><label for="as_terminwunsch">Terminwunsch:</label></td>
+    <td style="padding:0;"><input type="text" value='{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}' id="as_terminwunsch" xonclick="show_date(this)" id="terminwunsch" name="AS[terminwunsch]" class="itxt itxt2col"></td>
   </tr>
   
   <tr>
-    <td style="padding:0;"><label for="termin">Termin:</label></td>
-    <td style="padding:0;"><input type="text" value="{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}" xonclick="show_date(this)"
-	{literal} onfocus="SelBox_initLSDefault(this, 'Terminvorschlaege', true, {'ort':'input:name=AS[ort]'})" {/literal} id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
+    <td style="padding:0;"><label for="umzugstermin">Termin:</label></td>
+    <td style="padding:0;"><input type="text"
+      id="umzugstermin"
+      value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
+      xonclick="show_date(this)"
+	  {literal} onfocus="SelBox_initLSDefault(this, 'Terminvorschlaege', true, {'ort':'input:name=AS[ort]'})" {/literal}
+      name="AS[umzugstermin]"
+      class="itxt itxt2col"></td>
   </tr>
 
 </table>
@@ -60,7 +65,7 @@
   <caption style="font-size:11px;padding:0px;height:18px;">
   <div style="float:left;">Mitarbeiter</div>
   <div style="float:right;">L&ouml;schen <img align="absmiddle" src="images/loeschen_off.png" width="14" onclick="dropMA(this)" alt=""> &nbsp;
-Daten für nachfolgende Mitarbeiter &uuml;bernehmen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" alt=""></div>
+Daten fÃ¼r nachfolgende Mitarbeiter &uuml;bernehmen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" alt=""></div>
 </caption>
   <thead>
   <tr>
@@ -83,7 +88,7 @@ Daten für nachfolgende Mitarbeiter &uuml;bernehmen <img align="absmiddle" src="i
     <td id="nn1" class="nn"><input value="{$MA.name|escape}" autocomplet="off" id="mitarbeiter" onfocus="initMaSelBox(this)" class="itxt itxt1col" type="text" name="MA[name][]"></td>
     <td id="vn1" class="vn"><input value="{$MA.vorname|escape}" class="itxt itxt1col" type="text" name="MA[vorname][]"></td>
 	
-	<!-- Mustermann, Max</strong> Gebäude1, B02.12, GF -->
+	<!-- Mustermann, Max</strong> Gebï¿½ude1, B02.12, GF -->
     <td id="geb1" class="geb"><input value="{$MA.ort|escape}" class="itxt itxt1col" type="text" name="MA[ort][]"></td>
     <td id="geb1" class="geb"><input value="{$MA.gebaeude|escape}" class="itxt itxt1col" type="text" name="MA[gebaeude][]"></td>
     <td id="rnr1" class="rnr"><input value="{$MA.raumnr|escape}" class="itxt itxt1col" type="text" name="MA[raumnr][]"></td>
@@ -145,7 +150,7 @@ Daten für nachfolgende Mitarbeiter &uuml;bernehmen <img align="absmiddle" src="i
 <div class="SelTitle"><strong>Mitarbeiter</strong></div>
 <div id="SelBoxMaItems">
 </div>
-<div class="SelItem"> <div style="padding-left:20px;" onclick="GetMaSearch()">=> Auswahl übernehmen und korrigieren (Ja, das bin ich!)</div></div>
+<div class="SelItem"> <div style="padding-left:20px;" onclick="GetMaSearch()">=> Auswahl Ã¼bernehmen und korrigieren (Ja, das bin ich!)</div></div>
 <div class="SelItem"> <div style="padding-left:20px;">=> Manuelle Eingabe (Meine Daten sind nicht dabei!)</div></div>
 </div>
 
@@ -156,7 +161,7 @@ Daten für nachfolgende Mitarbeiter &uuml;bernehmen <img align="absmiddle" src="i
 <div class="SelItem"><input type="checkbox" name="uartbox" value="Box" checked=1> <strong>Box</strong>move</div>
 <div class="SelItem"><input type="checkbox" name="uartbox" value="EDV" checked=1> <strong>EDV</strong>-Anforderung</div>
 <div class="SelItem"><input type="checkbox" name="uartbox" value="Voice" checked=1> <strong>V</strong>oice-Anforderung</div>
-<div class="SelItem"><input type="checkbox" name="uartbox" value="ZG"> <strong>Z</strong>usätzliche Geräte</div>
+<div class="SelItem"><input type="checkbox" name="uartbox" value="ZG"> <strong>Z</strong>usÃ¤tzliche GerÃ¤te</div>
 </div>
 </div>
 

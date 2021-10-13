@@ -1,7 +1,9 @@
 <div style="display:block;margin-top:15px;">
     <!-- admin_umzugsformular_leistungsauswahl.tpl.html -->
-<span style="margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="add_Leistung();return false;">
-    Leistung hinzuf&uuml;gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
+{* <span style="margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;"
+      class="d-none"
+      onclick="add_Leistung();return false;">
+    Leistung hinzuf&uuml;gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span> *}
 </div>
 {literal}
 <style>
@@ -287,7 +289,8 @@ $(function(){
             <td><input class="ilstg" name="L[leistung_id][]" value="{$L.leistung_id}" type="hidden"><!-- 
              --><input class="menge name="L[menge_mertens][]" value="{$L.menge_property|escape|number_format:2:",":"."}" type="text">
             </td>
-            {if $PreiseAnzeigen}<td class="preis">{if $L.preis_pro_einheit}{$L.preis_pro_einheit|number_format:2:",":"."}{/if}</td>
+            {if $PreiseAnzeigen}
+            <td class="preis">{if $L.preis_pro_einheit}{$L.preis_pro_einheit|number_format:2:",":"."}{/if}</td>
             <td class="sum">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|escape|number_format:2:",":"."}{/if}</td>
             {/if}
         </tr>
@@ -306,13 +309,43 @@ $(function(){
             <td class="ktg1" onclick="get_Kategorie(this)"></td>
             <td class="lstg" onclick="get_Leistung(this)" data-p="" data-sum=""></td>
             <td><input class="ilstg" name="L[leistung_id][]" disabled="disabled" value="" type="hidden"><!--
-             --><input class="menge{if $creator == "property"} creator editable{else} readonly{/if}" name="L[menge_property][]"{if $creator !== "property"} readonly="readonly"{/if} disabled="disabled" value="" type="number"></td>
-            <td class="unit"></td>
-            <td><input class="menge menge2{if $creator == "property"} creator editable{else} readonly{/if}" name="L[menge2_property][]"{if $creator !== "property"} readonly="readonly"{/if} disabled="disabled" value="" type="number"></td>
-            <td class="unit unit2"></td>
-            <td><input class="menge{if $creator == "mertens"} creator editable{else} readonly{/if}" name="L[menge_mertens][]"{if $creator !== "mertens"} readonly="readonly"{/if} disabled="disabled" value="" type="number"></td>
-            <td><input class="menge menge2{if $creator == "mertens"} creator editable{else} readonly{/if}" name="L[menge2_mertens][]"{if $creator !== "mertens"} readonly="readonly"{/if} disabled="disabled" value="" type="number"></td>
-            {if $PreiseAnzeigen}<td class="preis"></td>
+             --><input
+                    class="menge{if $creator == 'property'} creator editable{else} readonly{/if}"
+                    name="L[menge_property][]"
+                    {if $creator ne "property"} readonly="readonly"{/if}
+                    disabled="disabled"
+                    value="1" type="number">
+                <input type="hidden"name="L[menge2_property][]" value="1">
+                <input type="hidden"name="L[menge_mertens][]" value="1">
+                <input type="hidden"name="L[menge2_mertens][]" value="1">
+            </td>
+            {*
+                <td class="unit"></td>
+                <td><input
+                        class="menge menge2{if $creator == 'property'} creator editable{else} readonly{/if}"
+                        name="L[menge2_property][]"
+                        {if $creator ne "property"} readonly="readonly"{/if}
+                        disabled="disabled"
+                        value="1" type="number"></td>
+                <td class="unit unit2"></td>
+            *}
+            <td><input
+                    class="menge{if $creator == "mertens"} creator editable{else} readonly{/if}"
+                name="L[menge_mertens][]"
+                {if $creator !== "mertens"} readonly="readonly"{/if}
+                disabled="disabled" value=""
+                type="number"></td>
+            {*
+            <td><input
+                    class="menge menge2{if $creator == "mertens"} creator editable{else} readonly{/if}"
+                name="L[menge2_mertens][]"
+                {if $creator !== "mertens"} readonly="readonly"{/if}
+                disabled="disabled" value=""
+                type="number">
+            </td>
+            *}
+            {if $PreiseAnzeigen}
+            <td class="preis"></td>
             <td class="sum"></td>
             {/if}
         </tr>

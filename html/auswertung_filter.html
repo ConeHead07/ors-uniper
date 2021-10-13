@@ -1,112 +1,122 @@
-<pre style="display:none;">
+{* <div style="display: none">
 html/auswertung_filter.html
-<b>Vodafone und Mertens</b>
 
 Weiterhin soll es eine flexible Auswertung geben.
 Hierzu soll eine Auswahl von KW bis KW  und das Jahr und Berechnet  ja/Nein angegeben werden.
  
 Folgende Felder sollen angezeigt werden:
  
-ID|STOM|Region|Standort|Wirtschaftseinheit|PSP-Element|Planon Nr.|Leistungsdatum|Abschluﬂdatum|Rechnungsdatum|Summe
+ID|STOM|Region|Standort|Wirtschaftseinheit|PSP-Element|Planon Nr.|Leistungsdatum|Abschlu√üdatum|Rechnungsdatum|Summe
  
 Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem Text eingegeben 
-/ ausgew‰hlt werden kann.
+/ ausgew√§hlt werden kann.
 
-</pre>
+</div> *}
 
-<style type="text/css">{literal}
+<style type="text/css">
+{literal}
     th.order {
         cursor:pointer;
     }
-{/literal}</style>
-<form id="frmStat" name="frmStat" method="get" action="?">
-<span style="border:0;font-weight:bold;font-size:12px;">Zeitraum
-    Von: <input type="date" name="datumvon" value="{$datumvon}" onchange="document.forms['frmStat'].submit()">
-    Bis: <input type="date" name="datumbis" value="{$datumbis}" onchange="document.forms['frmStat'].submit()">
-{*
-    <select onchange="document.forms['frmStat'].submit()" selected="{$kwvon}" name="kwvon" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
-<option value="">ausw‰hlen</option>
-        {html_options options=$kw_options selected=$kwvon}
-</select> bis 
-<select onchange="document.forms['frmStat'].submit()" selected="{$kwbis}" name="kwbis" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
-<option value="">ausw‰hlen</option>
-        {html_options options=$kw_options selected=$kwbis}
-</select>
-    *}
-<input type="hidden" name="s" value="{$s}">
-<input type="hidden" name="order" value="" id="orderby">
-<input type="hidden" name="queriedorder" value="{$order}">
-<input type="hidden" name="queriedodir" value="{$odir}">
-<noscript>&lt;input type="submit" value="Auswertung starten"&gt;</noscript>
-</span>
-<script>{literal}
-$(function(){
-    
-    var send = function() {
-        self.location.href = "?" + $("#frmStat").serialize();
-    };
-    
-    $("th.order").click(function(e){        
-        $("input#orderby").val( $(this).attr("data-fld") );
-        send();
-    });
-    
-    $("th input").keypress(function(e){
-        if ( (e.keyCode || e.which) === 13) send();
-    });
-    
-});
+#Auswertung.divInlay input[type=data] {
+    background-color: #e2f2ff;
+}
 {/literal}
-</script>
+</style>
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
+    <h1><span class="spanTitle">Auswertung</span></h1>
 
-<table class="tblList">
-    <thead>
-        <tr>
-            <th class="order" data-fld="aid">ID</th>
-            <th class="order" data-fld="vorgangsnummer">WWS</th>
-            <th class="order" data-fld="nachname">STOM</th>
-            <th class="order" data-fld="bundesland">Region</th>
-            <th class="order" data-fld="stadtname">Standort</th>
-            <th class="order" data-fld="Wirtschaftseinheit">WE</th>
-            <th class="order" data-fld="kostenstelle">PSP-Element</th>
-            <th class="order" data-fld="planonnr">Ticket Nr.</th>
-            <th class="order" data-fld="umzugstermin">Leistungsdatum</th>
-            <th class="order" data-fld="abgeschlossen_am">Abschlussdatum</th>
-            <th class="order" data-fld="berechnet_am">Rechnungsdatum</th>
-            <th class="order" data-fld="summe">Summe</th>
-        </tr>
-        <tr>
-            <th><input name="q[aid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></th>
-            <th><input name="q[vorgangsnummer]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.vorgangsnummer}{/if}"></th>
-            <th><input name="q[nachname]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.nachname}{/if}"></th>
-            <th><input name="q[bundesland]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.bundesland}{/if}"></th>
-            <th><input name="q[stadtname]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.stadtname}{/if}"></th>
-            <th><input name="q[Wirtschaftseinheit]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.Wirtschaftseinheit}{/if}"></th>
-            <th><input name="q[kostenstelle]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.kostenstelle}{/if}"></th>
-            <th><input name="q[planonnr]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.planonnr}{/if}"></th>
-            <th><input name="q[umzugstermin]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.umzugstermin}{/if}"></th>
-            <th><input name="q[abgeschlossen_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.abgeschlossen_am}{/if}"></th>
-            <th><input name="q[berechnet_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.berechnet_am}{/if}"></th>
-            <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.summe}{/if}"></th>
-        </tr>
-    </thead>
-    <tbody>
-    {foreach name=AList item=item from=$Auftraege}
-        <tr>
-            <td><a href="?s={$site_antrag}&id={$item.aid}">{$item.aid}</a></td>
-            <td>{$item.vorgangsnummer}</td>
-            <td>{if $item.antragsteller_gruppe ne "kunde_report" or $item.nachname eq $item.antragsteller_name}{$item.nachname}{else}!{$item.antragsteller_name}{/if}</td>
-            <td>{$item.bundesland}{*Region*}</td>
-            <td>{$item.stadtname}, {$item.adresse}</td>
-            <td>{$item.Wirtschaftseinheit}</td>
-            <td>{$item.kostenstelle}{*PSP-Element*}</td>
-            <td>{$item.planonnr}</td>
-            <td>{$item.umzugstermin}{*Leistungsdatum*}</td>
-            <td>{$item.abgeschlossen_am}</td>
-            <td>{$item.berechnet_am}</td>
-            <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
-        </tr>
-        {/foreach}
-    </tbody>
-</table>
-</form>
+    <div id="Auswertung" class="divInlay">
+        <form id="frmStat" name="frmStat" method="get" action="?">
+        <span style="border:0;font-weight:bold;font-size:12px;">Zeitraum
+            Von: <input type="date" name="datumvon" value="{$datumvon}" onchange="document.forms['frmStat'].submit()">
+            Bis: <input type="date" name="datumbis" value="{$datumbis}" onchange="document.forms['frmStat'].submit()">
+        {*
+            <select onchange="document.forms['frmStat'].submit()" selected="{$kwvon}" name="kwvon" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
+        <option value="">ausw√§hlen</option>
+                {html_options options=$kw_options selected=$kwvon}
+        </select> bis
+        <select onchange="document.forms['frmStat'].submit()" selected="{$kwbis}" name="kwbis" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
+        <option value="">ausw√§hlen</option>
+                {html_options options=$kw_options selected=$kwbis}
+        </select>
+            *}
+        <input type="hidden" name="s" value="{$s}">
+        <input type="hidden" name="order" value="" id="orderby">
+        <input type="hidden" name="queriedorder" value="{$order}">
+        <input type="hidden" name="queriedodir" value="{$odir}">
+        <noscript>&lt;input type="submit" value="Auswertung starten"&gt;</noscript>
+        </span>
+        <script>{literal}
+        $(function(){
+
+            var send = function() {
+                self.location.href = "?" + $("#frmStat").serialize();
+            };
+
+            $("th.order").click(function(e){
+                $("input#orderby").val( $(this).attr("data-fld") );
+                send();
+            });
+
+            $("th input").keypress(function(e){
+                if ( (e.keyCode || e.which) === 13) send();
+            });
+
+        });
+        {/literal}
+        </script>
+
+        <table class="tblList">
+            <thead>
+                <tr>
+                    <th class="order" data-fld="aid">ID</th>
+                    <th class="order" data-fld="vorgangsnummer">WWS</th>
+                    <th class="order" data-fld="kid">KID</th>
+                    <th class="order" data-fld="land">Land</th>
+                    <th class="order" data-fld="ort">Lieferort</th>
+                    <th class="order" data-fld="PLZ">PLZ</th>
+                    <th class="order" data-fld="strasse">Stra&szlig;e</th>
+                    <th class="order" data-fld="antragsdatum">Bestellung</th>
+                    <th class="order" data-fld="umzugstermin">Lieferdatum</th>
+                    <th class="order" data-fld="abgeschlossen_am">Abschlussdatum</th>
+                    <th class="order" data-fld="berechnet_am">Rechnungsdatum</th>
+                    <th class="order" data-fld="summe">Summe</th>
+                </tr>
+                <tr>
+                    <th><input name="q[aid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></th>
+                    <th><input name="q[vorgangsnummer]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.vorgangsnummer}{/if}"></th>
+                    <th><input name="q[kid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.kid}{/if}"></th>
+                    <th><input name="q[land]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.land}{/if}"></th>
+                    <th><input name="q[ort]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.ort}{/if}"></th>
+                    <th><input name="q[plz]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.plz}{/if}"></th>
+                    <th><input name="q[strasse]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.strasse}{/if}"></th>
+                    <th><input name="q[antragsdatum]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.antragsdatum}{/if}"></th>
+                    <th><input name="q[umzugstermin]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.umzugstermin}{/if}"></th>
+                    <th><input name="q[abgeschlossen_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.abgeschlossen_am}{/if}"></th>
+                    <th><input name="q[berechnet_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.berechnet_am}{/if}"></th>
+                    <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.summe}{/if}"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {foreach name=AList item=item from=$Auftraege}
+                <tr>
+                    <td><a href="?s={$site_antrag}&id={$item.aid}">{$item.aid}</a></td>
+                    <td>{$item.vorgangsnummer}</td>
+                    <td>{$item.kid}</td>
+                    <td>{$item.land}</td>
+                    <td>{$item.ort}</td>
+                    <td>{$item.plz}</td>
+                    <td>{$item.strasse}</td>
+                    <td>{$item.antragsdatum}</td>
+                    <td>{$item.umzugstermin}</td>
+                    <td>{$item.abgeschlossen_am}</td>
+                    <td>{$item.berechnet_am}</td>
+                    <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
+                </tr>
+                {/foreach}
+            </tbody>
+        </table>
+        </form>
+    </div>
+</div>

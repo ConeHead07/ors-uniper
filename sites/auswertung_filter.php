@@ -104,6 +104,7 @@ elseif ($order == 'aid') {
 }
 
 $sql = 'SELECT a.*, '
+      .' ua.personalnr AS kid,'
       .' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
       .' u.nachname, u.nachname stom, ua.nachname antragsteller_name, '
       .' ua.gruppe antragsteller_gruppe, '

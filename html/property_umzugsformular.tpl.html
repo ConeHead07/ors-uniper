@@ -9,7 +9,7 @@
 {/literal}
 <div id="SysInfoBox"></div>
 
-property_umzugsformular.tpl.html
+<span class="d-none">property_umzugsformular.tpl.html</span>
 <link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
@@ -138,7 +138,6 @@ property_umzugsformular.tpl.html
     <td style="padding:0;width:300px;" class="options-onoff"><label class='{if $AS.umzug eq "Ja"}on{else}off{/if} active'>{$AS.umzug}</label></td>
   </tr>
 </table>
-</div>
 
 {if 0}
     {include file="property_umzugsformular_mitarbeiterauswahl.tpl.html"}
@@ -160,19 +159,62 @@ property_umzugsformular.tpl.html
 <textarea class="iarea bemerkungen" name="AS[bemerkungen]"></textarea>
 </div>
 <div style="margin-top:20px;width:100%;"><!-- 
- --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
- --><input class="btn grey" type="submit" onclick="umzugsantrag_save()" xstyle="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Speichern"><!-- 
- --><input class="btn red" type="submit" onclick="umzugsantrag_reload()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Neu laden"><!-- 
- --><input class="btn red" type="submit" onclick="umzugsantrag_add_attachement()" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhänge">
+ --><input
+        type="submit"
+        name="CatchDefaultEnterReturnFalse"
+        onclick="return false;" value=""
+        style="border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!--
+ --><input
+        class="btn grey"
+        type="submit"
+        onclick="umzugsantrag_save()"
+        value="Speichern"><!--
+ -->{if 0}<input
+        class="btn red"
+        type="submit"
+        onclick="umzugsantrag_reload()"
+        value="Neu laden">{/if}<!--
+ --><input
+        class="btn red"
+        type="submit"
+        onclick="umzugsantrag_add_attachement()"
+        value="Dateianhänge">
 <br>
 <br>
 <strong>Status setzen: </strong> {$AS.umzugsstatus}
 <div class="statusConsole" xstyle="display:none;">
 {if $AS.umzugsstatus eq "geprueft" || $AS.umzugsstatus eq "angeboten"}
-<input id="btnStatZurueck"  class="btn blue"  type="submit"   {if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}class="cssHide"{/if} onclick="umzugsantrag_set_status( 'erneutpruefen','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:150px;height:24px;font-size:12px;color:#fff;font-weight:bold;" data-reCheckLabel="Erneut prüfen lassen" data-sendLabel="Senden" title="Erneut prüfen lassen" value="Zurück geben">
-<input id="btnStatGenJa"    class="btn green" type="submit"   {if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}class="cssHide"{/if} onclick="umzugsantrag_set_status( getLeistungenChanged() ? 'erneutpruefen' : 'genehmigt','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:150px;height:24px;font-size:12px;color:#fff;font-weight:bold;" data-reCheckLabel="Erneut prüfen lassen" data-sendLabel="Senden" title="Genehmigung senden" value="Senden">
-<input id="btnStatGenNein"  class="btn red" type="submit" {if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}class="cssHide"{/if} onclick="umzugsantrag_set_status('genehmigt','Nein')" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Ablehnen">
-<input id="btnStatGenReset" type="submit" class="{if $AS.genehmigt_br eq 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if} onclick="umzugsantrag_set_status('genehmigt','Init')" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Genehmigung aufheben">
+<input
+        id="btnStatZurueck"
+        class="btn blue"
+        type="submit"
+        class="{if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}cssHide{/if}"
+        onclick="umzugsantrag_set_status( 'erneutpruefen','Ja')"
+        data-reCheckLabel="Erneut prüfen lassen"
+        data-sendLabel="Senden"
+        title="Erneut prüfen lassen"
+        value="Zurück geben">
+<input
+        id="btnStatGenJa"
+        class="{if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}cssHide{else}btn green{/if}"
+        type="submit"
+        onclick="umzugsantrag_set_status( getLeistungenChanged() ? 'erneutpruefen' : 'genehmigt','Ja')"
+        data-reCheckLabel="Erneut prüfen lassen"
+        data-sendLabel="Senden"
+        title="Genehmigung senden"
+        value="Senden">
+<input
+        id="btnStatGenNein"
+        class="{if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}cssHide{else}btn red{/if}"
+        type="submit"
+        onclick="umzugsantrag_set_status('genehmigt','Nein')"
+        value="Ablehnen">
+<input
+        id="btnStatGenReset"
+        type="submit"
+        class="{if $AS.genehmigt_br eq 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if}"
+        onclick="umzugsantrag_set_status('genehmigt','Init')"
+        value="Genehmigung aufheben">
 {/if}</div>
 <!-- Debug-Btn:
 <input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">
@@ -180,21 +222,22 @@ property_umzugsformular.tpl.html
 <input type="submit" onclick="return umzugsantrag_submit_debug('stornieren')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="stornieren">
 <input type="submit" onclick="return umzugsantrag_submit_debug('laden')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="laden">
  -->
-<div id="BoxBemerkungenHistorie">
-<strong>Bisherige Bemerkungen</strong><br>
-<div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
-</div>
-</form>
+  <div id="BoxBemerkungenHistorie">
+    <strong>Bisherige Bemerkungen</strong><br>
+    <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
+  </div>
 </div>
 <div id="LoadingBar"></div>
-</p>
+</form>
 </div>
 
 <div id="SelBoxUart" class="SelBox">
-<div style="position:absolute;right:0;"><img align="absmiddle" src="images/loeschen_off.png" style="cursor:pointer" onclick="document.getElementById('SelbBoxUart').style.display='none'" width="14" alt=""></div>
-<div class="SelTitle"><strong>Anforderungsarten</strong></div>
-<div id="SelBoxUartItems">
-<div class="SelItem"><input type="checkbox" name="uartbox" value="Box" checked=1> <strong>Box</strong>move</div>
-<div class="SelItem"><input type="checkbox" name="uartbox" value="Mit Möbel" checked=1> Mit <strong>Möbel</strong></div>
+  <div style="position:absolute;right:0;"><img align="absmiddle" src="images/loeschen_off.png" style="cursor:pointer" onclick="document.getElementById('SelbBoxUart').style.display='none'" width="14" alt=""></div>
+  <div class="SelTitle"><strong>Anforderungsarten</strong></div>
+  <div id="SelBoxUartItems">
+  <div class="SelItem"><input type="checkbox" name="uartbox" value="Box" checked=1> <strong>Box</strong>move</div>
+  <div class="SelItem"><input type="checkbox" name="uartbox" value="Mit Möbel" checked=1> Mit <strong>Möbel</strong></div>
+  </div>
 </div>
+
 </div>

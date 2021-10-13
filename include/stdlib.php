@@ -70,7 +70,12 @@ function __autoload($class_name) {
     global $MConf;
 	$loadfile = $MConf["AppRoot"].$MConf["Class_Dir"].$class_name . '.class.php';
 	if (!file_exists($loadfile)) {
-		if ($class_name == "Smarty") $loadfile = $MConf["AppRoot"]."smarty3/Smarty.class.php";
+		if ($class_name == "Smarty") {
+		    $loadfile = $MConf["AppRoot"]."smarty3/Smarty.class.php";
+        }
+		elseif ($class_name == 'Tcpdf') {
+            $loadfile = $MConf["AppRoot"]."/vendor/tcpdf.php";
+        }
 		else {
 			echo "CanNotAutoLoad: ".$loadfile."<br>\n";
 			return false;

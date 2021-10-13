@@ -1,4 +1,7 @@
-.btn, 
+.d-none {
+    display:none !important;
+}
+.btn,
 button.btn,
 input[type=submit].btn,
 #Umzugsantrag .btn {
