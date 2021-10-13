@@ -70,7 +70,7 @@ switch($cat) {
 	break;
 	
 	case "gesendet":
-	$sqlWhere.= " AND umzugsstatus IN (\"beantragt\",\"angeboten\") \n";
+	$sqlWhere.= " AND umzugsstatus IN (\"beantragt\",\"angeboten\",\"geprueftn\",\"abgeschlossen\", \"bestaetigt\") \n";
 	$catTitle = "gesendete";
 	break;
 	
