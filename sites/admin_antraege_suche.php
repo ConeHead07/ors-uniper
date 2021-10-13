@@ -273,7 +273,7 @@ if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) {
 }
 
 $body_content.= "<div class=\"divModuleBasic padding6px width5Col heightAuto colorContentMain\"> 
-<h1><span class=\"spanTitle\">Suche in Auftr&auml;gen:</span></h1> 
+<h1><span class=\"spanTitle\">Auftragssuche:</span></h1> 
 <p>
 <div id=\"Umzugsantrag\" class=\"divInlay\">\n";
 $body_content.= $op;
