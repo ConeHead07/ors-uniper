@@ -61,6 +61,7 @@ $Tpl->assign('PreiseAnzeigen', $PreiseAnzeigen);
 // If AID: Bearbeitungsformular mit DB-Daten
 if ($AID) {
 	$AS->loadDbdata();
+	// print_r($AS->arrDbdata);
 	$AS->dbdataToInput();
 	$sql = "SELECT mid FROM `".$MAConf["Table"]."` WHERE aid = ".intval($AID);
 	$aMIDs = $db->query_rows($sql);
@@ -115,8 +116,8 @@ if ($AID) {
     );
     $AS->loadInput($defaultAS, false);
     $MA->loadInput(array(), false);
-    $Tpl->assign("AS", array($AS->arrInput));
 }
+$Tpl->assign("AS", array($AS->arrInput));
 
 // Lade Dienstleister
 $dl_id = $AS->arrInput['dienstleister_id'];
@@ -144,6 +145,14 @@ if ((int)$AS->arrInput['nach_gebaeude_id']) {
         'SELECT CONCAT(adresse, ", ", stadtname ) adr '
        .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['nach_gebaeude_id']);
 }
+if ((int)$AS->arrInput['antragsteller_uid']) {
+    $_kid = $db->query_one(
+        'SELECT personalnr '
+        .'FROM mm_user WHERE uid = ' . (int)$AS->arrInput['antragsteller_uid']);
+    $AS->arrInput['personalnr'] = $_kid;
+    $AS->arrInput['kid'] = $_kid;
+}
+
 $Tpl->assign("s", $s);
 $Tpl->assign('AID', $AID);
 $Tpl->assign('AIDJson', json_encode($AID));

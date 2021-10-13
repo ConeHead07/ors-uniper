@@ -10,126 +10,101 @@
 <div id="SysInfoBox"></div>
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-<h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1> 
-<p>
-<div id="Umzugsantrag" class="divInlay"> 
-<h2 style="margin:0;">Auftrags-Status</h2>
-<table border=0 cellspacing=1 cellpadding=1>
-  <tr>
-    <td style="padding:0;width:200px;"><label for="termin" style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
-    <td style="padding:0;width:300px;"><input type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
-	onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label for="umzugszeit" style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
-    <td style="padding:0;"><span data-fld="AS[umzugszeit]">{$AS.umzugszeit|escape|substr:0:5}</span></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label for="termin" style="display:block;width:auto;">Antragsdatum:</label></td>
-    <td style="padding:0;"><span data-fld="AS[antragsdatum]">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">{if $AS.angeboten_am}Genehmigt{else}Best&auml;tigt{/if}:</label></td>
-    <td style="padding:0;" class="status_{$AS.genehmigt_br}"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">Auftrag abgeschlossen:</label></td>
-    <td style="padding:0;" class="status_{$AS.abgeschlossen}"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label for="umzugsstatus" style="display:block;width:auto;">Status:</label></td>
-    <td style="padding:0;">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</td>
-  </tr>
-	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
-</table>
-<a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}&mode=property" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Anforderungsblatt / Druckansicht</a>
-<a href="%WebRoot%index.php?s=pantrag&id={$AS.aid}&export=csv" target="_blank">CSV-Export</a>
-<br>
+  <h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1>
+  <p>
+  <div id="Umzugsantrag" class="divInlay">
+    <h2 style="margin:0;" data-site="property/umzugsformular/tpl/read/html">Auftrags-Status</h2>
+    <table border=0 cellspacing=1 cellpadding=1>
+      <tr>
+        <td style="padding:0;width:200px;"><label for="termin" style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
+        <td style="padding:0;width:300px;"><input type="text" id="termin" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
+        onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
+        <td style="padding:0;"><span data-fld="AS[umzugszeit]">{$AS.umzugszeit|escape|substr:0:5}</span></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label for="termin" style="display:block;width:auto;">Auftragsdatum:</label></td>
+        <td style="padding:0;"><span data-fld="AS[antragsdatum]">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">Auftrag abgeschlossen:</label></td>
+        <td style="padding:0;" class="status_{$AS.abgeschlossen}"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">Status:</label></td>
+        <td style="padding:0;">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</td>
+      </tr>
+        <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+    </table>
+    <a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}&mode=property" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Anforderungsblatt / Druckansicht</a>
+    <a href="%WebRoot%index.php?s=pantrag&id={$AS.aid}&export=csv" target="_blank">CSV-Export</a>
+    <br>
 
-<h2 style="margin:0;">Leistungsantragsteller</h2> 
-<table>
-  <tr>
-    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
-    <td style="padding:0;width:300px;"><span data-fld="AS[vorname]">{$AS.vorname|escape}</span> <span data-fld="AS[name]">{$AS.name|escape}</span></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
-    <td style="padding:0;"><span data-fld="AS[email]">{$AS.email|escape}</span></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
-    <td style="padding:0;"><span data-fld="AS[fon]">{$AS.fon|escape}</span></td>
-  </tr>
-
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Standort:</label></td>
-    <td style="padding:0;"><span data-fld="AS[ort]">{$AS.ort|escape}</span></td>
-  </tr>
-
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Wirtschaftseinheit:</label></td>
-    <td style="padding:0;"><span data-fld="AS[gebaeude_text]">{$AS.gebaeude_text|escape}</span></td>
-  </tr>
-  
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Etage:</label></td>
-    <td style="padding:0;"><span data-fld="AS[etage]">{$AS.etage|escape}</span></td>
-  </tr>
-  
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Raum-Nr:</label></td>
-    <td style="padding:0;"><span data-fld="AS[raumnr]">{$AS.raumnr|escape}</span></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">{$ASConf.kostenstelle.label}:</label></td>
-    <td style="padding:0;"><span data-fld="AS[kostenstelle]">{$AS.kostenstelle|escape}</span></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Ticket Nr.:</label></td>
-    <td style="padding:0;"><span data-fld="AS[planonnr]">{$AS.planonnr|escape}</span></td>
-  </tr>
-  
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Terminwunsch:</label></td>
-    <td style="padding:0;" class="jtooltip" rel="%WebRoot%hilfetexte/terminwunsch.php"><span data-fld="AS[terminwunsch]">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</span></td>
-  </tr>
-
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Von</label></td>
-    <td class="ort"><span data-fld="AS[von_gebaeude_text]">{$AS.von_gebaeude_text|escape}</span></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Nach</label>
-    </td>
-    <td class="zort"><span data-fld="AS[nach_gebaeude_text]">{$AS.nach_gebaeude_text|escape}</span></td>
-  </tr>
-</table>
-<br>
-<h2 style="margin:0;">Ansprechpartner vor Ort</h2> 
-<table>
-  <tr>
-    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname</label></td>
-    <td style="padding:0;width:300px;">{$AS.ansprechpartner|escape}</td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">E-Mail</label></td>
-    <td style="padding:0;">{$AS.ansprechpartner_email|escape}</td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Fon</label></td>
-    <td style="padding:0;">{$AS.ansprechpartner_fon|escape}</td>
-  </tr>
-</table>
-<table>
-  <tr>
-    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Umzug</label></td>
-    <td style="padding:0;width:300px;" class="options-onoff"><label class='{if $AS.umzug eq "Ja"}on{else}off{/if} active'>{$AS.umzug}</label></td>
-  </tr>
-</table>
-<br clear="all" >
-<br>
-<br>
-
+    <h2 style="margin:0;">Antragsteller</h2>
+    <table>
+      <tr>
+        <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
+        <td style="padding:0;width:300px;"><span data-fld="AS[vorname]">{$AS.vorname|escape}</span> <span data-fld="AS[name]">{$AS.name|escape}</span></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
+        <td style="padding:0;"><span data-fld="AS[email]">{$AS.email|escape}</span></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
+        <td style="padding:0;"><span data-fld="AS[fon]">{$AS.fon|escape}</span></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">KID:</label></td>
+        <td style="padding:0;"><span data-fld="AS[kid]">{$AS.kid|escape}</span></td>
+      </tr>
+    </table>
+    <br>
+    <h2 style="margin:0;">Lieferadresse</h2>
+    <table>
+      <tr>
+        <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Stra&szlig;e &amp; Nr:</label></td>
+        <td style="padding:0;width:250px;"><span data-fld="AS[strasse]">{$AS.strasse|escape}</span></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">PLZ:</label></td>
+        <td style="padding:0;"><span data-fld="AS[plz]">{$AS.plz|escape}</span></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">Ort:</label></td>
+        <td style="padding:0;"><span data-fld="AS[ort]">{$AS.ort|escape}</span></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">Land:</label></td>
+        <td style="padding:0;"><span data-fld="AS[land]">{$AS.land|escape}</span></td>
+      </tr>
+    </table>
+    <br>
+    <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2>
+    <table>
+      <tr>
+        <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname</label></td>
+        <td style="padding:0;width:300px;">{$AS.ansprechpartner|escape}</td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">E-Mail</label></td>
+        <td style="padding:0;">{$AS.ansprechpartner_email|escape}</td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">Fon</label></td>
+        <td style="padding:0;">{$AS.ansprechpartner_fon|escape}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Service</label></td>
+        <td style="padding:0;width:300px;" class="options-onoff"><label class='{if $AS.service eq "Ja"}on{else}off{/if} active'>{$AS.service}</label></td>
+      </tr>
+    </table>
+    <br clear="all" >
+    <br>
 {if 0}
     {include file="property_umzugsformular_mitarbeiterauswahl.tpl.read.html"}
 {/if}
@@ -140,45 +115,57 @@
     {include file="property_umzugsformular_leistungsauswahl.tpl.read.html"}
 {/if}
 
-{include file="umzugsformular_attachments.tpl.read.html"}
+{if !empty($UmzugsAnlagen)}
+    {include file="umzugsformular_attachments.tpl.read.html"}
+{/if}
 
 {if $AS.umzugsstatus eq "angeboten"}
-<form name="frmUmzugsantrag" method="POST">
-<input type="hidden" name="AS[aid]" value="{$AS.aid}">
-{if 0}
-<div style="margin-top:20px;width:100%;"><!-- 
- --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
- --><input type="submit" onclick="umzugsantrag_save()" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Speichern"><!-- 
- --><input type="submit" onclick="umzugsantrag_reload()" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Neu laden"><!-- 
- --><input type="submit" onclick="umzugsantrag_add_attachement()" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhänge">
-<br>
-{/if}
-<br>
+    <form name="frmUmzugsantrag" method="POST">
+    <input type="hidden" name="AS[aid]" value="{$AS.aid}">
 
-<strong>Aktuellen Status <span style="color:#00f;">{$AS.umzugsstatus}</span> &auml;ndern</strong>
-<div class="statusConsole" style="xdisplay:none;">
-<input id="btnStatGenJa"    type="submit" class="{if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init')}cssHide{else}btn green{/if}" onclick="umzugsantrag_set_status('genehmigt','Ja')" xstyle="padding:0 0 9px 0;background:url(images/BtnGreen.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Genehmigen">
-<input id="btnStatGenNein"  type="submit" class="{if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br eq 'Nein' || $AS.bestaetigt ne 'Init')}"cssHide{else}btn red{/if}" onclick="umzugsantrag_set_status('genehmigt','Nein')" xstyle="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Ablehnen">
-<input id="btnStatGenReset" type="submit" class="{if $AS.genehmigt_br eq 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn red{/if}" onclick="umzugsantrag_set_status('genehmigt','Init')" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Genehmigung aufheben">
-</div>
-<br>
-<div id="BoxBemerkungen">
-<strong>Bemerkungen / Grund f�r Ablehnung:</strong><br>
-<textarea class="iarea bemerkungen" name="AS[bemerkungen]"></textarea>
-</div>
+    <div style="margin-top:20px;width:100%;">
+  {if 0}<!--
+     --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!--
+     --><input type="submit" onclick="umzugsantrag_save()" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Speichern"><!--
+     --><input type="submit" onclick="umzugsantrag_reload()" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Neu laden"><!--
+     --><input type="submit" onclick="umzugsantrag_add_attachement()" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhänge">
+    <br>
+  {/if}
+    <br>
+
+    <strong>Aktuellen Status <span style="color:#00f;">{$AS.umzugsstatus}</span> &auml;ndern</strong>
+    <div class="statusConsole" style="xdisplay:none;">
+      <input id="btnStatGenJa"
+             type="submit"
+             class="{if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init')}cssHide{else}btn green{/if}" onclick="umzugsantrag_set_status('genehmigt','Ja')"
+             value="Genehmigen">
+      <input id="btnStatGenNein"
+             type="submit"
+             class="{if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br eq 'Nein' || $AS.bestaetigt ne 'Init')}cssHide{else}btn red{/if}"
+             onclick="umzugsantrag_set_status('genehmigt','Nein')"
+             value="Ablehnen">
+      <input id="btnStatGenReset"
+             type="submit"
+             class="{if $AS.genehmigt_br eq 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn red{/if}"
+             onclick="umzugsantrag_set_status('genehmigt','Init')"
+             value="Genehmigung aufheben">
+    </div>
+    <br>
+    <div id="BoxBemerkungen">
+      <strong>Bemerkungen / Grund für Ablehnung:</strong><br>
+      <textarea class="iarea bemerkungen" name="AS[bemerkungen]"></textarea>
+    </div>
+  </div>
+
 </form>
 {/if}
-<!-- Debug-Btn:
-<input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">
-<input type="submit" onclick="return umzugsantrag_submit_debug('senden')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="senden">
-<input type="submit" onclick="return umzugsantrag_submit_debug('stornieren')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="stornieren">
-<input type="submit" onclick="return umzugsantrag_submit_debug('laden')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="laden">
- -->
+
+{if !empty($AS.bemerkungen)}
 <div id="BoxBemerkungenHistorie">
-<strong>Bisherige Bemerkungen</strong><br>
-<div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
+  <strong>Bisherige Bemerkungen</strong><br>
+  <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
 </div>
-</form>
+{/if}
 </div>
 <div id="LoadingBar"></div>
 </p>

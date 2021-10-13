@@ -13,13 +13,13 @@
 optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 {/literal}
 </script>
-admin_umzugsformular.tpl.html
+
 <div id="SysInfoBox"></div>
 
 <link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-<h1><span class="spanTitle">Auftrag #{$AS.aid}</span></h1>
+<h1><span class="spanTitle" data-site="admin/umzugsformular/tpl/html">Auftrag #{$AS.aid}</span></h1>
 <p>
 <div id="Umzugsantrag" class="divInlay"> 
 <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
@@ -73,6 +73,10 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   <tr>
     <td style="padding:0;"><label for="fon" style="width:180px;">Telefon<span class="right">{if $ASConf.fon.required}<span class="required">*</span>{/if}</span></label></td>
     <td style="padding:0;"><input id="fon" type="text" value="{$AS.fon|escape}" name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label for="as_kid" style="display:block;width:auto;">KID</label></td>
+    <td style="padding:0;"><input type="text" id="as_kid" name="AS[personalnr]"  readonly value="{if !empty($AS)}{$AS.personalnr|escape}{/if}" class="itxt itxt2col" ></td>
   </tr>
 </table>
 

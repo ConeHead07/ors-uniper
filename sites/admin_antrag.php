@@ -37,10 +37,9 @@ $Tpl->assign('PreiseAnzeigen', $PreiseAnzeigen);
 $sql = 'SELECT l.leistung_id, l.leistung_ref_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
       .' leistungskategorie AS kategorie, l.leistungskategorie_id AS kategorie_id, preis_pro_einheit, image, '
       .' m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis'
-      .' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k '
-      .'  ON l.leistungskategorie_id = k.leistungskategorie_id '
-      .' LEFT JOIN mm_leistungspreismatrix m '
-      .'  ON l.leistung_id = m.leistung_id '
+      .' FROM mm_leistungskatalog l '
+      . ' LEFT JOIN mm_leistungskategorie k ON l.leistungskategorie_id = k.leistungskategorie_id '
+      .'  LEFT JOIN mm_leistungspreismatrix m ON l.leistung_id = m.leistung_id '
       .' WHERE l.aktiv = "Ja" '
       .' ORDER BY kategorie, Bezeichnung, mx_von';
 
@@ -162,6 +161,13 @@ if ((int)$AS->arrInput['nach_gebaeude_id']) {
     $AS->arrInput['nach_gebaeude_text'] = $db->query_one(
         'SELECT CONCAT(adresse, ", ", stadtname) adr '
        .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['nach_gebaeude_id']);
+}
+if ((int)$AS->arrInput['antragsteller_uid']) {
+    $_kid = $db->query_one(
+        'SELECT personalnr '
+        .'FROM mm_user WHERE uid = ' . (int)$AS->arrInput['antragsteller_uid']);
+    $AS->arrInput['personalnr'] = $_kid;
+    $AS->arrInput['kid'] = $_kid;
 }
 
 $Tpl->assign("s", $s);

@@ -43,21 +43,6 @@
     <td style="padding:0;"><label style="display:block;width:auto;">Ort:</label></td>
     <td style="padding:0;">{$AS.ort|escape}</td>
   </tr>
-
-  <tr style="display:none;">
-    <td style="padding:0;"><label style="display:block;width:auto;">Wirtschaftseinheit:</label></td>
-    <td style="padding:0;">{$AS.gebaeude_text|escape}</td>
-  </tr>
-
-  <tr style="display:none;">
-    <td style="padding:0;"><label style="display:block;width:auto;">Etage:</label></td>
-    <td style="padding:0;">{$AS.etage}</td>
-  </tr>
-
-  <tr style="display:none;">
-    <td style="padding:0;"><label style="display:block;width:auto;">Raumnr:</label></td>
-    <td style="padding:0;">{$AS.raumnr}</td>
-  </tr>
 {*
   <tr style="display:none;">
     <td style="padding:0;"><label style="display:block;width:auto;">Kostenstelle:</label></td>
@@ -75,16 +60,6 @@
   <tr>
     <td style="padding:0;"><label style="background:#f00;border:0;display:block;width:auto;">Liefertermin:</label></td>
     <td style="padding:0;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</td>
-  </tr>
-	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
-  <tr style="display:none;">
-    <td style="padding:0;"><label style="display:block;width:auto;">Von:</label></td>
-    <td class="ort">{if $AS.von_gebaeude_text eq ""}{$AS.von_gebaeude_id|escape}{/if}{$AS.von_gebaeude_text|escape}</td>
-  </tr>
-	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
-  <tr style="display:none;">
-    <td style="padding:0;"><label style="display:block;width:auto;">Nach:</label></td>
-    <td class="zort">{if $AS.nach_gebaeude_text eq ""}{$AS.nach_gebaeude_id|escape}{/if}{$AS.nach_gebaeude_text|escape}</td>
   </tr>
 </table>
 <br>
@@ -108,7 +83,7 @@
 <table style="display:none">
   <tr>
     <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Umzug</label></td>
-    <td style="padding:0;width:300px;" class="options-onoff"><label class='{if $AS.umzug eq "Ja"}on{else}off{/if} active'>{$AS.umzug}</label></td>
+    <td style="padding:0;width:300px;" class="options-onoff"><label class='{if $AS.service eq "Ja"}on{else}off{/if} active'>{$AS.service}</label></td>
   </tr>
 </table>
 *}
