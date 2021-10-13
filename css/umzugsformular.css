@@ -163,21 +163,24 @@ input.AutoFill {
 	color:#f00;
 }
 input.UserInput {
-	background:#e9ffd9;
+    background:#e9ffd9;
 	color:#a52a2a;
 }
 
 #MyInfoBox {
-	border:1px solid #ff0000;
+    border:1px solid #0078dc;
+    previous-border:1px solid #ff0000;
 	padding:0;
 	background:#fff;
-        border-radius:2px;
+    border-radius:2px;
 }
 #MyInfoBox h3 {
 	color:#fff;
-	background:#f00;
+	background: #0078dc;
+    previous-background:#f00;
 	font-size:14px;
-	border-bottom:1px solid #f00;
+	border-bottom: 1px solid #0078dc;
+    previous-border-bottom:1px solid #f00;
 	padding:1px 15px 1px 5px;
 	margin:0;
 }

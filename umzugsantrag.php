@@ -87,7 +87,7 @@ switch($cmd) {
 
 		if ($reID) {
 			$msg.= "<strong>Ihre Bestellung wurde erfolgreich gesendet und wird von uns weiter bearbeitet.</strong><br>\n";
-			$msg.= "Den Status Ihres Auftrags können Sie über das Menü 'Bestellungen->Meine Bestellungen' einsehen!<br>\n";
+			$msg.= "Den Status Ihres Auftrags können Sie unter <a href='/?s=kantraege'>Meine Bestellungen</a> einsehen!<br>\n";
 			$msg.= "<br>\n";
 			$msg.= "<strong><a href=\"?s=Umzug\">Zur&uuml;ck zur &Uuml;bersicht</a></strong><br>\n";
 			$LoadScript.= "if (typeof(umzugsantrag_close)==\"function\") umzugsantrag_close(\"".json_escape($msg)."\");\n";
