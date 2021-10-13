@@ -49,13 +49,24 @@ $limit = getRequest("limit", 50);
 $ofld = getRequest("ofld", "");
 $odir = getRequest("odir", "ASC");
 $View = getRequest("View", "Antraege");
-$trackGetQuery = "";
+$trackGetQuery = "&sendquery=1";
 
+$originOFld = $ofld;
 //echo "<pre>".print_r($q,1)."</pre>\n";
 //if (is_array($q)) foreach($q as $k => $v) echo "case \"".$k."\":<br>\n";
 if ($ofld === 'TicketID') {
     $ofld = 'a.aid';
 }
+if (in_array($ofld, ['ort', 'PLZ', 'Land', 'Vorname', 'Name'])) {
+	$ofld = 'a.' . strtolower($ofld);
+} elseif($ofld === 'Liefertermin') {
+	$ofld = 'a.umzugstermin';
+} elseif($ofld === 'Status') {
+	$ofld = 'a.umzugsstatus';
+} elseif($ofld === 'kid') {
+	$ofld = 'u.personalnr';
+}
+
 if ($ofld && isset($searchFields[$ofld])) {
 	$orderBy = "ORDER BY ".$ofld." ".($odir!="DESC" ? "ASC" : "DESC");
 } else {
@@ -155,8 +166,12 @@ if ($sendquery) {
 		$row = $db->query_singlerow($sql);
 		$num_all = $row["count"];
 		
-		$sql = "Select a.aid, a.aid AS \"TicketID\", a.umzugstermin, a.ort, a.plz, a.strasse, a.land, a.name, a.umzugsstatus\n";
-		$sql.= "FROM `".$_TABLE["umzugsantrag"]."` a LEFT JOIN `".$_TABLE["umzugsmitarbeiter"]."` m USING (aid) \n";
+		$sql = "Select a.aid, a.aid AS \"TicketID\", u.personalnr AS kid, a.vorname AS Vorname, a.name AS Name, a.ort AS Ort, a.plz AS PLZ, a.strasse AS Strasse, "
+			. "a.land AS Land, a.umzugstermin AS Liefertermin, a.umzugsstatus AS Status\n";
+		$sql.= "FROM `" . $_TABLE["umzugsantrag"] . "` a "
+			. "LEFT JOIN `".$_TABLE["user"]."` u ON (a.antragsteller_uid = u.uid) \n"
+			. "LEFT JOIN `".$_TABLE["umzugsmitarbeiter"]."` m USING (aid) \n"
+		;
 		$sql.= "WHERE 1\n";
 		if ($sqlWhereUA) {
 		    $sql.= " AND ".$sqlWhereUA."\n";
@@ -173,7 +188,7 @@ if ($sendquery) {
 
 		$rows = $db->query_rows($sql);
 		$num = count($rows);
-		//echo "<pre>".print_r($rows,1)."</pre>\n";
+		// echo "<pre>".print_r($sql,1)."</pre>\n";
 	} else {
 		$sql = "Select COUNT(*) count\n";
 		$sql.= "FROM `".$_TABLE["umzugsmitarbeiter"]."` m LEFT JOIN `".$_TABLE["umzugsantrag"]."` a USING(aid) \n";
@@ -188,7 +203,10 @@ if ($sendquery) {
 		$num_all = $row["count"];
 		
 		$sql = "Select a.aid, a.umzugstermin, a.umzugsstatus, m.name, m.vorname, m.ort, m.gebaeude, m.etage, m.raumnr, m.ziel_ort, m.ziel_gebaeude, m.ziel_etage, m.ziel_raumnr\n";
-		$sql.= "FROM `".$_TABLE["umzugsmitarbeiter"]."` m LEFT JOIN `".$_TABLE["umzugsantrag"]."` a USING (aid) \n";
+		$sql.= "FROM `".$_TABLE["umzugsmitarbeiter"] . "` AS m"
+			."` LEFT JOIN `".$_TABLE["umzugsantrag"]."` a USING (aid) \n"
+		//	."` LEFT JOIN `".$_TABLE["user"]."` a ON (a.antragsteller_uid = user.uid) \n"
+		;
 		$sql.= "WHERE 1\n";
 		if ($sqlWhereMa) {
 		    $sql.= " AND ".$sqlWhereMa."\n";
@@ -227,7 +245,7 @@ if ($sendquery) {
 		$rows2Tbl.= "<td>#</td>";
 		$rows2Tbl.= "<td colspan=1>Aktion</td>";
 		foreach($rows[0] as $fld => $v) {
-			if ($fld!="aid") $rows2Tbl.= "<td><a href=\"".$ListBaseLink."&ofld=$fld&odir=".listbrowser::get_oDir($fld, $ofld, $odir)."\">".$fld."</a></td>";
+			if ($fld!="aid") $rows2Tbl.= "<td><a href=\"".$ListBaseLink."&ofld=$fld&odir=".listbrowser::get_oDir($fld, $originOFld, $odir)."\">".$fld."</a></td>";
 		}
 		$rows2Tbl.= "</thead>\n";
 		$rows2Tbl.= "<tbody>\n";

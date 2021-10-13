@@ -38,7 +38,7 @@
 }
 .tblList thead a,
 .tblList thead a:visited {
-    color:#fff;
+	color:#333;
     font-weight:bold;
 }
 .tblList thead a,
