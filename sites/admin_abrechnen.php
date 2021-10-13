@@ -89,11 +89,12 @@ elseif ($order == 'aid') {
     $sqlOrderFld = 'a.aid';
 }
 
-$sql = 'SELECT a.*, '
+$sql = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
       .' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
       .' u.nachname, u.nachname stom, '
       .' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe'
       .' FROM mm_umzuege a '
+      .' LEFT JOIN mm_user user ON (a.antragsteller_uid = user.uid) '
       .' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id '
       .' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid '
       .' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) '
