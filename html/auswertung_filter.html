@@ -76,10 +76,11 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
                     <th class="order" data-fld="ort">Lieferort</th>
                     <th class="order" data-fld="PLZ">PLZ</th>
                     <th class="order" data-fld="strasse">Stra&szlig;e</th>
-                    <th class="order" data-fld="antragsdatum">Bestellung</th>
-                    <th class="order" data-fld="umzugstermin">Lieferdatum</th>
-                    <th class="order" data-fld="abgeschlossen_am">Abschlussdatum</th>
-                    <th class="order" data-fld="berechnet_am">Rechnungsdatum</th>
+                    <th class="order" data-fld="service">Service</th>
+                    <th class="order" data-fld="antragsdatum">Bestellt</th>
+                    <th class="order" data-fld="umzugstermin">Geliefert</th>
+                    <th class="order" data-fld="abgeschlossen_am">Abschluss</th>
+                    <th class="order" data-fld="berechnet_am">RechDatum</th>
                     <th class="order" data-fld="vorgangsnummer">Rechnungsnr</th>
                     <th class="order" data-fld="summe">Summe</th>
                 </tr>
@@ -90,6 +91,7 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
                     <th><input name="q[ort]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.ort}{/if}"></th>
                     <th><input name="q[plz]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.plz}{/if}"></th>
                     <th><input name="q[strasse]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.strasse}{/if}"></th>
+                    <th><input name="q[service]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.service}{/if}"></th>
                     <th><input name="q[antragsdatum]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.antragsdatum}{/if}"></th>
                     <th><input name="q[umzugstermin]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.umzugstermin}{/if}"></th>
                     <th><input name="q[abgeschlossen_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.abgeschlossen_am}{/if}"></th>
@@ -103,14 +105,15 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
                 <tr>
                     <td><a href="?s={$site_antrag}&id={$item.aid}">{$item.aid}</a></td>
                     <td>{$item.kid}</td>
-                    <td>{$item.land}</td>
+                    <td>{if $item.land eq "Deutschland"}DE{elseif $item.land eq "Niederlande"}NL{else}{$item.land}{/if}</td>
                     <td>{$item.ort}</td>
                     <td>{$item.plz}</td>
                     <td>{$item.strasse}</td>
-                    <td>{$item.antragsdatum}</td>
-                    <td>{$item.umzugstermin}</td>
-                    <td>{$item.abgeschlossen_am}</td>
-                    <td>{$item.berechnet_am}</td>
+                    <td>{$item.service}</td>
+                    <td>{$item.antragsdatum|date_format:"%d.%m.%Y"}</td>
+                    <td>{$item.umzugstermin|date_format:"%d.%m.%Y"}</td>
+                    <td>{$item.abgeschlossen_am|date_format:"%d.%m.%Y"}</td>
+                    <td>{$item.berechnet_am|date_format:"%d.%m.%Y"}</td>
                     <td>{$item.vorgangsnummer}</td>
                     <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
                 </tr>

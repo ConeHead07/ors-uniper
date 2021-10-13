@@ -60,6 +60,7 @@ $validFields = array(
     'Wirtschaftseinheit',
     'kostenstelle',
     'planonnr',
+    'service',
     'umzugstermin',
     'abgeschlossen_am',
     'berechnet_am',
@@ -114,6 +115,7 @@ if ($order == 'Wirtschaftseinheit') {
 elseif ($order == 'aid') {
     $sqlOrderFld = 'a.aid';
 }
+
 
 $sql = 'SELECT a.*, '
       .' ua.personalnr AS kid,'
