@@ -9,6 +9,13 @@ if (empty($datumvon)) {
     $timeMin1Month = strtotime('-1 month');
     $datumvon = date('Y-m-01', $timeMin1Month);
 }
+if (empty($datumbis)) {
+    $lastDay = date('t');
+    if (strlen($lastDay) < 2) {
+        $lastDay = '0' . $lastDay;
+    }
+    $datumbis = date('Y-m-t');
+}
 
 
 $order = (!empty($_REQUEST['order']))   ? $_REQUEST['order'] : '';
