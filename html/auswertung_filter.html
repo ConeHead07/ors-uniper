@@ -102,7 +102,6 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
             {foreach name=AList item=item from=$Auftraege}
                 <tr>
                     <td><a href="?s={$site_antrag}&id={$item.aid}">{$item.aid}</a></td>
-                    <td>{$item.vorgangsnummer}</td>
                     <td>{$item.kid}</td>
                     <td>{$item.land}</td>
                     <td>{$item.ort}</td>
@@ -112,6 +111,7 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
                     <td>{$item.umzugstermin}</td>
                     <td>{$item.abgeschlossen_am}</td>
                     <td>{$item.berechnet_am}</td>
+                    <td>{$item.vorgangsnummer}</td>
                     <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
                 </tr>
                 {/foreach}
