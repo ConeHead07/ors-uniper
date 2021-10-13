@@ -11,7 +11,7 @@ $offset = getRequest("offset", 0);
 $limit = getRequest("limit", 50);
 $ofld = getRequest("ofld", "");
 $odir = getRequest("odir", "");
-$cat = getRequest("cat", "bearbeitung");
+$cat = getRequest("cat", "gesendet");
 $allusers = (int)getRequest('allusers', 0);
 
 $isMH = (preg_match('/admin|umzugsteam/', $user["gruppe"]));

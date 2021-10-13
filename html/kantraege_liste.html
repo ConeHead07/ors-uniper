@@ -12,24 +12,17 @@
 <!-- TAB NAVIGATION ITEMS BEGIN --> 
 <div id="ID128585" class="divTabbedNavigation" style="width:100%;"> 
 <div class="divTabbedList" style="width:100%;"> 
-<ul> 
-        <li {if $cat eq "bearbeitung"}class="activeTab"{/if}><a href="?s={$s}&cat=bearbeitung" style="width:160px">Noch nicht Gesendete</a></li> 
-        {*
-        <li {if $cat eq "zurueckgegeben"}class="activeTab"{/if}><a href="?s={$s}&cat=zurueckgegeben" class="d-none" style="width:160px">Zu korrigierende Antr&auml;ge</a></li>
-        *}
-        <li {if $cat eq "gesendet"}class="activeTab"{/if}><a href="?s={$s}&cat=gesendet" style="width:180px">Gesendet</a></li>
+<ul>
+  {*
+  <li {if $cat eq "zurueckgegeben"}class="activeTab"{/if}><a href="?s={$s}&cat=zurueckgegeben" class="d-none" style="width:160px">Zu korrigierende Antr&auml;ge</a></li>
+  *}
+  <li {if $cat eq "gesendet"}class="activeTab"{/if}><a href="?s={$s}&cat=gesendet" style="width:180px">Gesendet</a></li>
+  <li {if $cat eq "bearbeitung"}class="activeTab"{/if}><a href="?s={$s}&cat=bearbeitung" style="width:220px">Noch nicht gesendete Aufträge</a></li>
   {*
         <li {if $cat eq "aktiv"}class="activeTab"{/if}><a href="?s={$s}&cat=aktiv" style="width:160px">Aktiv</a></li>
         <li {if $cat eq "geschlossen"}class="activeTab"{/if}><a href="?s={$s}&cat=geschlossen" style="width:140px">Abgeschlossen</a></li>
   *}
         <li><a href="#ID128586" style="width:0px;display:none;">&nbsp;</a></li><!--  -->
-        <!-- <li><a href="#ID128587">Neue Anträge</a></li>
-        <li><a href="#ID128586">Aktive Aufträgee</a></li>
-        <li><a href="#ID128586">Abgeschlossene A. / Bewertungen</a></li>
-        <li><a href="#ID128586">Lagerbestand</a></li>
-        <li><a href="#ID128586">Infos nachlegen</a></li>
-        <li><a href="#ID128586">E-Mails an Beteiligte senden</a></li>
-        <li><a href="#ID128586">Gesprächsnotizen</a></li> -->
 </ul> 
 <div class="clearLeft"></div> 
 </div>
