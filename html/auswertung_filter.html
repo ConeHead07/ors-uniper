@@ -71,7 +71,6 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
             <thead>
                 <tr>
                     <th class="order" data-fld="aid">ID</th>
-                    <th class="order" data-fld="vorgangsnummer">WWS</th>
                     <th class="order" data-fld="kid">KID</th>
                     <th class="order" data-fld="land">Land</th>
                     <th class="order" data-fld="ort">Lieferort</th>
@@ -81,11 +80,11 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
                     <th class="order" data-fld="umzugstermin">Lieferdatum</th>
                     <th class="order" data-fld="abgeschlossen_am">Abschlussdatum</th>
                     <th class="order" data-fld="berechnet_am">Rechnungsdatum</th>
+                    <th class="order" data-fld="vorgangsnummer">Rechnungsnr</th>
                     <th class="order" data-fld="summe">Summe</th>
                 </tr>
                 <tr>
                     <th><input name="q[aid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></th>
-                    <th><input name="q[vorgangsnummer]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.vorgangsnummer}{/if}"></th>
                     <th><input name="q[kid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.kid}{/if}"></th>
                     <th><input name="q[land]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.land}{/if}"></th>
                     <th><input name="q[ort]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.ort}{/if}"></th>
@@ -95,6 +94,7 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
                     <th><input name="q[umzugstermin]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.umzugstermin}{/if}"></th>
                     <th><input name="q[abgeschlossen_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.abgeschlossen_am}{/if}"></th>
                     <th><input name="q[berechnet_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.berechnet_am}{/if}"></th>
+                    <th><input name="q[vorgangsnummer]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.vorgangsnummer}{/if}"></th>
                     <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.summe}{/if}"></th>
                 </tr>
             </thead>
