@@ -5,6 +5,11 @@ $Tpl = new myTplEngine();
 $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
 
+if (empty($datumvon)) {
+    $timeMin1Month = strtotime('-1 month');
+    $datumvon = date('Y-m-01', $timeMin1Month);
+}
+
 
 $order = (!empty($_REQUEST['order']))   ? $_REQUEST['order'] : '';
 $queriedorder = (!empty($_REQUEST['queriedorder'])) ? $_REQUEST['queriedorder'] : '';
