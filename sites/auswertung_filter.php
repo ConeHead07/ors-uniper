@@ -53,17 +53,23 @@ foreach($kws as $i => $_kw) {
 
 $validFields = array(
     'aid',
+    'kid',
+    'land',
+    'ort',
+    'plz',
+    'strasse',
+    'antragsdatum',
+    'berechnet_am',
     'vorgangsnummer',
+    'service',
+    'umzugstermin',
     'nachname',
     'bundesland',
     'stadtname',
     'Wirtschaftseinheit',
     'kostenstelle',
     'planonnr',
-    'service',
-    'umzugstermin',
     'abgeschlossen_am',
-    'berechnet_am',
     'summe',
 );
 
