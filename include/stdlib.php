@@ -162,7 +162,7 @@ function format_fstat($file) {
 	} else {
 		$s = round($s/(1024*1024*1024),1)."GB";
 	}
-	return $d."|".$s;
+	return $d . " | " . $s;
 }}
 
 if (!function_exists("format_file_size")) {

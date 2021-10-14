@@ -3,6 +3,15 @@ require(dirname(__FILE__)."/../header.php");
 //require(dirname(__FILE__)."/umzugsantrag_stdlib.php");
 
 $conf_gebaeude_file = dirname(__FILE__)."/../textfiles/conf.gebaeude_oc.cnf";
+/*
+# Reports für Gebäude aktivieren: J für Ja, N für Nein
+
+NO_BER_ATT_E = J
+NO_BER_ATT_M = J
+NO_STA_RUH_5 = J
+NO_STA_RUH_5A = J
+NW_DOR_KAM = J
+ */
 $CNF_GP = array();
 if (file_exists($conf_gebaeude_file)) {
 	$CNF_GP = conf_load($conf_gebaeude_file);

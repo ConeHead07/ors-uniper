@@ -199,7 +199,7 @@ height:256px;
 }
 .height135 .divInlay {
   /* overflow: hidden; */
-height: 110px;
+  height: 110px;
 }
 .height135 object,
 .height135 embed {
@@ -759,6 +759,7 @@ div.divModuleBasic div.divInlay h6 {
   line-height:normal;
 }
 div.divInlay {
+  padding-bottom: 1rem;
   border: 1px solid;
   border-top-width: 0px;
   border-bottom: none;
@@ -827,10 +828,10 @@ div.divInlay ul.ulLinkList {
 }
 /* INLAY WITH PADDING */
 div.divModuleBasic.padding6px div.divInlay {
-  padding: 0px 5px 0px 5px;
+  padding: 0px 5px .5rem 5px;
 }
 div.divModuleBasic.padding12px div.divInlay {
-  padding: 0px 11px 0px 11px;
+  padding: 0px 11px 1rem 11px;
 }
 div.divModuleBasic.padding6px div.divInlay.noPadding {
   padding: 0px 0px 0px 0px;

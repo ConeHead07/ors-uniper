@@ -146,9 +146,6 @@ $sql = 'SELECT a.*, '
       .'  (umzugsstatus IN ("genehmigt", "bestaetigt") '
       .'   OR (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja") '
       .'  )'
-//      .' AND abgeschlossen = "Ja" '
-//      .' AND abgeschlossen_am IS NOT NULL AND abgeschlossen_am BETWEEN :von AND :bis '
-//      .' AND berechnet_am IS NOT NULL AND '
       .( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
       .' GROUP BY a.aid '
       .( count($having) ? ' HAVING (' . implode(' AND ', $having) . ') ' : '')

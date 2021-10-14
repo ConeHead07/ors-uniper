@@ -15,33 +15,6 @@ function get_umzugsblatt_verteiler($antragsOrt, $antragsGebaeude) {
 	
 	$Region = "";
 	$verteilerFile = "";
-	switch($antragsOrt) {
-		case "Ratingen":
-		$verteilerFile = "email_verteiler_umzugsblatt_Ratingen.txt";
-		break;
-		
-		case "Essen":
-		case "Dortmund":
-		$verteilerFile = "email_verteiler_umzugsblatt_Essen_Dortmund.txt";
-		break;
-	}
-	if (!$verteilerFile) {
-		list($Region) = explode("_", $antragsGebaeude);
-		
-		switch($Region) {
-			case "ZV":
-			case "N":
-			case "NO":
-			case "NW":
-			case "O":
-			case "RM":
-			case "S":
-			case "SW":
-			case "W":
-			$verteilerFile = "email_verteiler_umzugsblatt_".$Region.".txt";
-			break;
-		}
-	}
 	
 	if (!$verteilerFile) {
 		echo "#".__LINE__." antragsOrt:$antragsOrt; antragsGebaeude:$antragsGebaeude; Region:$Region; verteilerFile:$verteilerFile<br>\n";

@@ -2,9 +2,49 @@
 require(dirname(__FILE__)."/../header.php");
 //require(dirname(__FILE__)."/umzugsantrag_stdlib.php");
 $conf_etagen_flaechen_file = dirname(__FILE__)."/../textfiles/conf.etagen_flaechen.cnf";
+/*
+# Kommawerte in Punktnoation angeben Bsp: 105.5 statt 105,5
+
+[NO_BER_ATT_E]
+OG03 = 1337
+OG04 = 1236
+
+[NO_BER_ATT_M]
+EG00 = 847
+OG01 = 1234
+OG02 = 1279
+OG03 = 1287
+OG04 = 1230
+ */
 $conf_etagen_ausblenden_file = dirname(__FILE__)."/../textfiles/conf.etagen_ausblenden_nia.cnf";
+/*
+# Etagen, die nicht im NIA-Report aufgenommen werden sollen, muessen zeilenweise
+# unter dem in eckigen Klammen gesetzten [Gebäudenamen] aufgeführt werden
+# Mit Raute beginnende Zeilen werden werden beim Auslesen der Konfiguration ignoriert
+
+[NO_BER_ATT_E]
+#OG03
+
+[NO_BER_ATT_M]
+
+[NO_STA_RUH_5]
+
+[NO_STA_RUH_5A]
+
+ */
 
 $conf_gebaeude_file = dirname(__FILE__)."/../textfiles/conf.gebaeude.cnf";
+/*
+# Reports für Gebäude aktivieren: J für Ja, N für Nein
+
+NO_BER_ATT_E = J
+NO_BER_ATT_M = J
+NO_STA_RUH_5 = J
+NO_STA_RUH_5A = J
+NW_DOR_KAM = J
+NW_KAS_KOE = N
+N__BRE_STR = J
+ */
 $CNF_GP = array();
 if (file_exists($conf_gebaeude_file)) {
 	$CNF_GP = conf_load($conf_gebaeude_file);
