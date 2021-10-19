@@ -8,7 +8,9 @@ if (basename($_SERVER["PHP_SELF"]) == basename(__FILE__)) {
 }
 
 require($MConf["AppRoot"]."sites".DS."umzugsantrag_datenblatt.php");
-if (empty($_CONF["umzugsanlagen"])) require_once($InclBaseDir."umzugsanlagen.inc.php");
+if (empty($_CONF["umzugsanlagen"])) {
+    require_once($InclBaseDir."umzugsanlagen.inc.php");
+}
 
 function get_umzugsblatt_verteiler($antragsOrt, $antragsGebaeude) {
     die('#'.__LINE__ . ' ' . __FUNCTION__ . '(' . print_r(func_get_args(),1) . ')');
@@ -39,46 +41,95 @@ function get_usersByAid($AID) {
 	global $connid;
 	global $user;
 	global $_TABLE;
-        
-        $row = $db->query_row(
-                'SELECT gebaeude, antragsteller_uid ' 
-               .' FROM ' . $_TABLE['umzugsantrag'] . ' ' . PHP_EOL
-               .' WHERE aid = ' . (int)$AID
-                
-        );
-        if (!$row) return null;
-        $gebaeudeId = $row['gebaeude'];
-        $antrag_uid = $row['antragsteller_uid'];
-//        die($db->lastQuery . PHP_EOL . '<br>' . print_r($row, 1));
-        
+
+    $row = $db->query_row(
+        'SELECT gebaeude, antragsteller_uid '
+        . ' FROM ' . $_TABLE['umzugsantrag'] . ' ' . PHP_EOL
+        . ' WHERE aid = ' . (int)$AID
+
+    );
+    if (!$row) {
+        return null;
+    }
+    $gebaeudeId = $row['gebaeude'];
+    $antrag_uid = $row['antragsteller_uid'];
+
+	$checkUsersByGebaeude = false;
+
+	if (!$checkUsersByGebaeude) {
         $users = array(
             'antragsteller' => $db->query_row(
-                    'SELECT * FROM  mm_user ' . PHP_EOL
-                   .' WHERE uid = ' . (int)$antrag_uid
+                'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' email AS `to` '
+                . ' FROM  mm_user ' . PHP_EOL
+                . ' WHERE freigegeben = "Ja" AND uid = ' . (int)$antrag_uid
+            ),
+            'admins' => $db->query_rows(
+                'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' email AS `to` '
+                . ' FROM  mm_user ' . PHP_EOL
+                . ' WHERE freigegeben = "Ja" AND gruppe IN ("admin") '
+            ),
+            'properties' => $db->query_rows(
+                'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' email AS `to` '
+                . ' FROM  mm_user ' . PHP_EOL
+                . ' WHERE freigegeben = "Ja" AND gruppe IN ("kunde-report", "v-property", "property") '
+            ),
+        );
+    } else {
+//        die($db->lastQuery . PHP_EOL . '<br>' . print_r($row, 1));
+
+        // user.gruppe enum('user','umzugsteam','kunde_report','admin_standort','admin_gesamt','admin','v-mitarbeiter','v-property','mertens')
+        $users = array(
+            'antragsteller' => $db->query_row(
+                'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' email AS to'
+                . ' FROM  mm_user ' . PHP_EOL
+                . ' WHERE uid = ' . (int)$antrag_uid
+            ),
+            'admins' => $db->query_rows(
+                'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' email AS to'
+                . ' FROM  mm_user ' . PHP_EOL
+                . ' WHERE gruppe IN ("admin") '
+            ),
+            'properties' => $db->query_rows(
+                'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' email AS to'
+                . ' FROM  mm_user ' . PHP_EOL
+                . ' WHERE gruppe IN ("v-property", "property") '
             ),
             'regionalmanager' => $db->query_row(
-                    'SELECT u.* FROM mm_stamm_gebaeude g ' . PHP_EOL
-                   .' LEFT JOIN mm_user u ON (g.regionalmanager_uid = u.uid)' . PHP_EOL 
-                   .' WHERE id = ' . (int)$gebaeudeId
+                'SELECT u.* FROM mm_stamm_gebaeude g ' . PHP_EOL
+                . ' LEFT JOIN mm_user u ON (g.regionalmanager_uid = u.uid)' . PHP_EOL
+                . ' WHERE id = ' . (int)$gebaeudeId
             ),
             'standortmanager' => $db->query_row(
-                    'SELECT u.* FROM mm_stamm_gebaeude g ' . PHP_EOL
-                   .' LEFT JOIN mm_user u ON (g.standortmanager_uid = u.uid)' . PHP_EOL 
-                   .' WHERE id = ' . (int)$gebaeudeId
+                'SELECT u.* FROM mm_stamm_gebaeude g ' . PHP_EOL
+                . ' LEFT JOIN mm_user u ON (g.standortmanager_uid = u.uid)' . PHP_EOL
+                . ' WHERE id = ' . (int)$gebaeudeId
             ),
             'objektleiter' => $db->query_row(
-                    'SELECT u.* FROM mm_stamm_gebaeude g ' . PHP_EOL
-                   .' LEFT JOIN mm_user u ON (g.objektleiter_uid = u.uid)' . PHP_EOL 
-                   .' WHERE id = ' . (int)$gebaeudeId
+                'SELECT u.* FROM mm_stamm_gebaeude g ' . PHP_EOL
+                . ' LEFT JOIN mm_user u ON (g.objektleiter_uid = u.uid)' . PHP_EOL
+                . ' WHERE id = ' . (int)$gebaeudeId
             ),
             'mertenshenk' => $db->query_row(
-                    'SELECT u.* FROM mm_stamm_gebaeude g ' . PHP_EOL
-                   .' LEFT JOIN mm_user u ON (g.mertenshenk_uid = u.uid)' . PHP_EOL 
-                   .' WHERE id = ' . (int)$gebaeudeId
-            )
+                'SELECT u.* FROM mm_stamm_gebaeude g ' . PHP_EOL
+                . ' LEFT JOIN mm_user u ON (g.mertenshenk_uid = u.uid)' . PHP_EOL
+                . ' WHERE id = ' . (int)$gebaeudeId
+            ),
         );
-        
-        return $users;
+    }
+
+    return $users;
 }
 
 function get_umzugsverteilerById($AID) {
@@ -274,12 +325,29 @@ function get_standort_admin_mail($antragsOrt, $antragsGebaeude) {
 	return $aAdminMailTo;
 }
 
-function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false) 
+function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false, $authorUser = [])
 {
     global $aHeader;
+    global $user;
+    $arg0 = $aUserTo;
+
+    if (!is_array($authorUser) || count(array_keys($authorUser)) === 0) {
+        $authorUser = $user;
+    }
 
 	if (!isset($aUserTo[0]['email'])) {
-        die('Für die Statusmail konnten keine E-Mail-Empfänger ermittelt werden!');
+	    $error = 'Für die Statusmail konnten keine E-Mail-Empfänger ermittelt werden!';
+	    $stack = [];
+	    try {
+	        throw new \Exception('Debug-Stack-Trace');
+        } catch(\Exception $e) {
+	        $stack = $e->getTrace();
+        }
+        $line = __LINE__;
+        $file = __FILE__;
+        $debugInfo = print_r(compact('error', 'line', 'file', 'arg0', 'aUserTo', 'tplMail', 'rplVars', 'authorUser', 'stack'), 1);
+	    error_log($debugInfo);
+        die($debugInfo);
 	}
 
 	$lines = explode("\n", $tplMail);
@@ -339,8 +407,8 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false)
 	return $success && $iNumSentTo > 0;
 }
 
-function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
-//        throw new Exception('#'.__LINE__ . ' ' . __FUNCTION__ . '(' . print_r(func_get_args(),1) . ')');
+function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) {
+//  throw new Exception('#'.__LINE__ . ' ' . __FUNCTION__ . '(' . print_r(func_get_args(),1) . ')');
 	global $db;
 	global $error;
 	global $msg;
@@ -349,10 +417,14 @@ function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
 	global $MConf;
 	global $connid;
 	global $user;
+
+	if (!is_array($authorUser) || count(array_keys($authorUser)) === 0) {
+	    $authorUser = $user;
+    }
     
 	$users = get_usersByAid($AID);
         
-	$TextBaseDir = $MConf["AppRoot"].$MConf["Texte_Dir"];
+	$TextBaseDir = $MConf["AppRoot"] . $MConf["Texte_Dir"];
         
 	if (!$AID) {
 		echo '#' . __LINE__ . ' AID: ' . $AID . '<br>' . PHP_EOL;
@@ -366,6 +438,7 @@ function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
 	
 	$AS->loadDbdata();
 	$AS->dbdataToInput();
+	$auftragsDaten = $AS->arrDbdata;
         
 	if (empty($AS->arrInput['angeboten_am']) && $status === "genehmigt") {
 		$status = 'bestaetigt';
@@ -381,22 +454,13 @@ function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
 				"Bemerkung" => $bemerkung,
 			)
 		);
-        
 	$userMailTo[] = $users['antragsteller'];
-        
-	$aPropertyMailTo = array(
-            $users['antragsteller'],
-//            $users['regionalmanager'],
-//            $users['standortmanager'],
-//            $users['objektleiter'],
-	);
+    // die('#' . __LINE__ . '' . __FILE__ . print_r(compact('AID', 'userMailTo', 'users', 'status', 'value')));
 	
     // Leider noch doppelte Abfrage aus evtll. Kompatibilitätsgründen, eigentlich unnötig, Korrektur steht noch an !!!
-	if ($users['antragsteller']['gruppe'] === 'kunde_report') {
-		$aPropertyMailTo[] = $users['antragsteller'];
-	} else {
-		$aPropertyMailTo[] = $users['standortmanager'];
-	}
+	$aPropertyMailTo = $users['properties'];
+
+	$aAdminMailTo = $users['admins'];
         
 	$aAdminMailTo[] = array(
 	    "to"=>"service-uniper@mertens.ag",
@@ -405,312 +469,372 @@ function umzugsantrag_mailinform_dussmann($AID, $status="neu", $value) {
         "vorname"=>"NewNormalOffice",
         'emails_cc' => ''
     );
-	if ($users['mertenshenk'] && $users['mertenshenk']['uid']) {
-		$aAdminMailTo[] = $users['mertenshenk'];
-	}
-	$dbg = 0;	
+
+	$dbg = 0;
+	$getDebugSteuerinfosAsPlaintext = function($status, $tplFile, $authorUser, $aMailTo, $_configNameEnable) {
+	    global $MConf;
+        $txt = "\n\nBenachrichtungs-Steuerinfos:\n";
+        $txt.= "- $_configNameEnable: " . (isset($MConf[$_configNameEnable]) ? json_encode($MConf[$_configNameEnable]) : 'UNDEFINED') . "\n";
+        $txt.= "- Status: $status\n";
+        $txt.= "- Template: $tplFile\n";
+        $txt.= "- Ersteller: \n";
+        $txt.= "- - uid: "    . ($authorUser['uid'] ?? 'UNDEFINED')    . "\n";
+        $txt.= "- - user: "   . ($authorUser['user'] ?? 'UNDEFINED')   . "\n";
+        $txt.= "- - email: "  . ($authorUser['email'] ?? 'UNDEFINED')  . "\n";
+        $txt.= "- - gruppe: " . ($authorUser['gruppe'] ?? 'UNDEFINED') . "\n";
+        $txt.= "- Empfänger: \n";
+        foreach($aMailTo as $_m) {
+            $txt.= "- - "
+                . ($_m['uid'] ?? 'UNDEFINED') . ' '
+                . ($_m['user'] ?? 'UNDEFINED') . ' '
+                . ($_m['email'] ?? 'UNDEFINED') . ' '
+                . ($_m['gruppe'] ?? 'UNDEFINED') . ' '
+                . "\n";
+        }
+        return $txt;
+    };
+    $return = true;
 	switch($status) {
         case "neuebemerkung":
             $tplFile = $TextBaseDir."statusmail_umzug_bemerkung.txt";
-            if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-            $tplMail = file_get_contents($tplFile);
-            $rplVars["StatusLink"] = $MConf["WebRoot"]."?s=pantrag&id=".$AID;
-            $rplVars["neuebemerkung"] = $value;
-            send_status_mail($userMailTo, $tplMail, $rplVars);
+            $_configNameEnable = 'notify_user_bemerkung';
+            if ((int)$authorUser['uid'] !== (int)$auftragsDaten['antragsteller_uid']) {
+                $_configNameEnable.= '_selfcreated';
+            }
+            if ($MConf[$_configNameEnable]) {
+                $tplMail = file_get_contents($tplFile);
+                $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=pantrag&id=" . $AID;
+                $rplVars["neuebemerkung"] = $value;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $userMailTo, $_configNameEnable);
+                }
+                if ($dbg) {
+                    $LINE = __LINE__;
+                    $FILE = __FILE__;
+                    print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
+                }
+                $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+            }
 
             $tplFile = $TextBaseDir."statusmail_umzug_bemerkung.txt";
-            if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-            $tplMail = file_get_contents($tplFile);
-            $rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
-            return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+            $_configNameEnable = 'notify_mertens_bemerkung';
+            if ($authorUser['gruppe'] !== 'user') {
+                $_configNameEnable.= '_selfcreated';
+            }
+            if ($MConf[$_configNameEnable]) {
+                $tplMail = file_get_contents($tplFile);
+                $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=aantrag&id=" . $AID;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aAdminMailTo, $_configNameEnable);
+                }
+                if ($dbg) {
+                    $LINE = __LINE__;
+                    $FILE = __FILE__;
+                    print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
+                }
+                return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+            }
+            return $return;
             break;
 
 		case "neu":
 		case "beantragt":
 			$tplFile = $TextBaseDir."statusmail_umzug_neu.txt";
-			if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-			$tplMail = file_get_contents($tplFile);
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=pantrag&id=".$AID;
-			send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
-            
-			$tplFile = $TextBaseDir."statusmail_umzug_zurpruefung.txt";
-			if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-			$tplMail = file_get_contents($tplFile);
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=" . $AID;
-			return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+            $_configNameEnable = 'notify_property_beantragt';
+			if (count($aPropertyMailTo) && $MConf[$_configNameEnable]) {
+                if ($dbg) echo '#' . __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ? 'Ja' : 'Nein') . PHP_EOL;
+                $tplMail = file_get_contents($tplFile);
+                $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=pantrag&id=" . $AID;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aPropertyMailTo, $_configNameEnable);
+                }
+                $return = send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+            }
+
+            $_configNameEnable = 'notify_mertens_beantragt';
+			if ($MConf[$_configNameEnable]) {
+                $tplFile = $TextBaseDir . "statusmail_umzug_zurpruefung.txt";
+                $tplMail = file_get_contents($tplFile);
+                $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=aantrag&id=" . $AID;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aAdminMailTo, $_configNameEnable);
+                }
+                if ($dbg) {
+                    $LINE = __LINE__;
+                    $FILE = __FILE__;
+                    print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
+                }
+                return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+            }
+            return $return;
+			break;
             
 		case "erneutpruefen":
-			$tplFile = $TextBaseDir."statusmail_umzug_zurerneutenpruefung.txt";
-			if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-			$tplMail = file_get_contents($tplFile);
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
-			return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+            $_configNameEnable = 'notify_mertens_erneutpruefen';
+		    if ($MConf[$_configNameEnable]) {
+                $tplFile = $TextBaseDir . "statusmail_umzug_zurerneutenpruefung.txt";
+                $tplMail = file_get_contents($tplFile);
+                $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=aantrag&id=" . $AID;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aAdminMailTo, $_configNameEnable);
+                }
+                if ($dbg) {
+                    $LINE = __LINE__;
+                    $FILE = __FILE__;
+                    print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
+                }
+                return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+            }
+            return $return;
+		    break;
             
 		case 'angeboten':
-			$tplFile = $TextBaseDir."statusmail_umzug_zurgenehmigung.txt";
-			if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-			$tplMail = file_get_contents($tplFile);
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=pantrag&id=".$AID;
-			return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+            $_configNameEnable = 'notify_property_angeboten';
+            if ($MConf[$_configNameEnable]) {
+                $tplFile = $TextBaseDir . "statusmail_umzug_zurgenehmigung.txt";
+                $tplMail = file_get_contents($tplFile);
+                $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=pantrag&id=" . $AID;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aPropertyMailTo, $_configNameEnable);
+                }
+                if ($dbg) {
+                    $LINE = __LINE__;
+                    $FILE = __FILE__;
+                    print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
+                }
+                return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+            }
+            return $return;
+            break;
 		
 		case "geprueft":
-			$tplFile = $TextBaseDir."statusmail_umzug_zurgenehmigung.txt";
-			if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-			$tplMail = file_get_contents($tplFile);
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=pantrag&id=".$AID;
-			return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+            $_configNameEnable = 'notify_property_geprueft';
+		    if ($MConf[$_configNameEnable]) {
+                $tplFile = $TextBaseDir . "statusmail_umzug_zurgenehmigung.txt";
+                $tplMail = file_get_contents($tplFile);
+                $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=pantrag&id=" . $AID;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aPropertyMailTo, $_configNameEnable);
+                }
+                if ($dbg) {
+                    $LINE = __LINE__;
+                    $FILE = __FILE__;
+                    print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
+                }
+                return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+            }
+            return $return;
+		    break;
 		
 		case "genehmigt":
 			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
 			switch($value) {
 				case "Nein":
-                    $tplFile = $TextBaseDir."statusmail_umzug_kabgelehnt.txt";
-                    if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-                    $tplMail = file_get_contents($tplFile);
-                    $rplVars["StatusLink"] = $MConf["WebRoot"]."?s=kantrag&id=".$AID;
-                    $sentToUser = send_status_mail($userMailTo, $tplMail, $rplVars);
-
-                    $tplFile = $TextBaseDir."statusmail_umzug_abgelehnt.txt";
-                    if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-                    $tplMail = file_get_contents($tplFile);
-                    $rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
-                    return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
-				
-				case "Ja":
-				default:
-                    $tplFile = $TextBaseDir."statusmail_umzug_aktiv.txt";
-                    if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-                    $tplMail = file_get_contents($tplFile);
-                    if ($dbg) echo '#' . __LINE__ . ' tplMail: ' . $tplMail . PHP_EOL;
-                    send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
-
-                    $tplFile = $TextBaseDir."statusmail_umzug_genehmigt.txt";
-                    if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-                    $tplMail = file_get_contents($tplFile);
-                    if ($dbg) echo '#' . __LINE__ . ' tplMail: ' . $tplMail . PHP_EOL;
-                    return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
-			}
-		break;
-		
-		case "bestaetigt": // 
-                    if ($value == "Ja") {
-						$tplFile = $TextBaseDir."statusmail_umzug_bestaetigt.txt";
-						if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-						$tplMail = file_get_contents($tplFile);
-                        // Benachrichtige UmzugsTeam über bestätigten Umzugsauftrag
-//			       send_umzugsblatt($AID, $AS->arrInput["ort"], $AS->arrInput["gebaeude"], $AS->arrInput);
-                    } else {
-						$tplFile = $TextBaseDir."statusmail_umzug_aufhebung.txt";
-						if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-						$tplMail = file_get_contents($tplFile);
-                        // Informiere Umzugsteam über (bis auf weiteres) aufgehobenen Umzugsauftrag
-//			       $rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
-//			       send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                    $_configNameEnable = 'notify_user_genehmigt_Nein';
+				    if ($MConf[$_configNameEnable]) {
+                        $tplFile = $TextBaseDir . "statusmail_umzug_kabgelehnt.txt";
+                        $tplMail = file_get_contents($tplFile);
+                        $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=kantrag&id=" . $AID;
+                        if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                            $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $userMailTo, $_configNameEnable);
+                        }
+                        if ($dbg) {
+                            $LINE = __LINE__;
+                            $FILE = __FILE__;
+                            print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
+                        }
+                        $sentToUser = send_status_mail($userMailTo, $tplMail, $rplVars);
+                        $return = $sentToUser;
                     }
 
-                    $rplVars["StatusLink"] = $MConf["WebRoot"]."?s=kantrag&id=".$AID;
-                    $sentToUser = send_status_mail($userMailTo, $tplMail, $rplVars);
-
-                    $rplVars["StatusLink"] = $MConf["WebRoot"]."?s=pantrag&id=".$AID;
-                    //die('#'.__LINE__ . ' ' . __LINE__ . ' ' . print_r($aPropertyMailTo,1));
-                    return (send_status_mail($aPropertyMailTo, $tplMail, $rplVars) && $sentToUser);
-		
-		case "zurueckgegeben":
-			$tplFile = $TextBaseDir."statusmail_umzug_zurueckgegeben.txt";
-			if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-			$tplMail = file_get_contents($tplFile);
-			
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=kantrag&id=".$AID;
-			return send_status_mail($userMailTo, $tplMail, $rplVars);
-		
-		case "abgeschlossen":
-			switch($value) {
-				case "Ja":
-				$tplFile = $TextBaseDir."statusmail_umzug_durchgefuehrt.txt";
-				if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-				$tplMail = file_get_contents($tplFile);
-				$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=kantrag&id=".$AID;
-				send_status_mail($userMailTo, $tplMail, $rplVars);
-
-				$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=pantrag&id=".$AID;
-				return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
-
-				case "Storniert":
-				$tplFile = $TextBaseDir."statusmail_umzug_storniert.txt";
-				if ($dbg) echo '#'. __LINE__ . ' FILE: ' . $tplFile . '; EXISTS: ' . (file_exists($tplFile) ?'Ja':'Nein') . PHP_EOL;
-				$tplMail = file_get_contents($tplFile);
-				$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=kantrag&id=".$AID;
-				send_status_mail($userMailTo, $tplMail, $rplVars);
-
-				$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=pantrag&id=".$AID;
-				return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
-			}
-		break;
-		
-		default:
-		return false;
-	}
-}
-
-function umzugsantrag_mailinform($AID, $status="neu", $value) {
-    return umzugsantrag_mailinform_dussmann($AID, $status, $value);
-
-    die('#'.__LINE__ . ' ' . __FUNCTION__ . '(' . print_r(func_get_args(),1) . ')');
-	global $db;
-	global $error;
-	global $msg;
-	global $LoadScript;
-	global $_CONF;
-	global $MConf;
-	global $connid;
-	global $user;
-	
-        
-    $users = get_usersByAid($AID);
-	$TextBaseDir = $MConf["AppRoot"].$MConf["Texte_Dir"];
-	
-	if (!$AID) {
-		return false;
-	}
-	$AS = new ItemEdit($_CONF["umzugsantrag"], $connid, $user, $AID);
-	$MAConf = $_CONF["umzugsmitarbeiter"];
-	
-	$AS->loadDbdata();
-	$AS->dbdataToInput();
-	
-	$sql = "SELECT * FROM `".$MAConf["Table"]."` WHERE `aid` = \"".$db->escape($AID)."\"";
-	$rows = $db->query_rows($sql);
-	
-	$rplVars = array(
-		"AID" => $AID,
-		"StatusLink" => $MConf["WebRoot"]."?s=aantrag&id=".$AID,
-		"HomepageTitle" => $MConf["AppTitle"]
-	);
-	
-	$userMailTo[] = array("email"=>$AS->arrInput["email"], "Name"=>$AS->arrInput["name"], "Vorname"=>$AS->arrInput["vorname"]);
-	
-	// Alte Abfrage des Verteiler an der Basisdaten des Umzugsantrags
-    $usePropertyStandortMailer = false;
-    if ($usePropertyStandortMailer) {
-        $aPropertyMailTo = get_standort_property_mail($AS->arrInput["ort"], $AS->arrInput["gebaeude"]);
-    } else {
-        $aPropertyMailTo = array(
-            $users['antragsteller'],
-//            $users['regionalmanager'],
-//            $users['standortmanager'],
-//            $users['objektleiter'],
-        );
-    }
-        
-	$aAdminMailTo = get_standort_admin_mail($AS->arrInput["ort"], $AS->arrInput["gebaeude"]);
-	
-	// Neue Abfrage des Verteilers unter Berücksichtigung aller enthaltenen umzuziehenden MA-Daten
-	// Leider noch doppelte Abfrage aus evtll. Kompatibilitätsgründen, eigentlich unnötig, Korrektur steht noch an !!!
-	$adminVerteiler = get_umzugsverteilerById($AID);
-	$propertyVerteiler = get_propertyverteilerById($AID);
-	
-	$aAdminVerteilerTo = array();
-	$iNumAdminVerteiler = count($adminVerteiler);
-    for($i = 0; $i < $iNumAdminVerteiler; $i++) {
-		if (!trim($adminVerteiler[$i])) continue;
-		$name = str_replace(".", " ", array_shift(explode("@", $adminVerteiler[$i])));
-		$aAdminVerteilerTo[] = array("email"=>$adminVerteiler[$i], "Name"=>$name, "Vorname"=>"");
-	}
-	
-	switch($status) {
-		case "neu":
-		case "beantragt":
-			$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_zurpruefung.txt");
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
-			return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
-		break;
-		
-		case "geprueft":
-			$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_zurgenehmigung.txt");
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=pantrag&id=".$AID;
-			if ($propertyVerteiler && @isset($propertyVerteiler[0]["email"])) $aPropertyMailTo = $propertyVerteiler;
-			return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
-		break;
-		
-		case "genehmigt":
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
-			switch($value) {
-				case "Nein":
-				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_kabgelehnt.txt");
-				$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=kantrag&id=".$AID;
-				$sentToUser = send_status_mail($userMailTo, $tplMail, $rplVars);
-				
-				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_abgelehnt.txt");
-				$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
-				return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
-				break;
+                    $_configNameEnable = 'notify_mertens_genehmigt_Nein';
+				    if ( $MConf[$_configNameEnable]) {
+                        $tplFile = $TextBaseDir . "statusmail_umzug_abgelehnt.txt";
+                        $tplMail = file_get_contents($tplFile);
+                        $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=aantrag&id=" . $AID;
+                        if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                            $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aAdminMailTo, $_configNameEnable);
+                        }
+                        if ($dbg) {
+                            $LINE = __LINE__;
+                            $FILE = __FILE__;
+                            print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
+                        }
+                        return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                    }
+				    return $return;
+				    break;
 				
 				case "Ja":
 				default:
-				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_genehmigt.txt");
-				return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
-				break;
+                    $_configNameEnable = 'notify_property_genehmigt_Ja';
+				    if ($MConf[$_configNameEnable]) {
+                        $tplFile = $TextBaseDir . "statusmail_umzug_aktiv.txt";
+                        $tplMail = file_get_contents($tplFile);
+                        if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                            $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aPropertyMailTo, $_configNameEnable);
+                        }
+                        if ($dbg) {
+                            $LINE = __LINE__;
+                            $FILE = __FILE__;
+                            print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
+                        }
+                        $return = send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                    }
+
+                    $_configNameEnable = 'notify_mertens_genehmigt_Ja';
+				    if ($MConf[$_configNameEnable]) {
+                        $tplFile = $TextBaseDir . "statusmail_umzug_genehmigt.txt";
+                        $tplMail = file_get_contents($tplFile);
+                        if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                            $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aAdminMailTo, $_configNameEnable);
+                        }
+                        if ($dbg) {
+                            $LINE = __LINE__;
+                            $FILE = __FILE__;
+                            print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
+                        }
+                        return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                    }
 			}
-		break;
+            return $return;
+		    break;
 		
-		case "bestaetigt":
-//			echo "#".__LINE__." bestaetigt ".$value."; aAdminVerteilerTo:".print_r($aAdminVerteilerTo,1)."<br />\n";
-//			echo "#".__LINE__." bestaetigt ".$value."; propertyVerteiler:".print_r($propertyVerteiler,1)."<br />\n";
-//			echo "#".__LINE__." bestaetigt ".$value."; userMailTo:".print_r($userMailTo,1)."<br />\n";
-//			echo "#".__LINE__." bestaetigt ".$value."; aPropertyMailTo:".print_r($aPropertyMailTo,1)."<br />\n";
-//			//echo "#".__LINE__." "; print_r($AS->arrInput)."<br>\n";
-//			echo "#".__LINE__." bestaetigt Ja<br />\n";
-			if ($value == "Ja") {
-				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_bestaetigt.txt");
-				// Benachrichtige UmzugsTeam über bestätigten Auftrag
-				send_umzugsblatt($AID, $AS->arrInput["ort"], $AS->arrInput["gebaeude"], $AS->arrInput);
-			} else {
-				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_aufhebung.txt");
-				// Informiere Umzugsteam über (bis auf weiteres) aufgehobenen Umzugsauftrag
-				$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
-				//echo "#".__LINE__." bestaetigt ".$value."; aAdminVerteilerTo:".print_r($aAdminVerteilerTo,1)."<br />\n";
-				send_status_mail($aAdminVerteilerTo, $tplMail, $rplVars);
-			}
-			
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=kantrag&id=".$AID;
-			$sentToUser = send_status_mail($userMailTo, $tplMail, $rplVars);
-			
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=pantrag&id=".$AID;
-			return (send_status_mail($aPropertyMailTo, $tplMail, $rplVars) && $sentToUser);
-		break;
+		case "bestaetigt": // 
+            if ($value == "Ja") {
+                $tplFile = $TextBaseDir."statusmail_umzug_bestaetigt.txt";
+                $tplMail = file_get_contents($tplFile);
+                // Benachrichtige UmzugsTeam über bestätigten Umzugsauftrag
+//			       send_umzugsblatt($AID, $AS->arrInput["ort"], $AS->arrInput["gebaeude"], $AS->arrInput);
+            } else {
+                $tplFile = $TextBaseDir."statusmail_umzug_aufhebung.txt";
+                $tplMail = file_get_contents($tplFile);
+                // Informiere Umzugsteam über (bis auf weiteres) aufgehobenen Umzugsauftrag
+//			       $rplVars["StatusLink"] = $MConf["WebRoot"]."?s=aantrag&id=".$AID;
+//			       send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+            }
+
+            $_configNameEnable = 'notify_user_bestaetigt_' . ($value === 'Ja' ? 'Ja' : 'Nein');
+            if ($MConf[$_configNameEnable]) {
+                $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=kantrag&id=" . $AID;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $userMailTo, $_configNameEnable);
+                }
+                if ($dbg) {
+                    $LINE = __LINE__;
+                    $FILE = __FILE__;
+                    print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo', 'users'));
+                }
+                $sentToUser = send_status_mail($userMailTo, $tplMail, $rplVars);
+                $return  = $sentToUser;
+            }
+
+            $_configNameEnable = 'notify_property_bestaetigt_' . ($value === 'Ja' ? 'Ja' : 'Nein');
+            if (count($aPropertyMailTo) && ($MConf[$_configNameEnable])) {
+                $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=pantrag&id=" . $AID;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aPropertyMailTo, $_configNameEnable);
+                }
+                if ($dbg) {
+                    $LINE = __LINE__;
+                    $FILE = __FILE__;
+                    print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
+                }
+                return (send_status_mail($aPropertyMailTo, $tplMail, $rplVars) && $sentToUser);
+            }
+            return $return;
+            break;
 		
 		case "zurueckgegeben":
-			$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_zurueckgegeben.txt");
-			$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=kantrag&id=".$AID;
-			return send_status_mail($userMailTo, $tplMail, $rplVars);
-		break;
+            $_configNameEnable = 'notify_user_zurueckgegeben';
+		    if ($MConf[$_configNameEnable]) {
+                $tplFile = $TextBaseDir . "statusmail_umzug_zurueckgegeben.txt";
+                $tplMail = file_get_contents($tplFile);
+
+                $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=kantrag&id=" . $AID;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $userMailTo, $_configNameEnable);
+                }
+                if ($dbg) {
+                    $LINE = __LINE__;
+                    $FILE = __FILE__;
+                    print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
+                }
+                return send_status_mail($userMailTo, $tplMail, $rplVars);
+            }
+            return $return;
+            break;
 		
 		case "abgeschlossen":
 			switch($value) {
 				case "Ja":
-				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_durchgefuehrt.txt");
-				$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=kantrag&id=".$AID;
-				return send_status_mail($userMailTo, $tplMail, $rplVars);
-				break;
-				
+                    $_configNameEnable = 'notify_user_abgeschlossen';
+				    if ($MConf[$_configNameEnable]) {
+                        $tplFile = $TextBaseDir . "statusmail_umzug_durchgefuehrt.txt";
+                        $tplMail = file_get_contents($tplFile);
+                        $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=kantrag&id=" . $AID;
+                        if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                            $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $userMailTo, $_configNameEnable);
+                        }
+                        if ($dbg) {
+                            $LINE = __LINE__;
+                            $FILE = __FILE__;
+                            print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
+                        }
+                        $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                    }
+
+                    $_configNameEnable = 'notify_property_abgeschlossen';
+				    if ($MConf[$_configNameEnable]) {
+                        $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=pantrag&id=" . $AID;
+                        if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                            $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aPropertyMailTo, $_configNameEnable);
+                        }
+                        if ($dbg) {
+                            $LINE = __LINE__;
+                            $FILE = __FILE__;
+                            print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
+                        }
+                        return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                    }
+				    return $return;
+				    break;
+
 				case "Storniert":
-				//echo "#".__LINE__." ".basename(__FILE__)."<br>\n";
-				if ($AS->arrInput["bestaetigt"]=="Ja") {
-					$verteiler = get_umzugsverteilerById($AID);
-					$aMailTo = (is_array($verteiler)) ? $verteiler : explode("\n", $verteiler);
-					$iNumMailTos = count($aMailTo);
-					for($i = 0; $i < $iNumMailTos; $i++) {
-						$name = str_replace(".", " ", array_shift(explode("@", $aMailTo[$i])));
-						$userMailTo[] = array("email"=>$aMailTo[$i], "Name"=>$name, "Vorname"=>"");
-					}
-				}
-				$tplMail = file_get_contents($TextBaseDir."statusmail_umzug_storniert.txt");
-				$rplVars["StatusLink"] = $MConf["WebRoot"]."?s=pantrag&id=".$AID;
-				//echo "#".__LINE__." ".basename(__FILE__)." ".$AS->arrInput["ort"].", ".$AS->arrInput["gebaeude"].": ".print_r($userMailTo,1)."<br>\n";
-				return send_status_mail($userMailTo, $tplMail, $rplVars);
-				break;
+                    $_configNameEnable = 'notify_user_storniert';
+				    if ($MConf[$_configNameEnable]) {
+                        $tplFile = $TextBaseDir . "statusmail_umzug_storniert.txt";
+                        $tplMail = file_get_contents($tplFile);
+                        $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=kantrag&id=" . $AID;
+                        if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                            $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $userMailTo, $_configNameEnable);
+                        }
+                        if ($dbg) {
+                            $LINE = __LINE__;
+                            $FILE = __FILE__;
+                            print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
+                        }
+                        $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                    }
+
+				    $_configNameEnable = 'notify_property_storniert';
+				    if ($MConf[$_configNameEnable]) {
+                        $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=pantrag&id=" . $AID;
+                        if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                            $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aPropertyMailTo, $_configNameEnable);
+                        }
+                        if ($dbg) {
+                            $LINE = __LINE__;
+                            $FILE = __FILE__;
+                            print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
+                        }
+                        return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                    }
+				    return $return;
+				    break;
 			}
-		break;
+            return $return;
+		    break;
 		
 		default:
 		return false;

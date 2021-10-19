@@ -16,11 +16,15 @@ $all   = (!empty($_REQUEST['all']))     ? $_REQUEST['all'] : '';
 if ($finish && $wwsnr && count($aids)) {
     $sql = 'UPDATE mm_umzuege SET berechnet_am = NOW(), vorgangsnummer = :wwsnr WHERE aid IN('.implode(',', $aids).')';
     $db->query($sql, array('wwsnr' => $wwsnr));    
-//    echo $db->error() . '<br>' . $db->lastQuery . '<br>';
+    //    echo $db->error() . '<br>' . $db->lastQuery . '<br>';
 }
 
 $timeVon = (preg_match('/^(\d{4})W(\d{2})$/', $kwvon, $m)) ? strtotime($kwvon) : strtotime(date('Y').'W'.substr('0'.date('W'),-2) );
-$timeBis = (preg_match('/^(\d{4})W(\d{2})$/', $kwbis, $m)) ? strtotime($kwbis) : $timeVon + (7*24*3600);
+if ($kwbis && preg_match('/^(\d{4})W(\d{2})$/', $kwbis, $m)) {
+    $timeBis = strtotime($kwbis);
+} else {
+    $timeBis = strtotime('+7 days', $timeVon);
+}
 
 $kwvon = date('Y\WW', $timeVon);
 $kwbis = date('Y\WW', $timeBis);
@@ -113,7 +117,10 @@ $sql = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
       .( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' : '')
       .' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
 $rows = $db->query_rows($sql, 0, array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis)));
-// echo $db->error() . '<br>' . $db->lastQuery . '<br>' . PHP_EOL;
+
+if (0) {
+    echo $db->error() . '<br>' . $db->lastQuery . '<br>' . PHP_EOL;
+}
 
 $Tpl->assign('s', $s);
 $Tpl->assign('all', $all);
@@ -128,4 +135,3 @@ $Tpl->assign('s', $s);
 $Tpl->assign('q', $query);
 $body_content = $Tpl->fetch("auswertung_form.html");
 
-//echo '<pre>' . print_r($rows,1) . '</pre>';

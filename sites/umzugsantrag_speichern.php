@@ -227,8 +227,9 @@ function umzugsantrag_speichern() {
 	$Umzugsarten = array();
 	$setStatus = false;
 	$addBemerkung = "";
+    $enrichedBemerkung = '';
 	
-    $cntAS = count(array_diff(array_keys($ASPostItem), array('aid', 'bemerkungen')));
+    $cntAS = count(array_diff(array_keys($ASPostItem), array('aid', 'lieferhinweise', 'bemerkungen')));
 	if ( ($cntAS > 0 && $cmd !== 'status') && !isset($ASPostItem["name"])) {
 		$error.= "Es wurden keine Daten zum Antragsteller übermittelt. Daten konnten nicht gespeichert werden![sp]<br>\n";
 		return false;
@@ -241,7 +242,9 @@ function umzugsantrag_speichern() {
 	
 	$userIsAdmin = (strpos($user["gruppe"], "kunde_report")!==false || strpos($user["gruppe"], "admin")!==false);
 	
-	if (!$AID && !empty($ASPostItem["aid"])) $AID = $ASPostItem["aid"];
+	if (!$AID && !empty($ASPostItem["aid"])) {
+	    $AID = $ASPostItem["aid"];
+    }
 
 	if (!$AID) {
 	    $ASPostItem['personalnr'] = $user['personalnr'];
@@ -251,7 +254,9 @@ function umzugsantrag_speichern() {
 	$USERConf = $_CONF["user"];
 	
 	$gruppierungen = getRequest("gruppierteauftraege",null);
-	if (!is_null($gruppierungen)) umzugsgruppierungen_speichern($AID, trim($gruppierungen, ','));
+	if (!is_null($gruppierungen)) {
+	    umzugsgruppierungen_speichern($AID, trim($gruppierungen, ','));
+    }
 	
 	$AS = new ItemEdit($ASConf, $connid, $user, $AID);
 	//echo "#".__LINE__. " AID:$AID; AS->arrDbdata:".print_r($AS->arrDbdata,1)."<br>\n";
@@ -261,9 +266,16 @@ function umzugsantrag_speichern() {
 		//$doValidate = false;
 		//foreach($ASConf["Fields"] as $field => $fConf) $ASConf["Fields"][$field]["required"] = false;
 	}
-	
-    $AS->arrConf["Fields"]["umzugstermin"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
-    $AS->arrConf["Fields"]["umzugszeit"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
+
+    $isSpeicher = $cmd === 'speichern';
+    $issetStatus = isset($ASPostItem['umzugsstatus']);
+    $isNewStatus = !$issetStatus || (0 === strcasecmp($ASPostItem, $AS->arrDbdata['umzugsstatus']));
+    if (
+        $cmd !== 'speichern'
+        ) {
+        $AS->arrConf["Fields"]["umzugstermin"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
+        $AS->arrConf["Fields"]["umzugszeit"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
+    }
 	
 	if ($AID) {
 		if (!$AS->itemExists) {
@@ -287,7 +299,9 @@ function umzugsantrag_speichern() {
 		return false;
 	}
 	
-	if (!$userIsAdmin) $ASPostItem["antragsstatus"] = "bearbeitung";
+	if (!$userIsAdmin) {
+	    $ASPostItem["antragsstatus"] = "bearbeitung";
+    }
 	$AS->loadInput($ASPostItem);
 	if (($cntAS > 0 && $cmd !== 'status') && !$AS->checkInput()) {
         $error.= "Überprüfen Sie die Angaben zum Antragssteller!<br>\n";
@@ -297,11 +311,16 @@ function umzugsantrag_speichern() {
         return false;
 	} else {
         if ($addBemerkung) {
-            $AS->arrInput["bemerkungen"] = "Bemerkung von ".$user["user"]." am ".date("d.m.Y")." um ".date("H:i")."\n";
+            $AS->arrInput["bemerkungen"] = "Bemerkung von " . $user["user"]
+                . " am " . date("d.m.Y")
+                . " um " . date("H:i")."\n";
+
             if ($cmd === 'status') {
                 $AS->arrInput["bemerkungen"].= $name . ' ' . $value . " - Grund:\n";
             }
             $AS->arrInput["bemerkungen"].= $addBemerkung;
+            $enrichedBemerkung = str_replace("\n", "\r\n", $AS->arrInput["bemerkungen"]);
+
             if (!empty($AS->arrDbdata["bemerkungen"]) && trim($AS->arrDbdata["bemerkungen"])) {
                 $AS->arrInput["bemerkungen"].= "\n\n".$AS->arrDbdata["bemerkungen"];
             }
@@ -411,12 +430,13 @@ function umzugsantrag_speichern() {
         $error.= "#396 Es konnten nicht alle Mitarbeiterdaten gespeichert werden!<br>\n".$save_errors;
         return false;
 	}
-    if ($addBemerkung) {
-        $enrichedBemerkung = $AS->arrInput["bemerkungen"];
-        if (umzugsantrag_mailinform($AID, "neuebemerkung", $enrichedBemerkung)) {
+
+    if ($enrichedBemerkung) {
+        $authorUser = $user;
+        if (umzugsantrag_mailinform($AID, "neuebemerkung", $enrichedBemerkung, $authorUser)) {
             $msg.= "Mail mit neuer Bemerkung wurde gesendet!<br>\n";
         } else {
-            $error.= "Fehler beim Mailversand!<br>\n";
+            $error.= "Fehler beim Mailversand [#421]!<br>\n";
         }
     }
 	return $AID;

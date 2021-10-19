@@ -70,7 +70,8 @@ $MConf = array(
 	"Inc_Dir" => "include".DS,
 	"Class_Dir" => "class".DS,
 	"Modul_Dir" => "module".DS,
-	"Texte_Dir" => "textfiles".DS,
+    "Texte_Dir" => "textfiles".DS,
+    "Sites_Dir" => "sites".DS,
 	"CAuthSessionName" => "MMAGSID",
 	"CAuthEncodingKey" => "mermoma",
 	"SiteIsOnline" => true,
@@ -111,13 +112,60 @@ $MConf = array(
 	'minWerktageVorlauf' => 0,
     'validateAntragOrt' => false,
     'validateAntragGebaeude' => false,
+
+    'STATUSMAIL_ADD_STEUERINFOS' => false,
+
+    'genehmigung_requires_pruefung' => false,
+    'bestaetigung_requires_genehmigung' => false,
+
+    'notify_user_bemerkung' => true,
+    'notify_user_bemerkung_selfcreated' => false,
+    'notify_user_genehmigt_Ja' => true,
+    'notify_user_genehmigt_Nein' => true,  // Ist aktuell nicht implementiert, siehe notify_property_genehmigt_Nein
+    'notify_user_bestaetigt_Ja' => true,
+    'notify_user_bestaetigt_Nein' => true,
+    'notify_user_zurueckgegeben' => true,
+    'notify_user_abgeschlossen' => true,
+    'notify_user_storniert' => true,
+
+    'notify_mertens_bemerkung' => true,
+    'notify_mertens_bemerkung_selfcreated' => false,
+    'notify_mertens_beantragt' => false,
+    'notify_mertens_erneutpruefen' => true,
+    'notify_mertens_genehmigt_Ja' => true,
+    'notify_mertens_genehmigt_Nein' => true,
+
+    'notify_property_beantragt' => false,
+    'notify_property_angeboten' => false,
+    'notify_property_geprueft' => false,
+    'notify_property_bestaetigt_Ja' => false,
+    'notify_property_bestaetigt_Nein' => false,
+    'notify_property_genehmigt_Nein' => false, // Sieht nach einem logischen Fehler, Property muss über eigene Aktion nicht benachrichtigt werden
+    'notify_property_abgeschlossen' => false,
+    'notify_property_storniert' => false,
 );
-//aDjSoNHQQKzT7
+
+/* statusmails:
+    neuebemerkung  - von User    statusmail_umzug_bemerkung.txt                      AN USER  ADMINS
+    neuebemerkung  - von Admin   statusmail_umzug_bemerkung.txt                      AN USER  ADMINS
+    neu                          statusmail_umzug_neu.txt                            AN       ADMINS  PROPERTY
+    beantragt                    statusmail_umzug_zurpruefung.txt                    AN       ADMINS  PROPERTY
+    erneutpruefen                statusmail_umzug_zurerneutenpruefung.txt            AN       ADMINS
+    angeboten                    statusmail_umzug_zurgenehmigung.txt                 AN               PROPERTY
+    geprueft                     statusmail_umzug_zurgenehmigung.txt                 AN               PROPERTY
+    genehmigt      - Nein        statusmail_umzug_kabgelehnt.txt                     AN USER
+    genehmigt      - Nein        statusmail_umzug_abgelehnt.txt                      AN       ADMINS
+    genehmigt      - Ja          statusmail_umzug_aktiv.txt                          AN               PROPERTY
+    genehmigt      - Ja          statusmail_umzug_genehmigt.txt                      AN       ADMINS
+    bestaetigt     - Ja          statusmail_umzug_bestaetigt.txt                     AN USER          PROPERTY
+    bestaetigt     - Nein        statusmail_umzug_aufhebung.txt                      AN USER          PROPERTY
+    zurueckgegeben               statusmail_umzug_zurueckgegeben.txt                 AN USER
+    abgeschlossen  - Ja          statusmail_umzug_durchgefuehrt.txt                  AN USER          PROPERTY
+    abgeschlossen  - Storniert   statusmail_umzug_storniert.txt                      AN USER          PROPERTY
+*/
+
 //die('<pre>'.print_r($MConf,1));
 
-/* $MConf['module_login_hint'] = <<<EOT
-        admin3=geheim3, test_vma(vodafone-user)=test, test_vproperty=test, test_mertens=test
-EOT; */
 
 
 $SiteVars["AppTitle"]     = $MConf["AppTitle"];
@@ -143,6 +191,7 @@ $AdminModulBaseDir = $AppBaseDir."adminmod/";
 $ClassBaseDir = $MConf["AppRoot"].$MConf["Class_Dir"];
 $ProjBaseDir = $MConf["AppRoot"].$MConf["Class_Dir"];
 $TextBaseDir = $MConf["AppRoot"].$MConf["Texte_Dir"];
+$SitesBaseDir = $MConf["AppRoot"].$MConf["Sites_Dir"];
 
 /* ADMIN-MODULE: START */
 $_ADMIN_MODUL["kontakt"] = $AdminModulBaseDir."admin_mod_kontakt.php";

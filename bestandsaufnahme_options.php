@@ -47,8 +47,8 @@ class raumdata {
 		if (!$this->error) {
 			if (!$this->isOrt($data["ort"])) $this->error.= "- Ung&uuml;ltige Ortsangabe!<br>\n";
 			if (!$this->isGebaeude($data["gebaeude"], $data["ort"])) $this->error.= "- Ung&uuml;ltige Geb&auml;udeangabe!<br>\n";
-			if (!$this->isBueroTyp($data["raum_kategorie"])) $this->error.= "- Ung&uuml;ltiger Bürotyp!<br>\n";
-			if ($data["raum_flaeche"] && !$this->isFlaeche($data["raum_flaeche"])) $this->error.= "- Ung&uuml;ltige Flächenangabe (Ganz- oder Kommazahl)!<br>\n";
+			if (!$this->isBueroTyp($data["raum_kategorie"])) $this->error.= "- Ung&uuml;ltiger BÃ¼rotyp!<br>\n";
+			if ($data["raum_flaeche"] && !$this->isFlaeche($data["raum_flaeche"])) $this->error.= "- Ung&uuml;ltige FlÃ¤chenangabe (Ganz- oder Kommazahl)!<br>\n";
 		}
 		return ($this->error == "") ? true : false;
 	}
@@ -128,9 +128,9 @@ class abteilung {
 	}
 	
 	function check($e) {
-		if (empty($e["bereich"])) $this->error.= "Wählen Sie einen Bereich (Hauptabteilung) aus!<br>\n";
+		if (empty($e["bereich"])) $this->error.= "Wï¿½hlen Sie einen Bereich (Hauptabteilung) aus!<br>\n";
 		if (empty($e["abteilungsname"]) && empty($e["abteilung"]) && empty($e["abteilungsleiter"])) {
-			$this->error.= "Geben Sie für die Abteilung eine Abk&uuml;rzung, einen Namen od. einen Leiter an!<br>\n";
+			$this->error.= "Geben Sie fï¿½r die Abteilung eine Abk&uuml;rzung, einen Namen od. einen Leiter an!<br>\n";
 		}
 		return (!empty($this->error));
 	}
@@ -152,12 +152,12 @@ class abteilung {
 		return false;
 	}
 	// 	Abteilung:
-	// - Geschäftsbereich (Abk)
+	// - Geschï¿½ftsbereich (Abk)
 	// - Hauptabteilung (Abk)
 	// - Abteilungsname (Klartext z.B. Grafik)
 	// - Abteilungsleiter
 	// Keine Pflichtfelder bei Bestandaufnahme
-	// Flag: Was wurde angelegt: Abteilung, Hauptabteilung, Geschäftsbereich
+	// Flag: Was wurde angelegt: Abteilung, Hauptabteilung, Geschï¿½ftsbereich
 }
 
 
@@ -187,7 +187,7 @@ class bereich {
 	
 	function check($e) {
 		if (empty($e["bereichsname"]) && empty($e["bereich"]) && empty($e["bereichsleiter"])) {
-			$this->error.= "Geben Sie für den Bereich eine Abk&uuml;rzung, einen Namen od. einen Leiter an!<br>\n";
+			$this->error.= "Geben Sie fÃ¼r den Bereich eine Abk&uuml;rzung, einen Namen od. einen Leiter an!<br>\n";
 		}
 		return (!empty($this->error));
 	}
@@ -207,12 +207,12 @@ class bereich {
 		return false;
 	}
 	// 	Abteilung:
-	// - Geschäftsbereich (Abk)
+	// - Geschï¿½ftsbereich (Abk)
 	// - Hauptabteilung (Abk)
 	// - Abteilungsname (Klartext z.B. Grafik)
 	// - Abteilungsleiter
 	// Keine Pflichtfelder bei Bestandaufnahme
-	// Flag: Was wurde angelegt: Abteilung, Hauptabteilung, Geschäftsbereich
+	// Flag: Was wurde angelegt: Abteilung, Hauptabteilung, GeschÃ¤ftsbereich
 }
 
 class gf {
@@ -367,12 +367,12 @@ class mitarbeiter {
 		return false;
 	}
 	// 	Abteilung:
-	// - Geschäftsbereich (Abk)
+	// - GeschÃ¤ftsbereich (Abk)
 	// - Hauptabteilung (Abk)
 	// - Abteilungsname (Klartext z.B. Grafik)
 	// - Abteilungsleiter
 	// Keine Pflichtfelder bei Bestandaufnahme
-	// Flag: Was wurde angelegt: Abteilung, Hauptabteilung, Geschäftsbereich
+	// Flag: Was wurde angelegt: Abteilung, Hauptabteilung, Geschï¿½ftsbereich
 }
 
 switch($cat) {
@@ -490,7 +490,7 @@ switch($cat) {
 	<label for="etage">Organisationseinheit</label>'.get_InputText("organisationseinheit", $e["organisationseinheit"]).'<br>
 	<label for="raumnr">Name</label>'.get_InputText("name", $e["name"]).'<br>
 	<label for="raumnr">Personalbelegschaft</label>'.get_InputText("personalbelegschaft", $e["personalbelegschaft"]).'<br>
-	<label for="raumnr">Verrechenbare Fläche</label>'.get_InputText("verrechenbare_flaeche", $e["verrechenbare_flaeche"]).'<br>
+	<label for="raumnr">Verrechenbare Flï¿½che</label>'.get_InputText("verrechenbare_flaeche", $e["verrechenbare_flaeche"]).'<br>
 	<input type="hidden" name=cat value="'.fb_htmlEntities($cat).'">
 	<input type="hidden" name=ort value="'.fb_htmlEntities($ort).'">
 	<input type="hidden" name=gebaeude value="'.fb_htmlEntities($gebaeude).'">
@@ -526,7 +526,7 @@ switch($cat) {
 	<label for="vorname">Vorname</label>'.get_InputText("vorname", $e["vorname"]).'<br>
 	<label for="extern">Extern</label>'.get_SelectBox("extern", $e["extern"], array("Ja","Intern", "Extern", "Funktionsarbeitsplatz", "Flex-Position", "Spare"), false).'<br>
 	<label for="extern">Externe Firma</label>'.get_InputText("extern_firma", $e["extern_firma"]).'<br>
-	<label for="raum">Raum</label>'.get_InputRead("raum", $e["ort"]." | Etg:".$e["etage"]." | R:".$e["raumnr"]." | m²:".$e["groesse_qm"], "id=\"".$e["immobilien_raum_id"]."\"").'<br>
+	<label for="raum">Raum</label>'.get_InputRead("raum", $e["ort"]." | Etg:".$e["etage"]." | R:".$e["raumnr"]." | mï¿½:".$e["groesse_qm"], "id=\"".$e["immobilien_raum_id"]."\"").'<br>
 	<label for="abteilung">GF</label>'.get_SelectBox("gf", $e["gf"], $GFData->aGF, true, "xonchange=reloadSelectBereiche(this,  'frmNewEntry')").'<br>
 	<label for="abteilung">Bereich</label>'.get_SelectBox("bereich", $e["bereich"], $AbtlgData->aBereiche, true, "xonchange=reloadSelectAbteilungen(this,  'frmNewEntry')").'<br>
 	';
@@ -563,7 +563,7 @@ switch($cat) {
 	break;
 
 	default:?>
-	Ungültige Kategorie!<?php
+	UngÃ¼ltige Kategorie!<?php
 }
 define("NEWLINE", "\n");
 
@@ -577,4 +577,3 @@ ob_end_clean();
 	echo '<Update id="'.(!empty($boxid)?$boxid:"frmEditData").'"><![CDATA['.$formHtml.']]></Update>'.NEWLINE;
 	if (!empty($formScript)) echo '<LoadScript language="javascript" src="cdata"><![CDATA['.$formScript.']]></LoadScript>'.NEWLINE;
 	echo '</Result>';
-?>

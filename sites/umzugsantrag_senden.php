@@ -202,7 +202,7 @@ function umzugsantrag_senden() {
     if (umzugsantrag_mailinform($AID, $sendmailstatus, "")) {
         $msg.= "Mail wurde gesendet!<br>\n";
     } else {
-        $error.= "Fehler beim Mailversand!<br>\n";
+        $error.= "Fehler beim Mailversand [#205]!<br>\n";
     }
     return $AS->id;
 }

@@ -418,6 +418,8 @@ td label {
 .SelBox .SelItem input {
   margin:3px 4px 0 0;
 }
+
+#LieferhinweiseContent,
 #BemerkungenHistorie {
     font-size:12px;
     padding:4px;

@@ -199,9 +199,25 @@ function umzugsantrag_fehler() {
             return $error;
     }
 	
-    if (!$AID && !empty($ASPostItem["aid"])) $AID = $ASPostItem["aid"];
+    if (!$AID && !empty($ASPostItem["aid"])) {
+        $AID = $ASPostItem["aid"];
+    }
 
     $AS = new ItemEdit($ASConf, $connid, $user, $AID);
+
+    $isSpeicher = $cmd === 'speichern';
+    $issetStatus = isset($ASPostItem['umzugsstatus']);
+    $isNewStatus = !$issetStatus || (0 === strcasecmp($ASPostItem, $AS->arrDbdata['umzugsstatus']));
+    if ($cmd === 'speichern'
+        &&
+        (
+            !$AID
+            || !isset($ASPostItem['umzugsstatus'])
+            || 0 === strcasecmp($ASPostItem, $AS->arrDbdata['umzugsstatus'])
+        )) {
+        // die('#' . __LINE__ . ' ' . print_r(compact('AID', 'cmd', 'isSpeicher', 'issetStatus', 'isNewStatus', 'ASPostItem'), 1));
+        return '';
+    }
 
     if ($AID) {
 		if (!$AS->itemExists) {

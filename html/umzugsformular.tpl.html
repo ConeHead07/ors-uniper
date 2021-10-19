@@ -335,21 +335,25 @@
                         title="{if $creator eq 'property'}An M {elseif $creator eq 'mertens'}An Property {/if}senden"
                         value="Senden">
 
-                <input
+                {if 0}<input
                         type="submit"
                         onclick="umzugsantrag_storno()"
                         class="{if empty($AS.aid)}hide-not-saved{else}btn red {/if}"
-                        value="Antrag stornieren">
+                        value="Auftrag stornieren">
+                {/if}
                 {if 0}<input
                         type="submit"
                         onclick="umzugsantrag_reload()"
                         class="{if empty($AS.aid)}hide-not-saved{else}btn blue{/if}"
-                        value="Neu laden">{/if}
+                        value="Neu laden">
+                {/if}
+                {if 0}
                 <input
                         type="submit"
                         onclick="umzugsantrag_add_attachement()"
                         class="{if empty($AS.aid)}hide-not-saved{else}btn grey{/if}"
                         value="Dateianhänge"></div>
+                {/if}
 
             <!-- Debug-Btn:
             <input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">

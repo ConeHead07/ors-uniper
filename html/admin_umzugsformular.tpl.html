@@ -216,9 +216,13 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
         <textarea class="iarea bemerkungen" name="AS[bemerkungen]"></textarea>
     </div>
 
+  <strong>Lieferinweis (für Lieferschein):</strong><br>
+{if $AS.umzugsstatus ne "abgeschlossen" and $AS.umzugsstatus ne "storniert" and $AS.umzugsstatus ne "abgelehnt"}
     <div id="BoxLieferhinweise">
-        <strong>Lieferinweis (für Lieferschein):</strong><br>
-        <textarea class="iarea bemerkungen lieferhinweise" name="AS[lieferhinweise]"></textarea>
+        <textarea class="iarea bemerkungen lieferhinweise" name="AS[lieferhinweise]">{$AS.lieferhinweise|escape}</textarea>
+{else}
+      {$AS.lieferhinweise|escape}
+{/if}
     </div>
 
 <div style="margin-top:20px;width:100%;"><!-- 
@@ -252,7 +256,7 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
     <input
             id="btnStatGenJa" type="submit"
             class="btn green"
-            onclick="umzugsantrag_set_status('geprueft','Ja')"
+            onclick="umzugsantrag_set_status('bestaetigt','Ja')"
             title="Senden als Bestätigt"
             value="Auftrag bestätigen">
   {/if}

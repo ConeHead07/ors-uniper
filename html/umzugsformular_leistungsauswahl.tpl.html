@@ -470,9 +470,12 @@ $(function(){
                 var tdChck = $("<div/>").addClass('chck').appendTo(tr);
 
                 if (it.image) {
-                    var bildHref = $("<a/>").attr("href", "images/leistungskatalog/" + it.image).css({
-                        border: 0
-                    });
+                    var bildHref = $("<a/>")
+                        .attr("href", "images/leistungskatalog/" + it.image)
+                        .attr("target", "_blank")
+                        .css({
+                            border: 0
+                        });
                     bildHref.appendTo(tdBild);
                     var bild = $("<img/>")
                         .attr({
@@ -591,9 +594,12 @@ $(function(){
                 var tdChck = $("<div/>").addClass('chck').appendTo(tr);
 
                 if (it.image) {
-                    var bildHref = $("<a/>").attr("href", "images/leistungskatalog/" + it.image).css({
-                        border: 0
-                    });
+                    var bildHref = $("<a/>")
+                        .attr("href", "images/leistungskatalog/" + it.image)
+                        .attr("target", "_blank")
+                        .css({
+                            border: 0
+                        });
                     bildHref.appendTo(tdBild);
                     var bild = $("<img/>")
                         .attr({

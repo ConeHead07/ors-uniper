@@ -432,7 +432,11 @@ class SmtpMailer {
                 . PHP_EOL . 'Result (Num Accepted Recipients): ' . $result
                 . PHP_EOL . 'Error . : ' . $error
                 . PHP_EOL . 'TRACE . : ' . $stackTrace
-                . PHP_EOL . 'HEADERS : ' . "\n" . implode("\n", $this->lastHeaders),
+                . PHP_EOL . 'HEADERS : ' . "\n" . implode("\n", $this->lastHeaders)
+                . PHP_EOL . 'SUBJECT: ' . $this->subject
+                . PHP_EOL . 'TEXT-BODY: ' . $this->textBody
+                . PHP_EOL . 'HTML-BODY: ' . $this->htmlBody
+                ,
                 FILE_APPEND
             );
         }

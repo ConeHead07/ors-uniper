@@ -1,8 +1,9 @@
 <?php 
-require_once($InclBaseDir."umzugsantrag.inc.php");
-require_once($InclBaseDir."umzugsmitarbeiter.inc.php");
-require_once($InclBaseDir."umzugsanlagen.inc.php");
-require_once($InclBaseDir."leistungskatalog.inc.php");
+require_once($InclBaseDir . "umzugsantrag.inc.php");
+require_once($InclBaseDir . "umzugsmitarbeiter.inc.php");
+require_once($InclBaseDir . "umzugsanlagen.inc.php");
+require_once($InclBaseDir . "leistungskatalog.inc.php");
+require_once($SitesBaseDir . "umzugsantrag_sendmail.php");
 
 $ASConf = &$_CONF["umzugsantrag"];
 $MAConf = &$_CONF["umzugsmitarbeiter"];
@@ -94,9 +95,10 @@ if ($AID) {
     
     if ($ASInput) {
         if (!empty($ASInput["add_bemerkungen"])) {
-            $AS->arrInput["bemerkungen"] = "Bemerkung von ".$user["user"]." am ".date("d.m.Y")." um ".date("H:i")." zum Status ".$AS->arrDbdata["umzugsstatus"].":\n";
-            $AS->arrInput["bemerkungen"].= trim($ASInput["add_bemerkungen"])."\n\n";
-            $AS->arrInput["bemerkungen"].= $AS->arrDbdata["bemerkungen"];
+            $enrichedBemerkung = "Bemerkung von ".$user["user"]." am ".date("d.m.Y")." um ".date("H:i")." zum Status ".$AS->arrDbdata["umzugsstatus"].":\n";
+            $enrichedBemerkung.= trim($ASInput["add_bemerkungen"])."\n\n";
+            $AS->arrInput["bemerkungen"] = $enrichedBemerkung .  $AS->arrDbdata["bemerkungen"];
+            umzugsantrag_mailinform($AID, 'neuebemerkung', $enrichedBemerkung, $user);
             $AS->save();
         }
     }

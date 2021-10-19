@@ -170,10 +170,8 @@ if (is_array($all)) foreach($all as $i => $item) {
 	$Umzuege[$i]["Antragsstatus"] =  $item["antragsstatus"];
 	$Umzuege[$i]["Termin"] = ($item["umzugstermin"]?$item["umzugstermin"]:$item["terminwunsch"]);
 	$Umzuege[$i]["Antragsdatum"] = $item["antragsdatum"];
-	
-	$Umzuege[$i]["Geprueft"]   = (!$item["geprueft_am"]) ? get_iconStatus($item["geprueft"], $item["geprueft_am"]) : '';
+
 	$Umzuege[$i]["Geprueft"]   = get_iconStatus($item["geprueft"], $item["geprueft_am"], $item["geprueft_von"], 'Geprueft');
-	$Umzuege[$i]["Genehmigt"]  = ($item['umzug'] == 'Ja') ? get_iconStatus($item["genehmigt_br"], $item["genehmigt_br_am"]) : '';
 	$Umzuege[$i]["Genehmigt"]  = get_iconStatus($item["genehmigt_br"], $item["genehmigt_br_am"], $item["genehmigt_br_von"]);
 	$Umzuege[$i]["Bestaetigt"] = (empty($item['angeboten_am']) ? get_iconStatus($item["genehmigt_br"], $item["genehmigt_br_am"]) : '');
 	$Umzuege[$i]["Abgeschlossen"] = get_iconStatus($item["abgeschlossen"], $item["abgeschlossen_am"], $item["abgeschlossen_von"]);

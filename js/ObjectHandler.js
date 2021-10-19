@@ -241,15 +241,13 @@ function MyInfoBox(sTitle, sHtml, dockToObj, dockAlign, hspace, vspace) {
 	var ShadowBox = (document.getElementById(InfoShadowBoxId))?document.getElementById(InfoShadowBoxId):document.createElement("div");
 	document.body.appendChild(ShadowBox);
 	ShadowBox.id = InfoShadowBoxId;
-	ShadowBox.style.position = "absolute";
+	ShadowBox.style.position = "fixed";
 	ShadowBox.style.top = 0;
 	ShadowBox.style.left = 0;
 	ShadowBox.style.display = "block";
 	ShadowBox.style.width = "100%";
 	ShadowBox.style.height = PageInfo.getDocumentHeight()+"px";
-	ShadowBox.style.background = "#009";
-	ShadowBox.style.opacity = "0.5";
-	ShadowBox.style.filter = "alpha(opacity=75)";
+	ShadowBox.style.background = "rgba(0, 0, 0, 0.75)";
 	ShadowBox.style.zIndex = 9999;
 	ShadowBox.innerHTML = "&nbsp;";
 	
@@ -258,7 +256,8 @@ function MyInfoBox(sTitle, sHtml, dockToObj, dockAlign, hspace, vspace) {
 	document.body.appendChild(InfoBox);
 	InfoBox.id = InfoBoxId;
 	InfoBox.ShadowBox = ShadowBox;
-	InfoBox.style.position = "absolute";
+	InfoBox.style.position = "fixed";
+	InfoBox.style.top = "20%";
 	InfoBox.innerHTML = "<h3 id=\"MyInfoBoxTitle\">"+sTitle+"</h3>\n";
 	InfoBox.innerHTML+= "<div id=\"MyInfoBoxText\" class=\"InfoText\">"+sHtml+"</div>\n";
 	InfoBox.innerHTML+= "<div id=\"MyInfoBoxBtn\" class=\"CloseBtn\" onclick=\"document.getElementById('"+InfoBoxId+"').close();\">OK</div>\n";
@@ -295,7 +294,7 @@ function MyInfoBox(sTitle, sHtml, dockToObj, dockAlign, hspace, vspace) {
 		
 		t+= CenterHeight;
 		l+= CenterWidth;
-		InfoBox.style.top = t+"px";
+		InfoBox.style.top = "25%"; // t+"px";
 		InfoBox.style.left = l+"px";
 		//alert("BoxHeight:"+BoxHeight+"\nScrollTop:"+ScrollTop+"\nDocHeight:"+DocHeight+"\nt:"+t+"\nvisibleHeight:"+visibleHeight);
 	}
