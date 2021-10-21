@@ -1,7 +1,7 @@
 <?php
 
 if (false && date("Y-m-d H:i") > "2016-01-30 13:00" && date("Y-m-d H:i") < "2016-01-30 15:00") {
-    die("Das Umzugsportal ist vorübergehend bis voraussichtlich 13.30 Uhr wegen Wartungsarbeiten gesperrt!");
+    die("Das Auftragsportal ist vorübergehend bis voraussichtlich 13.30 Uhr wegen Wartungsarbeiten gesperrt!");
 }
 
 // Delegate static file requests back to the PHP built-in webserver

@@ -44,7 +44,7 @@ class MYPDF extends TCPDF {
         $x = 149;
         $y = 10;
         $w = 50;
-        $h = 50;
+        $h = 25;
         $fitbox = 'RT'; // Maybe false
         // Logo
         $image_file = '../images/mertens_logo.jpg';
@@ -74,9 +74,9 @@ class MYPDF extends TCPDF {
         $img_h = 14;
         $fitbox = 'RT'; // Maybe false
         // Position at 15 mm from bottom
-        $this->SetY(-100);
+        $this->SetY(-50);
         // Set font
-        $this->SetFont('helvetica', 'I', 8);
+        $this->SetFont('helvetica', '', 8);
 
         /*
 Seite 1 von 20
@@ -98,65 +98,49 @@ Thomas R. Brünger, Unsere AGB finden Sie unter: www.mertens.ag/agb';
         $curr = $this->getAliasNumPage();
         $tot = $this->getAliasNbPages();
 
-        $pageCaption = $this->y . ' Seite  ' . $curr . ' von '. $tot .' ';
+        $pageCaption = ' Seite  ' . $curr . ' von '. $tot .' ';
         // Wegen unbeeinflussbaren rechten Aussenabtands von Total wird die Cell-Breite überzogen
-        $this->Cell(190, '', $pageCaption, 1, '', 'R');
+        $this->Cell(189, '', $pageCaption, 0, '', 'R');
         $this->Ln(18);
-        $this->Cell(165, 20, 'Zertifiziertes Managementsystem | DIN EN ISO 9001:2015', 1, '', 'R',
+        $this->SetTextColor(123);
+        $this->SetFont('helvetica', '', 7);
+        $this->Cell(165, 20, 'Zertifiziertes Managementsystem | DIN EN ISO 9001:2015', 0, '', 'R',
             '', '', '', '', 'B', 'B');
         $this->x;
-        $this->Image($image_file, 178, $this->y - 14, $img_w, $img_h, 'JPG', '', 'T', true,
+        $this->Image($image_file, 177, $this->y - 14, $img_w, $img_h, 'JPG', '', 'T', true,
             300, '', false, false, 0, $fitbox, false, false);
         $this->Ln(11);
-        $this->Cell(17, 5, 'merTens AG', 1, '', 'L',
-            '', '', '', '', '', '');
-        $this->writeHTMLCell(160, 5, '', '',
-            '<div style="border-bottom:2px solid yellow;"></div>', 1, '', '', '', '', '');
-//
-        $this->Ln(20);
+        $this->Cell(16, 6, 'merTens AG', 0, '', 'L',
+            '', '', '', '', '', 'B');
+        $useWriteHTMLCell = false;
 
+        // Yellow Line Config
+        $YL_w = 159.5;
+        $YL_h = 6;
+        $YL_x = 31;
+        $YL_y = $this->y + 1;
+        $YL_html = '<div style="border-bottom:2px solid #ffdd0e;color:#000000;"></div>';
+        $YL_b = 0;
+        $YL_ap = '';
+        $YL_al = '';
+        $YL_fill = '';
+        $YL_reseth = '';
+        $YL_autopadding = '';
+        if ($useWriteHTMLCell) {
+            $this->writeHTMLCell($YL_w, $YL_h, $YL_x, $YL_y,
+                $YL_html, $YL_b, '', $YL_fill, '', $YL_al, $YL_ap);
+        } else {
+            $this->MultiCell($YL_w, $YL_h, $YL_html, $YL_b, $YL_al, $YL_fill, '', $YL_x, $YL_y,
+                $YL_reseth, 0, true, $YL_autopadding, 6, 'B', false);
+        }
+        $this->Ln(6);
         $html = '<table width="99%">' . "\n";
         $html.= '<tr>';
-        $html.= '<td colspan="3">' . $text . '</td>';
+        $html.= '<td colspan="3"><div style="text-align: justify">' . $text . '</div></td>';
         $html.= '</tr>';
         $html.= "</table>";
-        $this->writeHTML($html);
-
-//        $html = '<table width="99%">' . "\n";
-//        $html.= '<tr>';
-//        $html.= '<td width="10%"></td>';
-//        $html.= '<td width="80%" align="right" valign="bottom"><br>Zertifiziertes Managementsystem | DIN EN ISO 9001:2015</td>';
-//        $html.= '<td width="10%" align="righ"><img src="' . $image_file . '" width="30" height="30" border="0"></td>';
-//        $html.= '</tr>';
-//        $html.= '</table>';
-//
-//        $html = '<table width="100%">' . "\n";
-//        $html.= '<tr>';
-//        $html.= '<td>merTens AG</td>';
-//        $html.= '<td></td>';
-//        $html.= '<td><hr/></td>';
-//        $html.= '</tr>';
-//        $html.= "</table>";
-//
-//        $html = '<table width="100%">' . "\n";
-//        $html.= '<tr>';
-//        $html.= '<td colspan="3">' . $text . '</td>';
-//        $html.= '</tr>';
-//        $html.= "</table>";
-//        $this->writeHTML($html);
-
-        /*
-        $this->Cell(120, '', "$pageCaption", 1, '', 'R');
-        $this->Ln();
-        $this->Image($image_file, 178, '', $img_w, $img_h, 'JPG', '', 'T', true,
-            300, '', false, false, 0, $fitbox, false, false);
-        $image = '';
-        $firmaWithLine = 'merTens AG '; // Gefolgt von einer gelben Linie
-        $this->Cell('merTens AG ');
-        $this->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 4, 'color' => array(255, 0, 0)));
-        $this->Ln();
-        $this->Cell($text);
-        */
+        $this->writeHTMLCell(178, '', '', '', $html);
+        // $this->writeHTML($html);
 
     }
 }
@@ -222,28 +206,7 @@ $pdf->SetSubject('Lieferung NewHomeOffice');
 $pdf->SetKeywords('merTens, ORS, Uniper, NewHomeOffice');
 $pdf->SetHeaderData('', '', '', '', [255, 255, 255], [255, 255, 255]);
 LOX(__FILE__, __LINE__);
-if (0) {
-    $sHeaderTitle = '';
-    $sHeaderText = '';
-    $aHeaderTextColor = array(0, 64, 255);
-    $aHeaderLineColor = array(0, 64, 128);
 
-// set default header data
-    $pdf->SetHeaderData(
-        PDF_HEADER_LOXO,
-        PDF_HEADER_LOXO_WIDTH,
-        $sHeaderTitle,
-        $sHeaderText,
-        $aHeaderTextColor,
-        $aHeaderLineColor
-    );
-
-    LOX(__FILE__, __LINE__);
-    $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-    $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-
-}
-LOX(__FILE__, __LINE__);
 // set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
@@ -356,10 +319,8 @@ $pdf->AddPage();
 LOX(__FILE__, __LINE__);
 $pdf->SetFont('helvetica', 'I', 8);
 // Page number
-if (false) {
-    $pdf->Cell(0, 10, 'Page ' . $pdf->getAliasNumPage() . '/' . $pdf->getAliasNbPages(), 0, false, 'L', 0, '', 0, false, 'T', 'M');
-}
-$pdf->Ln(40);
+
+$pdf->Ln(10);
 $pdf->SetFont('helvetica', '', 8);
 $pdf->SetTextColor(123);
 $pdf->MultiCell(107, 10, $sender,
@@ -405,109 +366,53 @@ $pdf->Ln(4);
 
 $pdf->writeHTML($tblColHeader);
 
+
+
+$kundenAbnahme = <<<EOT
+<div>Die Ware wurde ordnungsgemäß geliefert und in einwandfreiem Zustand montiert. Ebenfalls bestätigen Sie hiermit, dass
+durch uns keine Schäden an Ihrem Gebäude und Ihren Räumlichkeiten entstanden sind. Sollten Schäden entstanden
+sein, notieren Sie diese bitte auf dem beiliegendem Reklamationsformular.</div>
+<div></div>
+<table width="99%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td width="35%">Ihr Montageteam der merTens AG</td>
+        <td>____________________________________________</td>    
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div style="height:5px;overflow:hidden;"></div>
+            Ankunft __________ Uhr &nbsp; &nbsp; &nbsp; &nbsp; Abahrt __________ Uhr
+        </td>    
+    </tr>
+    <tr>
+        <td colspan="2"><div style="height:5px;overflow:hidden;"></div>
+            [ &nbsp; ] Eitekettierung erfolgt &nbsp; &nbsp; &nbsp; &nbsp;
+            [ &nbsp; ] Schreibtisch &nbsp; &nbsp; &nbsp; &nbsp;
+            [ &nbsp; ] Stuhl &nbsp; &nbsp; &nbsp; &nbsp;
+            [ &nbsp; ] Lampe
+                             
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div style="height:5px;overflow:hidden;"></div>
+            _______________
+            <br>(Datum)
+        </td>
+        <td>
+            <div style="height:5px;overflow:hidden;"></div>
+            ____________________________________________
+            <br>(Name Kunde Blockbuchstaben / Unterschrift
+        </td>   
+    </tr>
+
+</table>
+EOT;
+$pdf->SetFont('helvetica', '', 9);
+$pdf->Ln(10);
+$pdf->writeHTML($kundenAbnahme);
+
 LOX(__FILE__, __LINE__);
-$bShowDemo = false;
-if ($bShowDemo) {
-// add a page
-// set header and footer fonts
-    $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-    // set default monospaced font
-    $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
-    $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-// set margins
-    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-    $fitbox = 'RT';
-    $pdf->AddPage();
-    $x = 149;
-    $y = 10;
-    $w = 50;
-    $h = 50;
-    if (1) {
-        $pdf->Image('../images/mertens_logo.jpg', $x, $y, $w, $h, 'JPG', '', '', true,
-            300, '', false, false, 0, $fitbox, false, false);
-    }
-
-    LOX(__FILE__, __LINE__);
-// add a page
-    $pdf->AddPage();
-
-// set JPEG quality
-    $pdf->setJPEGQuality(75);
-
-// Image method signature:
-// Image($file, $x='', $y='', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false)
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-// Example of Image from data stream ('PHP rules')
-    $imgdata = base64_decode('iVBORw0KGgoAAAANSUhEUgAAABwAAAASCAMAAAB/2U7WAAAABlBMVEUAAAD///+l2Z/dAAAASUlEQVR4XqWQUQoAIAxC2/0vXZDrEX4IJTRkb7lobNUStXsB0jIXIAMSsQnWlsV+wULF4Avk9fLq2r8a5HSE35Q3eO2XP1A1wQkZSgETvDtKdQAAAABJRU5ErkJggg==');
-
-// The '@' character is used to indicate that follows an image data stream and not an image file name
-    $pdf->Image('@'.$imgdata);
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-// Image example with resizing
-    $pdf->Image('../images/image_demo.jpg', 15, 140, 75, 113, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 1, false, false, false);
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    if ($bShowDemo) {
-// test fitbox with all alignment combinations
-
-        $horizontal_alignments = array('L', 'C', 'R');
-        $vertical_alignments = array('T', 'M', 'B');
-
-        $x = 15;
-        $y = 35;
-        $w = 30;
-        $h = 30;
-        $iNumHA = count($horizontal_alignments);
-        $iNumVA = count($vertical_alignments);
-// test all combinations of alignments
-        for ($hi = 0; $hi < $iNumHA; ++$hi) {
-            $fitbox = $horizontal_alignments[$hi] . ' ';
-            $x = 15;
-            for ($vi = 0; $vi < $iNumVA; ++$vi) {
-                LOX(__FILE__, __LINE__);
-                $fitbox[1] = $vertical_alignments[$vi];
-                $pdf->Rect($x, $y, $w, $h, 'F', array(), array(128, 255, 128));
-                $pdf->Image('../images/image_demo.jpg', $x, $y, $w, $h, 'JPG', '', '', false, 300, '', false, false, 0, $fitbox, false, false);
-                $x += 32; // new column
-            }
-            $y += 32; // new row
-        }
-
-        $x = 115;
-        $y = 35;
-        $w = 25;
-        $h = 50;
-        for ($hi = 0; $hi < $iNumHA; ++$hi) {
-
-            $fitbox = $horizontal_alignments[$hi] . ' ';
-            $x = 115;
-            for ($vi = 0; $vi < $iNumVA; ++$vi) {
-                LOX(__FILE__, __LINE__);
-                $fitbox[1] = $vertical_alignments[$vi];
-                $pdf->Rect($x, $y, $w, $h, 'F', array(), array(128, 255, 255));
-                $pdf->Image('../images/image_demo.jpg', $x, $y, $w, $h, 'JPG', '', '', false, 300, '', false, false, 0, $fitbox, false, false);
-                $x += 27; // new column
-            }
-            $y += 52; // new row
-        }
-    }
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-// Stretching, position and alignment example
-
-    $pdf->SetXY(110, 200);
-    $pdf->Image('../images/image_demo.jpg', '', '', 40, 40, '', '', 'T', false, 300, '', false, false, 1, false, false, false);
-    $pdf->Image('../images/image_demo.jpg', '', '', 40, 40, '', '', '', false, 300, '', false, false, 1, false, false, false);
-
-// -------------------------------------------------------------------
-}
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -519,7 +424,7 @@ $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 if (1) {
-// set margins
+    // set margins
     $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 }
 
@@ -544,34 +449,9 @@ $pdf->setFontSubsetting(true);
 // dejavusans is a UTF-8 Unicode font, if you only need to
 // print standard ASCII chars, you can use core fonts like
 // helvetica or times to reduce file size.
-$pdf->SetFont('dejavusans', '', 14, '', true);
+// $pdf->SetFont('dejavusans', '', 14, '', true);
 
-if (1) {
-    LOX(__FILE__, __LINE__);
-    // Add a page
-    // This method has several options, check the source code documentation for more information.
-    $pdf->AddPage();
-}
-LOX(__FILE__, __LINE__);
-// set text shadow effect
-$pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'color'=>array(196,196,196), 'opacity'=>1, 'blend_mode'=>'Normal'));
-
-if ($bShowDemo) {
-    LOX(__FILE__, __LINE__);
-// Set some content to print
-    $html = <<<EOD
-    <h1>Welcome to <a href="http://www.tcpdf.org" style="text-decoration:none;background-color:#CC0000;color:black;">&nbsp;<span style="color:black;">TC</span><span style="color:white;">PDF</span>&nbsp;</a>!</h1>
-    <i>This is the first example of TCPDF library.</i>
-    <p>This text is printed using the <i>writeHTMLCell()</i> method but you can also use: <i>Multicell(), writeHTML(), Write(), Cell() and Text()</i>.</p>
-    <p>Please check the source code documentation and other examples for further information.</p>
-    <p style="color:#CC0000;">TO IMPROVE AND EXPAND TCPDF I NEED YOUR SUPPORT, PLEASE <a href="http://sourceforge.net/donate/index.php?group_id=128076">MAKE A DONATION!</a></p>
-EOD;
-
-// Print text using writeHTMLCell()
-    $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
-}
-
-// ---------------------------------------------------------
+$pdf->AddPage();
 
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.

@@ -1,0 +1,39 @@
+<h2 style="margin:0;">Lieferfirma / Dienstleister</h2> 
+
+<table id="InputDienstleister">
+  <tr>
+    <td style="padding:0;"><label style="width:180px;">Firmenname</label></td>
+    <td style="padding:0;width:200px;">{if !empty($DL.Firmenname)}{$DL.Firmenname|escape}{/if}></td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="width:180px;">Ansprechpartner</label></td>
+    <td style="padding:0;">{if !empty($DL.Ansprechpartner)}{$DL.Ansprechpartner|escape}{/if}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="width:180px;">Strasse</label></td>
+    <td style="padding:0;">{if !empty($DL.Strasse)}{$DL.Strasse|escape}{/if}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="width:180px;">Ort</label></td>
+    <td style="padding:0;">{if !empty($DL.Ort)}{$DL.Ort|escape}{/if}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="width:180px;">Handy</label></td>
+    <td style="padding:0;">{if !empty($DL.Handy)}{$DL.Handy|escape}{/if}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="width:180px;">Festnetz</label></td>
+    <td style="padding:0;">{if !empty($DL.Festnetz)}{$DL.Festnetz|escape}{/if}</td>
+  </tr>
+  <tr>
+    <td style="padding:0;"><label style="width:180px;">E-Mail</label></td>
+    <td style="padding:0;">{if !empty($DL.Email)}{$DL.Email|escape}{/if}</td>
+  </tr>
+  <tr>
+      <td colspan="2">
+          <label style="text-align: left;background:none;border:none;color:#000;width:100%;">Bemerkung Mertens intern</label>
+          <div>{$AS.dienstleister_bemerkung|escape}</div>
+      </td>
+  </tr>
+</table>
+

@@ -8,7 +8,11 @@ if (strpos($user["gruppe"], "admin") === false) {
         Header('Location: ' . $_alt);
         exit;
     }
-    die("UNERLAUBTER ZUGRIFF! Zugriff nur für Administratoren");
+    if ($user['gruppe'] === 'umzugsteam') {
+
+    } else {
+        die("UNERLAUBTER ZUGRIFF! Zugriff nur für Administratoren");
+    }
 }
 
 require_once($InclBaseDir . "umzugsantrag.inc.php");
@@ -16,6 +20,9 @@ require_once($InclBaseDir . "umzugsmitarbeiter.inc.php");
 require_once($InclBaseDir . "umzugsanlagen.inc.php");
 require_once($InclBaseDir . "leistungskatalog.inc.php");
 require_once($InclBaseDir . "dienstleister.inc.php");
+
+$userGruppe = $user['gruppe'];
+$istUmzugsteam = $userGruppe === 'umzugsteam';
 
 $ATConf = &$_CONF["umzugsanlagen"];
 $ASConf = &$_CONF["umzugsantrag"];
@@ -288,10 +295,12 @@ $mainmenu = "Class-Active-Umzug"; //Umzug" xclass="liActive
 $topmenu = implode("", file($MConf["AppRoot"]."/sites/mitarbeiter_topmenu.tpl.html"));
 
 $AS->loadDbdata();
-if ($AS->arrDbdata["antragsstatus"]!="storniert" && (!$AS->arrDbdata["abgeschlossen"] || $AS->arrDbdata["abgeschlossen"]=="Init")) {
+if (!$istUmzugsteam && $AS->arrDbdata["antragsstatus"]!="storniert" && (!$AS->arrDbdata["abgeschlossen"] || $AS->arrDbdata["abgeschlossen"]=="Init")) {
 	$body_content = $Tpl->fetch("admin_umzugsformular.tpl.html");
-} else {
+} elseif (!$istUmzugsteam) {
 	$body_content = $Tpl->fetch("admin_umzugsformular.tpl.read.html");
+} else {
+    $body_content = $Tpl->fetch("umzugsteam_umzugsformular.tpl.read.html");
 }
 
 //$body_content = implode("", file($MConf["AppRoot"].$MConf["Tpl_Dir"]."umzugsformular.tpl.html"));

@@ -39,57 +39,60 @@
 #pzeit,
 #paufgabe { color:#f00 }
 </style>
-<a href="%WebRoot%sites/nebenleistungsblatt.php?id={id}" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Druckansicht</a>
+  {if !empty($AS)}
+<a href="%WebRoot%sites/nebenleistungsblatt.php?id={id}" style="display: none" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Druckansicht</a>
+  <a href="%WebRoot%sites/lieferschein.php?id={$AS.aid}" target="_Lieferschein{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Lieferschein (PDF)</a>
+  {/if}
 <table border=1 class="tblForm" style="width:500px;">
   <tr>
-    <td class="tdLabel" style="padding:0;width:180px;"><label for="mitarbeiter" style="width:180px;">Vor &amp; Nachname:</label></td>
-    <td class="tdInput" style="padding:0;width:320px;"><input type="text" value="{eingabe[vorname]}" name="eingabe[vorname]" class="itxt itxt1col floatLeft"><input type="text" value="{eingabe[name]}" name="eingabe[name]" class="itxt itxt1col floatRight"></td>
+    <td class="tdLabel" style="padding:0;width:180px;"><label for="vorname" style="width:180px;">Vor &amp; Nachname:</label></td>
+    <td class="tdInput" style="padding:0;width:320px;"><input type="text" value="{eingabe[vorname]}" id="vorname" name="eingabe[vorname]" class="itxt itxt1col floatLeft"><input type="text" value="{eingabe[name]}" name="eingabe[name]" class="itxt itxt1col floatRight"></td>
   </tr>
   <tr>
-    <td class="tdLabel" style="padding:0;"><label for="email" style="width:180px;">E-Mail:</label></td>
-    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[email]}" name="eingabe[email]" class="itxt itxt2col"></td>
+    <td class="tdLabel" style="padding:0;"><label for="eingabe_email" style="width:180px;">E-Mail:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[email]}" id="eingabe_email" name="eingabe[email]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td class="tdLabel" style="padding:0;"><label for="fon" style="width:180px;">Fon:</label></td>
-    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[fon]}" name="eingabe[fon]" class="itxt itxt2col"></td>
+    <td class="tdLabel" style="padding:0;"><label for="eingabe_fon" style="width:180px;">Fon:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[fon]}" id="eingabe_fon" name="eingabe[fon]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td class="tdLabel" style="padding:0;"><label for="mitarbeiter" style="width:180px;">Standort:</label></td>
-    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[standort]}" onclick="get_fieldindex_ort(this)" name="eingabe[standort]" class="itxt itxt2col"></td>
+    <td class="tdLabel" style="padding:0;"><label for="eingabe_standort" style="width:180px;">Standort:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[standort]}" onclick="get_fieldindex_ort(this)" id="eingabe_standort" name="eingabe[standort]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td class="tdLabel" style="padding:0;"><label for="gebaeude" style="width:180px;">Gebaeude:</label></td>
-    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[gebaeude]}" onclick="get_fieldindex_gebaeude(this)" name="eingabe[gebaeude]" class="itxt itxt2col"></td>
+    <td class="tdLabel" style="padding:0;"><label for="eingabe_gebaeude" style="width:180px;">Gebaeude:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[gebaeude]}" onclick="get_fieldindex_gebaeude(this)" id="eingabe_gebaeude" name="eingabe[gebaeude]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td class="tdLabel" style="padding:0;"><label for="mitarbeiter" style="width:180px;">Kostenstelle:</label></td>
-    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[kostenstelle]}" name="eingabe[kostenstelle]" class="itxt itxt2col"></td>
+    <td class="tdLabel" style="padding:0;"><label for="eingabe_kostenstelle" style="width:180px;">Kostenstelle:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[kostenstelle]}" id="eingabe_kostenstelle" name="eingabe[kostenstelle]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td class="tdLabel" style="padding:0;"><label for="termin" style="width:180px;">Datum:</label></td>
-    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[datum]}" onfocus="showDtPicker(this)" id="NLDate" name="eingabe[datum]" class="itxt itxt2col" title="DatumE-Mail"></td>
+    <td class="tdLabel" style="padding:0;"><label for="eingabe_datum" style="width:180px;">Datum:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[datum]}" onfocus="showDtPicker(this)" id="NLDate" id="eingabe_datum" name="eingabe[datum]" class="itxt itxt2col" title="DatumE-Mail"></td>
   </tr>
   <tr>
-    <td class="tdLabel" style="padding:0;"><label for="termin" style="width:180px;">Bevorzugte Uhrzeit:</label></td>
-    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[uhrzeit]}" name="eingabe[uhrzeit]" class="itxt itxt2col"></td>
+    <td class="tdLabel" style="padding:0;"><label for="eingabe_uhrzeit" style="width:180px;">Bevorzugte Uhrzeit:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[uhrzeit]}" id="eingabe_uhrzeit" name="eingabe[uhrzeit]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td class="tdLabel" style="padding:0;"><label for="termin" style="width:180px;">Ben&ouml;tigte Zeit (Std:Min):</label></td>
-    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[zeit]}" name="eingabe[zeit]" class="itxt itxt2col"></td>
+    <td class="tdLabel" style="padding:0;"><label for="eingabe_zeit" style="width:180px;">Ben&ouml;tigte Zeit (Std:Min):</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{eingabe[zeit]}" id="eingabe_zeit" name="eingabe[zeit]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td class="tdLabel" style="padding:0;"><label for="termin" style="width:180px;">Sonderleistung:</label></td>
+    <td class="tdLabel" style="padding:0;"><label for="eingabe_sonderleistung" style="width:180px;">Sonderleistung:</label></td>
     <td class="tdInput" style="padding:0;"></td>
   </tr>
   <tr>
-    <td class="tdInput" colspan=2 style="padding:0;"><textarea name="eingabe[sonderleistung]" class="iarea">{eingabe[sonderleistung]}</textarea></td>
+    <td class="tdInput" colspan=2 style="padding:0;"><textarea id="eingabe_sonderleistung" name="eingabe[sonderleistung]" class="iarea">{eingabe[sonderleistung]}</textarea></td>
   </tr>
   <tr>
-    <td class="tdLabel" style="padding:0;"><label for="termin" style="width:180px;">Sonderleistung/Preis:</label></td>
-    <td class="tdInput" style="padding:0;"><input type="text" value="{lesen[sonderleistung_preis]}" name="eingabe[sonderleistung_preis]" class="itxt itxt2col"></td>
+    <td class="tdLabel" style="padding:0;"><label for="eingabe_sonderleistung_preis" style="width:180px;">Sonderleistung/Preis:</label></td>
+    <td class="tdInput" style="padding:0;"><input type="text" value="{lesen[sonderleistung_preis]}" id="eingabe_sonderleistung_preis" name="eingabe[sonderleistung_preis]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td class="tdLabel" style="padding:0;background:#0075B5;"><label for="termin" style="width:180px;height:80px;">Status:</label></td>
+    <td class="tdLabel" style="padding:0;background:#0075B5;"><label for="eingabe[status]0" style="width:180px;height:80px;">Status:</label></td>
     <td class="tdInput" style="padding:2px;border:1px solid #0075B5;background:#fff;">
 	<input LINE="392"  class="chckbox" type="radio" name="eingabe[status]" id="eingabe[status]0" value="Neu" check_status="Neu">Neu <br>
 	<input LINE="392"  class="chckbox" type="radio" name="eingabe[status]" id="eingabe[status]1" value="Beauftragt" check_status="Beauftragt">Beauftragt<br>
@@ -110,8 +113,8 @@
 <input type="button" onclick="nebenleistung_add_attachement({id});" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Dateianhänge"> <br>
 <input LINE="489" type="checkbox" class="ichck inext" name="gotoNext" value="New" chck_gotoNext="New"> Anschliessend neuen Eintrag anlegen
 </form>
-<div id="BoxBemerkungen">
+<div id="BoxLieferhinweise">
 <strong>Bisherige Angaben:</strong><br>
-<div id="BemerkungenHistorie">{lesen[aufgabe]}</div>
+<div id="LieferhinweiseContent">{lesen[aufgabe]}</div>
 </div>
 </div>

@@ -259,8 +259,10 @@ function MyInfoBox(sTitle, sHtml, dockToObj, dockAlign, hspace, vspace) {
 	InfoBox.style.position = "fixed";
 	InfoBox.style.top = "20%";
 	InfoBox.innerHTML = "<h3 id=\"MyInfoBoxTitle\">"+sTitle+"</h3>\n";
-	InfoBox.innerHTML+= "<div id=\"MyInfoBoxText\" class=\"InfoText\">"+sHtml+"</div>\n";
+	InfoBox.innerHTML+= "<div id=\"MyInfoBoxText\" class=\"InfoText\">" + (typeof sHtml === 'string' ? sHtml : '') + "</div>\n";
 	InfoBox.innerHTML+= "<div id=\"MyInfoBoxBtn\" class=\"CloseBtn\" onclick=\"document.getElementById('"+InfoBoxId+"').close();\">OK</div>\n";
+	$(InfoBox).find("#MyInfoBoxText").append(sHtml);
+
 	console.log('#264app/js/ObjectHandler.js MyInfoxBox', { InfoBoxId, sTitle, sHtml });
 	InfoBox.close = function() {
 		this.style.display="";
@@ -272,7 +274,9 @@ function MyInfoBox(sTitle, sHtml, dockToObj, dockAlign, hspace, vspace) {
 		}
 	}
 	InfoBox.InfoType = "";
-	if (typeof(O(dockToObj))=="object") dockBox(dockToObj, InfoBox, dockAlign, hspace, vspace);
+	if (typeof(O(dockToObj))=="object") {
+		dockBox(dockToObj, InfoBox, dockAlign, hspace, vspace);
+	}
 	else {
 		var BoxWidth = PageInfo.getElementWidth(InfoBox);
 		var BoxHeight= PageInfo.getElementHeight(InfoBox);

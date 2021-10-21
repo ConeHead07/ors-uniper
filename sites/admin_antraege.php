@@ -1,6 +1,11 @@
 <?php 
 
-if (strpos($user["gruppe"], "admin") === false) die("UNERLAUBTER ZUGRIFF!");
+if (strpos($user["gruppe"], "admin") === false && $user['gruppe'] !== 'umzugsteam') {
+    die("UNERLAUBTER ZUGRIFF!");
+}
+
+$userGruppe = $user['gruppe'];
+$istUmzugsteam = $userGruppe === 'umzugsteam';
 
 require_once($InclBaseDir."umzugsantrag.inc.php");
 require_once($InclBaseDir."umzugsmitarbeiter.inc.php");
@@ -9,15 +14,30 @@ $CUM = &$_CONF["umzugsmitarbeiter"];
 $Tpl = new myTplEngine();
 $Umzuege = array();
 
-$offset = getRequest("offset", 0);
-$limit = getRequest("limit", 100);
-$ofld = getRequest("ofld", "");
-$odir = getRequest("odir", "");
-$cat = getRequest("cat", "neue");
-$allusers = (int)getRequest("allusers", 1);
+$offset = getRequest('offset', 0);
+$limit = getRequest('limit', 100);
+$ofld = getRequest('ofld', "");
+$odir = getRequest('odir', "");
+$cat = getRequest('cat', !$istUmzugsteam ? 'neue' : 'heute');
+$allusers = (int)getRequest('allusers', 1);
 
 if (empty($s)) $s = getRequest("s", "");
-if (!in_array($cat, array('temp','zurueckgegeben','angeboten','abgelehnte','neue', 'gepruefte', 'genehmigte', 'aktive', 'abgeschlossene', 'stornierte'))) $cat = 'neue';
+
+if (!$istUmzugsteam) {
+    if (!in_array($cat,
+        [
+            'temp', 'zurueckgegeben', 'angeboten', 'abgelehnte', 'neue',
+            'gepruefte', 'genehmigte', 'heute', 'aktive', 'abgeschlossene',
+            'stornierte'
+        ])) {
+        $cat = 'neue';
+    }
+} else {
+    if (!in_array($cat,
+        [ 'heute', 'aktive', 'abgeschlossene', ])) {
+        $cat = 'heute';
+    }
+}
 
 $defaultOrder = "ORDER BY antragsdatum ASC";
 $orderFields = array(
@@ -81,10 +101,15 @@ switch($cat) {
 	case "genehmigte":
 	$sqlWhere.= "AND umzugsstatus = 'genehmigt'\n";
 	break;
-	
-	case "aktive":
-	$sqlWhere.= "AND (umzugsstatus IN ('geprueft', 'bestaetigt','genehmigt') OR (umzug='Nein' AND umzugsstatus='angeboten'))\n";
-	break;
+
+    case "heute":
+        $sqlWhere.= "AND DATE_FORMAT(umzugstermin, '%Y-%m-%d') = '" . date('Y-m-d') . "'";
+        $sqlWhere.= "AND (umzugsstatus IN ('geprueft', 'bestaetigt','genehmigt') OR (umzug='Nein' AND umzugsstatus='angeboten'))\n";
+        break;
+
+    case "aktive":
+        $sqlWhere.= "AND (umzugsstatus IN ('geprueft', 'bestaetigt','genehmigt') OR (umzug='Nein' AND umzugsstatus='angeboten'))\n";
+        break;
 	
 	case "abgeschlossene":
 	$sqlWhere.= "AND (umzugsstatus = 'abgeschlossen' AND abgeschlossen = 'Ja')\n";
@@ -190,7 +215,11 @@ $Tpl->assign("Umzuege", $Umzuege);
 
 //echo '<pre>#' . __LINE__ . ' '; // . print_r( filestat('html/antraege_liste.html'),1);
 try {
-	$body_content.= $Tpl->fetch("admin_antraege_liste.html");
+    if (!$istUmzugsteam) {
+        $body_content .= $Tpl->fetch("admin_antraege_liste.html");
+    } else {
+        $body_content .= $Tpl->fetch("umzugsteam_antraege_liste.html");
+    }
 } catch(Exception $e) {
 	echo $e->getMessage();
 }
