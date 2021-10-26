@@ -53,7 +53,7 @@ class formcreator {
 	{
 		if (!isset($this->db_tblconf[$tbl]) || $refresh == true) {
 			$this->db_tblconf[$tbl] = array();
-			$SQL = "SHOW FIELDS FROM `$db`.`$tbl`";
+			$SQL = "SHOW FIELDS FROM " . (!empty($db) ? "`$db`." : '' ) . "`$tbl`";
 			$r = $this->db_query($SQL, __LINE__);
 			if ($r) {
 				$n = MyDB::num_rows($r);
@@ -69,16 +69,16 @@ class formcreator {
 	}
 	
 	// public
-	function create_default_conf_fromdb($db, $tbl, $refresh = false) 
+	function create_default_conf_fromdb($dbName, $tbl, $refresh = false)
 	{
-		$isLoaded = $this->load_tblconf_from_db($db, $tbl, $refresh);
+		$isLoaded = $this->load_tblconf_from_db($dbName, $tbl, $refresh);
 		$aAppendFlds = array();
 		
 		if ($isLoaded || isset($this->db_tblconf[$tbl])) {
 			if (!$this->arrConf) {
 				$this->arrConf = array(			
 					"Title" => ucfirst($this->confName),
-					"Db" => $db,
+					"Db" => $dbName,
 					"Table" => $tbl,
 					"readMinAccess" => 0,	// 0:Normal Webuser, 1:Regist Webuser, 2:Systemuser, 3:Systemuser, 4:Systeuser, 5:Admin
 					"insertMinAccess" => 2, // 

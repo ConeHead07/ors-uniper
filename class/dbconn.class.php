@@ -219,6 +219,7 @@ class DbConnStatement extends mysqli_result {
 
 class dbconn {
     var $conn = null;
+    var $mysqli = null;
     var $dbconn = false;
     var $connected = false;
     var $errors = "";
@@ -232,6 +233,8 @@ class dbconn {
     public function __construct($Host, $Db, $User, $Pass, $Port = 3306, $aOptions = []) {
         try {
             $this->conn = new mysqli($Host, $User, $Pass, $Db, $Port);
+            $this->mysqli = $this->conn;            $this->link = mysqli_connect($Host, $User, $Pass, $Db, $Port);
+            // die('mysqli conntected in LINE ' . __LINE__ . ' in FILE ' . __FILE__ );
         } finally {
             $this->connect_error = isset($this->conn->connect_error) ? $this->conn->connect_error : '';
         }
@@ -308,6 +311,15 @@ class dbconn {
         return $stmt;
     }
 
+    public function getRenderedQuery($sql, $params = null) {
+        if (is_array($params)) {
+            foreach($params as $k => $v) {
+                $sql = preg_replace('/' . preg_quote(':' . $k, '/') . '\b/', $this->quote($v), $sql);
+            }
+        }
+        return $sql;
+    }
+
     /**
      *
      * @param string $sql
@@ -338,8 +350,10 @@ class dbconn {
             echo $e->getTraceAsString();
         }
         if ($this->conn->error) {
-            error_log('#' . __LINE__ . ' ' . __FILE__ . ' ' . $this->conn->error . "\nsql: " . $sql);
-            echo "#342 Interner Systemfehler";
+            $errLogMsg = '#' . __LINE__ . ' ' . __FILE__ . ' ' . $this->conn->error . "\nsql: " . $sql;
+            error_log($errLogMsg);
+            echo "#342 Interner Systemfehler\n";
+            echo "#344 " . $errLogMsg;
             exit;
         }
 
@@ -391,8 +405,10 @@ class dbconn {
     }
 
     static function escape_string($string) {
-        if (self::getInstance() && self::getInstance()->connect_error()) {
-            return self::getInstance()->real_escape_string($string);
+        if (self::getInstance() && self::getInstance()->conn) {
+            return self::getInstance()->conn->real_escape_string($string);
+        } else {
+            die('#' . __LINE__ . ' ' . __FILE__ . ' Cannot use mysql_real_escape');
         }
         return $string;
     }

@@ -23,5 +23,6 @@ $ConfRegData['lm'] = 'lm.inc.php';
 $ConfRegData['leistungskatalog'] = 'leistungskatalog.inc.php';
 $ConfRegData['leistungskategorie'] = 'leistungskategorie.inc.php';
 $ConfRegData['leistungsmatrix'] = 'leistungsmatrix.inc.php';
+$ConfRegData['lieferscheine'] = 'lieferscheine.inc.php';
 
 ?>

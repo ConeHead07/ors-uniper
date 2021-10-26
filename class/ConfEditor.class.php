@@ -76,7 +76,7 @@ class ConfEditor {
 			foreach($aDropPaths as $k => $r_path) {
 				$r_path = substr($r_path, strpos($r_path, "["));
 				if ($r_path[0] == "[") {
-					echo "Lösche: ".$_POST["DropNodes"][$k]."<br>\n";
+					echo "LÃ¶sche: ".$_POST["DropNodes"][$k]."<br>\n";
 					eval("if (isset(\$this->aCnfData{$r_path})) unset(\$this->aCnfData{$r_path});");
 				}
 			}
@@ -91,7 +91,7 @@ class ConfEditor {
 					if (!trim($v)) continue;
 					$k = urldecode($k);
 					$v = stripslashes($v);
-					// echo "Füge {$t}-Element '".fb_htmlEntities($v)."' zu: ".$k."<br>\n";
+					// echo "Fï¿½ge {$t}-Element '".fb_htmlEntities($v)."' zu: ".$k."<br>\n";
 					$r_path = substr($k, strpos($k, "["));
 					$evalCode = "if (isset(\$this->aCnfData{$r_path}) && !isset(\$this->aCnfData{$r_path}[\"".addslashes($v)."\"])) \$this->aCnfData{$r_path}[\"".addslashes($v)."\"] = array(1);";
 					// echo fb_htmlEntities($evalCode)."<br>\n";
@@ -101,7 +101,7 @@ class ConfEditor {
 			if (isset($aAddNodes["N"])) {
 				foreach($aAddNodes["N"] as $k => $v) {
 					$k = urldecode($k);
-					// echo "Füge {$t}-Element  zu: ".$k."<br>\n";
+					// echo "Fï¿½ge {$t}-Element  zu: ".$k."<br>\n";
 					$r_path = substr($k, strpos($k, "["));
 					eval("if (isset(\$this->aCnfData{$r_path})) array_push(\$this->aCnfData{$r_path}, array(1));");
 				}
@@ -181,7 +181,7 @@ class ConfEditor {
 		if (isset($_POST["SAVE"])) {
 			if (!file_exists($this->ConfFile)) die("#".__LINE__." ".__FILE__." ConfFile:".$this->ConfFile." kann nicht geladen werden!<br>\n");
 			$this->write_conf();
-			echo "<strong>Änderungen wurden gespeichert!</strong><br>\n";
+			echo "<strong>Ã„nderungen wurden gespeichert!</strong><br>\n";
 		}
 		
 		// Generiere Formular
@@ -194,7 +194,8 @@ class ConfEditor {
 	
 	function get_last_pathkey($path) {
 		if (substr($path, -1) == "]") {
-			return array_pop(explode("[", substr($path, 0, -1)));
+			$a = explode("[", substr($path, 0, -1));
+			return array_pop($a);
 		}
 		return false;
 	}
@@ -319,8 +320,8 @@ class ConfEditor {
 					$sCnfVars.= $this->get_propertie_vars($v, $pfad."[$k]");
 				}
 			} else {
-				echo "<div style=\"color:#f00;\">".$pfad."[$k] = ERROR! Ungültige Struktur. Erwarte Array! v:$v"."</div>\n";
-				$sCnfVars.= $pfad."[$k] = ERROR! Ungültige Struktur. Erwarte Array! v:$v<br>\n";
+				echo "<div style=\"color:#f00;\">".$pfad."[$k] = ERROR! UngÃ¼ltige Struktur. Erwarte Array! v:$v"."</div>\n";
+				$sCnfVars.= $pfad."[$k] = ERROR! UngÃ¼ltige Struktur. Erwarte Array! v:$v<br>\n";
 			}
 		}
 		return $sCnfVars;
@@ -460,9 +461,9 @@ class ConfEditor {
 							// echo "#".__LINE__." ".__FILE__." Is Not A Array $pfad: $d<br>\n";
 						}
 						if ($isList == "A") {
-							$sCnfForm.= "\t<tr><td colspan=2><input type=\"text\" name=\"AddNodes[$isList][".urlencode($pfad)."]\" value=\"\">Element hinzufügen zu $pfad</td></tr>\n";
+							$sCnfForm.= "\t<tr><td colspan=2><input type=\"text\" name=\"AddNodes[$isList][".urlencode($pfad)."]\" value=\"\">Element hinzufÃ¼gen zu $pfad</td></tr>\n";
 						} else {
-							$sCnfForm.= "\t<tr><td colspan=2><input type=\"checkbox\" name=\"AddNodes[$isList][".urlencode($pfad)."]\" value=\"1\">Element hinzufügen zu $pfad</td></tr>\n";
+							$sCnfForm.= "\t<tr><td colspan=2><input type=\"checkbox\" name=\"AddNodes[$isList][".urlencode($pfad)."]\" value=\"1\">Element hinzufÃ¼gen zu $pfad</td></tr>\n";
 						}
 					} else {
 						$sCnfForm.= "\t<tr><td colspan=2>".$this->get_conf_form($c[$k], (isset($d[$k])?$d[$k]:false), $pfad."[$k]")."</td></tr>\n";

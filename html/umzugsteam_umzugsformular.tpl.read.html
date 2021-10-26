@@ -73,7 +73,6 @@
   <br clear= "all">
   <div style="clear:both;"></div>
 
-
   {if 0}
       {include file="admin_umzugsformular_mitarbeiterauswahl.tpl.html"}
   {/if}
@@ -124,12 +123,13 @@
     #KundenabnahmeBox label + input {
       margin-right:.5rem;
     }
+    .canvas-sig,
     .m-signature-pad--body canvas {
       position: relative;
       left: 0;
       top: 0;
       width: 99%;
-      height: 120px;
+      height:200px;
       border: 1px solid #CCCCCC;
       box-sizing: border-box;
       background-color: #eaf9ff;
@@ -167,49 +167,79 @@
     .doc-body-no-scrollbars {
       overflow: hidden !important;
     }
+    form#frmAbnahme .input-bg-color {
+      /* background-color: #eaf9ff; */
+    }
   </style>
   <div id="KundenabnahmeBox">
     <h2>Kundenabnahme</h2>
-    <div>
-      Die Ware wurde ordnungsgemäß geliefert und in einwandfreiem Zustand montiert. Ebenfalls bestätigen Sie hiermit, dass durch
-      uns keine Schäden an Ihrem Gebäude und Ihren Räumlichkeiten entstanden sind. Sollten Schäden entstanden sein, notieren
-      Sie diese bitte auf dem beiliegendem Reklamationsformular.
-    </div>
-    <div>
-      <div style="display: inline-block;width:14rem;height:2rem;font-weight:bold;">
-        <label style="width:initial;margin:initial;text-align: left;">Ihr Montageteam der merTens AG</label>
-      </div>
-      <div id="imgSignatureBoxMertens" style="display: inline-block;width:15rem;height:2rem;border-bottom:2px solid black;">
-        <img id="imgSignatureMertens" src="" style="max-height:2rem;max-width:15rem;display:none;">
-        <input id="lsSignatureMertens" type="hidden" name="signature_mertens" value="">
-      </div>
-    </div>
 
-    <div>
-      <label style="margin-right:3rem;width:initial;">Ankunft <input id="ankunftsZeit" type="time" size="8"> Uhr</label>
-      <label style="margin-right:3rem;width:initial;">Abfahrt <input id="abfahrtsZeit" type="time" size="8"> Uhr</label>
-    </div>
-    <div>
-      <label style="margin-right:3rem;width:initial;"><input id="etikettierungErfolgt" value="Ja" type="checkbox"> Eitekettierung erfolgt</label>
-      <label style="margin-right:3rem;width:initial;"><input id="Schreibtisch" value="Ja" type="checkbox"> Schreibtisch</label>
-      <label style="margin-right:3rem;width:initial;"><input id="Stuhl" value="Ja" type="checkbox"> Stuhl</label>
-      <label style="margin-right:3rem;width:initial;"><input id="Lampe" value="Ja" type="checkbox"> Lampe</label>
-    </div>
-
-    <div>
-      <div style="float:left;">
-        <div style="border-bottom:2px solid black;height:2.5rem;display: inline-block;width:6rem;"></div>
-        <div>(Datum)</div>
+    <form id="frmAbnahme" class="w3-container" action="%WebRoot%lieferscheinabnahme.php" method="POST"
+          name="abnahme" enctype="multipart/form-data" target="_self">
+      <input type="hidden" name="aid" value="{$AS.aid|escape}">
+      <div>
+        Die Ware wurde ordnungsgemäß geliefert und in einwandfreiem Zustand montiert. Ebenfalls bestätigen Sie hiermit, dass durch
+        uns keine Schäden an Ihrem Gebäude und Ihren Räumlichkeiten entstanden sind. Sollten Schäden entstanden sein, notieren
+        Sie diese bitte auf dem beiliegendem Reklamationsformular.
       </div>
-      <div style="float:left;margin-left:2rem;">
-        <div id="imgSignatureBoxMA" style="border-bottom:2px solid black;height:2.5rem;display: inline-block;width:15rem;">
-          <img id="imgSignatureMA" src="" style="max-height:2rem;max-width:15rem;display:none;">
-          <input id="lsSignatureMA" type="hidden" name="signature_ma" value="">
+      <div>
+        <div style="display: inline-block;width:14rem;height:2rem;font-weight:bold;">
+          <label style="width:initial;margin:initial;text-align: left;">Ihr Montageteam der merTens AG</label>
         </div>
-        <div>(Name Kunde Blockbuchstaben / Unterschrift)</div>
+        <div id="imgSignatureBoxMertens"
+             class="input-bg-color"
+             style="display: inline-flex;width:15rem;height:2rem;border-bottom:2px solid black;">
+          <img id="imgSignatureMertens" src="" style="max-height:2rem;max-width:15rem;display:none;align-self: flex-end">
+          <input id="lsSignatureMertens" type="hidden" name="sig_mt_dataurl" value="">
+          <input id="lsSignatureMertensGeodata" type="hidden" name="sig_mt_geodata" value="">
+          <input id="lsSignatureMertensCreated" type="hidden" name="sig_mt_created" value="">
+        </div>
       </div>
-      <div style="clear: both"></div>
-    </div>
+
+      <div>
+        <label style="margin-right:3rem;width:initial;">Ankunft <input name="ankunft" id="ankunftsZeit" type="time" size="8" class="input-bg-color" > Uhr</label>
+        <label style="margin-right:3rem;width:initial;">Abfahrt <input name="abfahrt" id="abfahrtsZeit" type="time" size="8" class="input-bg-color" > Uhr</label>
+      </div>
+      <div>
+        <label style="margin-right:3rem;width:initial;" class="input-bg-color" ><input name="etikettierung_erfolgt" id="etikettierungErfolgt" value="Ja" type="checkbox"> Etikettierung erfolgt</label>
+        {foreach name=GList item=L from=$Umzugsleistungen}
+        {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" }
+        {continue}
+        {/if}
+        <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
+          <input name="leistung[{$L.leistung_id|escape}]"
+                 data-label="{$L.kategorie|escape}"
+                 id="{$L.kategorie|escape}"
+                 value="Ja" type="checkbox"> {$L.kategorie|escape}
+        </label>
+        {/foreach}
+      </div>
+
+      <div>
+        <div style="float:left;">
+          <div
+                  class="input-bg-color"
+                  style="border-bottom:2px solid black;height:2.5rem;width:6rem;display: inline-flex;">
+            <input type="date" name="lieferdatum" style="width:100%;align-self: flex-end">
+          </div>
+          <div>(Datum)</div>
+        </div>
+        <div style="float:left;margin-left:2rem;">
+          <div id="imgSignatureBoxMA"
+               class="input-bg-color"
+               style="border-bottom:2px solid black;height:2.5rem;display: inline-flex;width:15rem;">
+            <img id="imgSignatureMA" src="" style="max-height:2rem;max-width:15rem;display:none;align-self: flex-end">
+            <input id="lsSignatureMA" type="hidden" name="sig_ma_dataurl" value="">
+            <input id="lsSignatureMAGeodata" type="hidden" name="sig_ma_geodata" value="">
+            <input id="lsSignatureMACreated" type="hidden" name="sig_ma_created" value="">
+          </div>
+          <div>(Name Kunde Blockbuchstaben / Unterschrift)</div>
+        </div>
+        <div style="clear: both"></div>
+      </div>
+      <button id="btnSubmit" class="btn blue btn-submit" type="button" onclick="return false;">Speichern</button>
+      <div id="output"></div>
+    </form>
   </div>
 
 </div>
@@ -241,24 +271,36 @@
           <canvas id="canvas-sig-ma" class="canvas-sig canvas-sig-ma"></canvas>
         </div>
         <div style="text-align: center">
-          <button type="button" onclick="cancelSignaturePad('#signature-pad-ma');return false;" class="btn gray btn-cancel">Abbrechen</button>
-          <button type="button" onclick="loeschenSignaturePad('#signature-pad-ma');return false;" class="btn red btn-clear">Leeren</button>
-          <button type="button" onclick="submitSignature('#signature-pad-ma');return false;" class="btn green btn-apply">OK</button>
+          <button type="button"
+                  class="btn gray btn-cancel btn-sig-cancel"
+                  onclick="cancelSignaturePad('#signature-pad-ma');return false;">Abbrechen</button>
+          <button type="button"
+                  class="btn red btn-clear btn-sig-erase"
+                  onclick="loeschenSignaturePad('#signature-pad-ma');return false;">Leeren</button>
+          <button type="button"
+                  class="btn green btn-apply btn-sig-apply"
+                  onclick="submitSignature('#signature-pad-ma');return false;">OK</button>
         </div>
       </div>
 
     </div>
   </div>
 
-  <div id="statusCheck">Browser-Status-Check: <span id="browserOnlineStatus"></span></div>
+  <div style="display:none;" id="statusCheck">Browser-Status-Check: <span id="browserOnlineStatus"></span></div>
 
-  <div id="signature-pad-test" style="width:90vw;" data-refpad="" data-refimage="#imgSignatureMA" data-refinput="#lsSignatureMA" class="signature-pad m-signature-pad">
+  <div id="signature-pad-test" style="width:90vw;display:none;" data-refpad="" data-refimage="#imgSignatureMA" data-refinput="#lsSignatureMA" class="signature-pad m-signature-pad">
     <div class="signature-pad--body m-signature-pad--body">
       <canvas id="canvas-sig-test" class="canvas-sig canvas-sig-test"></canvas>
     </div>
   </div>
-  <script>
+
+</div>
+
+<script>
     var aid = {$AS.aid|json_encode};
+    function escapeSelector(name) {
+      return name.replaceAll('[', '\\[').replaceAll(']', '\\]');
+    }
     {literal}
 
     $(function() {
@@ -382,8 +424,10 @@
       createSignaturPad('#signature-pad-mertens');
       createSignaturPad('#signature-pad-ma');
       var canvasTest = document.getElementById('canvas-sig-test');
-      var sigPadTest = new SignaturePad(canvasTest);
-      onResizeCanvas(sigPadTest);
+      if (canvasTest) {
+        var sigPadTest = new SignaturePad(canvasTest);
+        onResizeCanvas(sigPadTest);
+      }
 
       // $("#imgSignatureBoxMertens").on("click", function() {
       //   showSignatureDialog('#signature-pad-mertens');
@@ -509,25 +553,83 @@
       hideSignatureDialog(selector);
     }
 
+    function getLocation(fnSuccessPos) {
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      };
+
+      var error = function() {
+        console.error('GEO-ACCESS-ERROR', arguments);
+      };
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(fnSuccessPos, error, options);
+      } else {
+        console.error('No GEO-Access!');
+      }
+    }
+
+    function getDbDateTimeString() {
+      var d = new Date();
+      if (d.toLocaleDateString && d.toLocaleTimeString) {
+        var dtParts = d.toLocaleDateString().split('.').reverse();
+        if (dtParts[1].length < 2) dtParts[1] = '0' + dtParts[1];
+        if (dtParts[2].length < 2) dtParts[2] = '0' + dtParts[2];
+        return dtParts.join('-') + " "  + d.toLocaleTimeString();
+      }
+      var Y = d.getFullYear();
+      var m = (d.getMonth() < 9 ? '0' : '') + (d.getMonth() + 1).toString(10);
+      var d = (d.getDate() < 10 ? '0' : '') + d.getDate().toString(10);
+      var H = (d.getHours() < 10 ? '0' : '') + d.getHours().toString(10);
+      var i = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes().toString(10);
+      var s = (d.getSeconds() < 10 ? '0' : '') + d.getSeconds().toString(10);
+
+      return [Y, m, d].join('-') + ' ' + [H, i, s].join(':');
+
+    }
+
     function submitSignature(selector) {
       var container = $(selector);
       var signaturePad = container.data("refpad");
       var img = signaturePad.getTargetImage();
       var input = signaturePad.getTargetInput();
+      var inputGeo = $("#" + input.attr("id") + "Geodata");
+      var inputTime = $("#" + input.attr("id") + "Created");
 
       //Unterschrift in verstecktes Feld übernehmen
-      var imgDataUrl = signaturePad.toDataURL();
+      // var imgDataUrl = signaturePad.toDataURL();
+      var imgDataUrl = signaturePad.getDataUrlOfPaintedArea();
 
       if (input && input.length) {
         input.val(imgDataUrl != "data:" ? imgDataUrl : '');
+        inputGeo.val('');
+        inputTime.val('');
       } else {
         console.error('input not found', { selector, container, signaturePad, img, input });
       }
 
       if (img && img.length) {
-        if (imgDataUrl.length > 6) {
+        if (imgDataUrl && (typeof imgDataUrl === 'string') && imgDataUrl.length > 6) {
           img.attr({src: imgDataUrl}).show();
+          var dt = getDbDateTimeString();
+          inputTime.val(dt);
+          getLocation(function getPosition(position) {
+            var geodata = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              altitude: position.coords.altitude,
+              accuracy: position.coords.accuracy,
+              speed: position.coords.speed,
+              timestamp: position.timestamp
+            };
+            inputGeo.val(JSON.stringify(geodata));
+            console.log('getLocation callback position:', { arguments, position });
+          });
+
         } else {
+          console.error('Nothing to write as Signatur-Image: ', { imgDataUrl });
           img.attr({src: ''}).hide();
         }
       } else {
@@ -540,11 +642,15 @@
       var signaturePad = container.data("refpad");
       var img = signaturePad.getTargetImage();
       var input = signaturePad.getTargetInput();
+      var inputGeo = $("#" + input.attr("id") + "Geodata");
+      var inputTime = $("#" + input.attr("id") + "Created");
 
       signaturePad.clear();
 
       if (input && input.length) {
         input.val('');
+        inputGeo.val('');
+        inputTime.val('');
       } else {
         console.error('input not found', { selector, container, signaturePad, img, input });
       }
@@ -567,27 +673,187 @@
     function setLieferscheinDaten(aid, daten) {
       var storageKey = 'lieferschein_' + aid;
       daten.aid = aid;
-      localStorage.setItem(storageKey, daten);
+      localStorage.setItem(storageKey, JSON.stringify(daten));
     }
     function addLieferscheinDaten(aid, name, value) {
       var daten = getLieferscheinDaten(aid);
       daten.aid = aid;
       daten[name] = value;
-      localStorage.setItem(storageKey, daten);
+      localStorage.setItem(storageKey, JSON.stringify(daten));
     }
     function removeLieferscheinByAID(aid) {
       var storageKey = 'lieferschein_' + aid;
       localStorage.removeItem(storageKey);
     }
-    function lieferscheinSpeichern() {
 
+    function lieferscheinSpeichern() {
+      var frm = $("#frmAbnahme");
+      var formData = new FormData(frm.get(0));
+
+      var daten = {};
+      formData.forEach(function(value, name) {
+        daten[name] = value;
+        console.log({name, value});
+      });
+
+      if (aid && (!daten.aid || isNaN(daten.aid))) {
+        daten.aid = aid;
+      }
+
+      if (!daten.aid) {
+        var error = "Lieferschein kann nicht ohne Auftrags-ID zwichengespeichert werden!";
+        console.error(error);
+        alert(error);
+        return false;
+      }
+
+      setLieferscheinDaten(aid, daten);
 
     }
+
+    function lieferscheinVonLocalStorageLaden() {
+      var frm = $("#frmAbnahme");
+      var daten = getLieferscheinDaten(aid);
+
+      if (!daten) {
+        console.log('Es existieren keine Lieferschein-Daten im LocalStorage für die AID' + aid);
+        return false;
+      }
+
+      for(var name in daten) {
+        if (!daten.hasOwnProperty(name)) {
+          continue;
+        }
+        name.replace('[', '\\[');
+        var input = frm.find("input[name=" + escapeSelector(name) + "]");
+        if (input.length === 1) {
+          var type = input.attr("type");
+          if (['radio', 'checkbox'].indexOf(type) > -1 ) {
+            input.prop("checked", true);
+          }
+          input.val(daten[name]);
+        }
+      }
+
+      var showImgMt = ("sig_mt_dataurl" in daten && daten['sig_mt_dataurl'].length > 6);
+      $("#imgSignatureMertens").attr("src", showImgMt ? daten["sig_mt_dataurl"] : "NOT-FOUND" ).toggle(showImgMt);
+
+      var showImgMa = ("sig_ma_dataurl" in daten && daten['sig_ma_dataurl'].length > 6);
+      $("#imgSignatureMA").attr("src", showImgMa ? daten["sig_ma_dataurl"] : "NOT-FOUND" ).toggle(showImgMa);
+    }
+
+    function submitAbnahme() {
+      var frm = $("#frmAbnahme");
+      var errors = '';
+      var warnings = '';
+      var aid = frm.find("input[name=aid]").val();
+
+      var sigMt = frm.find("input[name=sig_mt_dataurl]").val();
+      var sigMa = frm.find("input[name=sig_ma_dataurl]").val();
+
+      var ankunft = frm.find("input[name=ankunft]").val();
+      var abfahrt = frm.find("input[name=abfahrt]").val();
+      var lieferdatum = frm.find("input[name=lieferdatum]").val();
+
+      var etikettierung = frm.find("input[name=etikettierung_erfolgt]");
+      var leistungen = frm.find("input[name^=leistung]");
+      var checkedLength = leistungen.filter(function() { return this.checked; }).length;
+
+      var leistungenLabels = [];
+      leistungen.each(function() { leistungenLabels.push( $(this).data("label")  )});
+
+      console.log({
+        aid,
+        sigMt,
+        sigMa,
+        ankunft,
+        abfahrt,
+        lieferdatum,
+        etikettierung,
+        leistungen,
+        checkedLength,
+        leistungenLabels
+      });
+
+      if (!aid || isNaN(aid)) {
+        alert("Bitte Seite neu laden. Es liegt keine Auftrags-ID vor!");
+        return false;
+      }
+
+      if (!sigMt) {
+        errors+= "Die Unterschrift eines merTens-Mitarbeiter fehlt!\n";
+      }
+      if (!sigMa) {
+        errors+= "Die Kunden-Unterschrift fehlt!\n";
+      }
+      if (!lieferdatum) {
+        errors+= "Angabe Lieferdatum (Datum) fehlt!\n";
+      }
+      if (!ankunft) {
+        errors+= "Angabe Ankunftszeit fehlt!\n";
+      }
+      if (!abfahrt) {
+        errors+= "Angabe Abfahrtszeit fehlt!\n";
+      }
+      if (ankunft >= abfahrt) {
+        errors+= "Die Abfahrtszeit kann nicht vor der Ankunftszeit liegen!\n";
+      }
+      if (!checkedLength) {
+        errors+= "Es wurde kein Artikel als geliefert markiert:\n";
+        errors+= " - " + leistungenLabels.join("\n - ") + "\n";
+      }
+
+      if (errors) {
+        alert("Der Lieferschein wurde nicht vollständig ausgefüllt.\n\n" + errors);
+        return false;
+      }
+
+      if (etikettierung.length && !etikettierung.prop("checked")) {
+        warnings = "Die Etikettierung wurde nicht bestätigt.\n";
+      }
+      if (checkedLength < leistungen.length) {
+        var missingChecks = leistungen.length - checkedLength;
+        warnings+= "Die Lieferung von " + missingChecks + " Artikeln wurde nicht bestätigt.\n";
+      }
+
+      if (warnings) {
+        var warningsQuestion = "Möchten Sie trotz unvollständiger Angaben den Lieferschein so abnehmen?\n";
+        if ( !confirm(warningsQuestion + warnings) ) {
+          return false;
+        }
+      }
+      var formData = new FormData(frm.get(0));
+      lieferscheinSpeichern();
+
+      if (!window.navigator.onLine) {
+        alert("Aktuell besteht keine Internetverbindung um die Daten zum Server zu übertragen!");
+        return;
+      }
+
+      frm.find("#btnSubmit").prop("disabled", true);
+      $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: frm.attr("action"),
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 800000,
+        success: function (data) {
+          $("#output").removeClass("error").addClass("success").text(data);
+          console.log("SUCCESS : ", data);
+          frm.find("#btnSubmit").prop("disabled", false);
+        },
+        error: function (e) {
+          $("#output").addClass("error").removeClass("success").text(e.responseText);
+          console.log("ERROR : ", e);
+          frm.find("#btnSubmit").prop("disabled", false);
+        }
+      });
+
+    }
+
+    $("#frmAbnahme").find("#btnSubmit").off("click").on("click", submitAbnahme);
     {/literal}
   </script>
-  <form class="w3-container" action="process.php" method="POST"
-        name="DAFORM" enctype="multipart/form-data" target="_self">
-    <button type="button" onclick="return false;">Speichern</button>
-  </form>
-
-</div>

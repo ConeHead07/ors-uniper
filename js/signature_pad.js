@@ -645,6 +645,56 @@
     return null;
   };
 
+  SignaturePad.prototype.getPaintedAreaCoords = function() {
+      var canvasWidth = this._ctx.canvas.width;
+      var canvasHeight = this._ctx.canvas.height;
+
+      var x1 = canvasWidth;
+      var x2 = 0;
+      var y1 = canvasHeight;
+      var y2 = 0;
+
+      var selection = this._ctx.getImageData(0, 0, canvasWidth, canvasHeight);
+      var pixels = selection.data;
+      var x = 0;
+      var y = 0;
+
+      for(var i = 0, j = 0; i < pixels.length; i+= 4, j++) {
+        var r = pixels[i], g = pixels[i+1], b = pixels[i+2];
+        var minColVal = Math.min(r, g, b);
+        if (minColVal < 255) {
+          x = j % canvasWidth;
+          y = Math.floor(j / canvasWidth);
+          if (x < x1) { x1 = x; }
+          if (x > x2) { x2 = x; }
+          if (y < y1) { y1 = y; }
+          if (y > y2) { y2 = y; }
+        }
+      }
+      if (x2 === 0) {
+        return { x1:0, y1:0, w:0, h:0, x2:0, y2: 0 };
+      }
+      return { x1, y1, x2, y2, w: x2-x1, h: y2-y1 };
+  };
+
+  SignaturePad.prototype.getDataUrlOfPaintedArea = function() {
+    var coords = this.getPaintedAreaCoords();
+    if (coords.w === 0 || coords.h === 0) {
+      return '';
+    }
+
+    var canvas = document.createElement("CANVAS");
+    var ctx = canvas.getContext("2d");
+    canvas.width = coords.w + 10;
+    canvas.height = coords.h + 10;
+
+    var imageData = this._ctx.getImageData(coords.x1, coords.y1, coords.w, coords.h);
+    ctx.putImageData(imageData, 5, 5);
+
+    var dataUrl = canvas.toDataURL();
+    return dataUrl;
+  };
+
 return SignaturePad;
 
 })));

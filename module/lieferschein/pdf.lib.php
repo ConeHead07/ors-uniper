@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: f.barthold
+ * Date: 25.10.2021
+ * Time: 09:42
+ */
+
 set_time_limit(30);
 /**
  * Creates an example PDF TEST document using TCPDF
@@ -7,7 +14,7 @@ set_time_limit(30);
  * @author Nicola Asuni
  * @since 2008-03-04
  */
-function LOX($line, $file) {
+function LS_LOX($line, $file) {
     // echo '#' . $line . ' ' . $file . "<br>\n";
 }
 
@@ -34,13 +41,13 @@ require_once $MConf['AppRoot'] . $MConf['Inc_Dir'] . 'tcpdf_include.php';
 //               www.tecnick.com
 //               info@tecnick.com
 //============================================================+
-LOX(__FILE__, __LINE__);
+
 // Extend the TCPDF class to create custom Header and Footer
 class LS_PDF extends TCPDF {
 
     //Page header
     public function Header() {
-        LOX(__FILE__, __LINE__);
+        LS_LOX(__FILE__, __LINE__);
         $x = 149;
         $y = 10;
         $w = 50;
@@ -66,7 +73,7 @@ class LS_PDF extends TCPDF {
 
     // Page footer
     public function Footer() {
-        LOX(__FILE__, __LINE__);
+        LS_LOX(__FILE__, __LINE__);
         $image_file = '../images/mertens_prime_cert.jpg';
         $img_x = 175;
         $img_y = 10;
@@ -145,39 +152,72 @@ Thomas R. Brünger, Unsere AGB finden Sie unter: www.mertens.ag/agb';
     }
 }
 
-$mode = $_REQUEST['mode'] ?? '';
-if (empty($AID)) {
-    LOX(__FILE__, __LINE__);
-    $AID = $_REQUEST["id"] ?? 0;
-}
+class LS_Builder
+{
 
-if (empty($AID)) {
-    die('INGUELTIGER SEITENAUFRUF! Es wurde keine AuftragsID übergeben');
-}
+    public $mode = '';
+    public $AID = 0;
+    public $lid = 0;
+    public $pdf = null;
 
-if ($AID ) {
-    LOX(__FILE__, __LINE__);
-    $view = '';
-    if (true || $mode === 'property') {
-        LOX(__FILE__, __LINE__);
-        $auftrag = $db->query_row('SELECT * FROM mm_umzuege WHERE aid = ' . (int)$AID);
-        switch($auftrag['umzugsstatus']) {
-            case 'beantragt':
-            case 'angeboten':
-                $view = 'kalkulation';
-                break;
-            case 'abgeschlossen':
-                $view = 'rechnung';
+    private $db = null;
+    private $mysqli = null;
+    private $auftragsDaten = [];
+    private $lieferscheinDaten = [];
+
+    private $ktgIdLieferung = 18;
+    private $ktgIdRabatt = 25;
+    
+    public function __construct(int $AID)
+    {
+        global $db;
+        global $mysqli;
+        $this->db = $db;
+        $this->mysqli = $mysqli;
+    }
+    
+    public function loadFromRequest()
+    {
+        $mode = $_REQUEST['mode'] ?? '';
+        $AID = $_REQUEST["id"] ?? 0;
+        
+        $this->mode = $mode;
+        $this->AID = $AID;
+
+        if (empty($AID)) {
+            die('INGUELTIGER SEITENAUFRUF! Es wurde keine AuftragsID übergeben');
         }
+    }
 
-        if (!$auftrag) {
-            die('UNGUELTIGER SEITENAUFRUF! Es wurde kein Auftrag zur übergebenen ID gefunden!');
+    public function loadAuftrag() {
+        $this->auftragsDaten = $this->db->query_row(
+            'SELECT a.*, u.personalnr FROM mm_umzuege a '
+             . ' LEFT JOIN mm_user u ON(a.antragsteller_uid = u.uid)'
+             . ' WHERE aid = ' . (int)$this->AID
+        );
+
+        $err = $this->db->error();
+        if ($err) {
+            throw new \Exception($err);
         }
-        $ktgIdLieferung = 18;
-        $ktgIdRabatt = 25;
+        return $this;
+    }
 
-        LOX(__FILE__, __LINE__);
-        $leistungen = $db->query_rows(
+    public function loadDataByLID(int $lid) {
+        $this->lieferscheinDaten = $this->db->query(
+            'SELECT * FROM mm_lieferscheine WHERE lid = :lid',
+            [ 'lid' => $lid]
+        );
+
+        return $this->lieferscheinDaten;
+    }
+
+    public function loadLeistungen() {
+        $ktgIdLieferung = $this->ktgIdLieferung;
+        $ktgIdRabatt = $this->ktgIdRabatt;
+
+        $AID = $this->AID;
+        $this->leistungen = $this->db->query_rows(
             'SELECT 
  l.*,
  k.leistungskategorie_id, k.Bezeichnung, k.leistungseinheit, k.preis_pro_einheit, k.waehrung,
@@ -187,81 +227,125 @@ LEFT JOIN  `mm_leistungskatalog` k ON l.leistung_id = k.leistung_id
 LEFT JOIN  `mm_leistungskategorie` ktg ON k.leistungskategorie_id = ktg.leistungskategorie_id
 WHERE aid = ' . (int)$AID . ' AND k.leistungskategorie_id NOT IN (' . $ktgIdLieferung . ', ' . $ktgIdRabatt . ')');
 
-        if (!count($leistungen)) {
-            die('UNGUELTIGER SEITENAUFRUF! Es wurde keine Leistungen zum angegebenen Auftrag gefunden!');
+        return $this->leistungen;
+    }
+
+    public function getLaenderKuerzelByLand(string $land) {
+        switch ($land) {
+            case 'Deutschland':
+                return 'D';
+                break;
+            case 'Niederlande':
+                return 'NL';
+                break;
+            case 'Ungarn':
+                return 'HU';
+                break;
+
+            default:
+                return $land;
         }
     }
-}
 
-LOX(__FILE__, __LINE__);
+    public function setLieferscheinID(int $id) {
+        $this->lid = $id;
+    }
+
+    public function getLieferscheinID() {
+        return $this->lid;
+    }
+
+    public function getLieferscheinNr() {
+        $lid = $this->getLieferscheinID();
+        return 'UNIPER-4-' . str_pad($this->AID, 5, '0', STR_PAD_LEFT . '-' . $lid;
+    }
+    
+    public function loadByAID(int $AID)
+    {
+        $ktgIdLieferung = $this->ktgIdLieferung;
+        $ktgIdRabatt = $this->ktgIdRabatt;
+
+        if ($AID) {
+            LS_LOX(__FILE__, __LINE__);
+            $view = '';
+            if (true || $this->mode === 'property') {
+                LS_LOX(__FILE__, __LINE__);
+                $auftrag = $this->db->query_row(
+                    'SELECT a.*, u.personalnr FROM mm_umzuege a '
+                     . ' LEFT JOIN mm_user u ON(a.antragsteller_uid = u.uid)'
+                    . ' WHERE aid = ' . (int)$AID
+                );
+                switch ($auftrag['umzugsstatus']) {
+                    case 'beantragt':
+                    case 'angeboten':
+                        $view = 'kalkulation';
+                        break;
+                    case 'abgeschlossen':
+                        $view = 'rechnung';
+                }
+
+                if (!$auftrag) {
+                    die('UNGUELTIGER SEITENAUFRUF! Es wurde kein Auftrag zur übergebenen ID gefunden!');
+                }
+
+                $leistungen = $this->loadLeistungen();
+
+                if (!count($leistungen)) {
+                    die('UNGUELTIGER SEITENAUFRUF! Es wurde keine Leistungen zum angegebenen Auftrag gefunden!');
+                }
+            }
+        }
+
+        LS_LOX(__FILE__, __LINE__);
 // create new PDF document
 // $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-$pdf = new LS_PDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $this->pdf = new LS_PDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf = $this->pdf;
 
 // set document information
-$pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('merTens AG');
-$pdf->SetTitle('Lieferschein');
-$pdf->SetSubject('Lieferung NewHomeOffice');
-$pdf->SetKeywords('merTens, ORS, Uniper, NewHomeOffice');
-$pdf->SetHeaderData('', '', '', '', [255, 255, 255], [255, 255, 255]);
-LOX(__FILE__, __LINE__);
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('merTens AG');
+        $pdf->SetTitle('Lieferschein');
+        $pdf->SetSubject('Lieferung NewHomeOffice');
+        $pdf->SetKeywords('merTens, ORS, Uniper, NewHomeOffice');
+        $pdf->SetHeaderData('', '', '', '', [255, 255, 255], [255, 255, 255]);
+        LS_LOX(__FILE__, __LINE__);
 
 // set image scale factor
-$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
-LOX(__FILE__, __LINE__);
-$pdf->setFooterData(array(0,64,0), array(0,64,128));
+        LS_LOX(__FILE__, __LINE__);
+        $pdf->setFooterData(array(0, 64, 0), array(0, 64, 128));
 
-$sender = 'merTens AG - Stahlwerk Becker 8 - D-47877 Willich';
+        $sender = 'merTens AG - Stahlwerk Becker 8 - D-47877 Willich';
 
-LOX(__FILE__, __LINE__);
-$recipient = <<<EOT
-DKV MOBILITY SERVICES BUSINESS CENTER
-GmbH + Co. KG
-Herr Danny Kopper
-Balcke-Dürr-Allee 3
-D-40882 Ratingen
-EOT;
+        LS_LOX(__FILE__, __LINE__);
 
-switch($auftrag['land']) {
-    case 'Deutschland':
-        $laenderKuerzel = 'D';
-        break;
-    case 'Niederlande':
-        $laenderKuerzel = 'NL';
-        break;
-    case 'Ungarn':
-        $laenderKuerzel = 'HU';
-        break;
+        $laenderKuerzel = $this->getLaenderKuerzelByLand($auftrag['land']);
 
-    default:
-        $laenderKuerzel = $auftrag['land'];
+        $recipient = $auftrag['vorname'] . ' ' . $auftrag['name'] . "\r\n";
+        $recipient .= $auftrag['strasse'] . "\r\n";
+        $recipient .= "$laenderKuerzel-{$auftrag['plz']} {$auftrag['ort']}\r\n";
 
-}
-$recipient = $auftrag['vorname'] . ' ' . $auftrag['name'] . "\r\n";
-$recipient.= $auftrag['strasse'] . "\r\n";
-$recipient.= "$laenderKuerzel-{$auftrag['plz']} {$auftrag['ort']}\r\n";
+        $lieferscheinCaption = "Lieferschein\nNr. {number}";
 
+        $aBriefkopfRefData = [
+//            ['Referenznummer', '12345'],
+            ['KID', $auftrag['personalnr']],
+            ['Ihre Rufnummer', $auftrag['fon']],
+            ['Ihre E-Mai', $auftrag['email']],
+            ['Ihr Bestellzeichen', 'Uniper-ORS-' . $this->AID],
+//            ['', ''],
+//            ['Fachberator', 'Jochen Herbermann'],
+//            ['Telefon', '+49 177 9699 499'],
+//            ['Sachbearbeiter', 'Björn Bongartz'],
+//            ['Telefon', '+49 2154 4705 1121'],
+            ['', ''],
+            ['', 'Willich, ' . date('d.m.Y')],
+        ];
 
-$lieferscheinCaption = "Lieferschein\nNr. {number}";
-
-$aBriefkopfRefData = [
-    ['Referenznummer', '12345'],
-    ['Kundennummer', '6789'],
-    ['Ihre Durchwahl', '1234 567 890'],
-    ['Ihr Bestellzeichen', 'MM50607090'],
-    ['', ''],
-    ['Fachberator', 'Jochen Herbermann'],
-    ['Telefon', '+49 177 9699 499'],
-    ['Sachbearbeiter', 'Björn Bongartz'],
-    ['Telefon', '+49 2154 4705 1121'],
-    ['', ''],
-    ['', 'Willich, ' . date('d.m.Y')],
-];
-
-LOX(__FILE__, __LINE__);
-$tblColHeader = <<<EOT
+        LS_LOX(__FILE__, __LINE__);
+        $tblColHeader = <<<EOT
 <table style="border:1px solid gray" width="99%" cellspacing="0" cellpadding="1" border="0">
     <tr>
         <td style="font-weight:bold;padding-bottom:10px;" width="8%" align="left">Anzahl</td>
@@ -277,18 +361,18 @@ $tblColHeader = <<<EOT
     </tr>
 EOT;
 
-LOX(__FILE__, __LINE__);
-$iNumLstg = count($leistungen);
-for($i = 0; $i < $iNumLstg; $i++) {
+        LS_LOX(__FILE__, __LINE__);
+        $iNumLstg = count($leistungen);
+        for ($i = 0; $i < $iNumLstg; $i++) {
 
-    $_item = $leistungen[$i];
-    $unit = $_item['leistungseinheit'];
-    $kategorie = $_item['Kategorie'];
-    $anzahl = $_item['menge_mertens'];
-    $artikel = $_item['Bezeichnung'];
-    $BMenge = $anzahl;
-    $RMenge = 0;
-    $tblColHeader.= <<<EOT
+            $_item = $leistungen[$i];
+            $unit = $_item['leistungseinheit'];
+            $kategorie = $_item['Kategorie'];
+            $anzahl = $_item['menge_mertens'];
+            $artikel = $_item['Bezeichnung'];
+            $BMenge = $anzahl;
+            $RMenge = 0;
+            $tblColHeader .= <<<EOT
     <tr>
         <td style="font-weight:bold;" align="left"><font weight="bold">$anzahl</font></td>
         <td style="font-weight:bold;" align="right">$unit</td>
@@ -299,76 +383,75 @@ $artikel</td>
         <td style="font-weight:bold;" align="right">$RMenge</td>
     </tr>
 EOT;
-}
-$tblColHeader.= '
+        }
+        $tblColHeader .= '
 </table
 ';
 
 
-LOX(__FILE__, __LINE__);
-$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+        LS_LOX(__FILE__, __LINE__);
+        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 // set default monospaced font
-$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 // set margins
-$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-$fitbox = 'RT';
-$pdf->AddPage();
+        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+        $fitbox = 'RT';
+        $pdf->AddPage();
 
-LOX(__FILE__, __LINE__);
-$pdf->SetFont('helvetica', 'I', 8);
+        LS_LOX(__FILE__, __LINE__);
+        $pdf->SetFont('helvetica', 'I', 8);
 // Page number
 
-$pdf->Ln(10);
-$pdf->SetFont('helvetica', '', 8);
-$pdf->SetTextColor(123);
-$pdf->MultiCell(107, 10, $sender,
-    0, 'L', 0, 0, '', '', true, '', '', '', 10, 'B', '');
+        $pdf->Ln(10);
+        $pdf->SetFont('helvetica', '', 8);
+        $pdf->SetTextColor(123);
+        $pdf->MultiCell(107, 10, $sender,
+            0, 'L', 0, 0, '', '', true, '', '', '', 10, 'B', '');
 
-LOX(__FILE__, __LINE__);
-$pdf->SetFont('helvetica', 'B', 12);
-$pdf->SetTextColor(0);
-$pdf->MultiCell(55, 15, $lieferscheinCaption,
-    0, 'L', 0, 0, '', '', true, '', '', '', 15, 'T', '');
-$pdf->Ln(20);
+        LS_LOX(__FILE__, __LINE__);
+        $pdf->SetFont('helvetica', 'B', 12);
+        $pdf->SetTextColor(0);
+        $pdf->MultiCell(55, 15, $lieferscheinCaption,
+            0, 'L', 0, 0, '', '', true, '', '', '', 15, 'T', '');
+        $pdf->Ln(20);
 
-$pdf->SetFont('helvetica', '', 10);
-$pdf->MultiCell(107, 60, $recipient,
-    0, 'L', 0, 0, '', '', true);
-
-
-LOX(__FILE__, __LINE__);
-$iNumRefLines = count($aBriefkopfRefData);
-if ($iNumRefLines > 20) {
-    die('#' . __LINE__ . ' ' . __FILE__ . ' ' . print_r(compact('iNumRefLines'), 1));
-}
-for($ri = 0; $ri < $iNumRefLines; $ri++) {
-    $_lbl = $aBriefkopfRefData[$ri][0];
-    $_val = $aBriefkopfRefData[$ri][1] ?? '';
-
-    if (1) $pdf->MultiCell(
-        107, 5, '',
-        0, 'L', 0, 0, PDF_MARGIN_LEFT, '', true, '', '', '', '', 'T', '');
-    $pdf->MultiCell(
-        35, 5, $_lbl,
-        0, 'L', 0, 0, '', '', true, '', '', '', '', 'T', '');
-
-    $pdf->MultiCell(
-        35, 5, $_val,
-        0, 'R', 0, 0, '', '', true, '', '', '', '', 'T', '');
-    $pdf->Ln(5);
-    if ($ri > 20) {
-        break;
-    }
-}
-$pdf->Ln(4);
-
-$pdf->writeHTML($tblColHeader);
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->MultiCell(107, 60, $recipient,
+            0, 'L', 0, 0, '', '', true);
 
 
+        LS_LOX(__FILE__, __LINE__);
+        $iNumRefLines = count($aBriefkopfRefData);
+        if ($iNumRefLines > 20) {
+            die('#' . __LINE__ . ' ' . __FILE__ . ' ' . print_r(compact('iNumRefLines'), 1));
+        }
+        for ($ri = 0; $ri < $iNumRefLines; $ri++) {
+            $_lbl = $aBriefkopfRefData[$ri][0];
+            $_val = $aBriefkopfRefData[$ri][1] ?? '';
 
-$kundenAbnahme = <<<EOT
+            if (1) $pdf->MultiCell(
+                107, 5, '',
+                0, 'L', 0, 0, PDF_MARGIN_LEFT, '', true, '', '', '', '', 'T', '');
+            $pdf->MultiCell(
+                35, 5, $_lbl,
+                0, 'L', 0, 0, '', '', true, '', '', '', '', 'T', '');
+
+            $pdf->MultiCell(
+                35, 5, $_val,
+                0, 'R', 0, 0, '', '', true, '', '', '', '', 'T', '');
+            $pdf->Ln(5);
+            if ($ri > 20) {
+                break;
+            }
+        }
+        $pdf->Ln(4);
+
+        $pdf->writeHTML($tblColHeader);
+
+
+        $kundenAbnahme = <<<EOT
 <div>Die Ware wurde ordnungsgemäß geliefert und in einwandfreiem Zustand montiert. Ebenfalls bestätigen Sie hiermit, dass
 durch uns keine Schäden an Ihrem Gebäude und Ihren Räumlichkeiten entstanden sind. Sollten Schäden entstanden
 sein, notieren Sie diese bitte auf dem beiliegendem Reklamationsformular.</div>
@@ -408,42 +491,42 @@ sein, notieren Sie diese bitte auf dem beiliegendem Reklamationsformular.</div>
 
 </table>
 EOT;
-$pdf->SetFont('helvetica', '', 9);
-$pdf->Ln(10);
-$pdf->writeHTML($kundenAbnahme);
+        $pdf->SetFont('helvetica', '', 9);
+        $pdf->Ln(10);
+        $pdf->writeHTML($kundenAbnahme);
 
-LOX(__FILE__, __LINE__);
+        LS_LOX(__FILE__, __LINE__);
 
 // set header and footer fonts
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+        $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
 // set default monospaced font
-$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
-$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-if (1) {
-    // set margins
-    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-}
+        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        if (1) {
+            // set margins
+            $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+        }
 
 // set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
 // set image scale factor
-$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 // set some language-dependent strings (optional)
-if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-    require_once(dirname(__FILE__).'/lang/eng.php');
-    $pdf->setLanguageArray($l);
-}
+        if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
+            require_once(dirname(__FILE__) . '/lang/eng.php');
+            $pdf->setLanguageArray($l);
+        }
 
 // ---------------------------------------------------------
 
 // set default font subsetting mode
-$pdf->setFontSubsetting(true);
+        $pdf->setFontSubsetting(true);
 
 // Set font
 // dejavusans is a UTF-8 Unicode font, if you only need to
@@ -451,13 +534,14 @@ $pdf->setFontSubsetting(true);
 // helvetica or times to reduce file size.
 // $pdf->SetFont('dejavusans', '', 14, '', true);
 
-$pdf->AddPage();
+        $pdf->AddPage();
 
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
-LOX(__FILE__, __LINE__);
-$pdf->Output('example_001.pdf', 'I');
-
+        LS_LOX(__FILE__, __LINE__);
+        $pdf->Output('example_001.pdf', 'I');
+    }
+}
 //============================================================+
 // END OF FILE
 //============================================================+

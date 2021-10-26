@@ -1,0 +1,400 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: f.barthold
+ * Date: 25.10.2021
+ * Time: 09:42
+ */
+
+include_once($InclBaseDir . '/lieferscheine.inc.php');
+
+class LS_Model {
+
+    private $error = '';
+    private $validationErrors = [];
+    private $db = null;
+    private $mysqli = null;
+    private $inputVarNames = [];
+    private $AID = 0;
+    private $lid = 0;
+    private $lsdata = [];
+
+    public function __construct(int $aid = 0, int $lid = 0)
+    {
+        global $db;
+        $this->db = $db;
+        $this->mysqli = $db->conn;
+
+        $this->inputVarNames = [
+            'aid',
+            'lieferdatum',
+            'ankunft',
+            'abfahrt',
+            'etikettierung_erfolgt',
+            'leistung',
+            'sig_mt_dataurl',
+            'sig_mt_datetime',
+            'sig_mt_created',
+            'sig_mt_geodata',
+            'sig_ma_dataurl',
+            'sig_ma_datetime',
+            'sig_ma_created',
+            'sig_ma_geodata',
+            'leistung',
+            'daten'
+        ];
+    }
+
+    public function setLieferscheinId(int $lid) {
+        $row = $this->db->query_count(
+            'SELECT aid, lid FROM mm_lieferscheine WHERE lid = ' . (int)$lid
+        );
+
+        if (empty($row)) {
+            $this->error = 'Es existiert kein Lieferschein mit der ID ' . $lid;
+            throw new \Exception($this->error);
+        }
+
+        if ($row['aid'] != $this->AID) {
+            $this->error = 'Der Lieferschein mit der ID ' . $lid
+                . ' ist einem anderen Auftrag (ID ' . $row['aid'] . ') zugeordnet';
+            throw new \Exception($this->error);
+        }
+
+        $this->lid = $lid;
+        return $this;
+    }
+
+    public function getError() {
+        return $this->error;
+
+    }
+
+    public function getValidationErrors() {
+        return $this->validationErrors;
+    }
+
+    public function loadLastLieferschein() {
+        $this->lsdata = $this->db->query_row(
+            'SELECT * FROM mm_lieferscheine WHERE aid = :aid ORDER BY lid DESC LIMIT 1',
+            [ 'aid' => $this->AID]);
+
+        if (!empty($this->lsdata) && is_numeric($this->lsdata['lid'])) {
+            $this->lid = (int)$this->lsdata['lid'];
+            return true;
+        }
+
+        $this->lid = 0;
+        return false;
+    }
+
+    public function loadLieferschein(bool $autoCreate = true) {
+        if ($this->lid) {
+            $this->lsdata = $this->db->query_row(
+                'SELECT * FROM mm_lieferscheine WHERE aid = :aid ORDER BY lid DESC LIMIT 1',
+                [ 'aid' => $this->AID]);
+            return !empty($this->lsdata);
+        }
+        if ($autoCreate) {
+            return $this->createLieferschein();
+        }
+        return false;
+    }
+
+    public function createLieferschein() {
+        $this->db->query('INSERT INTO mm_lieferscheine (aid) VALUES(:aid)',
+            ['aid' => $this->AID]
+        );
+        $this->error = $this->db->error();
+        if ($this->error) {
+            $this->lsdata = [];
+            $this->lid = 0;
+            return false;
+        }
+        $this->lid = (int)$this->db->last_insert_id();
+        $this->loadLieferschein();
+        return true;
+    }
+
+    public function insert($input) {
+        global $user;
+        $data = $input;
+        $db = $this->db;
+        if (isset($data['leistung'])) {
+            $data['leistungen'] = json_encode($data['leistung']);
+            unset($data['leistung']);
+        }
+        $data['created_uid'] = $user['uid'];
+        $data['created_user'] = $user['user'];
+        $cols = [];
+        $vals = [];
+        foreach($data as $_k => $_v) {
+            $cols[] = $_k;
+            $vals[] = $_v;
+        }
+
+        $sql = 'INSERT INTO mm_lieferscheine (' . implode(', ', $cols) . ')'
+             . 'VALUES(:' . implode(', :', $cols) . ')';
+        // die($sql . "\n" . print_r(compact('cols', 'vals'), 1));
+
+        $db->query($sql, $data);
+        $id = $db->last_insert_id();
+
+        $this->createSigBlobsFromDataUrlCols((int)$id);
+
+        return $id;
+    }
+
+    public function getBinaryFromBase64DataUrl($dataurl) {
+        $_val = $dataurl;
+        $commaPos = strpos($_val, ',');
+        if ($commaPos > 20 && $commaPos < 50) {
+            $metaInfo = substr($_val, 0, $commaPos);
+            list($_d, $_i, $_type, $_enc) = preg_split("#[:/;,]#", $metaInfo);
+
+            if ($_d === 'data' && $_enc === 'base64') {
+                $base64Start = $commaPos + 1;
+                $base64Data = substr($_val, $base64Start);
+                return base64_decode($base64Data);
+            }
+        }
+        return '';
+    }
+
+    public function validateInput($rawInput) {
+        $this->error = '';
+        $this->validationErrors = [];
+        $input = [];
+
+        foreach($this->inputVarNames as $_name) {
+            $_val = $rawInput[$_name] ?? '';
+            $_colName = $_name;
+            switch($_name) {
+                case 'lieferdatum':
+                    if ($_val && strtotime($_val)) {
+                        $_val = date('Y-m-d', strtotime($_val));
+                    } else {
+                        $this->validationErrors[$_name] = 'Bitte geben Sie ein gültiges Lieferdatum an!';
+                        $_val = null;
+                    }
+                    break;
+                case 'ankunft':
+                case 'abfahrt':
+                    list($h, $m, $s) = explode(':', $_val . ':0:0');
+                    $time = '';
+                    if (is_numeric($h) && is_numeric($m) && is_numeric($s)) {
+                        $h = (int)$h;
+                        $m = (int)$m;
+                        $s = (int)$s;
+                        if ( 0 <= $h && $h <= 23
+                            && $m >= 0 && $m <= 59
+                            && $m >= 0 && $m <= 59) {
+                            $time = ($h < 10 ? '0' : '') . $h;
+                            $time.= ':' . ($m < 10 ? '0' : '') . $m;
+                            $time.= ':' . ($s < 10 ? '0' : '') . $s;
+                        }
+                    }
+                    if ($time) {
+                        $_val = $time;
+                    } else {
+                        $this->validationErrors[$_name] = 'Bitte geben Sie eine gültige Uhrzeit für ' . ucfirst($_name) . 'an!';
+                    }
+                    break;
+
+                case 'etikettierung_erfolgt':
+                    $_val = !empty($_val) ? 'J' : 'N';
+                    break;
+
+                case 'sig_mt_geodata':
+                case 'sig_ma_geodata':
+                    $_colName = str_replace('ma', 'kd', $_name);
+                    if (empty($_val)) {
+                        $_val = '{}';
+                    }
+                    break;
+
+                case 'sig_ma_datetime':
+                    $_colName = str_replace('ma', 'kd', $_name);
+                    break;
+
+                case 'sig_mt_created':
+                case 'sig_ma_created':
+                    $_colName = str_replace('created', 'datetime', $_name);
+                    $_colName = str_replace('ma', 'kd', $_colName);
+                    break;
+
+
+                case 'sig_mt_dataurl':
+                case 'sig_ma_dataurl':
+                    if ($_name === 'sig_ma_dataurl') {
+                        $_colName = 'sig_kd_dataurl';
+                    }
+                    $base = substr($_colName, 0, 7);
+                    $commaPos = strpos($_val, ',');
+                    if ($commaPos > 20 && $commaPos < 50) {
+                        $metaInfo = substr($_val, 0, $commaPos);
+                        list($_d, $_i, $_type, $_enc) = preg_split("#[:/;,]#", $metaInfo);
+
+                        if ($_d === 'data' && $_i === 'image' && $_enc === 'base64') {
+                            if (in_array($_type, ['png', 'jpeg', 'jpg', 'gif'])) {
+                                $imgInfo = getimagesizefromstring($this->getBinaryFromBase64DataUrl($_val));
+                                $tmpSize = strlen($_val);
+                                if (false === $imgInfo) {
+                                    $tmpImg = tempnam(sys_get_temp_dir(), 'img_sig');
+                                    $tmpImgTyped = $tmpImg . '.' . $_type;
+                                    rename($tmpImg, $tmpImgTyped);
+                                    file_put_contents($tmpImgTyped, $this->getBinaryFromBase64DataUrl($_val));
+                                    $imgInfo = getimagesize($tmpImgTyped);
+                                    @unlink($tmpImgTyped);
+                                }
+
+
+                                if (is_array($imgInfo) && count($imgInfo)) {
+                                    $input[$base . 'size'] = $tmpSize;
+                                    $input[$base . 'width'] = $imgInfo[0];
+                                    $input[$base . 'height'] = $imgInfo[1];
+                                    $input[$base . 'mime'] = image_type_to_mime_type($imgInfo[2]);
+                                }
+                            }
+                        } else {
+                            if ($_i !== 'image') {
+                                $this->validationErrors[$_name] = 'Die Datei ' . $_name . ' wurde nicht als Grafik übermittelt!';
+                            } elseif ($_enc !== 'base64') {
+                                $this->validationErrors[$_name] = 'Die Datei ' . $_name . ' wurde nicht mit base64 encodiert!';
+                            } else {
+                                $this->validationErrors[$_name] = 'Die Datei ' . $_name . ' kann nicht ausgelesen werden!';
+                            }
+                        }
+                    } else {
+                        $this->validationErrors[$_name] = 'Die Signatur ' . $_name . ' wurde in unerwarteter Data-URL-Codierung übermittelt!';
+                    }
+                    break;
+
+                case 'leistung':
+                    $input['leistungen'] = json_encode($_val);
+                    break;
+                case 'data':
+                    if (!$_val) {
+                        $_val = '{}';
+                    }
+                    break;
+            }
+            $input[$_colName] = $_val;
+        }
+
+        if (!count($this->validationErrors)) {
+            return $input;
+        }
+        return false;
+
+    }
+
+    public function addSignaturenImages(int $id, string $filenameMt, string $filenameKd) {
+        $this->error = '';
+        $iNumExecuted = 0;
+        $mysqli = $this->mysqli;
+
+        if (!empty($filenameMt) && file_exists($filenameMt) && filesize($filenameMt) > 0) {
+            $filesizeMt = filesize($filenameMt);
+            $queryMt = "UPDATE mm_lieferscheine SET sig_mt_blob = ?, sig_mt_size = ? WHERE INFULL(sig_mt_blob, '') = '' AND lid = ?"; // . $id;
+            $stmt = $mysqli>prepare($queryMt);
+            $null = NULL;
+            $stmt->bind_param("bii", $null, $filesizeMt, $id);
+            $stmt->send_long_data(0, file_get_contents($filenameMt));
+            $addedSigMtBlob = $stmt->execute();
+
+            if ($stmt->error) {
+                $this->error .= "#" . __LINE__ . ' ' . $stmt->error . "\n";
+            }
+            if ($addedSigMtBlob) {
+                ++$iNumExecuted;
+            }
+        }
+
+        if (!empty($filenameKd) && file_exists($filenameKd) && filesize($filenameKd) > 0) {
+            $filesizeKd = filesize($filenameKd);
+            $queryKd = "UPDATE mm_lieferscheine SET sig_kd_blob =  ?, sig_kd_size = ? WHERE lid = ?";
+            $stmt = $mysqli->prepare($queryKd);
+            $null = NULL;
+            $stmt->bind_param("bii", $null, $filesizeKd, $id);
+            $stmt->send_long_data(0, file_get_contents($filenameKd));
+            $addedSigKdBlob = $stmt->execute();
+            if ($stmt->error) {
+                $this->error .= "#" . __LINE__ . ' ' . $stmt->error . "\n";
+            }
+            if ($addedSigKdBlob) {
+                ++$iNumExecuted;
+            }
+        }
+
+        return $iNumExecuted;
+    }
+
+    public function createSigBlobsFromDataUrlCols(int $id) {
+        $this->error = '';
+        $iNumExecuted = 0;
+        $mysqli = $this->mysqli;
+
+        $sqlBlobMt = <<<EOT
+     UPDATE mm_lieferscheine SET 
+     sig_mt_blob = 
+        FROM_BASE64(
+            SUBSTR(sig_mt_dataurl, 
+                LOCATE(',', sig_mt_dataurl) + 1
+            )
+        )
+     WHERE 
+     IFNULL(sig_mt_blob, '') = ''
+     AND SUBSTR(sig_mt_dataurl, 1, 23) LIKE "data:image/%;base64,%"
+     AND lid = ?;
+EOT;
+
+        $stmt = $mysqli->prepare($sqlBlobMt);
+        if ($mysqli->error) {
+            die($mysqli->error);
+        }
+        if ($stmt->error) {
+            $this->error .= "#" . __LINE__ . ' ' . $stmt->error . "\n";
+        }
+        $stmt->bind_param('i', $id);
+        if ($stmt->error) {
+            $this->error .= "#" . __LINE__ . ' ' . $stmt->error . "\n";
+        }
+        $executedMT = $stmt->execute();
+        if ($stmt->error) {
+            $this->error .= "#" . __LINE__ . ' ' . $stmt->error . "\n";
+        }
+        if ($executedMT) {
+            ++$iNumExecuted;
+        }
+
+
+        $sqlBlobKd = <<<EOT
+     UPDATE mm_lieferscheine SET 
+     sig_kd_blob = 
+        FROM_BASE64(
+            SUBSTR(sig_kd_dataurl, 
+                LOCATE(',', sig_kd_dataurl) + 1
+            )
+        )
+     WHERE 
+     IFNULL(sig_kd_blob, '') = ''
+     AND SUBSTR(sig_kd_dataurl, 1, 23) LIKE "data:image/%;base64,%"
+     AND lid = ?;
+EOT;
+        $stmt = $mysqli->prepare($sqlBlobKd);
+        if ($mysqli->error) {
+            die($mysqli->error);
+        }
+        $stmt->bind_param('i', $id);
+        $executedKd = $stmt->execute();
+        if ($stmt->error) {
+            $this->error .= "#" . __LINE__ . ' ' . $stmt->error . "\n";
+        }
+        if ($executedKd) {
+            ++$iNumExecuted;
+        }
+
+        return $iNumExecuted;
+    }
+}
