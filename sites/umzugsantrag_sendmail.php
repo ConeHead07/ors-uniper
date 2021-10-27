@@ -643,8 +643,23 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             $FILE = __FILE__;
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
                         }
-                        $sentToUser = send_status_mail($userMailTo, $tplMail, $rplVars);
-                        $return = $sentToUser;
+                        $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                    }
+
+                    $_configNameEnable = 'notify_property_genehmigt_Nein';
+                    if ( $MConf[$_configNameEnable]) {
+                        $tplFile = $TextBaseDir . "statusmail_umzug_abgelehnt.txt";
+                        $tplMail = file_get_contents($tplFile);
+                        $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=aantrag&id=" . $AID;
+                        if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                            $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aAdminMailTo, $_configNameEnable);
+                        }
+                        if ($dbg) {
+                            $LINE = __LINE__;
+                            $FILE = __FILE__;
+                            print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
+                        }
+                        $return = send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
                     }
 
                     $_configNameEnable = 'notify_mertens_genehmigt_Nein';
@@ -660,13 +675,28 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             $FILE = __FILE__;
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
                         }
-                        return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                        $return = send_status_mail($aAdminMailTo, $tplMail, $rplVars);
                     }
 				    return $return;
 				    break;
 				
 				case "Ja":
 				default:
+                    $_configNameEnable = 'notify_user_genehmigt_Ja';
+                    if ($MConf[$_configNameEnable]) {
+                        $tplFile = $TextBaseDir . "statusmail_umzug_aktiv.txt";
+                        $tplMail = file_get_contents($tplFile);
+                        if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                            $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aPropertyMailTo, $_configNameEnable);
+                        }
+                        if ($dbg) {
+                            $LINE = __LINE__;
+                            $FILE = __FILE__;
+                            print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
+                        }
+                        $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                    }
+
                     $_configNameEnable = 'notify_property_genehmigt_Ja';
 				    if ($MConf[$_configNameEnable]) {
                         $tplFile = $TextBaseDir . "statusmail_umzug_aktiv.txt";
@@ -769,8 +799,8 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
 			switch($value) {
 				case "Ja":
                     $_configNameEnable = 'notify_user_abgeschlossen';
+                    $tplFile = $TextBaseDir . "statusmail_umzug_durchgefuehrt.txt";
 				    if ($MConf[$_configNameEnable]) {
-                        $tplFile = $TextBaseDir . "statusmail_umzug_durchgefuehrt.txt";
                         $tplMail = file_get_contents($tplFile);
                         $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=kantrag&id=" . $AID;
                         if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
@@ -802,8 +832,8 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
 
 				case "Storniert":
                     $_configNameEnable = 'notify_user_storniert';
+                    $tplFile = $TextBaseDir . "statusmail_umzug_storniert.txt";
 				    if ($MConf[$_configNameEnable]) {
-                        $tplFile = $TextBaseDir . "statusmail_umzug_storniert.txt";
                         $tplMail = file_get_contents($tplFile);
                         $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=kantrag&id=" . $AID;
                         if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {

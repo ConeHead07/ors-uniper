@@ -64,7 +64,7 @@
       </table>
       <br>
   </div>
-  {if 1}
+  {if !empty($DL) && !empty($DL.Firmenname)}
   <div style="float:left; margin-left:50px;">
       {include file="umzugsteam_umzugsformular_lieferauswahl.tpl.html"}
   </div>
@@ -83,7 +83,7 @@
       {include file="admin_umzugsformular_ortsauswahl.tpl.html"}
   {/if}
   {if 1}
-      {include file="umzugsformular_leistungsauswahl.tpl.read.html"}
+      {include file="umzugsteam_umzugsformular_leistungsauswahl.tpl.read.html"}
   {/if}
   {if !empty($UmzugsAnlagen)}
     {include file="umzugsformular_attachments.tpl.read.html" internal=1}

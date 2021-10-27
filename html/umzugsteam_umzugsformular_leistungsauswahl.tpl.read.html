@@ -1,0 +1,75 @@
+<style>
+{literal}
+tr.row * {
+    font-size:11px;
+}
+div.ktg1, div.lstg {
+    min-height: 18px;
+}
+tr#summary td { 
+    text-align:right;
+    padding:5px;
+    font-weight:bold;
+}
+td.unit {
+    text-align:center;
+}
+td.menge, td.menge, input.menge, td.preis, td.sum {
+    text-align:right;
+}
+.hideForUniper {
+    display:none;
+}
+.MitarbeierItem.table-leistungen  .inputRowVon td,
+.MitarbeierItem.table-leistungen  .inputRowZiel td,
+.table-leistungen thead td,
+.table-leistungen tbody td,
+.table-leistungen td {
+    padding-left:.5rem;
+    padding-right: .5rem;
+}
+{/literal}
+</style>
+{if count($Umzugsleistungen)}
+<h2 style="margin:0;padding:0" data-src="umzugsformular_leistungsauswahl.tpl.read.html">Leistungen</h2>
+<table class="MitarbeierItem table-leistungen" style="margin-top:0;padding-top:0;width:100%;">
+    <thead>
+        <tr>
+            <td>Kategorie</td>
+            <td>Leistung</td>
+            <td>Menge<span class="hideForUniper"> 1 DSD</span></td>
+            <td class="hideForUniper">Einheit 1</td>
+            <td class="hideForUniper">Menge 2 DSD</td>
+            <td class="hideForUniper">Einheit 2</td>
+            <td class="hideForUniper">Menge1 M</td>
+            <td class="hideForUniper">Menge2 M</td>
+            {if $umzugsstatus eq "abgeschlossen"}
+            <td class="hideForUniper">Rekla</td>
+            {/if}
+        </tr>
+    </thead>
+    <tbody id="TblLeistungenBody">
+    {foreach name=GList item=L from=$Umzugsleistungen}
+        {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" }
+            {continue}
+        {/if}
+        <tr class="row inputRowVon">
+            <td class="ktg1">{$L.kategorie|escape}</td>
+            <td class="lstg">{$L.leistung|escape}</td>
+            <td class="menge">{if is_numeric($L.menge_property)}{$L.menge_property|escape|number_format:0:",":"."}{/if}</td>
+            <td class="unit hideForUniper">{$L.leistungseinheit|escape}</td>
+            <td class=" hideForUniper">{if is_numeric($L.menge2_property)}{$L.menge2_property|escape|number_format:2:",":"."}{/if}</td>
+            <td class="unit hideForUniper">{$L.leistungseinheit2|escape}</td>
+            <td class="menge hideForUniper">{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:2:",":"."}{/if}</td>
+            <td class="menge hideForUniper">{if is_numeric($L.menge2_mertens)}{$L.menge2_mertens|escape|number_format:2:",":"."}{/if}</td>
+            {if $umzugsstatus eq "abgeschlossen"}
+            <td class="hideForUniper">Rekla</td>
+            {/if}
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
+{else}
+<strong>Leistungen:</strong> <em>Keine </em> <br>
+{/if}
+<br>

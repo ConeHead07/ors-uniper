@@ -119,30 +119,77 @@ $MConf = array(
     'bestaetigung_requires_genehmigung' => false,
 
     'notify_user_bemerkung' => true,
+    'notify_user_bemerkung_tpl' => 'statusmail_umzug_bemerkung.txt',
+
     'notify_user_bemerkung_selfcreated' => false,
-    'notify_user_genehmigt_Ja' => true,
-    'notify_user_genehmigt_Nein' => true,  // Ist aktuell nicht implementiert, siehe notify_property_genehmigt_Nein
+    'notify_user_bemerkung_selfcreated_tpl' => 'statusmail_umzug_bemerkung.txt',
+
+    'notify_user_genehmigt_Ja' => false,
+    'notify_user_genehmigt_Ja_tpl' => 'statusmail_umzug_aktiv.txt',
+
+    'notify_user_genehmigt_Nein' => false,  // Ist aktuell nicht implementiert, siehe notify_property_genehmigt_Nein
+    'notify_user_genehmigt_Nein_tpl' => 'statusmail_umzug_kabgelehnt.txt',  // Ist aktuell nicht implementiert, siehe notify_property_genehmigt_Nein
+
     'notify_user_bestaetigt_Ja' => true,
+    'notify_user_bestaetigt_Ja_tpl' => 'statusmail_umzug_bestaetigt.txt',
+
     'notify_user_bestaetigt_Nein' => true,
+    'notify_user_bestaetigt_Nein_tpl' => 'statusmail_umzug_aufhebung.txt',
+
     'notify_user_zurueckgegeben' => true,
+    'notify_user_zurueckgegeben_tpl' => 'statusmail_umzug_zurueckgegeben.txt',
+
     'notify_user_abgeschlossen' => true,
+    'notify_user_abgeschlossen_tpl' => 'statusmail_umzug_durchgefuehrt.txt',
+
     'notify_user_storniert' => true,
+    'notify_user_storniert_tpl' => 'statusmail_umzug_storniert.txt',
+
 
     'notify_mertens_bemerkung' => true,
+    'notify_mertens_bemerkung_tpl' => 'statusmail_umzug_bemerkung.txt',
+
     'notify_mertens_bemerkung_selfcreated' => false,
+    'notify_mertens_bemerkung_selfcreated_tpl' => 'statusmail_umzug_bemerkung.txt',
+
     'notify_mertens_beantragt' => false,
+    'notify_mertens_beantragt_tpl' => 'statusmail_umzug_zurpruefung.txt',
+
     'notify_mertens_erneutpruefen' => true,
-    'notify_mertens_genehmigt_Ja' => true,
-    'notify_mertens_genehmigt_Nein' => true,
+    'notify_mertens_erneutpruefen_tpl' => 'statusmail_umzug_zurerneutenpruefung.txt',
+
+    'notify_mertens_genehmigt_Ja' => false,
+    'notify_mertens_genehmigt_Ja_tpl' => 'statusmail_umzug_genehmigt.txt',
+
+    'notify_mertens_genehmigt_Nein' => false,
+    'notify_mertens_genehmigt_Nein_tpl' => 'statusmail_umzug_abgelehnt.txt',
 
     'notify_property_beantragt' => false,
+    'notify_property_beantragt_tpl' => 'statusmail_umzug_neu.txt',
+
     'notify_property_angeboten' => false,
+    'notify_property_angeboten_tpl' => 'statusmail_umzug_zurgenehmigung.txt',
+
     'notify_property_geprueft' => false,
+    'notify_property_geprueft_tpl' => 'statusmail_umzug_zurgenehmigung.txt',
+
     'notify_property_bestaetigt_Ja' => false,
+    'notify_property_bestaetigt_Ja_tpl' => 'statusmail_umzug_bestaetigt.txt',
+
     'notify_property_bestaetigt_Nein' => false,
+    'notify_property_bestaetigt_Nein_tpl' => 'statusmail_umzug_aufhebung.txt',
+
     'notify_property_genehmigt_Nein' => false, // Sieht nach einem logischen Fehler, Property muss über eigene Aktion nicht benachrichtigt werden
+    'notify_property_genehmigt_Nein_tpl' => '',
+
+    'notify_property_genehmigt_Ja' => false,
+    'notify_property_genehmigt_Ja_tpl' => 'statusmail_umzug_aktiv.txt',
+
     'notify_property_abgeschlossen' => false,
+    'notify_property_abgeschlossen_tpl' => 'statusmail_umzug_durchgefuehrt.txt',
+
     'notify_property_storniert' => false,
+    'notify_property_storniert_tpl' => 'statusmail_umzug_storniert.txt',
 );
 
 /* statusmails:

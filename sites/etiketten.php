@@ -40,7 +40,7 @@ class EtikettenPDF extends TCPDF {
     private static $iXPointsDefault = 141.732;
     private static $iYPointsDefault = 225.772;
 
-    public function __construct(string $orientation = 'L', string $unit = 'mm', $format = '', bool $unicode = true, string $encoding = 'UTF-8', bool $diskcache = false, $pdfa = false)
+    public function __construct(string $orientation = 'L', string $unit = 'mm', $format = 'ORS_ETIKETT', bool $unicode = true, string $encoding = 'UTF-8', bool $diskcache = false, $pdfa = false)
     {
         if (empty($format)) {
             $format = [self::$iXPointsDefault, self::$iYPointsDefault];
@@ -53,27 +53,80 @@ class EtikettenPDF extends TCPDF {
         $this->SetTitle('Etiketten');
         $this->SetSubject('Lieferung NewHomeOffice');
         $this->SetKeywords('merTens, ORS, Uniper, NewHomeOffice');
+
+        $this->setHeaderData('', '', '', '', '', '');
+        $this->setFooterData('', '');
+
+        // remove default header/footer
+        $this->setPrintHeader(false);
+        $this->setPrintFooter(false);
+
+// set font
+        $this->SetFont('helvetica', '', 9);
     }
 
-    //Page header
-    public function Header() {
-    }
+    public function addArtikel(string $lsNr, string $lsDatum, array $Artikel) {
+        $lsArtikel = $Artikel['Artikel'];
+        $link = $Artikel['Link'];
 
-    // Page footer
-    public function Footer() {
+//         141.732;
+//         225.772;
+        $page_format = array(
+            'MediaBox' => array ('llx' => 0, 'lly' => 0, 'urx' => 80, 'ury' =>50),
+            'CropBox' => array ('llx' => 0, 'lly' => 0, 'urx' => 80, 'ury' => 50),
+            'BleedBox' => array ('llx' => 0, 'lly' => 0, 'urx' => 80, 'ury' => 50),
+            'TrimBox' => array ('llx' => 10, 'lly' => 0, 'urx' => 80, 'ury' => 50),
+//            'ArtBox' => array ('llx' => 0, 'lly' => 0, 'urx' => 140, 'ury' => 225),
+        );
+        // $this->SetMargins(2, 2, 2, true);
+        $this->SetTopMargin(2);
+        $this->SetLeftMargin(2);
+        $this->setPrintHeader(false);
+        $this->setPrintFooter(false);
+        $this->getPageHeight();
+        $this->setFooterMargin(0);
+        $this->bMargin = 0;
+        $this->pagedim[$this->page]['bm'] = 0;
 
-    }
+        $this->AddPage('L', $page_format);
+        // $this->SetMargins(2, 2, 2, true);
+        $this->SetTopMargin(2);
+        $this->SetLeftMargin(2);
+        $this->setPrintHeader(false);
+        $this->setPrintFooter(false);
+        $this->getPageHeight();
+        $this->setFooterMargin(0);
+        $this->bMargin = 0;
+        $this->pagedim[$this->page]['bm'] = 0;
 
-    public function addArtikel(string $lsNr, string $lsDatum, string $lsArtikel) {
-        $html = <<<EOT
-            <table width="100%" height="100">
-                <tr>
-                    <td>$lsNr<br>$lsDatum<br>$lsArtikel</td>
-                </tr>
-            </table>
-EOT;
-        $this->AddPage();
-        $this->writeHTML($html);
+
+        // new style
+        $style = array(
+            'border' => false,
+            'padding' => 0,
+            'fgcolor' => array(0,0,0),
+            'bgcolor' => false
+        );
+
+        $innerContentMaxW = 72; // x,y,w.h in mm als Fließkommazahl
+        $x = 4;
+        $y = 4;
+        $w = 72;
+        if ($link) {
+            // QRCODE,H : QR-CODE Best error correction
+            $bw = 22;
+            $bh = 22;
+            $this->write2DBarcode($link, 'QRCODE,L', $x, $y, $bw, $bh, $style, 'N');
+            $x+= $bw + 3;
+            $w-= ($bw + 3);
+        }
+
+        $html = "<p>$lsNr<br>$lsDatum<br>$lsArtikel</p>";
+
+        // $this->writeHTML($html, '', true, '', '', '');
+        $border = 0;
+        $this->writeHTMLCell($w, '', $x, $y, $html, $border);
+
     }
 
     public function setArtikels(string $lsNr, string $lsDatum, array $aArtikels) {
@@ -102,8 +155,7 @@ if (empty($AID)) {
 if ($AID ) {
     LOX(__FILE__, __LINE__);
     $view = '';
-    if (true || $mode === 'property') {
-        LOX(__FILE__, __LINE__);
+    if (true) {
         $auftrag = $db->query_row('SELECT * FROM mm_umzuege WHERE aid = ' . (int)$AID);
         if (!$lid) {
             $lid = $db->query_one(
@@ -111,43 +163,57 @@ if ($AID ) {
                 [ 'aid' => $AID]
             );
         }
+
+        if (!$lid) {
+            die('Fehlende Lieferschein-ID oder es wurde noch kein Lieferschein angelegt!');
+        }
         $lieferschein = $db->query_row(
-            'SELECT * FROM mm_lieferscheine WHERE aid = :aid = lid = :lid',
+            'SELECT * FROM mm_lieferscheine WHERE aid = :aid AND lid = :lid',
             [ 'aid' => (int)$AID, 'lid' => $lid]
         );
 
+        if (!is_array($lieferschein) || empty($lieferschein)) {
+            die('Es wurde kein Lieferschein mit der ID ' . $lid . ' gefunden!');
+        }
+
         LOX(__FILE__, __LINE__);
         $leistungen = $db->query_rows(
-            'SELECT l.*, k.leistungskategorie_id, k.Bezeichnung, ktg.leistungskategorie AS Kategorie
- FROM mm_umzuege_leistungen l
-LEFT JOIN  `mm_leistungskatalog` k ON l.leistung_id = k.leistung_id
-LEFT JOIN  `mm_leistungskategorie` ktg ON k.leistungskategorie_id = ktg.leistungskategorie_id
-WHERE aid = ' . (int)$AID . ' AND k.leistungskategorie_id NOT IN (' . $ktgIdLieferung . ', ' . $ktgIdRabatt . ')');
+            'SELECT l.*,
+                    k.leistungskategorie_id,
+                    k.Bezeichnung,
+                    k.produkt_link AS Link,
+                    ktg.leistungskategorie AS Kategorie
+                 FROM mm_umzuege_leistungen l
+                 LEFT JOIN  `mm_leistungskatalog` k ON l.leistung_id = k.leistung_id
+                 LEFT JOIN  `mm_leistungskategorie` ktg ON k.leistungskategorie_id = ktg.leistungskategorie_id
+                 WHERE aid = ' . (int)$AID . ' AND k.leistungskategorie_id NOT IN (' . $ktgIdLieferung . ', ' . $ktgIdRabatt . ')');
 
-        $aArtikel = array_map(
-            function($item) { return $item['Kategorie'] . ' ' . $item['Bezeichnung']; },
-            $leistungen
-        );
         if (!count($leistungen)) {
             die('UNGUELTIGER SEITENAUFRUF! Es wurde keine Leistungen zum angegebenen Auftrag gefunden!');
         }
 
+        $lsNr = 'UNIPER-4-' . str_pad($AID, 5, '0', STR_PAD_LEFT);
+        $lsDatum = date('d.m.Y', strtotime($lieferschein['lieferdatum']));
+
+        $aArtikels = array_map(
+            function($item) { return
+                [
+                    'Kategorie' => $item['Kategorie'],
+                    'Bezeichnung' => $item['Bezeichnung'],
+                    'Artikel' =>$item['Kategorie'] . ' ' . $item['Bezeichnung'],
+                    'Link' => $item['Link'],
+                ];
+            },
+            $leistungen
+        );
+
         $pdf = new EtikettenPDF();
 
-        $pdf->setArtikels();
+        $pdf->setArtikels($lsNr, $lsDatum, $aArtikels);
+
+        $pdf->Output('lieferschein-' . $lid . '.pdf', 'I');
     }
 }
-
-LOX(__FILE__, __LINE__);
-// create new PDF document
-// $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-$pdf = new EtikettenPDF();
-
-$pdf->setArtikels();
-
-
-
-$pdf->Output('example_001.pdf', 'I');
 
 //============================================================+
 // END OF FILE

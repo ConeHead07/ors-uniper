@@ -155,20 +155,16 @@ if (empty($AID)) {
     die('INGUELTIGER SEITENAUFRUF! Es wurde keine AuftragsID übergeben');
 }
 
+$art = $_REQUEST['art'] ?? '';
+$istKommissionsSchein = $art === 'kommission';
+
+
 if ($AID ) {
     LOX(__FILE__, __LINE__);
     $view = '';
     if (true || $mode === 'property') {
         LOX(__FILE__, __LINE__);
         $auftrag = $db->query_row('SELECT * FROM mm_umzuege WHERE aid = ' . (int)$AID);
-        switch($auftrag['umzugsstatus']) {
-            case 'beantragt':
-            case 'angeboten':
-                $view = 'kalkulation';
-                break;
-            case 'abgeschlossen':
-                $view = 'rechnung';
-        }
 
         if (!$auftrag) {
             die('UNGUELTIGER SEITENAUFRUF! Es wurde kein Auftrag zur übergebenen ID gefunden!');
@@ -201,7 +197,7 @@ $pdf = new LS_PDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8'
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('merTens AG');
-$pdf->SetTitle('Lieferschein');
+$pdf->SetTitle(!$istKommissionsSchein ? 'Lieferschein' : 'Kommissionsschein');
 $pdf->SetSubject('Lieferung NewHomeOffice');
 $pdf->SetKeywords('merTens, ORS, Uniper, NewHomeOffice');
 $pdf->SetHeaderData('', '', '', '', [255, 255, 255], [255, 255, 255]);
@@ -243,8 +239,14 @@ $recipient = $auftrag['vorname'] . ' ' . $auftrag['name'] . "\r\n";
 $recipient.= $auftrag['strasse'] . "\r\n";
 $recipient.= "$laenderKuerzel-{$auftrag['plz']} {$auftrag['ort']}\r\n";
 
+switch($art) {
+    case 'kommission':
+        $lieferscheinCaption = "Kommissionierschein\nNr. {number}";
+        break;
 
-$lieferscheinCaption = "Lieferschein\nNr. {number}";
+    default:
+        $lieferscheinCaption = "Lieferschein\nNr. {number}";
+}
 
 $aBriefkopfRefData = [
     ['Referenznummer', '12345'],
@@ -252,11 +254,11 @@ $aBriefkopfRefData = [
     ['Ihre Durchwahl', '1234 567 890'],
     ['Ihr Bestellzeichen', 'MM50607090'],
     ['', ''],
-    ['Fachberator', 'Jochen Herbermann'],
-    ['Telefon', '+49 177 9699 499'],
-    ['Sachbearbeiter', 'Björn Bongartz'],
-    ['Telefon', '+49 2154 4705 1121'],
-    ['', ''],
+//    ['Fachberator', 'Jochen Herbermann'],
+//    ['Telefon', '+49 177 9699 499'],
+//    ['Sachbearbeiter', 'Björn Bongartz'],
+//    ['Telefon', '+49 2154 4705 1121'],
+//    ['', ''],
     ['', 'Willich, ' . date('d.m.Y')],
 ];
 
@@ -408,9 +410,11 @@ sein, notieren Sie diese bitte auf dem beiliegendem Reklamationsformular.</div>
 
 </table>
 EOT;
-$pdf->SetFont('helvetica', '', 9);
-$pdf->Ln(10);
-$pdf->writeHTML($kundenAbnahme);
+if (!$istKommissionsSchein) {
+    $pdf->SetFont('helvetica', '', 9);
+    $pdf->Ln(10);
+    $pdf->writeHTML($kundenAbnahme);
+}
 
 LOX(__FILE__, __LINE__);
 
