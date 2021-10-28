@@ -21,8 +21,6 @@ require_once($InclBaseDir . "umzugsanlagen.inc.php");
 require_once($InclBaseDir . "leistungskatalog.inc.php");
 require_once($InclBaseDir . "dienstleister.inc.php");
 
-$userGruppe = $user['gruppe'];
-$istUmzugsteam = $userGruppe === 'umzugsteam';
 
 $ATConf = &$_CONF["umzugsanlagen"];
 $ASConf = &$_CONF["umzugsantrag"];
@@ -31,6 +29,11 @@ $LKConf = &$_CONF["leistungskatalog"];
 
 // Get ID, falls Antrag bereits vorhanden
 $AID = getRequest("id",'');
+$topService = getRequest('top', '');
+
+$userGruppe = $user['gruppe'];
+$istUmzugsteam = $userGruppe === 'umzugsteam' || $topService === 'auslieferung';
+
 if (empty($AID)) $AID = (!empty($_POST["AS"]["aid"]) ? $_POST["AS"]["aid"] : (!empty($_GET["AS"]["aid"]) ? $_GET["AS"]["aid"] : ''));
 
 $AS = new ItemEdit($ASConf, $connid, $user, $AID);

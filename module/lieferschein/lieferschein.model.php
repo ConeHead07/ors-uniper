@@ -31,6 +31,7 @@ class LS_Model {
             'ankunft',
             'abfahrt',
             'etikettierung_erfolgt',
+            'funktionspruefung_erfolgt',
             'leistung',
             'sig_mt_dataurl',
             'sig_mt_datetime',
@@ -43,6 +44,12 @@ class LS_Model {
             'leistung',
             'daten'
         ];
+
+        $this->AID = $aid;
+        $this->lid = $lid;
+        if ($this->AID) {
+            $this->loadLieferschein();
+        }
     }
 
     public function setLieferscheinId(int $lid) {
@@ -88,17 +95,34 @@ class LS_Model {
         return false;
     }
 
+    /**
+     * @param bool $autoCreate
+     * @return $this
+     */
     public function loadLieferschein(bool $autoCreate = true) {
+        if (!$this->AID) {
+            return $this;
+        }
         if ($this->lid) {
+            $this->lsdata = $this->db->query_row(
+                'SELECT * FROM mm_lieferscheine WHERE aid = :aid AND lid = :lid LIMIT 1',
+                [ 'aid' => $this->AID, 'lid' => $this->lid]);
+        } else {
             $this->lsdata = $this->db->query_row(
                 'SELECT * FROM mm_lieferscheine WHERE aid = :aid ORDER BY lid DESC LIMIT 1',
                 [ 'aid' => $this->AID]);
-            return !empty($this->lsdata);
+            if (!empty($this->lsdata)) {
+                $this->lid = $this->lsdata['lid'];
+            }
         }
-        if ($autoCreate) {
-            return $this->createLieferschein();
+        if (empty($this->lsdata) && $autoCreate) {
+            $this->createLieferschein();
         }
-        return false;
+        return $this;
+    }
+
+    public function getData() {
+        return $this->lsdata;
     }
 
     public function createLieferschein() {
@@ -201,10 +225,6 @@ class LS_Model {
                     }
                     break;
 
-                case 'etikettierung_erfolgt':
-                    $_val = !empty($_val) ? 'J' : 'N';
-                    break;
-
                 case 'sig_mt_geodata':
                 case 'sig_ma_geodata':
                     $_colName = str_replace('ma', 'kd', $_name);
@@ -270,9 +290,16 @@ class LS_Model {
                     }
                     break;
 
-                case 'leistung':
-                    $input['leistungen'] = json_encode($_val);
+                case 'funktionspruefung_erfolgt':
+                case 'etikettierung_erfolgt':
+                    $_val = json_encode($_val);
                     break;
+
+                case 'leistung':
+                    $_colName = 'leistungen';
+                    $_val = json_encode($_val);
+                    break;
+
                 case 'data':
                     if (!$_val) {
                         $_val = '{}';

@@ -1,9 +1,15 @@
 <?php
 $Tpl = new myTplEngine();
 
-
+$request = $_REQUEST;
 $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
+$datumfeld = (!empty($_REQUEST['datumfeld']))   ? $_REQUEST['datumfeld'] : 'umzugstermin';
+
+$aValidDatumfelder = ['umzugstermin', 'antragsdatum', 'geprueftam', 'berechnet_am'];
+if (!in_array($datumfeld, $aValidDatumfelder)) {
+    $datumfeld = current($aValidDatumfelder);
+}
 
 if (empty($datumvon)) {
     $timeMin1Month = strtotime('-1 month');
@@ -76,9 +82,29 @@ $validFields = array(
 $having = array();
 $w = array();
 foreach($validFields as $_f) {
-    $sqlQueryField = $_f;
-    if ($_f == 'Wirtschaftseinheit') $sqlQueryField = 'g.id';
-    elseif ($_f == 'aid') $sqlQueryField = 'a.aid';
+
+    switch($_f) {
+        case 'kid':
+            $sqlQueryField = 'ua.personalnr';
+            break;
+
+        case 'Wirtschaftseinheit':
+            $sqlQueryField = 'g.id';
+            break;
+
+        case 'aid':
+            $sqlQueryField = 'a.aid';
+            break;
+
+        case 'plz':
+            $sqlQueryField = 'a.plz';
+            break;
+
+        default:
+            $sqlQueryField = $_f;
+
+    }
+
     if (!empty($query[$_f])) {
         if (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
             $_q = $sqlQueryField . ' ' . $m[1] . $db->quote($m[2]);
@@ -121,6 +147,12 @@ if ($order == 'Wirtschaftseinheit') {
 elseif ($order == 'aid') {
     $sqlOrderFld = 'a.aid';
 }
+elseif ($order == 'kid') {
+    $sqlOrderFld = 'ua.personalnr';
+}
+elseif ($order == 'plz') {
+    $sqlOrderFld = 'a.plz';
+}
 
 
 $sql = 'SELECT a.*, '
@@ -141,7 +173,7 @@ $sql = 'SELECT a.*, '
       .'    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))'
       .' ) '
       .' WHERE 1 '
-      .' AND umzugstermin BETWEEN :von AND :bis '
+      .' AND ' . $datumfeld . ' BETWEEN :von AND :bis '
       .' AND '
       .'  (umzugsstatus IN ("genehmigt", "bestaetigt") '
       .'   OR (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja") '
@@ -151,7 +183,7 @@ $sql = 'SELECT a.*, '
       .( count($having) ? ' HAVING (' . implode(' AND ', $having) . ') ' : '')
       .' ORDER BY ' . $sqlOrderFld . ' ' . $odir;
 $rows = $db->query_rows($sql, 0, array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis)));
-//echo $db->error() . '<br>' . $db->lastQuery . '<br>' . PHP_EOL;
+// echo $db->error() . '<br>' . $db->lastQuery . '<br>' . PHP_EOL;
 
 if ($s === 'vauswertung') $site_antrag = 'pantrag';
 
@@ -159,6 +191,7 @@ $Tpl->assign('Auftraege', $rows);
 $Tpl->assign('kw_options', $kw_options);
 $Tpl->assign('kwvon', $kwvon);
 $Tpl->assign('kwbis', $kwbis);
+$Tpl->assign('datumfeld', $datumfeld);
 $Tpl->assign('datumvon', $datumvon);
 $Tpl->assign('datumbis', $datumbis);
 $Tpl->assign('order', $order);

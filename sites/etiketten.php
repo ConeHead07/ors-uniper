@@ -122,6 +122,7 @@ class EtikettenPDF extends TCPDF {
         }
 
         $html = "<p>$lsNr<br>$lsDatum<br>$lsArtikel</p>";
+        $html.= $html;
 
         // $this->writeHTML($html, '', true, '', '', '');
         $border = 0;
@@ -129,12 +130,17 @@ class EtikettenPDF extends TCPDF {
 
     }
 
-    public function setArtikels(string $lsNr, string $lsDatum, array $aArtikels) {
-
-        $iNumPages = count($aArtikels);
-        for ($i = 0; $i < $iNumPages; $i++) {
-            $this->addArtikel($lsNr, $lsDatum, $aArtikels[$i]);
-        }
+    public function setArtikels(string $lsNr, string $lsDatum, array $aArtikels)
+    {
+        $iMaxLoops = 10;
+        $iLoop = 0;
+        do {
+            ++$iLoop;
+            $iNumPages = count($aArtikels);
+            for ($i = 0; $i < $iNumPages; $i++) {
+                $this->addArtikel($lsNr, $lsDatum, $aArtikels[$i]);
+            }
+        } while($iLoop < $iMaxLoops);
     }
 }
 

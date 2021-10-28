@@ -18,6 +18,48 @@ require_once $MConf['AppRoot'] . $MConf['Class_Dir'] . 'dbconn.class.php';
 require_once $MConf['AppRoot'] . $MConf['Class_Dir'] . 'SmtpMailer.class.php';
 require_once $MConf['AppRoot'] . $MConf['Inc_Dir'] . 'conn.php';
 require_once $MConf['AppRoot'] . $MConf['Inc_Dir'] . 'tcpdf_include.php';
+require_once $MConf['AppRoot'] . $MConf['Modul_Dir'] . 'lieferschein/lieferschein.model.php';
+
+
+if (!empty($_REQUEST['img'])) {
+    die(function_exists('imagecreatefromjpeg') ? 'TRUE' : 'FALSE');
+    $AID = $_REQUEST['id'] ?? 0;
+    $img = $_REQUEST['img'] ?? '';
+    $lid = $_REQUEST['lid'] ?? '';
+
+    if ($img && in_array($img, ['mt', 'kd']) && $AID && $lid) {
+        $lsmodel = new LS_Model($AID, $lid);
+        $daten = $lsmodel->getData();
+
+        $p = strpos($daten["sig_{$img}_dataurl"], ',') + 1;
+        // die(substr($daten["sig_{$img}_dataurl"], $p));
+
+        $tmpImg = tempnam(sys_get_temp_dir(), 'img');
+        $tmpImgPng = '.png';
+        rename($tmpImg, $tmpImgPng);
+
+        $im = imagecreatefrompng($tmpImgPng);
+        imagejpeg($im);
+        exit;
+
+        file_put_contents($tmpImgPng, base64_decode(substr($daten["sig_{$img}_dataurl"], $p)));
+        header('Content-Type: ' . $daten["sig_{$img}_mime"]);
+        readfile($tmpImgPng);
+        unlink($tmpImg);
+        unlink($tmpImgPng);
+        exit;
+//        print_r($daten);
+//        exit;
+
+        if ($daten["sig_" . $img . "_blob"]) {
+            // header('Content-Type: ' . $daten["sig_{$img}_mime"]);
+
+            echo "<img src=\"" . $daten["sig_{$img}_dataurl"] . "\">";
+            exit;
+        }
+        die('');
+    }
+}
 //============================================================+
 // File name   : example_001.php
 // Begin       : 2008-03-04
@@ -183,11 +225,72 @@ LEFT JOIN  `mm_leistungskatalog` k ON l.leistung_id = k.leistung_id
 LEFT JOIN  `mm_leistungskategorie` ktg ON k.leistungskategorie_id = ktg.leistungskategorie_id
 WHERE aid = ' . (int)$AID . ' AND k.leistungskategorie_id NOT IN (' . $ktgIdLieferung . ', ' . $ktgIdRabatt . ')');
 
+        $lsmodel = new LS_Model((int)$AID);
+        $lieferschein = $lsmodel->loadLieferschein(true)->getData();
+
+        $aLeistungsLabels = array_map(function($item) { return $item['Kategorie']; }, $leistungen);
+
         if (!count($leistungen)) {
             die('UNGUELTIGER SEITENAUFRUF! Es wurde keine Leistungen zum angegebenen Auftrag gefunden!');
         }
     }
 }
+
+$sig_mt = '____________________________________________';
+$sig_kd = '____________________________________________';
+$sig_datum = '_______________';
+$sig_pruefung = '&nbsp;';
+$sig_etikettierung = '';
+$sig_ankunft = '__________';
+$sig_abfahrt = '__________';
+
+$aEtikettenCheck = [];
+foreach($aLeistungsLabels as $k) {
+    $aEtikettenCheck[$k] = '&nbsp;';
+}
+
+if (!$istKommissionsSchein && !empty($lieferschein)) {
+    if ($lieferschein['sig_mt_dataurl']) {
+        $p = strpos($lieferschein['sig_mt_dataurl'], ',') + 1;
+        $sig_mt_src = '@' . substr($lieferschein['sig_mt_dataurl'], $p);
+        $sig_mt = "<img src=\"" . $sig_mt_src . "\" height=\"12\" width=\"40\">";
+    }
+    if ($lieferschein['sig_kd_dataurl']) {
+        $p = strpos($lieferschein['sig_kd_dataurl'], ',') + 1;
+        $sig_kd_src = '@' . substr($lieferschein['sig_mt_dataurl'], $p);
+        $sig_kd = "<img src=\"$sig_kd_src\" height=\"12\">";
+    }
+    if ($lieferschein['lieferdatum']) {
+        $sig_datum = date('d.m.Y', strtotime($lieferschein['lieferdatum']));
+    }
+    if ($lieferschein['funktionspruefung_erfolgt'] && strpos($lieferschein['funktionspruefung_erfolgt'], 'Schreibtisch') !== false) {
+        $sig_pruefung = 'x';
+    }
+    if ($lieferschein['etikettierung_erfolgt']) {
+        $sig_etikettierung = $lieferschein['etikettierung_erfolgt'];
+        if ($sig_etikettierung[0] === '{' || $sig_etikettierung[0] === '[') {
+            $sigEtJson = json_decode($sig_etikettierung, JSON_OBJECT_AS_ARRAY);
+            $aEtikettierteItem = array_values($sigEtJson);
+            foreach($aEtikettierteItem as $k) {
+                if (isset($aEtikettenCheck[$k])) {
+                    $aEtikettenCheck[$k] = 'x';
+                }
+            }
+        }
+    }
+    if ($lieferschein['ankunft']) {
+        $sig_ankunft = substr($lieferschein['ankunft'], 0, 5);
+    }
+    if ($lieferschein['abfahrt']) {
+        $sig_abfahrt = substr($lieferschein['abfahrt'], 0, 5);
+    }
+}
+
+$aEtikettenCheck2 = [];
+foreach($aEtikettenCheck as $k => $check) {
+    $aEtikettenCheck2[] = "[ $check ] $k";
+}
+$sEtikettenCheck = implode($aEtikettenCheck2, ' &nbsp; &nbsp; &nbsp; &nbsp;');
 
 LOX(__FILE__, __LINE__);
 // create new PDF document
@@ -378,32 +481,43 @@ sein, notieren Sie diese bitte auf dem beiliegendem Reklamationsformular.</div>
 <table width="99%" cellpadding="0" cellspacing="0">
     <tr>
         <td width="35%">Ihr Montageteam der merTens AG</td>
-        <td>____________________________________________</td>    
+        <td>$sig_mt<hr width="250px"></td>    
     </tr>
     <tr>
         <td colspan="2">
             <div style="height:5px;overflow:hidden;"></div>
-            Ankunft __________ Uhr &nbsp; &nbsp; &nbsp; &nbsp; Abahrt __________ Uhr
+            <table>
+                <tr>
+                <td width="50">Ankunft</td>
+                <td width="35">$sig_ankunft<hr width="35px"></td>
+                <td width="100"> Uhr &nbsp; &nbsp; &nbsp; &nbsp; Abfahrt </td>
+                <td width="35">$sig_abfahrt<hr></td>
+                <td width="30"> Uhr</td>
+                </tr>
+             </table>
         </td>    
     </tr>
     <tr>
         <td colspan="2"><div style="height:5px;overflow:hidden;"></div>
-            [ &nbsp; ] Eitekettierung erfolgt &nbsp; &nbsp; &nbsp; &nbsp;
-            [ &nbsp; ] Schreibtisch &nbsp; &nbsp; &nbsp; &nbsp;
-            [ &nbsp; ] Stuhl &nbsp; &nbsp; &nbsp; &nbsp;
-            [ &nbsp; ] Lampe
-                             
+            Etikettierung erfolgt:<br>
+            $sEtikettenCheck                             
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><div style="height:5px;overflow:hidden;"></div>
+            Funktionsprüfung erfolgt:<br>
+            [ $sig_pruefung ] Schreibtisch                              
         </td>
     </tr>
     <tr>
         <td>
             <div style="height:5px;overflow:hidden;"></div>
-            _______________
+            $sig_datum<hr width="60px">
             <br>(Datum)
         </td>
         <td>
             <div style="height:5px;overflow:hidden;"></div>
-            ____________________________________________
+            $sig_kd<hr width="250px">
             <br>(Name Kunde Blockbuchstaben / Unterschrift
         </td>   
     </tr>

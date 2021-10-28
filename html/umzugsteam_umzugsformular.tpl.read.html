@@ -201,26 +201,44 @@
         <label style="margin-right:3rem;width:initial;">Abfahrt <input name="abfahrt" id="abfahrtsZeit" type="time" size="8" class="input-bg-color" > Uhr</label>
       </div>
       <div>
-        <label style="margin-right:3rem;width:initial;" class="input-bg-color" ><input name="etikettierung_erfolgt" id="etikettierungErfolgt" value="Ja" type="checkbox"> Etikettierung erfolgt</label>
+        <div><label style="margin-right:3rem;width:initial;" class="input-bg-color" > Etikettierung erfolgt</label></div>
         {foreach name=GList item=L from=$Umzugsleistungen}
         {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" }
         {continue}
         {/if}
         <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
-          <input name="leistung[{$L.leistung_id|escape}]"
+          <input name="etikettierung_erfolgt[{$L.leistung_id|escape}]"
                  data-label="{$L.kategorie|escape}"
                  id="{$L.kategorie|escape}"
-                 value="Ja" type="checkbox"> {$L.kategorie|escape}
+                 value="{$L.kategorie|escape}" type="checkbox"> {$L.kategorie|escape}
         </label>
         {/foreach}
       </div>
+
+      {foreach name=GList item=L from=$Umzugsleistungen}
+        {if $L.kategorie eq "Schreibtisch" }
+          <div>
+            <div>
+              <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
+              Funktionsprüfung erfolgt</label>
+            </div>
+            <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
+              <input name="funktionspruefung_erfolgt[]"
+                     data-label="{$L.kategorie|escape}"
+                     id="Schreibtischpruefung"
+                     value="{$L.kategorie|escape}" type="checkbox"> {$L.kategorie|escape}
+            </label>
+          </div>
+          {break}
+        {/if}
+      {/foreach}
 
       <div>
         <div style="float:left;">
           <div
                   class="input-bg-color"
-                  style="border-bottom:2px solid black;height:2.5rem;width:6rem;display: inline-flex;">
-            <input type="date" name="lieferdatum" style="width:100%;align-self: flex-end">
+                  style="border-bottom:2px solid black;height:2.5rem;width:8rem;display: inline-flex;">
+            <input id="abnahmeLieferdatum" type="date" name="lieferdatum" style="width:100%;align-self: flex-end">
           </div>
           <div>(Datum)</div>
         </div>
@@ -304,6 +322,13 @@
     {literal}
 
     $(function() {
+      if ($("#abnahmeLieferdatum").val() === '') {
+        var heute = new Date();
+        var defautLieferdatum = heute.getFullYear() + "-" +
+                (heute.getMonth() < 9 ? '0' : '') + (heute.getMonth() +1) + "-" +
+                (heute.getDate() < 10 ? '0' : '') + heute.getDate();
+        $("#abnahmeLieferdatum").val(defautLieferdatum);
+      }
       // SignaturePad.prototype.getPlainCanvasElement = function() {
       //   return this._canvas;
       // };
@@ -356,8 +381,8 @@
 
       var createSignaturPad = function(containerSelector, options) {
         var defaults = {
-          minWidth: .5, // minimale Breite des Stiftes
-          maxWidth: 3, // maximale Breite des Stiftes
+          minWidth: 1.5, // minimale Breite des Stiftes
+          maxWidth: 6, // maximale Breite des Stiftes
           penColor: "#000000", // Stiftfarbe
           backgroundColor: '#FFFFFF'
         };
@@ -757,7 +782,8 @@
 
       var etikettierung = frm.find("input[name=etikettierung_erfolgt]");
       var leistungen = frm.find("input[name^=leistung]");
-      var checkedLength = leistungen.filter(function() { return this.checked; }).length;
+      var etikettiert = frm.find("input[name^=etikettierung_erfolgt]");
+      var checkedLength = etikettiert.filter(function() { return this.checked; }).length;
 
       var leistungenLabels = [];
       leistungen.each(function() { leistungenLabels.push( $(this).data("label")  )});
@@ -799,7 +825,7 @@
         errors+= "Die Abfahrtszeit kann nicht vor der Ankunftszeit liegen!\n";
       }
       if (!checkedLength) {
-        errors+= "Es wurde kein Artikel als geliefert markiert:\n";
+        errors+= "Es wurde kein Artikel als etikettiert markiert:\n";
         errors+= " - " + leistungenLabels.join("\n - ") + "\n";
       }
 

@@ -4,8 +4,6 @@ if (strpos($user["gruppe"], "admin") === false && $user['gruppe'] !== 'umzugstea
     die("UNERLAUBTER ZUGRIFF!");
 }
 
-$userGruppe = $user['gruppe'];
-$istUmzugsteam = $userGruppe === 'umzugsteam';
 
 require_once($InclBaseDir."umzugsantrag.inc.php");
 require_once($InclBaseDir."umzugsmitarbeiter.inc.php");
@@ -14,14 +12,20 @@ $CUM = &$_CONF["umzugsmitarbeiter"];
 $Tpl = new myTplEngine();
 $Umzuege = array();
 
+
+if (empty($s)) {
+    $s = getRequest("s", "");
+}
+
+$userGruppe = $user['gruppe'];
+$istUmzugsteam = $userGruppe === 'umzugsteam' || $s === 'auslieferung';
+
 $offset = getRequest('offset', 0);
 $limit = getRequest('limit', 100);
 $ofld = getRequest('ofld', "");
 $odir = getRequest('odir', "");
 $cat = getRequest('cat', !$istUmzugsteam ? 'neue' : 'heute');
 $allusers = (int)getRequest('allusers', 1);
-
-if (empty($s)) $s = getRequest("s", "");
 
 if (!$istUmzugsteam) {
     if (!in_array($cat,
@@ -186,8 +190,11 @@ if (!function_exists("get_iconStatus")) { function get_iconStatus($statVal, $dat
 //echo MyDB::error()."<br>$sql<br> num_rows:".count($all).":".print_r($all,1)."\n";
 if (is_array($all)) foreach($all as $i => $item) {
 	$Umzuege[$i] = $item;
-	
-	$Umzuege[$i]["LinkOpen"] = "?s=aantrag"."&id=".$item["aid"];
+
+	$Umzuege[$i]["LinkOpen"] = "?s=aantrag" . "&id=" . $item["aid"];
+    if ($istUmzugsteam) {
+        $Umzuege[$i]["LinkOpen"] = "?s=aantrag" . "&id=" . $item["aid"] . '&top=' . $s;
+    }
 	$Umzuege[$i]["Mitarbeiter"] = $item["mitarbeiter_num"];
     $Umzuege[$i]["plz"] = $item["plz"]."&nbsp;";
 	$Umzuege[$i]["Von"] = $item["gebaeude"]."&nbsp;";

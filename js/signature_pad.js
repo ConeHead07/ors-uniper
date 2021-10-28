@@ -136,6 +136,7 @@
 
     this._canvas = canvas;
     this._ctx = canvas.getContext('2d');
+    this._ctx.fillStyle = 'white';
     this.clear();
 
     // We need add these inline so they are available to unbind while still having
@@ -689,9 +690,11 @@
     canvas.height = coords.h + 10;
 
     var imageData = this._ctx.getImageData(coords.x1, coords.y1, coords.w, coords.h);
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.putImageData(imageData, 5, 5);
 
-    var dataUrl = canvas.toDataURL();
+    var dataUrl = canvas.toDataURL('image/jpeg');
     return dataUrl;
   };
 

@@ -29,6 +29,12 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
     <div id="Auswertung" class="divInlay">
         <form id="frmStat" name="frmStat" method="get" action="?">
         <span style="border:0;font-weight:bold;font-size:12px;">Zeitraum
+            <select id="auswertungDatumsfeld" name="datumfeld">
+                <option value="umzugstermin">Lieferdatum</option>
+                <option value="antragsdatum">Auftragsdatum</option>
+                <option value="geprueftam">Bestätigungsdatum</option>
+                <option value="berechnet_am">Rechnungsdatum</option>
+            </select>
             Von: <input type="date" name="datumvon" value="{$datumvon}" onchange="document.forms['frmStat'].submit()">
             Bis: <input type="date" name="datumbis" value="{$datumbis}" onchange="document.forms['frmStat'].submit()">
         {*
@@ -49,6 +55,10 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
         </span>
         <script>{literal}
         $(function(){
+
+            var datumFilterFeld = "{datumfeld}";
+            $("#auswertungDatumsfeld").val(datumFilterFeld);
+            // $("#auswertungDatumsfeld").find("option[value=" + datumFilterFeld + "]").prop("selected", true);
 
             var send = function() {
                 self.location.href = "?" + $("#frmStat").serialize();
@@ -74,11 +84,11 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
                     <th class="order" data-fld="kid">KID</th>
                     <th class="order" data-fld="land">Land</th>
                     <th class="order" data-fld="ort">Lieferort</th>
-                    <th class="order" data-fld="PLZ">PLZ</th>
+                    <th class="order" data-fld="plz">PLZ</th>
                     <th class="order" data-fld="strasse">Stra&szlig;e</th>
                     <th class="order" data-fld="service">Service</th>
                     <th class="order" data-fld="antragsdatum">Auftr.Dat.</th>
-                    <th class="order" data-fld="umzugstermin">Geliefert</th>
+                    <th class="order" data-fld="umzugstermin">Lief.Dat.</th>
                     <th class="order" data-fld="abgeschlossen_am">Abschluss</th>
                     <th class="order" data-fld="berechnet_am">RechDatum</th>
                     <th class="order" data-fld="vorgangsnummer">Rechnungsnr</th>
