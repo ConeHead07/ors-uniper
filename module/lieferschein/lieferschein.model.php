@@ -129,11 +129,11 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
         );
         $sth->bind_param('b', $null);
         $sth->send_long_data(0, $pdfdata);
+        /*
         $success = $sth->execute();
         $affected_rows = $sth->affected_rows;
-
-
         die(print_r(compact('sql', 'success', 'affected_rows'), 1));
+        */
 
         if ($sth->error) {
             $this->error = $sth->error;
@@ -312,12 +312,16 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
     public function auftragAbschliessen() {
         global $user;
 
+        if (!$this->AID) {
+            return false;
+        }
+
         $sql = 'UPDATE mm_umzuege SET 
     umzugsstatus = :status,
     abgeschlossen_am = NOW(),
     abgeschlossen_von = :abgeschlossen_von,
     modified = NOW()
-    WHERE aid = aid';
+    WHERE aid = :aid LIMIT 1';
 
         $this->db->query($sql, [
             'status' => 'abgeschlossen',
