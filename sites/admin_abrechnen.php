@@ -1,8 +1,46 @@
 <?php
 $Tpl = new myTplEngine();
 
-$kwvon = (!empty($_REQUEST['kwvon']))   ? $_REQUEST['kwvon'] : '';
-$kwbis = (!empty($_REQUEST['kwbis']))   ? $_REQUEST['kwbis'] : '';
+$datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
+$datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
+$datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'umzugstermin';
+
+$aValidDatumfelder = ['umzugstermin', 'antragsdatum', 'geprueftam', 'berechnet_am'];
+if (!in_array($datumfeld, $aValidDatumfelder)) {
+    $datumfeld = current($aValidDatumfelder);
+}
+
+if (empty($datumvon)) {
+//    $timeMin1Month = strtotime('-1 month');
+//    $datumvon = date('Y-m-01', $timeMin1Month);
+
+    $givendate = $_REQUEST['givendate'] ?? '';
+    $prevMonday = strtotime('previous monday', strtotime('-4 days', strtotime($givendate)));
+    $datumvon = date('Y-m-d', $prevMonday);
+}
+if (empty($datumbis)) {
+    $lastDay = date('t');
+    if (strlen($lastDay) < 2) {
+        $lastDay = '0' . $lastDay;
+    }
+    // $datumbis = date('Y-m-t');
+
+    $datumbis = date('Y-m-d', strtotime('next friday', strtotime($datumvon)));
+}
+if (!empty($_REQUEST['kwvon'])) {
+    $kwvon = (!empty($_REQUEST['kwvon'])) ? $_REQUEST['kwvon'] : '';
+    $kwbis = (!empty($_REQUEST['kwbis'])) ? $_REQUEST['kwbis'] : '';
+    $timeVon = (preg_match('/^(\d{4})W(\d{2})$/', $kwvon, $m)) ? strtotime($kwvon) : strtotime(date('Y') . 'W' . substr('0' . date('W'), -2));
+    $timeBis = (preg_match('/^(\d{4})W(\d{2})$/', $kwbis, $m)) ? strtotime($kwbis) : $timeVon + (7 * 24 * 3600);
+} else {
+    $timeVon = (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $datumvon, $m)) ? strtotime($datumvon) : strtotime(date('Y-m-01'));
+    $timeBis = (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $datumbis, $m)) ? strtotime($datumbis) : $timeVon + (7 * 24 * 3600);
+}
+
+$kwvon = date('Y\WW', $timeVon);
+$kwbis = date('Y\WW', $timeBis);
+
+
 $order = (!empty($_REQUEST['order']))   ? $_REQUEST['order'] : '';
 $queriedorder = (!empty($_REQUEST['queriedorder'])) ? $_REQUEST['queriedorder'] : '';
 $queriedodir  = (!empty($_REQUEST['queriedodir']))  ? $_REQUEST['queriedodir']  : '';
@@ -129,6 +167,9 @@ $Tpl->assign('Auftraege', $rows);
 $Tpl->assign('kw_options', $kw_options);
 $Tpl->assign('kwvon', $kwvon);
 $Tpl->assign('kwbis', $kwbis);
+$Tpl->assign('datumfeld', $datumfeld);
+$Tpl->assign('datumvon', $datumvon);
+$Tpl->assign('datumbis', $datumbis);
 $Tpl->assign('order', $order);
 $Tpl->assign('odir', $odir);
 $Tpl->assign('s', $s);

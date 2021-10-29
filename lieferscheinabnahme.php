@@ -12,6 +12,7 @@ if (function_exists('activity_log')) {
 
 $id = 0;
 $input = [];
+$error = '';
 $errors = [];
 $sigFiles = [];
 $tmpImg = '';
@@ -20,7 +21,17 @@ $commaPos = false;
 $base64Start = false;
 $base64Data = '';
 
-$lsmodel = new LS_Model();
+$aid = $_REQUEST['aid'] ?? 0;
+
+if (!$aid) {
+    echo json_encode([
+        'type' => 'error',
+        'errors' => ['aid' => 'Es wurde keine Auftrags-ID übergeben'],
+        'id' => 0,
+    ]);
+}
+
+$lsmodel = new LS_Model((int)$aid);
 
 $aPostInput = $_POST;
 $input = $lsmodel->validateInput($aPostInput);
@@ -30,7 +41,29 @@ if (isset($input['sig_mt_dataurl_geodata'])) {
 $errors = $lsmodel->getValidationErrors();
 
 if (false !== $input) {
-    $id = $lsmodel->insert($input);
+    $id = $lsmodel->save($input);
+
+    $auftrag = $lsmodel->getAuftragsdaten();
+    $leistungen = $lsmodel->getLeistungen();
+    $lsdaten = $lsmodel->getData();
+
+    $pdf = new \module\Pdf\MertensLieferscheinPDF();
+    $pdf->setAuftragsdaten($auftrag);
+    $pdf->setLeistungen($leistungen);
+    $pdf->setLieferscheindaten($lsdaten);
+    $pdf->create();
+    $lsPdf = $pdf->Output('lsdoc.pdf', 'S' );
+
+    $lsmodel->updateLieferscheinPdf($lsPdf);
+    $error.= $lsmodel->getError();
+
+    $lsmodel->auftragAbschliessen();
+    $error.= $lsmodel->getError();
+
+}
+
+if ($error) {
+    $errors['procesing'] = $error;
 }
 
 header('Content-Type: application/json; charset=UTF-8');

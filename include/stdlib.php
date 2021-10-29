@@ -73,12 +73,23 @@ function __autoload($class_name) {
 		if ($class_name == "Smarty") {
 		    $loadfile = $MConf["AppRoot"]."smarty3/Smarty.class.php";
         }
-		elseif ($class_name == 'Tcpdf') {
-            $loadfile = $MConf["AppRoot"]."/vendor/tcpdf.php";
+		elseif ($class_name == 'TCPDF') {
+            $loadfile = $MConf["AppRoot"]."/vendor/TCPDF/tcpdf.php";
         }
 		else {
-			echo "CanNotAutoLoad: ".$loadfile."<br>\n";
-			return false;
+            $moduleClassFile = $MConf["AppRoot"] . str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';
+            $moduleClassFileExists = file_exists($moduleClassFile);
+            if ($moduleClassFileExists) {
+                require_once $moduleClassFile;
+                $loadfile = $moduleClassFile;
+            } else {
+                return false;
+            }
+//            die('#'. __LINE__ . ' ' . __FILE__ . ' '
+//                . json_encode(compact('class_name', 'moduleClassFile', 'moduleClassFileExists'))
+//            );
+//			echo "CanNotAutoLoad: ".$loadfile."<br>\n";
+//			return false;
 		}
 	}
 	require_once $loadfile;

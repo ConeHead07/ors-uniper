@@ -20,7 +20,18 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
 
     <div id="Auswertung" class="divInlay">
 <form id="frmStat" name="frmStat" method="get" action="?" data-site="auswertung/form/html">
-<span style="border:0;font-weight:bold;font-size:12px;">Kalenderwoche 
+    <span style="border:0;font-weight:bold;font-size:12px;">
+    Zeitraum
+    <select id="auswertungDatumsfeld" name="datumfeld">
+        <option value="umzugstermin">Lieferdatum</option>
+        <option value="antragsdatum">Auftragsdatum</option>
+        <option value="geprueftam">Bestätigungsdatum</option>
+        <option value="berechnet_am">Rechnungsdatum</option>
+    </select>
+    Von: <input type="date" name="datumvon" value="{$datumvon}" onchange="document.forms['frmStat'].submit()">
+    Bis: <input type="date" name="datumbis" value="{$datumbis}" onchange="document.forms['frmStat'].submit()">
+    {*
+Kalenderwoche
 <select onchange="document.forms['frmStat'].submit()" selected="{$kwvon}" name="kwvon" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
 <option value="">auswählen</option>
         {html_options options=$kw_options selected=$kwvon}
@@ -28,7 +39,8 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
 <select onchange="document.forms['frmStat'].submit()" selected="{$kwbis}" name="kwbis" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
 <option value="">auswählen</option>
         {html_options options=$kw_options selected=$kwbis}
-</select> 
+</select>
+    *}
 <input style="margin-left:15px;" id="all" name="all" type="checkbox" value="1" {if $all}checked="checked"{/if}><label for="all"><span title="Auch bereits abgerechnete Leistungen anzeigen">Alle</span></label>
 <input type="hidden" name="s" value="{$s}">
 <input type="hidden" name="order" value="" id="orderby">

@@ -257,7 +257,7 @@ WHERE aid = ' . (int)$AID . ' AND k.leistungskategorie_id NOT IN (' . $ktgIdLief
 
     public function getLieferscheinNr() {
         $lid = $this->getLieferscheinID();
-        return 'UNIPER-4-' . str_pad($this->AID, 5, '0', STR_PAD_LEFT . '-' . $lid;
+        return 'UNIPER-4-' . str_pad($this->AID, 5, '0', STR_PAD_LEFT) . '-' . $lid;
     }
     
     public function loadByAID(int $AID)
@@ -267,32 +267,28 @@ WHERE aid = ' . (int)$AID . ' AND k.leistungskategorie_id NOT IN (' . $ktgIdLief
 
         if ($AID) {
             LS_LOX(__FILE__, __LINE__);
-            $view = '';
-            if (true || $this->mode === 'property') {
-                LS_LOX(__FILE__, __LINE__);
-                $auftrag = $this->db->query_row(
-                    'SELECT a.*, u.personalnr FROM mm_umzuege a '
-                     . ' LEFT JOIN mm_user u ON(a.antragsteller_uid = u.uid)'
-                    . ' WHERE aid = ' . (int)$AID
-                );
-                switch ($auftrag['umzugsstatus']) {
-                    case 'beantragt':
-                    case 'angeboten':
-                        $view = 'kalkulation';
-                        break;
-                    case 'abgeschlossen':
-                        $view = 'rechnung';
-                }
+            $auftrag = $this->db->query_row(
+                'SELECT a.*, u.personalnr FROM mm_umzuege a '
+                 . ' LEFT JOIN mm_user u ON(a.antragsteller_uid = u.uid)'
+                . ' WHERE aid = ' . (int)$AID
+            );
+            switch ($auftrag['umzugsstatus']) {
+                case 'beantragt':
+                case 'angeboten':
+                    $view = 'kalkulation';
+                    break;
+                case 'abgeschlossen':
+                    $view = 'rechnung';
+            }
 
-                if (!$auftrag) {
-                    die('UNGUELTIGER SEITENAUFRUF! Es wurde kein Auftrag zur übergebenen ID gefunden!');
-                }
+            if (!$auftrag) {
+                die('UNGUELTIGER SEITENAUFRUF! Es wurde kein Auftrag zur übergebenen ID gefunden!');
+            }
 
-                $leistungen = $this->loadLeistungen();
+            $leistungen = $this->loadLeistungen();
 
-                if (!count($leistungen)) {
-                    die('UNGUELTIGER SEITENAUFRUF! Es wurde keine Leistungen zum angegebenen Auftrag gefunden!');
-                }
+            if (!count($leistungen)) {
+                die('UNGUELTIGER SEITENAUFRUF! Es wurde keine Leistungen zum angegebenen Auftrag gefunden!');
             }
         }
 

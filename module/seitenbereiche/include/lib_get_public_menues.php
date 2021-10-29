@@ -118,30 +118,41 @@ function menu_isVisible(&$menuElement, &$activeMenuElements, &$menusByElementsId
 	
 	// Check Visible If Login
 	//echo "#".__LINE__." menu_isVisible: ".$menuElement["srv"]." <br>\n";
-	if ($menuElement["visibility"] == "never") return false;
+	if ($menuElement["visibility"] == "never") {
+	    return false;
+    }
 	$id = $menuElement["id"];
+	$name = $menuElement['name'];
 	$parentid = $menuElement["id"];
 	while($parentid != 0) {
 		if (!empty($menusByElementsId[$parentid])) {
 			$parentItem = $menusByElementsId[$parentid];
-			if (!$parentItem["IsVisibleByCond"]) return false;
+			if (!$parentItem["IsVisibleByCond"]) {
+			    return false;
+            }
 			
 			if ($id != $parentid) {
 				if ($parentItem["submenu_behaviour"] == "hidden") {
 					$isActive = false;
 					foreach($activeMenuElements as $activeItem) 
-						if ($activeItem["id"] == $parentItem["id"]) $isActive = true;
+						if ($activeItem["id"] == $parentItem["id"]) {
+						    $isActive = true;
+                        }
 					
-					if (!$isActive) return false;
+					if (!$isActive) {
+                        return false;
+                    }
 				}
 			}
 			
 			$parentid = $parentItem["parentid"];
 			//echo "#".__LINE__." parentid: ".$parentItem["parentid"]." <br>\n";
-		} else $parentid = 0;
+		} else {
+		    $parentid = 0;
+        }
 	}
-	
-	return true;
+
+    return true;
 	// Check Parent Is Visible
 }
 

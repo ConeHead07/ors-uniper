@@ -101,7 +101,9 @@ function get_navelements(&$user, $parentid = 0, $deep = 0, $menuGroupName="main"
 }
 
 function render_navelements(&$aNavElements, $deep = 0, $menuGroupName="main", $HP_LANG = "DE") {
-	if (!is_array($aNavElements) || !count($aNavElements)) return "";
+	if (!is_array($aNavElements) || !count($aNavElements)) {
+	    return "";
+    }
 	global $_TABLE;
 	global $_ConfMenu;
 	global $error;
@@ -130,6 +132,7 @@ function render_navelements(&$aNavElements, $deep = 0, $menuGroupName="main", $H
 				
 				if ($aNavElements[$i]["hasChilds"] && $deep + 1 < $_ConfMenu[$menuGroupName]["MenuDeep"]) {
 					//$sub_navbar = render_navelements($aNavElements[$i]["childs"], $deep+1, $menuGroupName, $HP_LANG);
+                    $sub_navbar = '';
 				} else {
 					$sub_navbar = "";
 				}
@@ -142,8 +145,8 @@ function render_navelements(&$aNavElements, $deep = 0, $menuGroupName="main", $H
 				}
 				
 				if ($tpl) {
-					$strMenu = ($_Item["IsVisible"]) ? render_dyn_navitem($tpl, $_Item, $sub_navbar, $HP_LANG) : "";
-					// echo "#".__LINE__." ".print_r($Item,true)."<br>\n";
+				    $_isVisible = $_Item["IsVisible"];
+					$strMenu = $_isVisible ? render_dyn_navitem($tpl, $_Item, $sub_navbar, $HP_LANG) : "";
 					$dyn_navbar.= $strMenu;
 				} else {
 					$error.= "#".__LINE__." ".basename(__FILE__)." ";

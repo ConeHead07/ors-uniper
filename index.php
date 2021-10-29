@@ -187,6 +187,7 @@ $iNumRplAusgabe = count($_rplAusgabe);
 for ($i = 0; $i < $iNumRplAusgabe; $i++) {
     $ausgabe = strtr($ausgabe, $_rplAusgabe[$i]);
 }
+// die(print_r(compact('_rplAusgabe'), 1));
 
 if (!empty($SiteVars)) foreach($SiteVars as $k => $v) {
     $ausgabe=str_replace("{".$k."}", $v, str_replace("%".$k."%", $v,$ausgabe));

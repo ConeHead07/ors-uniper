@@ -46,11 +46,11 @@ foreach($activeMenuElements as $activeItem) {
 
 foreach($menusByGroupname as $gName => $gNavElements) {
 	if (!empty($gNavElements) && load_menu_tpls($gName)) {
-		//echo "#".__LINE__." ".basename(__FILE__)." TemplateRegion für gName:$gName gefunden!<br>\n";
+		// echo "#".__LINE__." ".basename(__FILE__)." TemplateRegion fÃ¼r gName:$gName gefunden: " . count($gNavElements) . "!<br>\n";
 		$_rplAusgabe[0]["<!-- {MenuGroup:".$gName."} -->"] = render_navelements($gNavElements, 0, $gName, HP_LANG);
 		//echo "#".__LINE__." ".basename(__FILE__)." gName:$gName <br>\n";
 		//die("#".__LINE__." DIE():".fb_htmlEntities(print_r($_rplAusgabe[0]["<!-- {MenuGroup:".$gName."} -->"],1)));
 	} else {
-		echo "#".__LINE__." ".basename(__FILE__)." TemplateRegion für gName:$gName NICHT gefunden!<br>\n";
+		echo "#".__LINE__." ".basename(__FILE__)." TemplateRegion fÃ¼r gName:$gName NICHT gefunden!<br>\n";
 	}
 }

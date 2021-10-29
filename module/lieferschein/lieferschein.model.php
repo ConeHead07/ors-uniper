@@ -19,6 +19,9 @@ class LS_Model {
     private $lid = 0;
     private $lsdata = [];
 
+    private $ktgIdLieferung = 18;
+    private $ktgIdRabatt = 25;
+
     public function __construct(int $aid = 0, int $lid = 0)
     {
         global $db;
@@ -27,6 +30,7 @@ class LS_Model {
 
         $this->inputVarNames = [
             'aid',
+            'lid',
             'lieferdatum',
             'ankunft',
             'abfahrt',
@@ -52,8 +56,50 @@ class LS_Model {
         }
     }
 
+
+    public function AidExists($aid) {
+        $num = $this->db->query_one(
+            'SELECT count(1) FROM mm_umzuege WHERE aid = ' . (int)$aid
+        );
+        return (int)$num > 0;
+    }
+
+    public function lidExists($lid) {
+        $num = $this->db->query_one(
+            'SELECT count(1) FROM mm_lieferscheine WHERE lid = ' . (int)$lid
+        );
+        return (int)$num > 0;
+    }
+
+    public function getLieferscheinIdsByLid(int $lid) {
+        return $this->db->query_row(
+            'SELECT lid, aid FROM mm_lieferscheine WHERE lid = ' . (int)$lid
+        );
+    }
+
+    public function getAuftragsdaten() {
+        return $this->db->query_row(
+            'SELECT a.*, u.personalnr, u.personalnr AS kid
+FROM mm_umzuege a
+JOIN mm_user u ON (a.antragsteller_uid = u.uid)
+WHERE aid = ' . (int)$this->AID
+        );
+    }
+
+    public function getLeistungen() {
+        return $this->db->query_rows(
+            'SELECT 
+l.*,
+k.leistungskategorie_id, k.Bezeichnung, k.leistungseinheit, k.preis_pro_einheit, k.waehrung,
+ktg.leistungskategorie AS Kategorie
+FROM mm_umzuege_leistungen l
+LEFT JOIN  `mm_leistungskatalog` k ON l.leistung_id = k.leistung_id
+LEFT JOIN  `mm_leistungskategorie` ktg ON k.leistungskategorie_id = ktg.leistungskategorie_id
+WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $this->ktgIdLieferung . ', ' . $this->ktgIdRabatt . ')');
+    }
+
     public function setLieferscheinId(int $lid) {
-        $row = $this->db->query_count(
+        $row = $this->db->query_row(
             'SELECT aid, lid FROM mm_lieferscheine WHERE lid = ' . (int)$lid
         );
 
@@ -62,14 +108,38 @@ class LS_Model {
             throw new \Exception($this->error);
         }
 
-        if ($row['aid'] != $this->AID) {
+        if ($this->AID && $row['aid'] != $this->AID) {
             $this->error = 'Der Lieferschein mit der ID ' . $lid
                 . ' ist einem anderen Auftrag (ID ' . $row['aid'] . ') zugeordnet';
             throw new \Exception($this->error);
         }
 
+        $this->AID = $row['aid'];
+
         $this->lid = $lid;
         return $this;
+    }
+
+    public function updateLieferscheinPdf($pdfdata) {
+        $lid = $this->lid;
+        $null = null;
+        $sql = 'UPDATE mm_lieferscheine SET lieferschein = ? WHERE lid = ' . (int)$lid;
+        $sth = $this->mysqli->prepare(
+            $sql
+        );
+        $sth->bind_param('b', $null);
+        $sth->send_long_data(0, $pdfdata);
+        $success = $sth->execute();
+        $affected_rows = $sth->affected_rows;
+
+
+        die(print_r(compact('sql', 'success', 'affected_rows'), 1));
+
+        if ($sth->error) {
+            $this->error = $sth->error;
+            return false;
+        }
+        return false;
     }
 
     public function getError() {
@@ -121,6 +191,21 @@ class LS_Model {
         return $this;
     }
 
+    public function getAbgenommenenLieferscheinPDF() {
+        $sql = 'SELECT lieferschein FROM mm_lieferscheine '
+            . ' WHERE aid = ' . $this->AID . ' '
+            . '    AND lieferschein IS NOT NULL AND LENGTH(lieferschein) > 0 '
+            . '    AND sig_kd_dataurl IS NOT NULL '
+            . '    AND LENGTH(sig_kd_dataurl) > 50 '
+            . ' ORDER BY lid DESC '
+            . ' LIMIT 1';
+
+        return $this->db->query_one($sql);
+        die(print_r(compact('sql', 'row'), 1));
+
+        return $this->db->query_one($sql, [ 'aid' => $this->AID ]);
+    }
+
     public function getData() {
         return $this->lsdata;
     }
@@ -140,6 +225,13 @@ class LS_Model {
         return true;
     }
 
+    public function save(array $input) {
+        if (empty($input['lid'])) {
+            return $this->insert($input);
+        }
+        return $this->update($input);
+    }
+
     public function insert($input) {
         global $user;
         $data = $input;
@@ -153,6 +245,9 @@ class LS_Model {
         $cols = [];
         $vals = [];
         foreach($data as $_k => $_v) {
+            if ($_k === 'lid' || $_k === 'id') {
+                continue;
+            }
             $cols[] = $_k;
             $vals[] = $_v;
         }
@@ -162,11 +257,73 @@ class LS_Model {
         // die($sql . "\n" . print_r(compact('cols', 'vals'), 1));
 
         $db->query($sql, $data);
-        $id = $db->last_insert_id();
+        if ($db->error()) {
+            $this->error = $db->error();
+            return false;
+        }
+        $this->lid = $db->last_insert_id();
+        $this->aid = $data['aid'];
 
-        $this->createSigBlobsFromDataUrlCols((int)$id);
+        $this->createSigBlobsFromDataUrlCols((int)$this->lid);
 
-        return $id;
+        return $this->lid;
+    }
+
+    public function update($input) {
+        global $user;
+        $data = $input;
+        $db = $this->db;
+        if (empty($this->lid) && empty($input['lid'])) {
+            $this->error = 'Systemfehler. Es wurde keine lid zur Aktualisierung der Lieferscheindaten übergeben!';
+            return false;
+        }
+        if (isset($data['leistung'])) {
+            $data['leistungen'] = json_encode($data['leistung']);
+            unset($data['leistung']);
+        }
+        $data['created_uid'] = $user['uid'];
+        $data['created_user'] = $user['user'];
+        $sets = [];
+        foreach($data as $_k => $_v) {
+            $sets[] = "$_k = :$_k";
+        }
+
+        if (!empty($this->lid) && empty($data['lid'])) {
+            $data['lid'] = $this->lid;
+        }
+
+        $sql = 'UPDATE mm_lieferscheine SET ' . implode("\n", $sets) . ' '
+            . 'WHERE lid = :lid LIMIT 1';
+        // die($sql . "\n" . print_r(compact('cols', 'vals'), 1));
+
+        $db->query($sql, $data);
+        if ($db->error()) {
+            $this->error = $db->error();
+            return false;
+        }
+        $this->lid = $data['lid'];
+        $this->setLieferscheinId($this->lid);
+
+        $this->createSigBlobsFromDataUrlCols((int)$this->id);
+
+        return $this->lid;
+    }
+
+    public function auftragAbschliessen() {
+        global $user;
+
+        $sql = 'UPDATE mm_umzuege SET 
+    umzugsstatus = :status,
+    abgeschlossen_am = NOW(),
+    abgeschlossen_von = :abgeschlossen_von,
+    modified = NOW()
+    WHERE aid = aid';
+
+        $this->db->query($sql, [
+            'status' => 'abgeschlossen',
+            'abgeschlossen_von' => $user['user'],
+            'aid' => $this->AID
+        ]);
     }
 
     public function getBinaryFromBase64DataUrl($dataurl) {
@@ -194,6 +351,30 @@ class LS_Model {
             $_val = $rawInput[$_name] ?? '';
             $_colName = $_name;
             switch($_name) {
+                case 'aid':
+                    if (empty($_val)) {
+                        $this->validationErrors[$_name] = 'Systemfehler. Es wurde keine AuftragsID übergeben!';
+                    } elseif (!$this->AidExists((int)$_val)) {
+                        $this->validationErrors[$_name] = 'Systemfehler. Zu der aid ' . $_val
+                            . ' existiert kein Auftrag!';
+                    }
+                    break;
+
+                case 'lid':
+                    if (!empty($_val)) {
+                        $aIds = $this->getLieferscheinIdsByLid((int)$_val);
+                        if (empty($aIds)) {
+                            $this->validationErrors[$_name] = 'Systemfehler: Zu der lid ' . $_val
+                                . ' existieren keine Lieferscheindaten!';
+                        } elseif (isset($rawInput['aid']) && (int)$rawInput['aid'] !== (int)$aIds['aid']) {
+                            $this->validationErrors[$_name] = 'Systemfehler: Der Lieferschein ' . $_val
+                                . " ist einem anderen Auftrag zugeordnet:\n";
+                            $this->validationErrors[$_name].= 'AID-Eingabe ' . $rawInput['aid']
+                                . ' != AID-Lieferschein ' . $aIds['aid'] . '!';
+                        }
+                    }
+                    break;
+
                 case 'lieferdatum':
                     if ($_val && strtotime($_val)) {
                         $_val = date('Y-m-d', strtotime($_val));
@@ -202,6 +383,7 @@ class LS_Model {
                         $_val = null;
                     }
                     break;
+
                 case 'ankunft':
                 case 'abfahrt':
                     list($h, $m, $s) = explode(':', $_val . ':0:0');
@@ -243,11 +425,16 @@ class LS_Model {
                     $_colName = str_replace('ma', 'kd', $_colName);
                     break;
 
-
                 case 'sig_mt_dataurl':
                 case 'sig_ma_dataurl':
                     if ($_name === 'sig_ma_dataurl') {
                         $_colName = 'sig_kd_dataurl';
+                    }
+                    if (empty($_val) || strlen($_val) < 30) {
+                        if ($_name === 'sig_ma_dataurl') {
+                            $this->validationErrors[$_name] = 'Es fehlt die Unterschrift des Kunden!';
+                            break;
+                        }
                     }
                     $base = substr($_colName, 0, 7);
                     $commaPos = strpos($_val, ',');
@@ -278,15 +465,19 @@ class LS_Model {
                             }
                         } else {
                             if ($_i !== 'image') {
-                                $this->validationErrors[$_name] = 'Die Datei ' . $_name . ' wurde nicht als Grafik übermittelt!';
+                                $this->validationErrors[$_name] = 'Die Datei ' . $_name
+                                    . ' wurde nicht als Grafik übermittelt!';
                             } elseif ($_enc !== 'base64') {
-                                $this->validationErrors[$_name] = 'Die Datei ' . $_name . ' wurde nicht mit base64 encodiert!';
+                                $this->validationErrors[$_name] = 'Die Datei ' . $_name
+                                    . ' wurde nicht mit base64 encodiert!';
                             } else {
-                                $this->validationErrors[$_name] = 'Die Datei ' . $_name . ' kann nicht ausgelesen werden!';
+                                $this->validationErrors[$_name] = 'Die Datei ' . $_name
+                                    . ' kann nicht ausgelesen werden!';
                             }
                         }
                     } else {
-                        $this->validationErrors[$_name] = 'Die Signatur ' . $_name . ' wurde in unerwarteter Data-URL-Codierung übermittelt!';
+                        $this->validationErrors[$_name] = 'Die Signatur ' . $_name
+                            . ' wurde in unerwarteter Data-URL-Codierung übermittelt!';
                     }
                     break;
 

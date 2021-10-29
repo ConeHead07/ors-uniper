@@ -30,7 +30,10 @@ spl_autoload_register(function($className) {
         return false;
     };
 
-    $loadFileIfExists(__DIR__ . '/class/' . $className . '.class.php');
+    if (!$loadFileIfExists(__DIR__ . '/class/' . $className . '.class.php')) {
+        // Call __autoload defined in include/stdlib.php
+        __autoload($className);
+    }
 
 });
 

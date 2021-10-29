@@ -39,7 +39,7 @@ $tcpdf_include_dirs = array(
 );
 foreach ($tcpdf_include_dirs as $tcpdf_include_path) {
     if (@file_exists($tcpdf_include_path)) {
-        require_once($tcpdf_include_path);
+        // require_once($tcpdf_include_path);
         break;
     }
 }
