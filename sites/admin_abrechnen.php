@@ -14,10 +14,11 @@ if (empty($datumvon)) {
 //    $timeMin1Month = strtotime('-1 month');
 //    $datumvon = date('Y-m-01', $timeMin1Month);
 
-    $givendate = $_REQUEST['givendate'] ?? '';
+    $givendate = $_REQUEST['givendate'] ?? date('Y-m-d');
     $prevMonday = strtotime('previous monday', strtotime('-4 days', strtotime($givendate)));
     $datumvon = date('Y-m-d', $prevMonday);
 }
+
 if (empty($datumbis)) {
     $lastDay = date('t');
     if (strlen($lastDay) < 2) {
