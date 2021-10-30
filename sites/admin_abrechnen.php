@@ -19,7 +19,7 @@ if (empty($datumvon)) {
     $datumvon = date('Y-m-d', $prevMonday);
 }
 
-if (empty($datumbis)) {
+if (empty($datumbis) || $datumbis < $datumvon) {
     $lastDay = date('t');
     if (strlen($lastDay) < 2) {
         $lastDay = '0' . $lastDay;
