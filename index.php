@@ -117,7 +117,9 @@ if (is_array($ActiveMenu)
         }
         $_rplAusgabe[1][" active=\"".$srv."\" class=\""] = " active=\"".$srv."\" class=\"liActive ";
     }
-    if (!$srv_error) $_rplAusgabe[0]["{pageTitle}"] = $ActiveMenu["name"];
+    if (!$srv_error) {
+        $_rplAusgabe[0]["{pageTitle}"] = $ActiveMenu["name"];
+    }
 } else {
     $srv_error = true;
 }

@@ -97,6 +97,7 @@ function insert_reguser($user_connid, $tbl, &$arrFormVars, &$authentcode) {
 	$SQL.= " authentcode = \"".MyDB::escape_string($authentcode)."\",\n";
 	$SQL.= " registerdate = NOW(),\n";
 	$SQL.= " agb_confirm = \"".MyDB::escape_string($arrFormVars["agb_confirm"])."\",\n";
+	$SQL.= " datenschutz_confirm = \"".MyDB::escape_string($arrFormVars["datenschutz_confirm"])."\",\n";
 	$SQL.= " confirmdate = NULL,\n";
 	$SQL.= " lastlogin = NULL,\n";
 	$SQL.= " created = NOW()\n";

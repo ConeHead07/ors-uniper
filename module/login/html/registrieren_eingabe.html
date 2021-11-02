@@ -1,10 +1,18 @@
 <script src="{WebRoot}js/FbAjaxUpdater.js" type="text/javascript"></script>
 <script src="{WebRoot}js/PageInfo.js" type="text/javascript"></script>
 <link rel="STYLESHEET" type="text/css" href="{WebRoot}css/SelBox.easy.css" />
-<script src="{WebRoot}js/ObjectHandler.js" type="text/javascript"></script>
-<script src="{WebRoot}js/SelBox.easy.js" type="text/javascript"></script>
-<script src="{WebRoot}js/registrieren.easy.js" type="text/javascript"></script>
+<script src="{WebRoot}/js/ObjectHandler.js" type="text/javascript"></script>
+<script src="{WebRoot}/js/SelBox.easy.js" type="text/javascript"></script>
+<script src="{WebRoot}/js/registrieren.easy.js" type="text/javascript"></script>
 
+<link rel="STYLESHEET" type="text/css" href="/js/cluetip/jquery.cluetip.css" />
+<script src="/js/jquery-1.9.1.js"></script>
+<script src="/js/cluetip/jquery.cluetip.js" type="text/javascript"></script>
+<style>
+	label.required::after {
+		content: "*";
+	}
+</style>
 	<script>
 	function init() {
 		if (document.getElementById("inputUser")) {
@@ -39,21 +47,21 @@
 			<input type="radio" name="eingabe[anrede]" value="Herr" class="iRad" check_anrede="Herr">Herr</td>
 	</tr>
 	<tr class="form-group">
-		<td><label errclass="vorname" for="eingabe_vorname" id="InputLblvorname" class="col-form-label">Vorname:</label></td>
-		<td><input id="inputUser" id="eingabe_vorname" type="text" name="eingabe[vorname]" value="{eingabe[vorname]}" class="iTxt form-control"></td>
+		<td><label errclass="vorname" for="eingabe_vorname" id="InputLblvorname" class="col-form-label required">Vorname:</label></td>
+		<td><input required id="inputUser" id="eingabe_vorname" type="text" name="eingabe[vorname]" value="{eingabe[vorname]}" class="iTxt form-control"></td>
 	</tr>
 	<tr class="form-group">
-		<td><label errclass="nachname" for="eingabe_nachname" id="InputLblnachname" class="col-form-label">Nachname:</label></td>
-		<td><input type="text" id="eingabe_nachname" name="eingabe[nachname]" value="{eingabe[nachname]}" class="iTxt form-control"></td>
-	</tr>
-
-	<tr class="form-group">
-		<td><label errclass="user" for="eingabe_user" id="InputLbluser" class="col-form-label">Benutzer / E-Mail:</label></td>
-		<td><input type="text" id="eingabe_user" name="eingabe[user]" value="{eingabe[user]}" class="iTxt form-control"><span class="info info-email-tld-only"> {email_tld_only}</span></td>
+		<td><label errclass="nachname" for="eingabe_nachname" id="InputLblnachname" class="col-form-label required">Nachname:</label></td>
+		<td><input required type="text" id="eingabe_nachname" name="eingabe[nachname]" value="{eingabe[nachname]}" class="iTxt form-control"></td>
 	</tr>
 
 	<tr class="form-group">
-		<td><label errclass="personalnr" for="eingabe_personalnr" id="InputLblpersonalnr" class="col-form-label">KID:</label></td>
+		<td><label errclass="user" for="eingabe_user" id="InputLbluser" class="col-form-label required">E-Mail:</label></td>
+		<td><input required type="text" id="eingabe_user" name="eingabe[user]" value="{eingabe[user]}" class="iTxt form-control"><span class="info info-email-tld-only"> {email_tld_only}</span></td>
+	</tr>
+
+	<tr class="form-group">
+		<td><label errclass="personalnr" for="eingabe_personalnr" id="InputLblpersonalnr" class="col-form-label required">KID:</label></td>
 		<td><input type="text" id="eingabe_personalnr" name="eingabe[personalnr]" value="{eingabe[personalnr]}" class="iTxt form-control"></td>
 	</tr>
 
@@ -63,15 +71,15 @@
 	</tr>
 
 	<tr class="form-group" style="display:none;">
-		<td><label errclass="strasse" for="eingabe_strasse" id="InputLblstrasse" class="col-form-label">Strasse:</label></td>
+		<td><label errclass="strasse" for="eingabe_strasse" id="InputLblstrasse" class="col-form-label required">Strasse:</label></td>
 		<td><input type="text" id="eingabe_strasse" name="eingabe[strasse]" value="{eingabe[strasse]}" class="iTxt form-control"></td>
 	</tr>
 	<tr class="form-group" style="display:none;">
-		<td><label errclass="plz" for="eingabe_plz" id="InputLblplz" class="col-form-label">PLZ:</label></td>
-		<td><input type="text" id="eingabe_plz" name="eingabe[plz]" value="{eingabe[plz]}" class="iTxt form-control"></td>
+		<td><label errclass="plz" for="eingabe_plz" id="InputLblplz" class="col-form-label required">PLZ:</label></td>
+		<td><input equired type="text" id="eingabe_plz" name="eingabe[plz]" value="{eingabe[plz]}" class="iTxt form-control"></td>
 	</tr>
 	<tr class="form-group" style="display:none;">
-		<td><label errclass="ort" for="eingabe_ort" id="InputLblort" class="col-form-label">Ort:</label></td>
+		<td><label errclass="ort" for="eingabe_ort" id="InputLblort" class="col-form-label required">Ort:</label></td>
 		<td><input type="text" id="eingabe_ort" name="eingabe[ort]" value="{eingabe[ort]}" class="iTxt form-control"></td>
 	</tr>
 <!-- 
@@ -87,19 +95,23 @@
 	<td><label errclass="user" for="eingabe[user]" id="InputLbluser">Benutzername:</label></td> 
 	<td><input type="text" name="eingabe[user]" value="{eingabe[user]}" class="iTxt"></td>
 </tr> -->
-<tr class="form-group">
-	<td><label errclass="pw" for="eingabe_pw" id="InputLblpw" class="col-form-label">Passwort:</label></td>
-	<td><input type="password" id="eingabe_pw" name="eingabe[pw]" value="{eingabe[pw]}"  class="iPass form-control"><span class="info"> mind. {pw_min_length} Zeichen</span></td>
-</tr>
-<tr class="form-group">
-	<td><label errclass="pwc" for="eingabe_pwc" id="InputLblpwc" class="col-form-label">PW wiederholen:</label></td>
-	<td><input type="password" id="eingabe_pwc" name="eingabe[pwc]" value="{eingabe[pwc]}" class="iPass form-control"></td>
-</tr>
-<!-- <tr>
-	<td><label errclass="agb_confirm" for="eingabe[agb_confirm]" id="InputLblagb_confirm">AGB:</label></td> 
-	<td><input type="checkbox" name="eingabe[agb_confirm]" value="Ja" check_agb_confirm="Ja">
-	Ja, ich stimme den <a target="winAGB" onclick="openPp(this.href, this.target, 450, 420);return false"; href="{webPath}/agb.php">AGB</a> zu</td>
-</tr> -->
+	<tr class="form-group">
+		<td><label errclass="pw" for="eingabe_pw" id="InputLblpw" class="col-form-label required">Passwort:</label></td>
+		<td><input required type="password" id="eingabe_pw" name="eingabe[pw]" value="{eingabe[pw]}"  class="iPass form-control"><span class="info"> mind. {pw_min_length} Zeichen</span></td>
+	</tr>
+	<tr class="form-group">
+		<td><label errclass="pwc" for="eingabe_pwc" id="InputLblpwc" class="col-form-label required">PW wiederholen:</label></td>
+		<td><input required type="password" id="eingabe_pwc" name="eingabe[pwc]" value="{eingabe[pwc]}" class="iPass form-control"></td>
+	</tr>
+	<tr class="xform-group">
+		<td colspan="2"><label errclass="datenschutz_confirm" for="eingabe_datenschutz_confirm" id="InputLbldatenschutz" class="col-form-label required" style="width:initial">
+			<input required type="checkbox" readonly id="eingabe_datenschutz_confirm" name="eingabe[datenschutz_confirm]" value="1" class="form-control" style="width:initial">
+			<a id="showDatenschutz" onclick="" href="/textfiles/datenschutz.html" rel="/textfiles/datenschutz.html" target="_blank">Ich stimme der Datenschutzverordnung zu.
+			</a>
+		</label>
+		</td>
+	</tr>
+
 <tr>
 	<td></td>
 	<td>
@@ -115,3 +127,49 @@
 		{LnkForgetPw}
 	</div>
 </td></tr></table>
+<div id="DSGVODialogMertens" class="dialog dialog-back-layer">
+	<div class="dialog-wrapper" style="width:90vw">
+		<div style="width:90%;">
+			<div id="datenschutzContent" style="max-height:80vh;overflow-y: scroll;text-align:left;">{datenschutz.html}</div>
+
+			<div style="text-align: center">
+				<button type="button" onclick="return false;" class="btn gray btn-cancel">Abbrechen</button>
+				<button type="button" onclick="return false;" class="btn green btn-apply">Zustimmen</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<script>
+	function showDsgvoDialog() {
+
+		var container = $("#DSGVODialogMertens");
+		$("body").addClass("doc-body-no-scrollbars");
+		container.closest(".dialog")
+				.addClass("dialog-active")
+				.find("button.btn-cancel")
+					.on("click", function() {
+						$("#eingabe_datenschutz").prop("checked", false);
+						container.removeClass("dialog-active");
+					}).end()
+				.find("button.btn-apply")
+				.on("click", function() {
+					$("#eingabe_datenschutz").prop("checked", true);
+					container.removeClass("dialog-active");
+				}).end();
+		return;
+	}
+
+	$(function() {
+		$("#datenschutzContent").load("/textfiles/datenschutz.html");
+
+		$("#showDatenschutz").on("click", function(e) {
+			e.preventDefault();
+			showDsgvoDialog();
+			return false;
+		});
+		$(".cluetip").cluetip({activation: 'click', closePosition: 'title', arrows: true});
+
+
+	});
+</script>

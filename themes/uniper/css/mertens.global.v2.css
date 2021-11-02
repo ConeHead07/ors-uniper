@@ -1511,11 +1511,9 @@ ul.ulNavigationFooter li {
   margin-left: 7px;
   line-height: 11px;
   list-style-type: none;
-  border-left: 1px solid;
 }
 ul.ulNavigationFooter li.liCopyright {
   padding: 0px 0px 0px 0px;
-  border-left: none;
 }
 ul.ulNavigationFooter li a,
 ul.ulNavigationFooter li a:active,
@@ -3924,3 +3922,44 @@ ul.ulLogin {
     height:257px;
 }
 */
+
+
+#DialogBackLayer,
+.dialog-back-layer {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 9999;
+  box-sizing: border-box;
+}
+#DialogWrapper,
+.dialog-wrapper
+{
+  border: 3px solid #0078dc;
+  padding: 0.5rem;
+  background-color: #ffffff;
+  border-radius: .5rem;
+  box-sizing: border-box;
+}
+.dialog-back-layer,
+.signature-dialog {
+  display: none;
+}
+.dialog-active,
+.signature-dialog-active {
+  display: flex;
+}
+.doc-body-no-scrollbars {
+  overflow: hidden !important;
+}
+
+ul.ulNavigationTop::after {
+  content: ".";
+  line-height: 2.2;
+  opacity: 0;
+}

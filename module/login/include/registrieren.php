@@ -16,7 +16,8 @@ $arrFormVars = array(
 	'gebaeude' => '',
 	'user' => '',
 	'anzeigename' => '',
-	'agb_confirm' => '',
+    'agb_confirm' => '',
+    'datenschutz_confirm' => '',
 );
 
 $errorFlds = '';
@@ -136,10 +137,16 @@ if (isset($_POST['register'])) {
 		$errorFlds.= "<li>Bitte geben Sie Ihr Geb&auml;ude an!</li>\n";
 		$arrErrFlds['gebaeude'] = 1;
 	}
-	if (!$arrFormVars['agb_confirm']) {
-		$errorFlds.= '<li>für die Anmeldung benötigen wir Ihre Zustimmung zu unseren AGB!</li>\n';
-		$arrErrFlds['agb_confirm'] = 1;
-	}
+    if (false && !$arrFormVars['agb_confirm']) {
+        $errorFlds.= "<li>für die Anmeldung benötigen wir Ihre Zustimmung zu unseren AGB!</li>\n";
+        $arrErrFlds['agb_confirm'] = 1;
+    }
+    if (!$arrFormVars['datenschutz_confirm']) {
+        $errorFlds.= "<li>für die Anmeldung benötigen wir Ihre Zustimmung zu unseren Datenschutzbestimmungen!</li>\n";
+        $arrErrFlds['datenschutz_confirm'] = 1;
+    } else {
+        $arrFormVars['datenschutz_confirm'] = 'Ja';
+    }
 
 	if (!empty($arrFormVars['ort']) && empty($arrFormVars['standort'])) {
         $arrFormVars['standort'] = $arrFormVars['ort'];

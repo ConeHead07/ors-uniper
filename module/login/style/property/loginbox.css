@@ -176,6 +176,7 @@ div.page-login html [type=button] {
 	-webkit-appearance: button;
 }
 
+div.page-login .btn-apply,
 div.page-login .btn-primary {
 	color: #fff;
 	background-color: #007bff;
@@ -227,6 +228,7 @@ div.page-login ::before {
 	box-sizing: border-box;
 }
 
+div.page-login .btn-apply:hover,
 div.page-login .btn-primary:hover {
 	color: #fff;
 	background-color: #0069d9;

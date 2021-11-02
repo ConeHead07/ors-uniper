@@ -12,4 +12,5 @@ log/2018
 log_archive
 attachements/*
 !attachements/.gitkeep
+!vendor/*
 .idea/*
