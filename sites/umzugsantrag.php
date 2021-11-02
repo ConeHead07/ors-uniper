@@ -27,15 +27,27 @@ if (empty($db)) {
 }
 
 //  preismatrix_id 	leistung_id 	preis 	preiseinheit 	mengen_von 	mengen_bis 
-$sql = 'SELECT l.leistung_id, l.leistung_ref_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
-      .' leistungskategorie AS kategorie, l.leistungskategorie_id AS kategorie_id, preis_pro_einheit, image, '
-      .' m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis'
-      .' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k '
-      .'  ON l.leistungskategorie_id = k.leistungskategorie_id '
-      .' LEFT JOIN mm_leistungspreismatrix m '
-      .'  ON l.leistung_id = m.leistung_id '
-      .' WHERE l.aktiv = "Ja" '
-      .' ORDER BY kategorie, Bezeichnung, mx_von';
+$sql = 'SELECT '
+    . ' l.leistung_id, '
+    . ' l.leistung_ref_id, '
+    . ' Bezeichnung leistung, '
+    . ' Beschreibung, '
+    . ' produkt_link, '
+    . ' leistungseinheit, '
+    . ' leistungseinheit2, '
+    . ' leistungskategorie AS kategorie, '
+    . ' l.leistungskategorie_id AS kategorie_id, '
+    . ' preis_pro_einheit, image, '
+    . ' m.preis mx_preis, '
+    . ' m.preiseinheit mx_preiseinheit, '
+    . ' m.mengen_von mx_von, '
+    . ' m.mengen_bis mx_bis'
+    . ' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k '
+    . '  ON l.leistungskategorie_id = k.leistungskategorie_id '
+    . ' LEFT JOIN mm_leistungspreismatrix m '
+    . '  ON l.leistung_id = m.leistung_id '
+    . ' WHERE l.aktiv = "Ja" '
+    . ' ORDER BY kategorie, Bezeichnung, mx_von';
 
 $lkTreeItems = array();
 $lkTreeItemsJson = array();
@@ -51,10 +63,10 @@ foreach($lkItems as $k => $v) {
     
     $jvals = array();
     foreach($v as $jk => $jv) {
-        $jvals[utf8_encode($jk)] = utf8_encode($jv);
+        $jvals[$jk] = $jv;
     }
-    if (!isset($lkTreeItemsJson[utf8_encode($ktg1)][utf8_encode($v['leistung'])])) {
-        $lkTreeItemsJson[utf8_encode($ktg1)][utf8_encode($v['leistung'])] = $jvals;
+    if (!isset($lkTreeItemsJson[$ktg1][$v['leistung']])) {
+        $lkTreeItemsJson[$ktg1][$v['leistung']] = $jvals;
         $lkmById[$v['leistung_id']] = array();
     }
     

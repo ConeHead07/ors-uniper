@@ -16,11 +16,7 @@ if (empty($datumvon)) {
     $datumvon = date('Y-m-01', $timeMin1Month);
 }
 if (empty($datumbis)) {
-    $lastDay = date('t');
-    if (strlen($lastDay) < 2) {
-        $lastDay = '0' . $lastDay;
-    }
-    $datumbis = date('Y-m-t');
+    $datumbis = date('Y-m-01', strtotime('next month', strtotime($datumvon)));
 }
 
 
@@ -198,5 +194,6 @@ $Tpl->assign('odir', $odir);
 $Tpl->assign('s', $s);
 $Tpl->assign('q', $query);
 $Tpl->assign('site_antrag', (!empty($site_antrag)?$site_antrag:'aantrag'));
+
 $body_content = $Tpl->fetch("auswertung_filter.html");
 

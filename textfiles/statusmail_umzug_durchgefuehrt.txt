@@ -1,17 +1,16 @@
-Betreff=Auftrag ID {AID} - Durchführung
+Betreff=Bestellung ID {AID} - Ausgeliefert
 
-Sehr geehrter Anwender,
-sehr geehrte Anwenderin,
+Hallo {Vorname} {Name},
 
-Ihr Auftrag mit der ID {AID} wurde durchgeführt und wird geschlossen.
+Ihre Bestellung mit der ID {AID} wurde ausgeliefert und wird nun als erledigt markiert.
 
-Antragsteller:  {vorname} {name}
+Lieferdaten:  {vorname} {name}
 Ausführungszeit {ausgefuehrtam}
 
-Sie können den  Vorgang  unter folgendem Link  einsehen:
+Sie können die Bestellung  unter folgendem Link  einsehen:
 {StatusLink}
 
 Mit freundlichen Grüßen
 
-Ihr
-{HomepageTitle}
+Ihr Team von
+merTens AG für {HomepageTitle}

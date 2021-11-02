@@ -5,12 +5,12 @@ sehr geehrte Anwenderin,
 
 es liegt ein neuer Auftrag  mit der ID {AID} vor.
 
-Antragsteller:  {vorname} {name}
+Lieferdaten:  {vorname} {name}
 
 Sie können den Status des Auftrags unter folgendem Link einsehen:
 {StatusLink}
 
 Mit freundlichen Grüßen
 
-Ihr
-{HomepageTitle}
+Ihr Team von
+merTens AG für {HomepageTitle}

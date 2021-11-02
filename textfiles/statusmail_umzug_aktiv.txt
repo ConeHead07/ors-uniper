@@ -1,17 +1,16 @@
-Betreff=Auftrag ID {AID} - Bestaetigt
+Betreff=Bestellung ID {AID} - Bestaetigt
 
 Hallo {Vorname} {Name},
 
-der Auftrag mit der ID {AID} wurde bestaetigt und befindet sich
-im Durchführungsstatus.
+die Bestellung mit der ID {AID} wurde bestaetigt und befindet sich in Bearbeitung.
 
-Antragsteller:  {vorname} {name}
-Liefertermin {ausgefuehrtam}
+Lieferdaten: {vorname} {name}
+Liefertermin: {ausgefuehrtam}
 
-Sie können den  Vorgang  unter folgendem Link  einesehen:
+Sie können die Bestellung  unter folgendem Link  einesehen:
 {StatusLink}
 
 Mit freundlichen Grüßen
 
-Ihr
-{HomepageTitle}
+Ihr Team von
+merTens AG für {HomepageTitle}

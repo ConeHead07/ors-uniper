@@ -1,30 +1,12 @@
 Betreff=Auftrag ID {AID} - Bearbeitung
 
-Sehr geehrter Anwender,
-sehr geehrte Anwenderin,
-
-Ihr Auftrag  mit der ID {AID}  wurde bearbeitet und freigegeben.
-
-Antragsteller:  {vorname} {name}
-Ausführungszeit {ausgefuehrtam}
-
-Sie können den Status Ihres Auftrags unter folgendem Link einsehen:
-{StatusLink}
-
-Mit freundlichen Grüßen
-
-Ihr
-{HomepageTitle}
-
-Betreff=Auftrag ID {AID} - Bearbeitung
-
-Hallo {vorname} {nachname},
+Hallo {vorname} {name},
 
 Ihre Bestellung mit der ID {AID}  wurde bearbeitet und avisiert.
 
-Antragsteller:  {vorname} {name}
-Lieferadresse: {XXXXXXXXXXXXX}
-Abweichender Empfänger: {XXXXXXXXX}
+Lieferdaten:  {vorname} {name}
+Lieferadresse: {Lieferadresse}
+Abweichender Empfänger: {ansprechpartner}
 Lieferung: {ausgefuehrtam}
 
 

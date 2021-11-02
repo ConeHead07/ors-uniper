@@ -4,13 +4,13 @@ Hallo {Vorname} {Name},
 
 es liegt ein neuer genehmigter Auftrag mit der ID {AID} zur Durchführung vor.
 
-Antragsteller:  {vorname} {name}
-Ausführungszeit {ausgefuehrtam}
+Lieferdaten:  {vorname} {name}
+Ausführungszeit: {ausgefuehrtam}
 
 Sie können den  Vorgang  unter folgendem Link  bearbeiten:
 {StatusLink}
 
 Mit freundlichen Grüßen
 
-Ihr
-{HomepageTitle}
+Ihr Team von
+merTens AG für {HomepageTitle}

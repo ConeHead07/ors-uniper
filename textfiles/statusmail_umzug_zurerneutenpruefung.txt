@@ -1,15 +1,15 @@
-Betreff=Auftrag ID {AID} - Prüfung
+Betreff=Bestellung ID {AID} - Prüfung
 
 Hallo {Vorname} {Name},
 
-es liegt ein Auftrag mit der ID {AID} zur erneuten Prüfung und Bestätigung vor.
+es liegt eine Bestellung mit der ID {AID} zur erneuten Prüfung und Bestätigung vor.
 
-Antragsteller:  {vorname} {name}
+Lieferdaten:  {vorname} {name}
 
 Sie können den  Vorgang  unter folgendem Link  bearbeiten:
 {StatusLink}
 
 Mit freundlichen Grüßen
 
-Ihr
-{HomepageTitle}
+Ihr Team von
+merTens AG für {HomepageTitle}

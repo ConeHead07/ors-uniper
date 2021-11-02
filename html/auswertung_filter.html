@@ -1,28 +1,13 @@
-{* <div style="display: none">
-html/auswertung_filter.html
-
-Weiterhin soll es eine flexible Auswertung geben.
-Hierzu soll eine Auswahl von KW bis KW  und das Jahr und Berechnet  ja/Nein angegeben werden.
- 
-Folgende Felder sollen angezeigt werden:
- 
-ID|STOM|Region|Standort|Wirtschaftseinheit|PSP-Element|Planon Nr.|Leistungsdatum|Abschlußdatum|Rechnungsdatum|Summe
- 
-Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem Text eingegeben 
-/ ausgewählt werden kann.
-
-</div> *}
-
-<style type="text/css">
 {literal}
+<style type="text/css">
     th.order {
         cursor:pointer;
     }
-#Auswertung.divInlay input[type=data] {
-    background-color: #e2f2ff;
-}
-{/literal}
+    #Auswertung.divInlay input[type=data] {
+        background-color: #e2f2ff;
+    }
 </style>
+{/literal}
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
     <h1><span class="spanTitle">Auswertung</span></h1>
 
@@ -53,32 +38,32 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
         <input type="hidden" name="queriedodir" value="{$odir}">
         <noscript>&lt;input type="submit" value="Auswertung starten"&gt;</noscript>
         </span>
-        <script>{literal}
-        $(function(){
+            <script>{literal}
+            $(function(){
 
-            var datumFilterFeld = "{datumfeld}";
-            $("#auswertungDatumsfeld").val(datumFilterFeld);
-            // $("#auswertungDatumsfeld").find("option[value=" + datumFilterFeld + "]").prop("selected", true);
+                var datumFilterFeld = "{datumfeld}";
+                $("#auswertungDatumsfeld").val(datumFilterFeld);
+                // $("#auswertungDatumsfeld").find("option[value=" + datumFilterFeld + "]").prop("selected", true);
 
-            var send = function() {
-                self.location.href = "?" + $("#frmStat").serialize();
-            };
+                var send = function() {
+                    self.location.href = "?" + $("#frmStat").serialize();
+                };
 
-            $("th.order").click(function(e){
-                $("input#orderby").val( $(this).attr("data-fld") );
-                send();
+                $("th.order").click(function(e){
+                    $("input#orderby").val( $(this).attr("data-fld") );
+                    send();
+                });
+
+                $("th input").keypress(function(e){
+                    if ( (e.keyCode || e.which) === 13) send();
+                });
+
             });
+            {/literal}
+            </script>
 
-            $("th input").keypress(function(e){
-                if ( (e.keyCode || e.which) === 13) send();
-            });
-
-        });
-        {/literal}
-        </script>
-
-        <table class="tblList">
-            <thead>
+            <table class="tblList">
+                <thead>
                 <tr>
                     <th class="order" data-fld="aid">ID</th>
                     <th class="order" data-fld="kid">KID</th>
@@ -109,9 +94,9 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
                     <th><input name="q[vorgangsnummer]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.vorgangsnummer}{/if}"></th>
                     <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.summe}{/if}"></th>
                 </tr>
-            </thead>
-            <tbody>
-            {foreach name=AList item=item from=$Auftraege}
+                </thead>
+                <tbody>
+                {foreach name=AList item=item from=$Auftraege}
                 <tr>
                     <td><a href="?s={$site_antrag}&id={$item.aid}">{$item.aid}</a></td>
                     <td>{$item.kid}</td>
@@ -128,8 +113,8 @@ Jedes Feld soll Filterbar sein ( unter dem jeweiligen Feld ein Freifeld in dem T
                     <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
                 </tr>
                 {/foreach}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
         </form>
     </div>
 </div>

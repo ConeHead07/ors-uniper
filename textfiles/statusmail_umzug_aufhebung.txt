@@ -1,11 +1,11 @@
-Betreff=Auftrag ID {AID} - Aufhebung
+Betreff=Bestellung ID {AID} - Aufhebung
 
-Guten Tag,
+Hallo {Vorname} {Name},
 
-der Auftrag mit der ID {AID} wurde aufgehoben.
-Sie werden erneut informiert, wenn die Leistung durchgeführt werden soll.
+die Bestellung mit der ID {AID} wurde aufgehoben.
+Sie werden erneut informiert, wenn die Bestellung doch durchgeführt wird.
 
 Mit freundlichen Grüßen
 
-Ihr
-{HomepageTitle}
+Ihr Team von
+merTens AG für {HomepageTitle}

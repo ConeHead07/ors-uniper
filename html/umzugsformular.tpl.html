@@ -38,6 +38,15 @@
         padding-right:15px;
         margin-left:20px;
     }
+
+    div#Umzugsantrag .umzugsantrag-hinweise {
+        margin-top: 1rem;
+        max-width: 700px;
+    }
+    div#Umzugsantrag .umzugsantrag-hinweise,
+    div#Umzugsantrag .umzugsantrag-hinweise * {
+        font-size: .9rem;
+    }
 </style>
 {/literal}
 <div id="SysInfoBox"></div>
@@ -48,8 +57,10 @@
     <h1><span class="spanTitle">Neuer Auftrag</span></h1>
     <p>
     <div id="Umzugsantrag" class="divInlay">
-        {ors_include_static_content file="bestellung_hinweis.html"}
-        <h2 style="margin:0;" data-site="umzugsformular/tpl/html">Antragsteller</h2>
+        <div class="umzugsantrag-hinweise">
+            {ors_include_static_content file="bestellung_hinweis.html"}
+        </div>
+        <h2 style="margin:0;" data-site="umzugsformular/tpl/html">Lieferdaten</h2>
         <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
             <input type="hidden" name="AS[aid]" value="{if !empty($AS)}{$AS.aid}{/if}">
             <input type="hidden" name="AS[token]" value="{if !empty($AS)}{$AS.token}{/if}">
@@ -192,7 +203,7 @@
             </table>
             <br>
             <div style="display:xnone">
-                <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort <span class="infolink" id="copyASDataToAPVorOrt" style="display: none;">(Angaben vom Antragsteller übernehmen)</span></h2>
+                <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort <span class="infolink" id="copyASDataToAPVorOrt" style="display: none;">(Angaben von Lieferdaten übernehmen)</span></h2>
                 <table>
                     <tr>
                         <td style="padding:0;width:200px;"><label for="as_ansprechpartner" title="Ansprechpartner Name" style="display:block;width:auto;">Vor &amp; Nachname<span class="right">{if $ASConf.ansprechpartner.required}<span class="required">*</span>{/if}</span></label></td>
@@ -209,10 +220,6 @@
                                 <div class="button" id="fileuploader">Upload Dokument</div>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td style="padding:0;"><label for="as_ansprech_email" title="Ansprechpartner E-Mail" style="display:block;width:auto;">E-Mail<span class="right">{if $ASConf.ansprechpartner_email.required}<span class="required">*</span>{/if}</span></label></td>
-                        <td style="padding:0;"><input type="text" id="as_ansprech_email" value="{if !empty($AS)}{$AS.ansprechpartner_email|escape}{/if}" {if $ASConf.ansprechpartner_email.required}required="required"{/if} name="AS[ansprechpartner_email]" class="itxt itxt2col" title="Ansprechpartner E-Mail"></td>
                     </tr>
                     <tr>
                         <td style="padding:0;"><label for="as_ansprech_fon" title="Ansprechpartner Fon" style="display:block;width:auto;">Fon<span class="right">{if $ASConf.ansprechpartner_fon.required}<span class="required">*</span>{/if}</span></label></td>

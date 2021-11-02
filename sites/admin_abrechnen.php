@@ -15,7 +15,7 @@ if (empty($datumvon)) {
 //    $datumvon = date('Y-m-01', $timeMin1Month);
 
     $givendate = $_REQUEST['givendate'] ?? date('Y-m-d');
-    $prevMonday = strtotime('previous monday', strtotime('-4 days', strtotime($givendate)));
+    $prevMonday = strtotime('previous thursday', strtotime('-2 days', strtotime($givendate)));
     $datumvon = date('Y-m-d', $prevMonday);
 }
 
@@ -26,7 +26,7 @@ if (empty($datumbis) || $datumbis < $datumvon) {
     }
     // $datumbis = date('Y-m-t');
 
-    $datumbis = date('Y-m-d', strtotime('next friday', strtotime($datumvon)));
+    $datumbis = date('Y-m-d', strtotime('next wednesday', strtotime($datumvon)));
 }
 if (!empty($_REQUEST['kwvon'])) {
     $kwvon = (!empty($_REQUEST['kwvon'])) ? $_REQUEST['kwvon'] : '';
@@ -54,7 +54,7 @@ $all   = (!empty($_REQUEST['all']))     ? $_REQUEST['all'] : '';
 
 if ($finish && $wwsnr && count($aids)) {
     $sql = 'UPDATE mm_umzuege SET berechnet_am = NOW(), vorgangsnummer = :wwsnr WHERE aid IN('.implode(',', $aids).')';
-    $db->query($sql, array('wwsnr' => $wwsnr));    
+    $db->query($sql, array('wwsnr' => $wwsnr));
     //    echo $db->error() . '<br>' . $db->lastQuery . '<br>';
 }
 
@@ -71,9 +71,9 @@ $kwbis = date('Y\WW', $timeBis);
 //echo 'Bis: ' . $kwbis . ' => '. date( 'r', $timeBis) . '<br/>';
 
 $sql = 'SELECT date_format(umzugstermin, "%Y\W%u") kw '
-      .' FROM mm_umzuege '
-      .' GROUP BY date_format(umzugstermin, "%Y\W%u")'
-      .' ORDER BY umzugstermin ASC';
+    .' FROM mm_umzuege '
+    .' GROUP BY date_format(umzugstermin, "%Y\W%u")'
+    .' ORDER BY umzugstermin ASC';
 $kws = $db->query_rows($sql);
 $kw_options = array();
 foreach($kws as $i => $_kw) {
@@ -108,7 +108,7 @@ foreach($validFields as $_f) {
         } else {
             $_q = $sqlQueryField . ' ' . ' LIKE ' . $db->quote( str_replace('*','%', $query[$_f]) . '%');
         }
-        
+
         if ($_f !== 'summe') {
             $w[] = $_q;
         }
@@ -133,28 +133,28 @@ elseif ($order == 'aid') {
 }
 
 $sql = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
-      .' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
-      .' u.nachname, u.nachname stom, '
-      .' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe'
-      .' FROM mm_umzuege a '
-      .' LEFT JOIN mm_user user ON (a.antragsteller_uid = user.uid) '
-      .' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id '
-      .' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid '
-      .' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) '
-      .' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
-      .' LEFT JOIN mm_leistungspreismatrix lm ON('
-      .'    l.leistung_id = lm.leistung_id '
-      .'    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
-      .'    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))'
-      .' ) '
-      .' WHERE '
-     // .' abgeschlossen_am IS NOT NULL AND '
-      .' abgeschlossen = "Ja" AND abgeschlossen_am IS NOT NULL AND abgeschlossen_am BETWEEN :von AND :bis '
-      .(!$all ? 'AND berechnet_am IS NULL' : '')
-      .( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
-      .' GROUP BY a.aid'
-      .( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' : '')
-      .' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
+    .' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
+    .' u.nachname, u.nachname stom, '
+    .' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe'
+    .' FROM mm_umzuege a '
+    .' LEFT JOIN mm_user user ON (a.antragsteller_uid = user.uid) '
+    .' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id '
+    .' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid '
+    .' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) '
+    .' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
+    .' LEFT JOIN mm_leistungspreismatrix lm ON('
+    .'    l.leistung_id = lm.leistung_id '
+    .'    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
+    .'    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))'
+    .' ) '
+    .' WHERE '
+    // .' abgeschlossen_am IS NOT NULL AND '
+    .' abgeschlossen = "Ja" AND abgeschlossen_am IS NOT NULL AND abgeschlossen_am BETWEEN :von AND :bis '
+    .(!$all ? 'AND berechnet_am IS NULL' : '')
+    .( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
+    .' GROUP BY a.aid'
+    .( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' : '')
+    .' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
 $rows = $db->query_rows($sql, 0, array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis)));
 
 if (0) {

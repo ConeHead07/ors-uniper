@@ -12,6 +12,23 @@ if (empty($_CONF["umzugsanlagen"])) {
     require_once($InclBaseDir."umzugsanlagen.inc.php");
 }
 
+if (!function_exists('getLaenderKuerzelByLand')) {
+    function getLaenderKuerzelByLand($land) {
+        switch($land) {
+            case 'Deutschland':
+                return 'D';
+            case 'Niederlande':
+                return 'NL';
+                break;
+            case 'Ungarn':
+                return 'HU';
+
+            default:
+                return $land;
+        }
+    }
+}
+
 function get_umzugsblatt_verteiler($antragsOrt, $antragsGebaeude) {
     die('#'.__LINE__ . ' ' . __FUNCTION__ . '(' . print_r(func_get_args(),1) . ')');
 	global $MConf;
@@ -382,9 +399,16 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false, 
         $rplVars['UserTo'] = json_encode($aUserTo[$i]);
         $rplVars['Vorname'] = $aUserTo[$i]["vorname"] ?? '';
         $rplVars['Name'] =  $aUserTo[$i]["nachname"] ?? '';
+        $rplVars['umzugstermin'] = date('d.m.Y', strtotime($rplVars['umzugstermin'] ) );
         $rplVars['ausgefuehrtam'] = date('d.m.Y', strtotime($rplVars['umzugstermin'] ) );
 
-        if (trim($rplVars['umzugszeit'])) {
+
+        $rplVars['Lieferadresse'] = $rplVars['strasse']
+            . ', ' . getLaenderKuerzelByLand($rplVars['land'])
+            . '-' . $rplVars['plz']
+            . ' ' . $rplVars['ort'];
+
+        if (false && trim($rplVars['umzugszeit'])) {
             $rplVars['ausgefuehrtam'].= ' um ' . substr(trim($rplVars['umzugszeit']), 0, 5) . ' Uhr';
         }
 

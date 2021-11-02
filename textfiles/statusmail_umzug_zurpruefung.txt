@@ -4,12 +4,12 @@ Hallo {Vorname} {Name},
 
 es liegt ein neuer Auftrag mit der ID {AID} zur Bestätigung vor.
 
-Antragsteller:  {vorname} {name}
+Lieferdaten:  {vorname} {name}
 
 Sie können den  Vorgang  unter folgendem Link  bearbeiten:
 {StatusLink}
 
 Mit freundlichen Grüßen
 
-Ihr
-{HomepageTitle}
+Ihr Team von
+merTens AG für {HomepageTitle}

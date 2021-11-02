@@ -1,20 +1,18 @@
-Betreff=Umzug ID {AID} - Neue Bemerkung
+Betreff=Bestellung ID {AID} - Neue Bemerkung
 
 Hallo {Vorname} {Name},
 
-es liegt eine neue Bemerkung zum Auftrag mit der ID {AID} vor.
+es liegt eine neue Bemerkung zu der Bestellung mit der ID {AID} vor.
 
-Antragsteller:  {vorname} {name}
+Lieferdaten:  {vorname} {name}
 
-Neue Bemerkung
+Neue Bemerkung:
 {neuebemerkung}
 
-Sie können den  Vorgang  unter folgendem Link  bearbeiten:
+Sie können die Bestellung unter folgendem Link  bearbeiten:
 {StatusLink}
 
 Mit freundlichen Grüßen
 
-Ihr
-{HomepageTitle}
-- - - - - - -
- . . . . . . 
+Ihr Team von
+merTens AG für {HomepageTitle}

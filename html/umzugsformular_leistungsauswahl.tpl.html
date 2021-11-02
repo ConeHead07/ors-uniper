@@ -35,9 +35,27 @@ div.row div.bild img {
 div.row div.lstg {
     flex: 1 1 auto;
     align-self: center;
-    font-weight: bold;
+}
+div.row div.lstg,
+div.row div.lstg * {
+    font-weight: normal;
     font-size: 1rem;
 }
+div.row div.lstg .Bezeichnung {
+    font-weight: bold;
+}
+div.row div.lstg .produkt_link,
+div.row div.lstg .produkt_link * {
+    font-size: .8rem;
+    text-decoration: none;
+    color: #0078dc;
+}
+div.row div.lstg .produkt_link a:active,
+div.row div.lstg .produkt_link a:hover {
+    text-decoration: underline;
+
+}
+
 div.row div.chck {
     flex: 0 0 auto;
     align-self: center;
@@ -469,6 +487,15 @@ $(function(){
                 var tdLstg = $("<div/>").addClass('lstg').appendTo(tr);
                 var tdChck = $("<div/>").addClass('chck').appendTo(tr);
 
+                var leistungInfos = '<div class="Bezeichnung">' + it.leistung + '</div>';
+                if (it.Beschreibung) {
+                    leistungInfos+= '<div class="Beschreibung">' + it.Beschreibung + '</div>';
+                }
+                if (it.produkt_link) {
+                    leistungInfos+= '<div class="produkt_link"><a href="' + it.produkt_link + '" target="_blank">Mehr Infos</a></div>';
+                }
+            console.log('#479 ', {it});
+
                 if (it.image) {
                     var bildHref = $("<a/>")
                         .attr("href", "images/leistungskatalog/" + it.image)
@@ -484,7 +511,7 @@ $(function(){
                         .appendTo(bildHref);
                 }
 
-                tdLstg.text(it.leistung).off("click").on("click", function () {
+                tdLstg.html( leistungInfos ).off("click").on("click", function () {
                     var tr = $(this).closest(".row");
                     // tr.find(".chck label")[0].click();
                     console.log('click leistung');
@@ -592,6 +619,15 @@ $(function(){
                 var tdBild = $("<div/>").addClass('bild').appendTo(tr);
                 var tdLstg = $("<div/>").addClass('lstg').appendTo(tr);
                 var tdChck = $("<div/>").addClass('chck').appendTo(tr);
+                console.log('#603 ', {it});
+
+                var leistungInfos = '<div class="Bezeichnung">' + it.leistung + '</div>';
+                if (it.Beschreibung) {
+                    leistungInfos+= '<div class="Beschreibung">' + it.Beschreibung + '</div>';
+                }
+                if (it.produkt_link) {
+                    leistungInfos+= '<div class="produkt_link"><a href="' + it.produkt_link + '" target="_blank">Mehr Infos</a></div>';
+                }
 
                 if (it.image) {
                     var bildHref = $("<a/>")
@@ -608,7 +644,7 @@ $(function(){
                         .appendTo(bildHref);
                 }
 
-                tdLstg.text(it.leistung).off("click").on("click", function () {
+                tdLstg.html(leistungInfos).off("click").on("click", function () {
                     var tr = $(this).closest(".row");
                     // tr.find(".chck label")[0].click();
                     console.log('click leistung');

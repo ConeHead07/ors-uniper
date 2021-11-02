@@ -73,25 +73,25 @@ h2 {
 <input type="hidden" name="AS[aid]" value="{$AS.aid}">
 <table style="width:480px">
   <tr>
-      <td style="width:160px"><label for="mitarbeiter"><b>Vor &amp; Nachname:</b></label></td>
+      <td style="width:160px"><label><b>Vor &amp; Nachname:</b></label></td>
     <td style="width:220px;">{$AS.vorname|escape} {$AS.name|escape}</td>
   </tr>
   <tr>
-    <td style=""><label for="termin"><b>E-Mail:</b></label></td>
+    <td style=""><label><b>E-Mail:</b></label></td>
     <td style="">{$AS.email|escape}</td>
   </tr>
   <tr>
-    <td style=""><label for="termin"><b>Fon:</b></label></td>
+    <td style=""><label><b>Fon:</b></label></td>
     <td style="">{$AS.fon|escape}</td>
   </tr>
 
   <tr>
-    <td style=""><label for="ort"><b>Standort:</b></label></td>
+    <td style=""><label><b>Standort:</b></label></td>
     <td style="">{$AS.ort|escape}</td>
   </tr>
 
   <tr>
-    <td style=""><label for="gebaeude"><b>Wirtschaftseinheit:</b></label></td>
+    <td style=""><label><b>Wirtschaftseinheit:</b></label></td>
     <td style="">{$AS.gebaeude_text|escape}</td>
   </tr>
   <tr>
@@ -103,15 +103,15 @@ h2 {
     <td style="">{$AS.planonnr|escape}</td>
   </tr>
   <tr>
-    <td style=""><label for="termin"><b>Terminwunsch:</b></label></td>
+    <td style=""><label><b>Terminwunsch:</b></label></td>
     <td style="">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</td>
   </tr>
   <tr>
-      <td style=""><label for="von_gebaeude_text"><b>Von:</b></label></td>
+      <td style=""><label><b>Von:</b></label></td>
     <td style="">{$AS.von_gebaeude_text|escape}</td>
   </tr>
   <tr>
-      <td style=""><label for="nach_gebaeude_text"><b>Nach:</b></label></td>
+      <td style=""><label><b>Nach:</b></label></td>
     <td style="">{$AS.nach_gebaeude_text|escape}</td>
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
@@ -120,15 +120,11 @@ h2 {
 <h2 style="margin:6px 0;">Ansprechpartner vor Ort</h2> 
 <table style="width:480px">
   <tr>
-      <td style="width:160px"><label for="ansprechpartner"><b>Vor &amp; Nachname:</b></label></td>
+      <td style="width:160px"><label><b>Vor &amp; Nachname:</b></label></td>
     <td style="width:220px;">{$AS.ansprechpartner|escape}</td>
   </tr>
   <tr>
-    <td style=""><label for="termin"><b>E-Mail:</b></label></td>
-    <td style="">{$AS.ansprechpartner_email|escape}</td>
-  </tr>
-  <tr>
-    <td style=""><label for="termin"><b>Fon:</b></label></td>
+    <td style=""><label><b>Fon:</b></label></td>
     <td style="">{$AS.ansprechpartner_fon|escape}</td>
   </tr>
 </table>

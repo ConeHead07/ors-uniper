@@ -5,12 +5,12 @@ Hallo {Vorname} {Name},
 der Auftrag mit der ID {AID} wurde abgelehnt mit der Begründung:
 {Bemerkung}
 
-Antragsteller:  {vorname} {name}
+Lieferdaten:  {vorname} {name}
 
 Sie können den  Vorgang  unter folgendem Link bearbeiten:
 {StatusLink}
 
 Mit freundlichen Grüßen
 
-Ihr
-{HomepageTitle}
+Ihr Team von
+merTens AG für {HomepageTitle}

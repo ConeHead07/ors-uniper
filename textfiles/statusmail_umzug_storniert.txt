@@ -1,16 +1,16 @@
-Betreff=Auftrag ID {AID} - Storniert
+Betreff=Bestellung ID {AID} - Storniert
 
-Sehr geehrter Anwender,
-sehr geehrte Anwenderin,
+Hallo {Vorname} {Name},
 
-der Auftrag mit der ID {AID} wurde storniert und wird geschlossen.
+die Bestellung mit der ID {AID} wurde storniert und wird geschlossen.
 
-Antragsteller:  {vorname} {name}
+Lieferdaten:  {vorname} {name}
+Bestellung ID: {AID}
 
 Sie können den  Vorgang  unter folgendem Link einsehen:
 {StatusLink}
 
 Mit freundlichen Grüßen
 
-Ihr
-{HomepageTitle}
+Ihr Team von
+merTens AG für {HomepageTitle}

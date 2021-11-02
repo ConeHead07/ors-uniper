@@ -1,15 +1,15 @@
-Betreff=Auftrag ID {AID} - Bearbeitung
+Betreff=Bestellung ID {AID} - Bearbeitung
 
-Sehr geehrte(r) {Vorname} {Name},
+Hallo {Vorname} {Name},
 
-Ihr Auftrag mit der ID {AID} wurde zur Überarbeitung an Sie zurückgegeben.
+Ihre Bestellung mit der ID {AID} wurde zur Überarbeitung an Sie zurückgegeben.
 
-Antragsteller:  {vorname} {name}
+Lieferdaten:  {vorname} {name}
 
 Sie können den Auftrag unter folgendem Link einsehen und bearbeiten:
 {StatusLink}
 
 Mit freundlichen Grüßen
 
-Ihr
-{HomepageTitle}
+Ihr Team von
+merTens AG für {HomepageTitle}
