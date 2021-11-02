@@ -46,9 +46,9 @@
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN -->
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
     <h1><span class="spanTitle">Neuer Auftrag</span></h1>
-    {ors_include_static_content file="bestellung_hinweis.html"}
     <p>
     <div id="Umzugsantrag" class="divInlay">
+        {ors_include_static_content file="bestellung_hinweis.html"}
         <h2 style="margin:0;" data-site="umzugsformular/tpl/html">Antragsteller</h2>
         <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
             <input type="hidden" name="AS[aid]" value="{if !empty($AS)}{$AS.aid}{/if}">
