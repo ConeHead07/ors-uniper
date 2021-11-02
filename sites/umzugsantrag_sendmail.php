@@ -385,7 +385,7 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false, 
         $rplVars['ausgefuehrtam'] = date('d.m.Y', strtotime($rplVars['umzugstermin'] ) );
 
         if (trim($rplVars['umzugszeit'])) {
-            $rplVars['ausgefuehrtam'].= $rplVars['umzugszeit'];
+            $rplVars['ausgefuehrtam'].= ' um ' . substr(trim($rplVars['umzugszeit']), 0, 5) . ' Uhr';
         }
 
         $aUserHeader['Reply-To'] = $rplVars['Reply-To'] ?? 'service-uniper@mertens.ag';

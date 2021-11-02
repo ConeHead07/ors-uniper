@@ -15,3 +15,27 @@ Mit freundlichen Grüßen
 
 Ihr
 {HomepageTitle}
+
+Betreff=Auftrag ID {AID} - Bearbeitung
+
+Hallo {vorname} {nachname},
+
+Ihre Bestellung mit der ID {AID}  wurde bearbeitet und avisiert.
+
+Antragsteller:  {vorname} {name}
+Lieferadresse: {XXXXXXXXXXXXX}
+Abweichender Empfänger: {XXXXXXXXX}
+Lieferung: {ausgefuehrtam}
+
+
+Bitte stellen Sie sicher, dass wir Sie (oder Ihren abweichenden Empfänger) zu diesem Termin an der oben genannten Adresse antreffen.
+
+Sie können den Status Ihrer Bestellung unter folgendem Link einsehen:
+{StatusLink}
+
+Sollte der Termin nicht wahrnehmbar sein, bitte schicken Sie uns eine Benachigtigung über die Statusseite ihrer Bestellung.
+
+Mit freundlichen Grüßen
+
+Ihr Team von
+merTens AG für {HomepageTitle}
