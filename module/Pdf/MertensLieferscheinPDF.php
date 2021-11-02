@@ -25,6 +25,7 @@ class MertensLieferscheinPDF extends MertensBasePDF
     protected $sigAbfahrt = '';
     protected $sigSchreibtischGeprueft = false;
     protected $sigEtikettierungen = '';
+    protected $sigKdName = '';
 
     public function __construct(string $orientation = 'P', string $unit = 'mm', string $format = 'A4', bool $unicode = true, string $encoding = 'UTF-8', bool $diskcache = false, bool $pdfa = false)
     {
@@ -59,6 +60,10 @@ class MertensLieferscheinPDF extends MertensBasePDF
 
                 case 'abfahrt':
                     $this->setAbfahrt($val);
+                    break;
+
+                case 'sig_kd_unterzeichner':
+                    $this->setAbnahmeSigKdName($val);
                     break;
 
                 case 'etikettierung_erfolgt':
@@ -113,6 +118,12 @@ class MertensLieferscheinPDF extends MertensBasePDF
             $this->sigKdDataUrlSrc = '@' . substr($dataurl, $dataStart);
             $this->sigKdImg = '<img height="12" src="' . $this->sigKdDataUrlSrc . '">';
         }
+        return $this;
+    }
+    // $this->sigKdText
+
+    public function setAbnahmeSigKdName(string $kdUnterzeichnerName) {
+        $this->sigKdName = $kdUnterzeichnerName;
         return $this;
     }
 
@@ -283,6 +294,7 @@ EOT;
     protected function getKundenabnahme() {
         $sig_mt = $this->sigMtImg ?: '&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;';
         $sig_kd = $this->sigKdImg ?: '&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;';
+        $sig_kd_txt = $this->sigKdName ?: '&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;';
         $sig_datum = $this->sigDatum ?: '&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;';
         $sig_pruefung = $this->sigSchreibtischGeprueft ? 'x' : '&nbsp;';
         $sig_ankunft = $this->sigAnkunft ?: '&nbsp; &nbsp; :&nbsp; &nbsp;';
@@ -337,16 +349,27 @@ EOT;
         }
         $kundenAbnahme.= <<<EOT
     <tr>
-        <td>
-            <div style="height:5px;overflow:hidden;"></div>
-            $sig_datum<hr width="60px">
-            <br>(Datum)
-        </td>
-        <td>
-            <div style="height:5px;overflow:hidden;"></div>
-            $sig_kd<hr width="250px">
-            <br>(Name Kunde Blockbuchstaben / Unterschrift
-        </td>   
+        <td colspan="3">
+            <table>
+                <tr>
+                    <td width="100">
+                        <div style="height:5px;overflow:hidden;"></div>
+                        $sig_datum<hr width="55px">
+                        <br>(Datum)
+                    </td>
+                    <td width="200">
+                        <div style="height:5px;overflow:hidden;"></div>
+                        $sig_kd_txt<hr width="170px">
+                        <br>(Name Kunde in Blockbuchstaben)
+                    </td>  
+                    <td width="180">
+                        <div style="height:5px;overflow:hidden;"></div>
+                        $sig_kd<hr width="180px">
+                        <br>(Kunde Unterschrift)
+                    </td>  
+                </tr>
+            </table>
+        </td> 
     </tr>
 
 </table>
