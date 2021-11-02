@@ -1,6 +1,6 @@
 Hallo {vorname} {nachname},
 
-Sie haben sich auf unserer Webseite {HomepageTitle}  registriert.
+Sie haben sich auf der {HomepageTitle} Bestellseite der merTens AG  registriert.
 Um Ihren Login zu aktivieren klicken Sie bitte den folgenden Link an:
 {AktivierungsLink}
 
@@ -12,7 +12,6 @@ kopieren Sie ihn in die Adressleiste Ihres Browsers.
 Mit freundlichen Grüßen
 
 Ihr Team von
-{HomepageTitle}
-
+merTens AG für {HomepageTitle}
 
 
