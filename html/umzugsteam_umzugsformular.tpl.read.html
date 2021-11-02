@@ -243,6 +243,17 @@
           <div>(Datum)</div>
         </div>
         <div style="float:left;margin-left:2rem;">
+          <div
+                  class="input-bg-color"
+                  style="border-bottom:2px solid black;height:2.5rem;width:14rem;display: inline-flex;">
+            <input id="lsSignatureUnterzeichner" type="text" name="sig_ma_unterzeichner"
+                   value="{$AS.vorname|escape} {$AS.name|escape}"
+                   style="width:100%;align-self: flex-end">
+          </div>
+
+          <div>(Name Kunde in Blockbuchstaben)</div>
+        </div>
+        <div style="float:left;margin-left:2rem;">
           <div id="imgSignatureBoxMA"
                class="input-bg-color"
                style="border-bottom:2px solid black;height:2.5rem;display: inline-flex;width:15rem;">
@@ -251,7 +262,7 @@
             <input id="lsSignatureMAGeodata" type="hidden" name="sig_ma_geodata" value="">
             <input id="lsSignatureMACreated" type="hidden" name="sig_ma_created" value="">
           </div>
-          <div>(Name Kunde Blockbuchstaben / Unterschrift)</div>
+          <div>(Unterschrift)</div>
         </div>
         <div style="clear: both"></div>
       </div>

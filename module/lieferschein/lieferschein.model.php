@@ -41,6 +41,7 @@ class LS_Model {
             'sig_mt_datetime',
             'sig_mt_created',
             'sig_mt_geodata',
+            'sig_ma_unterzeichner',
             'sig_ma_dataurl',
             'sig_ma_datetime',
             'sig_ma_created',
@@ -419,6 +420,13 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
                     }
                     break;
 
+                case 'sig_ma_unterzeichner':
+                    $_colName = str_replace('ma', 'kd', $_name);
+
+                    if (empty($_val)) {
+                        $this->validationErrors[$_name] = 'Es fehlt der Name des Unterzeichners in Blockbuchstaben!';
+                    }
+                    break;
                 case 'sig_ma_datetime':
                     $_colName = str_replace('ma', 'kd', $_name);
                     break;
