@@ -2,30 +2,9 @@
 include_once("./include/stdlib.php");
 
 $body_content.= <<<EOT
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <link xxx-href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script xxx-src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script xxsrc="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div id="summernote"></div>
-    <!-- <script>
-    $(function() {
-      if (0) $('#summernote').summernote({
-        placeholder: 'Hello stand alone ui',
-        tabsize: 2,
-        height: 120,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
-        ]
-      });
-      });
-    </script> -->
 <style>
     .text-editor-area,
     #Texteditor .text-editor-area {
@@ -124,9 +103,6 @@ if ($d && $f && file_exists($TFE_CNF["Dir"][$d]."/".$f)) {
 	<input type=\"hidden\" name=\"d\" value=\"$d\">
 	<input type=\"hidden\" name=\"f\" value=\"".fb_htmlEntities($f)."\">
 	</form>\n";
-
-	$body_content.="<h3>Summernote-Editor</h3>\n";
-	$body_content.= "<textarea id='summernote'>+";
 
 }
 $body_content.= <<<EOT
