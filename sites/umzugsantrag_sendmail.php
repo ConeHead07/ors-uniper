@@ -400,7 +400,16 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = [], $au
         $rplVars['Vorname'] = $aUserTo[$i]["vorname"] ?? '';
         $rplVars['Name'] =  $aUserTo[$i]["nachname"] ?? '';
         $rplVars['umzugstermin'] = date('d.m.Y', strtotime($rplVars['umzugstermin'] ) );
-        $rplVars['ausgefuehrtam'] = date('d.m.Y', strtotime($rplVars['umzugstermin'] ) );
+        if (empty($rplVars['ausgefuehrtam'])) {
+            $rplVars['ausgefuehrtam'] = date('d.m.Y', strtotime($rplVars['umzugstermin']));
+        }
+
+        if (!empty($rplVars['lieferdatum'])) {
+            $rplVars['ausgefuehrtam'] = date('d.m.Y', strtotime($rplVars['lieferdatum']));
+            if (!empty($rplVars['ankunft'])) {
+                $rplVars['ausgefuehrtam'].= ', ' . substr($rplVars['ankunft'], 0, 5) . ' Uhr';
+            }
+        }
 
 
         $rplVars['Lieferadresse'] = $rplVars['strasse']
@@ -825,6 +834,40 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
 				case "Ja":
                     $lsmodel = new LS_Model($AID);
                     $lspdf = $lsmodel->getAbgenommenenLieferscheinPDF();
+                    $lsdaten = $lsmodel->getData();
+                    $rplVars['entgegengenommen_von'] = '';
+
+                    foreach($lsdaten as $k => $v) {
+                        switch($k) {
+                            case 'ankunft':
+                            case 'abfahrt':
+                                $rplVars[$k] = substr($v, 0, 5);
+                                break;
+
+                            case 'lieferdatum':
+                                $rplVars[$k] = date('d.m.Y', strtotime($v));
+                                $rplVars['ausgefuehrtam'] = date('d.m.Y', strtotime($v));
+                                if (!empty($lsdaten['ankunft'])) {
+                                    $rplVars['ausgefuehrtam'].= ', ' . substr($lsdaten['ankunft'], 0, 5) . ' Uhr';
+                                }
+                                break;
+
+                            case 'sig_kd_unterzeichner':
+                                $rplVars[$k] = $v;
+                                $rplVars['entgegengenommen_von'] = $v;
+                                break;
+
+                            case 'etikettierung_erfolgt':
+                            case 'funktionspruefung_erfolgt':
+                                $tmp = json_decode($v, JSON_OBJECT_AS_ARRAY);
+                                if (is_array($tmp)) {
+                                    $rplVars[$k] = implode(', ', array_values($tmp));
+                                } else {
+                                    $rplVars[$k] = $v;
+                                }
+                                break;
+                        }
+                    }
                     $aAttachments = [
                       [
                           'type' => 'data',

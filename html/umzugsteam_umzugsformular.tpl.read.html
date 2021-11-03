@@ -50,6 +50,16 @@
     <a href="%WebRoot%sites/lieferschein.php?id={$AS.aid}" target="_Lieferschein{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Lieferschein (PDF)</a>
   <br>
 
+  <div id="BoxBemerkungen" style="display: none;">
+    <strong>Bemerkungen:</strong><br>
+    <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
+    <br>
+  </div>
+  <div id="BoxLieferhinweise">
+    <strong>Lieferhinweise:</strong><br>
+    <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
+  </div>
+
   <div style="float:left">
       <h2 style="margin:0;">Lieferdaten</h2>
       <table>
@@ -75,8 +85,7 @@
   </div>
   {/if}
 
-  <br clear= "all">
-  <div style="clear:both;"></div>
+  <div clear= "all" style="clear:both;"></div>
 
   {if 0}
       {include file="admin_umzugsformular_mitarbeiterauswahl.tpl.html"}
@@ -104,15 +113,6 @@
   </div>
   {/if}
 
-  <div id="BoxBemerkungen">
-    <strong>Bemerkungen:</strong><br>
-    <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
-  </div>
-  <br>
-  <div id="BoxLieferhinweise">
-    <strong>Lieferhinweise:</strong><br>
-    <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
-  </div>
   <div id="LoadingBar"></div>
 
   <style>
