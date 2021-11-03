@@ -32,7 +32,7 @@ $_CONF["allow_user_register"]   = true;
 $_CONF["allow_user_forgetpass"] = true;
 $_CONF["allow_user_changemail"] = true;
 
-$_CONF["LnkStartseite"] = "<a class=\"menuLnk\" id=\"astart\" href=\"{$_CONF['WebRoot']}index.php\" target=\"_self\">Startseite</a>";
+$_CONF["LnkStartseite"] = "<a class=\"menuLnk\" id=\"astart\" href=\"{$_CONF['WebRoot']}\" target=\"_self\">Startseite</a>";
 $_CONF["LnkLogin"] = "<a href=\"{$_CONF['WebRoot']}login.php\">Anmelden</a> "; //Registrieren //
 $_CONF["LnkRegister"] = "<a href=\"{$_CONF['WebRoot']}login.php?rg=1\">Registrieren</a> "; //Registrieren //
 $_CONF["LnkForgetPw"] = "<a href=\"{$_CONF['WebRoot']}login.php?fpw=1\">Passwort vergessen?</a> ";
