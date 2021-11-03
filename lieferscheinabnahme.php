@@ -111,10 +111,10 @@ echo json_encode([
     'strlen_lsPdf' => strlen($lsPdf),
     'lsPdfLengthByLid' => $lsPdfLengthByLid,
     'lPdfLength' => $lsPdfLength,
-    'auftrag' => $auftrag,
-    'leistungen' => $leistungen,
-    'input' => $input,
-    'lsdaten' => $lsdaten
+//    'auftrag' => $auftrag,
+//    'leistungen' => $leistungen,
+//    'input' => $input,
+//    'lsdaten' => $lsdaten
 ]);
 
 

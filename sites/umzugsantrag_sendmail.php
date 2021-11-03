@@ -574,8 +574,8 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
 		case "neu":
 		case "beantragt":
             $_configNameEnable = 'notify_user_beantragt';
+            $tplFileUsr = $TextBaseDir."statusmail_user_beantragt.txt";
             if ($MConf[$_configNameEnable]) {
-                $tplFileUsr = $TextBaseDir."statusmail_user_beantragt.txt";
                 if ($dbg) {
                     echo '#' . __LINE__ . ' FILE: ' . $tplFileUsr
                         . '; EXISTS: ' . (file_exists($tplFileUsr) ? 'Ja' : 'Nein')
@@ -850,6 +850,7 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
 			switch($value) {
 				case "Ja":
                     $lsmodel = new LS_Model($AID);
+                    $lsmodel->loadLieferschein();
                     $lspdf = $lsmodel->getAbgenommenenLieferscheinPDF();
                     $lsdaten = $lsmodel->getData();
                     $rplVars['entgegengenommen_von'] = '';
