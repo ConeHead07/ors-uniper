@@ -120,6 +120,9 @@ $MConf = array(
     'genehmigung_requires_pruefung' => false,
     'bestaetigung_requires_genehmigung' => false,
 
+    'notify_user_beantragt' => true,
+    'notify_user_beantragt_tpl' => 'statusmail_user_beantragt.txt',
+
     'notify_user_bemerkung' => true,
     'notify_user_bemerkung_tpl' => 'statusmail_umzug_bemerkung.txt',
 

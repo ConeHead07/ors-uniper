@@ -69,7 +69,6 @@ if (false !== $input) {
     $pdf->setLieferscheindaten($lsdaten);
     $pdf->create();
     $lsPdf = $pdf->Output('lsdoc_' . $lid . '.pdf', 'S' );
-    // echo base64_encode($lsPdf);
 
     if (empty($lsPdf) || strlen($lsPdf) < 10) {
         $error = 'Lieferschein konnte nicht generiert werden!';
@@ -112,7 +111,10 @@ echo json_encode([
     'lid' => $lid,
     'strlen_lsPdf' => strlen($lsPdf),
     'lsPdfLengthByLid' => $lsPdfLengthByLid,
-    'lPdfLength' => $lsPdfLength
+    'lPdfLength' => $lsPdfLength,
+    'auftrag' => $auftrag,
+    'leistungen' => $leistungen,
+    'lsdaten' => $lsdaten
 ]);
 
 
