@@ -17,6 +17,8 @@ class LS_Model {
     private $inputVarNames = [];
     private $AID = 0;
     private $lid = 0;
+    private $auftragsdaten = [];
+    private $leistungen = [];
     private $lsdata = [];
 
     private $ktgIdLieferung = 18;
@@ -53,6 +55,8 @@ class LS_Model {
         $this->AID = $aid;
         $this->lid = $lid;
         if ($this->AID) {
+            $this->auftragsdaten = $this->getAuftragsdaten();
+            $this->leistungen = $this->getLeistungen();
             $this->loadLieferschein();
         }
     }
@@ -85,6 +89,24 @@ FROM mm_umzuege a
 JOIN mm_user u ON (a.antragsteller_uid = u.uid)
 WHERE aid = ' . (int)$this->AID
         );
+    }
+
+    public function getLeistungenIds() {
+        if (!$this->AID) {
+            return [];
+        }
+        $rows = $this->db->query_rows(
+            'SELECT 
+l.leistung_id
+FROM mm_umzuege_leistungen l
+LEFT JOIN  `mm_leistungskatalog` k ON l.leistung_id = k.leistung_id
+WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $this->ktgIdLieferung . ', ' . $this->ktgIdRabatt . ')');
+
+        if (empty($rows)) {
+            return [];
+        }
+
+        return array_column($rows, 0);
     }
 
     public function getLeistungen() {
@@ -121,8 +143,9 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
         return $this;
     }
 
-    public function updateLieferscheinPdf($pdfdata) {
+    public function updateLieferscheinPdf(&$pdfdata) {
         $lid = $this->lid;
+        $aIdsByLid = $this->getLieferscheinIdsByLid($lid);
         $null = null;
         $sql = 'UPDATE mm_lieferscheine SET lieferschein = ? WHERE lid = ' . (int)$lid;
         $sth = $this->mysqli->prepare(
@@ -130,17 +153,23 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
         );
         $sth->bind_param('b', $null);
         $sth->send_long_data(0, $pdfdata);
-        /*
+
         $success = $sth->execute();
+
         $affected_rows = $sth->affected_rows;
-        die(print_r(compact('sql', 'success', 'affected_rows'), 1));
-        */
+        $sthError = $sth->error;
+        $mysqliError = $this->mysqli->error;
+
+        if (!$affected_rows || !$success || $sthError || $mysqliError) {
+            // die(print_r(compact('sql', 'success', 'affected_rows', 'lid', 'aIdsByLid', 'sthError', 'mysqliError', 'pdfdata'), 1));
+        }
+
 
         if ($sth->error) {
             $this->error = $sth->error;
             return false;
         }
-        return false;
+        return true;
     }
 
     public function getError() {
@@ -205,6 +234,18 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
         die(print_r(compact('sql', 'row'), 1));
 
         return $this->db->query_one($sql, [ 'aid' => $this->AID ]);
+    }
+
+    public function getLieferscheinPdfLength(int $lid = 0) {
+        if (!$lid) {
+            $lid = $this->lid;
+        }
+        if (!$lid) {
+            return 0;
+        }
+        $sql = 'SELECT LENGTH(lieferschein) FROM mm_lieferscheine WHERE lid = :lid LIMIT 1';
+
+        return $this->db->query_one($sql, ['lid' => $lid]);
     }
 
     public function getData() {
@@ -310,6 +351,13 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
         return $this->lid;
     }
 
+    public function getAuftragsStatus() {
+        $sql = 'SELECT umzugsstatus FROM mm_umzuege 
+    WHERE aid = :aid LIMIT 1';
+
+        return $this->db->query_one($sql, ['aid' => $this->AID]);
+    }
+
     public function auftragAbschliessen() {
         global $user;
 
@@ -329,6 +377,12 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
             'abgeschlossen_von' => $user['user'],
             'aid' => $this->AID
         ]);
+
+        if ($this->db->error()) {
+            $this->error;
+            return false;
+        }
+        return true;
     }
 
     public function getBinaryFromBase64DataUrl($dataurl) {
@@ -351,6 +405,7 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
         $this->error = '';
         $this->validationErrors = [];
         $input = [];
+        $auftragLeistungenIds = $this->getLeistungenIds();
 
         foreach($this->inputVarNames as $_name) {
             $_val = $rawInput[$_name] ?? '';
@@ -391,6 +446,10 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
 
                 case 'ankunft':
                 case 'abfahrt':
+                    if (empty($_val) || strlen($_val) < 2) {
+                        $this->validationErrors[$_name] = 'Es fehlt die Angabe zur ' . ucfirst($_name) . 'szeit!';
+                        break;
+                    }
                     list($h, $m, $s) = explode(':', $_val . ':0:0');
                     $time = '';
                     if (is_numeric($h) && is_numeric($m) && is_numeric($s)) {
@@ -493,8 +552,17 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
                     }
                     break;
 
-                case 'funktionspruefung_erfolgt':
                 case 'etikettierung_erfolgt':
+                    if (empty($_val)) {
+                        $this->validationErrors[$_name] = 'Es fehlen Angaben zur Etikettierung!';
+                    }
+                    if (is_array($_val) && count($_val) < count($auftragLeistungenIds)) {
+                        $this->validationErrors[$_name] = 'Es wurden nicht alle Artikel als etikettiert markiert!';
+                    }
+                    $_val = json_encode($_val);
+                    break;
+
+                case 'funktionspruefung_erfolgt':
                     $_val = json_encode($_val);
                     break;
 
@@ -510,6 +578,9 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
                     break;
             }
             $input[$_colName] = $_val;
+        }
+        if ($input['ankunft'] && $input['abfahrt'] && $input['abfahrt'] <= $input['ankunft']) {
+            $this->validationErrors[$_name] = 'Die Ankunftszeit muss vor der Abfahrtszeit liegen!';
         }
 
         if (!count($this->validationErrors)) {

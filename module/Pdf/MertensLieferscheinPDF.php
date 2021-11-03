@@ -62,6 +62,10 @@ class MertensLieferscheinPDF extends MertensBasePDF
                     $this->setAbfahrt($val);
                     break;
 
+                case 'lieferdatum':
+                    $this->setAbnahmeDatum($val);
+                    break;
+
                 case 'sig_kd_unterzeichner':
                     $this->setAbnahmeSigKdName($val);
                     break;
@@ -128,7 +132,7 @@ class MertensLieferscheinPDF extends MertensBasePDF
     }
 
     public function setAbnahmeDatum(string $datum) {
-        $this->sigDatum = date('d.m.Y', strotime($datum));
+        $this->sigDatum = date('d.m.Y', strtotime($datum));
         return $this;
     }
 
@@ -180,7 +184,7 @@ class MertensLieferscheinPDF extends MertensBasePDF
 
         $aBriefkopfRefData = [
 //            ['Referenznummer', '12345'],
-            ['Ihre KID', $auftrag['personalnummer']],
+            ['Ihre KID', !empty($auftrag['kid']) ? $auftrag['kid'] : ''],
             ['Ihre Durchwahl', $auftrag['fon']],
             ['Ihr Bestellzeichen', 'UNIPER-ORS-' . $auftrag['aid']],
             ['', ''],

@@ -5,13 +5,15 @@ require_once($InclBaseDir . 'umzugsantrag.inc.php');
 require_once($InclBaseDir . 'umzugsmitarbeiter.inc.php');
 
 require_once($ModulBaseDir . '/lieferschein/lieferschein.model.php');
+require_once($SitesBaseDir . '/umzugsantrag_sendmail.php');
 
 if (function_exists('activity_log')) {
     register_shutdown_function('activity_log');
 }
 
-$id = 0;
+$lid = 0;
 $input = [];
+$msg = '';
 $error = '';
 $errors = [];
 $sigFiles = [];
@@ -29,9 +31,23 @@ if (!$aid) {
         'errors' => ['aid' => 'Es wurde keine Auftrags-ID übergeben'],
         'id' => 0,
     ]);
+    exit;
 }
 
 $lsmodel = new LS_Model((int)$aid);
+
+if ($lsmodel->getAuftragsStatus() === 'abgeschlossen') {
+    $lsPdfExists = $lsmodel->getLieferscheinPdfLength();
+    if ($lsPdfExists) {
+        echo json_encode([
+            'type' => 'error',
+            'errors' => ['aid' => 'Der Auftrag wurde bereits abgeschlossen und der Lieferschein unterschrieben!'],
+            'id' => 0,
+        ]);
+        exit;
+    }
+
+}
 
 $aPostInput = $_POST;
 $input = $lsmodel->validateInput($aPostInput);
@@ -41,7 +57,7 @@ if (isset($input['sig_mt_dataurl_geodata'])) {
 $errors = $lsmodel->getValidationErrors();
 
 if (false !== $input) {
-    $id = $lsmodel->save($input);
+    $lid = $lsmodel->save($input);
 
     $auftrag = $lsmodel->getAuftragsdaten();
     $leistungen = $lsmodel->getLeistungen();
@@ -52,13 +68,33 @@ if (false !== $input) {
     $pdf->setLeistungen($leistungen);
     $pdf->setLieferscheindaten($lsdaten);
     $pdf->create();
-    $lsPdf = $pdf->Output('lsdoc.pdf', 'S' );
+    $lsPdf = $pdf->Output('lsdoc_' . $lid . '.pdf', 'S' );
+    // echo base64_encode($lsPdf);
 
-    $lsmodel->updateLieferscheinPdf($lsPdf);
+    if (empty($lsPdf) || strlen($lsPdf) < 10) {
+        $error = 'Lieferschein konnte nicht generiert werden!';
+    } else {
+        $msg.= 'Lieferchein wurde generiert: ' . strlen($lsPdf) . '!' . "\n";
+    }
+
+    if (!$lsmodel->updateLieferscheinPdf($lsPdf)) {
+        $error.= 'Lieferschein konnte nicht in Datenbank gespeichert werden!';
+    } else {
+        $msg.= 'Lieferschein wurde gespeicherr!' . "\n";
+    }
     $error.= $lsmodel->getError();
 
-    $lsmodel->auftragAbschliessen();
+    $lsPdfLengthByLid = $lsmodel->getLieferscheinPdfLength($lid);
+    $lsPdfLength = $lsmodel->getLieferscheinPdfLength();
+
+    if ($lsmodel->auftragAbschliessen()) {
+        $msg.= 'Auftrag wurde abgeschlossen!' . "\n";
+    }
     $error.= $lsmodel->getError();
+
+    if (umzugsantrag_mailinform($aid, 'abgeschlossen', 'Ja')) {
+        $msg.= 'Unterzeichneter Lieferschein wurde per Mail an den Kunden verschickt!' . "\n";
+    }
 
 }
 
@@ -68,9 +104,15 @@ if ($error) {
 
 header('Content-Type: application/json; charset=UTF-8');
 echo json_encode([
-    'type' => (!$errors && $id) ? 'success' : 'error',
+    'type' => (!$errors && $lid) ? 'success' : 'error',
     'errors' => $errors,
-    'id' => $id,
+    'msg' => $msg,
+    'id' => $lid,
+
+    'lid' => $lid,
+    'strlen_lsPdf' => strlen($lsPdf),
+    'lsPdfLengthByLid' => $lsPdfLengthByLid,
+    'lPdfLength' => $lsPdfLength
 ]);
 
 

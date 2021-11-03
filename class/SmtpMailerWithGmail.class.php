@@ -368,7 +368,7 @@ class SmtpMailer {
 
             $type = $this->getArrayElm($_aItem, ['quelle', 'source', 'type'], null);
 
-            if (!is_array($_aItem) || empty($_aItem['quelle']) || empty($_aItem['file'])) {
+            if (!is_array($_aItem) || empty($type) || empty($_aItem['file'])) {
                 throw new Exception('Invalid Data-Structure of Attachment. Should be array with keys quelle, file!');
             }
 

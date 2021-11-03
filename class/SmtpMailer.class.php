@@ -455,12 +455,16 @@ class SmtpMailer {
      * @throws Exception
      */
     public function addAttachments(array $aAttachments) {
+        if (!count($aAttachments)) {
+            return $this;
+        }
         foreach($aAttachments as $_aItem) {
 
             $type = $this->getArrayElm($_aItem, ['quelle', 'source', 'type'], null);
 
-            if (!is_array($_aItem) || empty($_aItem['quelle']) || empty($_aItem['file'])) {
-                throw new Exception('Invalid Data-Structure of Attachment. Should be array with keys quelle, file!');
+            if (!is_array($_aItem) || empty($type) || !isset($_aItem['file'])) {
+                throw new Exception('Invalid Data-Structure of Attachment in _aItem. Should be array with keys [quelle or source or type] and file!'
+                . ' Given: ' . print_r(compact('aAttachments', '_aItem'), 1));
             }
 
             $mimeType = $this->getArrayElm($_aItem, ['fmime', 'mimeType'], null);

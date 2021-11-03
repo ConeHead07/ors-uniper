@@ -255,7 +255,7 @@ class dbconn {
         } else {
             $this->errors = "#".__LINE__." Error-DB-Conn: $Host:$Port, $Db <br>\n" . print_r($this->connect_error, 1);
             error_log($this->errors);
-            throw new Exception( $this->errors);
+            die( 'Systemfehler [Cannot connect with Storage-Server]! Bitte versuchen Sie es später noch einmal.');
         }
     }
 

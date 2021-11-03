@@ -10,7 +10,12 @@
 <h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1> 
 <p>
 <div id="Umzugsantrag" class="divInlay"> 
-  <h2 style="margin:0;">Auftrags-Status</h2>
+  <h2 style="margin:0;">Auftragsdaten</h2>
+  {if $umzugsstatus eq "abgeschlossen"}
+  <div>
+    <h2>Der Auftrag wurde bereits abgeschlossen!</h2>
+  </div>
+  {/if}
   <table border=0 cellspacing=1 cellpadding=1>
     <tr>
       <td style="padding:0;height:auto;width:200px;"><label style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
@@ -46,7 +51,7 @@
   <br>
 
   <div style="float:left">
-      <h2 style="margin:0;">Leistungsantragsteller</h2>
+      <h2 style="margin:0;">Lieferdaten</h2>
       <table>
         <tr>
           <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
@@ -171,7 +176,7 @@
       /* background-color: #eaf9ff; */
     }
   </style>
-  <div id="KundenabnahmeBox">
+  <div id="KundenabnahmeBox" {if $umzugsstatus eq "abgeschlossen"}style="display:none"{/if}>
     <h2>Kundenabnahme</h2>
 
     <form id="frmAbnahme" class="w3-container" action="%WebRoot%lieferscheinabnahme.php" method="POST"
@@ -878,9 +883,23 @@
         cache: false,
         timeout: 800000,
         success: function (data) {
-          $("#output").removeClass("error").addClass("success").text(data);
+          $("#output").html('');
           console.log("SUCCESS : ", data);
-          frm.find("#btnSubmit").prop("disabled", false);
+          if (data.type === 'success') {
+            frm.find("#btnSubmit")
+                    .text('Auftrag wurde abgeschlossen')
+                    .prop("disabled", true);
+            if ('msg' in data) {
+              $("#output").addClass("success").removeClass("error").html( data.msg.split("\n").join("<br>") );
+            }
+          } else {
+            var errMsg = '';
+            if (typeof data === 'object' && 'errors' in data) {
+              errMsg = (Array.isArray(data.errors)) ? data.errors.join("\n") : JSON.stringify(data.errors);
+            }
+            $("#output").addClass("error").removeClass("success").html(errMsg.split("\n").join("<br>") );
+            frm.find("#btnSubmit").prop("disabled", false);
+          }
         },
         error: function (e) {
           $("#output").addClass("error").removeClass("success").text(e.responseText);

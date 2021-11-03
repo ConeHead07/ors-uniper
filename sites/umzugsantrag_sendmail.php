@@ -342,7 +342,7 @@ function get_standort_admin_mail($antragsOrt, $antragsGebaeude) {
 	return $aAdminMailTo;
 }
 
-function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false, $authorUser = [])
+function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = [], $authorUser = [])
 {
     global $aHeader;
     global $user;
@@ -416,14 +416,14 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = false, 
 
         $mailer = SmtpMailer::getNewInstance();
         $mailer->setTplVars($rplVars, 'UTF-8');
-        $iNumSentTo+= $mailer->sendMultiMail([ ['email' => $to, 'anrede' => ''] ], $su, null, $body, [], $aUserHeader);
+        $iNumSentTo+= $mailer->sendMultiMail([ ['email' => $to, 'anrede' => ''] ], $su, null, $body, $aAttachements, $aUserHeader);
 
         // print_r(compact('iNumRecipients', 'aUserTo', 'iNumSentTo', 'to', 'su', 'body', 'cc', 'rplVars'));
 
         if ($cc) {
             $aCC = explode(',', $cc);
             foreach($aCC as $_emailAddress) {
-                $iNumSentTo+= $mailer->sendMultiMail([ ['email' => $_emailAddress, 'anrede' => ''] ], $su, null, $body, [], $aUserHeader);
+                $iNumSentTo+= $mailer->sendMultiMail([ ['email' => $_emailAddress, 'anrede' => ''] ], $su, null, $body, $aAttachements, $aUserHeader);
             }
         }
 	}
@@ -441,6 +441,7 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
 	global $MConf;
 	global $connid;
 	global $user;
+
 
 	if (!is_array($authorUser) || count(array_keys($authorUser)) === 0) {
 	    $authorUser = $user;
@@ -822,6 +823,17 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
 		case "abgeschlossen":
 			switch($value) {
 				case "Ja":
+                    $lsmodel = new LS_Model($AID);
+                    $lspdf = $lsmodel->getAbgenommenenLieferscheinPDF();
+                    $aAttachments = [
+                      [
+                          'type' => 'data',
+                          'name' => 'Lieferschein_' . $AID . '.pdf',
+                          'mimeType' => 'application/pdf',
+                          'file' => $lspdf,
+                      ]
+                    ];
+
                     $_configNameEnable = 'notify_user_abgeschlossen';
                     $tplFile = $TextBaseDir . "statusmail_umzug_durchgefuehrt.txt";
 				    if ($MConf[$_configNameEnable]) {
@@ -835,7 +847,7 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             $FILE = __FILE__;
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
                         }
-                        $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                        $return = send_status_mail($userMailTo, $tplMail, $rplVars, $aAttachments);
                     }
 
                     $_configNameEnable = 'notify_property_abgeschlossen';
