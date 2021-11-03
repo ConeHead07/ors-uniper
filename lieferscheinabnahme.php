@@ -36,7 +36,7 @@ if (!$aid) {
 
 $lsmodel = new LS_Model((int)$aid);
 
-if ($lsmodel->getAuftragsStatus() === 'abgeschlossen') {
+if (false && $lsmodel->getAuftragsStatus() === 'abgeschlossen') {
     $lsPdfExists = $lsmodel->getLieferscheinPdfLength();
     if ($lsPdfExists) {
         echo json_encode([
@@ -46,7 +46,6 @@ if ($lsmodel->getAuftragsStatus() === 'abgeschlossen') {
         ]);
         exit;
     }
-
 }
 
 $aPostInput = $_POST;
@@ -114,6 +113,7 @@ echo json_encode([
     'lPdfLength' => $lsPdfLength,
     'auftrag' => $auftrag,
     'leistungen' => $leistungen,
+    'input' => $input,
     'lsdaten' => $lsdaten
 ]);
 
