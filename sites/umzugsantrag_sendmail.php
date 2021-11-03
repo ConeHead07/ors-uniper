@@ -532,7 +532,7 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
         case "neuebemerkung":
             $tplFile = $TextBaseDir."statusmail_umzug_bemerkung.txt";
             $_configNameEnable = 'notify_user_bemerkung';
-            if ((int)$authorUser['uid'] !== (int)$auftragsDaten['antragsteller_uid']) {
+            if ((int)$authorUser['uid'] === (int)$auftragsDaten['antragsteller_uid']) {
                 $_configNameEnable.= '_selfcreated';
             }
             if ($MConf[$_configNameEnable]) {
