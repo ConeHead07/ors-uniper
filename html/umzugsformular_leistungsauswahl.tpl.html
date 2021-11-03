@@ -503,6 +503,9 @@ $(function(){
                         .css({
                             border: 0
                         });
+                    if (it.produkt_link) {
+                        bildHref.attr("href", it.produkt_link);
+                    }
                     bildHref.appendTo(tdBild);
                     var bild = $("<img/>")
                         .attr({
@@ -636,6 +639,9 @@ $(function(){
                         .css({
                             border: 0
                         });
+                    if (it.produkt_link) {
+                        bildHref.attr("href", it.produkt_link);
+                    }
                     bildHref.appendTo(tdBild);
                     var bild = $("<img/>")
                         .attr({
