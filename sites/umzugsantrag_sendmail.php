@@ -573,6 +573,23 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
 
 		case "neu":
 		case "beantragt":
+            $_configNameEnable = 'notify_user_beantragt';
+            if ($MConf[$_configNameEnable]) {
+                $tplFileUsr = $TextBaseDir."statusmail_user_beantragt.txt";
+                if ($dbg) {
+                    echo '#' . __LINE__ . ' FILE: ' . $tplFileUsr
+                        . '; EXISTS: ' . (file_exists($tplFileUsr) ? 'Ja' : 'Nein')
+                        . PHP_EOL;
+                }
+                $tplMail = file_get_contents($tplFileUsr);
+                $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=pantrag&id=" . $AID;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext(
+                        $status, $tplFileUsr, $authorUser, $aPropertyMailTo, $_configNameEnable
+                    );
+                }
+                $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+            }
 			$tplFile = $TextBaseDir."statusmail_umzug_neu.txt";
             $_configNameEnable = 'notify_property_beantragt';
 			if (count($aPropertyMailTo) && $MConf[$_configNameEnable]) {
