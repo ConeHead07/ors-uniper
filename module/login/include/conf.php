@@ -21,7 +21,7 @@ if (!isset($_CONF["defaultPruefeLogin"])) $_CONF["defaultPruefeLogin"] = true;
 $_CONF["redirectAfterLogin"] = "index.php?area=admin";
 $_CONF["regc_subject"] = "Aktivieren Sie Ihren Account auf ".$MConf["WebRoot"];
 $_CONF["regc_authentlink"] = $MConf["WebRoot"]."login.php?ac={authentcode}";
-$_CONF["regc_mail_tld_only"] = '@gmail.com'; // "@mertens.ag"; // "@mertens.ag"; // "@googlemail.com"; //
+$_CONF["regc_mail_tld_only"] = '@uniper.energy'; // '@gmail.com'; // "@mertens.ag"; // "@mertens.ag"; // "@googlemail.com"; //
 $_CONF["regc_mail_tld_check"] = true; //false;
 $_CONF["forget_pw_link"] = $MConf["WebRoot"]."login_fpw.php";
 $_CONF["mailc_subject"]  = "Aktivieren Sie Ihre E-Mail-Änderung";
@@ -55,3 +55,7 @@ $_CONF["HTML"]["msgbox"]   = PATH_TO_LOGIN_MODUL."html/msgbox.html";
 $_TABLE["user"] = $_CONF["user_tbl_prefix"]."user";
 $_TABLE["newpw"] = $_CONF["user_tbl_prefix"]."user_newpw";
 $_TABLE["newemail"] = $_CONF["user_tbl_prefix"]."user_newemail";
+
+if (file_exists(__DIR__ . '/conf.local.php')) {
+    include(__DIR__ . '/conf.local.php');
+}
