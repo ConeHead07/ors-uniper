@@ -199,10 +199,23 @@ function umzugsantrag_senden() {
     
     $sql = "UPDATE `".$ASConf["Table"]."` SET antragsstatus=\"$antragsstatus\", `umzugstermin`=`terminwunsch` WHERE `aid` = \"".$db->escape($AID)."\"";
     $db->query($sql);
-    if (umzugsantrag_mailinform($AID, $sendmailstatus, "")) {
-        $msg.= "Mail wurde gesendet!<br>\n";
+    if (!$db->error()) {
+        $msg.= "Daten wurden aktualisert!<br>\n";
     } else {
-        $error.= "Fehler beim Mailversand [#205]!<br>\n";
+        $error.= "Fehler beim Aktualisieren der Daten!<br>\n";
+    }
+    if (umzugsantrag_mailinform($AID, $sendmailstatus, "")) {
+        if ($user['gruppe'] === 'admin') {
+            $msg .= "Mail wurde gesendet!<br>\n";
+        } else {
+            $msg.= "Ihre Daten wurden weitergeleiter!<br>\n";
+        }
+    } else {
+        if ($user['gruppe'] === 'admin') {
+            $error.= "Fehler beim Mailversand [#213]!<br>\n";
+        } else {
+            $error.= "Fehler im Nachrichtensystem [#215]!<br>\n";
+        }
     }
     return $AS->id;
 }

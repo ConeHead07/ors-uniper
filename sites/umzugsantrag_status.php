@@ -200,9 +200,17 @@ function umzugsantrag_status($AID, $name, $value) {
 	if (getRequest("umzugsart") != "Datenpflege") {
 		if ($sendmail_newstatus) {
 			if (umzugsantrag_mailinform($AID, $sendmail_newstatus, $value)) {
-				$msg.= "Mail wurde gesendet!<br>\n";
+                if ($user['gruppe'] === 'admin') {
+                    $msg .= "Mail wurde gesendet!<br>\n";
+                } else {
+                    $msg.= "Ihre Daten wurden weitergeleiter!<br>\n";
+                }
 			} else {
-				$msg.= "Fehler beim Mailversand [#183]!<br>\n";
+                if ($user['gruppe'] === 'admin') {
+                    $error.= "Fehler beim Mailversand [#213]!<br>\n";
+                } else {
+                    $error.= "Fehler im Nachrichtensystem [#215]!<br>\n";
+                }
 			}
 		}
 	}
