@@ -235,7 +235,9 @@ function InfoBox(sHtml, dockToObj, dockAlign, hspace, vspace) {
 
 function MyInfoBox(sTitle, sHtml, dockToObj, dockAlign, hspace, vspace) {
 	if (typeof(PageInfo)!="object" || typeof(O)!="function" || typeof(dockBox)!="function") { 
-	alert("Missing Functions PageInfo, O, dockBox\n"+sHtml); return false; }
+		alert("Missing Functions PageInfo, O, dockBox\n"+sHtml);
+		return false;
+	}
 	
 	var InfoShadowBoxId = "MyInfoBoxShadow";
 	var ShadowBox = (document.getElementById(InfoShadowBoxId))?document.getElementById(InfoShadowBoxId):document.createElement("div");
@@ -259,7 +261,7 @@ function MyInfoBox(sTitle, sHtml, dockToObj, dockAlign, hspace, vspace) {
 	InfoBox.style.position = "fixed";
 	InfoBox.style.top = "20%";
 	InfoBox.innerHTML = "<h3 id=\"MyInfoBoxTitle\">"+sTitle+"</h3>\n";
-	InfoBox.innerHTML+= "<div id=\"MyInfoBoxText\" class=\"InfoText\">" + (typeof sHtml === 'string' ? sHtml : '') + "</div>\n";
+	InfoBox.innerHTML+= "<div id=\"MyInfoBoxText\" class=\"InfoText\"></div>\n";
 	InfoBox.innerHTML+= "<div id=\"MyInfoBoxBtn\" class=\"CloseBtn\" onclick=\"document.getElementById('"+InfoBoxId+"').close();\">OK</div>\n";
 	$(InfoBox).find("#MyInfoBoxText").append(sHtml);
 

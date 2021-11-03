@@ -187,12 +187,12 @@ function umzugsantrag_send() {
 	}
 	
 	document.forms["frmUmzugsantrag"].action = "umzugsantrag.php";
-        frmSerializeGeraete();
+	frmSerializeGeraete();
 	var sData = frmSerialize(document.forms["frmUmzugsantrag"]);
 	var selector = "MyInfoBoxTxt";
 	umzugsantrag_loadingBar('');
 	//alert("Antrag wird zwischengespeichert!\n"+sData);
-        frmSerializeGeraete();
+	frmSerializeGeraete();
 	AjaxFormSend(document.forms["frmUmzugsantrag"], selector, "", "cmd=senden", "senden");
 }
 
@@ -257,7 +257,7 @@ function umzugsantrag_auto_reload(id) {
 	//alert("Antrag wird neu geladen AID:"+aid+"!");
 	document.forms["frmUmzugsantrag"].action = "umzugsantrag.php";
 	var selector = "MyInfoBoxTxt";
-        frmSerializeGeraete();
+	frmSerializeGeraete();
 	AjaxFormSend(document.forms["frmUmzugsantrag"], selector, "", "cmd=autoreload&id="+escape(aid));
         if (id) $(".hide-not-saved").removeClass("hide-not-saved");
 }

@@ -72,7 +72,7 @@ if (false !== $input) {
     if (empty($lsPdf) || strlen($lsPdf) < 10) {
         $error = 'Lieferschein konnte nicht generiert werden!';
     } else {
-        $msg.= 'Lieferchein wurde generiert: ' . strlen($lsPdf) . '!' . "\n";
+        $msg.= 'Lieferchein wurde generiert (' . number_format(strlen($lsPdf) /1024, 2, ',', '.')  . 'KB)!' . "\n";
     }
 
     if (!$lsmodel->updateLieferscheinPdf($lsPdf)) {

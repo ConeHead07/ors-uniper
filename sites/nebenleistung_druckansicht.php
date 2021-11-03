@@ -1,5 +1,5 @@
 <?php 
-if (strpos($user["gruppe"], "admin") === false) die("UNERLAUBTER ZUGRIFF! Zugriff nur für Administratoren");
+if (strpos($user["gruppe"], "admin") === false) die("UNERLAUBTER ZUGRIFF! Zugriff nur fï¿½r Administratoren");
 
 $Tpl = new myTplEngine();
 require_once($InclBaseDir."nebenleistungen.inc.php");

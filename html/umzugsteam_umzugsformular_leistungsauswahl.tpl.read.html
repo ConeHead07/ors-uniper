@@ -30,7 +30,7 @@ td.menge, td.menge, input.menge, td.preis, td.sum {
 }
 {/literal}
 </style>
-{if count($Umzugsleistungen)}
+{if !empty($Umzugsleistungen) and count($Umzugsleistungen)}
 <h2 style="margin:0;padding:0" data-src="umzugsformular_leistungsauswahl.tpl.read.html">Leistungen</h2>
 <table class="MitarbeierItem table-leistungen" style="margin-top:0;padding-top:0;width:100%;">
     <thead>

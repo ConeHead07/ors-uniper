@@ -452,7 +452,7 @@ function igWDomUpdater(aData, s, debug) {
   var r_obj;
   var msgj;
   if (!debug) debug = false;
-  for (i in aData) {
+  for (var i in aData) {
     if (debug) alert("#456 igWDomUpdater() i:"+i);
     switch(i) {
       case "Update":
