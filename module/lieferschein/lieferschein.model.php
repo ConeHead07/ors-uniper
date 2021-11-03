@@ -376,7 +376,7 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
     umzugsstatus = :status,
     abgeschlossen_am = NOW(),
     abgeschlossen_von = :abgeschlossen_von,
-    abgeschlossen = :abgeschlossen_ja
+    abgeschlossen = :abgeschlossen_ja,
     modified = NOW()
     WHERE aid = :aid LIMIT 1';
 
