@@ -57,6 +57,8 @@ class LS_Model {
         if ($this->AID) {
             $this->auftragsdaten = $this->getAuftragsdaten();
             $this->leistungen = $this->getLeistungen();
+        }
+        if ($this->lid) {
             $this->loadLieferschein();
         }
     }
@@ -308,6 +310,9 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
 
         $this->createSigBlobsFromDataUrlCols((int)$this->lid);
 
+        $sql = 'SELECT * FROM mm_lieferscheine WHERE lid = :lid LIMIT 1';
+        $this->lsdata = $this->db->query_row($sql, [ 'lid' => $this->lid]);
+
         return $this->lid;
     }
 
@@ -348,6 +353,8 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
 
         $this->createSigBlobsFromDataUrlCols((int)$this->id);
 
+        $this->loadLieferschein();
+
         return $this->lid;
     }
 
@@ -369,12 +376,14 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
     umzugsstatus = :status,
     abgeschlossen_am = NOW(),
     abgeschlossen_von = :abgeschlossen_von,
+    abgeschlossen = :abgeschlossen_ja
     modified = NOW()
     WHERE aid = :aid LIMIT 1';
 
         $this->db->query($sql, [
             'status' => 'abgeschlossen',
             'abgeschlossen_von' => $user['user'],
+            'abgeschlossen_ja' => 'Ja',
             'aid' => $this->AID
         ]);
 
