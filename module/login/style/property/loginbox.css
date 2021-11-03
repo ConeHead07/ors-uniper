@@ -66,7 +66,9 @@ div.page-login .LoginBox .topCell,
 	color:#0078dc;
 	padding:40px;
 }
-
+.LoginAdLinks a {
+	margin-right: 2rem;
+}
 div.page-login .LoginAdLinks,
 .LoginAdLinks {
 	margin-top:20px;

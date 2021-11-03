@@ -113,7 +113,7 @@ if (isset($_POST['register'])) {
         $errorFlds.= "<li>Bitte geben Sie Ihre KID an!</li>\n";
         $arrErrFlds['personalnr'] = 1;
     } elseif (!unique_fldval($user_connid, 'personalnr', $arrFormVars['personalnr'], $uid = '')) {
-        $errorFlds.= "<li>Es existiert bereits ein Benutzer mit der KID " . $arrFormVars['personalnr'] . "!</li>\n";
+        $errorFlds.= "<li>Die KID ist unzulässig, möglicherweise ist sie bereits vergeben!</li>\n";
         $arrErrFlds['personalnr'] = 1;
     }
 
@@ -138,11 +138,11 @@ if (isset($_POST['register'])) {
 		$arrErrFlds['gebaeude'] = 1;
 	}
     if (false && !$arrFormVars['agb_confirm']) {
-        $errorFlds.= "<li>für die Anmeldung benötigen wir Ihre Zustimmung zu unseren AGB!</li>\n";
+        $errorFlds.= "<li>Für die Anmeldung benötigen wir Ihre Zustimmung zu unseren AGB!</li>\n";
         $arrErrFlds['agb_confirm'] = 1;
     }
     if (!$arrFormVars['datenschutz_confirm']) {
-        $errorFlds.= "<li>für die Anmeldung benötigen wir Ihre Zustimmung zu unseren Datenschutzbestimmungen!</li>\n";
+        $errorFlds.= "<li>Für die Anmeldung benötigen wir Ihre Zustimmung zu unseren Datenschutzbestimmungen!</li>\n";
         $arrErrFlds['datenschutz_confirm'] = 1;
     } else {
         $arrFormVars['datenschutz_confirm'] = 'Ja';

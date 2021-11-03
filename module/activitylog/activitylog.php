@@ -39,13 +39,16 @@ function activity_log() {
 	activity_log_dropold_entries();
 }
 
-function activity_log_dropold_entries($days = 60) {
+function activity_log_dropold_entries($days = 0) {
 	global $db;
 	global $_TABLE;
+	global $MConf;
+	if (!$days) {
+		$days = (int)($MConf['activity_log_max_days'] ?? 30);
+	}
 	
-	$sql = "DELETE FROM ".$_TABLE["activity_log"]." WHERE timestamp < \"".date("Y-m-d", time()-($days*24*3600))."\"";
+	$sql = "DELETE FROM ".$_TABLE["activity_log"]." WHERE timestamp < \"".date("Y-m-d", time()-($days * 24 * 3600))."\"";
 	$db->query($sql);
 	if (basename(__FILE__)==basename($_SERVER["PHP_SELF"])) echo "#".__LINE__." ".basename(__FILE__)." sql:$sql<br>".$db->error()."<br>\n";
 }
 
-?>
