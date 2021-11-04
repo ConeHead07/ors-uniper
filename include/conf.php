@@ -90,7 +90,7 @@ $MConf = array(
 	"Html_ErrBox" => "errorbox.html",
 	"theme" => "uniper",
 
-	"activity_log_max_days" => 7,
+	"activity_log_max_days" => 30,
 
 	"propertyName" => $propertyName,
 //	"smtp_server"    => "mail.mertens.ag",
