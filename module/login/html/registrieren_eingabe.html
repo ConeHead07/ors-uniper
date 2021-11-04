@@ -105,7 +105,7 @@
 	</tr>
 	<tr class="xform-group">
 		<td colspan="2"><label errclass="datenschutz_confirm" for="eingabe_datenschutz_confirm" id="InputLbldatenschutz" class="col-form-label required" style="width:initial">
-			<input required type="checkbox" readonly id="eingabe_datenschutz_confirm" name="eingabe[datenschutz_confirm]" value="1" class="form-control" style="width:initial">
+			<input required type="checkbox" id="eingabe_datenschutz_confirm" name="eingabe[datenschutz_confirm]" value="1" class="form-control" style="width:initial">
 			<a id="showDatenschutz" onclick="" href="/textfiles/datenschutz.html" rel="/textfiles/datenschutz.html" target="_blank">Ich stimme der Datenschutzverordnung zu.
 			</a>
 		</label>
@@ -149,15 +149,19 @@
 				.addClass("dialog-active")
 				.find("button.btn-cancel")
 					.on("click", function() {
-						$("#eingabe_datenschutz").prop("checked", false);
+						$("#eingabe_datenschutz_confirm").prop("checked", false);
 						container.removeClass("dialog-active");
 					}).end()
 				.find("button.btn-apply")
 				.on("click", function() {
-					$("#eingabe_datenschutz").prop("checked", true);
+					$("#eingabe_datenschutz_confirm").prop("checked", true);
 					container.removeClass("dialog-active");
 				}).end();
 		return;
+	}
+
+	function confirmDatenschutz() {
+
 	}
 
 	$(function() {
