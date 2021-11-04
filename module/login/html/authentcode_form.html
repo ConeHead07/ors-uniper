@@ -1,0 +1,49 @@
+
+<table width="350" height="200" class="LoginBox" align=center>
+<thead>
+<tr>
+<td class="hdCell">{HomepageTitle}: Registrierung bestätigen</td>
+</tr>
+</thead>
+<tr>
+<td class="topCell" style="padding-top:20px;">
+<p>Bitte geben Sie den per Mail erhaltenen Freigabecode ein,
+	um die Registrierung abzuschliessen und ihr Konto zu aktivieren.</p>
+<!-- {msg} -->
+<!-- {error} -->
+<table style="100%">
+<form id="frmAuthentCode" action="{UrlToHomepage}login.php?ac=01" method="post">
+	<tr class="form-group">
+		<td align=right class="tdLbl"><label for="inputAuthentCode" class="col-form-label">Freigabecode</label></td>
+		<td><input id="inputAuthentCode" type="text" name="authentcode" value="" class="form-control"></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input class="btn btn-primary" type="submit" name="login" value="Bestätigen"></td>
+	</tr>
+<input type="hidden" name="redirect" value="{redirect}">
+</form>
+</table>
+<div>{login_hint}</div>
+<div class="LoginAdLinks">
+	{LnkStartseite}
+	{LnkRegister}
+	{LnkForgetPw}</div>
+</td></tr></table>
+
+<script>
+	function init() {
+		if (document.getElementById('inputAuthentCode')) {
+			document.getElementById('inputAuthentCode').focus();
+		}
+	}
+	function loadAuthentCode() {
+		var ac = {/*authentcodeJson*/};
+		document.getElementById('inputAuthentCode').value = ac;
+	}
+	function sendAuthentCode() {
+		document.getElementById('frmAuthentCode').submit();
+	}
+	loadAuthentCode();
+	sendAuthentCode();
+</script>

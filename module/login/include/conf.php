@@ -44,6 +44,7 @@ $_CONF["regc_mail_text"] = PATH_TO_LOGIN_MODUL."mailtexte/reg_confirm_mail.txt";
 $_CONF["mailc_change_text"] = PATH_TO_LOGIN_MODUL."mailtexte/confirm_mail_change.txt";
 $_CONF["fpw_mail_text"]    = PATH_TO_LOGIN_MODUL."mailtexte/forget_password.txt"; // Passwort vergessen: Sende Mail mit neuem Freischaltcode
 $_CONF["fpw_mail_subject"] = "Passwort vergessen?";
+$_CONF["HTML"]["authentcode_form"] = PATH_TO_LOGIN_MODUL . "html/authentcode_form.html";
 $_CONF["HTML"]["login"] = PATH_TO_LOGIN_MODUL."html/login.html";
 $_CONF["HTML"]["forget_pw"] = PATH_TO_LOGIN_MODUL."html/login_forgetpw.html";
 $_CONF["HTML"]["registrieren_eingabe"] = PATH_TO_LOGIN_MODUL."html/registrieren_eingabe.html";
