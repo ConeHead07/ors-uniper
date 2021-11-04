@@ -11,19 +11,18 @@
 	um die Registrierung abzuschliessen und ihr Konto zu aktivieren.</p>
 <!-- {msg} -->
 <!-- {error} -->
+	<form id="frmAuthentCode" style="margin:0">
 <table style="100%">
-<form id="frmAuthentCode" action="{UrlToHomepage}login.php?ac=01" method="post">
 	<tr class="form-group">
 		<td align=right class="tdLbl"><label for="inputAuthentCode" class="col-form-label">Freigabecode</label></td>
 		<td><input id="inputAuthentCode" type="text" name="authentcode" value="" class="form-control"></td>
 	</tr>
 	<tr>
 		<td></td>
-		<td><input class="btn btn-primary" type="submit" name="login" value="Bestätigen"></td>
+		<td><input class="btn btn-primary" type="button" name="login" value="Bestätigen"></td>
 	</tr>
-<input type="hidden" name="redirect" value="{redirect}">
-</form>
 </table>
+	</form>
 <div>{login_hint}</div>
 <div class="LoginAdLinks">
 	{LnkStartseite}
@@ -37,13 +36,28 @@
 			document.getElementById('inputAuthentCode').focus();
 		}
 	}
+
 	function loadAuthentCode() {
 		var ac = {/*authentcodeJson*/};
-		document.getElementById('inputAuthentCode').value = ac;
+		$('#inputAuthentCode').val(ac);
+
+		sendAuthentCode = function() {
+			var frm = $('#frmAuthentCode');
+			frm.attr({
+				action: "{UrlToHomepage}login.php?ac=01",
+				method: 'post'
+			}).submit();
+		};
 	}
-	function sendAuthentCode() {
-		document.getElementById('frmAuthentCode').submit();
-	}
+
+	var sendAuthentCode = function() {
+		var frm = ('#frmAuthentCode');
+		frm.css({margin:0});
+	};
+
+	$(function() {
+		$("#frmAuthentCode").find(".btn.btn-primary").on("click", sendAuthentCode);
+	});
+
 	loadAuthentCode();
-	sendAuthentCode();
 </script>
