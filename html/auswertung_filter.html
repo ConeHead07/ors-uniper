@@ -20,8 +20,8 @@
                 <option value="geprueftam">Bestätigungsdatum</option>
                 <option value="berechnet_am">Rechnungsdatum</option>
             </select>
-            Von: <input type="date" name="datumvon" value="{$datumvon}" onchange="document.forms['frmStat'].submit()">
-            Bis: <input type="date" name="datumbis" value="{$datumbis}" onchange="document.forms['frmStat'].submit()">
+            Von: <input type="date" name="datumvon" value="{$datumvon}" xonchange="document.forms['frmStat'].submit()">
+            Bis: <input type="date" name="datumbis" value="{$datumbis}" xonchange="document.forms['frmStat'].submit()">
         {*
             <select onchange="document.forms['frmStat'].submit()" selected="{$kwvon}" name="kwvon" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
         <option value="">auswählen</option>
@@ -36,7 +36,7 @@
         <input type="hidden" name="order" value="" id="orderby">
         <input type="hidden" name="queriedorder" value="{$order}">
         <input type="hidden" name="queriedodir" value="{$odir}">
-        <noscript>&lt;input type="submit" value="Auswertung starten"&gt;</noscript>
+            <button type="submit" class="btn btn-apply">Auswertung starten</button>
         </span>
             <script>{literal}
             $(function(){
