@@ -1,7 +1,5 @@
 <?php
-require_once(dirname(__FILE__)."/../../header.php");
-if (basename(__FILE__)==basename($_SERVER["PHP_SELF"])) register_shutdown_function("activity_log");
-
+require_once(dirname(__FILE__) . "/../../header.php");
 
 function activity_log() {
 	global $db;
@@ -9,6 +7,15 @@ function activity_log() {
 	global $s;
 	global $lid;
 	global $user;
+
+	if (empty($db) || empty($_TABLE) ) {
+	    return false;
+    }
+
+    $logUser = (!empty($user)) ? $user : [
+	      'uid' => 0,
+          'user' => '[OHNE-LOGIN]',
+        ];
 	
 	$LogFields = $db->get_fields_assoc($_TABLE["activity_log"]);
 	
@@ -22,8 +29,8 @@ function activity_log() {
 		$sql .= "\n" . $db->setFieldValue("timestamp", "NOW()", "function");
 		$sql .= ",\n" . $db->setFieldValue("serverscript", substr($_SERVER["PHP_SELF"], 0, $LogFields["serverscript"]["Size"]), "string", 1);
 		$sql .= ",\n" . $db->setFieldValue("ip", substr($_SERVER["REMOTE_ADDR"], 0, $LogFields["ip"]["Size"]), "string", 1);
-		$sql .= ",\n" . $db->setFieldValue("user", substr($user["user"], 0, $LogFields["user"]["Size"]), "string", 1);
-		$sql .= ",\n" . $db->setFieldValue("uid", $user["uid"], "integer", 1);
+		$sql .= ",\n" . $db->setFieldValue("user", substr($logUser["user"], 0, $LogFields["user"]["Size"]), "string", 1);
+		$sql .= ",\n" . $db->setFieldValue("uid", $logUser["uid"], "integer", 1);
 		$sql .= ",\n" . $db->setFieldValue("s", substr(getRequest("s"), 0, $LogFields["get"]["Size"]), "string", 1);
 
 		$sql .= ",\n" . $db->setFieldValue("docid", getRequest("id"), "integer", 1);
@@ -51,4 +58,6 @@ function activity_log_dropold_entries($days = 0) {
 	$db->query($sql);
 	if (basename(__FILE__)==basename($_SERVER["PHP_SELF"])) echo "#".__LINE__." ".basename(__FILE__)." sql:$sql<br>".$db->error()."<br>\n";
 }
+
+register_shutdown_function("activity_log");
 

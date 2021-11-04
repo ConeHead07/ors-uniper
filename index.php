@@ -11,9 +11,6 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
 
 error_reporting(E_ALL);
 require_once("header.php");
-if (function_exists("activity_log")) {
-    register_shutdown_function("activity_log");
-}
 
 $topmenu = "";
 $bodby_content = "";

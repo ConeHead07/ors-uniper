@@ -15,11 +15,12 @@ require_once $MConf['AppRoot'] . $MConf['Inc_Dir'] . 'form_request.php';
 require_once $MConf['AppRoot'] . $MConf['Inc_Dir'] . 'fbmail.php';
 require_once $MConf['AppRoot'] . $MConf['Inc_Dir'] . 'lib_mail.php';
 $userlogin = true; //
+
+require_once $MConf['AppRoot'] . $MConf['Modul_Dir'] . 'activitylog/activitylog.php';
 require_once $MConf['AppRoot'] . $MConf['Modul_Dir'] . 'login/login.php';
 require_once $MConf['AppRoot'] . 'smarty3/Smarty.class.php';
 require_once($MConf['AppRoot'] . $MConf['Class_Dir'] . 'myTplEngine.class.php');
 
-require_once $MConf['AppRoot'] . $MConf['Modul_Dir'] . 'activitylog/activitylog.php';
 
 spl_autoload_register(function($className) {
     $loadFileIfExists = function($file) {
