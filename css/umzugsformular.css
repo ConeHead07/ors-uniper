@@ -5,6 +5,8 @@
 button.btn,
 input[type=submit].btn,
 #Umzugsantrag .btn {
+ box-sizing: border-box;
+ text-align: center;
  border:1px solid #8bcf54 !important; 
  border-radius: 3px;
  font-size:12px;

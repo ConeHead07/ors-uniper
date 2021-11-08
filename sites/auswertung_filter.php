@@ -6,7 +6,7 @@ $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
 $datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'umzugstermin';
 
-$aValidDatumfelder = ['umzugstermin', 'antragsdatum', 'geprueftam', 'berechnet_am'];
+$aValidDatumfelder = ['umzugstermin', 'antragsdatum', 'geprueft_am', 'berechnet_am'];
 if (!in_array($datumfeld, $aValidDatumfelder)) {
     $datumfeld = current($aValidDatumfelder);
 }
