@@ -2,9 +2,9 @@ Betreff=Bestellung ID {AID} - Bestaetigt
 
 Hallo {Vorname} {Name},
 
-die Bestellung mit der ID {AID} wurde versendet und befindet sich in Bearbeitung.
+die Bestellung mit der ID {AID} wurde erfasst und befindet sich in Bearbeitung.
 
-Sie können die Bestellung  unter folgendem Link  einesehen:
+Sie können die Bestellung  unter folgendem Link  einsehen:
 {StatusLink}
 
 Mit freundlichen Grüßen
