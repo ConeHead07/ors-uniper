@@ -530,6 +530,7 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
     $return = true;
 	switch($status) {
         case "neuebemerkung":
+            $rplVars["neuebemerkung"] = $value;
             $tplFile = $TextBaseDir."statusmail_umzug_bemerkung.txt";
             $_configNameEnable = 'notify_user_bemerkung';
             if ((int)$authorUser['uid'] === (int)$auftragsDaten['antragsteller_uid']) {
@@ -538,7 +539,6 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
             if ($MConf[$_configNameEnable]) {
                 $tplMail = file_get_contents($tplFile);
                 $rplVars["StatusLink"] = $MConf["WebRoot"] . "?s=pantrag&id=" . $AID;
-                $rplVars["neuebemerkung"] = $value;
                 if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
                     $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $userMailTo, $_configNameEnable);
                 }
