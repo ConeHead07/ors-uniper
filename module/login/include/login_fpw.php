@@ -1,62 +1,68 @@
 <?php 
 $fpwSuccess = false;
 
+$send_fpwmail = !empty($_POST["send_fpwmail"]);
+$givenUsername = !empty($_POST["username"]) ? filter_var($_POST["username"], FILTER_SANITIZE_STRING) : '';
+$givenEmail = !empty($_POST["email"]) ? filter_var($_POST['email'], FILTER_SANITIZE_EMAIL) : '';
+
+$create_fpw = !empty($_POST["create_fpw"]);
+$givenAuthentcode = !empty($_POST["code"]) && preg_match('#[a-zA-Z0-9]*$#', $_POST["code"]) ? $_POST["code"] : '';
+$givenPW = !empty($_POST['pw']) ? $_POST['pw'] : '';
+$givenPWC = !empty($_POST['pwc']) ? $_POST['pwc'] : '';
+
 // Freischaltcode anfordern
-if (isset($_POST["send_fpwmail"]) ) {
-	if (!empty($_POST["email"])) {
+if ($send_fpwmail) {
+	if (!empty($givenEmail)) {
 		$SQL = "SELECT * FROM `".$_TABLE["user"]."` \n";
-		$SQL.= "WHERE email LIKE \"".MyDB::escape_string($_POST["email"])."\" \n";
+		$SQL.= "WHERE email LIKE \"".MyDB::escape_string($givenEmail)."\" \n";
 		$SQL.= "LIMIT 1";
 		$row = $db->query_row($SQL, $ConnUserDB["connid"]);
 		if ($row) {
-			if ($row) {
-				srand ( (double)microtime () * 1000000 );
-				$authentcode = substr(md5(rand().$user["email"].$user["pw"]), 0, 10);
-				$user = $row;
-				$SQL = "REPLACE `".$_TABLE["newpw"]."` SET \n";
-				$SQL.= " uid = \"".$user["uid"]."\", \n";
-				$SQL.= " code = \"".$authentcode."\", \n";
-				$SQL.= " date = NOW() \n";
-				$db->query($SQL);
-				if (!$db->error()) {
-					$vorlage = implode("", file($_CONF["fpw_mail_text"]));
-					if (send_fpw_mail($vorlage, $_POST["email"], $authentcode)) {
-						$msg = "E-Mail mit Freischaltcode wurde verschickt!";
-					} else {
-						$error.= "Interner Fehler: E-Mail mit Freischaltcode konnte nicht versendet werden!<br>\n";
-					}
-				} else {
-					$error.= "Interner Fehler: Freischaltcode konnte nicht erstellt werden!<br>\n";
-					// echo "<pre>".MyDB::error()."\n".$SQL."</pre>";
-				}
-			} else {
-				$error.= "Es existiert kein Account mit der E-Mail: ".$_POST["email"]."!<br>\n";
-			}
-		} else {
-			$error.= "Interner Fehler bei Accountabfrage mittel E-Mail!<br>\n";
-		}
+            srand ( (double)microtime () * 1000000 );
+            $authentcode = substr(md5(rand().$user["email"].$user["pw"]), 0, 10);
+            $user = $row;
+            $SQL = "REPLACE `".$_TABLE["newpw"]."` SET \n";
+            $SQL.= " uid = \"".$user["uid"]."\", \n";
+            $SQL.= " code = \"".MyDB::escape_string($authentcode)."\", \n";
+            $SQL.= " date = NOW() \n";
+            $db->query($SQL);
+            if (!$db->error()) {
+                $vorlage = implode("", file($_CONF["fpw_mail_text"]));
+                if (send_fpw_mail($vorlage, $row['email'], $authentcode)) {
+                    $msg = "E-Mail mit Freischaltcode wurde verschickt!";
+                } else {
+                    $error.= "Interner Fehler: E-Mail mit Freischaltcode konnte nicht versendet werden!<br>\n";
+                }
+            } else {
+                $error.= "Interner Fehler: Freischaltcode konnte nicht erstellt werden!<br>\n";
+                // echo "<pre>".MyDB::error()."\n".$SQL."</pre>";
+            }
+        } else {
+            $error.= "Es existiert kein Account mit der E-Mail: " . $givenEmail ."!<br>\n";
+        }
 	} else {
         $error.= "Bitte geben Sie Ihre Mailadresse an!<br>\n";
     }
 }
 
+
 // Neues Passwort mit Freischaltcode anlegen
-if (isset($_POST["create_fpw"]) ) {
-	if (isset($_POST["email"])) {
+if ( $create_fpw ) {
+	if (!empty($givenEmail) && !empty($givenAuthentcode)) {
 		$SQL = "SELECT u.* FROM `".$_TABLE["newpw"]."` AS n \n";
 		$SQL.= " LEFT JOIN `".$_CONF["user"]["Table"]."` AS u USING(uid) \n";
-		$SQL.= "WHERE n.code LIKE \"".MyDB::escape_string($_POST["code"])."\" \n";
-		$SQL.= " AND u.email LIKE \"".MyDB::escape_string($_POST["email"])."\" \n";
+		$SQL.= "WHERE n.code LIKE \"".MyDB::escape_string($givenAuthentcode)."\" \n";
+		$SQL.= " AND u.email LIKE \"".MyDB::escape_string($givenEmail)."\" \n";
 		$SQL.= "LIMIT 1";
 		$r = MyDB::query($SQL, $ConnUserDB["connid"]);
 		if ($r) {
 			if (MyDB::num_rows($r)) {
 				$user = MyDB::fetch_array($r, MYSQL_ASSOC);
-				if ($_POST["pw"] && $_POST["pw"] == $_POST["pwc"]) {
-                    if (!preg_match('/\W/', $_POST["pw"]) ) {
-						if (strlen($_POST["pw"]) >= 5) {
+				if ($givenPW && $givenPW === $givenPWC) {
+                    if (!preg_match('/\W/', $givenPW) ) {
+						if (strlen($givenPW) >= 5) {
 							$SQL = "UPDATE `".$_CONF["user"]["Table"]."` SET \n";
-							$SQL.= " pw = \"".md5(stripslashes($_POST["pw"]))."\" \n";
+							$SQL.= " pw = \"".MyDB::escape_string(md5(stripslashes($givenPW)))."\" \n";
 							$SQL.= " WHERE uid = \"".$user["uid"]."\" ";
 							MyDB::query($SQL);
 							if (!MyDB::error()) {
@@ -85,14 +91,12 @@ if (isset($_POST["create_fpw"]) ) {
 }
 
 if (!isset($redirect)) {
-	if (isset($_GET["redirect"])) $redirect = $_GET["redirect"];
-	elseif (isset($_POST["redirect"])) $redirect = $_POST["redirect"];
-	else $redirect = "";
+    $redirect = isset($_REQUEST['redirect']) ? $_REQUEST['redirect'] : '';
 }
 
 $_rpl = array();
-$_rpl["{code}"] = (isset($_POST["code"]) ? fb_htmlEntities(stripslashes($_POST["code"])) : "");
-$_rpl["{email}"] = (isset($_POST["username"]) ? fb_htmlEntities(stripslashes($_POST["email"])) : "");
+$_rpl["{code}"] = !empty($givenAuthentcode) ? fb_htmlEntities(stripslashes($givenAuthentcode)) : "";
+$_rpl["{email}"] = !empty($givenUsername) ? fb_htmlEntities(stripslashes($_POST["email"])) : "";
 $_rpl["{username}"] = $_rpl["{email}"];
 $_rpl["{redirect}"] = (isset($redirect)) ? fb_htmlEntities($redirect) : "";
 $_rpl["{HomepageTitle}"] = $_CONF["HomepageTitle"];
