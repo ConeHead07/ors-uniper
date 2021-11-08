@@ -32,7 +32,7 @@ $validFields[$_TABLE["cms_texte"]]=array(
 						0,										// 11 = check Input
 						1),										// 12 = zeilen
 						
-		"lang"=>array("Sprachschlüssel",				    	// 0 = Alias
+		"lang"=>array("Sprachschlï¿½ssel",				    	// 0 = Alias
 						"DE",									// 1 = Default
 						0,										// 2 = Pflicht
 						"lang",									// 3 = MySQL-DB-Feld
@@ -130,7 +130,7 @@ $validFields[$_TABLE["cms_texte"]]=array(
 						1,										// 11 = check Input
 						1),										// 12 = zeilen
 						
-		"text2mehr"=>array("Text für -&gt;mehr ...",			// 0 = Alias
+		"text2mehr"=>array("Text fï¿½r -&gt;mehr ...",			// 0 = Alias
 						"mehr",									// 1 = Default
 						0,										// 2 = Pflicht
 						"text2mehr",							// 3 = MySQL-Name
@@ -424,7 +424,7 @@ $_SYS2MYSQL[$_TABLE["cms_texte"]]=array(
 );
 
 // Erweitern des Array validFields um MYSQL-FELD-Eigenschaften
-$mysql_tbl_fields[$_TABLE["cms_texte"]] = MyDB::show_fields($_TABLE["cms_texte"]);
+$mysql_tbl_fields[$_TABLE["cms_texte"]] = db_show_fields($_TABLE["cms_texte"]);
 while(list($k,$v) = each ($validFields[$_TABLE["cms_texte"]])) {
 	$validFields[$_TABLE["cms_texte"]][$k]["mysql"] = array();
 	if (isset($mysql_tbl_fields[$_TABLE["cms_texte"]][$v[3]])) {
