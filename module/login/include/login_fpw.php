@@ -53,7 +53,7 @@ if (isset($_POST["create_fpw"]) ) {
 			if (MyDB::num_rows($r)) {
 				$user = MyDB::fetch_array($r, MYSQL_ASSOC);
 				if ($_POST["pw"] && $_POST["pw"] == $_POST["pwc"]) {
-                                        if (!preg_match('/\W/', $_GET["pw"]) ) {
+                    if (!preg_match('/\W/', $_POST["pw"]) ) {
 						if (strlen($_POST["pw"]) >= 5) {
 							$SQL = "UPDATE `".$_CONF["user"]["Table"]."` SET \n";
 							$SQL.= " pw = \"".md5(stripslashes($_POST["pw"]))."\" \n";
