@@ -150,7 +150,7 @@ $sql.= "GROUP BY aid\n";
 $sql.= $orderBy."\n";
 $sql.= "LIMIT $offset, $limit";
 $all = $db->query_rows($sql);
-//echo $db->error()."<br>\nsql: $sql <br>\n";
+echo $db->error()."<br>\nsql: $sql <br>\n";
 $num = count($all);
 
 if ($num_all > $num) {

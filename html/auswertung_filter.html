@@ -38,10 +38,11 @@
         <input type="hidden" name="queriedodir" value="{$odir}">
             <button type="submit" class="btn btn-apply">Auswertung starten</button>
         </span>
+            <script>
+                var datumFilterFeld = "{$datumfeld}";
+            </script>
             <script>{literal}
-            $(function(){
-
-                var datumFilterFeld = "{datumfeld}";
+            $(function() {
                 $("#auswertungDatumsfeld").val(datumFilterFeld);
                 // $("#auswertungDatumsfeld").find("option[value=" + datumFilterFeld + "]").prop("selected", true);
 

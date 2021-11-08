@@ -54,8 +54,14 @@ Kalenderwoche
         cursor:pointer;
     }
 {/literal}</style>
+<script>
+    var datumFilterFeld = "{$datumfeld}";
+</script>
 <script>{literal}
+
 $(function(){
+
+    $("#auswertungDatumsfeld").val(datumFilterFeld);
     
     var send = function() {
         self.location.href = "?" + $("#frmStat").serialize();

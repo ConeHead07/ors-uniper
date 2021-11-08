@@ -7,6 +7,7 @@ $datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'umzugs
 
 $aValidDatumfelder = ['umzugstermin', 'antragsdatum', 'geprueft_am', 'berechnet_am'];
 if (!in_array($datumfeld, $aValidDatumfelder)) {
+    echo "$datumfeld is not " . json_encode($aValidDatumfelder) . "!<br>\n";
     $datumfeld = current($aValidDatumfelder);
 }
 
@@ -28,18 +29,6 @@ if (empty($datumbis) || $datumbis < $datumvon) {
 
     $datumbis = date('Y-m-d', strtotime('next wednesday', strtotime($datumvon)));
 }
-if (!empty($_REQUEST['kwvon'])) {
-    $kwvon = (!empty($_REQUEST['kwvon'])) ? $_REQUEST['kwvon'] : '';
-    $kwbis = (!empty($_REQUEST['kwbis'])) ? $_REQUEST['kwbis'] : '';
-    $timeVon = (preg_match('/^(\d{4})W(\d{2})$/', $kwvon, $m)) ? strtotime($kwvon) : strtotime(date('Y') . 'W' . substr('0' . date('W'), -2));
-    $timeBis = (preg_match('/^(\d{4})W(\d{2})$/', $kwbis, $m)) ? strtotime($kwbis) : $timeVon + (7 * 24 * 3600);
-} else {
-    $timeVon = (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $datumvon, $m)) ? strtotime($datumvon) : strtotime(date('Y-m-01'));
-    $timeBis = (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $datumbis, $m)) ? strtotime($datumbis) : $timeVon + (7 * 24 * 3600);
-}
-
-$kwvon = date('Y\WW', $timeVon);
-$kwbis = date('Y\WW', $timeBis);
 
 
 $order = (!empty($_REQUEST['order']))   ? $_REQUEST['order'] : '';
@@ -57,18 +46,6 @@ if ($finish && $wwsnr && count($aids)) {
     $db->query($sql, array('wwsnr' => $wwsnr));
     //    echo $db->error() . '<br>' . $db->lastQuery . '<br>';
 }
-
-$timeVon = (preg_match('/^(\d{4})W(\d{2})$/', $kwvon, $m)) ? strtotime($kwvon) : strtotime(date('Y').'W'.substr('0'.date('W'),-2) );
-if ($kwbis && preg_match('/^(\d{4})W(\d{2})$/', $kwbis, $m)) {
-    $timeBis = strtotime($kwbis);
-} else {
-    $timeBis = strtotime('+7 days', $timeVon);
-}
-
-$kwvon = date('Y\WW', $timeVon);
-$kwbis = date('Y\WW', $timeBis);
-//echo 'Von: ' . $kwvon . ' => '. date( 'r', $timeVon) . '<br/>';
-//echo 'Bis: ' . $kwbis . ' => '. date( 'r', $timeBis) . '<br/>';
 
 $sql = 'SELECT date_format(umzugstermin, "%Y\W%u") kw '
     .' FROM mm_umzuege '
@@ -149,17 +126,19 @@ $sql = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
     .' ) '
     .' WHERE '
     // .' abgeschlossen_am IS NOT NULL AND '
-    .' abgeschlossen = "Ja" AND abgeschlossen_am IS NOT NULL AND abgeschlossen_am BETWEEN :von AND :bis '
+    .' abgeschlossen = "Ja" AND abgeschlossen_am IS NOT NULL AND ' . $datumfeld . ' BETWEEN :von AND :bis '
     .(!$all ? 'AND berechnet_am IS NULL' : '')
     .( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
     .' GROUP BY a.aid'
     .( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' : '')
     .' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
-$rows = $db->query_rows($sql, 0, array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis)));
+$rows = $db->query_rows($sql, 0, array('von'=> $datumvon, 'bis'=> $datumbis));
 
 if (0) {
     echo $db->error() . '<br>' . $db->lastQuery . '<br>' . PHP_EOL;
 }
+$kwvon = date('Y\WW', strtotime($datumvon));
+$kwbis = date('Y\WW', strtotime($datumbis));
 
 $Tpl->assign('s', $s);
 $Tpl->assign('all', $all);
@@ -171,6 +150,7 @@ $Tpl->assign('kwbis', $kwbis);
 $Tpl->assign('datumfeld', $datumfeld);
 $Tpl->assign('datumvon', $datumvon);
 $Tpl->assign('datumbis', $datumbis);
+$Tpl->assign('datumfeld', $datumfeld);
 $Tpl->assign('order', $order);
 $Tpl->assign('odir', $odir);
 $Tpl->assign('s', $s);
