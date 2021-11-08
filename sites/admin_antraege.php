@@ -91,7 +91,7 @@ if (!$allusers) {
 
 switch($cat) {
 	case "neue":
-	$sqlWhere.= "AND umzugsstatus IN ('beantragt', 'erneutpruefen')\n";
+	$sqlWhere.= "AND umzugsstatus IN ('angeboten', 'beantragt', 'erneutpruefen')\n";
 	break;
     
 	case "angeboten":

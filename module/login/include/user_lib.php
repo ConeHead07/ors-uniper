@@ -102,6 +102,7 @@ function insert_reguser($user_connid, $tbl, &$arrFormVars, &$authentcode) {
 	$SQL.= " lastlogin = NULL,\n";
 	$SQL.= " created = NOW()\n";
 	MyDB::query($SQL, $user_connid);
+
 	if (!MyDB::error()) {
 		return MyDB::insert_id($user_connid);
 	} else {
@@ -225,5 +226,4 @@ function killUser($user_connid, $uid) {
 	else $error.= "<pre>#".__LINE__." DB-ERROR:".MyDB::error()."\nDB-QUERY(connid:$user_connid):".fb_htmlEntities($SQL)."</pre>\n";
 	return false;
 }
-/**/
-?>
+

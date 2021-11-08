@@ -1,10 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+
+<link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
+<link rel="stylesheet" type="text/css" xhref="css/bootstrap-5.1.3-dist/css/bootstrap.css" />
+<script xsrc="css/bootstrap-5.1.3-dist/js/bootstrap.js"></script>
+
+<h2 style="margin:0;" data-site="userprofile/html/profile/edit">Benutzerdaten</h2>
+<table>
+    <tr>
+        <td style="padding:0;width:200px;">
+            <label for="as_vornachname" style="display:block;width:auto;">
+                Vor &amp; Nachname<span class="right"></span>
+            </label></td>
+
+        <td style="padding:0;width:250px;">
+            <input type="text" id="as_vornachname" readonly="true" value="{vorname}" required="required"
+                   name="AS[vorname]" class="itxt itxt1col floatLeft">
+            <input type="text" id="as_name" readonly="true" value="{nachname}"
+                   name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="as_kid" style="display:block;width:auto;">KID</label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" id="as_kid"  readonly value="{kid}"
+                   name="AS[kid]" class="itxt itxt2col ireadonly">
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="as_registerdate" style="display:block;width:auto;">Registriert</label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" id="as_registerdate"  readonly value="{registerdate}"
+                   name="AS[registerdate]" class="itxt itxt2col ireadonly">
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="as_email" style="display:block;width:auto;">E-Mail<span class="right"></span></label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" autocomplete="email" id="as_email" value="{email}"
+                   name="AS[email]" required="required" readonly="true" class="itxt itxt2col" title="E-Mail">
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="as_fon" style="display:block;width:auto;">Telefon<span class="right"></span></label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" autocomplete="tel" id="as_fon" value="{fon}" required="required"
+                   name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php">
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input class="btn blue" style="width:100%;box-sizing: border-box;text-align:center;" value="Telefonnr aktualisieren"></input></td>
+    </tr>
+</table>
+
+<h2 style="margin:0;margin-top:4rem;" data-site="userprofile/html/profile/edit">Passwort ändern</h2>
+<table>
+    <tr>
+        <td style="padding:0;width:200px;">
+            <label for="pwneu" style="display:block;width:auto;">Neues Passwort<span class="right"></span></label>
+        </td>
+        <td style="padding:0;width:250px;">
+            <input type="text" value=""
+                   id="pwneu" name="pwneu"
+                   required="required" class="itxt itxt2col jtooltip-local" rel="#profilePwNeu">
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="pwrepeat" style="display:block;width:auto;">Wiederholen<span class="right"></span></label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" autocomplete="tel" value="" required="required"
+                   id="pwrepeat" name="pwrepeat"
+                   class="itxt itxt2col jtooltip-local"
+                   rel="#profilePwRepeat">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">Bitte geben Sie Ihr aktuelles Passwort zur Bestätigung an:</td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="pwalt" style="display:block;width:auto;">Aktuelles Passwort<span class="right"></span></label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" value="" required="required"
+                   id="pwalt" id="pwalt"
+                   class="itxt itxt2col jtooltip-local" rel="#profilePwAlt">
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input class="btn red" style="width:100%;box-sizing: border-box;text-align:center;" value="Passwortänderung speichern"></input></td>
+    </tr>
+</table>
+
+<h2 style="margin:0;margin-top:4rem;" data-site="userprofile/html/profile/edit">Konto löschen</h2>
+<table>
+    <tr>
+        <td style="padding:0;width:200px;">
+            <label for="pwneu" style="display:block;width:auto;">Neues Passwort<span class="right"></span></label>
+        </td>
+        <td style="padding:0;width:250px;">
+            <input type="text" value=""
+                   id="pwneu" name="pwneu"
+                   required="required" class="itxt itxt2col jtooltip-local" rel="#profilePwNeu">
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="pwrepeat" style="display:block;width:auto;">Wiederholen<span class="right"></span></label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" autocomplete="tel" value="" required="required"
+                   id="pwrepeat" name="pwrepeat"
+                   class="itxt itxt2col jtooltip-local"
+                   rel="#profilePwRepeat">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">Bitte geben Sie Ihr aktuelles Passwort zur Bestätigung an:</td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="pwalt" style="display:block;width:auto;">Aktuelles Passwort<span class="right"></span></label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" value="" required="required"
+                   id="pwalt" id="pwalt"
+                   class="itxt itxt2col jtooltip-local" rel="#profilePwAlt">
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input class="btn red" style="width:100%;box-sizing: border-box;text-align:center;" value="Passwortänderung speichern"></input></td>
+    </tr>
+</table>
+
+<div style="display: none;">
+    <div id="profilePwNeu">Legen Sie hier Ihr neues Passwort fest!</div>
+    <div id="profilePwRepeat">Wiederholen Sie Ihr neues Passwort, um Tippfehler auszuschließen!</div>
+    <p id="profilePwAlt" class="profilePwAlt">Für die Passwortänderung ist aus Sicherheitsgründen die Bestätigung mit dem aktuellen Passwort erforderlich!</p>
+</div>

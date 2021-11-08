@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<table>
+    <tr>
+        <td style="padding:0;width:200px;">
+            <label for="as_vornachname" style="display:block;width:auto;">
+                Vor &amp; Nachname<span class="right"></span>
+            </label></td>
+
+        <td style="padding:0;width:250px;">
+            <input type="text" id="as_vornachname" readonly="true" value="{vorname}" required="required"
+                   name="AS[vorname]" class="itxt itxt1col floatLeft">
+            <input type="text" id="as_name" readonly="true" value="{nachname}"
+                   name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="as_email" style="display:block;width:auto;">E-Mail<span class="right"></span></label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" autocomplete="email" id="as_email" value="{email}"
+                   name="AS[email]" required="required" readonly="true" class="itxt itxt2col" title="E-Mail">
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="as_fon" style="display:block;width:auto;">Telefon<span class="right"></span></label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" autocomplete="tel" id="as_fon" value="{fon}" required="required"
+                   name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php">
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="as_kid" style="display:block;width:auto;">KID</label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" id="as_kid"  readonly value="{kid}"
+                   name="AS[kid]" class="itxt itxt2col ireadonly">
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:0;">
+            <label for="as_registerdate" style="display:block;width:auto;">Registriert</label>
+        </td>
+        <td style="padding:0;">
+            <input type="text" id="as_registerdate"  readonly value="{registerdate}"
+                   name="AS[registerdate]" class="itxt itxt2col ireadonly">
+        </td>
+    </tr>
+</table>
