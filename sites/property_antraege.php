@@ -122,7 +122,7 @@ switch($cat) {
 	break;
 	
 	case "aktive":
-	$sqlWhere= "WHERE (umzugsstatus IN ('geprueft'))\n";
+	$sqlWhere= "WHERE (umzugsstatus IN ('geprueft', 'bestaetigt'))\n";
 	break;
 	
 	case "abgeschlossene":
