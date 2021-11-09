@@ -67,3 +67,49 @@ function formatLesenLeistungskatalogImage(
 
 }
 
+function formatEingabeLeistungskatalogProduktLink(
+    $editCmd,
+    $fN,
+    $val,
+    $fC,
+    $arrDbdata,
+    $arrInput,
+    &$tplForm,
+    $needle
+) {
+    $script = "<script>$(function() {
+        var inputElm = $(\"input[name=eingabe\\\\[$fN\\\\]]\");
+        var inputBox = $(\"#InputBox{$fN} .inputFrm\");
+        var previewHref = $(\"<a/>\").attr({target: \"_$fN\"});
+        previewHref.appendTo(inputBox);
+        inputElm.on(\"change\", function() {
+            if (!this.value) {
+                previewHref.hide();
+                previewHref.attr(\"href\", \"\");                
+                return;
+            }
+            var hrefPath = this.value;
+            previewHref.text(hrefPath).show().attr({href: hrefPath });
+        })
+        .trigger(\"change\");
+    });
+            </script>";
+    $tplForm.= $script;
+}
+function formatLesenLeistungskatalogProduktLink(
+    $editCmd,
+    $fN,
+    &$val,
+    $fC,
+    $rrDbdata,
+    $arrInput,
+    &$tplForm,
+    $needle
+) {
+    $val = ' <a href="' . htmlentities($val) . '" target="_preview">'
+        . $val
+        . '</a>';
+
+}
+
+
