@@ -171,7 +171,7 @@ if ($num_all > $num) {
 } else {
 	$ListBrowsing = ""; 
 }
-if(0) {
+if(1) {
     $ListBrowsing = "<div style='border:1px solid gray;border-radius: 5px;padding:.8rem;'>
 <pre style='background-color: #c9c9c9;color: #626262;padding:.8rem;'>" . $sql . "</pre>Num-Result: " . count($all) . "</div>" . $ListBrowsing;
 }
@@ -201,8 +201,9 @@ if ( is_array($all) ) foreach($all as $i => $item) {
 	$Umzuege[$i]["Antragsstatus"] =  $item["antragsstatus"];
 	$Umzuege[$i]["Termin"] = ($item["umzugstermin"]?$item["umzugstermin"]:$item["terminwunsch"]);
 	$Umzuege[$i]["Antragsdatum"] = $item["antragsdatum"];
-	
-	
+
+
+    $Umzuege[$i]["Avisiert"]   = get_iconStatus($item["bestaetigt"], $item["umzugstermin"], $item["geprueft_von"], 'Liefertermin');
 	$Umzuege[$i]["Geprueft"]      = get_iconStatus($item["geprueft"], $item["geprueft_am"], $item["geprueft_von"], 'Geprueft');
 	$Umzuege[$i]["Genehmigt"]     = get_iconStatus($item["genehmigt_br"], $item["genehmigt_br_am"], $item["genehmigt_br_von"]);
 	$Umzuege[$i]["Bestaetigt"]    = get_iconStatus($item["bestaetigt"], $item["bestaetigt_am"], $item["bestaetigt_von"]);
