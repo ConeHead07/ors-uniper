@@ -1,20 +1,26 @@
 <style>
 {literal}
 tr.row * {
-    font-size:11px;
+    font-size:0.8rem;
+}
+.MitarbeierItem tr.row.inputRowVon td,
+tr.row td {
+    font-size:0.8rem;
+    padding:.2rem .8rem;
 }
 div.ktg1, div.lstg {
     min-height: 18px;
 }
 tr#summary td { 
     text-align:right;
-    padding:5px;font-weight:bold;
+    font-weight:bold;
 }
 td.unit {
     text-align:center;
 }
 td.menge, td.menge, input.menge, td.preis, td.sum {
     text-align:right;
+    padding-right:1rem;
 }
 {/literal}
 </style>
@@ -51,7 +57,6 @@ function blurBox(callback, hide) {
 {/literal}
 </script>
 <!-- Removed MH in Leistungen  -->
-<br>
 <h2 style="margin:0;padding:0">Leistungen</h2>
 <table class="MitarbeierItem" style="width:100%;">
     <thead>
@@ -69,7 +74,7 @@ function blurBox(callback, hide) {
         <tr class="row inputRowVon">
             <td class="ktg1">{$L.kategorie|escape}</td>
             <td class="lstg">{$L.leistung|escape}</td>
-            <td>{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:2:",":"."}{/if}</td>
+            <td class="menge">{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:2:",":"."}{else}1{/if}</td>
             {if $PreiseAnzeigen}<td class="preis">{if $L.preis_pro_einheit}{$L.preis_pro_einheit|number_format:2:",":"."}{/if}</td>
             <td class="preis sum">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|escape|number_format:2:",":"."}{/if}</td>
             {/if}

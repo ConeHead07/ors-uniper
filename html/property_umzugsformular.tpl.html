@@ -18,10 +18,10 @@
 <div id="Umzugsantrag" class="divInlay"> 
 <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
 <input type="hidden" name="AS[token]" value="{$AS.token}">
-<h2 style="margin:0;">Genehmigungs-Status</h2>
+<h2 style="margin:0;" data-site="property/umzugsformular/tpl/html">Genehmigungs-Status</h2>
 <table border=0 cellspacing=1 cellpadding=1>
   <tr>
-    <td style="padding:0;width:180px;"><label for="termin" style="display:block;width:auto;">Umzugstermin:</label></td>
+    <td style="padding:0;width:180px;"><label for="termin" style="display:block;width:auto;">Ausführungstermin:</label></td>
     <td style="padding:0;width:250px;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}{* <input type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
 	onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"> *}</td>
   </tr>

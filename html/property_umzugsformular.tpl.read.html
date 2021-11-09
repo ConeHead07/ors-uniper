@@ -9,40 +9,52 @@
 {/literal}
 <div id="SysInfoBox"></div>
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
-<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-  <h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1>
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
+  {if !empty($AS.umzugstermin)}
+  <h1><span class="spanTitle">Bestellung #{$AS.aid}</span></h1>
+  {else}
+  <h1><span class="spanTitle">Auftrag #{$AS.aid}</span></h1>
+  {/if}
   <p>
   <div id="Umzugsantrag" class="divInlay">
     <h2 style="margin:0;" data-site="property/umzugsformular/tpl/read/html">Auftrags-Status</h2>
-    <table border=0 cellspacing=1 cellpadding=1>
+    <table xborder=0 xcellspacing=1 xcellpadding=1>
+      {if !empty($AS.umzugstermin)}
       <tr>
         <td style="padding:0;width:200px;"><label for="termin" style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
-        <td style="padding:0;width:300px;"><input type="text" id="termin" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
-        onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
+        <td style="padding:0;width:300px;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}{* <input type="text" id="termin" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
+        onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"> *}</td>
       </tr>
+      {/if}
+      {*
       <tr>
-        <td style="padding:0;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
+        <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
         <td style="padding:0;"><span data-fld="AS[umzugszeit]">{$AS.umzugszeit|escape|substr:0:5}</span></td>
       </tr>
+      *}
       <tr>
-        <td style="padding:0;"><label for="termin" style="display:block;width:auto;">Auftragsdatum:</label></td>
+        <td style="padding:0;width:200px;"><label for="termin" style="display:block;width:auto;">Auftragsdatum:</label></td>
         <td style="padding:0;"><span data-fld="AS[antragsdatum]">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
       </tr>
+      {if !empty($AS.umzugsstatus) and $AS.umzugsstatus eq "abgeschlossen"}
       <tr>
-        <td style="padding:0;"><label style="display:block;width:auto;">Auftrag abgeschlossen:</label></td>
+        <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Auftrag abgeschlossen:</label></td>
         <td style="padding:0;" class="status_{$AS.abgeschlossen}"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></td>
       </tr>
+      {/if}
       <tr>
-        <td style="padding:0;"><label style="display:block;width:auto;">Status:</label></td>
+        <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Status:</label></td>
         <td style="padding:0;">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</td>
       </tr>
         <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
     </table>
+  {if !empty($AS.umzugsstatus) and $AS.umzugsstatus eq "abgeschlossen"}
     <a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}&mode=property" style="display:none" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Anforderungsblatt / Druckansicht</a>
     <a href="%WebRoot%sites/lieferschein.php?id={$AS.aid}&mode=property" target="_Lieferschein{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Lieferschein</a>
     | <a href="%WebRoot%index.php?s=pantrag&id={$AS.aid}&export=csv" target="_blank">CSV-Export</a>
-    <br>
 
+  {/if}
+  <br>
     <h2 style="margin:0;">Lieferdaten</h2>
     <table>
       <tr>
@@ -83,6 +95,7 @@
       </tr>
     </table>
     <br>
+  {if !empty($AS.ansprechpartner) || !empty($AS.ansprechpartner_fon)}
     <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2>
     <table>
       <tr>
@@ -94,12 +107,14 @@
         <td style="padding:0;">{$AS.ansprechpartner_fon|escape}</td>
       </tr>
     </table>
-    <table>
+  {/if}
+    {* <table>
       <tr>
         <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Service</label></td>
         <td style="padding:0;width:300px;" class="options-onoff"><label class='{if $AS.service eq "Ja"}on{else}off{/if} active'>{$AS.service}</label></td>
       </tr>
     </table>
+  *}
     <br clear="all" >
     <br>
 {if 0}
