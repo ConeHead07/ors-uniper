@@ -54,17 +54,17 @@
   <li><a class="iconRightContentMain" href="{$U.LinkOpen}">
   <div>
       <div style="float:left;display:block;width:30px;font-weight:bold;">{$U.aid}&nbsp;</div>
-      <div style="float:left;display:block;width:75px;" >{$U.kid}&nbsp;&nbsp;</div>
+      <div style="float:left;display:block;width:75px;" >{$U.kid}&nbsp;</div>
       <div style="float:left;display:block;width:100px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
       <div style="float:left;display:block;width:60px;">{if $U.land == "Deutschland"}DE{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if} &nbsp;</div>
-      <div style="float:left;display:block;width:100px;">{$U.ort}&nbsp</div>
+      <div style="float:left;display:block;width:100px;">{$U.ort}&nbsp;</div>
       <div style="float:left;display:block;width:50px;">{$U.plz}&nbsp;</div>
       <div style="float:left;display:block;width:200px;">{$U.strasse}&nbsp;</div>
-      <div style="float:left;display:block;width:75px;" >{$U.service}&nbsp;&nbsp;</div>
+      <div style="float:left;display:block;width:75px;" >{$U.service}&nbsp&nbsp;</div>
       <div style="float:left;display:block;width:100px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
       <div style="float:left;display:none;width:35px;">{$U.Genehmigt}&nbsp;</div>
       <div style="float:left;display:none;width:35px;">{$U.Geprueft}&nbsp;</div>
-      <div style="float:left;display:block;width:80px;">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}</div><br clear=left></div>
+      <div style="float:left;display:block;width:80px;">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}&nbsp;</div><br clear=left></div>
   </a></li>
 {/foreach}
 </ul> 
