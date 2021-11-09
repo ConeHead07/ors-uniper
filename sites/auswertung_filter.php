@@ -151,32 +151,33 @@ elseif ($order == 'plz') {
 
 
 $sql = 'SELECT a.*, '
-      .' ua.personalnr AS kid,'
-      .' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
-      .' u.nachname, u.nachname stom, ua.nachname antragsteller_name, '
-      .' ua.gruppe antragsteller_gruppe, '
-      .' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe'
-      .' FROM mm_umzuege a '
-      .' JOIN mm_user ua ON a.antragsteller_uid = ua.uid '
-      .' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id '
-      .' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid '
-      .' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) '
-      .' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
-      .' LEFT JOIN mm_leistungspreismatrix lm ON('
-      .'    l.leistung_id = lm.leistung_id '
-      .'    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
-      .'    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))'
-      .' ) '
-      .' WHERE 1 '
-      .' AND ' . $datumfeld . ' BETWEEN :von AND :bis '
-      .' AND '
-      .'  (umzugsstatus IN ("genehmigt", "bestaetigt") '
-      .'   OR (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja") '
-      .'  )'
-      .( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
-      .' GROUP BY a.aid '
-      .( count($having) ? ' HAVING (' . implode(' AND ', $having) . ') ' : '')
-      .' ORDER BY ' . $sqlOrderFld . ' ' . $odir;
+      . ' ua.personalnr AS kid,'
+      . ' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
+      . ' u.nachname, u.nachname stom, ua.nachname antragsteller_name, '
+      . ' ua.gruppe antragsteller_gruppe, '
+      . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe'
+      . ' FROM mm_umzuege a '
+      . ' JOIN mm_user ua ON a.antragsteller_uid = ua.uid '
+      . ' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id '
+      . ' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid '
+      . ' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) '
+      . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
+      . ' LEFT JOIN mm_leistungspreismatrix lm ON('
+      . '    l.leistung_id = lm.leistung_id '
+      . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
+      . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))'
+      . ' ) '
+      . ' WHERE 1 '
+      . ' AND ' . $datumfeld . ' BETWEEN :von AND :bis '
+      . ' AND ('
+//      . '  umzugsstatus IN ("genehmigt", "bestaetigt") '
+//      . '   OR '
+      . '(umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja") '
+      . '  )'
+      . ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
+      . ' GROUP BY a.aid '
+      . ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ') ' : '')
+      . ' ORDER BY ' . $sqlOrderFld . ' ' . $odir;
 $rows = $db->query_rows($sql, 0, array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis)));
 // echo $db->error() . '<br>' . $db->lastQuery . '<br>' . PHP_EOL;
 
