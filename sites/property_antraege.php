@@ -122,7 +122,7 @@ switch($cat) {
 	break;
 	
 	case "aktive":
-	$sqlWhere= "WHERE (umzugsstatus IN ('geprueft', 'bestaetigt'))\n";
+	$sqlWhere= "WHERE (umzugsstatus IN ('geprueft', 'bestaetigt') AND IFNULL(U.umzugstermin, '') != '')\n";
 	break;
 	
 	case "abgeschlossene":
@@ -178,6 +178,7 @@ if(1) {
 
 if (!function_exists("get_iconStatus")) { function get_iconStatus($statVal, $date, $von ='', $statKey ='') {
         $alt = '';
+        if ($statKey)
         $alt.= (strtotime($date) ? date('d.m H:i', strtotime($date)) : $date);
         if ($statKey) $alt.= ' ' . $statKey . '(' . $statVal . ')';
         if ($von) $alt.= ' von ' . $von;
@@ -203,7 +204,11 @@ if ( is_array($all) ) foreach($all as $i => $item) {
 	$Umzuege[$i]["Antragsdatum"] = $item["antragsdatum"];
 
 
-    $Umzuege[$i]["Avisiert"]   = get_iconStatus($item["bestaetigt"], $item["umzugstermin"], $item["geprueft_von"], 'Liefertermin');
+	if ($item["geprueft"] == 'Ja') {
+        $Umzuege[$i]["Avisiert"]  = get_iconStatus($item["geprueft"], $item["geprueft_am"], $item["geprueft_von"], 'Avisiert');
+    } else {
+        $Umzuege[$i]["Avisiert"] = get_iconStatus($item["bestaetigt"], $item["bestaetigt_am"], $item["bestaetigt_von"], 'Avisiert');
+    }
 	$Umzuege[$i]["Geprueft"]      = get_iconStatus($item["geprueft"], $item["geprueft_am"], $item["geprueft_von"], 'Geprueft');
 	$Umzuege[$i]["Genehmigt"]     = get_iconStatus($item["genehmigt_br"], $item["genehmigt_br_am"], $item["genehmigt_br_von"]);
 	$Umzuege[$i]["Bestaetigt"]    = get_iconStatus($item["bestaetigt"], $item["bestaetigt_am"], $item["bestaetigt_von"]);
