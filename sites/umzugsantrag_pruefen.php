@@ -268,9 +268,14 @@ function umzugsantrag_fehler() {
             }
             return $error;
     }
-
-    $errLst = getLeistungenError();
-    if ($errLst && $errLst != 1) $error.= $errLst;
+    $leistungen = getRequest('L');
+//    die(print_r(['leistungen'=> $leistungen, 'REQUEST_L' => $_REQUEST['L']]));
+    if (!empty($leistungen) && is_array($leistungen) && count($leistungen)) {
+        $errLst = getLeistungenError();
+        if ($errLst && $errLst != 1) $error .= $errLst;
+    } else {
+        $error.= 'Es wurde kein Artikel ausgewählt!';
+    }
 	
     $MAError = false;
     foreach($MAPostItems as $i => $MAItem) {
