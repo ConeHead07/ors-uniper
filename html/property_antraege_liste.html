@@ -13,12 +13,12 @@
 <div id="ID128585" class="divTabbedNavigation" style="width:100%;"> 
 <div class="divTabbedList" style="width:100%;"> 
 <ul> 
-        <li {if $cat eq "neue"}class="activeTab"{/if}><a href="?s={$s}&cat=neue{if $allusers}&allusers=1{/if}" style="width:170px">Bestellungen</a></li>
-        <li {if $cat eq "bearbeitung"}class="activeTab"{/if} style="display:none"><a href="?s={$s}&cat=bearbeitung{if $allusers}&allusers=1{/if}" style="width:170px">Neue Antr&auml;ge von merTens</a></li>
-        <li {if $cat eq "aktive"}class="activeTab"{/if}><a href="?s={$s}&cat=aktive{if $allusers}&allusers=1{/if}" style="width:170px">Aktive Auftr&auml;ge</a></li><!-- Genehmigt -->
+        <li {if $cat eq "neue"}class="activeTab"{/if}><a href="?s={$s}&cat=neue{if $allusers}&allusers=1{/if}">Bestellungen</a></li>
+        <li {if $cat eq "bearbeitung"}class="activeTab"{/if} style="display:none"><a href="?s={$s}&cat=bearbeitung{if $allusers}&allusers=1{/if}">Neue Antr&auml;ge von merTens</a></li>
+        <li {if $cat eq "aktive"}class="activeTab"{/if}><a href="?s={$s}&cat=aktive{if $allusers}&allusers=1{/if}">Aktive Auftr&auml;ge</a></li><!-- Genehmigt -->
         <li {if $cat eq "abgelehnte"}class="activeTab"{/if} style="display:none"><a href="?s={$s}&cat=abgelehnte{if $allusers}&allusers=1{/if}" style="width:70px;color:#ffd700;">Abgelehnt</a></li>
-        <li {if $cat eq "abgeschlossene"}class="activeTab"{/if}><a href="?s={$s}&cat=abgeschlossene{if $allusers}&allusers=1{/if}" style="width:90px">Abgeschlossen</a></li>
-        <li {if $cat eq "stornierte"}class="activeTab"{/if} style="display:none"><a href="?s={$s}&cat=stornierte{if $allusers}&allusers=1{/if}" style="width:60px">Storno</a></li>
+        <li {if $cat eq "abgeschlossene"}class="activeTab"{/if}><a href="?s={$s}&cat=abgeschlossene{if $allusers}&allusers=1{/if}">Abgeschlossen</a></li>
+        <li {if $cat eq "stornierte"}class="activeTab"{/if} style="display:none"><a href="?s={$s}&cat=stornierte{if $allusers}&allusers=1{/if}">Storno</a></li>
         <li><a href="#ID128586" style="width:50px">&nbsp;</a></li><!--  -->
 </ul><br clear="all">
 </div>
@@ -67,7 +67,7 @@
   <div style="float:left;display:block;width:70px;">&nbsp;&nbsp;</div>
   <div style="float:left;display:block;width:70px;">&nbsp;&nbsp;</div>
   <div style="float:left;display:block;width:80px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
-  <div style="float:left;display:block;width:80px;">{$U.Geprueft}&nbsp;</div>
+  <div style="float:left;display:block;width:80px;" data-u="{$U.geprueft},{$U.bestaetigt}">{$U.Avisiert}&nbsp;</div>
   <div style="float:left;display:block;width:80px;">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}</div><br clear=left></div>
   </a></li>
 {/foreach}
@@ -76,10 +76,10 @@
 <p>
 - Infos nachlegen
 - Mails an Beteiligte verschicken
-- Gespr�chsnotizen
+- Gesprächsnotizen
 - Lagerbestand abfragen</p> 
 </div> --> 
-<!-- Add-On Flie�text(dyn) ID: 128588 END --> 
+<!-- Add-On Fließtext(dyn) ID: 128588 END -->
 </div> 
 <!-- TAB ITEM (128587) END --> 
  
