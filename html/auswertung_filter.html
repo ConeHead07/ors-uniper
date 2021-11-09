@@ -13,39 +13,41 @@
 
     <div id="Auswertung" class="divInlay">
         <form id="frmStat" name="frmStat" method="get" action="?">
-        <span style="border:0;font-weight:bold;font-size:12px;">Zeitraum
-            <select id="auswertungDatumsfeld" name="datumfeld">
-                <option value="umzugstermin">Lieferdatum</option>
-                <option value="antragsdatum">Auftragsdatum</option>
-                <!-- option value="geprueft_am">Bestätigungsdatum</option -->
-                <option value="berechnet_am">Rechnungsdatum</option>
-            </select>
-            Von: <input type="date" name="datumvon" value="{$datumvon}" xonchange="document.forms['frmStat'].submit()">
-            Bis: <input type="date" name="datumbis" value="{$datumbis}" xonchange="document.forms['frmStat'].submit()">
-        {*
-            <select onchange="document.forms['frmStat'].submit()" selected="{$kwvon}" name="kwvon" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
-        <option value="">auswählen</option>
-                {html_options options=$kw_options selected=$kwvon}
-        </select> bis
-        <select onchange="document.forms['frmStat'].submit()" selected="{$kwbis}" name="kwbis" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
-        <option value="">auswählen</option>
-                {html_options options=$kw_options selected=$kwbis}
-        </select>
-            *}
-        <input type="hidden" name="s" value="{$s}">
-        <input type="hidden" name="order" value="" id="orderby">
-        <input type="hidden" name="queriedorder" value="{$order}">
-        <input type="hidden" name="queriedodir" value="{$odir}">
+            <div id="frmFilterBox" style="margin-bottom:1rem; border:1px solid #E0E0E0;padding:1rem;border-radius:8px;">
+                <span style="border:0;font-weight:bold;">Zeitraum
+                    <select id="auswertungDatumsfeld" name="datumfeld">
+                        <option value="umzugstermin">Lieferdatum</option>
+                        <option value="antragsdatum">Auftragsdatum</option>
+                        <!-- option value="geprueft_am">Bestätigungsdatum</option -->
+                        <option value="berechnet_am">Rechnungsdatum</option>
+                    </select>
+                    Von: <input type="date" name="datumvon" style="border-bottom:1px solid #E0E0E0;text-align:right;padding-right:5px" value="{$datumvon}" xonchange="document.forms['frmStat'].submit()">
+                    Bis: <input type="date" name="datumbis" style="border-bottom:1px solid #E0E0E0;text-align:right;padding-right:5px"  value="{$datumbis}" xonchange="document.forms['frmStat'].submit()">
+                {*
+                    <select onchange="document.forms['frmStat'].submit()" selected="{$kwvon}" name="kwvon" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
+                <option value="">auswählen</option>
+                        {html_options options=$kw_options selected=$kwvon}
+                </select> bis
+                <select onchange="document.forms['frmStat'].submit()" selected="{$kwbis}" name="kwbis" style="border:0;font-weight:bold;font-size:12px;width:150px;">
+                <option value="">auswählen</option>
+                        {html_options options=$kw_options selected=$kwbis}
+                </select>
+                    *}
+                <input type="hidden" name="s" value="{$s}">
+                <input type="hidden" name="order" value="" id="orderby">
+                <input type="hidden" name="queriedorder" value="{$order}">
+                <input type="hidden" name="queriedodir" value="{$odir}">
 
-            <div>
-                <label><input type="checkbox" name="auftragsstatus[]" id="filter_beauftragt" value="beauftragt">Beauftragt</label>
-                <label><input type="checkbox" name="auftragsstatus[]" id="filter_avisiert" value="avisiert">Avisiert</label>
-                <label><input type="checkbox" name="auftragsstatus[]" id="filter_abgeschlossen" value="abgeschlossen">Abgeschlossen</label>
-                <label><input type="checkbox" name="auftragsstatus[]" id="filter_abgerechnet" value="abgerechnet">Abgerechnet</label>
+
+                    <div style="margin-top:5px;margin-bottom:5px;">
+                        <label style="margin-right:2rem"><input type="checkbox" name="auftragsstatus[]" id="filter_beauftragt" value="beauftragt"> Beauftragt</label>
+                        <label style="margin-right:2rem"><input type="checkbox" name="auftragsstatus[]" id="filter_avisiert" value="avisiert"> Avisiert</label>
+                        <label style="margin-right:2rem"><input type="checkbox" name="auftragsstatus[]" id="filter_abgeschlossen" value="abgeschlossen"> Abgeschlossen</label>
+                        <label style="margin-right:2rem"><input type="checkbox" name="auftragsstatus[]" id="filter_abgerechnet" value="abgerechnet"> Abgerechnet</label>
+                    </div>
+                        <button type="submit" class="btn btn-apply">Auswertung starten</button>
+                </span>
             </div>
-
-            <button type="submit" class="btn btn-apply">Auswertung starten</button>
-        </span>
             <script>
                 var datumFilterFeld = "{$datumfeld}";
                 var aAuftragsstatusFilter = {$aAuftragsstatus};

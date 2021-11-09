@@ -45,14 +45,14 @@
   <ul class="ulLinkList"> 
   <div>
       <div style="float:left;display:block;width:30px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=id{if $ofld eq "id" && $odir ne "DESC"}&odir=DESC{/if}">ID</a></div>
+      <div style="float:left;display:block;width:70px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=personalnr{if $ofld eq "personalnr" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
       <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Lieferdatum</a></div>
-      <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=land{if $ofld eq "land" && $odir ne "DESC"}&odir=DESC{/if}">Land</a></div>
+      <div style="float:left;display:block;width:70px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=land{if $ofld eq "land" && $odir ne "DESC"}&odir=DESC{/if}">Land</a></div>
       <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=ort{if $ofld eq "ort" && $odir ne "DESC"}&odir=DESC{/if}">Lieferort</a></div>
       <div style="float:left;display:block;width:60px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=plz{if $ofld eq "plz" && $odir ne "DESC"}&odir=DESC{/if}">PLZ</a></div>
-      <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=strasse{if $ofld eq "strasse" && $odir ne "DESC"}&odir=DESC{/if}">Stra&szlig;e</a></div>
-      <div style="float:left;display:block;width:70px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=personalnr{if $ofld eq "personalnr" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
+      <div style="float:left;display:block;width:180px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=strasse{if $ofld eq "strasse" && $odir ne "DESC"}&odir=DESC{/if}">Stra&szlig;e</a></div>
       {* <div style="float:left;display:block;width:70px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=umzug{if $ofld eq "umzug" && $odir ne "DESC"}&odir=DESC{/if}">Kategorie</a></div> *}
-      <div style="float:left;display:block;width:80px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Eingang</a></div>
+      <div style="float:left;display:block;width:90px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Auftr.Dat.</a></div>
       <div style="float:left;display:block;width:80px;font-weight:bold;color:#00869c;" title="Von merTens geprueft"><a href="{$ListBaseLink}&ofld=bestaetigt{if $ofld eq "bestaetigt" && $odir ne "DESC"}&odir=DESC{/if}">Avisiert</a></div>
       <div style="float:left;display:block;width:80px;font-weight:bold;color:#00869c;" title="Abgeschlossen"><a href="{$ListBaseLink}&ofld=abgeschlossen{if $ofld eq "abgeschlossen" && $odir ne "DESC"}&odir=DESC{/if}">Abgeschlossen</a></div><br clear=left>
   </div>
@@ -60,15 +60,15 @@
   <li><a class="iconRightContentMain" href="{$U.LinkOpen}">
   <div>
       <div style="float:left;display:block;width:30px;font-weight:bold;">{$U.aid}&nbsp;</div>
+      <div style="float:left;display:block;width:70px;">{$U.kid}</div>
       <div style="float:left;display:block;width:100px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
-      <div style="float:left;display:block;width:100px;font-weight:bold;">{$U.land}&nbsp;</div>
+      <div style="float:left;display:block;width:70px;">{if $U.land == "Deutschland"}DE{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if}&nbsp;</div>
       <div style="float:left;display:block;width:100px;">{$U.ort}&nbsp;</div>
       <div style="float:left;display:block;width:60px;">{$U.plz}&nbsp;</div>
-      <div style="float:left;display:block;width:75px;">{$U.strasse}&nbsp;</div>
-      <div style="float:left;display:block;width:70px;">&nbsp{$U.kid}&nbsp;</div>
+      <div style="float:left;display:block;width:180px;">{$U.strasse}&nbsp;</div>
       {* <div style="float:left;display:block;width:70px;">&nbsp;&nbsp;</div> *}
-      <div style="float:left;display:block;width:80px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
-      <div style="float:left;display:block;width:80px;" data-u="{$U.geprueft},{$U.bestaetigt}">{$U.Avisiert}&nbsp;</div>
+      <div style="float:left;display:block;width:90px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
+      <div style="float:left;display:block;width:80px;" data-u="{$U.geprueft},{$U.bestaetigt}">{$U.Avisiert}</div>
       <div style="float:left;display:block;width:80px;">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}</div><br clear=left>
   </div>
   </a></li>
