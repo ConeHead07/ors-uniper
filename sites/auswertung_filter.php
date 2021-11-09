@@ -153,24 +153,24 @@ elseif ($order == 'plz') {
 }
 
 
-$sql = 'SELECT a.*, '
-      . ' ua.personalnr AS kid,'
-      . ' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
-      . ' u.nachname, u.nachname stom, ua.nachname antragsteller_name, '
-      . ' ua.gruppe antragsteller_gruppe, '
-      . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe'
-      . ' FROM mm_umzuege a '
-      . ' JOIN mm_user ua ON a.antragsteller_uid = ua.uid '
-      . ' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id '
-      . ' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid '
-      . ' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) '
+$sql = 'SELECT a.*, ' . "\n"
+      . ' ua.personalnr AS kid,' . "\n"
+      . ' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, ' . "\n"
+      . ' u.nachname, u.nachname stom, ua.nachname antragsteller_name, ' . "\n"
+      . ' ua.gruppe antragsteller_gruppe, ' . "\n"
+      . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . "\n"
+      . ' FROM mm_umzuege a ' . "\n"
+      . ' JOIN mm_user ua ON a.antragsteller_uid = ua.uid ' . "\n"
+      . ' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id ' . "\n"
+      . ' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid ' . "\n"
+      . ' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) ' . "\n"
       . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
-      . ' LEFT JOIN mm_leistungspreismatrix lm ON('
-      . '    l.leistung_id = lm.leistung_id '
-      . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
-      . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))'
-      . ' ) '
-      . ' WHERE 1 '
+      . ' LEFT JOIN mm_leistungspreismatrix lm ON(' . "\n"
+      . '    l.leistung_id = lm.leistung_id ' . "\n"
+      . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . "\n"
+      . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . "\n"
+      . ' ) ' . "\n"
+      . ' WHERE 1 ' . "\n"
       . ' AND ' . $datumfeld . ' BETWEEN :von AND :bis ' . "\n";
 if (in_array('beauftragt', $aAuftragsstatus)) {
     $sql.= ' AND (umzugsstatus = "beauftragt" OR IFNULL(antragsdatum, "") != "") ' . "\n";
@@ -185,17 +185,12 @@ if (in_array('abgerechnet', $aAuftragsstatus)) {
     $sql.= ' AND (IFNULL(berechnet_am, "") != "") ' . "\n";
 }
 
-$sql.=  ' AND ('
-      . '  umzugsstatus IN ("genehmigt", "bestaetigt") '
-      . '   OR '
-      . '(umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja") '
-      . '  )'
-      . ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
-      . ' GROUP BY a.aid '
-      . ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ') ' : '')
-      . ' ORDER BY ' . $sqlOrderFld . ' ' . $odir;
-// echo '<pre>' . $sql . '</pre>>' . PHP_EOL;
+$sql.=  ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '') . "\n"
+      . ' GROUP BY a.aid ' . "\n"
+      . ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ') ' : '') . "\n"
+      . ' ORDER BY ' . $sqlOrderFld . ' ' . $odir . "\n";
 $rows = $db->query_rows($sql, 0, array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis)));
+//echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
 
 if ($s === 'vauswertung') $site_antrag = 'pantrag';
 
