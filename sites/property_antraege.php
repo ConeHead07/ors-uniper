@@ -205,10 +205,16 @@ if ( is_array($all) ) foreach($all as $i => $item) {
 
 
 
-	if ($item["geprueft"] == 'Ja') {
+	if (empty($item['umzugstermin'])) {
+        $Umzuege[$i]["Avisiert"]  = get_iconStatus('Init', '', '', 'Avisiert');
+    }
+    elseif ($item["geprueft"] == 'Ja') {
+        $Umzuege[$i]["Avisiert"]  = get_iconStatus($item["geprueft"], $item["geprueft_am"], $item["geprueft_von"], 'Avisiert');
+    }
+    elseif ($item["geprueft"] == 'Ja') {
         $Umzuege[$i]["Avisiert"]  = get_iconStatus($item["geprueft"], $item["geprueft_am"], $item["geprueft_von"], 'Avisiert');
     } else {
-        $Umzuege[$i]["Avisiert"] = get_iconStatus($item["bestaetigt"], $item["bestaetigt_am"], $item["bestaetigt_von"], 'Avisiert');
+        $Umzuege[$i]["Avisiert"] = get_iconStatus('Ja', $item['umzugstermin'], '', 'Avisiert');
     }
 	$Umzuege[$i]["Geprueft"]      = get_iconStatus($item["geprueft"], $item["geprueft_am"], $item["geprueft_von"], 'Geprueft');
 	$Umzuege[$i]["Genehmigt"]     = get_iconStatus($item["genehmigt_br"], $item["genehmigt_br_am"], $item["genehmigt_br_von"]);
