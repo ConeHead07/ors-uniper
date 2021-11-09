@@ -10,7 +10,7 @@
 <div id="SysInfoBox"></div>
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
-  {if !empty($AS.umzugstermin)}
+  {if empty($AS.umzugstermin)}
   <h1><span class="spanTitle">Bestellung #{$AS.aid}</span></h1>
   {else}
   <h1><span class="spanTitle">Auftrag #{$AS.aid}</span></h1>
