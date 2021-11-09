@@ -264,7 +264,8 @@ if ($export === 'csv') {
 }
 
 if (in_array($AS->arrDbdata['umzugsstatus'], array('temp', 'angeboten', 'zurueckgegeben', 'geprueft') )) {
-	$body_content = $Tpl->fetch('property_umzugsformular.tpl.html');
+    $body_content = $Tpl->fetch('property_umzugsformular.tpl.read.html');
+	// $body_content = $Tpl->fetch('property_umzugsformular.tpl.html');
 } else {
 	$body_content = $Tpl->fetch('property_umzugsformular.tpl.read.html');
 }
