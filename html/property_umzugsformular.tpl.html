@@ -22,10 +22,10 @@
 <table border=0 cellspacing=1 cellpadding=1>
   <tr>
     <td style="padding:0;width:180px;"><label for="termin" style="display:block;width:auto;">Umzugstermin:</label></td>
-    <td style="padding:0;width:250px;"><input type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
-	onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
+    <td style="padding:0;width:250px;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}{* <input type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
+	onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"> *}</td>
   </tr>
-  <tr>
+  <tr style="display: none">
     <td style="padding:0;"><label for="termin" style="display:block;width:auto;">Umzugszeit:</label></td>
     <td style="padding:0;"><input type="text" value='{$AS.umzugszeit|escape}'
 	id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
@@ -44,9 +44,10 @@
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
 </table>
+  <div style="display: none">
 <a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}&mode=property" style="display: none;" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Umzugsblatt / Druckansicht</a>
   <a href="%WebRoot%sites/lieferschein.php?id={$AS.aid}&mode=property" target="_Lieferschein{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Lieferschein</a>
-  | <a href="%WebRoot%index.php?s=pantrag&id={$AS.aid}&export=csv" target="_blank">CSV-Export</a>
+  | <a href="%WebRoot%index.php?s=pantrag&id={$AS.aid}&export=csv" target="_blank">CSV-Export</a></div>
 <br>
 
 <div>
