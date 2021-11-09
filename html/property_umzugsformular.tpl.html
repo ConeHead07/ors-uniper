@@ -12,24 +12,30 @@
 <span class="d-none">property_umzugsformular.tpl.html</span>
 <link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
-<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-<h1><span class="spanTitle">Auftrag #{$AS.aid}</span></h1>
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
+  {if empty($AS.umzugstermin)}
+  <h1><span class="spanTitle">Bestellung #{$AS.aid}</span></h1>
+  {else}
+  <h1><span class="spanTitle">Auftrag #{$AS.aid}</span></h1>
+  {/if}
 <p>
 <div id="Umzugsantrag" class="divInlay"> 
 <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
 <input type="hidden" name="AS[token]" value="{$AS.token}">
-<h2 style="margin:0;" data-site="property/umzugsformular/tpl/html">Genehmigungs-Status</h2>
+<h2 style="margin:0;" data-site="property/umzugsformular/tpl/html">Auftragsstatusn</h2>
 <table border=0 cellspacing=1 cellpadding=1>
   <tr>
     <td style="padding:0;width:180px;"><label for="termin" style="display:block;width:auto;">Ausführungstermin:</label></td>
     <td style="padding:0;width:250px;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}{* <input type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
 	onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"> *}</td>
   </tr>
+  {*
   <tr style="display: none">
     <td style="padding:0;"><label for="termin" style="display:block;width:auto;">Umzugszeit:</label></td>
     <td style="padding:0;"><input type="text" value='{$AS.umzugszeit|escape}'
 	id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
-  </tr>  
+  </tr>
+  *}
   <tr>
     <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">{if $AS.angeboten_am}Genehmigt{else}Best&auml;tigt{/if}:</label></td>
     <td style="padding:0;" class="status_{$AS.genehmigt_br}"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></td>
@@ -179,6 +185,7 @@
         value="Dateianhänge">
 <br>
 <br>
+  {*
 <strong>Status setzen: </strong> {$AS.umzugsstatus}
 <div class="statusConsole" xstyle="display:none;">
 {if $AS.umzugsstatus eq "geprueft" || $AS.umzugsstatus eq "angeboten"}
@@ -214,6 +221,7 @@
         onclick="umzugsantrag_set_status('genehmigt','Init')"
         value="Genehmigung aufheben">
 {/if}</div>
+  *}
 <!-- Debug-Btn:
 <input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">
 <input type="submit" onclick="return umzugsantrag_submit_debug('senden')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="senden">

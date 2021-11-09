@@ -17,7 +17,7 @@
   {/if}
   <p>
   <div id="Umzugsantrag" class="divInlay">
-    <h2 style="margin:0;" data-site="property/umzugsformular/tpl/read/html">Auftrags-Status</h2>
+    <h2 style="margin:0;" data-site="property/umzugsformular/tpl/read/html">Auftragsstatus</h2>
     <table xborder=0 xcellspacing=1 xcellpadding=1>
       {if !empty($AS.umzugstermin)}
       <tr>
@@ -131,7 +131,8 @@
     {include file="umzugsformular_attachments.tpl.read.html"}
 {/if}
 
-{if $AS.umzugsstatus eq "angeboten"}
+  {** status angeboten gibt es bei uniper nicht! *}
+{if 0 and $AS.umzugsstatus eq "angeboten"}
     <form name="frmUmzugsantrag" method="POST">
     <input type="hidden" name="AS[aid]" value="{$AS.aid}">
 
