@@ -51,10 +51,10 @@ $user["uid"];
 
 
 $sqlFrom= "FROM `".$CUA["Table"]."` U LEFT JOIN `".$CUM["Table"]."` M USING(aid)\n"
-           ." LEFT JOIN mm_stamm_gebaeude g  ON U.gebaeude = g.id \n"
-           ." LEFT JOIN mm_stamm_gebaeude vg ON U.von_gebaeude_id = vg.id \n"
-           ." LEFT JOIN mm_stamm_gebaeude ng ON U.nach_gebaeude_id = ng.id \n"
-           ." LEFT JOIN mm_user usr ON U.antragsteller_uid = usr.uid \n";
+    . " LEFT JOIN mm_stamm_gebaeude g  ON U.gebaeude = g.id \n"
+    . " LEFT JOIN mm_stamm_gebaeude vg ON U.von_gebaeude_id = vg.id \n"
+    . " LEFT JOIN mm_stamm_gebaeude ng ON U.nach_gebaeude_id = ng.id \n"
+    . " LEFT JOIN mm_user usr ON U.antragsteller_uid = usr.uid \n";
 // 'temp', 
 //'angeboten', 
 //'beantragt', 
@@ -148,8 +148,7 @@ $row = $db->query_singlerow($sql);
 $num_all = $row["count"];
 
 
-
-$sql = 'SELECT U.*, user.personalnr AS kid, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude' ."\n";
+$sql = 'SELECT U.*, usr.personalnr AS kid, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude' ."\n";
 $sql.= $sqlFrom.$sqlWhere;
 $sql.= "GROUP BY aid\n";
 $sql.= $orderBy."\n";
