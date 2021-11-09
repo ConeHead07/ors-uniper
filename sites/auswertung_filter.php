@@ -6,6 +6,9 @@ $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
 $datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'umzugstermin';
 
+
+$aAuftragsstatus = (!empty($_REQUEST['auftragsstatus'])) ? $_REQUEST['auftragsstatus'] : ['beauftragt'];
+
 $aValidDatumfelder = ['umzugstermin', 'antragsdatum', 'geprueft_am', 'berechnet_am'];
 if (!in_array($datumfeld, $aValidDatumfelder)) {
     $datumfeld = current($aValidDatumfelder);
@@ -168,18 +171,31 @@ $sql = 'SELECT a.*, '
       . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))'
       . ' ) '
       . ' WHERE 1 '
-      . ' AND ' . $datumfeld . ' BETWEEN :von AND :bis '
-      . ' AND ('
-//      . '  umzugsstatus IN ("genehmigt", "bestaetigt") '
-//      . '   OR '
+      . ' AND ' . $datumfeld . ' BETWEEN :von AND :bis ' . "\n";
+if (in_array('beauftragt', $aAuftragsstatus)) {
+    $sql.= ' AND (umzugsstatus = "beauftragt" OR IFNULL(antragsdatum, "") != "") ' . "\n";
+}
+if (in_array( 'avisiert', $aAuftragsstatus)) {
+    $sql.= ' AND (umzugsstatus = "bestaetigt" or bestaetigt="Ja" or IFNULL(umzugstermin, "") != "") ' . "\n";
+}
+if (in_array('abgeschlossen', $aAuftragsstatus)) {
+    $sql.= ' AND (umzugsstatus = "abgeschlossen" or abgeschlossen="Ja") ' . "\n";
+}
+if (in_array('abgerechnet', $aAuftragsstatus)) {
+    $sql.= ' AND (IFNULL(berechnet_am, "") != "") ' . "\n";
+}
+
+$sql.=  ' AND ('
+      . '  umzugsstatus IN ("genehmigt", "bestaetigt") '
+      . '   OR '
       . '(umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja") '
       . '  )'
       . ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
       . ' GROUP BY a.aid '
       . ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ') ' : '')
       . ' ORDER BY ' . $sqlOrderFld . ' ' . $odir;
+// echo '<pre>' . $sql . '</pre>>' . PHP_EOL;
 $rows = $db->query_rows($sql, 0, array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis)));
-// echo $db->error() . '<br>' . $db->lastQuery . '<br>' . PHP_EOL;
 
 if ($s === 'vauswertung') $site_antrag = 'pantrag';
 
@@ -195,6 +211,7 @@ $Tpl->assign('odir', $odir);
 $Tpl->assign('s', $s);
 $Tpl->assign('q', $query);
 $Tpl->assign('site_antrag', (!empty($site_antrag)?$site_antrag:'aantrag'));
+$Tpl->assign('aAuftragsstatus', json_encode($aAuftragsstatus));
 
 $body_content = $Tpl->fetch("auswertung_filter.html");
 

@@ -149,7 +149,7 @@ $num_all = $row["count"];
 
 
 
-$sql = 'SELECT U.*, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude' ."\n";
+$sql = 'SELECT U.*, user.personalnr AS kid, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude' ."\n";
 $sql.= $sqlFrom.$sqlWhere;
 $sql.= "GROUP BY aid\n";
 $sql.= $orderBy."\n";

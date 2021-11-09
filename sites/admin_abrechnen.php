@@ -5,7 +5,7 @@ $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
 $datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'umzugstermin';
 
-$aValidDatumfelder = ['umzugstermin', 'antragsdatum', 'geprueft_am', 'berechnet_am'];
+$aValidDatumfelder = ['umzugstermin', 'antragsdatum', 'geprueft_am', 'bestaetigt_am', 'abgeschlossen_am', 'berechnet_am'];
 if (!in_array($datumfeld, $aValidDatumfelder)) {
     echo "$datumfeld is not " . json_encode($aValidDatumfelder) . "!<br>\n";
     $datumfeld = current($aValidDatumfelder);

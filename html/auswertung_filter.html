@@ -9,7 +9,7 @@
 </style>
 {/literal}
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
-    <h1><span class="spanTitle">Auswertung abgeschlossener Aufträge</span></h1>
+    <h1><span class="spanTitle">Auswertung beauftragter Aufträge</span></h1>
 
     <div id="Auswertung" class="divInlay">
         <form id="frmStat" name="frmStat" method="get" action="?">
@@ -36,15 +36,31 @@
         <input type="hidden" name="order" value="" id="orderby">
         <input type="hidden" name="queriedorder" value="{$order}">
         <input type="hidden" name="queriedodir" value="{$odir}">
+
+            <div>
+                <label><input type="checkbox" name="auftragsstatus[]" id="filter_beauftragt" value="beauftragt">Beauftragt</label>
+                <label><input type="checkbox" name="auftragsstatus[]" id="filter_avisiert" value="avisiert">Avisiert</label>
+                <label><input type="checkbox" name="auftragsstatus[]" id="filter_abgeschlossen" value="abgeschlossen">Abgeschlossen</label>
+                <label><input type="checkbox" name="auftragsstatus[]" id="filter_abgerechnet" value="abgerechnet">Abgerechnet</label>
+            </div>
+
             <button type="submit" class="btn btn-apply">Auswertung starten</button>
         </span>
             <script>
                 var datumFilterFeld = "{$datumfeld}";
+                var aAuftragsstatusFilter = {$aAuftragsstatus};
             </script>
             <script>{literal}
             $(function() {
                 $("#auswertungDatumsfeld").val(datumFilterFeld);
                 // $("#auswertungDatumsfeld").find("option[value=" + datumFilterFeld + "]").prop("selected", true);
+
+                if (aAuftragsstatusFilter && Array.isArray(aAuftragsstatusFilter) && aAuftragsstatusFilter.length > 0) {
+                    for(var ai = 0; ai < aAuftragsstatusFilter.length; ai++) {
+                        var asel = '#filter_' + aAuftragsstatusFilter[ai];
+                        $(asel).prop("checked", true);
+                    }
+                }
 
                 var send = function() {
                     self.location.href = "?" + $("#frmStat").serialize();
