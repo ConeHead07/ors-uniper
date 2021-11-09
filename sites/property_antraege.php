@@ -171,7 +171,7 @@ if ($num_all > $num) {
 } else {
 	$ListBrowsing = ""; 
 }
-if(1) {
+if(0) {
     $ListBrowsing = "<div style='border:1px solid gray;border-radius: 5px;padding:.8rem;'>
 <pre style='background-color: #c9c9c9;color: #626262;padding:.8rem;'>" . $sql . "</pre>Num-Result: " . count($all) . "</div>" . $ListBrowsing;
 }
@@ -202,6 +202,7 @@ if ( is_array($all) ) foreach($all as $i => $item) {
 	$Umzuege[$i]["Antragsstatus"] =  $item["antragsstatus"];
 	$Umzuege[$i]["Termin"] = ($item["umzugstermin"]?$item["umzugstermin"]:$item["terminwunsch"]);
 	$Umzuege[$i]["Antragsdatum"] = $item["antragsdatum"];
+
 
 
 	if ($item["geprueft"] == 'Ja') {
