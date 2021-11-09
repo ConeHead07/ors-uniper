@@ -68,7 +68,7 @@ $sqlFrom= "FROM `".$CUA["Table"]."` U LEFT JOIN `".$CUM["Table"]."` M USING(aid)
  
 switch($cat) {
     case 'neue':
-        $sqlWhere= "WHERE (umzugsstatus = 'beantragt')\n";
+        $sqlWhere= "WHERE (umzugsstatus  IN ('angeboten', 'beantragt', 'erneutpruefen'))\n";
         // $sqlWhere= "WHERE ((umzugsstatus = 'beantrag' and usr.gruppe NOT LIKE \"admin%\")\n";
         break;
 
