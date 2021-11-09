@@ -56,7 +56,7 @@
   <div style="float:left;display:block;width:80px;font-weight:bold;color:#00869c;" title="Von merTens geprueft"><a href="{$ListBaseLink}&ofld=bestaetigt{if $ofld eq "bestaetigt" && $odir ne "DESC"}&odir=DESC{/if}">Avisiert</a></div>
   <div style="float:left;display:block;width:80px;font-weight:bold;color:#00869c;" title="Abgeschlossen"><a href="{$ListBaseLink}&ofld=abgeschlossen{if $ofld eq "abgeschlossen" && $odir ne "DESC"}&odir=DESC{/if}">Abgeschlossen</a></div><br clear=left></div>
 {foreach item=U from=$Umzuege}
-  <li><a class="iconRightContentMain" href="{$U.LinkOpen}">
+  <li><a class="iconRightContentMain" xhref="{$U.LinkOpen}">
   <div>
       <div style="float:left;display:block;width:30px;font-weight:bold;">{$U.aid}&nbsp;</div>
   <div style="float:left;display:block;width:100px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
