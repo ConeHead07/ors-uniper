@@ -28,6 +28,7 @@
 .tblList thead tr td,
 .tblList thead tr th,
 .tblList td.thead {
+	text-align: left;
 	previous-background:#0078dc;
 	border:#0078dc;
 	color:#333;

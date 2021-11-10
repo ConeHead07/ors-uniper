@@ -69,17 +69,17 @@ if ($ofld && isset($orderFields[$ofld])) {
 $ListBaseLink = '?s='.urlencode($s).'&cat='.urlencode($cat).($allusers ? '&allusers=1' : '');
 
 $sqlFrom  = "FROM `".$CUA['Table']."` U LEFT JOIN `".$CUM['Table']."` M USING(aid)\n"
-           . " LEFT JOIN mm_user user ON U.antragsteller_uid = user.uid \n "
-           . " LEFT JOIN mm_stamm_gebaeude g  ON U.gebaeude = g.id \n"
-           . " LEFT JOIN mm_stamm_gebaeude vg ON U.von_gebaeude_id = vg.id \n"
-           . " LEFT JOIN mm_stamm_gebaeude ng ON U.nach_gebaeude_id = ng.id \n"
-           . ' LEFT JOIN mm_umzuege_leistungen ul ON (U.aid = ul.aid) ' . "\n"
-           . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
-           . ' LEFT JOIN mm_leistungspreismatrix lm ON(' . "\n"
-           . '    l.leistung_id = lm.leistung_id ' . "\n"
-           . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . "\n"
-           . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . "\n"
-           . ' ) ' . "\n";
+    . " LEFT JOIN mm_user user ON U.antragsteller_uid = user.uid \n "
+    . " LEFT JOIN mm_stamm_gebaeude g  ON U.gebaeude = g.id \n"
+    . " LEFT JOIN mm_stamm_gebaeude vg ON U.von_gebaeude_id = vg.id \n"
+    . " LEFT JOIN mm_stamm_gebaeude ng ON U.nach_gebaeude_id = ng.id \n"
+    . ' LEFT JOIN mm_umzuege_leistungen ul ON (U.aid = ul.aid) ' . "\n"
+    . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n";
+$sqlJoinPreise = ' LEFT JOIN mm_leistungspreismatrix lm ON(' . "\n"
+    . '    l.leistung_id = lm.leistung_id ' . "\n"
+    . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . "\n"
+    . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . "\n"
+    . ' ) ' . "\n";
 $sqlWhere = "WHERE 1\n";
 
 if (!$allusers) {
@@ -144,15 +144,18 @@ switch($cat) {
 }
 
 $sql = "SELECT COUNT(distinct(U.aid)) count \n";
-$sql.= $sqlFrom.$sqlWhere;
+$sql.= $sqlFrom . $sqlJoinPreise . $sqlWhere;
 //$sql.= "GROUP BY aid\n";
 $row = $db->query_singlerow($sql);
 //echo $db->error()."<br>\nsql: $sql <br>\n";
 $num_all = $row['count'];
 
-$sql = 'SELECT U.*, user.personalnr AS kid, CONCAT(vg.stadtname, " ", vg.adresse) von_gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude ' . PHP_EOL;
+$sql = 'SELECT U.*,
+user.personalnr AS kid, 
+CONCAT(vg.stadtname, " ", vg.adresse) von_gebaeude,
+CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude ' . PHP_EOL;
 $sql.= ', SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . "\n";
-$sql.= $sqlFrom.$sqlWhere;
+$sql.= $sqlFrom . $sqlJoinPreise . $sqlWhere;
 $sql.= "GROUP BY aid\n";
 $sql.= $orderBy."\n";
 $sql.= "LIMIT $offset, $limit";
@@ -164,6 +167,12 @@ $sqlSummeTotal = 'SELECT SUM(summe) FROM (';
 $sqlSummeTotal.= substr($sql, 0, strpos($sql, "\nLIMIT "));
 $sqlSummeTotal.= ') AS SummenTable';
 $summeTotal = $db->query_one($sqlSummeTotal);
+
+$sqlArtikel = "SELECT l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, COUNT(distinct(U.aid)) count, group_concat(ul.aid) aids \n";
+$sqlArtikel.= $sqlFrom . "\n" . $sqlWhere . " AND l.leistung_id IS NOT NULL\n";
+$sqlArtikel.= 'GROUP BY l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . "\n";
+$artikelStat = $db->query_rows($sqlArtikel);
+// echo '<pre>' . $sqlArtikel . '</pre>' . "\n";
 
 if ($num_all > $num) {
 	$rlist_nav = new listbrowser(array(
@@ -234,6 +243,7 @@ $Tpl->assign('ofld', $ofld);
 $Tpl->assign('odir', $odir);
 $Tpl->assign('num_all', $num_all);
 $Tpl->assign('summeTotal', $summeTotal);
+$Tpl->assign('artikelStat', $artikelStat);
 
 $Tpl->assign('Umzuege', $Umzuege);
 

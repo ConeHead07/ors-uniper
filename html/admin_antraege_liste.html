@@ -100,7 +100,32 @@
   </a></li>
       {* <li>{$U|json_encode}</li> *}
 {/foreach}
-</ul> 
+</ul>
+<h2 style="margin:1rem 0 0 0;padding-bottom:0;">Enthaltene Artikel</h2>
+    <table class="tblList" width="100%">
+        <thead>
+            <tr>
+                <th>Artikel</th>
+                <th>Farbe</th>
+                <th>Größe</th>
+                <th>Menge</th>
+            </tr>
+
+        </thead>
+        <tbody>
+    {foreach item=A from=$artikelStat}
+    <tr>
+        <td>{$A.Bezeichnung}</td>
+        <td>{$A.Farbe}</td>
+        <td>{$A.Groesse}</td>
+        <td style="text-align:right">{$A.count}</td>
+    </tr>
+    {/foreach}
+        </tbody>
+    </table>
+    <pre style="display: none;">
+        {$artikelStat|print_r}
+    </pre>
 
 <!-- <h2>Startseite Mertens AG</h2> 
 <p>
