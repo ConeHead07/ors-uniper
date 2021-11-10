@@ -1,6 +1,12 @@
 <?php 
 
 function check_email($email) {
+    $email = trim($email);
+    $validate = filter_var($email, FILTER_VALIDATE_EMAIL);
+    if (!$validate) {
+        return false;
+    }
+
 	$email = trim($email);
 	$b = strpos($email," ");
 	$k = strpos($email,",");

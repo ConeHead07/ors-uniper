@@ -78,13 +78,22 @@ if (isset($_POST['register'])) {
             $errorFlds.= "<li>Bitte geben Sie im Feld Benutzer/E-Mail NUR den vorderen Teil Ihrer Firmen-Email an, der vor dem @-Zeicen steht!</li>\n";
             $arrErrFlds['user'] = 1;
         } elseif(!unique_fldval($user_connid, 'user', $arrFormVars['user'], $uid = '')) {
-            $errorFlds.= "<li>Es existiert bereits ein Benutzer mit dieser Kennung!</li>\n";
+            $errorFlds.= '<li>Es existiert bereits ein Benutzer mit dieser Kennung!</li>' . "\n";
             $arrErrFlds['user'] = 1;
         } elseif(!unique_fldval($user_connid, 'email', $arrFormVars['email'], $uid = '')) {
-            $errorFlds.= "<li>Es existiert bereits ein Benutzer mit dieser E-Mail-Adresse!</li>\n";
+            $errorFlds.= '<li>Es existiert bereits ein Benutzer mit dieser E-Mail-Adresse!</li>' . "\n";
             $arrErrFlds['user'] = 1;
         } else {
             $arrFormVars['email'] = $arrFormVars['user'] . $_CONF['regc_mail_tld_only'];
+
+            if (!check_email($arrFormVars['email'])) {
+                $errorFlds.= '<li>Ungültige E-Mail-Angabe!</li>' . "\n";
+                $arrErrFlds['email'] = 1;
+            } elseif (!unique_email($conn, $arrFormVars['email'])) {
+                $errorFlds.= "<li>Es existiert bereits ein User mit dieser E-Mail!</li>\n";
+                $errorFlds.= "<li>Falls Sie Ihr Passwort vergessen haben, können Sie es sich an Ihr E-Mail-Postfach schicken lassen!</li>\n";
+                $arrErrFlds['email'] = 1;
+            }
         }
     } else {
 
@@ -100,7 +109,7 @@ if (isset($_POST['register'])) {
             $errorFlds.= "<li>Bitte geben Sie eine E-Mail-Adresse an!</li>\n";
             $arrErrFlds['email'] = 1;
         } elseif (!check_email($arrFormVars['email'].$_CONF['regc_mail_tld_only'])) {
-            $errorFlds.= '<li>Ungültige E-Mail-Angabe!</li>\n';
+            $errorFlds.= '<li>Ungültige E-Mail-Angabe!</li>' . "\n";
             $arrErrFlds['email'] = 1;
         } elseif (!unique_email($conn, $arrFormVars['email'].$_CONF['regc_mail_tld_only'])) {
             $errorFlds.= "<li>Es existiert bereits ein User mit dieser E-Mail!</li>\n";
