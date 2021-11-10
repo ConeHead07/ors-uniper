@@ -166,7 +166,7 @@ if ($sendquery) {
 		$row = $db->query_singlerow($sql);
 		$num_all = $row["count"];
 		
-		$sql = "Select a.aid, a.aid AS \"TicketID\", u.personalnr AS kid, a.vorname AS Vorname, a.name AS Name, a.ort AS Ort, a.plz AS PLZ, a.strasse AS Strasse, "
+		$sql = "Select a.aid, a.aid AS \"AID\", u.personalnr AS kid, a.vorname AS Vorname, a.name AS Name, a.ort AS Ort, a.plz AS PLZ, a.strasse AS Strasse, "
 			. "a.land AS Land, a.umzugstermin AS Liefertermin, a.umzugsstatus AS Status\n";
 		$sql.= "FROM `" . $_TABLE["umzugsantrag"] . "` a "
 			. "LEFT JOIN `".$_TABLE["user"]."` u ON (a.antragsteller_uid = u.uid) \n"
@@ -236,11 +236,11 @@ if ($sendquery) {
 
         $rows2Tbl = '';
 		// $rows2Tbl.= '<pre>' . htmlentities($sql) . '</pre>';
-		$rows2Tbl.= $rlist_nav->get_nav("all")."<br>\n";
+		$rows2Tbl.= $rlist_nav->get_nav("all")."\n";
 		//if ($db->error()) 
 		//$rows2Tbl.= $db->error()."<br>\nsql:".$sql."<br>\n";
 		$wz = "";
-		$rows2Tbl.= "<table class=\"tblList\" border=1 cellpadding=1 cellspacing=0>\n";
+		$rows2Tbl.= "<table class=\"tblList\" width='100%' border=1 cellpadding=1 cellspacing=0>\n";
 		$rows2Tbl.= "<thead>\n";
 		$rows2Tbl.= "<td>#</td>";
 		$rows2Tbl.= "<td colspan=1>Aktion</td>";

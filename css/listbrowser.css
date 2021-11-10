@@ -21,9 +21,12 @@ div.lbsearchBox {
 div.lbnavBox,
 div.lbnavBox a,
 div.lbnavBox * {
-    color:#e8e8e8;
+    color: #7a7a7a;
     font-size:12px;
     font-weight:bold;
+}
+div.lbnavBox a {
+    color: #0075b5;
 }
 div.lbnavBox a {
 	text-decoration:none;
@@ -44,7 +47,7 @@ div.lbsearchBox select {
     margin:0;
     box-sizing: border-box;
     height:22px;
-    border:1px solid #CCCCCC;s
+    border:1px solid #CCCCCC;
 }
 
 div.lbsearchBox input[type=submit] {

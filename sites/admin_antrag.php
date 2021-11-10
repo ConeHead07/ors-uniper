@@ -45,13 +45,15 @@ $PreiseAnzeigen = ($user['darf_preise_sehen'] === 'Ja') ? 1 : 0;
 $Tpl->assign('PreiseAnzeigen', $PreiseAnzeigen);
 
 $sql = 'SELECT l.leistung_id, l.leistung_ref_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
-      .' leistungskategorie AS kategorie, l.leistungskategorie_id AS kategorie_id, preis_pro_einheit, image, '
-      .' m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis'
-      .' FROM mm_leistungskatalog l '
+      . ' leistungskategorie AS kategorie, l.leistungskategorie_id AS kategorie_id, '
+      . ' l.aktiv, l.verfuegbar, '
+      . ' preis_pro_einheit, image, '
+      . ' m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis'
+      . ' FROM mm_leistungskatalog l '
       . ' LEFT JOIN mm_leistungskategorie k ON l.leistungskategorie_id = k.leistungskategorie_id '
-      .'  LEFT JOIN mm_leistungspreismatrix m ON l.leistung_id = m.leistung_id '
-      .' WHERE l.aktiv = "Ja" '
-      .' ORDER BY kategorie, Bezeichnung, mx_von';
+      . '  LEFT JOIN mm_leistungspreismatrix m ON l.leistung_id = m.leistung_id '
+      . ' WHERE l.aktiv = "Ja" '
+      . ' ORDER BY kategorie, Bezeichnung, mx_von';
 
 $lkTreeItems = array();
 $lkTreeItemsJson = array();

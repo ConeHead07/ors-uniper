@@ -24,11 +24,11 @@ $offset = getRequest('offset', 0);
 $limit = getRequest('limit', 100);
 $ofld = getRequest('ofld', "");
 $odir = getRequest('odir', "");
-$cat = getRequest('cat', !$istUmzugsteam ? 'neue' : 'heute');
+$cat = getRequest('cat', '');
 $allusers = (int)getRequest('allusers', 1);
 
 if (!$istUmzugsteam) {
-    if (!in_array($cat,
+    if (empty($cat) || !in_array($cat,
         [
             'temp', 'zurueckgegeben', 'angeboten', 'abgelehnte', 'neue',
             'gepruefte', 'genehmigte', 'heute', 'aktive', 'abgeschlossene',
@@ -37,7 +37,7 @@ if (!$istUmzugsteam) {
         $cat = 'neue';
     }
 } else {
-    if (!in_array($cat,
+    if (empty($cat) || !in_array($cat,
         [ 'heute', 'aktive', 'abgeschlossene', ])) {
         $cat = 'heute';
     }

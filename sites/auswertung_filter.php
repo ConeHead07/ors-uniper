@@ -152,6 +152,20 @@ elseif ($order == 'plz') {
     $sqlOrderFld = 'a.plz';
 }
 
+$aWhereStatusAnyOf = [];
+if (in_array('beauftragt', $aAuftragsstatus)) {
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "beauftragt" OR IFNULL(antragsdatum, "") != "") ' . "\n";
+}
+if (in_array( 'avisiert', $aAuftragsstatus)) {
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "bestaetigt" or bestaetigt="Ja" or IFNULL(umzugstermin, "") != "") ' . "\n";
+}
+if (in_array('abgeschlossen', $aAuftragsstatus)) {
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "abgeschlossen" or abgeschlossen="Ja") ' . "\n";
+}
+if (in_array('abgerechnet', $aAuftragsstatus)) {
+    $aWhereStatusAnyOf[] = ' (IFNULL(berechnet_am, "") != "") ' . "\n";
+}
+
 
 $sql = 'SELECT a.*, ' . "\n"
       . ' ua.personalnr AS kid,' . "\n"
@@ -172,17 +186,8 @@ $sql = 'SELECT a.*, ' . "\n"
       . ' ) ' . "\n"
       . ' WHERE 1 ' . "\n"
       . ' AND ' . $datumfeld . ' BETWEEN :von AND :bis ' . "\n";
-if (in_array('beauftragt', $aAuftragsstatus)) {
-    $sql.= ' AND (umzugsstatus = "beauftragt" OR IFNULL(antragsdatum, "") != "") ' . "\n";
-}
-if (in_array( 'avisiert', $aAuftragsstatus)) {
-    $sql.= ' AND (umzugsstatus = "bestaetigt" or bestaetigt="Ja" or IFNULL(umzugstermin, "") != "") ' . "\n";
-}
-if (in_array('abgeschlossen', $aAuftragsstatus)) {
-    $sql.= ' AND (umzugsstatus = "abgeschlossen" or abgeschlossen="Ja") ' . "\n";
-}
-if (in_array('abgerechnet', $aAuftragsstatus)) {
-    $sql.= ' AND (IFNULL(berechnet_am, "") != "") ' . "\n";
+if (count($aWhereStatusAnyOf)) {
+    $sql.= ' AND ( ' . implode(' OR ', $aWhereStatusAnyOf) . ')' . "\n";
 }
 
 $sql.=  ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '') . "\n"
