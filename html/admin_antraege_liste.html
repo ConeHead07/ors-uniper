@@ -28,18 +28,22 @@
         <a href="{$ListBaseLink}&ofld=id&odir={$odir}&allusers={if $allusers}0{else}1{/if}">Wechsel zu {if $allusers}meine Auftr&auml;ge{else}Auftr&auml;gen aller User{/if}</a>
     </div>
 
+    <div>
 {if $cat eq "angeboten"}
-<h2 data-site="admin/antraege/liste/html">Es liegen {$num_all} von Mertens gestellte Aufträge vor</h2>
+<h2 style="float:left;" data-site="admin/antraege/liste/html">Es liegen {$num_all} von Mertens gestellte Aufträge vor</h2>
 {else}
-<h2 data-site="admin/antraege/liste/html">Es liegen {$num_all} {$cat} Aufträge vor</h2>
+<h2 style="float:left;" data-site="admin/antraege/liste/html">Es liegen {$num_all} {$cat} Aufträge vor</h2>
 {/if}
-
+        <h2 style="float:right">{$summeTotal|number_format:2:",":"."} &euro;</h2>
+        <span style="clear:both"></span>
+</div>
 {assign var="showLieferdatum" value=true}
 {assign var="showAbgeschlossen" value=true}
 {assign var="lieferdatumWidth" value=100}
 {assign var="abgeschlossenWidth" value=80}
 {assign var="serviceWidth" value=80}
-{assign var="strasseWidth" value=200}
+    {assign var="strasseWidth" value=180}
+    {assign var="summeWidth" value=60}
 
 {if $cat eq "neue"}
     {assign var="showLieferdatum" value=false}
@@ -54,22 +58,23 @@
 {if $ListBrowsing}{$ListBrowsing}{/if}
   <ul class="ulLinkList"> 
   <div>
-  <div style="float:left;display:block;width:30px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=id{if $ofld eq "id" && $odir ne "DESC"}&odir=DESC{/if}">ID</a></div>
-  <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=kid{if $ofld eq "kid" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
+  <div style="float:left;display:block;width:30px;font-weight:bold;color:#00869c;" title="Auftrags-ID"><a href="{$ListBaseLink}&ofld=id{if $ofld eq "id" && $odir ne "DESC"}&odir=DESC{/if}">ID</a></div>
+  <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;" title="Uniper MitarbeiterNr."><a href="{$ListBaseLink}&ofld=kid{if $ofld eq "kid" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
   {if $showLieferdatum}
   <div style="float:left;display:block;width:{$lieferdatumWidth}px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Lieferdatum</a></div>
   {/if}
   <div style="float:left;display:block;width:60px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=land{if $ofld eq "land" && $odir ne "DESC"}&odir=DESC{/if}">Land</a></div>
   <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=ort{if $ofld eq "ort" && $odir ne "DESC"}&odir=DESC{/if}">Lieferort</a></div>
-  <div style="float:left;display:block;width:50px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=plz{if $ofld eq 'plz' && $odir ne "DESC"}&odir=DESC{/if}">PLZ</a></div>
+  <div style="float:left;display:block;width:50px;font-weight:bold;color:#00869c;" title="Postleitzahl"><a href="{$ListBaseLink}&ofld=plz{if $ofld eq 'plz' && $odir ne "DESC"}&odir=DESC{/if}">PLZ</a></div>
   <div style="float:left;display:block;width:{$strasseWidth}px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=strasse{if $ofld eq 'strasse' && $odir ne "DESC"}&odir=DESC{/if}">Stra&szlig;e</a></div>
   <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=service{if $ofld eq 'service' && $odir ne 'DESC'}&odir=DESC{/if}">Service</a></div>
-  <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Auftr.Dat.</a></div>
+  <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;" title="Auftragsdatum"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Auftr.Dat.</a></div>
   <div style="float:left;display:none;width:35px;font-weight:bold;color:#00869c;" title="Von Property genehmigt"><a href="{$ListBaseLink}&ofld=genehmigt{if $ofld eq "genehmigt_br" && $odir ne "DESC"}&odir=DESC{/if}">Gen</a></div>
   <div style="float:left;display:none;width:35px;font-weight:bold;color:#00869c;" title="Von merTens geprueft / Avisisiert"><a href="{$ListBaseLink}&ofld=bestaetigt{if $ofld eq "bestaetigt" && $odir ne "DESC"}&odir=DESC{/if}">Avi</a></div>
   {if $showAbgeschlossen}
-  <div style="float:left;display:block;width:{$abgeschlossenWidth}px;font-weight:bold;color:#00869c;" title="Abgeschlossen"><a href="{$ListBaseLink}&ofld=abgeschlossen{if $ofld eq "abgeschlossen" && $odir ne "DESC"}&odir=DESC{/if}">Abgeschlossen</a></div>
+  <div style="float:left;display:block;width:{$abgeschlossenWidth}px;font-weight:bold;color:#00869c;" title="Abgeschlossen"><a href="{$ListBaseLink}&ofld=abgeschlossen{if $ofld eq "abgeschlossen" && $odir ne "DESC"}&odir=DESC{/if}">Abgeschl.</a></div>
   {/if}
+      <div style="float:left;display:block;width:{$summeWidth}px;font-weight:bold;color:#00869c;" title="Auftragswert"><a href="{$ListBaseLink}&ofld=summe{if $ofld eq "summe" && $odir ne "DESC"}&odir=DESC{/if}">Summe</a></div>
       <br clear=left></div>
 {foreach item=U from=$Umzuege}
   <li><a class="iconRightContentMain" href="{$U.LinkOpen}">
@@ -90,8 +95,10 @@
       {if $showAbgeschlossen}
       <div style="float:left;display:block;width:{$abgeschlossenWidth}px;">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}&nbsp;</div>
       {/if}
+      <div style="float:left;display:inline-block;width:{$summeWidth}px;text-align:right">{$U.summe|number_format:2:",":"."}&nbsp;</div>
       <br clear=left></div>
   </a></li>
+      {* <li>{$U|json_encode}</li> *}
 {/foreach}
 </ul> 
 
