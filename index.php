@@ -14,6 +14,7 @@ require_once("header.php");
 
 $topmenu = "";
 $bodby_content = "";
+$assetsRefreshId = '202111111205';
 
 // Seitenbereiche
 require_once $MConf["AppRoot"].$MConf["Inc_Dir"]."lib_admin_cms.php";
@@ -23,10 +24,11 @@ require_once $MConf["AppRoot"].$MConf["Modul_Dir"]."seitenbereiche/include/lib_m
 require_once $MConf["AppRoot"].$MConf["Modul_Dir"]."seitenbereiche/include/lib_menues_render.php";
 require_once $MConf["AppRoot"].$MConf["Inc_Dir"]."/lib_menu_embed_functions.php";
 
+$_rplAusgabe[0]['%assetsRefreshId%'] = $assetsRefreshId;
 $_rplAusgabe[0]["{theme}"] = $MConf["theme"];
 $_rplAusgabe[0]['<!-- {Headers} -->'] =
     "<link rel=\"stylesheet\" href=\"css/"
-    . (!empty($userlogin["uid"]) ? "ulogin.css" : "ulogout.css")."\">\n";
+    . (!empty($userlogin["uid"]) ? "ulogin.css" : "ulogout.css?$assetsRefreshId")."\">\n";
 
 $_rplAusgabe[0]["{pageTitle}"]  = $MConf["AppTitle"];
 $_rplAusgabe[0]["{user.uid}"]  = $user['uid'];
@@ -156,6 +158,7 @@ if ($srv_error && empty($show_login)) {
 //$body_content.= $MenuAccess."<br>\n";
 
 if (!empty($aTrackVars)) {
+    $_rplAusgabe[1]['%assetsRefreshId%'] = $assetsRefreshId;
     $_rplAusgabe[1]["{trackVars}"] = "";
     $_rplAusgabe[1]["<!-- {trackPostVars} -->"] = "";
 

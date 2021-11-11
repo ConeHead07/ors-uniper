@@ -7,8 +7,8 @@ if (basename(__FILE__)==basename($_SERVER["PHP_SELF"])) {
 <head>
 <?php } ?>
 	<title>Untitled</title>
-	<link rel="STYLESHEET" type="text/css" href="css/tablelisting.css">
-	<link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
+	<link rel="STYLESHEET" type="text/css" href="css/tablelisting.css?%assetsRefreshId%">
+	<link rel="stylesheet" type="text/css" href="css/umzugsformular.css?%assetsRefreshId%">
 	<style>
 	*, body *, html * { font-family:Arial,Helvetica,sans-serif; font-size:12px; }
 	.jLink { cursor:pointer; color:#00f; }
@@ -316,7 +316,7 @@ if (basename(__FILE__)==basename($_SERVER["PHP_SELF"])) {
 	
 	function get_SearchInputListeGebaeude(obj) {
 		if (!O('ortsFilter').value) {
-			alert("Wählen Sie erst einenStandort aus!");
+			alert("Wï¿½hlen Sie erst einenStandort aus!");
 			O("ortsFilter").focus();
 			//get_SearchInputListeOrte(O('ortsFilter'));
 			return false;
@@ -341,13 +341,13 @@ if (basename(__FILE__)==basename($_SERVER["PHP_SELF"])) {
 	
 	function get_SearchInputListeEtage(obj) {
 		if (!document.frmMAFilter.elements['ort'].value) {
-			alert("Wählen Sie erst einen Standort aus!");
+			alert("Wï¿½hlen Sie erst einen Standort aus!");
 			//O("ortsFilter").focus();
 			//get_SearchInputListeOrte();
 			return false;
 		}
 		if (!document.frmMAFilter.elements['gebaeude'].value) {
-			alert("Wählen Sie erst ein Gebaeude aus!");
+			alert("Wï¿½hlen Sie erst ein Gebaeude aus!");
 			//O("gebaeudeFilter").focus();
 			//get_SearchInputListeGebaeude();
 			return false;
@@ -368,7 +368,7 @@ if (basename(__FILE__)==basename($_SERVER["PHP_SELF"])) {
 	}
 	
 	function dropMa(MaId, rowId) {
-		if (!confirm("Arbeitsplatzdaten löschen?")) return false;
+		if (!confirm("Arbeitsplatzdaten lï¿½schen?")) return false;
 		
 		var sUrl = "bestandsaufnahme_loeschen.php?cat=mitarbeiter&id="+MaId+"&rowId="+rowId;
 		SendRequest(sUrl, 'frmEditData');
@@ -439,49 +439,49 @@ $BereichData = new bereich();
 $AbtlgData = new abteilung();
 $RaumData = new raumdata();
 
-// RaumTyp ändern
+// RaumTyp ï¿½ndern
 $editRaumtyp = getRequest("editRaumtyp", "");
 if ($editRaumtyp) {
 	$del_raum_id = getRequest("raum", "");
 	$editRaum["raum_typ_id"] = getRequest("raum_typ_id", "");
 	
 	if ($RaumData->setRaumtypById($del_raum_id, $editRaum["raum_typ_id"])) {
-		$msg.= "Raumtyp wurde geändert!<br>\n";
+		$msg.= "Raumtyp wurde geï¿½ndert!<br>\n";
 	} else {
-		$error.= "Raumtyp konnte nicht geändert werden!<br>\n";
+		$error.= "Raumtyp konnte nicht geï¿½ndert werden!<br>\n";
 		$error.= "Fehler: ".$RaumData->error."<br>\n";
 	}
 }
 
-// RaumNr ändern
+// RaumNr ï¿½ndern
 $editRaumnr = getRequest("editRaumnr", "");
 if ($editRaumnr) {
 	$del_raum_id = getRequest("raum", "");
 	$editRaum["raumnr"] = getRequest("raumnr", "");
 	
 	if ($RaumData->setRaumnrById($del_raum_id, $editRaum["raumnr"])) {
-		$msg.= "Raumnr wurde geändert!<br>\n";
+		$msg.= "Raumnr wurde geï¿½ndert!<br>\n";
 	} else {
-		$error.= "Raumnr konnte nicht geändert werden!<br>\n";
+		$error.= "Raumnr konnte nicht geï¿½ndert werden!<br>\n";
 		$error.= "Fehler: ".$RaumData->error."<br>\n";
 	}
 }
 
-// RaumFläche ändern
+// RaumFlï¿½che ï¿½ndern
 $editRaumflaeche = getRequest("editRaumflaeche", "");
 if ($editRaumflaeche) {
 	$edit_raum_id = getRequest("raum", "");
 	$editRaum["raumflaeche"] = getRequest("raumflaeche", "");
 	
 	if ($RaumData->setRaumflaecheById($edit_raum_id, $editRaum["raumflaeche"])) {
-		$msg.= "Raumfläche wurde geändert!<br>\n";
+		$msg.= "Raumflï¿½che wurde geï¿½ndert!<br>\n";
 	} else {
-		$error.= "Raumfläche konnte nicht geändert werden!<br>\n";
+		$error.= "Raumflï¿½che konnte nicht geï¿½ndert werden!<br>\n";
 		$error.= "Fehler: ".$RaumData->error."<br>\n";
 	}
 }
 
-// Raum löschen
+// Raum lï¿½schen
 $deleteRaum = getRequest("deleteRaum", "");
 if ($deleteRaum) {
 	$backUpDir = $MConf["AppRoot"]."geloescht/";
@@ -495,18 +495,18 @@ if ($deleteRaum) {
 				$db->query("INSERT INTO `mm_stamm_immobilien_geloescht` ".$sql);
 				$db->query_export_csv($sql, $backUpDir."geloeschte_raeume.csv", ";", "\"", "\"\"", true);
 				if ($RaumData->delete($del_raum_id)) {
-					$msg.= "Der Raumdatensatz wurde gelöscht!<br>\n";
+					$msg.= "Der Raumdatensatz wurde gelï¿½scht!<br>\n";
 				} else {
-					$error.= "Fehler beim Löschen! ".$RaumData->error."<br>\n";
+					$error.= "Fehler beim Lï¿½schen! ".$RaumData->error."<br>\n";
 				}
 			} else {
-				$error.= "Raum kann nicht gelöscht werden! Dem Raum sind noch ".$RaumData->numMitarbeiter($del_raum_id)." Mitarbeiter zugeordnet!<br>\n";
+				$error.= "Raum kann nicht gelï¿½scht werden! Dem Raum sind noch ".$RaumData->numMitarbeiter($del_raum_id)." Mitarbeiter zugeordnet!<br>\n";
 			}
 		} else {
 			$error.= "Es existiert kein Raum mit der ID:".$del_raum_id."!<br>\n";
 		}
 	} else {
-		$error.= "Fehlende RaumId für Löschvorgang!<br>\n";
+		$error.= "Fehlende RaumId fï¿½r Lï¿½schvorgang!<br>\n";
 	}
 }
 
@@ -516,7 +516,7 @@ if ($editRaumstatus) {
 	$edit_raum_id = getRequest("raum", "");
 	
 	if ($RaumData->updateRaumstatusById($edit_raum_id)) {
-		$msg.= "Raumstatus wurde geändert!<br>\n";
+		$msg.= "Raumstatus wurde geï¿½ndert!<br>\n";
 	} else {
 		$error.= "Raumstatus konnte nicht aktualisiert werden!<br>\n";
 		$error.= "Fehler: ".$RaumData->error."<br>\n";
@@ -725,7 +725,7 @@ if (count($rows)) {
 	$GFAbkSelect = array();
 	$GFData = new gf();
 	foreach($GFData->aSelect as $k => $v) $GFAbkSelect[$k] = $k;
-	$theadColTitles = "<tr><td>#</td><td>Anmkg</td><td>Löschen</td><td>Name</td><td>Vorname</td><td>AP-Nutzung</td><td>Firma (wenn ext.)</td><td>A-Nr.</td><td>GF</td><td>Bereich</td><td>Abtlg</td><td>E-Helfer</td><td>Räumgs-BA</td></tr>\n";
+	$theadColTitles = "<tr><td>#</td><td>Anmkg</td><td>Lï¿½schen</td><td>Name</td><td>Vorname</td><td>AP-Nutzung</td><td>Firma (wenn ext.)</td><td>A-Nr.</td><td>GF</td><td>Bereich</td><td>Abtlg</td><td>E-Helfer</td><td>Rï¿½umgs-BA</td></tr>\n";
 	if (!empty($rows)) for ($i = 0; $i < count($rows); $i++) {
 		$e = $rows[$i];
 		if ($e["abteilung"] && !$e["bereich"]) $e["bereich"] = getBereichByAbteilung($AbtlgData->aAbteilungen, $e["abteilung"]);
@@ -737,14 +737,14 @@ if (count($rows)) {
 			$RowNrStyle = (isset($RowsError[$e["id"]]) ? "color:#f00;" : (isset($RowsSaved[$e["id"]]) ? "color:#008000;" : ""));
 			$liste.= "<td class=\"cellInput\" style=\"text-align:right;font-weight:bold;$RowNrStyle\">$i</td>\n";
 			$liste.= "<td class=\"cellInput\"><div onclick=\"TC('{$rowId}i2', 'rowHide', '')\" xonmouseover=\"alert(O+'; '+'anmerkung[$i]: '+O('anmerkung[$i]'))\" class=\"jLink\">Anmkg</div></td>\n";
-			$liste.= "<td class=\"cellInput\"><div onclick=\"dropMa('".$e["id"]."', '{$rowId}'); \" class=\"jLink\">Löschen</div></td>\n";
+			$liste.= "<td class=\"cellInput\"><div onclick=\"dropMa('".$e["id"]."', '{$rowId}'); \" class=\"jLink\">Lï¿½schen</div></td>\n";
 			$liste.= "<td class=\"cellInput\">".get_InputText("name[$i]", $e["name"])."</td>\n";
 			$liste.= "<td class=\"cellInput\">".get_InputText("vorname[$i]", $e["vorname"])."</td>\n";
 			$liste.= "<td class=\"cellInput\">".get_SelectBox("extern[$i]", $e["extern"], array("Staff", "Extern", "Funktionsarbeitsplatz", "Flex-Position", "Spare"), false, "onchange=\"checkListExternFirma($i)\" default=\"".$e["extern"]."\"")."</td>\n";
 			$liste.= "<td class=\"cellInput\">".get_InputText("extern_firma[$i]", $e["extern_firma"])."</td>\n";
 			$liste.= "<td class=\"cellInput\">".get_InputText("arbeitsplatznr[$i]", $e["arbeitsplatznr"], "maxlength=3 size=4")."</td>\n";
 			
-			//$liste.= "<td>".get_SelectBox("imo_raum_id[$i]", $e["immobilien_raum_id"], array($e["immobilien_raum_id"]=>$e["ort"]." | Etg:".$e["etage"]." | R:".$e["raumnr"]." | m²:".$e["groesse_qm"]), true, "")."</td>\n";
+			//$liste.= "<td>".get_SelectBox("imo_raum_id[$i]", $e["immobilien_raum_id"], array($e["immobilien_raum_id"]=>$e["ort"]." | Etg:".$e["etage"]." | R:".$e["raumnr"]." | mï¿½:".$e["groesse_qm"]), true, "")."</td>\n";
 			$liste.= get_InputHidden("imo_raum_id[$i]", $e["immobilien_raum_id"]);
 			
 			//$liste.= "<td class=\"cellInput\">".get_SelectBox("abteilungs_kategorie[$i]", $e["abteilungs_kategorie"], array('GF'=>'GF','Bereich'=>'Bereich','Abteilung'=>'Abtlg',''=>'N.N.'), true, "onchange=\"checkListAbteilungsAuswahl($i)\"")."</td>\n";
@@ -813,7 +813,7 @@ if (!empty($thisRaum)) {
 		}
 	echo $raumTypOptions;
 	echo "</select>";
-	echo "<input type=\"submit\" name=\"editRaumtyp\" value=\"Raumtyp ändern\" style=\"width:150px;font-size:11px;\">\n";
+	echo "<input type=\"submit\" name=\"editRaumtyp\" value=\"Raumtyp ï¿½ndern\" style=\"width:150px;font-size:11px;\">\n";
 	echo "<input type=\"hidden\" name=\"raum\" value=\"".fb_htmlEntities($thisRaum["id"])."\">\n";
 	echo "<input type=\"hidden\" name=\"etage\" value=\"".fb_htmlEntities($thisRaum["etage"])."\">\n";
 	echo "<input type=\"hidden\" name=\"gebaeude\" value=\"".fb_htmlEntities($thisRaum["gebaeude"])."\">\n";
@@ -822,7 +822,7 @@ if (!empty($thisRaum)) {
 	
 	echo "<div><form method=\"post\" action=\"".basename($_SERVER["PHP_SELF"])."\" style=\"display:inline;margin:0;\">\n";
 	echo "<input type=\"text\" name=\"raumnr\" value=\"".fb_htmlEntities($thisRaum["raumnr"])."\" style=\"width:200px;font-size:11px;\">";
-	echo "<input type=\"submit\" name=\"editRaumnr\" value=\"Raumnr ändern\" style=\"width:150px;font-size:11px;\">\n";
+	echo "<input type=\"submit\" name=\"editRaumnr\" value=\"Raumnr ï¿½ndern\" style=\"width:150px;font-size:11px;\">\n";
 	echo "<input type=\"hidden\" name=\"raum\" value=\"".fb_htmlEntities($thisRaum["id"])."\">\n";
 	echo "<input type=\"hidden\" name=\"etage\" value=\"".fb_htmlEntities($thisRaum["etage"])."\">\n";
 	echo "<input type=\"hidden\" name=\"gebaeude\" value=\"".fb_htmlEntities($thisRaum["gebaeude"])."\">\n";
@@ -831,7 +831,7 @@ if (!empty($thisRaum)) {
 	
 	echo "<div><form method=\"post\" action=\"".basename($_SERVER["PHP_SELF"])."\" style=\"display:inline;margin:0;\">\n";
 	echo "<input type=\"text\" name=\"raumflaeche\" value=\"".fb_htmlEntities(str_replace(".", ",",$thisRaum["raum_flaeche"]))."\" style=\"width:200px;font-size:11px;\">";
-	echo "<input type=\"submit\" name=\"editRaumflaeche\" value=\"Raumfläche ändern\" style=\"width:150px;font-size:11px;\">\n";
+	echo "<input type=\"submit\" name=\"editRaumflaeche\" value=\"Raumflï¿½che ï¿½ndern\" style=\"width:150px;font-size:11px;\">\n";
 	echo "<input type=\"hidden\" name=\"raum\" value=\"".fb_htmlEntities($thisRaum["id"])."\">\n";
 	echo "<input type=\"hidden\" name=\"etage\" value=\"".fb_htmlEntities($thisRaum["etage"])."\">\n";
 	echo "<input type=\"hidden\" name=\"gebaeude\" value=\"".fb_htmlEntities($thisRaum["gebaeude"])."\">\n";
@@ -839,7 +839,7 @@ if (!empty($thisRaum)) {
 	echo "</form></div>\n";
 	
 	echo "<div><form method=\"get\" action=\"".basename($_SERVER["PHP_SELF"])."\" style=\"display:inline;margin:0;\">\n";
-	echo "<input type=\"submit\" name=\"deleteRaum\" value=\"Raum löschen\" style=\"width:350px;font-size:11px;color:#f00;\">\n";
+	echo "<input type=\"submit\" name=\"deleteRaum\" value=\"Raum lï¿½schen\" style=\"width:350px;font-size:11px;color:#f00;\">\n";
 	echo "<input type=\"hidden\" name=\"raum\" value=\"".fb_htmlEntities($thisRaum["id"])."\">\n";
 	echo "<input type=\"hidden\" name=\"etage\" value=\"".fb_htmlEntities($thisRaum["etage"])."\">\n";
 	echo "<input type=\"hidden\" name=\"gebaeude\" value=\"".fb_htmlEntities($thisRaum["gebaeude"])."\">\n";

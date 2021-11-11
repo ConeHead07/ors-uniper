@@ -6,7 +6,7 @@ require("sites/umzugsantrag_stdlib.php");
 <html>
 <head>
 	<title>Untitled</title>
-	<link rel="STYLESHEET" type="text/css" href="css/tablelisting.css">
+	<link rel="STYLESHEET" type="text/css" href="css/tablelisting.css?%assetsRefreshId%">
 	<script>
 	function checkCheckbox(inputName, check, filterValue) {
 		var aElements = document.getElementsByName(inputName);

@@ -16,17 +16,19 @@
     <!-- META-KEYWORDS - END --> 
     
     <!-- Mertens GLOBAL CSS BEGIN --> 
-    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/mertens.global.v2.css" /> 
-    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/cms.global.v2.css" /> 
-    <link rel="stylesheet" type="text/css" media="print" href="{WebRoot}themes/{theme}/css/print.global.v2.css" /> 
-    <link rel="stylesheet" type="text/css" href="{WebRoot}themes/{theme}/css/tabbed.ul.navigation.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/header.css" />
-
+    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/mertens.global.v2.css?%assetsRefreshId%" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/cms.global.v2.css?%assetsRefreshId%" />
+    <link rel="stylesheet" type="text/css" media="print" href="{WebRoot}themes/{theme}/css/print.global.v2.css?%assetsRefreshId%" />
+    <link rel="stylesheet" type="text/css" href="{WebRoot}themes/{theme}/css/tabbed.ul.navigation.css?%assetsRefreshId%" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{WebRoot}themes/{theme}/css/header.css?%assetsRefreshId%" />
+    <style>
+    </style>
     <style>
       /* Override property_old/css/mertens.global.v2.css */
       div.divHeader {
         background: none;
         background-color: white;
+        line-height: 140%;
       }
       div.divHeader .header-title {
         position:absolute;
@@ -48,6 +50,7 @@
         position: relative;
         background: none;
         background-color: #ffffff;
+        font-size: .8rem;
       }
 
       div.divHeader .header-title,
@@ -69,12 +72,13 @@
       {
         color: #333333;
         border: 0;
+        box-sizing: content-box;
       }
 
       ul.ulNavigationMain li a:hover {
         background: #fff;
         border:0;
-        border-bottom: 2px solid #0078dc;
+        --previous-border-bottom: 2px solid #0078dc;
         previous-border-bottom-color: #C80000;
       }
       ul.ulNavigationMain li.liActive {
@@ -105,23 +109,41 @@
         text-decoration: underline;
       }
       div#divSubNavigationHeader {
-        width: 956px;
+        width: 100%;
+        max-width: 956px;
         background: #ffffff;
         background-color: #ffffff;
         position: relative;
-        height: 25px;
+        height: auto;
         border-top: 1px solid rgba(51, 51, 51,0.1);
-        display: inline-block;
+        display: inline-flex;
         margin-left: 3px;
+        border-bottom: 2px solid #E0E0E0;
+        border-right: 2px solid #e0e0e0;
+        justify-content: space-between;
+        padding-top: 0.4rem;
+        padding-right: 0.4rem;
+        box-sizing: border-box;
       }
       ul.ulNavigationMain li:first-child a {
         padding-left: .5rem;
+      }
+      ul.ulNavigationTop, ul.ulLogin,
+      ul.ulNavigationTop *, ul.ulLogin * {
+        font-size: .8rem;
+      }
+
+      div#KundenabnahmeBox,
+      div#KundenabnahmeBox *,
+      div#KundenabnahmeBox label,
+      div#KundenabnahmeBox input {
+        font-size: .9rem;
       }
     </style>
     <!-- Mertens GLOBAL CSS END --> 
 	
     <!-- MoveManagement-Extensions BEGIN -->
-    <link rel="STYLESHEET" type="text/css" href="js/cluetip/jquery.cluetip.css" />
+    <link rel="STYLESHEET" type="text/css" href="js/cluetip/jquery.cluetip.css?%assetsRefreshId%" />
     <!-- <script xsrc="{WebRoot}js/jquery.js"></script> -->
     <script src="{WebRoot}js/jquery-1.9.1.js"></script>
     <script src="{WebRoot}js/jquery.form.3.51.0.js"></script>
@@ -143,50 +165,49 @@
               closePosition: 'title',
               closeText: '<img src="./js/cluetip/images/cross_white2.png" alt="close" />'
             });
+          $('.jtooltip-local').cluetip({
+            local: true,
+            cluetipClass: 'jtip',
+            arrows: true,
+            dropShadow: false,
+            hoverIntent: false,
+            sticky: true,
+            mouseOutClose: true,
+            closePosition: 'title',
+            closeText: '<img src="./js/cluetip/images/cross_white2.png" alt="close" />'
+          });
 	 });
 	</script>
 	<!-- MoveManagement-Extensions END -->
  
-    <!-- Mertens ADDITIONAL JS/CSS BEGIN --> 
-    <!--[if IE 6]>
-    <link rel="stylesheet" type="text/css" media="screen" href="http://www.Mertens.de/styles/Mertens.ie6.v2.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://www.Mertens.de/styles/cms.ie6.v2.css" />
-    <![endif]--> 
-    <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="http://www.Mertens.de/styles/Mertens.ie7.v2.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://www.Mertens.de/styles/cms.ie7.v2.css" />
-    <![endif]--> 
-    <!--[if IE 8]>
-    <link rel="stylesheet" type="text/css" media="screen" href="http://www.Mertens.de/styles/Mertens.ie8.v2.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="http://www.Mertens.de/styles/cms.ie8.v2.css" />
-    <![endif]--> 
+    <![endif]-->
     <!-- Mertens ADDITIONAL JS/CSS END --> 
-    <link  href="{WebRoot}module/datepicker/DatePicker.css" rel="stylesheet" media="screen" />
-    <link  href="{WebRoot}css/listbrowser.css" rel="stylesheet" media="screen" />
+    <link  href="{WebRoot}module/datepicker/DatePicker.css?%assetsRefreshId%" rel="stylesheet" media="screen" />
+    <link  href="{WebRoot}css/listbrowser.css?%assetsRefreshId%" rel="stylesheet" media="screen" />
 
-    <script src="{WebRoot}js/PageInfo.js"></script>
-    <script src="{WebRoot}module/datepicker/DatePicker.js"></script>
-    <script src="{WebRoot}module/combobox/ComboBox.js"></script>
-    <script src="{WebRoot}module/lightbox/LightBox.js"></script>
-    <script src="{WebRoot}js/navigation.js"></script>
-    <script src="{WebRoot}js/subbox.js"></script>
-    <script src="{WebRoot}js/GetObjectDisplay.js"></script>
+    <script src="{WebRoot}js/PageInfo.js?%assetsRefreshId%"></script>
+    <script src="{WebRoot}module/datepicker/DatePicker.js?%assetsRefreshId%"></script>
+    <script src="{WebRoot}module/combobox/ComboBox.js?%assetsRefreshId%"></script>
+    <script src="{WebRoot}module/lightbox/LightBox.js?%assetsRefreshId%"></script>
+    <script src="{WebRoot}js/navigation.js?%assetsRefreshId%"></script>
+    <script src="{WebRoot}js/subbox.js?%assetsRefreshId%"></script>
+    <script src="{WebRoot}js/GetObjectDisplay.js?%assetsRefreshId%"></script>
 
-    <script src="{WebRoot}js/FbAjaxUpdater.js"></script>
+    <script src="{WebRoot}js/FbAjaxUpdater.js?%assetsRefreshId%"></script>
 
-    <script src="{WebRoot}js/EventHandler.js"></script>
+    <script src="{WebRoot}js/EventHandler.js?%assetsRefreshId%"></script>
 <!--	<script src="{WebRoot}js/SelBox_LiveSearch.js"></script>-->
     <script src="{WebRoot}js/SelBox.js"></script>
 
-    <link  href="{WebRoot}module/combobox/ComboBox.css" rel="stylesheet" media="screen" />
-    <link  href="{WebRoot}/css/tablelisting.css" rel="stylesheet" media="screen" />
-    <link  href="{WebRoot}/css/tablelisting.print.css" rel="stylesheet" media="print" />
-    <link  href="{WebRoot}css/navigation.css" rel="stylesheet" media="screen" />
-    <link  href="{WebRoot}css/forms.css" rel="stylesheet" media="screen" />
+    <link  href="{WebRoot}module/combobox/ComboBox.css?%assetsRefreshId%" rel="stylesheet" media="screen" />
+    <link  href="{WebRoot}/css/tablelisting.css?%assetsRefreshId%" rel="stylesheet" media="screen" />
+    <link  href="{WebRoot}/css/tablelisting.print.css?%assetsRefreshId%" rel="stylesheet" media="print" />
+    <link  href="{WebRoot}css/navigation.css?%assetsRefreshId%" rel="stylesheet" media="screen" />
+    <link  href="{WebRoot}css/forms.css?%assetsRefreshId%" rel="stylesheet" media="screen" />
             
-    <link  href="{WebRoot}module/jqupload/css/uploadfile.css" rel="stylesheet" media="screen" />
-    <link  href="{WebRoot}module/jqupload/css/uploadfile.custom.css" rel="stylesheet" media="screen" />
-    <script src="{WebRoot}module/jqupload/js/jquery.uploadfile.js"></script>
+    <link  href="{WebRoot}module/jqupload/css/uploadfile.css?%assetsRefreshId%" rel="stylesheet" media="screen" />
+    <link  href="{WebRoot}module/jqupload/css/uploadfile.custom.css?%assetsRefreshId%" rel="stylesheet" media="screen" />
+    <script src="{WebRoot}module/jqupload/js/jquery.uploadfile.js?%assetsRefreshId%"></script>
     <!-- {Headers} -->
  </head> 
   <body> 
@@ -229,16 +250,17 @@
         <!-- {topmenu} -->
 	<!-- {MenuGroup:top:Sub} -->
         </ul>
-        </div>
-        <!-- NAVIGATION TOP - END -->
-        <!-- LOGIN & REGISTER - BEGIN -->
-        <ul class="ulLogin">
-          <!-- SSI DISABLED --><!--
+
+          <!-- LOGIN & REGISTER - BEGIN -->
+          <ul class="ulLogin">
+            <!-- SSI DISABLED --><!--
           <li id="xliLoginID"><a class="aLink iconLogin" href="login.php">Login</a></li>
           <li id="liLogoutID"><a class="aLink iconLogout" href="?logout=1">Logout</a></li>  -->
-		  <!-- {MenuGroup:login} -->
-                  <li id="ulWhoami">{user.name}</li>
-        </ul>
+            <!-- {MenuGroup:login} -->
+            <li id="ulWhoami">{user.name}</li>
+          </ul>
+        </div>
+        <!-- NAVIGATION TOP - END -->
         <!-- LOGIN & REGISTER - END -->
 	<li id="liLogoutID" style="list-style: none;list-style-type:none;"><a class="aLink xiconLogout" href="?logout=1">&nbsp;</a></li>
         <!-- CONTENTPAGE 1+DYN COLUMN - BEGIN -->

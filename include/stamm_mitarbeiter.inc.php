@@ -534,5 +534,3 @@ $_CONF["stamm_mitarbeiter"] = array(
 
 	)
 );
-// ENDE BASE CONF
-?>

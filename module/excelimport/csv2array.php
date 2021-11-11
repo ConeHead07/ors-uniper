@@ -23,13 +23,13 @@ function fit_colnames4mysql($colname) {
 		"." => "",
 		"," => "",
 		"#" => "",
-		"ä" => "ae",
-		"Ä" => "ae",
-		"ö" => "oe",
-		"Ö" => "oe",
-		"Ü" => "ue",
-		"ü" => "ue",
-		"ß" => "ss"
+		"ï¿½" => "ae",
+		"ï¿½" => "ae",
+		"ï¿½" => "oe",
+		"ï¿½" => "oe",
+		"ï¿½" => "ue",
+		"ï¿½" => "ue",
+		"ï¿½" => "ss"
 	);
 	$colname = ucfirst(strtolower(strtr($colname, $a)));
 	return $colname;
@@ -158,7 +158,7 @@ if (isset($_FILES[$fuploadname])) {
 			break;
 			
 			default:
-			$msg.= "#".__LINE__." Ungültige Dateierweiterung: ".strtolower(implode(".",array_slice($t,-1)))."<br>\n";
+			$msg.= "#".__LINE__." Ungï¿½ltige Dateierweiterung: ".strtolower(implode(".",array_slice($t,-1)))."<br>\n";
 		}
 		$tmp_nr = 2;
 		$max_nr = 100;
@@ -176,8 +176,8 @@ if (isset($_FILES[$fuploadname])) {
 $show_csv_files = (!empty($_GET["show_csv_files"]) || !$csv_file && !file_exists($csv_dir.$csv_file)) ? true : false;
 if ($del_file) {
 	if (file_exists($csv_dir."/".$del_file)) {
-		if (unlink($csv_dir."/".$del_file)) $msg.= "Datei <strong>$del_file</strong> wurde gelöscht!<br>\n";
-		else $msg.= "Datei <strong>$del_file</strong> konnte <strong>nicht</strong> gelöscht werden!<br>\n";
+		if (unlink($csv_dir."/".$del_file)) $msg.= "Datei <strong>$del_file</strong> wurde gelï¿½scht!<br>\n";
+		else $msg.= "Datei <strong>$del_file</strong> konnte <strong>nicht</strong> gelï¿½scht werden!<br>\n";
 	} else  $msg.= "Datei <strong>$del_file</strong> existiert <strong>nicht</strong>!<br>\n";
 }
 
@@ -195,7 +195,7 @@ if ($dp) {
 				<td align=right>".$fs."</td>
 				<td>"."<input type=\"radio\" id=\"f{$fi}\" name=\"csv_file\" value=\"".fb_htmlEntities($file)."\"><span onclick=\"O('f{$fi}').click()\" style=\"cursor:pointer;\">".$file." </span> </td>
 				<td>"."<a href=\"".$csv_dir.$file."\" target=_blank style=\"color:#00f;\">Anzeigen </a> </td>
-				<td>"."<a href=\"?".$trackVars."&show_csv_files=1&del_file=".urlencode($file)."\" style=\"color:#f00;\">Löschen </a> </td>
+				<td>"."<a href=\"?".$trackVars."&show_csv_files=1&del_file=".urlencode($file)."\" style=\"color:#f00;\">Lï¿½schen </a> </td>
 			</tr>\n";
 			$aCsvFiles[] = $file;
 		}
@@ -216,12 +216,12 @@ if (isset($import) && !empty($mapCsvDst)) {
 	foreach($mapCsvDst as $k => $v) {
 		if ($v) {
 			if (isset($aChckDstFld[$v])) {
-				$error.= "Fehler! Doppelte Feldzuweisung für Feld $v!<br>\n";
+				$error.= "Fehler! Doppelte Feldzuweisung fï¿½r Feld $v!<br>\n";
 				$aChckDstFld[$v]++;
 			} else $aChckDstFld[$v] = 1;
 		}
 	}
-	if (!count($aChckDstFld)) $error.= "Es wurden keine Felder für den Import zugewiesen!<br>\n";
+	if (!count($aChckDstFld)) $error.= "Es wurden keine Felder fï¿½r den Import zugewiesen!<br>\n";
 	
 	if (!$error) {
 		$Csv = new CsvXls2Array();
@@ -265,8 +265,8 @@ if (isset($import) && !empty($mapCsvDst)) {
 			
 			$db->query("TRUNCATE TABLE `".$tblConf["Table"]."`");
 			$num_del = $db->affected_rows();
-			$msg.= "Für den Import wurde die Tabelle `".$tblConf["Table"]."` geleert. $num_del Datensätze!<br>\n";
-			if ($csvTblBackup) $msg.= "Zuvor wurde ein Backup, dass über das csv-Verzeichnis wieder eingespielt werden kann!<br>\n";
+			$msg.= "Fï¿½r den Import wurde die Tabelle `".$tblConf["Table"]."` geleert. $num_del Datensï¿½tze!<br>\n";
+			if ($csvTblBackup) $msg.= "Zuvor wurde ein Backup, dass ï¿½ber das csv-Verzeichnis wieder eingespielt werden kann!<br>\n";
 		}
 		$db->query($SQL);
 		if ($db->error()) $error.= $db->error() . '<pre>' . $SQL . '</pre>' . PHP_EOL;
@@ -316,7 +316,7 @@ if ((empty($import) || $error) && $importTblKey && $csv_file && file_exists($csv
 		$sMapTable.= "</td></tr>\n";
 	}
 	$sMapTable.= "</table>\n";
-	$sMapTable.= "<input type=\"checkbox\" name=\"saveMapTable\">Zuordnung für Tabelle $importTblKey speichern<br>\n";
+	$sMapTable.= "<input type=\"checkbox\" name=\"saveMapTable\">Zuordnung fï¿½r Tabelle $importTblKey speichern<br>\n";
 	$sMapTable.= "<input type=\"checkbox\" name=\"cleanImportTable\">Tabelle vor Import leeren<br>\n";
 	$sMapTable.= "<input type=\"submit\" name=\"import\" value=\"importieren\"><br>\n";
 	$sMapTable.= "</form>\n";
@@ -352,23 +352,23 @@ if ($db_import) {
 		font-weight:bold;
 	}
 	</style>
-	<script src="./js/PageInfo.js" type="text/javascript"></script> 
-	<script src="./js/GetObjectDisplay.js" type="text/javascript"></script> 
-	<script src="./module/datepicker/DatePicker.js"></script> 
-	<link  href="./module/datepicker/DatePicker.css" rel="stylesheet" media="screen"> 
-	<link  href="./module/ComboBox/ComboBox.css" rel="stylesheet" media="screen">
-	<script src="./module/ComboBox/ComboBox.js"></script> 
+	<script src="./js/PageInfo.js?%assetsRefreshId%" type="text/javascript"></script>
+	<script src="./js/GetObjectDisplay.js?%assetsRefreshId%" type="text/javascript"></script>
+	<script src="./module/datepicker/DatePicker.js?%assetsRefreshId%"></script>
+	<link  href="./module/datepicker/DatePicker.css?%assetsRefreshId%" rel="stylesheet" media="screen">
+	<link  href="./module/ComboBox/ComboBox.css?%assetsRefreshId%" rel="stylesheet" media="screen">
+	<script src="./module/ComboBox/ComboBox.js?%assetsRefreshId%"></script>
 </head>
 
 <body>
 <?php
 if ($error) echo "<div style=\"border:1px solid #f00;padding:5px;color:#000080;\">".$error."</div>\n";
 $msg.= "<form enctype=\"multipart/form-data\" method=\"post\" style=\"margin:0px;display:inline;\">\n";
-$msg.= "<a href=\"?".$trackVars."&show_csv_files=1\" onclick=\"ChgD('csvList'); return false;\">Vorhandene CSV-Datei aus Liste auswählen ...</a><br>\n";
+$msg.= "<a href=\"?".$trackVars."&show_csv_files=1\" onclick=\"ChgD('csvList'); return false;\">Vorhandene CSV-Datei aus Liste auswï¿½hlen ...</a><br>\n";
 if ($file_liste) $msg.= "<div id=\"csvList\" style=\"display:".($show_csv_files?"":"none")."\">$file_liste</div><br>\n";
-$msg.= "Neue Datei für Import hochladen<br>\n";
+$msg.= "Neue Datei fï¿½r Import hochladen<br>\n";
 $msg.= "<input type=\"file\" name=\"$fuploadname\"><br>\n";
-$msg.= "Vor dem Import müssen Excel-Dateien als CSV-Dateien exportiert und mit der Dateiendung .csv versehen worden sein!<br>\n";
+$msg.= "Vor dem Import mï¿½ssen Excel-Dateien als CSV-Dateien exportiert und mit der Dateiendung .csv versehen worden sein!<br>\n";
 $msg.= "<br>\n";
 $msg.= "Importieren in:<br>\n";
 $msg.= "<select name=\"importTblKey\">\n";

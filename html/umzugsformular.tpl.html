@@ -2,13 +2,13 @@
 {assign var="laenderLst" value="','"|explode:$laenderCsv}
 
 {literal}
-<script src="{WebRoot}js/FbAjaxUpdater.js" type="text/javascript"></script>
-<script src="{WebRoot}js/PageInfo.js" type="text/javascript"></script>
-<link rel="STYLESHEET" type="text/css" href="{WebRoot}css/SelBox.easy.css">
-<script src="{WebRoot}js/ObjectHandler.js" type="text/javascript"></script>
-<script src="{WebRoot}js/SelBox.easy.js" type="text/javascript"></script>
-<script src="{WebRoot}js/umzugsformular.easy.js?lm=20101021" type="text/javascript"></script>
-<script src="{WebRoot}js/geraeteumzug.easy.js?lm=20101021" type="text/javascript"></script>
+<script src="{WebRoot}js/FbAjaxUpdater.js?%assetsRefreshId%" type="text/javascript"></script>
+<script src="{WebRoot}js/PageInfo.js?%assetsRefreshId%" type="text/javascript"></script>
+<link rel="STYLESHEET" type="text/css" href="{WebRoot}css/SelBox.easy.css?%assetsRefreshId%">
+<script src="{WebRoot}js/ObjectHandler.js?%assetsRefreshId%" type="text/javascript"></script>
+<script src="{WebRoot}js/SelBox.easy.js?%assetsRefreshId%" type="text/javascript"></script>
+<script src="{WebRoot}js/umzugsformular.easy.js?%assetsRefreshId%" type="text/javascript"></script>
+<script src="{WebRoot}js/geraeteumzug.easy.js?%assetsRefreshId%" type="text/javascript"></script>
 
 <style>
     .hide-not-saved {
@@ -51,7 +51,7 @@
 {/literal}
 <div id="SysInfoBox"></div>
 
-<link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
+<link rel="stylesheet" type="text/css" href="css/umzugsformular.css?%assetsRefreshId%">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN -->
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
     <h1><span class="spanTitle">Neuer Auftrag</span></h1>
