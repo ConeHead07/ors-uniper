@@ -22,29 +22,35 @@
       {if !empty($AS.umzugstermin)}
       <tr>
         <td style="padding:0;width:200px;"><label for="termin" style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
-        <td style="padding:0;width:300px;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}{* <input type="text" id="termin" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
-        onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"> *}</td>
+        <td style="padding:0;width:300px;"><div class="itxt itxt2col ireadonly">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</div>
+          {*
+          <input type="text" id="termin" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
+        onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col">
+          *}</td>
       </tr>
       {/if}
       {*
       <tr>
         <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
-        <td style="padding:0;"><span data-fld="AS[umzugszeit]">{$AS.umzugszeit|escape|substr:0:5}</span></td>
+        <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[umzugszeit]">{$AS.umzugszeit|escape|substr:0:5}</span></div></td>
       </tr>
       *}
       <tr>
         <td style="padding:0;width:200px;"><label for="termin" style="display:block;width:auto;">Auftragsdatum:</label></td>
-        <td style="padding:0;"><span data-fld="AS[antragsdatum]">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
+        <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[antragsdatum]">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</span></td>
       </tr>
       {if !empty($AS.umzugsstatus) and $AS.umzugsstatus eq "abgeschlossen"}
       <tr>
         <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Auftrag abgeschlossen:</label></td>
-        <td style="padding:0;" class="status_{$AS.abgeschlossen}"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></td>
+        <td style="padding:0;" class="status_{$AS.abgeschlossen}"><div class="itxt itxt2col ireadonly">
+          <img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></div></td>
       </tr>
       {/if}
       <tr>
         <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Status:</label></td>
-        <td style="padding:0;">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</td>
+        <td style="padding:0;"><div class="itxt itxt2col ireadonly">
+          {if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}
+        </div></td>
       </tr>
         <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
     </table>
@@ -59,19 +65,27 @@
     <table>
       <tr>
         <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
-        <td style="padding:0;width:300px;"><span data-fld="AS[vorname]">{$AS.vorname|escape}</span> <span data-fld="AS[name]">{$AS.name|escape}</span></td>
+        <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[vorname]">
+          {$AS.vorname|escape}</span> <span data-fld="AS[name]">{$AS.name|escape}</span>
+      </div></td>
       </tr>
       <tr>
         <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
-        <td style="padding:0;"><span data-fld="AS[email]">{$AS.email|escape}</span></td>
+        <td style="padding:0;"><div class="itxt itxt2col ireadonly">
+          <span data-fld="AS[email]">{$AS.email|escape}</span>
+        </div></td>
       </tr>
       <tr>
         <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
-        <td style="padding:0;"><span data-fld="AS[fon]">{$AS.fon|escape}</span></td>
+        <td style="padding:0;"><div class="itxt itxt2col ireadonly">
+          <span data-fld="AS[fon]">{$AS.fon|escape}</span>
+        </div></td>
       </tr>
       <tr>
         <td style="padding:0;"><label style="display:block;width:auto;">KID:</label></td>
-        <td style="padding:0;"><span data-fld="AS[kid]">{$AS.kid|escape}</span></td>
+        <td style="padding:0;"><div class="itxt itxt2col ireadonly">
+          <span data-fld="AS[kid]">{$AS.kid|escape}</span>
+        </div></td>
       </tr>
     </table>
     <br>
@@ -79,19 +93,27 @@
     <table>
       <tr>
         <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Stra&szlig;e &amp; Nr:</label></td>
-        <td style="padding:0;width:250px;"><span data-fld="AS[strasse]">{$AS.strasse|escape}</span></td>
+        <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">
+          <span data-fld="AS[strasse]">{$AS.strasse|escape}</span>
+        </div></td>
       </tr>
       <tr>
         <td style="padding:0;"><label style="display:block;width:auto;">PLZ:</label></td>
-        <td style="padding:0;"><span data-fld="AS[plz]">{$AS.plz|escape}</span></td>
+        <td style="padding:0;"><div class="itxt itxt2col ireadonly">
+          <span data-fld="AS[plz]">{$AS.plz|escape}</span>
+        </div></td>
       </tr>
       <tr>
         <td style="padding:0;"><label style="display:block;width:auto;">Ort:</label></td>
-        <td style="padding:0;"><span data-fld="AS[ort]">{$AS.ort|escape}</span></td>
+        <td style="padding:0;"><div class="itxt itxt2col ireadonly">
+          <span data-fld="AS[ort]">{$AS.ort|escape}</span>
+        </div></td>
       </tr>
       <tr>
         <td style="padding:0;"><label style="display:block;width:auto;">Land:</label></td>
-        <td style="padding:0;"><span data-fld="AS[land]">{$AS.land|escape}</span></td>
+        <td style="padding:0;"><div class="itxt itxt2col ireadonly">
+          <span data-fld="AS[land]">{$AS.land|escape}</span>
+        </div></td>
       </tr>
     </table>
     <br>
@@ -100,11 +122,11 @@
     <table>
       <tr>
         <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname</label></td>
-        <td style="padding:0;width:300px;">{$AS.ansprechpartner|escape}</td>
+        <td style="padding:0;width:300px;"><div class="itxt itxt2col ireadonly">{$AS.ansprechpartner|escape}</div></td>
       </tr>
       <tr>
         <td style="padding:0;"><label style="display:block;width:auto;">Fon</label></td>
-        <td style="padding:0;">{$AS.ansprechpartner_fon|escape}</td>
+        <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.ansprechpartner_fon|escape}</div></td>
       </tr>
     </table>
   {/if}

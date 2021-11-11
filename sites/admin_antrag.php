@@ -291,6 +291,8 @@ foreach($aLItems as &$_it) {
 
 if (!empty($aLItems) && count($aLItems)) {
     $Tpl->assign("Umzugsleistungen", $aLItems);
+} else {
+    $Tpl->assign("Umzugsleistungen", []);
 }
 $Tpl->assign("Gesamtsumme", $Gesamtsumme);
 

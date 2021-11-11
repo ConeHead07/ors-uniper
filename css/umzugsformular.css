@@ -9,7 +9,7 @@ input[type=submit].btn,
  text-align: center;
  border:1px solid #8bcf54 !important; 
  border-radius: 3px;
- font-size:12px;
+ font-size:0.8rem;
  font-family:arial, helvetica, sans-serif; 
  padding: 8px 14px; 
  text-decoration:none; 
@@ -180,7 +180,7 @@ input.UserInput {
 	color:#fff;
 	background: #0078dc;
     previous-background:#f00;
-	font-size:14px;
+	font-size:1rem;
 	border-bottom: 1px solid #0078dc;
     previous-border-bottom:1px solid #f00;
 	padding:1px 15px 1px 5px;
@@ -188,22 +188,22 @@ input.UserInput {
 }
 #MyInfoBox div.InfoText {
 	color:#000;
-	font-size:12px;
+	font-size:0.8rem;
 	padding:5px;
 }
 #MyInfoBox div.CloseBtn {
 	cursor:pointer;
 	background:#e9e9e9;
 	color:#000;
-	font-size:12px;
+	font-size:0.8rem;
 	padding:0;
 	text-align:center;
 }
-h1.hdErr { font-size:18px; }
-h2.hdErr { font-size:16px; }
-h3.hdErr { font-size:14px; }
-h4.hdErr { font-size:13px; }
-h5.hdErr { font-size:12px; }
+h1.hdErr { font-size:1.1rem; }
+h2.hdErr { font-size:1rem; }
+h3.hdErr { font-size:0.9rem; }
+h4.hdErr { font-size:0.85rem; }
+h5.hdErr { font-size:0.8rem; }
 .hdErr {
 	margin:0;
 	color:#f00;
@@ -228,7 +228,7 @@ label {
   border:1px solid #0075B5;
   width:120px;
   text-align:right;
-  font-size:12px;
+  font-size:0.8rem;
   margin:0;
   font-weight:bold;
   color:#fff;
@@ -239,11 +239,14 @@ label {
   z-background:#f1f8ff;
   height:25px;
   border:1px solid #0075B5;
-  font-size:12px;
   margin:0;
   padding:4px;
   box-sizing: border-box;
   border-radius:2px;
+}
+.itxt,
+.itxt * {
+    font-size:0.8rem;
 }
 input[readonly],
 .itxt[readonly],
@@ -255,7 +258,7 @@ input[readonly],
     width: 100%;
     height: 25px;
     border: 1px solid #0075b5;
-    font-size:12px;
+    font-size:0.8rem;
     margin:0;
     padding:4px;
     box-sizing: border-box;
@@ -278,7 +281,7 @@ td label {
   display:inline-block;
   z-background:#f1f8ff;
   border:1px solid #0075B5;
-  font-size:12px;
+  font-size:0.8rem;
   margin:0;
   padding:0;
   width:100%;
@@ -327,7 +330,7 @@ td label {
 }
 
 .MitarbeierItem thead {
-  font-size:11px;
+  font-size:0.8rem;
   font-weight:bold;
   background:#0075B5;
   color:#fff;
@@ -342,7 +345,7 @@ td label {
 .MitarbeierItem .inputRowVon td input.itxt {
   width:100%;
   height:100%;
-  font-size:12px;
+  font-size:0.8rem;
   margin:0;
   padding:0 3px;
   color:#0071b5;
@@ -355,7 +358,7 @@ td label {
 }
 .MitarbeierItem .inputRowZiel .ziel {
   background:#0075B5;
-  font-size:11px;
+  font-size:0.8rem;
   font-weight:bold;
   padding-right:2px;
   text-align:right;
@@ -369,7 +372,7 @@ td label {
 .MitarbeierItem .inputRowZiel td input,
 .MitarbeierItem .inputRowZiel td input.itxt {
   width:100%;
-  font-size:11px;
+  font-size:0.8rem;
   margin:0 0px 0 0px;
   padding:0;
   color:#0071b5;
@@ -404,7 +407,7 @@ td label {
   color: #3b3b3b;
   margin:0;
   padding:0 0 0 3px;
-  font-size:11px;
+  font-size:0.8rem;
 }
 .SelBox .IsActiveItem {
     background:#d1ddef;
@@ -421,7 +424,7 @@ td label {
   color: #bd7100;
   margin:0;
   padding:0;
-  font-size:11px;
+  font-size:0.8rem;
 }
 .SelBox .SelItem input {
   margin:3px 4px 0 0;
@@ -429,7 +432,7 @@ td label {
 
 #LieferhinweiseContent,
 #BemerkungenHistorie {
-    font-size:12px;
+    font-size:0.8rem;
     padding:4px;
     border:1px solid #0075B5;
     color:#6d6d6d;
@@ -449,7 +452,7 @@ td label {
 /* Leistungsauswahl */
 
 tr.row * {
-    font-size:12px;
+    font-size:0.8rem;
 }
 div.ktg1, div.lstg {
     min-height: 18px;

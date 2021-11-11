@@ -9,7 +9,7 @@
 {include file="admin_antraege_tabs.html" cat="auftrag" aid=$AS.aid s="aantraege" allusers=1}
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
 <h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1> 
-<p>
+
 <div id="Umzugsantrag" class="divInlay"> 
 <h2 style="margin:0;">Auftrags-Status</h2>
 <table border=0 cellspacing=1 cellpadding=1>
@@ -25,26 +25,34 @@
   </tr>
   <tr>
     <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
-    <td style="padding:0;">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
   </tr>
   {if $AS.angeboten_am}
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Genehmigt:</label></td>
-    <td style="padding:0;" class="status_{$AS.genehmigt_br}"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></td>
+    <td style="padding:0;" class="status_{$AS.genehmigt_br}"><div class="itxt itxt2col ireadonly">
+      <img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span>
+    </div></td>
   </tr>
   {else}
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Bestätigt:</label></td>
-    <td style="padding:0;" class="status_{$AS.genehmigt_br}"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></td>
+    <td style="padding:0;" class="status_{$AS.genehmigt_br}"><div class="itxt itxt2col ireadonly">
+      <img id="imgStatGenBr" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGenBr">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span>
+    </div></td>
   </tr>
   {/if}
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Abgeschlossen:</label></td>
-    <td style="padding:0;" class="status_{$AS.abgeschlossen}"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></td>
+    <td style="padding:0;" class="status_{$AS.abgeschlossen}"><div class="itxt itxt2col ireadonly">
+      <img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span>
+    </div></td>
   </tr>
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Status:</label></td>
-    <td style="padding:0;">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">
+      {if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}
+    </div></td>
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
 </table>
@@ -57,48 +65,50 @@
 <table>
   <tr>
     <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
-    <td style="padding:0;width:250px;"><span data-fld="AS[vorname]"></span>{$AS.vorname|escape}</span> <span data-fld="AS[name]"></span>{$AS.name|escape}</span></td>
+    <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">
+      <span data-fld="AS[vorname]"></span>{$AS.vorname|escape}</span> <span data-fld="AS[name]"></span>{$AS.name|escape}</span>
+    </div></td>
   </tr>
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
-    <td style="padding:0;" data-fld="AS[email]">{$AS.email|escape}</td>
+    <td style="padding:0;" data-fld="AS[email]"><div class="itxt itxt2col ireadonly">{$AS.email|escape}</div></td>
   </tr>
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
-    <td style="padding:0;" data-fld="AS[fon]">{$AS.fon|escape}</td>
+    <td style="padding:0;" data-fld="AS[fon]"><div class="itxt itxt2col ireadonly">{$AS.fon|escape}</div></td>
   </tr>
 
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Standort:</label></td>
-    <td style="padding:0;" data-fld="AS[ort]">{$AS.ort|escape}</td>
+    <td style="padding:0;" data-fld="AS[ort]"><div class="itxt itxt2col ireadonly">{$AS.ort|escape}</div></td>
   </tr>
 
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Gebäude:</label></td>
-    <td style="padding:0;" data-fld="AS[gebauede]">{$AS.gebaeude|escape}</td>
+    <td style="padding:0;" data-fld="AS[gebauede]"><div class="itxt itxt2col ireadonly">{$AS.gebaeude|escape}</div></td>
   </tr>
   
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Etage:</label></td>
-    <td style="padding:0;"><span data-fld="AS[etage]">{$AS.etage|escape}</span></td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[etage]">{$AS.etage|escape}</span></div></td>
   </tr>
   
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Raum-Nr:</label></td>
-    <td style="padding:0;"><span data-fld="AS[raumnr]">{$AS.raumnr|escape}</span></td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[raumnr]">{$AS.raumnr|escape}</span></div></td>
   </tr>
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">{$ASConf.kostenstelle.label}:</label></td>
-    <td style="padding:0;"><span data-fld="AS[kostenstelle]">{$AS.kostenstelle|escape}</span></td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[kostenstelle]">{$AS.kostenstelle|escape}</span></div></td>
   </tr>
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Ticket-Nr.:</label></td>
-    <td style="padding:0;"><span data-fld="AS[planonr]">{$AS.planonnr|escape}</span></td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[planonr]">{$AS.planonnr|escape}</span></div></td>
   </tr>
   
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Terminwunsch:</label></td>
-    <td style="padding:0;" data-fld="AS[terminwunsch]">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</td>
+    <td style="padding:0;" data-fld="AS[terminwunsch]"><div class="itxt itxt2col ireadonly">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</div></td>
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
 </table>
@@ -111,7 +121,7 @@
 {/if}
 
 <br clear= "all">
-<div style="clear:all;"></div>
+<div style="clear:both;"></div>
 
 
 {if 0}
@@ -149,6 +159,6 @@
     <strong>Lieferhinweise:</strong><br>
     <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
   </div>
-<div id="LoadingBar"></div>
+  <div id="LoadingBar"></div>
 
 </div> 

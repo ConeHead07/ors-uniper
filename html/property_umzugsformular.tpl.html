@@ -25,28 +25,32 @@
 <h2 style="margin:0;" data-site="property/umzugsformular/tpl/html">Auftragsstatusn</h2>
 <table border=0 cellspacing=1 cellpadding=1>
   <tr>
-    <td style="padding:0;width:180px;"><label for="termin" style="display:block;width:auto;">Ausführungstermin:</label></td>
-    <td style="padding:0;width:250px;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}{* <input type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
+    <td style="padding:0;width:180px;"><label for="umzugstermin" style="display:block;width:auto;">Ausführungstermin:</label></td>
+    <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}{* <input type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
 	onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"> *}</td>
   </tr>
   {*
   <tr style="display: none">
-    <td style="padding:0;"><label for="termin" style="display:block;width:auto;">Umzugszeit:</label></td>
+    <td style="padding:0;"><label for="umzugszeit" style="display:block;width:auto;">Umzugszeit:</label></td>
     <td style="padding:0;"><input type="text" value='{$AS.umzugszeit|escape}'
 	id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
   </tr>
   *}
   <tr>
-    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">{if $AS.angeboten_am}Genehmigt{else}Best&auml;tigt{/if}:</label></td>
-    <td style="padding:0;" class="status_{$AS.genehmigt_br}"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">{if $AS.angeboten_am}Genehmigt{else}Best&auml;tigt{/if}:</label></td>
+    <td style="padding:0;" class="status_{$AS.genehmigt_br}"><div class="itxt itxt2col ireadonly">
+      <img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></div></td>
   </tr>
   <tr>
-    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">Abgeschlossen:</label></td>
-    <td style="padding:0;" class="status_{$AS.abgeschlossen}"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Abgeschlossen:</label></td>
+    <td style="padding:0;" class="status_{$AS.abgeschlossen}"><div class="itxt itxt2col ireadonly">
+      <img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></div></td>
   </tr>
   <tr>
-    <td style="padding:0;"><label for="umzugsstatus" style="display:block;width:auto;">Status:</label></td>
-    <td style="padding:0;">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Status:</label></td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">
+      {if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}
+    </div></td>
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
 </table>
@@ -61,20 +65,20 @@
 <input type="hidden" name="AS[aid]" value="{$AS.aid}">
 <table>
   <tr>
-    <td style="padding:0;width:180px;"><label for="mitarbeiter" style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
+    <td style="padding:0;width:180px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
     <td style="padding:0;width:250px;"><input type="text" readonly="true" value="{$AS.vorname|escape}" name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" readonly="true" value="{$AS.name|escape}" name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
   </tr>
   <tr>
-    <td style="padding:0;"><label for="termin" style="display:block;width:auto;">E-Mail:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
     <td style="padding:0;"><input type="text" readonly="true" value="{$AS.email|escape}" name="AS[email]" class="itxt itxt2col" title="E-Mail"></td>
   </tr>
   <tr>
-    <td style="padding:0;"><label for="termin" style="display:block;width:auto;">Fon:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
     <td style="padding:0;"><input type="text" value="{$AS.fon|escape}" name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
   </tr>
 
   <tr>
-    <td style="padding:0;"><label for="ort" style="display:block;width:auto;">Standort:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Standort:</label></td>
     <td style="padding:0;"><input type="text" onclick="get_standort_ort(this)" value="{$AS.ort|escape}" name="AS[ort]" class="itxt itxt2col"></td>
   </tr>
 
@@ -95,12 +99,12 @@
     <td style="padding:0;"><input type="text" id="kostenstelle" value="{$AS.kostenstelle|escape}" name="AS[kostenstelle]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td style="padding:0;"><label for="kostenstelel" style="display:block;width:auto;">{$ASConf.planonnr.label}<span class="right">{if $ASConf.planonnr.required}<span class="required">*</span>{/if}</span></label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">{$ASConf.planonnr.label}<span class="right">{if $ASConf.planonnr.required}<span class="required">*</span>{/if}</span></label></td>
     <td style="padding:0;"><input type="text" value="{$AS.planonnr|escape}" name="AS[planonnr]" class="itxt itxt2col"></td>
   </tr>
   
   <tr>
-    <td style="padding:0;"><label for="termin" style="display:block;width:auto;">Terminwunsch:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Terminwunsch:</label></td>
     <td style="padding:0;"><input type="text" value="{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}" 
 	onfocus="showDtPicker(this)" id="terminwunsch" name="AS[terminwunsch]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/terminwunsch.php"></td>
   </tr>
@@ -126,11 +130,11 @@
 <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2>
 <table>
   <tr>
-    <td style="padding:0;width:180px;"><label for="ansprechpartner" style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
+    <td style="padding:0;width:180px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
     <td style="padding:0;width:250px;"><input type="text" value="{$AS.ansprechpartner|escape}" name="AS[ansprechpartner]" class="itxt itxt2col" title="Ansprechpartner"></td>
   </tr>
   <tr>
-    <td style="padding:0;"><label for="termin" style="display:block;width:auto;">Fon:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
     <td style="padding:0;"><input type="text" value="{$AS.ansprechpartner_fon|escape}" name="AS[ansprechpartner_fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
   </tr>
 </table>

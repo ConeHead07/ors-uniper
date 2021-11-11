@@ -354,7 +354,7 @@ function delete_db_auswahlwert($tbl, $fld, $val, $connid = "") {
 
 if (!function_exists("db_show_fields")){
 function db_show_fields($tbl, $connid = "") {
-        $db = dbconn::getInstance();
+    $db = dbconn::getInstance();
         
 	$SQL = "SHOW FIELDS FROM $tbl";
 	$result= $db->query($SQL);
@@ -362,13 +362,13 @@ function db_show_fields($tbl, $connid = "") {
 	$num = $db->num_rows($result);
 	
 	$f = array();
-	$$db->tbl_flds = array();
+	$db->tbl_flds = array();
 	for ($i=0; $i<$num; $i++) {
 		$erg = $db->fetch_array($result);
 		list($f["field"],$f["type"],$f["null"],$f["key"],$f["default"],$f["extra"]) = $erg;
-		$$db->tbl_flds[$f["field"]] = $f;
+		$db->tbl_flds[$f["field"]] = $f;
 	}
-	return $$db->tbl_flds;
+	return $db->tbl_flds;
 }
 }
 
