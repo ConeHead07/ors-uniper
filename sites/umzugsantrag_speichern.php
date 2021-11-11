@@ -26,7 +26,7 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
     global $db;
     // Annahme: leistung_ref_id in leistungen bezieht sich auf automatisch anzupassende Shipping-Positionen
 
-    $arr = $aInputLeistungen['leistung_id'];
+    $arr = !empty($aInputLeistungen) ? $aInputLeistungen['leistung_id'] : [];
     $aLIds = array_map('intval', array_filter($arr, 'is_numeric'));
     if (!count($aLIds)) {
         return [];
@@ -129,7 +129,7 @@ function umzugsleistungen_speichern($AID) {
     //die('<pre>#' . __LINE__ . ' ' . __FILE__ . ' existing_ids: ' . print_r($existing_ids,1).'</pre>');
     $creator = (preg_match('/umzugsteam|admin/', $user['gruppe'] ) ? 'mertens' : 'property' );
     $data = array();
-    $lst = getRequest('L');
+    $lst = getRequest('L', []);
     $aLstDefaults = [
         'menge_mertens' => 1,
         'menge2_mertens' => 1,
@@ -137,7 +137,7 @@ function umzugsleistungen_speichern($AID) {
         'menge2_property' => 1,
     ];
 
-    $iNumLeistungen = count($lst['leistung_id']);
+    $iNumLeistungen = !empty($lst) ? count($lst['leistung_id']) : 0;
     for($i = 0; $i < $iNumLeistungen; $i++) {
         foreach($aLstDefaults as $_k => $_defaultVal) {
             if (!isset($lst[$_k][$i])) {

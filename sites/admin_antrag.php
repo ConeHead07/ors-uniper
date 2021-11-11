@@ -241,17 +241,18 @@ if (!empty($aGItems) && count($aGItems)) {
 }
 
 $SumBase = 'MH';
-$sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_property, '
-      .' ul.menge_mertens, ul.menge2_mertens, '
-      .' l.Bezeichnung leistung, lk.leistungskategorie kategorie, lk.leistungskategorie_id kategorie_id, '
+$sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_property, ' . "\n"
+      .' ul.menge_mertens, ul.menge2_mertens, ' . "\n"
+      .' l.Bezeichnung leistung, lk.leistungskategorie kategorie, lk.leistungskategorie_id kategorie_id, ' . "\n"
+      .' l.image, l.Beschreibung, l.produkt_link, l.Farbe, l.Groesse, ' . "\n"
       .' l.leistungseinheit, l.leistungseinheit2, if(lm.preis, lm.preis, preis_pro_einheit) preis_pro_einheit ' . "\n"
       .' FROM mm_umzuege_leistungen ul ' . "\n"
       .' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
       .' LEFT JOIN mm_leistungskategorie lk ON(l.leistungskategorie_id = lk.leistungskategorie_id) ' . "\n"
-      .' LEFT JOIN mm_leistungspreismatrix lm ON('
+      .' LEFT JOIN mm_leistungspreismatrix lm ON(' . "\n"
       .'    l.leistung_id = lm.leistung_id ';
       if ($SumBase == 'MH') {
-            $sql.= '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
+            $sql.= '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . "\n"
                   .'    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))';
       } else {
 //      $sql.= '      AND lm.mengen_von <= if(ul.menge_mertens * IFNULL(ul.menge2_mertens,1) < 0.01, ul.menge_property * IFNULL(ul.menge2_property,1), ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
