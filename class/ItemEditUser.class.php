@@ -8,7 +8,7 @@
 class ItemEditUser extends ItemEdit {
 
     private $anonymisierungsStat = [];
-    public function __construct($conf, $connid, $user, bool $id = false)
+    public function __construct($conf, $connid, $user, $id = false)
     {
         parent::__construct($conf, $connid, $user, $id);
     }
@@ -21,7 +21,6 @@ class ItemEditUser extends ItemEdit {
 
 //        print_r(['this->arrConf' => $this->arrConf]);
 //        exit;
-        
         $SQL = 'SELECT g.*, z.bezeichnung zustaendigkeit FROM mm_gebaeude_user gu ' . "\n"
               .' LEFT JOIN mm_gebaeude_zustaendigkeitsarten z ' ."\n"
               .' ON(gu.zustaendigkeits_id = z.zustaendigkeits_id)' ."\n"
