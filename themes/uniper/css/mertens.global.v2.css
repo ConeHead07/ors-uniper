@@ -15,11 +15,116 @@ html, html body, body {
   font-size: 100%;
 }
 body * {
-  font-size: .75rem;
+  font-size: 1rem;
 }
 body {
   line-height: 140%;
 }
+/*
+Media Queries für Breakpoints können sowohl mit min-width oder max-width
+oder einer Kombination aus beiden Abfragen festgelegt werden.
+
+min-width basierte Breakpoints sind Mobile First.
+Alles was nicht innerhalb einer @media-Regel für den Start einer Monitorbreite festgelegt wird,
+sind universelle Stile für alle Monitorbreiten und zielen auf die kleinsten Geräte (zumeist auf Smartphones) ab.
+Hier liegen die Inhalte der Seiten sequentiell in einer Spalte. Von hier aus legen weitere Breakpoints
+die CSS-Eigenschaften für größere Viewports fest.
+*/
+/*
+body::after {
+  content: "No-Min-Width";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size:1rem;
+  color: gray;
+}
+@media screen and (min-width:320px) {
+  body::after {
+    content: "min-width:320px, iPhone SE";
+  }
+}
+@media screen and (min-width:375px) {
+  body::after {
+    content: "min-width:375px, iPhone 6 to X";
+  }
+}
+@media screen and (min-width:414px) {
+  body::after {
+    content: "min-width:414px, iPhone 8 Plus";
+  }
+}
+@media screen and (min-width:568px) {
+  body::after {
+    content: "min-width:568px, iPhone SE landscape";
+  }
+}
+@media screen and (min-width:667px) {
+  body::after {
+    content: "min-width:667px, iPhone 6 to 8 landscape";
+  }
+}
+
+@media screen and (min-width:736px) {
+  body::after {
+    content: "min-width:736px";
+  }
+}
+@media screen and (min-width:812px) {
+  body::after {
+    content: "min-width:812px";
+  }
+}
+@media screen and (min-width:1024px) {
+  body::after {
+    content: "min-width:1024px";
+  }
+}
+@media screen and (min-width:1112px) {
+  body::after {
+    content: "min-width:1112px";
+  }
+}
+@media screen and (min-width:1336px) {
+  body::after {
+    content: "min-width:1336px";
+  }
+}
+@media screen and (min-width:1440px) {
+  body::after {
+    content: "min-width:1440px";
+  }
+}
+@media screen and (min-device-width:1000px) {
+  body {
+    font-size:0.85rem;
+  }
+  body::after {
+    content: "min-device-width:1000px;
+  }
+}
+*/
+/*
+Device Category     Breakpoint Width	Device Name
+Mobile, portrait    320px               iPhone SE
+                    375px               iPhone 6 to X
+                    414px               iPhone 8 Plus
+Mobile, landscape   568px               iPhone SE
+                    667px               iPhone 6 to 8
+                    736px               iPhone 8 Plus
+                    812px               iPhone X
+Tablet, portrait    768px               iPad Air, iPad Mini, iPad Pro 9″
+                    834px               iPad Pro 10″
+Tablet, landscape   1024px              iPad Air, iPad Mini, iPad Pro 9″
+                    1024px              iPad Pro 12″ (portrait)
+                    1112px              iPad Pro 10″
+Laptop displays     1366px              HD laptops (768p)
+                    1366px              iPad Pro 12″ (landscape)
+                    1440px              13″ MacBook Pro (2x scaling)
+Desktop displays	1680px              13″ MacBook Pro (1.5x scaling)
+                    1920px              1080p displays
+*/
+
 a,
 a:active,
 a:focus,
@@ -81,57 +186,67 @@ br.clear {
 div.divContent1Col {
   float: left;
   overflow: hidden;
-  width: 192px;
+  width: 100%;
+  max-width: 192px;
 }
 /* GRID 2 COLUMN */
 div.divContent2Col {
   float: left;
   overflow: hidden;
-  width: 384px;
+  width: 100%;
+  max-width: 384px;
 }
 /* GRID 3 COLUMN */
 div.divContent3Col {
   float: left;
   overflow: hidden;
-  width: 576px;
+  width: 100%;
+  max-width: 576px;
 }
 /* GRID 4 COLUMN */
 div.divContent4Col {
   float: left;
   overflow: hidden;
-  width: 768px;
+  width: 100%;
+  max-width: 768px;
 }
 /* GRID 5 COLUMN */
 div.divContent5Col {
   float: none;
   clear: both;
   overflow: hidden;
-  width: 961px;
+  width: 100%;
+  max-width: 961px;
 }
 /* WIDTH 1 COLUMN */
 .width1Col {
   overflow: hidden;
-  width:186px;
+  width: 100%;
+  max-width:186px;
 }
 /* WIDTH 2 COLUMN */
 .width2Col {
   overflow: hidden;
-  width:378px;
+  width: 100%;
+  max-width:378px;
 }
 /* WIDTH 3 COLUMN */
 .width3Col {
   overflow: hidden;
-  width:570px;
+  width: 100%;
+  max-width:570px;
 }
 /* WIDTH 4 COLUMN */
 .width4Col {
   overflow: hidden;
-  width:762px;
+  width: 100%;
+  max-width:762px;
 }
 /* WIDTH 5 COLUMN */
 .width5Col {
   overflow: hidden;
-  width:954px;
+  width: 100%;
+  max-width: 954px;
 }
 /* WIDTH 1 COLUMN */
 .width186 {
@@ -286,7 +401,8 @@ div.divSuperBanner {
 /* BASICS BEGIN */
 div.divMatrix {
   position: relative;
-  width:1135px;
+  width: 100%;
+  max-width:1135px;
   padding:12px 0px 19px 0px;
   margin:0px auto;
 }
@@ -299,9 +415,12 @@ div.divPopUp {
 /* BASICS */
 div.divHeader {
   margin:0px 0px 0px 3px;
-  height: 67px;
+  height: auto;
+  min-height: 67px;
+  overflow:hidden;
   position: relative;
-  width: 956px;
+  width: 100%;
+  max-width: 956px;
 }
 div.divPopUp div.divHeader {
   width: auto;
@@ -447,7 +566,8 @@ div.divContent {
   float: none;
   clear: both;
   overflow: hidden;
-  width: 970px;
+  width: 100%;
+  max-width: 970px;
   height: inherit;
   position:relative;
 }
@@ -474,18 +594,18 @@ div.divSticker {
 /* NAVIGATION TOP */
 ul.ulNavigationTop {
   background:#FFF;
-  float: left;
-  margin-left: 3px;
-  margin-bottom: 10px;
-  width: 954px;
-  border-bottom:2px solid #E0E0E0;
-  border-right:2px solid #E0E0E0;
+  --previous-float: left;
+  --previous-margin-left: 3px;
+  --previous-margin-bottom: 10px;
+  --previous-width: 954px;
+  --previous-border-bottom:2px solid #E0E0E0;
+  --previous-border-right:2px solid #E0E0E0;
   overflow: hidden;
 }
 ul.ulNavigationTop li {
   float: left;
   display: inline;
-  line-height: 2.2;
+  --previous-line-height: 2.2;
   font-size: 1.182em;
   margin: 0 0 0 15px;
 }
@@ -514,17 +634,21 @@ width: 954px;
 */
 /* LOGIN & REGISTER */
 ul.ulLogin {
-    position: absolute;
-    right: 20px !important;
-    top: 0px;
-    width: 200px;
-    height: 30px;
-    margin: 0px 0px 0px 3px;
-    list-style: none;
+  --previous-float: right;
+  --previous-position: absolute;
+  --previous-right: 20px !important;
+  top: 0px;
+  --previous-width: 200px;
+  height: auto;
+  --previous-margin: 0px 20px 0px 3px;
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+
 }
 ul.ulLogin li {
-  float: right;
-  margin: 7px 0px 0px 12px;
+  --previous-float: right;
+  margin: 0px 0px 0px 12px;
   list-style-type: none;
 }
 /* MEGATEASER */
@@ -2313,6 +2437,14 @@ ul.ulLinkList {
 ul.ulLinkList li {
   border-top-color: #EDEDED;
 }
+ul.ulLinkList,
+ul.ulLinkList > li,
+ul.ulLinkList > li > a > div,
+ul.ulLinkList > div > div > a,
+ul.ulLinkList * {
+  font-size: 0.75rem;
+}
+
 ul.ulLinkList li a,
 ul.ulLinkList li a:active,
 ul.ulLinkList li a:focus,
@@ -3410,24 +3542,28 @@ ul.breadcrumb {
   top: 12px;
   left: 5px;
   display: block;
-  width: 680px;
-  height: 40px;
+  --previous-width: 680px;
+  --previous-height: 40px;
   padding: 0;
   margin: 0;
   list-style-type: none;
-  overflow: hidden;
+  --previous-overflow: hidden;
 }
 ul.breadcrumb li {
   display: block;
   width: auto;
-  height: 18px;
+  --previous-height: 18px;
   padding: 0;
   margin: 0;
   float: left;
   position: relative;
-  overflow: hidden;
+  --previous-overflow: hidden;
   cursor: default;
   color: #666666;
+}
+ul.breadcrumb li,
+ul.breadcrumb li * {
+  font-size: .7rem;
 }
 ul.breadcrumb li.lastItem {
   width: auto;
