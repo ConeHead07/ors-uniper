@@ -53,7 +53,7 @@ switch($cmd) {
 		$reID = umzugsantrag_speichern();
 		if ($reID) {
 			$msg.= "Ihre Umzugsdaten wurden gespeichert!<br>\n";
-			$msg.= "Sie können sie zu einem späteren Zeitpunkt über das Menü 'Umzugsantrag->Meine Anträge' öffnen und bearbeiten!<br>\n";
+			$msg.= "Sie können sie zu einem späteren Zeitpunkt über das Menü 'Umzugsantrag->Meine Bestellungen' öffnen und bearbeiten!<br>\n";
 			if ($reID!=$id) $LoadScript.= "if (typeof(umzugsformular_set_id)==\"function\") umzugsformular_set_id('".$reID."'); else alert(\"Fehler beim Setzen der Antrags-ID!\");\n";
 			$LoadScript.= "if (typeof(umzugsantrag_auto_reload)==\"function\") umzugsantrag_auto_reload('".$reID."');\n";
 		}
@@ -69,7 +69,7 @@ switch($cmd) {
 		if ($reID) {
 			$msg.= "Die Daten wurden aktualisiert!<br>\n";
 			if ($reID!=$id) {
-			    $LoadScript.= "if (typeof(umzugsformular_set_id)==\"function\") umzugsformular_set_id('".$reID."'); else alert(\"Fehler beim Setzen der Antrags-ID!\");\n";
+			    $LoadScript.= "if (typeof(umzugsformular_set_id)==\"function\") umzugsformular_set_id('".$reID."'); else alert(\"Fehler beim Setzen der Auftrags-ID!\");\n";
             }
 			$LoadScript.= "if (typeof(umzugsantrag_auto_reload)==\"function\") umzugsantrag_auto_reload('".$reID."');\n";
 		}

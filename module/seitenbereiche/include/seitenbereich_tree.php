@@ -7,7 +7,7 @@ $activeMenuId = (isset($id) && $id) ? $id : 0;
 $numberOfAllMenus = get_numberOfAllMenus();
 
 $numberOfChilds = get_numberOfChilds($activeMenuId);
-$body_content.= "#".__LINE__."Menüs auf aktueller Ebene: $numberOfChilds<br>\n";
+$body_content.= "Menüs auf aktueller Ebene: $numberOfChilds<br>\n";
 
 // Hole MenuDaten
 if (!empty($activeId)) {
@@ -69,7 +69,7 @@ if (is_array($_ItemsByParentid) && count($_ItemsByParentid)) {
 	$body_content.= "<td>Edit</td>";
 	$body_content.= "<td>Aktiviert</td>";
 	$body_content.= "<td>Menüanzeige</td>";
-	$body_content.= "<td><img src=\"../images/usr_icon.gif\" width=\"15\" height=\"14\" alt=\"Status, ob Frei zugänglich\">Freier Zugang</td>";
+	$body_content.= "<td>Status, ob Zugang geschützt ist</td>";
 	$body_content.= "<td>Pos</td>";
 	$body_content.= "<td>Kill</td>";
 	$body_content.= "</tr>";
@@ -92,7 +92,7 @@ if (is_array($_ItemsByParentid) && count($_ItemsByParentid)) {
 		
 		$invert_free = ($r_free != "Ja" ? "Ja" : "Nein");
 		$invert_lock = ($r_lock != "Ja" ? "Ja" : "Nein");
-		$invert_visi = ($r_visi != "visible" ? "visible" : "hidden");
+		$invert_visi = ($r_visi != "visible" ? "allways" : "never");
 		
 		// Edit
 		$body_content.= "<td><a href=\"".$msbBaselinkTree."&ansicht=edit&id=".$r_id."&parentid=\">Edit</a></td>\n";
@@ -103,7 +103,7 @@ if (is_array($_ItemsByParentid) && count($_ItemsByParentid)) {
 		$body_content.= " &raquo; <a href=\"".$msbBaselinkTree."&cmd=setfreigabe&wert=$invert_free&id=".$r_id."&pid=$r_pid\">";
 		$body_content.= "".$_SetFlag["webfreigabe"][$invert_free]."</a></td>\n";
 		
-		// Men�anzeige
+		// Menüanzeige
 		$body_content.= "<td style=\"background:$r_visi_bg;\" title=\"Editierbarer Status: Menüanzeige\">";
 		$body_content.= $_GetFlag["visibility"][$r_visi];
 		$body_content.= " &raquo; <a href=\"".$msbBaselinkTree."&cmd=setvisibility&wert=$invert_visi&id=".$r_id."&pid=$r_pid\">";
@@ -118,18 +118,18 @@ if (is_array($_ItemsByParentid) && count($_ItemsByParentid)) {
 		// Positionierung
 		$body_content.= "<td title=\"Positionierung\">";
 		$body_content.= " <a href=\"".$msbBaselinkTree."&cmd=pos&wert=first&id=".$r_id."&pid=$r_pid\">";
-		$body_content.= "<img src=\"../images/pfeil_nachganzoben.gif\" width=\"10\" height=\"10\" alt=\"\"></a>";
+		$body_content.= "<img src=\"../images/pfeil_nachganzoben.png\" width=\"10\" height=\"10\" alt=\"\"></a>";
 		$body_content.= " <a href=\"".$msbBaselinkTree."&cmd=pos&wert=higher&id=".$r_id."&pid=$r_pid\">";
-		$body_content.= "<img src=\"../images/pfeil_nachoben.gif\" width=\"10\" height=\"10\" alt=\"\"></a>";
+		$body_content.= "<img src=\"../images/pfeil_nachoben.png\" width=\"10\" height=\"10\" alt=\"\"></a>";
 		$body_content.= " <a href=\"".$msbBaselinkTree."&cmd=pos&wert=lower&id=".$r_id."&pid=$r_pid\">";
-		$body_content.= "<img src=\"../images/pfeil_nachunten.gif\" width=\"10\" height=\"10\" alt=\"\"></a>";
+		$body_content.= "<img src=\"../images/pfeil_nachunten.png\" width=\"10\" height=\"10\" alt=\"\"></a>";
 		$body_content.= " <a href=\"".$msbBaselinkTree."&cmd=pos&wert=last&id=".$r_id."&pid=$r_pid\">";
-		$body_content.= "<img src=\"../images/pfeil_nachganzunten.gif\" width=\"10\" height=\"10\" alt=\"\"></a>";
+		$body_content.= "<img src=\"../images/pfeil_nachganzunten.png\" width=\"10\" height=\"10\" alt=\"\"></a>";
 		$body_content.= "</td>\n";
 		
-		// L�schen
+		// Löschen
 		$body_content.= "<td title=\"Editierbarer Status: Sichtbarkeit im Menü\">";
-		$body_content.= "<a href=\"".$msbBaselinkTree."&cmd=loeschen&wert=1&id=".$r_id."&pid=$r_pid\"><img src=\"../images/kill_item.gif\" width=\"10\" height=\"10\" alt=\"Men� löschen\"></a></td>\n";
+		$body_content.= "<a href=\"".$msbBaselinkTree."&cmd=loeschen&wert=1&id=".$r_id."&pid=$r_pid\"><img src=\"../images/kill_item.png\" width=\"10\" height=\"10\" alt=\"Menü löschen\"></a></td>\n";
 		
 		$body_content.= "</tr>\n";
 	}/**/

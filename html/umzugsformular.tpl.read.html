@@ -7,73 +7,102 @@
 <link rel="stylesheet" type="text/css" href="../css/umzugsformular.css">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-<h1><span class="spanTitle">Auftrag {if $AS.aid}#{$AS.aid}{/if}</span></h1>
+<h1><span class="spanTitle">Auftrag</span></h1>
 <p>
-<div id="Umzugsantrag" class="divInlay"> 
-<h2 style="margin:0;">Auftragsteller</h2>
-<table>
+<div id="Umzugsantrag" class="divInlay" data-site="umzugsformular/tpl/read/html">
+  <h2 style="margin:0;">Auftragsstatus</h2>
+  <table>
+    <tr>
+      <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Auftrags-ID:</label></td>
+      <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">{$AS.aid|str_pad:8:"0":0}</div></td>
+    </tr>
+    <tr>
+      <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Auftragsdatum:</label></td>
+      <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
+    </tr>
+    <tr>
+      <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Auftragsstatus:</label></td>
+      <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">{$AS.umzugsstatus}</div></td>
+    </tr>
+    <tr>
+      <td style="padding:0;width:200px;" valign="top"><label style="display:block;width:auto;">Bisherige Bemerkungen:</label></td>
+      <td style="padding:0;">{if empty($AS.bemerkungen)}<div class="itxt itxt2col ireadonly"><i>Keine</i></div>{/if}</td>
+    </tr>
+  </table>
+  {if !empty($AS.bemerkungen)}
+  <table width="100%">
+    <tr>
+      <td style="padding:0;">
+        <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
+      </td>
+    </tr>
+  </table>
+  {/if}
+
+  <br>
+
+  <h2 style="margin:0;">Lieferdaten</h2>
+  <table>
   <tr>
-    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Auftragsdatum:</label></td>
-    <td style="padding:0;width:250px;">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
+    <td style="padding:0;width:200px;"><label style="background:#f00;border:0;display:block;width:auto;">Liefertermin:</label></td>
+    <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</div></td>
   </tr>
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
-    <td style="padding:0;">{$AS.vorname|escape} {$AS.name|escape}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.vorname|escape} {$AS.name|escape}</div></td>
   </tr>
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
-    <td style="padding:0;">{$AS.email|escape}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.email|escape}</div></td>
   </tr>
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Telefon:</label></td>
-    <td style="padding:0;">{$AS.fon|escape}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.fon|escape}</div></td>
   </tr>
 
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Stra&szlig;e &amp; Nr:</label></td>
-    <td style="padding:0;">{$AS.strasse|escape}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.strasse|escape}</div></td>
   </tr>
 
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">PLZ:</label></td>
-    <td style="padding:0;">{$AS.plz|escape}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.plz|escape}</div></td>
   </tr>
 
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Ort:</label></td>
-    <td style="padding:0;">{$AS.ort|escape}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.ort|escape}</div></td>
   </tr>
 {*
   <tr style="display:none;">
     <td style="padding:0;"><label style="display:block;width:auto;">Kostenstelle:</label></td>
-    <td style="padding:0;">{$AS.kostenstelle|escape}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.kostenstelle|escape}</div></td>
   </tr>
 *}
   <tr style="display:none;">
     <td style="padding:0;"><label style="display:block;width:auto;">Terminwunsch:</label></td>
-    <td style="padding:0;">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</div></td>
   </tr>
   <tr style="display:none;">
     <td style="padding:0;"><label style="display:block;width:auto;">Uhrzeit</label></td>
-    <td style="padding:0;">{$AS.umzugszeit|escape}</td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="background:#f00;border:0;display:block;width:auto;">Liefertermin:</label></td>
-    <td style="padding:0;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.umzugszeit|escape}</div></td>
   </tr>
 </table>
+  {if $AS.ansprechpartner}
 <br>
 <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2>
 <table>
   <tr>
     <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname</label></td>
-    <td style="padding:0;width:300px;">{$AS.ansprechpartner|escape}</td>
+    <td style="padding:0;width:300px;"><div class="itxt itxt2col ireadonly">{$AS.ansprechpartner|escape}</div></td>
   </tr>
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Fon</label></td>
-    <td style="padding:0;">{$AS.ansprechpartner_fon|escape}</td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.ansprechpartner_fon|escape}</div></td>
   </tr>
 </table>
+  {/if}
 
 {*
 <table style="display:none">
@@ -95,21 +124,20 @@
     {include file="umzugsformular_leistungsauswahl.tpl.read.html"}
 {/if}
 
+{if !empty($UmzugsAnlagen)}
 {include file="umzugsformular_attachments.tpl.read.html"}
+{/if}
 
 <form action="?s={$s}" method="post" name="frmUmzugsantrag">
 <input type="hidden" name="AS[aid]" value="{$AS.aid}">
 <input type="hidden" name="AS[token]" value="{$AS.token}">
-<strong>Bemerkung:</strong><br>
+<strong>Bemerkung hinzufügen:</strong><br>
 <textarea class="iarea bemerkungen" name="AS[add_bemerkungen]"></textarea>
 <br>
 
-<input class='btn blue' type="submit" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Anmerkung hinzufügen">
+<input class='btn blue' type="submit" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Bemerkung hinzufügen">
 </form>
-<div id="BoxBemerkungen">
-<strong>Bisherige Bemerkungen:</strong><br>
-<div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
-</div>
+
 <div id="LoadingBar"></div>
 
 </p>

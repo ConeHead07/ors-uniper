@@ -37,7 +37,7 @@ td.menge, td.menge, input.menge, td.preis, td.sum {
         <tr>
             <td>Kategorie</td>
             <td>Leistung</td>
-            <td>Menge<span class="hideForUniper"> 1 DSD</span></td>
+            <td class="hideForUniper">Menge<span class="hideForUniper"> 1 DSD</span></td>
             <td class="hideForUniper">Einheit 1</td>
             <td class="hideForUniper">Menge 2 DSD</td>
             <td class="hideForUniper">Einheit 2</td>
@@ -56,10 +56,26 @@ td.menge, td.menge, input.menge, td.preis, td.sum {
         {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" }
             {continue}
         {/if}
+        {* <tr><td colspan="3">{$L|json_encode}</td></tr> *}
         <tr class="row inputRowVon">
             <td class="ktg1">{$L.kategorie|escape}</td>
-            <td class="lstg">{$L.leistung|escape}</td>
-            <td class="menge">{if is_numeric($L.menge_property)}{$L.menge_property|escape|number_format:0:",":"."}{/if}</td>
+            <td class="lstg">
+                {if !empty($L.image)}
+                    <div class="bild">
+                    <img src="images/leistungskatalog/{$L.image}" style="float:left;max-width:120px;max-height:120px;border:0;margin-right:1rem;margin-bottom:.5rem;">
+                    </div>
+                {/if}
+                <div class="Bezeichnung">{$L.leistung|escape}</div>
+                {if !empty($L.Beschreibung)}
+                    <div class="Beschreibung">{$L.Beschreibung}</div>
+                {/if}
+                {if !empty($L.produkt_link)}
+                    <div class="produkt_link">
+                        <a href="{$L.produkt_link}" target="_PL{$L.leistung_id}">mehr Infos</a>
+                    </div>
+                {/if}
+            </td>
+            <td class="hideForUniper menge">{if is_numeric($L.menge_property)}{$L.menge_property|escape|number_format:0:",":"."}{/if}</td>
             <td class="unit hideForUniper">{$L.leistungseinheit|escape}</td>
             <td class=" hideForUniper">{if is_numeric($L.menge2_property)}{$L.menge2_property|escape|number_format:2:",":"."}{/if}</td>
             <td class="unit hideForUniper">{$L.leistungseinheit2|escape}</td>

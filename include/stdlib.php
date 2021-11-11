@@ -89,7 +89,7 @@ function __autoload($class_name) {
 //                . json_encode(compact('class_name', 'moduleClassFile', 'moduleClassFileExists'))
 //            );
 //			echo "CanNotAutoLoad: ".$loadfile."<br>\n";
-//			return false;
+			return false;
 		}
 	}
 	require_once $loadfile;

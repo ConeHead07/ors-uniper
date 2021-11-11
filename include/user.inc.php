@@ -2,6 +2,7 @@
 // START BASE CONF
 $_CONF['user'] = array(
 	'ConfName' => 'user',
+	'ItemEditClas' => 'ItemEditUser',
 	'Title' => 'User',
 	'Description' => '',
 	'Src' => '',
@@ -15,7 +16,7 @@ $_CONF['user'] = array(
 	'FormInput' => '',
 	'FormPreview' => '',
 	'FormRead' => '',
-    'EditClass' => 'ItemEditUser',
+    'ItemEditClass' => 'ItemEditUser',
 	'Fields' => array(
 		'uid' => array(
 			'dbField' => 'uid',

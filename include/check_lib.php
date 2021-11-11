@@ -81,16 +81,21 @@ function IsEmail($email) {
 
 if (!function_exists("check_email")) {
 function check_email($email) {
-	$email = trim($email);
+    $email = trim($email);
+    $validate = filter_var($email, FILTER_VALIDATE_EMAIL);
+    if (!$validate) {
+        return "ÃœberprÃ¼fen Sie Ihre E-Mail-Angabe!";
+    }
+
 	$b = strrpos($email," ");
 	$k = strrpos($email,",");
 	$a=strrpos($email,"@");
 	$p=strrpos($email,".");
 	$l=strlen($email);
-	if (!$k && !$b && $l>6 && ($p+3)<=$l && ($a+3)<=$p) {
+	if (false === $k && false === $b && $l>6 && ($p+3)<=$l && ($a+3)<=$p) {
 		$return["Error"] = "";
 	} else {
-		$return["Error"] = "Überprüfen Sie Ihre E-Mail-Angabe";
+		$return["Error"] = "ÃœberprÃ¼fen Sie Ihre E-Mail-Angabe";
 	}
 	return $return["Error"];
 }}
@@ -129,21 +134,21 @@ function check_date($inputDatum) {
 		$maxJahr = 2037;
 		if ($jahr >= $minJahr && $jahr <=$maxJahr) {
 			// echo "#2 tag: $tag<br>monat: $monat<br>jahr: $jahr<br>";
-			// Prüfen ob es sich um ein gültiges Datum handelt
+			// Prï¿½fen ob es sich um ein gï¿½ltiges Datum handelt
 			$date2Time = mktime(1,1,1,$monat,$tag,$jahr);
 			$time2Date = date("Y-m-d",$date2Time);
 			if ($time2Date == ($jahr."-".$monat."-".$tag)) {
 				$return["Datum"] = $time2Date;
 				$return["Deutsch"] = $tag.".".$monat.".".$jahr;
 			} else {
-				$return["Error"].="Ungültiges Datum<br>";
+				$return["Error"].="Ungï¿½ltiges Datum<br>";
 			}
 		} else {
 			$return["Error"].="Die Jahresangabe '$jahr' liegt ausserhalb";
 			$return["Error"].=" des Bereichs $minJahr - $maxJahr<br>";
 		}
 	} else {
-		$return["Error"].="Ungültiges Datumsformat<br>";
+		$return["Error"].="Ungï¿½ltiges Datumsformat<br>";
 	}
 	return $return;
 }}
@@ -244,7 +249,7 @@ function check_float($inputZahl,$min,$max,$nachkommastellen) {
 			$auswertung["Error"].="Geben Sie einen Wert zwischen $min und $max ein!<br>";
 		}
 	 } else {
-	 	$auswertung["Error"].="Geben Sie eine Ganzzahl aus reinen Zahlen und maximal einen Punkt für Nachkommastellen an!<br>";
+	 	$auswertung["Error"].="Geben Sie eine Ganzzahl aus reinen Zahlen und maximal einen Punkt fï¿½r Nachkommastellen an!<br>";
 	 }
 	 list($vorkomma,$nachkomma) = explode(".",$inputZahl);
 	 if (strlen(strval($nachkomma)) > $nachkommastellen) {
