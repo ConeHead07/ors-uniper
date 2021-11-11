@@ -63,6 +63,7 @@ div#auswahlUmzugsleistungenBox div.row div.lstg .produkt_link a:hover {
 div#auswahlUmzugsleistungenBox div.row div.chck {
     flex: 0 0 auto;
     align-self: center;
+    margin-right: 1rem;
 }
 /* The container */
 div#auswahlUmzugsleistungenBox label.container {
@@ -98,7 +99,9 @@ div#auswahlUmzugsleistungenBox label.container .checkmark {
     left: 0;
     height: 25px;
     width: 25px;
-    background-color: #eee;
+    background-color: #cdcdcd;
+    border: 3px solid #605e5e;
+    border-radius: 8px;
 }
 
 /* On mouse-over, add a grey background color */
@@ -108,7 +111,7 @@ div#auswahlUmzugsleistungenBox label.container .container:hover input ~ .checkma
 
 /* When the checkbox is checked, add a blue background */
 div#auswahlUmzugsleistungenBox label.container  input:checked ~ .checkmark {
-    background-color: green;
+    background-color: #ffffff;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -125,12 +128,12 @@ div#auswahlUmzugsleistungenBox label.container  input:checked ~ .checkmark:after
 
 /* Style the checkmark/indicator */
 div#auswahlUmzugsleistungenBox label.container  .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
+    left: 6px;
+    top: -2px;
+    width: 9px;
+    height: 19px;
+    border: solid #008000;
+    border-width: 0 5px 5px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
