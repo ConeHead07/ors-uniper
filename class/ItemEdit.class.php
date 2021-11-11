@@ -2264,7 +2264,9 @@ class ItemEdit
 		$SQL = "DELETE FROM `".$this->arrConf["Db"]."`.`".$this->arrConf["Table"]."` \n";
 		$SQL.= "\n WHERE `".$this->arrConf["PrimaryKey"]."` = \"".MyDB::escape_string($this->id)."\"";
 		$this->db_query($SQL, __LINE__);
-		if (!MyDB::error()) return true;
+		if (!MyDB::error()) {
+		    return true;
+        }
 		else {
 			$this->Error.= "Fehler beim L&ouml;schen des Datensatzes!<br>\n";
 			$this->dbError.= "#".__LINE__." ".basename(__FILE__)."\n";
@@ -2685,7 +2687,7 @@ class ItemEdit
 			break;
 			
 			default:
-			echo "editCmd:$editCmd <br>\n";
+			// echo "<span data-class='ItemEdit' data-line='" . __LINE__ . "'>editCmd:$editCmd </span><br>\n";
 		}
 		
 		// Speichern der gesendeten
