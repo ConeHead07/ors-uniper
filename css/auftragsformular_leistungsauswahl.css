@@ -1,0 +1,137 @@
+
+div#auswahlUmzugsleistungenBox div.row {
+    width: 100%;
+    display: flex;
+    border: 2px solid #0075b5;
+    border-radius: 8px;
+    flex-wrap: nowrap;
+    margin-bottom: 1rem;
+    background-color: #f1f8ff;
+}
+div#auswahlUmzugsleistungenBox div.row.checked {
+    border: 2px solid green;
+    background-color: #F2FAF3;
+}
+div#auswahlUmzugsleistungenBox div.row div.bild {
+    flex-grow: 0;
+    width:160px;
+}
+div#auswahlUmzugsleistungenBox div.row div.bild img {
+    max-width: 350px;
+    max-height: 150px;
+    border: 1px solid transparent;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+div#auswahlUmzugsleistungenBox div.row div.lstg {
+    flex: 1 1 auto;
+    align-self: center;
+    padding-right: 1rem;
+}
+div#auswahlUmzugsleistungenBox div.row div.lstg,
+div#auswahlUmzugsleistungenBox div.row div.lstg * {
+    font-weight: normal;
+    font-size: 1rem;
+}
+.row .lstg .Bezeichnung,
+.row .lstg .Bezeichnung *,
+div#auswahlUmzugsleistungenBox div.row div.lstg .Bezeichnung,
+div#auswahlUmzugsleistungenBox div.row div.lstg .Bezeichnung * {
+    font-weight: bold;
+}
+.row .lstg .Beschreibung,
+.row .lstg .Beschreibung *,
+div#auswahlUmzugsleistungenBox div.row div.lstg .Beschreibung,
+div#auswahlUmzugsleistungenBox div.row div.lstg .Beschreibung * {
+    font-weight: normal;
+}
+.row .lstg .produkt_link,
+.row .lstg .produkt_link,
+div#auswahlUmzugsleistungenBox div.row div.lstg .produkt_link,
+div#auswahlUmzugsleistungenBox div.row div.lstg .produkt_link * {
+    font-size: .8rem;
+    text-decoration: none;
+    color: #0078dc;
+}
+.row .lstg .produkt_link a:active,
+.row .lstg .produkt_link a:hover,
+div#auswahlUmzugsleistungenBox div.row div.lstg .produkt_link a:active,
+div#auswahlUmzugsleistungenBox div.row div.lstg .produkt_link a:hover {
+    text-decoration: underline;
+}
+
+div#auswahlUmzugsleistungenBox div.row div.chck {
+    flex: 0 0 auto;
+    align-self: center;
+}
+/* The container */
+div#auswahlUmzugsleistungenBox label.container {
+    border:0;
+    background:none;
+    display: block;
+    position: relative;
+    margin-bottom: 12px;
+    width: initial;
+    min-height:25px;
+    min-width:25px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+div#auswahlUmzugsleistungenBox label.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+div#auswahlUmzugsleistungenBox label.container .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+div#auswahlUmzugsleistungenBox label.container .container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+div#auswahlUmzugsleistungenBox label.container  input:checked ~ .checkmark {
+    background-color: green;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+div#auswahlUmzugsleistungenBox label.container .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+div#auswahlUmzugsleistungenBox label.container  input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+div#auswahlUmzugsleistungenBox label.container  .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

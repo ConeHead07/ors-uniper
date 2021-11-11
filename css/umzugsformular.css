@@ -236,7 +236,7 @@ label {
 }
 .itxt {
   display:inline-block;
-  z-background:#f7ffff;
+  z-background:#f1f8ff;
   height:25px;
   border:1px solid #0075B5;
   font-size:12px;
@@ -276,7 +276,7 @@ td label {
 }
 .iarea {  
   display:inline-block;
-  z-background:#f7ffff;
+  z-background:#f1f8ff;
   border:1px solid #0075B5;
   font-size:12px;
   margin:0;
@@ -323,7 +323,7 @@ td label {
 
 
 .MitarbeierItem .inputRowVon {
-  z-background:#f7ffff;
+  z-background:#f1f8ff;
 }
 
 .MitarbeierItem thead {
@@ -351,7 +351,7 @@ td label {
 }
 
 .MitarbeierItem .inputRowVon {
-  background:#f7ffff;
+  background:#f1f8ff;
 }
 .MitarbeierItem .inputRowZiel .ziel {
   background:#0075B5;
