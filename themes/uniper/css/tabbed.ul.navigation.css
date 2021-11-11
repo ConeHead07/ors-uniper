@@ -34,7 +34,8 @@ div.divTabbedList  ul li a {
     text-decoration: none; 
     border-left: 1px solid white; 
     color: #000; 
-	background-color: #a5c7ce;
+	background-color: rgba(0, 117, 181, .33);
+	--background-color-rgba-as-hex: #0075b554;
 }
 
 * html div.divTabbedList  ul a,
@@ -46,12 +47,12 @@ div.divTabbedList  ul li a {
 div.divTabbedList  ul li a:hover,
 div.divTabbedList  ul li span {
     color: white; 
-	background-color: #00869c;
+	background-color: #0075B5;
 }
 div.divTabbedList  ul li.activeTab a,
 div.divTabbedList  ul li.activeTab span {
     color: white; 
-	background-color: #00869c;
+	background-color: #0075B5;
 	font-weight:bold;
 }
 .clearLeft {
