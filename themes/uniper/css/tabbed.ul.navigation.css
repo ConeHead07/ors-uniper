@@ -18,12 +18,15 @@ div.divTabbedList  ul li {
 	float:left;
     margin: 0; 
 	padding: 0px;
-	font-size:12px;
     text-align:center;
 	width:auto;
 	padding-top:10px;
   }
+div.divTabbedList  ul li,
+div.divTabbedList  ul li * {
+	font-size:.8rem;
 
+}
 div.divTabbedList  ul li a {
     padding: 10px;
 	display:block;

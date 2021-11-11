@@ -1,41 +1,29 @@
 <!-- TAB NAVIGATION ITEMS BEGIN --> 
-<div id="ID128585" class="divTabbedNavigation" style="width:100%;"> 
-<div class="divTabbedList" style="width:100%;"> 
-
-<ul> 
-        <li {if $cat eq "neue"}class="activeTab"{/if}><a href="?s={$s}&cat=neue{if $allusers}&allusers=1{/if}" style="width:90px">Bestellungen</a></li>
-        <li {if $cat eq "angeboten"}class="activeTab"{/if} style="display:none"><a href="?s={$s}&cat=angeboten{if $allusers}&allusers=1{/if}" style="width:125px">zur Genehmigung</a></li>
-        <li {if $cat eq "aktive"}class="activeTab"{/if}><a href="?s={$s}&cat=aktive{if $allusers}&allusers=1{/if}">Aktive Aufträge</a></li>
-        <li {if $cat eq "abgeschlossene"}class="activeTab"{/if}><a href="?s={$s}&cat=abgeschlossene{if $allusers}&allusers=1{/if}">Abgeschlossen</a></li>
-        <li {if $cat eq "temp"}class="activeTab"{/if}><a href="?s={$s}&cat=temp{if $allusers}&allusers=1{/if}" style="display:none;">Tmp</a></li>
-        <li {if $cat eq "zurueckgegeben"}class="activeTab"{/if}><a href="?s={$s}&cat=zurueckgegeben{if $allusers}&allusers=1{/if}" style="color:#ffd700;display:none;">Zur&uuml;ck</a></li>
-        <li {if $cat eq "abgelehnte"}class="activeTab"{/if}><a href="?s={$s}&cat=abgelehnte{if $allusers}&allusers=1{/if}" style="color:#ffd700;display:none;">Abgelehnt</a></li>
-        <li {if $cat eq "stornierte"}class="activeTab"{/if}><a href="?s={$s}&cat=stornierte{if $allusers}&allusers=1{/if}" style="color:#ffd700;display:none;">Storno</a></li>
-        <li {if $cat eq "suche"}class="activeTab"{/if}><a href="?s=umzugssuche{if $allusers}&allusers=1{/if}">Suche</a></li>
-        <!-- <li><a href="#ID128586" style="width:60px">&nbsp;</a></li> -->
-</ul><br clear="all">
-</div>
+<div id="ID128585" class="divTabbedNavigation" style="width:100%;">
+    {include file="admin_antraege_tabs.html"}
 <!-- TAB NAVIGATION ITEMS END --> 
  
 <!-- TAB ITEM (128587) BEGIN --> 
 <div id="ID128587" class="divModuleBasic padding12px width5Col heightAuto"> 
-<div class="divInlay noMarginBottom borderTop"> 
-</div> 
+<div class="divInlay noMarginBottom borderTop">
+</div>
 
 <!-- Add-On Fließtext(dyn) ID: 128588 BEGIN -->
 <div class="divInlay borderTop">
+    {*
     <div style="float:right;padding:10px 20px 0 0;display:none">
         <a href="{$ListBaseLink}&ofld=id&odir={$odir}&allusers={if $allusers}0{else}1{/if}">Wechsel zu {if $allusers}meine Auftr&auml;ge{else}Auftr&auml;gen aller User{/if}</a>
     </div>
+    *}
 
     <div>
 {if $cat eq "angeboten"}
-<h2 style="float:left;" data-site="admin/antraege/liste/html">Es liegen {$num_all} von Mertens gestellte Aufträge vor</h2>
+    <h2 style="float:left;" data-site="admin/antraege/liste/html">Es liegen {$num_all} von Mertens gestellte Aufträge vor</h2>
 {else}
-<h2 style="float:left;" data-site="admin/antraege/liste/html">Es liegen {$num_all} {$cat} Aufträge vor</h2>
+    <h2 style="float:left;" data-site="admin/antraege/liste/html">Es liegen {$num_all} {$cat} Aufträge vor</h2>
 {/if}
-        <h2 style="float:right">{$summeTotal|number_format:2:",":"."} &euro;</h2>
-        <span style="clear:both"></span>
+    <h2 style="float:right">{$summeTotal|number_format:2:",":"."} &euro;</h2>
+    <span style="clear:both"></span>
 </div>
 {assign var="showLieferdatum" value=true}
 {assign var="showAbgeschlossen" value=true}

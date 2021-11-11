@@ -1,11 +1,19 @@
 <?php
 $op = ""; // Ausgabebuffer 
-if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) require_once("../header.php");
+if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) {
+	require_once("../header.php");
+}
 
-if (empty($s)) $s = getRequest("s", "umzugssuche");
+if (empty($s)) {
+	$s = getRequest("s", "umzugssuche");
+}
 $queryForm = file_get_contents($HtmlBaseDir."admin_antraege_suche.html");
 $queryForm = str_replace("{s}", $s, $queryForm);
 require_once($InclBaseDir."parse_userquery.php");
+
+$Tpl = new myTplEngine();
+$Tpl->assign('cat', 'suche');
+$Tpl->assign('allusers', 1);
 
 $searchFields = array(
 	"a.aid" => "",
@@ -39,7 +47,9 @@ $searchFields = array(
 	"m.ziel_abteilung" => "",
 	"m.umzugsart" => ""
 );
-foreach($searchFields as $k => $v) $searchFields[$k] = "";
+foreach($searchFields as $k => $v) {
+	$searchFields[$k] = "";
+}
 
 $defaultOrder = "ORDER BY a.umzugstermin";
 $q = getRequest("q");
@@ -57,6 +67,7 @@ $originOFld = $ofld;
 if ($ofld === 'TicketID') {
     $ofld = 'a.aid';
 }
+
 if (in_array($ofld, ['ort', 'PLZ', 'Land', 'Vorname', 'Name'])) {
 	$ofld = 'a.' . strtolower($ofld);
 } elseif($ofld === 'Liefertermin') {
@@ -240,7 +251,7 @@ if ($sendquery) {
 		//if ($db->error()) 
 		//$rows2Tbl.= $db->error()."<br>\nsql:".$sql."<br>\n";
 		$wz = "";
-		$rows2Tbl.= "<table class=\"tblList\" width='100%' border=1 cellpadding=1 cellspacing=0>\n";
+		$rows2Tbl.= "<table id='auftragsSuchResult' class=\"tblList\" width='100%' border=1 cellpadding=1 cellspacing=0>\n";
 		$rows2Tbl.= "<thead>\n";
 		$rows2Tbl.= "<td>#</td>";
 		$rows2Tbl.= "<td colspan=1>Aktion</td>";
@@ -252,14 +263,25 @@ if ($sendquery) {
 		
 		for($i = 0; $i < count($rows); $i++) {
 			$wz = ($wz!=1)?1:2;
-			$rows2Tbl.= "<tr class=\"wz$wz\">";
+			$lnk = "?s=aantrag&id=".urlencode($rows[$i]["aid"]);
+			$rows2Tbl.= "<tr class=\"wz$wz data-href\" data-href='$lnk'>";
 			$rows2Tbl.= "<td>".($offset+$i+1)."</td>";
-			$rows2Tbl.= "<td><a href=\"?s=aantrag&id=".urlencode($rows[$i]["aid"])."\">Antrag anzeigen</a></td>";
+			$rows2Tbl.= "<td><a href=\"?s=aantrag&id=".urlencode($rows[$i]["aid"])."\">anzeigen</a></td>";
 			foreach($rows[$i] as $k => $v) if ($k!="aid") $rows2Tbl.= "<td>$v</td>";
 			$rows2Tbl.= "</tr>\n";
 		}
 		$rows2Tbl.= "</tbody>\n";
 		$rows2Tbl.= "</table>";
+		$rows2Tbl.= <<<EOT
+<script>
+	$(function() {
+		$("table#auftragsSuchResult tr[data-href]").on("click", function() {
+			self.location.href = $(this).data("href");
+		});
+	});
+</script>
+EOT;
+
 		$op.= "<br>\n".$rows2Tbl;
 	} else {#
 		$op.= "Ihre Suche ergab keine Treffer!<br>\n";
@@ -272,11 +294,18 @@ if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) {
     echo $op;
 }
 
-$body_content.= "<div class=\"divModuleBasic padding6px width5Col heightAuto colorContentMain\"> 
-<h1><span class=\"spanTitle\">Auftragssuche:</span></h1> 
-<p>
-<div id=\"Umzugsantrag\" class=\"divInlay\">\n";
+$body_content.= '<div id="ID128585" class="divTabbedNavigation" style="width:100%;">' . "\n";
+
+$Tpl->assign('s', 'aantraege');
+$body_content.= $Tpl->fetch('admin_antraege_tabs.html');
+
+$body_content.= "<div class=\"divModuleBasic padding12px width5Col heightAuto colorContentMain\">
+<div class=\"divInlay noMarginBottom borderTop\"></div> 
+<div id=\"Umzugsantrag\" class=\"divInlay borderTop\">
+<h2>Auftragssuche</h2>\n";
+
 $body_content.= $op;
 $body_content.= "</div>\n";
 $body_content.= "</div>\n";
-?>
+$body_content.= "</div>\n";
+

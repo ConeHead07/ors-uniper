@@ -193,32 +193,33 @@
         uns keine Schäden an Ihrem Gebäude und Ihren Räumlichkeiten entstanden sind. Sollten Schäden entstanden sein, notieren
         Sie diese bitte auf dem beiliegendem Reklamationsformular.
       </div>
-      <div>
-        <div style="display: inline-block;width:14rem;height:2rem;font-weight:bold;">
+      <div style="min-height:1.5rem;margin-top:.8rem;">
+        <div style="display: inline-block;font-weight:bold;">
           <label style="width:initial;margin:initial;text-align: left;">Ihr Montageteam der merTens AG</label>
         </div>
         <div id="imgSignatureBoxMertens"
              class="input-bg-color"
-             style="display: inline-flex;width:15rem;height:2rem;border-bottom:2px solid black;">
-          <img id="imgSignatureMertens" src="" style="max-height:2rem;max-width:15rem;display:none;align-self: flex-end">
+             style="display: inline-block;width:15rem;min-height:1.5rem;border-bottom:2px solid black;">
+          <img id="imgSignatureMertens" src="" style="max-height:1.5rem;max-width:15rem;display:none;align-self: flex-end">
           <input id="lsSignatureMertens" type="hidden" name="sig_mt_dataurl" value="">
           <input id="lsSignatureMertensGeodata" type="hidden" name="sig_mt_geodata" value="">
           <input id="lsSignatureMertensCreated" type="hidden" name="sig_mt_created" value="">
         </div>
       </div>
 
-      <div>
-        <label style="margin-right:3rem;width:initial;">Ankunft <input name="ankunft" id="ankunftsZeit" type="time" size="8" class="input-bg-color" > Uhr</label>
-        <label style="margin-right:3rem;width:initial;">Abfahrt <input name="abfahrt" id="abfahrtsZeit" type="time" size="8" class="input-bg-color" > Uhr</label>
+      <div style="min-height:1.5rem;margin-top:.8rem;">
+        <label style="margin-right:3rem;width:initial;">Ankunft <span style="border-bottom:1px solid black;margin-left:1rem;"><input name="ankunft" id="ankunftsZeit" type="time" size="8" class="input-bg-color"> Uhr</span></label>
+        <label style="margin-right:3rem;width:initial;">Abfahrt <span style="border-bottom:1px solid black;margin-left:1rem"><input name="abfahrt" id="abfahrtsZeit" type="time" size="8" class="input-bg-color"> Uhr</span></label>
       </div>
-      <div>
+
+      <div style="min-height:1.5rem;margin-top:.8rem;">
         <div><label style="margin-right:3rem;width:initial;" class="input-bg-color" > Etikettierung erfolgt</label></div>
         {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
          {foreach name=GList item=L from=$Umzugsleistungen}
           {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" }
            {continue}
           {/if}
-        <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
+        <label style="margin-right:3rem;width:initial;padding: 10px 3px 5px 0" class="input-bg-color" >
           <input name="etikettierung_erfolgt[{$L.leistung_id|escape}]"
                  data-label="{$L.kategorie|escape}"
                  id="{$L.kategorie|escape}"
@@ -236,7 +237,7 @@
               <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
               Funktionsprüfung erfolgt</label>
             </div>
-            <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
+            <label style="margin-right:3rem;width:initial;;padding: 10px 3px 5px 0" class="input-bg-color" >
               <input name="funktionspruefung_erfolgt[]"
                      data-label="{$L.kategorie|escape}"
                      id="Schreibtischpruefung"
@@ -248,19 +249,21 @@
        {/foreach}
       {/if}
 
-      <div>
-        <div style="float:left;">
+      <div style="margin-top:.5rem;">
+        <div style="display:inline-block;margin-right:2rem;margin-top:1rem;">
           <div
                   class="input-bg-color"
-                  style="border-bottom:2px solid black;height:2.5rem;width:8rem;display: inline-flex;">
+                  style="border-bottom:2px solid black;min-height:1.5rem;width:8rem;display: inline-flex;">
             <input id="abnahmeLieferdatum" type="date" name="lieferdatum" style="width:100%;align-self: flex-end">
           </div>
           <div>(Datum)</div>
         </div>
-        <div style="float:left;margin-left:2rem;">
+
+        <div style="display:inline-block;margin-top:1rem;">
+        <div style="display:inline-block;margin-right:2rem;">
           <div
                   class="input-bg-color"
-                  style="border-bottom:2px solid black;height:2.5rem;width:14rem;display: inline-flex;">
+                  style="border-bottom:2px solid black;min-height:1.5rem;width:14rem;display: inline-flex;">
             <input id="lsSignatureUnterzeichner" type="text" name="sig_ma_unterzeichner"
                    value="{$AS.vorname|escape} {$AS.name|escape}"
                    style="width:100%;align-self: flex-end">
@@ -268,17 +271,20 @@
 
           <div>(Name Kunde in Blockbuchstaben)</div>
         </div>
-        <div style="float:left;margin-left:2rem;">
+
+        <div style="display:inline-block;">
           <div id="imgSignatureBoxMA"
                class="input-bg-color"
-               style="border-bottom:2px solid black;height:2.5rem;display: inline-flex;width:15rem;">
-            <img id="imgSignatureMA" src="" style="max-height:2rem;max-width:15rem;display:none;align-self: flex-end">
+               style="border-bottom:2px solid black;min-height:1.5rem;display: inline-flex;width:15rem;">
+            <img id="imgSignatureMA" src="" style="max-height:1.5rem;max-width:15rem;display:none;align-self: flex-end">
             <input id="lsSignatureMA" type="hidden" name="sig_ma_dataurl" value="">
             <input id="lsSignatureMAGeodata" type="hidden" name="sig_ma_geodata" value="">
             <input id="lsSignatureMACreated" type="hidden" name="sig_ma_created" value="">
           </div>
           <div>(Unterschrift)</div>
         </div>
+        </div>
+
         <div style="clear: both"></div>
       </div>
       <button id="btnSubmit" class="btn blue btn-submit" type="button" onclick="return false;">Speichern</button>

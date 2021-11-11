@@ -74,10 +74,18 @@
 .tblList .wz2 * {
 	background:#f7f7f7;
 }
-
 .tblList .wz1:hover,
-.tblList .wz2:hover {
-	background:#ffff5e;
+.tblList .wz2:hover,
+.tblList .wz1:hover td,
+.tblList .wz2:hover td {
+	background: #fff;
+}
+
+.tblList tr.data-href:hover,
+.tblList tr.data-href:hover td,
+.tblList tr.data-href:hover td * {
+	color: #0075B5;
+	cursor: pointer;
 }
 .tblList td.int,
 .tblList td.float {

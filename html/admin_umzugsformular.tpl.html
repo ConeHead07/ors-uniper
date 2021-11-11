@@ -20,14 +20,14 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 <div id="SysInfoBox"></div>
 
 <link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
+
+{include file="admin_antraege_tabs.html" cat="auftrag" aid=$AS.aid s="aantraege" allusers=1}
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
-<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-<h1><span class="spanTitle" data-site="admin/umzugsformular/tpl/html">Auftrag #{$AS.aid}</span></h1>
-<p>
-<div id="Umzugsantrag" class="divInlay"> 
-<form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
+<div class="divModuleBasic padding12px width5Col heightAuto colorContentMain">
+  <div class="divInlay noMarginBottom borderTop"></div>
+<div id="Umzugsantrag" class="divInlay">
 <h2 style="margin:0;">Auftragsdaten</h2>
-Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
+  <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
 <table border=1 cellspacing=1 cellpadding=1>
   <tr>
     <td style="padding:0;height:auto;width:auto;"><label for="termin" style="width:180px;">Liefertermin:</label></td>
@@ -41,20 +41,29 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   </tr>
   <tr>
     <td style="padding:0;height:auto;width:auto;"><label style="width:180px;">Antragsdatum:</label></td>
-    <td style="padding:0;width:auto;">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
+    <td style="padding:0;width:auto;"><div  class="itxt itxt2col">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
   </tr>
   <tr>
     <td style="padding:0;width:auto;"><label style="width:180px;">{if $AS.angeboten_am}Genehmigt{else}Best&auml;tigt{/if}:</label></td>
-    <td style="padding:0;width:auto;" class="status_{$AS.genehmigt_br}"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></td>
+    <td style="padding:0;width:auto;" class="status_{$AS.genehmigt_br}">
+      <div  class="itxt itxt2col"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></div></td>
   </tr>
   <tr>
     <td style="padding:0;width:auto;"><label style="width:180px;">Abgeschlossen:</label></td>
-    <td style="padding:0;width:auto;" class="status_{$AS.abgeschlossen}"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></td>
+    <td style="padding:0;width:auto;" class="status_{$AS.abgeschlossen}">
+      <div  class="itxt itxt2col">
+      <img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></div></td>
   </tr>
   <tr>
     <td style="padding:0;"><label style="width:180px;">Status:</label></td>
-    <td style="padding:0;">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</td>
+    <td style="padding:0;"><div class="itxt itxt2col">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</div></td>
   </tr>
+  {if $AS.angeboten_von}
+  <tr>
+    <td style="padding:0;"><label style="width:180px;">Angeboten:</label></td>
+    <td style="padding:0;"><div class="itxt itxt2col">{$AS.angeboten_am} von {$AS.angeboten_von}</div></td>
+  </tr>
+  {/if}
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
 </table>
   <a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}" style="display:none;" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Umzugsblatt / Druckansicht</a>
@@ -65,16 +74,17 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
   | <a href="%WebRoot%sites/etiketten.php?id={$AS.aid}" target="_Lieferschein{$AS.aid}">Etiketten</a>
 <br>
 
-  <div id="BoxBemerkungenHistorie">
+  <div id="BoxBemerkungenHistorie" style="margin-top: 1rem">
     <strong>Bisherige Bemerkungen</strong><br>
     <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
   </div>
 
-  <div id="BoxLieferhinweiseAktuell">
+  <div id="BoxLieferhinweiseAktuell" style="margin-top: 1rem">
     <strong>Lieferhinweise:</strong><br>
     <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
   </div>
 
+  <div  style="margin-top: 1rem">
 <div style="float:left">
 <h2 style="margin:0;">Lieferdaten</h2>
 <input type="hidden" name="AS[aid]" value="{$AS.aid}">
@@ -207,6 +217,7 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
     {include file="admin_umzugsformular_lieferauswahl.tpl.html"}
 </div>
 {/if}
+</div>
 <br>
 <div style="clear:both;"></div>
 
@@ -238,12 +249,13 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
 <!-- <div style="color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="addMa();return false;">Weiteren Mitarbeiter ausw&auml;hlen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></div><br> -->
 <br>
 
-    <div id="BoxBemerkungen">
-        <strong>Bemerkungen:</strong><br>
+    <div id="BoxBemerkungen" style="margin-top: 1rem">
+        <strong>Bemerkung hinzufügen:</strong><br>
         <textarea class="iarea bemerkungen" name="AS[bemerkungen]"></textarea>
     </div>
 
-  <strong>Lieferinweis (für Lieferschein):</strong><br>
+  <div style="margin-top: 1rem">
+    <strong>Lieferinweis (für Lieferschein):</strong><br>
 {if $AS.umzugsstatus ne "abgeschlossen" and $AS.umzugsstatus ne "storniert" and $AS.umzugsstatus ne "abgelehnt"}
     <div id="BoxLieferhinweise">
         <textarea class="iarea bemerkungen lieferhinweise" name="AS[lieferhinweise]">{$AS.lieferhinweise|escape}</textarea>
@@ -251,8 +263,9 @@ Angeboten: {$AS.angeboten_am} von {$AS.angeboten_von}
       {$AS.lieferhinweise|escape}
 {/if}
     </div>
+  </div>
 
-<div style="margin-top:20px;width:100%;"><!-- 
+<div style="margin-top:1.5rem;width:100%;"><!--
  --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
  --><input type="submit" class="btn grey"
            onclick="umzugsantrag_save()"
