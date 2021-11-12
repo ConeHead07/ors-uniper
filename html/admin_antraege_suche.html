@@ -8,6 +8,20 @@
 <style>
 .frmSuche input.qField { width:200px; }
 .frmSuche label { width:100px; margin-left:0; }
+.frmSuche .options label {
+	background: none;
+	display: inline-block;
+	color: initial;
+	width: initial;
+	border: none;
+	box-sizing: border-box;
+	width: 49%;
+	text-align: left;
+	cursor: pointer;
+}
+.frmSuche .options label {
+	padding-right: 1rem;
+}
 </style>
 
 <form name="frmSuche" class="frmSuche">
@@ -26,6 +40,10 @@
 		<tr>
 			<td style="padding:0;"><label for="q_aid" style="display:block;width:auto;">Ticket-ID</label></td>
 			<td style="padding:0;"><input type="text" id="q_aid" value="{q[a.aid]}" name="q[a.aid]" class="itxt itxt2col" title="Ticket-ID"></td>
+		</tr>
+		<tr>
+			<td style="padding:0;"><label for="q_tour" style="display:block;width:auto;">Tour-Kennung</label></td>
+			<td style="padding:0;"><input type="text" id="q_tour" value="{q[a.tour_kennung]}" name="q[a.tour_kennung]" class="itxt itxt2col" title="Kennung für die Tourenplanung"></td>
 		</tr>
 		<tr>
 			<td style="padding:0;"><label for="q_kid" style="display:block;width:auto;">KID</label></td>
@@ -62,10 +80,33 @@
 				<option value="abgeschlossen">abgeschlossen</option>
 			</select></td>
 		</tr>
+		<tr>
+			<td style="padding:0;height:1rem"><label for="q_land" style="display:block;width:auto;height:100%">
+				Leistungen
+				<div style="color:#fff;font-size:x-small;">
+					Sucht nach Aufträgen, die mind. eines dieser Kategorien enthalten.
+				</div>
+			</label></td>
+			<td class="options" style="padding:0;">
+				<div class="itxt itxt2col">
+					<label><input type="checkbox" name="q[kk.leistungskategorie][]" value="Schreibtisch"> Schreibtisch</label>
+					<label><input type="checkbox" name="q[kk.leistungskategorie][]" value="Schreibtischlampe"> Lampe</label>
+					<label><input type="checkbox" name="q[kk.leistungskategorie][]" value="Stuhl"> Stuhl</label>
+					<label><input type="checkbox" name="q[kk.leistungskategorie][]" value="Rabatt"> Rabatt</label>
+					<label><input type="checkbox" name="q[kk.leistungskategorie][]" value="Transportpositionen"> Transport</label>
+				</div>
+			</td>
+		</tr>
 	</table>
 	<script>
 		var selectedUmzugsstatus = "{q[a.umzugsstatus]}";
+		var aCheckedKategorien = [/*aCheckedKategorienJson*/];
 		$("#q_umzugsstatus").find("option[value="+selectedUmzugsstatus+"]").prop("selected", true);
+		if (Array.isArray(aCheckedKategorien) && aCheckedKategorien.length > 0) {
+			aCheckedKategorien.forEach(function(val, idx) {
+				$("input[type=checkbox][name*=leistungskategorie][value=" + val + "]").prop("checked", true);
+			});
+		}
 	</script>
 
 	<input type="hidden" name="View" value="Antraege">

@@ -237,7 +237,7 @@ label {
 .itxt {
   display:inline-block;
   z-background:#f1f8ff;
-  height:25px;
+  min-height:25px;
   border:1px solid #0075B5;
   margin:0;
   padding:4px;
@@ -250,7 +250,7 @@ label {
 }
 .iselect {
     width: 100%;
-    height: 25px;
+    min-height: 25px;
     border: 1px solid #0075b5;
     font-size:0.8rem;
     margin:0;

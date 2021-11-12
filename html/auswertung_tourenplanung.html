@@ -1,0 +1,191 @@
+<pre style="display: none;">
+html/auswertung_form.html
+Rechnungsstellung nur Mertens-Henk:
+ 
+Es wird eine Funktion zur Abrechnung der Vorgänge benötigt.
+Hierzu soll eine Auswahl von KW bis KW  und das Jahr angegeben werden.
+Daraus soll eine Liste mit allen Vorgängen die Abgeschlossen worden sind
+und noch nicht abgerechnet worden sind mit
+Folgenden Feldern ausgegeben werden:
+ 
+ID|STOM|Region|Standort|Wirtschaftseinheit|PSP-Element|Planon Nr.|Leistungsdatum|AbschlussDatum|Summe
+ 
+Unter dieser Tabelle muss es ein Feld geben wo wir unsere WWS Vorgangs Nr. 
+eintragen können und dann ein Fertigsstellungsbutton.
+Beim Bestätigen müssen der Status alle angezeigten Vorgänge auf Berechnet
+gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
+</pre>
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
+    <h1><span class="spanTitle">Zuordnung von Aufträgen zu Tourenplänen</span></h1>
+
+    <div id="Auswertung" class="divInlay">
+    <form id="frmStat" name="frmStat" method="get" action="?" data-site="auswertung/form/html">
+    <div id="frmFilterBox" style="margin-bottom:1rem; border:1px solid #E0E0E0;padding:1rem;border-radius:8px;">
+    <span style="border:0;font-weight:bold;font-size:12px;">
+    Zeitraum
+    <select id="auswertungDatumsfeld" name="datumfeld">
+        <option value="umzugstermin">Lieferdatum</option>
+        <option value="antragsdatum">Auftragsdatum</option>
+        <option value="tour_disponiert_am">Disponiert am</option>
+        <option value="abgeschlossen_am">Abschlussdatum</option>
+        <option value="bestaetigt_am">Bestätigungsdatum</option>
+        <option value="berechnet_am">Rechnungsdatum</option>
+    </select>
+    Von: <input type="date" name="datumvon" value="{$datumvon}" xonchange="document.forms['frmStat'].submit()">
+    Bis: <input type="date" name="datumbis" value="{$datumbis}" xonchange="document.forms['frmStat'].submit()">
+    {*
+        Kalenderwoche
+        <select onchange="document.forms['frmStat'].submit()" selected="{$kwvon}" name="kwvon" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
+        <option value="">auswählen</option>
+                {html_options options=$kw_options selected=$kwvon}
+        </select> bis
+        <select onchange="document.forms['frmStat'].submit()" selected="{$kwbis}" name="kwbis" style="border:0;font-weight:bold;font-size:12px;width:150px;background:none;">
+        <option value="">auswählen</option>
+                {html_options options=$kw_options selected=$kwbis}
+        </select>
+    *}
+    <input style="margin-left:15px;" id="all" name="all" type="checkbox" value="1" {if $all}checked="checked"{/if}><label for="all"><span title="Auch bereits disponierte Leistungen anzeigen">Auch bereit disponierte Aufträge</span></label>
+
+
+    <div style="margin-top:5px;margin-bottom:5px;">
+        <label style="margin-right:2rem"><input type="checkbox" name="auftragsstatus[]" id="filter_beauftragt" value="beauftragt"> Beauftragt</label>
+        <label style="margin-right:2rem"><input type="checkbox" name="auftragsstatus[]" id="filter_avisiert" value="avisiert"> Avisiert</label>
+        <label style="margin-right:2rem"><input type="checkbox" name="auftragsstatus[]" id="filter_disponiert" value="disponiert"> Disponiert</label>
+        <label style="margin-right:2rem"><input type="checkbox" name="auftragsstatus[]" id="filter_abgeschlossen" value="abgeschlossen"> Abgeschlossen</label>
+    </div>
+
+<input type="hidden" name="s" value="{$s}">
+<input type="hidden" name="order" value="" id="orderby">
+<input type="hidden" name="queriedorder" value="{$order}">
+<input type="hidden" name="queriedodir" value="{$odir}">
+        <button type="submit" class="btn btn-apply">Auswertung starten</button>
+    </span>
+    </div>
+<noscript>&lt;input type="submit" value="Auswertung starten"&gt;</noscript>
+</span>
+<style type="text/css">{literal}
+    th.order {
+        cursor:pointer;
+    }
+{/literal}</style>
+<script>
+    var datumFilterFeld = "{$datumfeld}";
+    var aAuftragsstatusFilter = {$aAuftragsstatus};
+</script>
+<script>{literal}
+
+$(function(){
+
+    $("#auswertungDatumsfeld").val(datumFilterFeld);
+
+    if (aAuftragsstatusFilter && Array.isArray(aAuftragsstatusFilter) && aAuftragsstatusFilter.length > 0) {
+        for(var ai = 0; ai < aAuftragsstatusFilter.length; ai++) {
+            var asel = '#filter_' + aAuftragsstatusFilter[ai];
+            $(asel).prop("checked", true);
+        }
+    }
+    
+    var send = function() {
+        self.location.href = "?" + $("#frmStat").serialize();
+    };
+    
+    $("th.order").click(function(e){        
+        $("input#orderby").val( $(this).attr("data-fld") );
+        send();
+    });
+    
+    $("th input").keypress(function(e){
+        if ( (e.keyCode || e.which) === 13) send();
+    });
+
+    $("#tblTourenplanung tr[data-href]").on("click", function() {
+        var link = $(this).data("href");
+        console.log({link});
+        window.open( $(this).data("href"), "auftrag");
+        window.status= $(this).data("href");
+    });
+    
+});
+{/literal}
+</script>
+
+<table id="tblTourenplanung" class="tblList">
+    <thead>
+        <tr>
+            <th style="cursor:pointer" {literal}
+                onclick="(function(){
+                    $('input:checkbox[name^=aids]').attr('checked', !$('input:checkbox[name^=aids]:first').is(':checked') );
+            })(){/literal}">x</th>
+            <th class="order" data-fld="aid">ID</th>
+            <th class="order" data-fld="kid">KID</th>
+            <th class="order" data-fld="land" title="Land">L.</th>
+            <th class="order" data-fld="ort">Lieferort</th>
+            <th class="order" data-fld="plz">PLZ</th>
+            <th class="order" data-fld="strasse">Stra&szlig;e</th>
+            <th class="order" data-fld="service">Service</th>
+            <th class="order" data-fld="antragsdatum">Auftr.Dat.</th>
+            <th class="order" data-fld="umzugstermin">Geliefert</th>
+            <th class="order" data-fld="tour_kennung">Tour</th>
+            <th class="order" data-fld="Leistungen">Lstg.</th>
+            <th class="order" data-fld="summe">Summe</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th><input name="q[aid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></th>
+            <th><input name="q[kid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.kid}{/if}"></th>
+            <th><input name="q[land]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.land}{/if}"></th>
+            <th><input name="q[ort]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.ort}{/if}"></th>
+            <th><input name="q[plz]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.plz}{/if}"></th>
+            <th><input name="q[strasse]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.strasse}{/if}"></th>
+            <th><input name="q[service]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.service}{/if}"></th>
+            <th><input name="q[antragsdatum]" placeholder="JJJJ-MM-TT" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.antragsdatum}{/if}"></th>
+            <th><input name="q[umzugstermin]" placeholder="JJJJ-MM-TT" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.umzugstermin}{/if}"></th>
+            <th><input name="q[tour_kennung]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.tour_kennung}{/if}"></th>
+            <th><input name="q[Leistungen]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.Leistungen}{/if}"></th>
+            <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.summe}{/if}"></th>
+        </tr>
+    </thead>
+    </thead>
+    <tbody>
+    {foreach name=AList item=item from=$Auftraege}
+        <tr class="data-href" data-href="?s={$site_antrag}&id={$item.aid}">
+            <td>{if !$item.berechnet_am}<input type="checkbox" name="aids[]" value="{$item.aid}">{/if}</td>
+            <td>{$item.aid}</td>
+            <td>{$item.kid}</td>
+            <td>{if $item.land eq "Deutschland"}D{elseif $item.land eq "Niederlande"}NL{else}{$item.land}{/if}</td>
+            <td>{$item.ort}</td>
+            <td>{$item.plz}</td>
+            <td>{$item.strasse}</td>
+            <td>{$item.service}</td>
+            <td title="{$item.antragsdatum|date_format:"%d.%m.%Y %H:%M"}">{if !empty($item.antragsdatum) && {$item.antragsdatum|date_format:"%Y"} eq {'Y'|date}}
+                    {$item.antragsdatum|date_format:"%d.%m."}
+                {else}
+                    {$item.antragsdatum|date_format:"%d.%m.'%y"}
+                {/if}
+            </td>
+            <td title="{$item.umzugstermin|date_format:"%d.%m.%Y"}">{if !empty($item.umzugstermin) && {$item.umzugstermin|date_format:"%Y"} eq {'Y'|date}}
+                {$item.umzugstermin|date_format:"%d.%m."}
+                {else}
+                {$item.umzugstermin|date_format:"%d.%m.%y"}
+                {/if}
+            </td>
+            <td {if !empty($item.tour_disponiert_am)}title="{$item.tour_disponiert_am}, {$item.tour_disponiert_von}"{/if}>
+                {$item.tour_kennung}
+            </td>
+            <td title="{$item.LeistungenFull}">{$item.Leistungen}</td>
+            <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
+        </tr>
+        {/foreach}
+    </tbody>
+</table>
+    <input type="text" name="tourkennung" placeholder="Tourkennung/ID" size="15" style="border:1px solid #666;width:180px;font-size:11px;" value="{$tourkennung}">
+<input type="submit" name="finish" value="Tourkennung markierten Aufträgen zuweisen"
+       style="border-style:solid;border-width:1px;background-color:#666;color:#fff;font-weight:bold;">
+</form>
+        <div>
+            {if !empty($listAidsByTour)}
+
+            {/if}
+        </div>
+    </div>
+</div>

@@ -182,7 +182,7 @@ if ($num_all > $num) {
 		'num_all'    => $num_all,
 		'baselink'   => $ListBaseLink."&offset={offset}&limit={limit}&ofld=$ofld&odir=$odir"));
 	$rlist_nav->render_browser();
-	$ListBrowsing = $rlist_nav->get_nav('all')." num:$num num_all:$num_all<br>\n";
+	$ListBrowsing = $rlist_nav->get_nav('all')."<br>\n";
 } else {
 	$ListBrowsing = ""; 
 }

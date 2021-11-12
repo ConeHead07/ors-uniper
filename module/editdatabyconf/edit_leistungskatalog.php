@@ -169,7 +169,7 @@ if (isset($confName) && isset($ConfRegData[$confName]) && file_exists($InclBaseD
 
     if ($show_list) {
         if ($userHasInsertAccess) {
-            $body_content.= "[<a href=\"".$modBaseLink."&confName=".rawurlencode($confName)."&editCmd=Edit\">Neuen Eintrag hinzufügen</a>]<br>\n";
+            $body_content.= '[<a href="'.$modBaseLink."&confName=".rawurlencode($confName).'&editCmd=Edit">Neuen Eintrag hinzufügen</a>]<br>' . "\n";
         } else {
             $body_content.= "(No Insert-Access)<br>\n";
         }

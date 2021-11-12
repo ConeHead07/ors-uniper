@@ -74,6 +74,7 @@ $validFields = array(
     'kostenstelle',
     'planonnr',
     'abgeschlossen_am',
+    'Leistungen',
     'summe',
 );
 
@@ -103,11 +104,28 @@ foreach($validFields as $_f) {
 
     }
 
-    if (!empty($query[$_f])) {
-        if (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
+    if (isset($query[$_f]) && is_string($query[$_f]) && trim($query[$_f]) !== '') {
+        $_q = '';
+        if ($_f === 'Leistungen') {
+            $chars = str_split( trim($query[$_f]));
+            $chars = preg_replace('#[^A-Z]#', '', $chars);
+
+            foreach($chars as $_chr) {
+                $having[] = 'GROUP_CONCAT(kategorie_abk) LIKE "%' . $_chr . '%"';
+            }
+            break;
+        }
+        elseif (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
             $_q = $sqlQueryField . ' ' . $m[1] . $db->quote($m[2]);
         } else {
-            $_q = $sqlQueryField . ' ' . ' LIKE ' . $db->quote( str_replace('*','%', $query[$_f]) . '%');
+            $_term = str_replace('*','%', trim($query[$_f]));
+            if ($_f === 'land' && strcmp($_term,'NL') === 0) {
+                $_term = 'Niederlande';
+            }
+            else {
+                $_term.= '%';
+            }
+            $_q = $sqlQueryField . ' ' . ' LIKE ' . $db->quote( $_term);
         }
         
         if ($sqlQueryField === 'nachname') {
@@ -126,7 +144,7 @@ foreach($validFields as $_f) {
         elseif ($_f !== 'summe') {
             $w[] = $_q;
         }
-        else {
+        elseif ($_q) {
             $having[] = $_q;
         }
     }
@@ -167,35 +185,43 @@ if (in_array('abgerechnet', $aAuftragsstatus)) {
 }
 
 
-$sql = 'SELECT a.*, ' . "\n"
+$sqlSelect = 'SELECT a.*, ' . "\n"
       . ' ua.personalnr AS kid,' . "\n"
       . ' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, ' . "\n"
       . ' u.nachname, u.nachname stom, ua.nachname antragsteller_name, ' . "\n"
       . ' ua.gruppe antragsteller_gruppe, ' . "\n"
-      . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . "\n"
-      . ' FROM mm_umzuege a ' . "\n"
+      . ' GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . "\n"
+      . ' GROUP_CONCAT(lk.leistungskategorie ORDER BY leistungskategorie SEPARATOR ", ") AS LeistungenFull, ' . "\n"
+      . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . "\n";
+
+$sqlFrom = ' FROM mm_umzuege a ' . "\n"
       . ' JOIN mm_user ua ON a.antragsteller_uid = ua.uid ' . "\n"
       . ' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id ' . "\n"
       . ' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid ' . "\n"
       . ' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) ' . "\n"
       . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
+      . ' LEFT JOIN mm_leistungskategorie lk ON(l.leistungskategorie_id = lk.leistungskategorie_id) ' . "\n"
       . ' LEFT JOIN mm_leistungspreismatrix lm ON(' . "\n"
       . '    l.leistung_id = lm.leistung_id ' . "\n"
       . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . "\n"
       . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . "\n"
-      . ' ) ' . "\n"
-      . ' WHERE 1 ' . "\n"
+      . ' ) ' . "\n";
+
+$sqlWhere = ' WHERE 1 ' . "\n"
       . ' AND ' . $datumfeld . ' BETWEEN :von AND :bis ' . "\n";
 if (count($aWhereStatusAnyOf)) {
-    $sql.= ' AND ( ' . implode(' OR ', $aWhereStatusAnyOf) . ')' . "\n";
+    $sqlWhere.= ' AND ( ' . implode(' OR ', $aWhereStatusAnyOf) . ')' . "\n";
 }
 
-$sql.=  ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '') . "\n"
-      . ' GROUP BY a.aid ' . "\n"
-      . ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ') ' : '') . "\n"
-      . ' ORDER BY ' . $sqlOrderFld . ' ' . $odir . "\n";
+$sqlWhere.=  ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '') . "\n";
+$sqlGroup = ' GROUP BY a.aid ' . "\n";
+$sqlHaving = ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ') ' : '') . "\n";
+$sqlOrder = ' ORDER BY ' . $sqlOrderFld . ' ' . $odir . "\n";
+$sqlLimit = '';
+
+$sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
 $rows = $db->query_rows($sql, 0, array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis)));
-//echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
+// echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
 
 if ($s === 'vauswertung') $site_antrag = 'pantrag';
 

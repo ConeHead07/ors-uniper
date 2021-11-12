@@ -81,12 +81,13 @@
             {/literal}
             </script>
 
+            <div style="width:100%;overflow-x:scroll">
             <table class="tblList">
                 <thead>
                 <tr>
                     <th class="order" data-fld="aid">ID</th>
                     <th class="order" data-fld="kid">KID</th>
-                    <th class="order" data-fld="land">Land</th>
+                    <th class="order" data-fld="land" title="Land">L.</th>
                     <th class="order" data-fld="ort">Lieferort</th>
                     <th class="order" data-fld="plz">PLZ</th>
                     <th class="order" data-fld="strasse">Stra&szlig;e</th>
@@ -96,6 +97,7 @@
                     <th class="order" data-fld="abgeschlossen_am">Abschluss</th>
                     <th class="order" data-fld="berechnet_am">RechDatum</th>
                     <th class="order" data-fld="vorgangsnummer">Rechnungsnr</th>
+                    <th class="order" data-fld="Leistungen abgekürzt">Lstg.</th>
                     <th class="order" data-fld="summe">Summe</th>
                 </tr>
                 <tr>
@@ -106,11 +108,12 @@
                     <th><input name="q[plz]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.plz}{/if}"></th>
                     <th><input name="q[strasse]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.strasse}{/if}"></th>
                     <th><input name="q[service]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.service}{/if}"></th>
-                    <th><input name="q[antragsdatum]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.antragsdatum}{/if}"></th>
-                    <th><input name="q[umzugstermin]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.umzugstermin}{/if}"></th>
-                    <th><input name="q[abgeschlossen_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.abgeschlossen_am}{/if}"></th>
-                    <th><input name="q[berechnet_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.berechnet_am}{/if}"></th>
+                    <th><input placeholder="JJJJ-MM-TT" name="q[antragsdatum]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.antragsdatum}{/if}"></th>
+                    <th><input placeholder="JJJJ-MM-TT" name="q[umzugstermin]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.umzugstermin}{/if}"></th>
+                    <th><input placeholder="JJJJ-MM-TT" name="q[abgeschlossen_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.abgeschlossen_am}{/if}"></th>
+                    <th><input placeholder="JJJJ-MM-TT" name="q[berechnet_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.berechnet_am}{/if}"></th>
                     <th><input name="q[vorgangsnummer]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.vorgangsnummer}{/if}"></th>
+                    <th><input name="q[Leistungen]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.Leistungen}{/if}"></th>
                     <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.summe}{/if}"></th>
                 </tr>
                 </thead>
@@ -119,21 +122,53 @@
                 <tr>
                     <td><a href="?s={$site_antrag}&id={$item.aid}">{$item.aid}</a></td>
                     <td>{$item.kid}</td>
-                    <td>{if $item.land eq "Deutschland"}DE{elseif $item.land eq "Niederlande"}NL{else}{$item.land}{/if}</td>
+                    <td>{if $item.land eq "Deutschland"}D{elseif $item.land eq "Niederlande"}NL{else}{$item.land|substr:0:3}{/if}</td>
                     <td>{$item.ort}</td>
                     <td>{$item.plz}</td>
                     <td>{$item.strasse}</td>
                     <td>{$item.service}</td>
-                    <td>{$item.antragsdatum|date_format:"%d.%m.%Y"}</td>
-                    <td>{$item.umzugstermin|date_format:"%d.%m.%Y"}</td>
-                    <td>{$item.abgeschlossen_am|date_format:"%d.%m.%Y"}</td>
-                    <td>{$item.berechnet_am|date_format:"%d.%m.%Y"}</td>
+
+                    <td title="{$item.antragsdatum|date_format:"%d.%m.%Y %H:%M"}">
+                    {if !empty($item.antragsdatum) && {$item.antragsdatum|date_format:"%Y"} eq {'Y'|date}}
+                    {$item.antragsdatum|date_format:"%d.%m."}
+                    {else}
+                    {$item.antragsdatum|date_format:"%d.%m.%y"}
+                    {/if}
+                    </td>
+
+                    <td title="{$item.umzugstermin|date_format:"%d.%m.%Y"}">
+                    {if !empty($item.umzugstermin) && {$item.umzugstermin|date_format:"%Y"} eq {'Y'|date}}
+                    {$item.umzugstermin|date_format:"%d.%m."}
+                    {else}
+                    {$item.umzugstermin|date_format:"%d.%m.%y"}
+                    {/if}
+                    </td>
+
+                    <td title="{$item.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"}">
+                    {if !empty($item.abgeschlossen_am) && {$item.abgeschlossen_am|date_format:"%Y"} eq {'Y'|date}}
+                    {$item.abgeschlossen_am|date_format:"%d.%m."}
+                    {else}
+                    {$item.abgeschlossen_am|date_format:"%d.%m.%y"}
+                    {/if}
+                    </td>
+
+
+                    <td title="{$item.berechnet_am|date_format:"%d.%m.%Y %H:%M"}">
+                    {if !empty($item.berechnet_am) && {$item.berechnet_am|date_format:"%Y"} eq {'Y'|date}}
+                    {$item.berechnet_am|date_format:"%d.%m."}
+                    {else}
+                    {$item.berechnet_am|date_format:"%d.%m.%y"}
+                    {/if}
+                    </td>
+
                     <td>{$item.vorgangsnummer}</td>
+                    <td title="{$item.LeistungenFull}">{$item.Leistungen}</td>
                     <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
                 </tr>
                 {/foreach}
                 </tbody>
             </table>
+            </div>
         </form>
     </div>
 </div>

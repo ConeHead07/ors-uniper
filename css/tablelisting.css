@@ -66,6 +66,9 @@
 .tblList tbody tr {
 	border-top: 1px solid #ededed;
 }
+.tblList tbody tr td {
+	vertical-align: top;
+}
 .tblList .wz1,
 .tblList .wz1 * {
     background:#fff;
@@ -81,6 +84,9 @@
 	background: #fff;
 }
 
+.tblList tr[data-href]:hover,
+.tblList tr[data-href]:hover td,
+.tblList tr[data-href]:hover td *,
 .tblList tr.data-href:hover,
 .tblList tr.data-href:hover td,
 .tblList tr.data-href:hover td * {
@@ -88,7 +94,8 @@
 	cursor: pointer;
 }
 .tblList td.int,
-.tblList td.float {
+.tblList td.float,
+.tblList td.menge {
 	text-align:right;
 }
 .tblList td.sum,

@@ -109,9 +109,9 @@ $(function(){
             <th><input name="q[plz]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.plz}{/if}"></th>
             <th><input name="q[strasse]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.strasse}{/if}"></th>
             <th><input name="q[service]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.service}{/if}"></th>
-            <th><input name="q[antragsdatum]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.antragsdatum}{/if}"></th>
-            <th><input name="q[umzugstermin]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.umzugstermin}{/if}"></th>
-            <th><input name="q[abgeschlossen_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.abgeschlossen_am}{/if}"></th>
+            <th><input name="q[antragsdatum]" placeholder="JJJJ-MM-TT" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.antragsdatum}{/if}"></th>
+            <th><input name="q[umzugstermin]" placeholder="JJJJ-MM-TT" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.umzugstermin}{/if}"></th>
+            <th><input name="q[abgeschlossen_am]" placeholder="JJJJ-MM-TT" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.abgeschlossen_am}{/if}"></th>
             <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.summe}{/if}"></th>
         </tr>
     </thead>
@@ -127,9 +127,30 @@ $(function(){
             <td>{$item.plz}</td>
             <td>{$item.strasse}</td>
             <td>{$item.service}</td>
-            <td>{$item.antragsdatum|date_format:"%d.%m.%Y"}</td>
-            <td>{$item.umzugstermin|date_format:"%d.%m.%Y"}</td>
-            <td>{$item.abgeschlossen_am|date_format:"%d.%m.%Y"}</td>
+            <td title="{$item.antragsdatum|date_format:"%d.%m.%Y %H:%M"}">
+                {if !empty($item.antragsdatum) && {$item.antragsdatum|date_format:"%Y"} eq {'Y'|date}}
+                    {$item.antragsdatum|date_format:"%d.%m."}
+                {else}
+                    {$item.antragsdatum|date_format:"%d.%m.%y"}
+                {/if}
+            </td>
+
+            <td title="{$item.umzugstermin|date_format:"%d.%m.%Y"}">
+            {if !empty($item.umzugstermin) && {$item.umzugstermin|date_format:"%Y"} eq {'Y'|date}}
+                {$item.umzugstermin|date_format:"%d.%m."}
+            {else}
+                {$item.umzugstermin|date_format:"%d.%m.%y"}
+            {/if}
+            </td>
+
+            <td title="{$item.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"}">
+            {if !empty($item.abgeschlossen_am) && {$item.abgeschlossen_am|date_format:"%Y"} eq {'Y'|date}}
+            {$item.abgeschlossen_am|date_format:"%d.%m."}
+            {else}
+            {$item.abgeschlossen_am|date_format:"%d.%m.%y"}
+            {/if}
+            </td>
+
             <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
         </tr>
         {/foreach}

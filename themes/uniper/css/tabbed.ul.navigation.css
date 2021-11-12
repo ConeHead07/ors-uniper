@@ -38,12 +38,6 @@ div.divTabbedList  ul li a {
 	--background-color-rgba-as-hex: #0075b554;
 }
 
-* html div.divTabbedList  ul a,
-* html div.divTabbedList  ul span {
-    xwidth: 1em;    /* nur fuer IE 5.0x erforderlich */
-    xw/idth: auto;  /* sicherheitshalber fuer IE 6 zurueckgesetzt */
-}
-
 div.divTabbedList  ul li a:hover,
 div.divTabbedList  ul li span {
     color: white; 

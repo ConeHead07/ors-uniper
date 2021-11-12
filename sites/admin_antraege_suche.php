@@ -1,4 +1,22 @@
 <?php
+
+if (!function_exists('getLaenderKuerzelByLand')) {
+    function getLaenderKuerzelByLand($land) {
+        switch($land) {
+            case 'Deutschland':
+                return 'D';
+            case 'Niederlande':
+                return 'NL';
+                break;
+            case 'Ungarn':
+                return 'HU';
+
+            default:
+                return $land;
+        }
+    }
+}
+
 $op = ""; // Ausgabebuffer 
 if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) {
 	require_once("../header.php");
@@ -26,6 +44,8 @@ $searchFields = array(
 	"a.gebaeude" => "",
 	"a.umzugstermin" => "",
 	"a.umzugsstatus" => "",
+	"a.tour_kennung" => "",
+	"kk.leistungskategorie" => [],
 	"u.kid" => "",
 	"m.name" => "",
 	"m.vorname" => "",
@@ -47,9 +67,6 @@ $searchFields = array(
 	"m.ziel_abteilung" => "",
 	"m.umzugsart" => ""
 );
-foreach($searchFields as $k => $v) {
-	$searchFields[$k] = "";
-}
 
 $defaultOrder = "ORDER BY a.umzugstermin";
 $q = getRequest("q");
@@ -84,10 +101,32 @@ if ($ofld && isset($searchFields[$ofld])) {
 	$orderBy = $defaultOrder;
 }
 
+if (!empty($q['kk.leistungskategorie'])) {
+    $queryForm = str_replace('[/*aCheckedKategorienJson*/]', json_encode($q['kk.leistungskategorie']), $queryForm);
+} else {
+    $queryForm = str_replace('[/*aCheckedKategorienJson*/]', '[]', $queryForm);
+}
 foreach($searchFields as $f => $v) {
-	if (isset($q[$f])) $searchFields[$f] = $q[$f];
-	$queryForm = str_replace("{"."q[$f]"."}", fb_htmlEntities($searchFields[$f]), $queryForm);
-	if ($searchFields[$f]) $trackGetQuery.= "&q[$f]=".urlencode($searchFields[$f]);
+	if (isset($q[$f])) {
+	    $searchFields[$f] = $q[$f];
+    }
+
+	if (empty($searchFields[$f])) {
+        $queryFormReplacePart = '';
+    } elseif (is_scalar($searchFields[$f])) {
+        $queryFormReplacePart = fb_htmlEntities($searchFields[$f]);
+    }
+	$queryForm = str_replace("{"."q[$f]"."}", $queryFormReplacePart, $queryForm);
+
+	if ($searchFields[$f]) {
+	    if (is_array($searchFields[$f])) {
+	        foreach($searchFields[$f] as $fkey => $fval) {
+                $trackGetQuery .= "&q[$f][" . (is_numeric($fkey) ? '' : $fkey) . "]=" . urlencode($fval);
+            }
+        } else {
+            $trackGetQuery .= "&q[$f]=" . urlencode($searchFields[$f]);
+        }
+    }
 }
 $queryForm = str_replace("chck_View=\"".$View."\"", "checked=\"true\"", $queryForm);
 $ListBaseLink = "?s=$s".$trackGetQuery."&View=".urlencode($View);
@@ -96,6 +135,7 @@ if ($sendquery) {
 	$sqlWhereMa = "";
 	$sqlWhereUA = "";
     $sqlWhereUsr = "";
+    $sqlWhereKtg = "";
 	if (!empty($q)) {
 		foreach($searchFields as $qField => $userQuery) {
 			if ($userQuery) {
@@ -113,12 +153,24 @@ if ($sendquery) {
 					case "a.gebaeude":
 					case "a.umzugstermin":
 					case "a.umzugsstatus":
+                    case "a.tour_kennung":
 					$dbField = $qField;
 					$sqlWhereUA.= ($sqlWhereUA?"AND ":"")." (";
 					$aUQueryParts = userquery_parse($userQuery, "Both");
 					$sqlWhereUA.= userquery_parts2sql($aUQueryParts, $dbField);
 					$sqlWhereUA.= ")\n";
 					break;
+
+                    case 'kk.leistungskategorie':
+                        if (is_array($userQuery)) {
+                            $sqlWhereKtg.= ($sqlWhereKtg ? ' AND ' : '');
+                            $aQuotedVals = array_map(function( $val ) use($db) { return $db::quote($val);  }, $userQuery);
+                            $sqlWhereKtg.= $qField . ' in (' . implode(', ', $aQuotedVals) . ')' . "\n";
+                        } elseif (is_string($userQuery) && trim($userQuery) !== '') {
+                            $sqlWhereKtg.= ($sqlWhereKtg ? ' AND ' : '');
+                            $sqlWhereKtg.= $qField . ' LIKE ' . $db::quote($aQuotedVals) . "\n";
+                        }
+                        break;
 					
 					case "m.name":
 					case "m.vorname":
@@ -164,55 +216,58 @@ if ($sendquery) {
 	}
 	
 	if ($View == "Antraege") {
-		$sql = "Select COUNT(*) count\n";
-		$sql.= "FROM `".$_TABLE["umzugsantrag"]."` a LEFT JOIN `".$_TABLE["umzugsmitarbeiter"]."` m USING(aid) \n";
-
-		$sql.= "WHERE 1\n";
-		if ($sqlWhereUA) {
-		    $sql.= " AND ".$sqlWhereUA."\n";
-        }
-		if ($sqlWhereMa) {
-		    $sql.= "AND a.aid IN(SELECT aid FROM `".$_TABLE["umzugsmitarbeiter"]."` m WHERE $sqlWhereMa)\n";
-        }
-		$row = $db->query_singlerow($sql);
-		$num_all = $row["count"];
 		
-		$sql = "Select a.aid, a.aid AS \"AID\", u.personalnr AS kid, a.vorname AS Vorname, a.name AS Name, a.ort AS Ort, a.plz AS PLZ, a.strasse AS Strasse, "
-			. "a.land AS Land, a.umzugstermin AS Liefertermin, a.umzugsstatus AS Status\n";
-		$sql.= "FROM `" . $_TABLE["umzugsantrag"] . "` a "
-			. "LEFT JOIN `".$_TABLE["user"]."` u ON (a.antragsteller_uid = u.uid) \n"
-			. "LEFT JOIN `".$_TABLE["umzugsmitarbeiter"]."` m USING (aid) \n"
+		$sqlSelect = 'Select a.aid, a.aid AS AID, u.personalnr AS kid, '  . "\n"
+            . ' a.tour_kennung AS Tour, ' . "\n"
+            . ' CONCAT(a.name, ", ", substr(a.vorname, 1, 1), ".") AS Name, a.ort AS Ort, a.plz AS PLZ, a.strasse AS Strasse, ' . "\n"
+			. ' a.land AS Land, a.umzugstermin AS Liefertermin, a.umzugsstatus AS Status, ' . "\n"
+            . ' GROUP_CONCAT(kategorie_abk ORDER BY leistungskategorie) AS Leistungen, ' . "\n"
+            . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe ' . "\n"
+        ;
+		$sqlFrom = "FROM `" . $_TABLE["umzugsantrag"] . "` a " . "\n"
+			. " LEFT JOIN `".$_TABLE["user"]."` u ON (a.antragsteller_uid = u.uid) \n"
+            . ' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) ' . "\n"
+            . ' LEFT JOIN mm_leistungskatalog l ON (ul.leistung_id = l.leistung_id) ' . "\n"
+            . ' LEFT JOIN mm_leistungskategorie kk ON (l.leistungskategorie_id = kk.leistungskategorie_id) ' . "\n"
+            . ' LEFT JOIN mm_leistungspreismatrix lm ON(' . "\n"
+            . '    l.leistung_id = lm.leistung_id ' . "\n"
+            . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . "\n"
+            . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . "\n"
+            . ' ) ' . "\n"
 		;
-		$sql.= "WHERE 1\n";
+		$sqlWhere = "WHERE 1\n";
 		if ($sqlWhereUA) {
-		    $sql.= " AND ".$sqlWhereUA."\n";
+            $sqlWhere.= " AND ".$sqlWhereUA."\n";
         }
 		if ($sqlWhereMa) {
-		    $sql.= "AND a.aid IN(SELECT aid FROM `".$_TABLE["umzugsmitarbeiter"]."` m WHERE $sqlWhereMa)\n";
+            $sqlWhere.= "AND a.aid IN(SELECT aid FROM `".$_TABLE["umzugsmitarbeiter"]."` m WHERE $sqlWhereMa)\n";
         }
         if ($sqlWhereUsr) {
-            $sql.= "AND a.antragsteller_uid IN(SELECT uid FROM `".$_TABLE["user"]."` u WHERE $sqlWhereUsr)\n";
+            $sqlWhere.= "AND a.antragsteller_uid IN(SELECT uid FROM `".$_TABLE["user"]."` u WHERE $sqlWhereUsr)\n";
         }
-		$sql.= "GROUP BY a.aid\n";
-		$sql.= $orderBy."\n";
-		$sql.= "LIMIT $offset, $limit";
+        if ($sqlWhereKtg) {
+            $sqlWhere.= 'AND a.aid IN(
+                    SELECT distinct(a.aid) 
+                    FROM mm_umzuege a 
+                    JOIN mm_umzuege_leistungen ul ON(a.aid=ul.aid)
+                    JOIN mm_leistungskatalog l ON (ul.leistung_id = l.leistung_id)
+                    JOIN mm_leistungskategorie kk ON (l.leistungskategorie_id = kk.leistungskategorie_id)
+                    WHERE ' . $sqlWhereKtg . '
+                )';
+        }
+		$sqlGroup = "GROUP BY a.aid\n";
+		$sqlOrder = $orderBy."\n";
+		$sqlLimit = "LIMIT $offset, $limit";
 
+		$sqlCount = 'SELECT count(1) AS count FROM (SELECT a.aid ' . $sqlFrom . $sqlWhere . $sqlGroup . ') AS t';
+		$row = $db->query_singlerow($sqlCount);
+		$num_all = $row["count"];
+
+		$sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlOrder . $sqlLimit;
 		$rows = $db->query_rows($sql);
 		$num = count($rows);
 		// echo "<pre>".print_r($sql,1)."</pre>\n";
 	} else {
-		$sql = "Select COUNT(*) count\n";
-		$sql.= "FROM `".$_TABLE["umzugsmitarbeiter"]."` m LEFT JOIN `".$_TABLE["umzugsantrag"]."` a USING(aid) \n";
-		$sql.= "WHERE 1\n";
-		if ($sqlWhereMa) {
-		    $sql.= " AND ".$sqlWhereMa."\n";
-        }
-		if ($sqlWhereUA) {
-		    $sql.= " AND ".$sqlWhereUA."\n";
-        }
-		$row = $db->query_singlerow($sql);
-		$num_all = $row["count"];
-		
 		$sql = "Select a.aid, a.umzugstermin, a.umzugsstatus, m.name, m.vorname, m.ort, m.gebaeude, m.etage, m.raumnr, m.ziel_ort, m.ziel_gebaeude, m.ziel_etage, m.ziel_raumnr\n";
 		$sql.= "FROM `".$_TABLE["umzugsmitarbeiter"] . "` AS m"
 			."` LEFT JOIN `".$_TABLE["umzugsantrag"]."` a USING (aid) \n"
@@ -225,15 +280,23 @@ if ($sendquery) {
 		if ($sqlWhereUA) {
 		    $sql.= " AND ".$sqlWhereUA."\n";
         }
-		$sql.= $orderBy."\n";
-		$sql.= "LIMIT $offset, $limit";
-		
+        $sqlOrder = $orderBy."\n";
+        $sqlLimit = "LIMIT $offset, $limit";
+
+        $sqlCount = 'SELECT count(1) FROM (' . $sql . ') AS t';
+        $row = $db->query_singlerow($sql);
+        $num_all = $row["count"];
+
+        $sql.= $sqlOrder . $sqlLimit;
 		$rows = $db->query_rows($sql);
 		$num = count($rows);
 		//echo "<pre>".print_r($rows,1)."</pre>\n";
 	}
 }
 $op.= $queryForm;
+
+$withRowNumbers = false;
+$withActionColumn = false;
 
 if ($sendquery) {
 	if (is_array($rows) && count($rows)) {
@@ -245,29 +308,139 @@ if ($sendquery) {
 			"baselink"   => $ListBaseLink."&offset={offset}&limit={limit}&ofld=$ofld&odir=$odir"));
 		$rlist_nav->render_browser();
 
-        $rows2Tbl = '';
+        $rows2Tbl = <<<EOT
+        <style>
+        #legendKategorien {
+            float:right;
+            display: inline-block;
+            border:1px solid #ededed;
+            border-radius: 4px;
+            background: #f7f7f7;
+            font-size:x-small;
+            color: #484848;            
+        }
+        #legendKategorien::after {
+           clear: both; 
+        }
+        #legendKategorien legend {
+            font-size: x-small;
+            line-height: 130%;
+            font-weight: bold;
+            margin-left:0.6rem;
+            border:1px solid #ededed;
+            border-radius: 4px;
+            background: #ffffff;
+        }
+        #legendKategorien .content {
+            font-size: x-small;
+            margin: .2rem 0.6rem;
+            line-height: 120%;
+        }
+        </style>
+        <fieldset class="legend" id="legendKategorien" style="margin-top:-1rem">
+            <legend>Kategorien</legend>
+            <div class="content">T=Schreibtisch, S=Stuhl, R=Rabatt, P=Transportpostion</div>
+        </fieldset>
+EOT;
 		// $rows2Tbl.= '<pre>' . htmlentities($sql) . '</pre>';
+        $currYear = date('Y');
 		$rows2Tbl.= $rlist_nav->get_nav("all")."\n";
 		//if ($db->error()) 
 		//$rows2Tbl.= $db->error()."<br>\nsql:".$sql."<br>\n";
 		$wz = "";
 		$rows2Tbl.= "<table id='auftragsSuchResult' class=\"tblList\" width='100%' border=1 cellpadding=1 cellspacing=0>\n";
 		$rows2Tbl.= "<thead>\n";
-		$rows2Tbl.= "<td>#</td>";
-		$rows2Tbl.= "<td colspan=1>Aktion</td>";
+		if ($withRowNumbers) {
+            $rows2Tbl .= "<td>#</td>";
+        }
+		if ($withActionColumn) {
+            $rows2Tbl .= "<td colspan=1>Aktion</td>";
+        }
 		foreach($rows[0] as $fld => $v) {
-			if ($fld!="aid") $rows2Tbl.= "<td><a href=\"".$ListBaseLink."&ofld=$fld&odir=".listbrowser::get_oDir($fld, $originOFld, $odir)."\">".$fld."</a></td>";
+		    $_lnk = $ListBaseLink."&ofld=$fld&odir=".listbrowser::get_oDir($fld, $originOFld, $odir);
+		    $_tdTitle = '';
+		    switch($fld) {
+                case 'Tour':
+                case 'tour_kennung':
+                    $colLabel = 'Tour';
+                    $_tdTitle = 'Zuordnungs-ID aus der Tourenplanung';
+                    break;
+
+                case 'Liefertermin':
+                case 'umzugstermin':
+                    $colLabel = 'LiefDat';
+                    $_tdTitle = 'Liefertermin';
+                    break;
+
+                case 'Leistungen':
+                case 'Lstg':
+                    $colLabel = 'Lstg.';
+                    $_tdTitle = 'Enthaltene Leistungen in abgekürzter Schreibweise';
+                    break;
+
+                default:
+                    $colLabel = $fld;
+            }
+
+			if ($fld !=='aid' && $fld !== 'Land') {
+			    $rows2Tbl.= "<td title='$_tdTitle'><a href=\"" . $_lnk . "\">" . $colLabel . "</a></td>";
+            }
 		}
 		$rows2Tbl.= "</thead>\n";
 		$rows2Tbl.= "<tbody>\n";
-		
-		for($i = 0; $i < count($rows); $i++) {
+
+		$iNumRows = count($rows);
+		for($i = 0; $i < $iNumRows; $i++) {
 			$wz = ($wz!=1)?1:2;
 			$lnk = "?s=aantrag&id=".urlencode($rows[$i]["aid"]);
 			$rows2Tbl.= "<tr class=\"wz$wz data-href\" data-href='$lnk'>";
-			$rows2Tbl.= "<td>".($offset+$i+1)."</td>";
-			$rows2Tbl.= "<td><a href=\"?s=aantrag&id=".urlencode($rows[$i]["aid"])."\">anzeigen</a></td>";
-			foreach($rows[$i] as $k => $v) if ($k!="aid") $rows2Tbl.= "<td>$v</td>";
+			if ($withRowNumbers) {
+                $rows2Tbl .= "<td>" . ($offset + $i + 1) . "</td>";
+            }
+			if ($withActionColumn) {
+			    $rows2Tbl.= "<td><a href=\"?s=aantrag&id=".urlencode($rows[$i]["aid"])."\">anzeigen</a></td>";
+            }
+			foreach($rows[$i] as $k => $v) {
+			    switch($k) {
+                    case 'aid':
+                        // Nothing do not show
+                        break;
+
+                    case 'summe':
+                        $rows2Tbl.= "<td class='menge'>" . number_format($v, 2, ',', '.') . "</td>\n";
+                        break;
+
+                    case 'Land':
+                        // $rows2Tbl.= "<td>" . getLaenderKuerzelByLand($v) . "</td>\n";
+                        break;
+
+                    case 'PLZ':
+                        $laenderKuerzel = !empty($rows[$i]['Land']) ? getLaenderKuerzelByLand($rows[$i]['Land']).' ' : '';
+                        $rows2Tbl.= "<td>" . $laenderKuerzel . $v . "</td>\n";
+                        break;
+
+                    case 'Liefertermin':
+                        if ($v) {
+                            $_t = strtotime($v);
+                            $y = date('Y', $_t);
+                            if ($y == $currYear) {
+                                $v = date('d.m.', $_t);
+                            } else {
+                                $v = date('d.m.y');
+                            }
+                        }
+                        $rows2Tbl.= "<td>" . $v . "</td>\n";
+                        break;
+
+                    case 'Kategorien':
+                    case 'Leistungen':
+                        $ktgAbk = str_replace(',', '', $v); // strtr($v, $aKtgAbk);
+                        $rows2Tbl.= "<td>" . $ktgAbk . "</td>\n";
+                        break;
+                    default:
+                        $rows2Tbl.= "<td>$v</td>";
+                }
+            }
 			$rows2Tbl.= "</tr>\n";
 		}
 		$rows2Tbl.= "</tbody>\n";
