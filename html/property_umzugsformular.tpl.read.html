@@ -56,7 +56,7 @@
     </table>
   {if !empty($AS.umzugsstatus) and $AS.umzugsstatus eq "abgeschlossen"}
     <a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}&mode=property" style="display:none" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Anforderungsblatt / Druckansicht</a>
-    <a href="%WebRoot%sites/lieferschein.php?id={$AS.aid}&mode=property" target="_Lieferschein{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Lieferschein</a>
+    <a href="%WebRoot%sites/lieferschein.php?aid={$AS.aid}&mode=property" target="_Lieferschein{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Lieferschein</a>
     | <a href="%WebRoot%index.php?s=pantrag&id={$AS.aid}&export=csv" target="_blank">CSV-Export</a>
 
   {/if}

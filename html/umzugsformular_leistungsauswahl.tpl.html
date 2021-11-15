@@ -242,7 +242,35 @@ $(function(){
 
 {literal}
 <script>
+    function escapeSelector(name) {
+        return name.replaceAll('[', '\\[').replaceAll(']', '\\]');
+    }
 
+    var createSelectLstgInput = function(leistungen, name, value, disabled) {
+
+        var selectBox = $("<select/>").attr({name});
+        for (var it of leistungen) {
+            var isSelected = it.leistung_id === value;
+            var optText = '';
+            if (it.Farbe) {
+                optText = it.Farbe;
+            }
+            if (it.Groesse) {
+                optText+= (optText.length ? ', ' : '') + it.Groesse;
+            }
+            if (!optText) {
+                optText = it.Bezeichnung;
+            }
+            selectBox.append(
+                $("<option/>")
+                    .val(it.leistung_id)
+                    .text(optText)
+                    .data(JSON.parse(JSON.stringify(it)))
+                    .prop("selected", isSelected)
+            );
+        }
+        return selectBox;
+    };
     var createHiddenLstgInput = function(name, value, disabled, classNames, data) {
         var elm = $("<input/>").attr({
             name,
@@ -340,7 +368,6 @@ $(function(){
             if (ktgId === 18 || ktgId === 25) {
                 continue;
             }
-            alert(JSON.stringify(it));
 
             console.log({ktg});
             var box = $("<div/>");
@@ -424,6 +451,7 @@ $(function(){
             box.appendTo(boxLeistungen);
         }
     };
+
     var renderAuswahlListe = function() {
         var boxLeistungenSel = "div#auswahlUmzugsleistungenBox";
         var boxLeistungen = $(boxLeistungenSel);
@@ -481,139 +509,221 @@ $(function(){
             var ktgBundleId = 18;
             var ktgRabatName = "Rabatt";
             var ktgRabatId = 25;
+
+            var aListStammIds = [];
             boxTitle.appendTo(box);
             for (var it of ktgItems) {
                 console.log({it});
                 var ktgId = it.kategorie_id;
                 var lstId = it.leistung_id;
+                var stammId = it.leistung_stamm_id > 0 ? it.leistung_stamm_id : lstId;
                 var isSelected = selectedLIds.indexOf(lstId) > -1;
-                var tr = $("<div/>").addClass("row ktg-" + ktgId).attr({
-                    "data-ktg": ktg,
-                    "data-ktgId": ktgId,
-                    "data-id": lstId
-                });
-                var tdBild = $("<div/>").addClass('bild').appendTo(tr);
-                var tdLstg = $("<div/>").addClass('lstg').appendTo(tr);
-                var tdChck = $("<div/>").addClass('chck').appendTo(tr);
-                console.log('#603 ', {it});
+                var isStammArtikel = !stammId || stammId === lstId;
+                var istVerfuegbar = ("verfuegbar" in it) ? (it.verfuegbar !== "Nein") : true;
+                var numVarianten = ( ("NumVarianten" in it) && !isNaN(it.NumVarianten)) ? +it.NumVarianten : 0;
 
-                var leistungInfos = '<div class="Bezeichnung">' + it.leistung + '</div>';
-                if (it.Beschreibung) {
-                    leistungInfos+= '<div class="Beschreibung">' + it.Beschreibung + '</div>';
-                }
-                if (it.produkt_link) {
-                    leistungInfos+= '<div class="produkt_link"><a href="' + it.produkt_link + '" target="_blank">Mehr Infos</a></div>';
-                }
+                if (isStammArtikel) {
+                    aListStammIds.push(stammId);
+                    var tr = $("<div/>").addClass("row ktg-" + ktgId + " stamm-" + stammId).attr({
+                        "data-ktg": ktg,
+                        "data-ktgId": ktgId,
+                        "data-id": lstId,
+                        "stamm-id": lstId
+                    }).data('leistung', it);
+                    var tdBild = $("<div/>").addClass('bild').appendTo(tr);
+                    var tdLstg = $("<div/>").addClass('lstg').appendTo(tr);
+                    var tdChck = $("<div/>").addClass('chck').appendTo(tr);
+                    console.log('#603 ', {it});
 
-                if (it.image) {
-                    var bildHref = $("<a/>")
-                        .attr("href", "images/leistungskatalog/" + it.image)
-                        .attr("target", "_blank")
-                        .css({
-                            border: 0
-                        });
-                    if (it.produkt_link) {
-                        bildHref.attr("href", it.produkt_link);
+                    var lstgBezeichnung = $("<div/>").addClass("Bezeichnung").html(it.leistung);
+                    var lstgBeschreibung = $("<div/>").addClass("Beschreibung");
+                    var lstgProduktLinkBox = $("<div/>").addClass("produkt_link");
+                    var lstgProduktLink = $("<a/>").attr("target", "_blank");
+                    var lstgImage = $("<img/>");
+                    var lstgImgHref = $("<a/>").attr("target", "_blank");
+
+                    lstgProduktLinkBox.append(lstgProduktLink);
+                    lstgImgHref.append(lstgImage);
+                    tdBild.append(lstgImgHref);
+
+                    if (it.Beschreibung) {
+                        lstgBeschreibung.html(it.Beschreibung);
+                    } else {
+                        lstgBeschreibung.hide();
                     }
-                    bildHref.appendTo(tdBild);
-                    var bild = $("<img/>")
-                        .attr({
-                            src: "images/leistungskatalog/" + it.image
-                        })
-                        .appendTo(bildHref);
-                }
 
-                tdLstg.html(leistungInfos).off("click").on("click", function () {
-                    var tr = $(this).closest(".row");
-                    // tr.find(".chck label")[0].click();
-                    console.log('click leistung');
-                });
+                    if (it.produkt_link) {
+                        lstgProduktLink.attr("href", it.produkt_link).text("Mehr Infos");
+                        lstgImgHref.attr("href", it.produkt_link);
+                    } else {
+                        lstgProduktLinkBox.hide();
+                        lstgProduktLink.hide();
+                    }
 
+                    if (it.image) {
+                        lstgImage.attr({
+                                src: "images/leistungskatalog/" + it.image
+                            });
+                    } else {
+                        lstgImage.hide();
+                    }
 
-                console.log("#712", { it });
-                if ("verfuegbar" in it && it.verfuegbar === "Nein") {
-                    box.append(tr);
-                    continue;
-                    // labelChck.off("click");
-                    // inputChck.off("click").prop('disabled', true);
-                    // tdChck.hide();
-                }
+                    tdLstg.append( lstgBezeichnung)
+                        .append(lstgBeschreibung)
+                        .append(lstgProduktLinkBox);
 
-                var labelChck = $("<label/>").addClass("container");
-                var inputChck = $("<input/>").attr({
-                    name: "check[" + it.kategorie_id + "]",
-                    type: "radio",
-                    value: it.leistung_id
-                });
-
-                var spanChck = $("<span/>").addClass("checkmark");
-                labelChck.append(inputChck).append(spanChck);
-                labelChck.off("click").on("click", function (e) {
-                    console.log('click label', {e});
-                    if (!("srcElement" in e) || e.srcElement.nodeName !== 'SPAN') {
+                    tdLstg.off("click").on("click", function () {
                         var tr = $(this).closest(".row");
-                        var chckCell = tr.find("div.chck");
-                        var chckRadio = chckCell.find("label input[type=radio]");
-                        console.log('checkRadio ', chckRadio.attr("name"), chckRadio.prop("checked"));
-                        var ktg = tr.attr("data-ktg");
-                        var ktgId = tr.attr("data-ktgId");
-                        if (tr.is(".checked")) {
-                            chckRadio.prop("checked", false);
-                        }
-                        if (chckRadio.prop("checked")) {
-                            toggleBundleauswahl(ktg, ktgId, ktgBundleName, ktgBundleId);
-                            var checkedRows = boxLeistungen.find(".row .chck label input:checked");
-                            var maxCheckedPositionen = 9999;
-                            if (checkedRows.length > maxCheckedPositionen) {
-                                var isStuhlChecked = checkedRows.find("[data-ktg=Stuhl],[data-ktgId=21]").length > 0;
-                                var isTischChecked = checkedRows.find("[data-ktg=Tisch],[data-ktg=22]").length > 0;
-                                var isLampeChecked = checkedRows.find("[data-ktg=Schreibtischlampe],[data-ktg=23]").length > 0;
-                                console.log("Auswahlkontrolle ", { isStuhlChecked, isTischChecked, isLampeChecked});
+                        // tr.find(".chck label")[0].click();
+                        console.log('click leistung');
+                    });
 
-                                alert("Es können maximal " + mmaxCheckedPositionen + " Einzelpositionen ausgewählt werden oder ein Komplettpaket!");
-                                chckRadio.prop("checked", false);
+                    if (numVarianten) {
+                        var optionsLeistungen = [ it ];
+                        var selectedLeistungId = isSelected ? it.leistung_id : 0;
+                        var variantenDisabled = false;
+                        for (var itV of ktgItems) {
+                            if (itV.leistung_stamm_id === stammId && itV.leistung_id !== lstId) {
+                                optionsLeistungen.push(itV);
+                                if (selectedLIds.indexOf(itV.leistung_id) > -1) {
+                                    selectedLeistungId = itV.leistung_id;
+                                }
                             }
                         }
-                        var checked = chckRadio.prop("checked");
+                        var inputSelect = createSelectLstgInput(optionsLeistungen, 'L[leistung_id][]', selectedLeistungId, variantenDisabled);
 
-                        var selector = ".row.checked.ktg-" + ktgId;
-                        console.log({tr, ktg, ktgId, checked, selector});
-                        $(".row.ktg-" + ktgId).removeClass("checked");
-                        $(".row.ktg-" + ktgId).find("input.lstg-input").prop("disabled", true);
+                        inputSelect.on("change", function() {
+                            $(this).find("option:selected").each(function() {
+                                var row = $(this).closest(".row");
+                                var optVal = $(this).val();
+                                var optData = $(this).data();
 
-                        if (checked) {
-                            tr.addClass("checked");
-                            chckCell.find("input.lstg-input").prop("disabled", false);
-                            chckCell.find("input.lstg-input.menge").val(1);
-                        } else {
-                            chckCell.find("input.lstg-input").prop("disabled", true);
-                            chckCell.find("input.lstg-input.menge").val(0);
-                        }
-                    } else {
-                        console.log("No Reaction to the click :-(");
+                                var lstgBeschreibung = row.find(".Beschreibung");
+                                var lstgBezeichnung = row.find(".Bezeichnung");
+                                var lstgProduktLinkBox = row.find(".produkt_link");
+                                var lstgProduktLink = row.find(".produkt_link a");
+                                var lstgImageHref = row.find(".bild a");
+                                var lstgImage = row.find(".bild img");
+                                var tdChck = row.find(".chck");
+
+                                lstgBezeichnung.html( optData.leistung );
+                                lstgBeschreibung.html( optData.Beschreibung );
+                                if (optData.produkt_link) {
+                                    lstgProduktLink.attr("href", optData.produkt_link);
+                                    lstgProduktLinkBox.show();
+                                    lstgImageHref.attr("href", optData.produkt_link);
+                                } else {
+                                    lstgProduktLinkBox.hide();
+                                    lstgProduktLink.removeAttr("href");
+                                    lstgImageHref.removeAttr("href");
+                                }
+
+                                if (optData.image) {
+                                    var img = new Image();
+                                    $(img).on("load", function() {
+                                        lstgImage.attr("src", this.src).show();
+                                    });
+                                    img.src = "images/leistungskatalog/" + optData.image;
+                                } else {
+                                    lstgImage.hide();
+                                }
+
+                                tdChck.find("input[name=" + escapeSelector('L[leistung_id][]') + "]").val( optVal );
+
+                            });
+                        });
+                        tdLstg.append(inputSelect);
                     }
-                });
-                tdChck.append(labelChck);
-                var _ldata = {leistung_id: it.leistung_id};
-                var _lclss = ' group-leistungid-' + it.leistung_id;
-                tdChck
-                    .append(
-                        createHiddenLstgInput('L[leistung_id][]', it.leistung_id, true, 'leistung_id' + _lclss, _ldata)
-                    )
-                    .append(
-                        createHiddenLstgInput('L[menge_property][]', 0, true, 'menge menge_property' + _lclss, _ldata)
-                    )
-                    .append(
-                        createHiddenLstgInput('L[menge2_property][]', 0, true, 'menge menge2_property' + _lclss, _ldata)
-                    )
-                    .append(
-                        createHiddenLstgInput('L[menge_mertens][]', 0, true, 'menge menge_mertens' + _lclss, _ldata)
-                    )
-                    .append(
-                        createHiddenLstgInput('L[menge2_mertens][]', 0, true, 'menge menge2_mertens' + _lclss, _ldata)
-                    );
 
-                box.append(tr);
+
+                    console.log("#712", {it});
+                    if ("verfuegbar" in it && it.verfuegbar === "Nein") {
+                        box.append(tr);
+                        continue;
+                        // labelChck.off("click");
+                        // inputChck.off("click").prop('disabled', true);
+                        // tdChck.hide();
+                    }
+
+                    var labelChck = $("<label/>").addClass("container");
+                    var inputChck = $("<input/>").attr({
+                        name: "check[" + it.kategorie_id + "]",
+                        type: "radio",
+                        value: it.leistung_id
+                    });
+
+                    var spanChck = $("<span/>").addClass("checkmark");
+                    labelChck.append(inputChck).append(spanChck);
+                    labelChck.off("click").on("click", function (e) {
+                        console.log('click label', {e});
+                        if (!("srcElement" in e) || e.srcElement.nodeName !== 'SPAN') {
+                            var tr = $(this).closest(".row");
+                            var chckCell = tr.find("div.chck");
+                            var chckRadio = chckCell.find("label input[type=radio]");
+                            console.log('checkRadio ', chckRadio.attr("name"), chckRadio.prop("checked"));
+                            var ktg = tr.attr("data-ktg");
+                            var ktgId = tr.attr("data-ktgId");
+                            if (tr.is(".checked")) {
+                                chckRadio.prop("checked", false);
+                            }
+                            if (chckRadio.prop("checked")) {
+                                toggleBundleauswahl(ktg, ktgId, ktgBundleName, ktgBundleId);
+                                var checkedRows = boxLeistungen.find(".row .chck label input:checked");
+                                var maxCheckedPositionen = 9999;
+                                if (checkedRows.length > maxCheckedPositionen) {
+                                    var isStuhlChecked = checkedRows.find("[data-ktg=Stuhl],[data-ktgId=21]").length > 0;
+                                    var isTischChecked = checkedRows.find("[data-ktg=Tisch],[data-ktg=22]").length > 0;
+                                    var isLampeChecked = checkedRows.find("[data-ktg=Schreibtischlampe],[data-ktg=23]").length > 0;
+                                    console.log("Auswahlkontrolle ", {isStuhlChecked, isTischChecked, isLampeChecked});
+
+                                    alert("Es können maximal " + mmaxCheckedPositionen + " Einzelpositionen ausgewählt werden oder ein Komplettpaket!");
+                                    chckRadio.prop("checked", false);
+                                }
+                            }
+                            var checked = chckRadio.prop("checked");
+
+                            var selector = ".row.checked.ktg-" + ktgId;
+                            console.log({tr, ktg, ktgId, checked, selector});
+                            $(".row.ktg-" + ktgId).removeClass("checked");
+                            $(".row.ktg-" + ktgId).find("input.lstg-input").prop("disabled", true);
+
+                            if (checked) {
+                                tr.addClass("checked");
+                                chckCell.find("input.lstg-input").prop("disabled", false);
+                                chckCell.find("input.lstg-input.menge").val(1);
+                            } else {
+                                chckCell.find("input.lstg-input").prop("disabled", true);
+                                chckCell.find("input.lstg-input.menge").val(0);
+                            }
+                        } else {
+                            console.log("No Reaction to the click :-(");
+                        }
+                    });
+                    tdChck.append(labelChck);
+                    var _ldata = {leistung_id: it.leistung_id};
+                    var _lclss = ' group-leistungid-' + it.leistung_id;
+
+                    tdChck
+                        .append(
+                            createHiddenLstgInput('L[leistung_id][]', it.leistung_id, true, 'leistung_id' + _lclss, _ldata)
+                        )
+                        .append(
+                            createHiddenLstgInput('L[menge_property][]', 0, true, 'menge menge_property' + _lclss, _ldata)
+                        )
+                        .append(
+                            createHiddenLstgInput('L[menge2_property][]', 0, true, 'menge menge2_property' + _lclss, _ldata)
+                        )
+                        .append(
+                            createHiddenLstgInput('L[menge_mertens][]', 0, true, 'menge menge_mertens' + _lclss, _ldata)
+                        )
+                        .append(
+                            createHiddenLstgInput('L[menge2_mertens][]', 0, true, 'menge menge2_mertens' + _lclss, _ldata)
+                        );
+
+
+
+                    box.append(tr);
+                }
 
 
                 if (isSelected) {

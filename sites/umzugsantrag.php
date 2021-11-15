@@ -26,57 +26,76 @@ if (empty($db)) {
     $db = new dbconn($MConf['DB_Host'], $MConf['DB_Name'], $MConf['DB_User'], $MConf['DB_Pass']);
 }
 
-//  preismatrix_id 	leistung_id 	preis 	preiseinheit 	mengen_von 	mengen_bis 
-$sql = 'SELECT '
-    . ' l.leistung_id, '
-    . ' l.leistung_ref_id, '
-    . ' Bezeichnung leistung, '
-    . ' Beschreibung, '
-    . ' produkt_link, '
-    . ' leistungseinheit, '
-    . ' leistungseinheit2, '
-    . ' leistungskategorie AS kategorie, '
-    . ' l.leistungskategorie_id AS kategorie_id, '
-    . ' l.aktiv, l.verfuegbar, '
-    . ' preis_pro_einheit, image, '
-    . ' m.preis mx_preis, '
-    . ' m.preiseinheit mx_preiseinheit, '
-    . ' m.mengen_von mx_von, '
-    . ' m.mengen_bis mx_bis'
-    . ' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k '
-    . '  ON l.leistungskategorie_id = k.leistungskategorie_id '
-    . ' LEFT JOIN mm_leistungspreismatrix m '
-    . '  ON l.leistung_id = m.leistung_id '
-    . ' WHERE l.aktiv = "Ja" '
-    . ' ORDER BY kategorie, Bezeichnung, mx_von';
+//  preismatrix_id 	leistung_id 	preis 	preiseinheit 	mengen_von 	mengen_bis
+$NL = "\n";
+$sql = 'SELECT ' . $NL
+    . ' l.leistung_id, ' . $NL
+    . ' l.leistung_ref_id, ' . $NL
+    . ' IFNULL(l.leistung_stamm_id, StammIds.leistung_stamm_id) AS leistung_stamm_id, ' . $NL
+    . ' IFNULL(StammIds.numVarianten, 0) AS NumVarianten, ' . $NL
+    . ' l.Bezeichnung, ' . $NL
+    . ' l.Bezeichnung leistung, ' . $NL
+    . ' l.Beschreibung, ' . $NL
+    . ' l.Farbe, ' . $NL
+    . ' l.Groesse, ' . $NL
+    . ' produkt_link, ' . $NL
+    . ' leistungseinheit, ' . $NL
+    . ' leistungseinheit2, ' . $NL
+    . ' leistungskategorie AS kategorie, ' . $NL
+    . ' l.leistungskategorie_id AS kategorie_id, ' . $NL
+    . ' l.aktiv, l.verfuegbar, ' . $NL
+    . ' preis_pro_einheit, image, ' . $NL
+    . ' m.preis mx_preis, ' . $NL
+    . ' m.preiseinheit mx_preiseinheit, ' . $NL
+    . ' m.mengen_von mx_von, ' . $NL
+    . ' m.mengen_bis mx_bis' . $NL
+    . ' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k ' . $NL
+    . '  ON l.leistungskategorie_id = k.leistungskategorie_id ' . $NL
+    . ' LEFT JOIN mm_leistungspreismatrix m ' . $NL
+    . '  ON l.leistung_id = m.leistung_id ' . $NL
+    . ' LEFT JOIN (' . $NL
+    . '     SELECT l.leistung_stamm_id, COUNT(1) numVarianten ' . $NL
+    . '     FROM mm_leistungskatalog l' . $NL
+    . '     WHERE l.aktiv="Ja" AND IFNULL(l.leistung_stamm_id, 0) != 0 AND l.leistung_id != l.leistung_stamm_id' . $NL
+    . ' GROUP BY leistung_stamm_id' . $NL
+    . ') StammIds ' . $NL
+    . ' ON (l.leistung_id = StammIds.leistung_stamm_id OR l.leistung_stamm_id = StammIds.leistung_stamm_id)' . $NL
+    . ' WHERE l.aktiv = "Ja" ' . $NL
+    . ' ORDER BY kategorie, Bezeichnung, mx_von' . $NL;
+
 
 $lkTreeItems = array();
 $lkTreeItemsJson = array();
 $lkmById = array();
 $lkItems = $db->query_rows($sql);
+// die(print_r(array_column($lkItems, 'leistung_id'), 1));
 if ($db->error()) {
     echo $db->error() . '<br>' . PHP_EOL;
     echo $sql . '<br>' . PHP_EOL;
 }
 foreach($lkItems as $k => $v) {
+    $v['leistung_id'] = (int)$v['leistung_id'];
+    $v['leistung_ref_id'] = (int)$v['leistung_ref_id'];
+    $v['leistung_stamm_id'] = (int)$v['leistung_stamm_id'];
+    $v['NumVarianten'] = (int)$v['NumVarianten'];
+    $v['preis_pro_einheit'] = (float)$v['preis_pro_einheit'];
     $ktg1 = (empty($v['kategorie'])) ? 'Einsatz' : $v['kategorie'];
     $lkTreeItems[$ktg1][$v['leistung']][] = $v;
     
-    $jvals = array();
-    foreach($v as $jk => $jv) {
-        $jvals[$jk] = $jv;
+    $jvals = $v;
+
+    $lkTreeItemsJson[$ktg1][$v['leistung_id']] = $jvals;
+    $lkmById[$v['leistung_id']] = array();
+
+    if ($v['mx_preis']) {
+        $lkmById[$v['leistung_id']][] = array(
+            'preis' => $v['mx_preis'],
+            'von'   => $v['mx_von'],
+            'bis'   => $v['mx_bis'],
+        );
     }
-    if (!isset($lkTreeItemsJson[$ktg1][$v['leistung']])) {
-        $lkTreeItemsJson[$ktg1][$v['leistung']] = $jvals;
-        $lkmById[$v['leistung_id']] = array();
-    }
-    
-    if ($v['mx_preis']) $lkmById[$v['leistung_id']][] = array(
-        'preis' => $v['mx_preis'],
-        'von'   => $v['mx_von'],
-        'bis'   => $v['mx_bis'],
-    );
 }
+// die('<pre>' . json_encode(compact('lkItems', 'lkTreeItems', 'lkTreeItemsJson'), JSON_PRETTY_PRINT));
 
 //die('<pre> lkItmes: ' . print_r($lkItems,1) . '</pre>');
 $cmd = getRequest("cmd","");

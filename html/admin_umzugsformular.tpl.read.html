@@ -19,6 +19,11 @@
 	onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
   </tr>
   <tr>
+    <td style="padding:0;width:200px;height:auto;width:auto;"><label for="tour_kennung" style="width:180px;">Tour-Kennung/ID:</label></td>
+    <td style="padding:0;width:250px;"><input id="tour_kennung" type="text" value='{$AS.tour_kennung|escape}'
+                                              name="AS[tour_kennung]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
     <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
     <td style="padding:0;"><input type="text" value='{$AS.umzugszeit|escape}'
 	id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
@@ -56,8 +61,10 @@
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
 </table>
+  <img src="%WebRoot%images/printer.png" width="16" height="16" alt="">
 <a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}" style="display: none" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Anforderungsblatt / Druckansicht</a>
-  <a href="%WebRoot%sites/lieferschein.php?id={$AS.aid}" target="_Lieferschein{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Lieferschein</a>
+  <a href="%WebRoot%sites/lieferschein.php?aid={$AS.aid}" target="_Lieferschein{$AS.aid}">Lieferschein</a>
+  | <a href="%WebRoot%sites/etiketten.php?aid={$AS.aid}" target="_Etiketten{$AS.aid}">Etiketten</a>
 <br>
 
 <div style="float:left">

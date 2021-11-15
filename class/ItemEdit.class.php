@@ -1355,7 +1355,9 @@ class ItemEdit
 	
 	function dbdataToInput($autoload = true) {
             global $msg;
-            if (empty($this->arrDbdata) && $autoload) $this->loadDbdata();
+            if (empty($this->arrDbdata) && $autoload) {
+                $this->loadDbdata();
+            }
 
             if (count($this->arrDbdata) || $this->loadDbdata()) {
                 if (is_array($this->arrConf["Fields"]) && count($this->arrConf["Fields"]) ) {

@@ -22,7 +22,10 @@ require_once $MConf['AppRoot'] . $MConf['Inc_Dir'] . 'tcpdf_include.php';
 require_once $MConf['AppRoot'] . $MConf['Modul_Dir'] . 'lieferschein/lieferschein.model.php';
 require_once $MConf['AppRoot'] . $MConf['Modul_Dir'] . 'lieferschein/lieferschein.model.php';
 
-$AID = $_REQUEST['id'] ?? 0;
+$AID = $_REQUEST['aid'] ?? 0;
+if (empty($AID)) {
+    $AID = $_REQUEST['id'] ?? 0;
+}
 
 if (empty($AID)) {
     die('INGUELTIGER SEITENAUFRUF! Es wurde keine AuftragsID übergeben');

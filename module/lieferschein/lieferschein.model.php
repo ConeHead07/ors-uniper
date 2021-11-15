@@ -255,8 +255,11 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
     }
 
     public function createLieferschein() {
-        $this->db->query('INSERT INTO mm_lieferscheine (aid) VALUES(:aid)',
-            ['aid' => $this->AID]
+        $this->db->query('INSERT INTO mm_lieferscheine (aid, lieferdatum) VALUES(:aid, :lieferdatum)',
+            [
+                'aid' => $this->AID,
+                'lieferdatum' => $this->auftragsdaten['umzugstermin']
+            ]
         );
         $this->error = $this->db->error();
         if ($this->error) {

@@ -18,6 +18,9 @@ $ktgIdLieferung = 18;
 $ktgIdRabatt = 25;
 $mode = $_REQUEST['mode'] ?? '';
 if (empty($AID)) {
+    $AID = $_REQUEST["aid"] ?? 0;
+}
+if (empty($AID)) {
     $AID = $_REQUEST["id"] ?? 0;
 }
 if (empty($lid)) {
@@ -68,7 +71,8 @@ if ($AID ) {
             die('UNGUELTIGER SEITENAUFRUF! Es wurde keine Leistungen zum angegebenen Auftrag gefunden!');
         }
 
-        $lsNr = 'UNIPER-4-' . str_pad($AID, 5, '0', STR_PAD_LEFT);
+        // U-00030
+        $lsNr = 'U-' . str_pad($AID, 5, '0', STR_PAD_LEFT);
         $lsDatum = date('d.m.Y', strtotime($lieferschein['lieferdatum']));
 
         $aArtikels = array_map(

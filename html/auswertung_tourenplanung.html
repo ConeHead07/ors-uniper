@@ -104,6 +104,11 @@ $(function(){
         window.open( $(this).data("href"), "auftrag");
         window.status= $(this).data("href");
     });
+
+    $("#tblTourenplanung input[type=checkbox][name^=aids]").on("click", function(e) {
+        e.stopPropagation();
+        return true;
+    })
     
 });
 {/literal}
