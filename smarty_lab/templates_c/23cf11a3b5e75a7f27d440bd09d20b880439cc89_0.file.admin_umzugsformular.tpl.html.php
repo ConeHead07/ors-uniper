@@ -71,7 +71,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 <p>
 <div id="Umzugsantrag" class="divInlay"> 
 <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
-<h2 style="margin:0;">Auftrags-Status</h2>
+<h2 style="margin:0;">Auftragsdaten</h2>
 Angeboten: <?php echo $_smarty_tpl->tpl_vars['AS']->value['angeboten_am'];?>
  von <?php echo $_smarty_tpl->tpl_vars['AS']->value['angeboten_von'];?>
 

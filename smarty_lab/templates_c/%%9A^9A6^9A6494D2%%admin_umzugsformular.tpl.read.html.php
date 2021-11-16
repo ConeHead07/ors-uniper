@@ -15,7 +15,7 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'escape', 'a
 </span></h1> 
 <p>
 <div id="Umzugsantrag" class="divInlay"> 
-<h2 style="margin:0;">Auftrags-Status</h2>
+<h2 style="margin:0;">Auftragsdaten</h2>
 <table border=0 cellspacing=1 cellpadding=1>
   <tr>
     <td style="padding:0;height:auto;width:200px;"><label for="termin" style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
@@ -46,7 +46,7 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'escape', 'a
   </tr>
   <?php else: ?>
   <tr>
-    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">Bestätigt:</label></td>
+    <td style="padding:0;"><label for="mitarbeiter" style="display:block;width:auto;">Bestï¿½tigt:</label></td>
     <td style="padding:0;" class="status_<?php echo $this->_tpl_vars['AS']['genehmigt_br']; ?>
 "><img id="imgStatGen" src="images/status_<?php echo ((is_array($_tmp=$this->_tpl_vars['AS']['genehmigt_br'])) ? $this->_run_mod_handler('lower', true, $_tmp) : smarty_modifier_lower($_tmp)); ?>
 .png"><span id="txtStatGen"><?php if ($this->_tpl_vars['AS']['genehmigt_br'] != 'Init'): ?> <?php echo $this->_tpl_vars['AS']['genehmigt_br']; ?>
@@ -103,7 +103,7 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'escape', 'a
   </tr>
 
   <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Gebäude:</label></td>
+    <td style="padding:0;"><label style="display:block;width:auto;">Gebï¿½ude:</label></td>
     <td style="padding:0;" data-fld="AS[gebauede]"><?php echo ((is_array($_tmp=$this->_tpl_vars['AS']['gebaeude'])) ? $this->_run_mod_handler('escape', true, $_tmp) : smarty_modifier_escape($_tmp)); ?>
 </td>
   </tr>

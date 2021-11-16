@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-10-08 10:17:10
+/* Smarty version 3.1.34-dev-7, created on 2021-11-11 13:39:24
   from '/var/www/html/html/umzugsformular_attachments.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61601aa6470bd8_08094968',
+  'unifunc' => 'content_618d1d0c45a3c8_29623685',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '43a5b32506c4f315a9d77c18bee32ad5cf57ef2d' => 
     array (
       0 => '/var/www/html/html/umzugsformular_attachments.tpl.read.html',
-      1 => 1633687896,
+      1 => 1636637959,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61601aa6470bd8_08094968 (Smarty_Internal_Template $_smarty_tpl) {
+function content_618d1d0c45a3c8_29623685 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.truncate.php','function'=>'smarty_modifier_truncate',),));
 ?>
 
@@ -31,16 +31,13 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
     
     #attachments_list .row .col.fname {
         width:50%;
-        max-width:400px;
     }
     #attachments_list .row .col.fsize {
         width:20%;
-        max-width:120px;
     }
     
     #attachments_list .row .col.fdate {
-        width:20%;
-        max-width:140px;
+        width:25%;
     }
     #attachments_list .row.names {
         background:#eee;
@@ -80,7 +77,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
     }
     
     .ulAttachements .row.values .col.fname {
-        background: url(images/attachment-icon2.png) left top no-repeat;
+        background: url("images/attachment-icon2.png") left top no-repeat;
         padding-left:18px;
         box-sizing: border-box;
     }

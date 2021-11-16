@@ -19,7 +19,7 @@ smarty_core_load_plugins(array('plugins' => array(array('modifier', 'escape', 'p
 </span></h1> 
 <p>
 <div id="Umzugsantrag" class="divInlay"> 
-<h2 style="margin:0;">Auftrags-Status</h2>
+<h2 style="margin:0;">Auftragsdaten</h2>
 <table border=0 cellspacing=1 cellpadding=1>
   <tr>
     <td style="padding:0;width:200px;"><label for="termin" style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>

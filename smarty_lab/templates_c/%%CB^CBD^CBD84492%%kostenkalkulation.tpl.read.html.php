@@ -87,7 +87,7 @@ themes/imgcolor.php?color=eee");
 
 <p>
 <div>
-<h2 style="margin:0;">Auftrags-Status</h2>
+<h2 style="margin:0;">Auftragsdaten</h2>
 <table>
   <tr>
     <td style="width:140px" bgcolor="#eeeeee" class="th"><label for="ansprechpartner"><b>Ausf&uuml;hrungstermin</b></label></td>
@@ -199,7 +199,7 @@ unset($_smarty_tpl_vars);
     <div style="display:block;color:#9d9d9c;font-family:Arial,Verdana,font-size:9px;line-height:145%;text-align:justify;">
     merTensHenk GmbH & Co. OHG<br>
     Stahlwerk Becker 8, D-47877 Willich, Tel. +49(0) 2154 4705 0, Fax +49(0) 2154 4705 40000, info@mertens-henk.de, www.mertens-henk.de,
-    Stadt<wbr>spar<wbr>kasse Düsseldorf, IBAN DE80 3005 0110 1006 8653 70, BIC DUSSDEDDXXX, Steuer-Nr. 102/5748/1231, USt-IdNr. DE294456615, 
+    Stadt<wbr>spar<wbr>kasse Dï¿½sseldorf, IBAN DE80 3005 0110 1006 8653 70, BIC DUSSDEDDXXX, Steuer-Nr. 102/5748/1231, USt-IdNr. DE294456615, 
     Amts<wbr>gericht Krefeld HRA 6363, Gesell<wbr>schafter merTens AG, Henk Inter<wbr>national GmbH, Unsere AGBs finden Sie unter www.mertens-henk.de/agb
 </div>
     

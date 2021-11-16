@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-09-22 08:49:16
+/* Smarty version 3.1.34-dev-7, created on 2021-11-11 14:11:38
   from '/var/www/html/html/admin_umzugsformular_lieferauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_614aee0c32baf5_51983823',
+  'unifunc' => 'content_618d249a4d05b0_90267106',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1eb71b97585ea7de3d34b9b8182ae973573e43e8' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular_lieferauswahl.tpl.html',
-      1 => 1632300549,
+      1 => 1636639891,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_614aee0c32baf5_51983823 (Smarty_Internal_Template $_smarty_tpl) {
+function content_618d249a4d05b0_90267106 (Smarty_Internal_Template $_smarty_tpl) {
 ?><h2 style="margin:0;">Lieferfirma / Dienstleister</h2> 
 
 <div class="SelBoxDienstleisterWidth" style="width:390px;">
@@ -49,49 +49,49 @@ Neu anlegen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" a
   <tr>
     <td style="padding:0;"><label for="dl_firmenname" style="width:180px;">Firmenname</label></td>
     <td style="padding:0;width:200px;"><input id="dl_firmenname" type="text" readonly="true" value="<?php if (!empty($_smarty_tpl->tpl_vars['DL']->value['Firmenname'])) {
-echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Firmenname'], ENT_QUOTES, 'ISO-8859-1', true);
+echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Firmenname'], ENT_QUOTES, 'UTF-8', true);
 }?>" name="DL[Firmenname]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_ansprechpartner" style="width:180px;">Ansprechpartner</label></td>
     <td style="padding:0;"><input id="dl_ansprechpartner" type="text" readonly="true" value="<?php if (!empty($_smarty_tpl->tpl_vars['DL']->value['Ansprechpartner'])) {
-echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Ansprechpartner'], ENT_QUOTES, 'ISO-8859-1', true);
+echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Ansprechpartner'], ENT_QUOTES, 'UTF-8', true);
 }?>" name="DL[Ansprechpartner]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_strasse" style="width:180px;">Strasse</label></td>
     <td style="padding:0;"><input id="dl_strasse" type="text" readonly="true" value="<?php if (!empty($_smarty_tpl->tpl_vars['DL']->value['Strasse'])) {
-echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Strasse'], ENT_QUOTES, 'ISO-8859-1', true);
+echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Strasse'], ENT_QUOTES, 'UTF-8', true);
 }?>" name="DL[Strasse]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_ort" style="width:180px;">Ort</label></td>
     <td style="padding:0;"><input id="dl_ort" type="text" readonly="true" value="<?php if (!empty($_smarty_tpl->tpl_vars['DL']->value['Ort'])) {
-echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Ort'], ENT_QUOTES, 'ISO-8859-1', true);
+echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Ort'], ENT_QUOTES, 'UTF-8', true);
 }?>" name="DL[Ort]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_handy" style="width:180px;">Handy</label></td>
     <td style="padding:0;"><input id="dl_handy" type="text" readonly="true" value="<?php if (!empty($_smarty_tpl->tpl_vars['DL']->value['Handy'])) {
-echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Handy'], ENT_QUOTES, 'ISO-8859-1', true);
+echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Handy'], ENT_QUOTES, 'UTF-8', true);
 }?>" name="DL[Handy]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_festnetz" style="width:180px;">Festnetz</label></td>
     <td style="padding:0;"><input id="dl_festnetz" type="text" readonly="true" value="<?php if (!empty($_smarty_tpl->tpl_vars['DL']->value['Festnetz'])) {
-echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Festnetz'], ENT_QUOTES, 'ISO-8859-1', true);
+echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Festnetz'], ENT_QUOTES, 'UTF-8', true);
 }?>" name="DL[Festnetz]" class="itxt itxt2col"></td>
   </tr>
   <tr>
     <td style="padding:0;"><label for="dl_email" style="width:180px;">E-Mail</label></td>
     <td style="padding:0;"><input id="dl_email" type="text" readonly="true" value="<?php if (!empty($_smarty_tpl->tpl_vars['DL']->value['Email'])) {
-echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Email'], ENT_QUOTES, 'ISO-8859-1', true);
+echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Email'], ENT_QUOTES, 'UTF-8', true);
 }?>" name="DL[Email]" class="itxt itxt2col"></td>
   </tr>
   <tr>
       <td colspan="2">
           <label style="text-align: left;background:none;border:none;color:#000;width:100%;">Bemerkung Mertens intern</label>
-          <textarea id="as_dl_bemerkung" style="width:100%;height:160px;max-width:380px;" class="iarea" name="AS[dienstleister_bemerkung]"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['dienstleister_bemerkung'], ENT_QUOTES, 'ISO-8859-1', true);?>
+          <textarea id="as_dl_bemerkung" style="width:100%;height:160px;resize:vertical;overflow:auto" class="iarea" name="AS[dienstleister_bemerkung]"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['dienstleister_bemerkung'], ENT_QUOTES, 'UTF-8', true);?>
 </textarea>
       </td>
   </tr>
