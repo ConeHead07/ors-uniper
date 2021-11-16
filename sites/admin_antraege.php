@@ -49,6 +49,8 @@ $orderFields = array(
 	'termin' => array('field'=>'umzugstermin', 'defaultOrder'=>'ASC'),
 	'von' => array('field'=>"M.gebaeude", 'defaultOrder'=>'ASC'),
 	'nach' => array('field'=>"M.ziel_gebaeude", 'defaultOrder'=>'ASC'),
+    'strasse' => array('field'=>'strasse', 'defaultOrder'=>'ASC'),
+    'plz' => array('field'=>'plz', 'defaultOrder'=>'ASC'),
     'ort' => array('field'=>'ort', 'defaultOrder'=>'ASC'),
     'kid' => array('field'=>"user.personalnr", 'defaultOrder'=>'ASC'),
 	'umzug' => array('field'=>'umzug', 'defaultOrder'=>'ASC'),
