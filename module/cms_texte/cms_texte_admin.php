@@ -66,7 +66,7 @@ $editTable = $_TABLE["cms_texte"];
 $editTableKey = "id";
 $_VF = &$validFields[$editTable];
 
-// Start Block: Setze Werte für set_cms_editbar
+// Start Block: Setze Werte fÃ¼r set_cms_editbar
 $groupid_counter =0;
 $delimitedTags ="div,u,b,i,ul,ol,li";
 $editareavorlage_file = $ModSelfPath."html".DS."vorlage_editarea.html";
@@ -78,7 +78,7 @@ if ($user["gruppe"] == "admin") {
 	$jsbuttonsvorlage_file= $ModSelfPath."html".DS."vorlage_editjsbtns500.txt";
 	$editareavorlage_file= $ModSelfPath."html".DS."vorlage_editarea500.html";
 }
-// End Block: Setze Werte für set_cms_editbar
+// End Block: Setze Werte fÃ¼r set_cms_editbar
 
 if (empty($ActiveMenu["kommentar"])) $ActiveMenu = get_menu_bySrv($srv);
 if ($ActiveMenu["kommentar"]) {
@@ -103,22 +103,22 @@ if ($cmstask == "translate") {
 		
 		switch(count($aTranslatedItems)) {
 			case 0: 
-			// Keine Übersetzung vorhanden, neu anlegen
+			// Keine Ãœbersetzung vorhanden, neu anlegen
 			$validFields[$editTable]["lang"][1] = ($from_lang == "DE") ? "EN" : "";
 			$validFields[$editTable]["common_lang_key"][1] = $clk;
 			$ansicht = "eingabe";
 			break;
 			
 			case 1: 
-			// Übersetzung vorhanden, zur Bearbeitung öffnen
+			// Ãœbersetzung vorhanden, zur Bearbeitung Ã¶ffnen
 			$id = $aTranslatedItems[0][$editTableKey];
 			$cmstask = "edit";
 			$ansicht = "bearbeiten";
 			break;
 			
 			default: 
-			// Es existieren Übersetzung in mehr als nur einer Sprache
-			// Zur Zeit nicht möglich, da nur deutsch und englisch konfiguriert sind
+			// Es existieren Ãœbersetzungen in mehr als nur einer Sprache
+			// Zur Zeit nicht mÃ¶glich, da nur deutsch und englisch konfiguriert sind
 			echo "#".__LINE__." ".basename(__FILE__)."<br>\n";
 			break;
 		}
@@ -150,7 +150,7 @@ function recount_public_srv_items($srv) {
 		MyDB::free_result($r);
 		for ($i = 0; $i < $n; $i++) {
 			$SQL = "UPDATE $editTable SET \n";
-			$SQL.= " $editTableOrd = '".strval($i+1)."' \n";
+			$SQL.= " $editTableOrd = '". (string)($i+1)."' \n";
 			$SQL.= " WHERE $editTableKey = '".$key2Ord[$i]."'";
 			$SQL.= " AND seitenbereich = \"".addslashes($srv)."\" ";
 			MyDB::query($SQL);
@@ -255,7 +255,7 @@ switch ($ansicht) {
 	$r_max_Ord = 0;
 	$SQL = "SELECT $editTableKey, ".$_SYS2MYSQL[$editTable]["sortierfeld"]." FROM $editTable \n";
 	$SQL.= " WHERE webfreigabe LIKE 'Ja' \n";
-	$SQL.= " AND seitenbereich LIKE \"".$srv."\" \n";
+	$SQL.= " AND srv LIKE \"".$srv."\" \n";
 	$SQL.= " ORDER BY $editTableOrd ASC";
 	$r = MyDB::query($SQL);
 	if ($r) {
@@ -276,12 +276,12 @@ switch ($ansicht) {
 	
 	$SQL = "SELECT * FROM $editTable \n";
 	$SQL.= " WHERE webfreigabe LIKE 'Ja' \n";
-	$SQL.= " AND seitenbereich LIKE \"".$srv."\" \n";
+	$SQL.= " AND srv LIKE \"".$srv."\" \n";
 	$SQL.= " ORDER BY $editTableOrd ASC";
 	$result = MyDB::query($SQL);
 	$num = MyDB::num_rows($result);
 	//echo "#".__LINE__." num:$num, ".MyDB::error()."<br>SQL:$SQL<br>";
-	$public_liste = "<table width='100%'><tr><td><b>Auf Portalseite ver&ouml;ffentlichte Beiträge</b></td></tr></table>";
+	$public_liste = "<table width='100%'><tr><td><b>Auf Portalseite ver&ouml;ffentlichte BeitrÃ¤ge</b></td></tr></table>";
 	
 	$public_item_vorlage = "";
 	if ($num) {
@@ -321,17 +321,17 @@ switch ($ansicht) {
 		}
 	} else {
 		//echo "#74 else<br>";
-		$public_liste.="Zur Zeit sind keine Beiträge ver&ouml;ffentlicht!<br>";
+		$public_liste.="Zur Zeit sind keine BeitrÃ¤ge ver&ouml;ffentlicht!<br>";
 	}
 	
 	$SQL = "SELECT * FROM $editTable \n";
 	$SQL.= " WHERE webfreigabe NOT LIKE 'Ja' \n";
-	$SQL.= " AND seitenbereich LIKE \"".$srv."\" \n";
-	$SQL.= " ORDER BY ".$_SYS2MYSQL[$editTable]["erstelltam"]." DESC";
+	$SQL.= " AND srv LIKE \"".$srv."\" \n";
+	$SQL.= " ORDER BY created DESC";
 	$result = MyDB::query($SQL);
 	$num = MyDB::num_rows($result);
 	//echo "#80 num:$num<br>";
-	$unpublic_liste = "<br><table width='100%'><tr><td><b>Auf Portalseite gesperrte Beiträge</b></td></tr></table>";
+	$unpublic_liste = "<br><table width='100%'><tr><td><b>Auf Portalseite gesperrte BeitrÃ¤ge</b></td></tr></table>";
 	$unpublic_item_vorlage = "";
 	if ($num) {
 		$unpublic_item_vorlage = implode("",file($unpublic_item_vorlage_file));
@@ -362,7 +362,7 @@ switch ($ansicht) {
 			$unpublic_liste.= strtr($unpublic_item_vorlage, $_rplItem);
 		}
 	} else {
-		$unpublic_liste.="Zur Zeit existieren keine unver&ouml;ffentlichten Beiträge!<br>";
+		$unpublic_liste.="Zur Zeit existieren keine unver&ouml;ffentlichten BeitrÃ¤ge!<br>";
 	}
 	$body_content.=$cmscontent_nav.$public_liste.$unpublic_liste;
 	break;
@@ -389,7 +389,7 @@ switch ($ansicht) {
 	case "vorschau":
 	case "speichern":
 	case "korrigieren":
-	// Überprüfe Eingabewerte
+	// ÃœberprÃ¼fe Eingabewerte
 	if ($cx) echo "#".__LINE__." ansicht:$ansicht<br>\n";
 	reset($_POST["eingabe"]);
 	//echo "<pre>#".__LINE__." ".arraytoVarString("\$_POST", $_POST)."</pre>\n";
@@ -497,12 +497,12 @@ switch($ansicht) {
 	$cmscontent = str_replace("%id%", $id, $cmscontent);
 	get_tplvars($eingabe, $lesen, $_TplVars);
 	$cmscontent = strtr($cmscontent, $_TplVars);
-	$cmscontent = set_formVars($cmscontent, &$_VF, $fehlerfelder);
+	$cmscontent = set_formVars($cmscontent,$_VF, $fehlerfelder);
 	list($cmscontent,$ausgabe) = set_cms_editbar($cmscontent,$ausgabe);
 	break;
 
 	case "speichern":
-	$mysql_save_mode = (intval($eingabe[$editTableKey]) > 0) ? "UPDATE" : "INSERT" ;
+	$mysql_save_mode = ((int)($eingabe[$editTableKey]) > 0) ? "UPDATE" : "INSERT" ;
 	list($insertID,$fehlertext) = MyDB::save_input(
 										$eingabe,
 										$_VF,
@@ -534,7 +534,7 @@ switch($ansicht) {
 	
 	get_tplvars($eingabe, $lesen, $_TplVars);
 	$cmscontent = strtr($cmscontent, $_TplVars);
-	$cmscontent = set_formVars($cmscontent, &$_VF);
+	$cmscontent = set_formVars($cmscontent, $_VF);
 	
 	if (!$fehlertext) {
 		$cmscontent_nav.='
@@ -572,4 +572,3 @@ $_TplBaseVars["{id}"]   = $id;
 $cmscontent_nav = strtr($cmscontent_nav, $_TplBaseVars);
 $cmscontent = strtr($cmscontent, $_TplBaseVars);
 $body_content.= $cmscontent_nav.$hintsandtipps.$cmscontent;
-?>

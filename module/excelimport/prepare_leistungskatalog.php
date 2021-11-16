@@ -39,7 +39,7 @@ $import = (isset($_POST["import"])) ? $_POST["import"] : (isset($_GET["import"])
 $firstRowIsTitle = (isset($_POST["firstRowIsTitle"])) ? $_POST["firstRowIsTitle"] : (isset($_GET["firstRowIsTitle"]) ? $_GET["firstRowIsTitle"] : "");
 $mapCsvDst = (isset($_POST["mapCsvDst"])) ? $_POST["mapCsvDst"] : (isset($_GET["mapCsvDst"]) ? $_GET["mapCsvDst"] : "");
 if ($mapCsvDst && $importTblKey) {
-	file_put_contents(dirname(__FILE__)."/mapCsvDst.$importTblKey.phs", serialize($mapCsvDst));
+	file_put_contents(__DIR__ ."/mapCsvDst.$importTblKey.phs", serialize($mapCsvDst));
 }
 $csv_file = (isset($_POST["csv_file"])) ? $_POST["csv_file"] : (isset($_GET["csv_file"]) ? $_GET["csv_file"] : "");
 $del_file = (isset($_POST["del_file"])) ? $_POST["del_file"] : (isset($_GET["del_file"]) ? $_GET["del_file"] : "");
@@ -74,7 +74,7 @@ if (isset($_FILES[$fuploadname])) {
 			break;
 			
 			default:
-			$msg.= "#".__LINE__." Ungültige Dateierweiterung: ".strtolower(implode(".",array_slice($t,-1)))."<br>\n";
+			$msg.= "#".__LINE__." UngÃ¼ltige Dateierweiterung: ".strtolower(implode(".",array_slice($t,-1)))."<br>\n";
 		}
 		$tmp_nr = 2;
 		$max_nr = 100;
@@ -89,12 +89,19 @@ if (isset($_FILES[$fuploadname])) {
 	}
 }
 
-$show_csv_files = (!empty($_GET["show_csv_files"]) || !$csv_file && !file_exists($csv_dir.$csv_file)) ? true : false;
+$show_csv_files = (!empty($_GET["show_csv_files"]) || !$csv_file || !file_exists($csv_dir . $csv_file)) ? true : false;
+
 if ($del_file) {
 	if (file_exists($csv_dir."/".$del_file)) {
-		if (unlink($csv_dir."/".$del_file)) $msg.= "Datei <strong>$del_file</strong> wurde gelöscht!<br>\n";
-		else $msg.= "Datei <strong>$del_file</strong> konnte <strong>nicht</strong> gelöscht werden!<br>\n";
-	} else  $msg.= "Datei <strong>$del_file</strong> existiert <strong>nicht</strong>!<br>\n";
+		if (unlink($csv_dir."/".$del_file)) {
+		    $msg.= "Datei <strong>$del_file</strong> wurde gelÃ¶scht!<br>\n";
+        }
+		else {
+		    $msg.= "Datei <strong>$del_file</strong> konnte <strong>nicht</strong> gelÃ¶scht werden!<br>\n";
+        }
+	} else {
+	    $msg.= "Datei <strong>$del_file</strong> existiert <strong>nicht</strong>!<br>\n";
+    }
 }
 
 $dp = opendir($csv_dir);
@@ -111,7 +118,7 @@ if ($dp) {
 				<td align=right>".$fs."</td>
 				<td>"."<input type=\"radio\" id=\"f{$fi}\" name=\"csv_file\" value=\"".fb_htmlEntities($file)."\"><span onclick=\"O('f{$fi}').click()\" style=\"cursor:pointer;\">".$file." </span> </td>
 				<td>"."<a href=\"".$csv_dir.$file."\" target=_blank style=\"color:#00f;\">Anzeigen </a> </td>
-				<td>"."<a href=\"?".$trackVars."&show_csv_files=1&del_file=".urlencode($file)."\" style=\"color:#f00;\">Löschen </a> </td>
+				<td>"."<a href=\"?".$trackVars."&show_csv_files=1&del_file=".urlencode($file)."\" style=\"color:#f00;\">Lï¿½schen </a> </td>
 			</tr>\n";
 			$aCsvFiles[] = $file;
 		}
@@ -131,7 +138,8 @@ if (isset($import) && $csv_file) {
 		die( print_r($Csv->DATA, 1));
                 $lastTitle = '';
 		$insertRows = "";
-		for ($i = $offset; $i < count($Csv->DATA); $i++) {
+		$iCountCsvData = count($Csv->DATA);
+		for ($i = $offset; $i < $iCountCsvData; $i++) {
 			$row = $Csv->DATA[$i];
                         $variante = '';
                         if ( trim($row[0]) && '' == trim($row[1] . $row[2])) {
@@ -156,8 +164,8 @@ if (isset($import) && $csv_file) {
 //echo "#".__LINE__." ".basename(__FILE__)." <strong>import:</strong>$import, <strong>error:</strong>$error, <strong>importTblKey:</strong>$importTblKey, <strong>csv_dir:</strong>$csv_dir, <strong>csv_file:</strong>$csv_file, <strong>file_exists():</strong>".file_exists($csv_dir.$csv_file)."<br>\n";
 if ((empty($import) || $error) && $importTblKey && $csv_file && file_exists($csv_dir.$csv_file)) {
 	//echo "#".__LINE__." ".basename(__FILE__)." csv_file:$csv_file<br>\n";
-	if (empty($mapCsvDst) && file_exists(dirname(__FILE__)."/mapCsvDst.$importTblKey.phs")) {
-		$mapCsvDst = unserialize(file_get_contents(dirname(__FILE__)."/mapCsvDst.$importTblKey.phs"));
+	if (empty($mapCsvDst) && file_exists(__DIR__ . "/mapCsvDst.$importTblKey.phs")) {
+		$mapCsvDst = unserialize(file_get_contents(dirname(__FILE__) . "/mapCsvDst.$importTblKey.phs"));
 	}
 	$max_rows = 10;
 	$return_rows = true;
@@ -217,32 +225,38 @@ if ($db_import) {
 		font-weight:bold;
 	}
 	</style>
-	<script src="./js/PageInfo.js" type="text/javascript"></script> 
-	<script src="./js/GetObjectDisplay.js" type="text/javascript"></script> 
-	<script src="./module/datepicker/DatePicker.js"></script> 
-	<link  href="./module/datepicker/DatePicker.css" rel="stylesheet" media="screen"> 
-	<link  href="./module/ComboBox/ComboBox.css" rel="stylesheet" media="screen">
-	<script src="./module/ComboBox/ComboBox.js"></script> 
+	<script src="./js/PageInfo.js?%assetsRefreshId%" type="text/javascript"></script>
+	<script src="./js/GetObjectDisplay.js?%assetsRefreshId%" type="text/javascript"></script>
+	<script src="./module/datepicker/DatePicker.js?%assetsRefreshId%"></script>
+	<link  href="./module/datepicker/DatePicker.css?%assetsRefreshId%" rel="stylesheet" media="screen">
+	<link  href="./module/ComboBox/ComboBox.css?%assetsRefreshId%" rel="stylesheet" media="screen">
+	<script src="./module/ComboBox/ComboBox.js?%assetsRefreshId%"></script>
 </head>
 
 <body>
 <?php
 if ($error) echo "<div style=\"border:1px solid #f00;padding:5px;color:#000080;\">".$error."</div>\n";
 $msg.= "<form enctype=\"multipart/form-data\" method=\"post\" style=\"margin:0px;display:inline;\">\n";
-$msg.= "<a href=\"?".$trackVars."&show_csv_files=1\" onclick=\"ChgD('csvList'); return false;\">Vorhandene CSV-Datei aus Liste auswählen ...</a><br>\n";
-if ($file_liste) $msg.= "<div id=\"csvList\" style=\"display:".($show_csv_files?"":"none")."\">$file_liste</div><br>\n";
-$msg.= "Neue Datei für Import hochladen<br>\n";
+$msg.= "<a href=\"?".$trackVars."&show_csv_files=1\" onclick=\"ChgD('csvList'); return false;\">Vorhandene CSV-Datei aus Liste auswÃ¤hlen ...</a><br>\n";
+
+if ($file_liste) {
+    $msg.= "<div id=\"csvList\" style=\"display:".($show_csv_files?"":"none")."\">$file_liste</div><br>\n";
+}
+
+$msg.= "Neue Datei fÃ¼r Import hochladen<br>\n";
 $msg.= "<input type=\"file\" name=\"$fuploadname\"><br>\n";
 $msg.= "<input type=\"hidden\" name=\"ximport\" value=\"1\">";
 $msg.= "<input type=\"submit\" value=\"Weiter\">\n";
 $msg.= "</form>\n";
-/**/
+
 echo "<div style=\"border:1px solid gray;padding:5px;color:#000080;\">".$msg."</div>\n";
-if (isset($sMapTable)) echo $sMapTable;
+if (isset($sMapTable)) {
+    echo $sMapTable;
+}
 echo $csvToTbl;
 ?>
 
 
 </body>
 </html>
-<?php exit; ?>
+<?php exit;
