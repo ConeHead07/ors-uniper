@@ -10,7 +10,7 @@
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
 <h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1> 
 
-<div id="Umzugsantrag" class="divInlay"> 
+<div id="Umzugsantrag" data-html="html/admin/umzugsformular/tpl/read/html" class="divInlay">
 <h2 style="margin:0;">Auftrags-Status</h2>
 <table border=0 cellspacing=1 cellpadding=1>
   <tr>
@@ -156,7 +156,7 @@
     {include file="admin_umzugsformular_gruppierung.tpl.html"}
 </div>
 {/if}
-
+  umzugsstatus: {$AS.umzugsstatus}
   <div id="BoxBemerkungen">
     <strong>Bemerkungen:</strong><br>
     <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
@@ -168,4 +168,4 @@
   </div>
   <div id="LoadingBar"></div>
 
-</div> 
+</div>

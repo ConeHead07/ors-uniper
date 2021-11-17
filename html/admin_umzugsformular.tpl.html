@@ -25,7 +25,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding12px width5Col heightAuto colorContentMain">
   <div class="divInlay noMarginBottom borderTop"></div>
-<div id="Umzugsantrag" class="divInlay">
+<div id="Umzugsantrag" data-html="html/admin/umzugsformular/tpl/html" class="divInlay">
 <h2 style="margin:0;">Auftragsdaten</h2>
   <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
 <table border=1 cellspacing=1 cellpadding=1>
@@ -329,7 +329,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
   {if $AS.umzugsstatus eq "beantragt"}
     <input
           id="btnStatGeprBackToUser" type="submit"
-          class="{if $AS.geprueft eq 'Ja' || $AS.genehmigt_br ne 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if}"
+          class="{if $AS.umzugsstatus eq 'beantragt' or $AS.umzugsstatus eq 'erneutpruefen' or $AS.umzugsstatus eq 'angeboten'}btn blue{else}cssHide{/if}"
           onclick="umzugsantrag_set_status('zurueckgeben','Ja')"
           value="Zurueckgeben">
 

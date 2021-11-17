@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-17 14:12:30
+/* Smarty version 3.1.34-dev-7, created on 2021-11-17 16:46:26
   from '/var/www/html/html/admin_umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_6194ffbe664a83_48948418',
+  'unifunc' => 'content_619523d22046a5_69982006',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3277e0744e9936c6fe82f29745a3a388efa6f8e9' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular.tpl.html',
-      1 => 1637154456,
+      1 => 1637163941,
       2 => 'file',
     ),
   ),
@@ -29,7 +29,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_6194ffbe664a83_48948418 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619523d22046a5_69982006 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 $_smarty_tpl->_assignInScope('laenderCsv', substr($_smarty_tpl->tpl_vars['ASConf']->value['land']['size'],1,-1));
 $_smarty_tpl->_assignInScope('laenderLst', explode("','",$_smarty_tpl->tpl_vars['laenderCsv']->value));?>
@@ -75,7 +75,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding12px width5Col heightAuto colorContentMain">
   <div class="divInlay noMarginBottom borderTop"></div>
-<div id="Umzugsantrag" class="divInlay">
+<div id="Umzugsantrag" data-html="html/admin/umzugsformular/tpl/html" class="divInlay">
 <h2 style="margin:0;">Auftragsdaten</h2>
   <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
 <table border=1 cellspacing=1 cellpadding=1>
@@ -86,7 +86,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     onfocus="showDtPicker(this)" name="AS[umzugstermin]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td style="padding:0;width:200px;height:auto;width:auto;"><label for="tour_kennung" style="width:100%;">Tour-Kennung/TID:</label></td>
+    <td style="padding:0;width:200px;height:auto;width:auto;"><label for="tour_kennung" style="width:180px;">Tour-Kennung/ID:</label></td>
     <td style="padding:0;width:250px;"><input
             id="tour_kennung"name="AS[tour_kennung]" type="text" value='<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['tour_kennung'], ENT_QUOTES, 'UTF-8', true);?>
 '
@@ -388,7 +388,7 @@ $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read2.html
   <?php if ($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] == "beantragt") {?>
     <input
           id="btnStatGeprBackToUser" type="submit"
-          class="<?php if ($_smarty_tpl->tpl_vars['AS']->value['geprueft'] == 'Ja' || $_smarty_tpl->tpl_vars['AS']->value['genehmigt_br'] != 'Init' || $_smarty_tpl->tpl_vars['AS']->value['bestaetigt'] != 'Init') {?>cssHide<?php } else { ?>btn blue<?php }?>"
+          class="<?php if ($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] == 'beantragt' || $_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] == 'erneutpruefen' || $_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] == 'angeboten') {?>btn blue<?php } else { ?>cssHide<?php }?>"
           onclick="umzugsantrag_set_status('zurueckgeben','Ja')"
           value="Zurueckgeben">
 

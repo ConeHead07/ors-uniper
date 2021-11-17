@@ -302,13 +302,16 @@ $Tpl->assign("Gesamtsumme", $Gesamtsumme);
 $mainmenu = "Class-Active-Umzug"; //Umzug" xclass="liActive
 $topmenu = implode("", file($MConf["AppRoot"]."/sites/mitarbeiter_topmenu.tpl.html"));
 
+$istEditierbar = in_array($AS->arrDbdata["umzugsstatus"],[ 'angeboten', 'beantragt', 'bestaetigt', 'geprueft', 'geprueft' ]);
+$istAktiv = in_array($AS->arrDbdata["umzugsstatus"],[ 'bestaetigt', 'geprueft' ]);
 $AS->loadDbdata();
-if (!$istUmzugsteam && $AS->arrDbdata["antragsstatus"]!="storniert" && (!$AS->arrDbdata["abgeschlossen"] || $AS->arrDbdata["abgeschlossen"]=="Init")) {
-	$body_content = $Tpl->fetch("admin_umzugsformular.tpl.html");
-} elseif (!$istUmzugsteam) {
-	$body_content = $Tpl->fetch("admin_umzugsformular.tpl.read.html");
-} else {
+
+if ($istUmzugsteam && $istAktiv) {
     $body_content = $Tpl->fetch("umzugsteam_umzugsformular.tpl.read.html");
+} elseif($istEditierbar) {
+    $body_content = $Tpl->fetch("admin_umzugsformular.tpl.html");
+} else {
+    $body_content = $Tpl->fetch("admin_umzugsformular.tpl.read.html");
 }
 
 //$body_content = implode("", file($MConf["AppRoot"].$MConf["Tpl_Dir"]."umzugsformular.tpl.html"));

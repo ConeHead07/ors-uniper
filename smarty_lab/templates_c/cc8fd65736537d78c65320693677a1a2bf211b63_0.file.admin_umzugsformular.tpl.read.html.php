@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-17 14:12:04
+/* Smarty version 3.1.34-dev-7, created on 2021-11-17 16:30:00
   from '/var/www/html/html/admin_umzugsformular.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_6194ffa48b5bb5_35165624',
+  'unifunc' => 'content_61951ff8e64cf2_62323084',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'cc8fd65736537d78c65320693677a1a2bf211b63' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular.tpl.read.html',
-      1 => 1637154561,
+      1 => 1637162996,
       2 => 'file',
     ),
   ),
@@ -29,7 +29,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_6194ffa48b5bb5_35165624 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61951ff8e64cf2_62323084 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <link rel="STYLESHEET" type="text/css" href="../css/SelBox.easy.css">
@@ -233,6 +233,7 @@ if (!empty($_smarty_tpl->tpl_vars['UmzugsAnlagen']->value)) {?>
 ?>
 </div>
 <?php }?>
+  umzugsstatus: <?php echo $_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'];?>
 
   <div id="BoxBemerkungen">
     <strong>Bemerkungen:</strong><br>
@@ -247,6 +248,6 @@ if (!empty($_smarty_tpl->tpl_vars['UmzugsAnlagen']->value)) {?>
   </div>
   <div id="LoadingBar"></div>
 
-</div> 
+</div>
 <?php }
 }
