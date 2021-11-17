@@ -25,7 +25,11 @@ require_once $MConf['AppRoot'] . $MConf['Modul_Dir'] . 'lieferschein/lieferschei
 $AID = $_REQUEST['id'] ?? 0;
 
 if (empty($AID)) {
-    die('INGUELTIGER SEITENAUFRUF! Es wurde keine AuftragsID übergeben');
+    $AID = $_REQUEST['aid'] ?? 0;
+}
+
+if (empty($AID)) {
+    die('UNGUELTIGER SEITENAUFRUF! Es wurde keine AuftragsID übergeben');
 }
 
 $art = $_REQUEST['art'] ?? '';
