@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-10 23:13:30
+/* Smarty version 3.1.34-dev-7, created on 2021-11-16 10:07:45
   from '/var/www/html/html/admin_antraege_tabs.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_618c521a5721c4_48139628',
+  'unifunc' => 'content_619382f1c41bb9_66263949',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '596ba6fcf64dedd712b8d1ef5e1e1580ca0bfef8' => 
     array (
       0 => '/var/www/html/html/admin_antraege_tabs.html',
-      1 => 1636586005,
+      1 => 1637057245,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_618c521a5721c4_48139628 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619382f1c41bb9_66263949 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="divTabbedList" style="width:100%;">
 
     <ul>
@@ -31,6 +31,8 @@ function content_618c521a5721c4_48139628 (Smarty_Internal_Template $_smarty_tpl)
         <?php }?>
         <li <?php if ($_smarty_tpl->tpl_vars['cat']->value == "neue") {?>class="activeTab"<?php }?>><a href="?s=<?php echo $_smarty_tpl->tpl_vars['s']->value;?>
 &cat=neue<?php if ($_smarty_tpl->tpl_vars['allusers']->value) {?>&allusers=1<?php }?>" style="width:90px">Bestellungen</a></li>
+        <li <?php if ($_smarty_tpl->tpl_vars['cat']->value == "disponierte") {?>class="activeTab"<?php }?>><a href="?s=<?php echo $_smarty_tpl->tpl_vars['s']->value;?>
+&cat=disponierte<?php if ($_smarty_tpl->tpl_vars['allusers']->value) {?>&allusers=1<?php }?>" style="width:90px">Mit TourId</a></li>
         <li <?php if ($_smarty_tpl->tpl_vars['cat']->value == "angeboten") {?>class="activeTab"<?php }?> style="display:none"><a href="?s=<?php echo $_smarty_tpl->tpl_vars['s']->value;?>
 &cat=angeboten<?php if ($_smarty_tpl->tpl_vars['allusers']->value) {?>&allusers=1<?php }?>" style="width:125px">zur Genehmigung</a></li>
         <li <?php if ($_smarty_tpl->tpl_vars['cat']->value == "aktive") {?>class="activeTab"<?php }?>><a href="?s=<?php echo $_smarty_tpl->tpl_vars['s']->value;?>

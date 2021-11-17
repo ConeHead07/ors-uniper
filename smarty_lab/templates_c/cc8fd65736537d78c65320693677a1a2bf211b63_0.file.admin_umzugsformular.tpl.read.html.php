@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-15 09:53:45
+/* Smarty version 3.1.34-dev-7, created on 2021-11-17 14:12:04
   from '/var/www/html/html/admin_umzugsformular.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61922e2961e245_60286933',
+  'unifunc' => 'content_6194ffa48b5bb5_35165624',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'cc8fd65736537d78c65320693677a1a2bf211b63' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular.tpl.read.html',
-      1 => 1636967846,
+      1 => 1637154561,
       2 => 'file',
     ),
   ),
@@ -29,7 +29,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_61922e2961e245_60286933 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6194ffa48b5bb5_35165624 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <link rel="STYLESHEET" type="text/css" href="../css/SelBox.easy.css">
@@ -56,7 +56,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
 	onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
   </tr>
   <tr>
-    <td style="padding:0;width:200px;height:auto;width:auto;"><label for="tour_kennung" style="width:180px;">Tour-Kennung/ID:</label></td>
+    <td style="padding:0;width:200px;height:auto;width:auto;"><label for="tour_kennung" style="display:block;width:auto;">Tour-Kennung/ID:</label></td>
     <td style="padding:0;width:250px;"><input id="tour_kennung" type="text" value='<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['tour_kennung'], ENT_QUOTES, 'UTF-8', true);?>
 '
                                               name="AS[tour_kennung]" class="itxt itxt2col"></td>
