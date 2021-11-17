@@ -26,7 +26,7 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
     global $db;
     // Annahme: leistung_ref_id in leistungen bezieht sich auf automatisch anzupassende Shipping-Positionen
 
-    $arr = !empty($aInputLeistungen) ? $aInputLeistungen['leistung_id'] : [];
+    $arr = !empty($aInputLeistungen['leistung_id']) ? $aInputLeistungen['leistung_id'] : [];
     $aLIds = array_map('intval', array_filter($arr, 'is_numeric'));
     if (!count($aLIds)) {
         return [];
@@ -137,7 +137,7 @@ function umzugsleistungen_speichern($AID) {
         'menge2_property' => 1,
     ];
 
-    $iNumLeistungen = !empty($lst) ? count($lst['leistung_id']) : 0;
+    $iNumLeistungen = !empty($lst['leistung_id']) ? count($lst['leistung_id']) : 0;
     for($i = 0; $i < $iNumLeistungen; $i++) {
         foreach($aLstDefaults as $_k => $_defaultVal) {
             if (!isset($lst[$_k][$i])) {
@@ -268,10 +268,11 @@ function umzugsantrag_speichern() {
 	}
 
     $isSpeicher = $cmd === 'speichern';
+    $isStorno = (strcmp($name, 'abgeschlossen') === 0 && strcmp($value, 'Storniert') === 0);
     $issetStatus = isset($ASPostItem['umzugsstatus']);
     $isNewStatus = !$issetStatus || (0 === strcasecmp($ASPostItem, $AS->arrDbdata['umzugsstatus']));
     if (
-        $cmd !== 'speichern'
+        $cmd !== 'speichern' && !$isStorno
         ) {
         $AS->arrConf["Fields"]["umzugstermin"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
         $AS->arrConf["Fields"]["umzugszeit"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-10-05 05:15:45
+/* Smarty version 3.1.34-dev-7, created on 2021-11-17 15:19:12
   from '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_615bdf812d1997_30461920',
+  'unifunc' => 'content_61950f6093c5e7_80644014',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f6b287127950a4b4dd8103490880f308965b3227' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1633360500,
+      1 => 1636639236,
       2 => 'file',
     ),
   ),
@@ -20,11 +20,9 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_615bdf812d1997_30461920 (Smarty_Internal_Template $_smarty_tpl) {
-?><div style="display:block;margin-top:15px;">
+function content_61950f6093c5e7_80644014 (Smarty_Internal_Template $_smarty_tpl) {
+?><div data-test="2" style="display:block;margin-top:15px;">
     <!-- admin_umzugsformular_leistungsauswahl.tpl.html -->
-<span style="margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="add_Leistung();return false;">
-    Leistung hinzuf&uuml;gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
 </div>
 
 <style>
@@ -67,7 +65,7 @@ function blurBox(callback, hide) {
 }
 
 function get_Kategorie( obj ) {
-   $("#lktgselect").html( $("<option/>").text("Bitte auswählen") );
+   $("#lktgselect").html( $("<option/>").text("Bitte auswÃ¤hlen") );
    for(var ktg1 in lkItems) {
         $("#lktgselect").append( 
             $("<option/>").val(ktg1).text(ktg1).data("leistungen", lkItems[ktg1]).data("kategorie1", ktg1)
@@ -112,7 +110,7 @@ function get_Leistung( obj ) {
     }
     
     var leistungen = $( objKtg1 ).data( "leistungen" );
-    $("#ldescselect").html( $("<option/>").text("Bitte auswählen") );
+    $("#ldescselect").html( $("<option/>").text("Bitte auswÃ¤hlen") );
     for(var lstg in leistungen) {
         $("#ldescselect").append( 
             $("<option/>").val(lstg).text(lstg).data("leistung", leistungen[lstg])
@@ -122,8 +120,8 @@ function get_Leistung( obj ) {
         var data = $(this).find("option:selected").data("leistung");
         if ( lstgIsAllreadyInList(data.leistung_id, objInp) ) {
             alert("Die Leistung wurde bereits in die Liste aufgenommen!\n" + 
-                  "Bitte fügen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
-                  "Andernfalls werden bestehende Mengen überschrieben."
+                  "Bitte fÃ¼gen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
+                  "Andernfalls werden bestehende Mengen Ã¼berschrieben."
             );
             objInp.blur();
             return false;
@@ -296,8 +294,7 @@ $(function(){
 <table class="MitarbeierItem" style="width:100%;">
     <thead>
         <tr>
-            <td style="width:14px;padding:0;"> X </td>
-            <td>Kategorie</td>
+                        <td>Kategorie</td>
             <td>Leistung</td>
             <td>Menge</td>
             <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?><td>Preis</td>
@@ -313,23 +310,42 @@ if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['L']->value) {
 ?>
         <tr class="row inputRowVon">
-            <td style="padding:0;"><span onclick="drop_Leistung(this)" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""></span></td>
-            <td class="ktg1" onclick="get_Kategorie(this)"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'ISO-8859-1', true);?>
+                        <td class="ktg1" onclick="get_Kategorie(this)"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
 </td>
             <td class="lstg" onclick="get_Leistung(this)" data-p="<?php echo $_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'];?>
 " data-sum="<?php echo $_smarty_tpl->tpl_vars['L']->value['gesamtpreis'];?>
-"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['leistung'], ENT_QUOTES, 'ISO-8859-1', true);?>
-</td>
+">
+                <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['image'])) {?>
+                <div class="bild">
+                    <img src="images/leistungskatalog/<?php echo $_smarty_tpl->tpl_vars['L']->value['image'];?>
+" style="float:left;max-width:120px;max-height:120px;border:0;margin-right:1rem;margin-bottom:.5rem;">
+                </div>
+                <?php }?>
+                <div class="Bezeichnung"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['leistung'], ENT_QUOTES, 'UTF-8', true);?>
+</div>
+                <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['Beschreibung'])) {?>
+                <div class="Beschreibung"><?php echo $_smarty_tpl->tpl_vars['L']->value['Beschreibung'];?>
+</div>
+                <?php }?>
+                <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['produkt_link'])) {?>
+                <div class="produkt_link">
+                    <a href="<?php echo $_smarty_tpl->tpl_vars['L']->value['produkt_link'];?>
+" target="_PL<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
+">mehr Infos</a>
+                </div>
+                <?php }?>
+            </td>
             <td><input class="ilstg" name="L[leistung_id][]" value="<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
 " type="hidden"><!-- 
-             --><input class="menge name="L[menge_mertens][]" value="<?php echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge_property'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");?>
+             --><input class="menge name="L[menge_mertens][]" value="<?php echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge_property'], ENT_QUOTES, 'UTF-8', true),2,",",".");?>
 " type="text">
             </td>
-            <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?><td class="preis"><?php if ($_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit']) {
+            <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>
+            <td class="preis"><?php if ($_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit']) {
 echo number_format($_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'],2,",",".");
 }?></td>
             <td class="sum"><?php if (is_numeric($_smarty_tpl->tpl_vars['L']->value['gesamtpreis'])) {
-echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['gesamtpreis'], ENT_QUOTES, 'ISO-8859-1', true),2,",",".");
+echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['gesamtpreis'], ENT_QUOTES, 'UTF-8', true),2,",",".");
 }?></td>
             <?php }?>
         </tr>
@@ -339,7 +355,7 @@ echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['gesamtpr
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         <tr id="summary">
     <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>
-            <td colspan="<?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>6<?php } else { ?>4<?php }?>"><span id="allsum" data-allsum="0"><?php echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['Gesamtsumme']->value, ENT_QUOTES, 'ISO-8859-1', true),2,",",".");?>
+            <td colspan="<?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>6<?php } else { ?>4<?php }?>"><span id="allsum" data-allsum="0"><?php echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['Gesamtsumme']->value, ENT_QUOTES, 'UTF-8', true),2,",",".");?>
 </span><span style="margin-left:5px">&euro;</span></td>
     <?php }?>
         </tr>
@@ -352,13 +368,24 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
             <td class="ktg1" onclick="get_Kategorie(this)"></td>
             <td class="lstg" onclick="get_Leistung(this)" data-p="" data-sum=""></td>
             <td><input class="ilstg" name="L[leistung_id][]" disabled="disabled" value="" type="hidden"><!--
-             --><input class="menge<?php if ($_smarty_tpl->tpl_vars['creator']->value == "property") {?> creator editable<?php } else { ?> readonly<?php }?>" name="L[menge_property][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property") {?> readonly="readonly"<?php }?> disabled="disabled" value="" type="number"></td>
-            <td class="unit"></td>
-            <td><input class="menge menge2<?php if ($_smarty_tpl->tpl_vars['creator']->value == "property") {?> creator editable<?php } else { ?> readonly<?php }?>" name="L[menge2_property][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "property") {?> readonly="readonly"<?php }?> disabled="disabled" value="" type="number"></td>
-            <td class="unit unit2"></td>
-            <td><input class="menge<?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?> creator editable<?php } else { ?> readonly<?php }?>" name="L[menge_mertens][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "mertens") {?> readonly="readonly"<?php }?> disabled="disabled" value="" type="number"></td>
-            <td><input class="menge menge2<?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?> creator editable<?php } else { ?> readonly<?php }?>" name="L[menge2_mertens][]"<?php if ($_smarty_tpl->tpl_vars['creator']->value !== "mertens") {?> readonly="readonly"<?php }?> disabled="disabled" value="" type="number"></td>
-            <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?><td class="preis"></td>
+             --><input
+                    class="menge<?php if ($_smarty_tpl->tpl_vars['creator']->value == 'property') {?> creator editable<?php } else { ?> readonly<?php }?>"
+                    name="L[menge_property][]"
+                    <?php if ($_smarty_tpl->tpl_vars['creator']->value != "property") {?> readonly="readonly"<?php }?>
+                    disabled="disabled"
+                    value="1" type="number">
+                <input type="hidden"name="L[menge2_property][]" value="1">
+                <input type="hidden"name="L[menge_mertens][]" value="1">
+                <input type="hidden"name="L[menge2_mertens][]" value="1">
+            </td>
+                        <td><input
+                    class="menge<?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?> creator editable<?php } else { ?> readonly<?php }?>"
+                name="L[menge_mertens][]"
+                <?php if ($_smarty_tpl->tpl_vars['creator']->value !== "mertens") {?> readonly="readonly"<?php }?>
+                disabled="disabled" value=""
+                type="number"></td>
+                        <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>
+            <td class="preis"></td>
             <td class="sum"></td>
             <?php }?>
         </tr>

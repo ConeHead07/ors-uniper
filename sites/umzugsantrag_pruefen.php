@@ -205,6 +205,13 @@ function umzugsantrag_fehler() {
 
     $AS = new ItemEdit($ASConf, $connid, $user, $AID);
 
+    if ($cmd === 'status' && $name === 'abgeschlossen' && strcmp($value, 'Storniert') === 0) {
+        if (!$AS || empty($AS->arrDbdata['umzugsstatus'])) {
+            return 'Es existiert kein Auftrag mit der ID ' . $AID . '!';
+        }
+        return '';
+    }
+
     $isSpeicher = $cmd === 'speichern';
     $issetStatus = isset($ASPostItem['umzugsstatus']);
     $isNewStatus = !$issetStatus || (0 === strcasecmp($ASPostItem, $AS->arrDbdata['umzugsstatus']));

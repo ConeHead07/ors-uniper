@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-10-08 07:17:28
+/* Smarty version 3.1.34-dev-7, created on 2021-11-17 15:12:12
   from '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_615ff0884731b6_24494483',
+  'unifunc' => 'content_61950dbc56c769_96192721',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '346d952b773372d484fde33cfdf99fd837ff0bb3' => 
     array (
       0 => '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1633621739,
+      1 => 1637158184,
       2 => 'file',
     ),
   ),
@@ -20,124 +20,12 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_615ff0884731b6_24494483 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61950dbc56c769_96192721 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div style="display:block;margin-top:15px;">
     <!-- umzugsformular_leistungsauswahl.tpl.html -->
 </div>
-<style>
-
-div.row {
-    width: 100%;
-    display: flex;
-    border: 2px solid #0075b5;
-    border-radius: 8px;
-    flex-wrap: nowrap;
-    margin-bottom: 1rem;
-    background-color: #f1f8ff;
-}
-div.row.checked {
-    border: 2px solid green;
-    background-color: #F2FAF3;
-}
-div.row div.bild {
-    flex-grow: 0;
-    width:160px;
-}
-div.row div.bild img {
-    max-width: 350px;
-    max-height: 150px;
-    border: 1px solid transparent;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
-div.row div.lstg {
-    flex: 1 1 auto;
-    align-self: center;
-    font-weight: bold;
-    font-size: 1rem;
-}
-div.row div.chck {
-    flex: 0 0 auto;
-    align-self: center;
-}
-    /* The container */
-label.container {
-    border:0;
-    background:none;
-    display: block;
-    position: relative;
-    margin-bottom: 12px;
-    width: initial;
-    min-height:25px;
-    min-width:25px;
-    cursor: pointer;
-    font-size: 22px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-div {
-    min-height: 25px;
-}
-
-/* Hide the browser's default checkbox */
-label.container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-
-/* Create a custom checkbox */
-label.container .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
-}
-
-/* On mouse-over, add a grey background color */
-label.container .container:hover input ~ .checkmark {
-    background-color: #ccc;
-}
-
-/* When the checkbox is checked, add a blue background */
-label.container  input:checked ~ .checkmark {
-    background-color: green;
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-label.container .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-
-/* Show the checkmark when checked */
-label.container  input:checked ~ .checkmark:after {
-    display: block;
-}
-
-/* Style the checkmark/indicator */
-label.container  .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-
-</style>
+<link rel="stylesheet" type="text/css" href="{WebRoot}/css/auftragsformular_leistungsauswahl.css?%assetsRefreshId%">
 <?php echo '<script'; ?>
 >
 var aid = <?php echo $_smarty_tpl->tpl_vars['AIDJson']->value;?>
@@ -149,6 +37,8 @@ var lkmById = <?php echo $_smarty_tpl->tpl_vars['lkmByIdJson']->value;?>
 var umzugsleistungen = <?php echo $_smarty_tpl->tpl_vars['UmzugsleistungenJson']->value;?>
 ;
 var umzugsstatus = <?php echo $_smarty_tpl->tpl_vars['umzugsstatusJson']->value;?>
+;
+var antragsstatus = <?php echo $_smarty_tpl->tpl_vars['antragsstatusJson']->value;?>
 ;
 
 
@@ -442,7 +332,8 @@ $(function(){
         }
     };
 
-    var renderBestellListe = function() {
+    var renderBestellListe = function(umzugsstatus) {
+        alert("renderBestellListe()\n" + JSON.stringify(arguments));
         var boxLeistungenSel = "div#auswahlUmzugsleistungenBox";
         var boxLeistungen = $(boxLeistungenSel);
         if (!boxLeistungen.length) {
@@ -476,10 +367,25 @@ $(function(){
                 var tdLstg = $("<div/>").addClass('lstg').appendTo(tr);
                 var tdChck = $("<div/>").addClass('chck').appendTo(tr);
 
+                var leistungInfos = '<div class="Bezeichnung">' + it.leistung + '</div>';
+                if (it.Beschreibung) {
+                    leistungInfos+= '<div class="Beschreibung">' + it.Beschreibung + '</div>';
+                }
+                if (it.produkt_link) {
+                    leistungInfos+= '<div class="produkt_link"><a href="' + it.produkt_link + '" target="_blank">Mehr Infos</a></div>';
+                }
+            console.log('#479 ', {it});
+
                 if (it.image) {
-                    var bildHref = $("<a/>").attr("href", "images/leistungskatalog/" + it.image).css({
-                        border: 0
-                    });
+                    var bildHref = $("<a/>")
+                        .attr("href", "images/leistungskatalog/" + it.image)
+                        .attr("target", "_blank")
+                        .css({
+                            border: 0
+                        });
+                    if (it.produkt_link) {
+                        bildHref.attr("href", it.produkt_link);
+                    }
                     bildHref.appendTo(tdBild);
                     var bild = $("<img/>")
                         .attr({
@@ -488,7 +394,7 @@ $(function(){
                         .appendTo(bildHref);
                 }
 
-                tdLstg.text(it.leistung).off("click").on("click", function () {
+                tdLstg.html( leistungInfos ).off("click").on("click", function () {
                     var tr = $(this).closest(".row");
                     // tr.find(".chck label")[0].click();
                     console.log('click leistung');
@@ -554,23 +460,26 @@ $(function(){
 
                 for (var it of ktgItems) {
                     var _data = {leistung_id: it.leistung_id};
+                    // alert("it.verfuegbar: " + it.verfuegbar);
                     var _clss = ' group-leistungid-' + it.leistung_id;
-                    boxLeistungen
-                        .append(
-                            createHiddenLstgInput('L[leistung_id][]', it.leistung_id, true, 'leistung_id' + _clss, _data)
-                        )
-                        .append(
-                            createHiddenLstgInput('L[menge_property][]', 0, true, 'menge menge_property' + _clss, _data)
-                        )
-                        .append(
-                            createHiddenLstgInput('L[menge2_property][]', 0, true, 'menge menge2_property' + _clss, _data)
-                        )
-                        .append(
-                            createHiddenLstgInput('L[menge_mertens][]', 0, true, 'menge menge_mertens' + _clss, _data)
-                        )
-                        .append(
-                            createHiddenLstgInput('L[menge2_mertens][]', 0, true, 'menge menge2_mertens' + _clss, _data)
-                        );
+                    if (!"verfuegbar" in it || it.verfuegbar !== "Nein") {
+                        boxLeistungen
+                            .append(
+                                createHiddenLstgInput('L[leistung_id][]', it.leistung_id, true, 'leistung_id' + _clss, _data)
+                            )
+                            .append(
+                                createHiddenLstgInput('L[menge_property][]', 0, true, 'menge menge_property' + _clss, _data)
+                            )
+                            .append(
+                                createHiddenLstgInput('L[menge2_property][]', 0, true, 'menge menge2_property' + _clss, _data)
+                            )
+                            .append(
+                                createHiddenLstgInput('L[menge_mertens][]', 0, true, 'menge menge_mertens' + _clss, _data)
+                            )
+                            .append(
+                                createHiddenLstgInput('L[menge2_mertens][]', 0, true, 'menge menge2_mertens' + _clss, _data)
+                            );
+                    }
                 }
                 continue;
             }
@@ -596,11 +505,26 @@ $(function(){
                 var tdBild = $("<div/>").addClass('bild').appendTo(tr);
                 var tdLstg = $("<div/>").addClass('lstg').appendTo(tr);
                 var tdChck = $("<div/>").addClass('chck').appendTo(tr);
+                console.log('#603 ', {it});
+
+                var leistungInfos = '<div class="Bezeichnung">' + it.leistung + '</div>';
+                if (it.Beschreibung) {
+                    leistungInfos+= '<div class="Beschreibung">' + it.Beschreibung + '</div>';
+                }
+                if (it.produkt_link) {
+                    leistungInfos+= '<div class="produkt_link"><a href="' + it.produkt_link + '" target="_blank">Mehr Infos</a></div>';
+                }
 
                 if (it.image) {
-                    var bildHref = $("<a/>").attr("href", "images/leistungskatalog/" + it.image).css({
-                        border: 0
-                    });
+                    var bildHref = $("<a/>")
+                        .attr("href", "images/leistungskatalog/" + it.image)
+                        .attr("target", "_blank")
+                        .css({
+                            border: 0
+                        });
+                    if (it.produkt_link) {
+                        bildHref.attr("href", it.produkt_link);
+                    }
                     bildHref.appendTo(tdBild);
                     var bild = $("<img/>")
                         .attr({
@@ -609,11 +533,21 @@ $(function(){
                         .appendTo(bildHref);
                 }
 
-                tdLstg.text(it.leistung).off("click").on("click", function () {
+                tdLstg.html(leistungInfos).off("click").on("click", function () {
                     var tr = $(this).closest(".row");
                     // tr.find(".chck label")[0].click();
                     console.log('click leistung');
                 });
+
+
+                console.log("#712", { it });
+                if ("verfuegbar" in it && it.verfuegbar === "Nein") {
+                    box.append(tr);
+                    continue;
+                    // labelChck.off("click");
+                    // inputChck.off("click").prop('disabled', true);
+                    // tdChck.hide();
+                }
 
                 var labelChck = $("<label/>").addClass("container");
                 var inputChck = $("<input/>").attr({
@@ -703,11 +637,22 @@ $(function(){
         }
     };
 
-    if (!umzugsleistungen || umzugsstatus === 'temp' || umzugsstatus === 'zurueckgegeben') {
+    if (!umzugsleistungen || (antragsstatus === 'bearbeitung' && umzugsstatus === 'temp') || umzugsstatus === 'zurueckgegeben') {
+        if (0) {
+            alert("renderAuswahlliste() " +
+                "\n umzugsstatus: " + umzugsstatus +
+                "\n antragsstatus: " + antragsstatus +
+                "\n umzugsleistungen:\n" + JSON.stringify(umzugsleistungen));
+        }
         renderAuswahlListe();
     } else if (umzugsstatus !== 'abgeschlossen') {
+        alert("renderBestellListe() " +
+            "\n umzugsstatus: "  + umzugsstatus  +
+            "\n antragsstatus: " + antragsstatus +
+            "\n umzugsleistungen:\n" + JSON.stringify(umzugsleistungen));
         renderBestellListe();
     } else {
+        // Umzugsstatus: abgeschlossen
         // @ToDo Mit Option Reklamation / Umtausch für gelieferte Artikel anzufordern
         renderBestellListe();
     }

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-11 01:20:53
-  from '/var/www/html/uniper/htdocs/html/admin_antraege_tabs.html' */
+/* Smarty version 3.1.34-dev-7, created on 2021-11-17 15:12:05
+  from '/var/www/html/html/admin_antraege_tabs.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_618c61e56bbe40_16181469',
+  'unifunc' => 'content_61950db5527032_28831255',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '0b8e8f95389c96446bea93ebd34d323a564617e1' => 
+    '596ba6fcf64dedd712b8d1ef5e1e1580ca0bfef8' => 
     array (
-      0 => '/var/www/html/uniper/htdocs/html/admin_antraege_tabs.html',
-      1 => 1636590027,
+      0 => '/var/www/html/html/admin_antraege_tabs.html',
+      1 => 1637158184,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_618c61e56bbe40_16181469 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61950db5527032_28831255 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="divTabbedList" style="width:100%;">
 
     <ul>
