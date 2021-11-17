@@ -1,0 +1,21 @@
+{
+  "name": "frankbarthold/magorsuniper",
+  "description": "Ors-Uniper",
+  "license": "BSD-3-Clause",
+  "require": {
+    "php": "^7.0",
+    "tecnickcom/tcpdf": "^6.4.2",
+    "phpoffice/phpspreadsheet": "^1.4",
+    "mk-j/php_xlsxwriter": "^0.38",
+    "filp/whoops": "^2.5",
+    "cache/simple-cache-bridge": "^1.1",
+    "cache/apcu-adapter": "^1.1",
+    "cache/redis-adapter": "^1.1"
+  },
+  "require-dev": {
+    "zendframework/zend-developer-tools": "1.0.0"
+  },
+  "autoload": {
+    "files": ["mix.php"]
+  }
+}

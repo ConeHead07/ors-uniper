@@ -100,7 +100,6 @@ $validFields = array(
     'tour_kennung',
     'Leistungen',
     'summe',
-
     'vorgangsnummer',
     'nachname',
     'bundesland',

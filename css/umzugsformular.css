@@ -237,10 +237,10 @@ label {
 .itxt {
   display:inline-block;
   z-background:#f1f8ff;
-  min-height:25px;
+  height:25px;
   border:1px solid #0075B5;
   margin:0;
-  padding:4px;
+  padding:4px 0 0 3px;
   box-sizing: border-box;
   border-radius:2px;
 }

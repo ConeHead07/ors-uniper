@@ -5,6 +5,7 @@
         <li {if $cat eq "auftrag"}class="activeTab"{/if}><a xhref="?s=aantraege&id={$aid}&cat=auftrag&allusers=1" style="width:90px">Auftrag &nbsp; #{$aid}</a></li>
         {/if}
         <li {if $cat eq "neue"}class="activeTab"{/if}><a href="?s={$s}&cat=neue{if $allusers}&allusers=1{/if}" style="width:90px">Bestellungen</a></li>
+        <li {if $cat eq "disponierte"}class="activeTab"{/if}><a href="?s={$s}&cat=disponierte{if $allusers}&allusers=1{/if}" style="width:90px">Mit TourId</a></li>
         <li {if $cat eq "angeboten"}class="activeTab"{/if} style="display:none"><a href="?s={$s}&cat=angeboten{if $allusers}&allusers=1{/if}" style="width:125px">zur Genehmigung</a></li>
         <li {if $cat eq "aktive"}class="activeTab"{/if}><a href="?s={$s}&cat=aktive{if $allusers}&allusers=1{/if}">Aktive Aufträge</a></li>
         <li {if $cat eq "abgeschlossene"}class="activeTab"{/if}><a href="?s={$s}&cat=abgeschlossene{if $allusers}&allusers=1{/if}">Abgeschlossen</a></li>

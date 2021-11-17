@@ -205,10 +205,13 @@ function umzugsantrag_senden() {
         $error.= "Fehler beim Aktualisieren der Daten!<br>\n";
     }
     if (umzugsantrag_mailinform($AID, $sendmailstatus, "")) {
-        if ($user['gruppe'] === 'admin') {
-            $msg .= "Mail wurde gesendet!<br>\n";
-        } else {
-            $msg.= "Ihre Daten wurden weitergeleiter!<br>\n";
+        $iNumMails = umzugsantrag_mailinform_get_numMails();
+        if ($iNumMails > 0) {
+            if ($user['gruppe'] === 'admin') {
+                $msg .= "Mail wurde gesendet [Anzahl: $iNumMails]!<br>\n";
+            } else {
+                $msg .= "Ihre Daten wurden weitergeleiter!<br>\n";
+            }
         }
     } else {
         if ($user['gruppe'] === 'admin') {

@@ -29,24 +29,28 @@ function umzugsantrag_status($AID, $name, $value) {
 	$AS->loadDbdata();
 	$AS->dbdataToInput();
 
-	if (!$AS->arrInput["umzugstermin"]) {
-		$ASError.= "Der Umzugstermin wurde noch nicht festgesetzt!<br>\n";
-	}
+	$istStorno = (strcmp($name, 'abgeschlossen') === 0 && strcmp($value, 'Storniert') === 0);
 
-	if (!$AS->arrInput["fon"]) {
-        $ASError.= "Telefon: fehlende Eingabe!<br>\n";
+	if (!$istStorno) {
+        if (!$AS->arrInput["umzugstermin"]) {
+            $ASError .= "Der Umzugstermin wurde noch nicht festgesetzt!<br>\n";
+        }
+
+        if (!$AS->arrInput["fon"]) {
+            $ASError .= "Telefon: fehlende Eingabe!<br>\n";
+        }
+
+        if (!$AS->arrInput["email"]) {
+            $ASError .= "Email: fehlende Eingabe!<br>\n";
+        }
+
+        if ($ASError) {
+            $error .= "Es wurden noch nicht alle erforderlichen Felder ausgefüllt!<br>\n";
+            $error .= $ASError;
+            //$error.= $AS->Warning;
+            return false;
+        }
     }
-
-	if (!$AS->arrInput["email"]) {
-		$ASError.= "Email: fehlende Eingabe!<br>\n";
-	}
-
-	if($ASError) {
-		$error.= "Es wurden noch nicht alle erforderlichen Felder ausgefüllt!<br>\n";
-		$error.= $ASError;
-		//$error.= $AS->Warning;
-		return false;
-	}
 	
 	$MAPostItems = get_ma_post_items();
 	if ($MConf['min_ma'] && (!is_array($MAPostItems) || !count($MAPostItems))) {
@@ -200,10 +204,13 @@ function umzugsantrag_status($AID, $name, $value) {
 	if (getRequest("umzugsart") != "Datenpflege") {
 		if ($sendmail_newstatus) {
 			if (umzugsantrag_mailinform($AID, $sendmail_newstatus, $value)) {
-                if ($user['gruppe'] === 'admin') {
-                    $msg .= "Mail wurde gesendet!<br>\n";
-                } else {
-                    $msg.= "Ihre Daten wurden weitergeleiter!<br>\n";
+                $iNumMails = umzugsantrag_mailinform_get_numMails();
+                if ($iNumMails > 0) {
+                    if ($user['gruppe'] === 'admin') {
+                        $msg .= "Mail wurde gesendet [Anzahl: $iNumMails]!<br>\n";
+                    } else {
+                        $msg .= "Ihre Daten wurden weitergeleiter!<br>\n";
+                    }
                 }
 			} else {
                 if ($user['gruppe'] === 'admin') {

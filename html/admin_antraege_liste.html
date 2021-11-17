@@ -1,6 +1,12 @@
 <!-- TAB NAVIGATION ITEMS BEGIN --> 
 <div id="ID128585" class="divTabbedNavigation" style="width:100%;">
-    {include file="admin_antraege_tabs.html"}
+
+    <div style="display: flex;justify-content: space-between">
+        <div>{include file="admin_antraege_tabs.html"}</div>
+        <div style="align-self: flex-end;margin-right:5px;margin-bottom:2px;">
+            <button id="btnCsvExport" class="btn btn-blue" style="padding:10px;cursor: pointer;">CSV-Export</button>
+        </div>
+    </div>
 <!-- TAB NAVIGATION ITEMS END --> 
  
 <!-- TAB ITEM (128587) BEGIN --> 
@@ -25,70 +31,199 @@
     <h2 style="float:right">{$summeTotal|number_format:2:",":"."} &euro;</h2>
     <span style="clear:both"></span>
 </div>
-{assign var="showLieferdatum" value=true}
-{assign var="showAbgeschlossen" value=true}
-{assign var="lieferdatumWidth" value=100}
-{assign var="abgeschlossenWidth" value=80}
-{assign var="serviceWidth" value=80}
-    {assign var="strasseWidth" value=180}
+    {assign var="showTourkennung" value=false}
+    {assign var="showAuftragsdatum" value=true}
+    {assign var="showLieferdatum" value=true}
+    {assign var="showBestaetigt" value=true}
+    {assign var="showAbgeschlossen" value=true}
+    {assign var="showGenehmigt" value=false}
+    {assign var="showGeprueft" value=false}
+    {assign var="showLeistungen" value=false}
+    {assign var="showSumme" value=true}
+
+    {assign var="aidWidth" value=30}
+    {assign var="kidWidth" value=75}
+    {assign var="landWidth" value=45}
+    {assign var="ortWidth" value=100}
+    {assign var="plzWidth" value=50}
+    {assign var="strasseWidth" value=140}
+    {assign var="serviceWidth" value=60}
+    {assign var="beauftragtWidth" value=80}
+    {assign var="bestaetigtWidth" value=80}
+    {assign var="genehmigtWidth" value=60}
+    {assign var="leistungenWidth" value=50}
+    {assign var="lieferdatumWidth" value=100}
+    {assign var="abgeschlossenWidth" value=80}
+    {assign var="tourkennungWidth" value=80}
     {assign var="summeWidth" value=60}
 
 {if $cat eq "neue"}
     {assign var="showLieferdatum" value=false}
     {assign var="showAbgeschlossen" value=false}
     {assign var="strasseWidth" value=$strasseWidth + $lieferdatumWidth + $abgeschlossenWidth}
+{elseif $cat eq "disponierte"}
+    {assign var="showBestaetigt" value=false}
+    {assign var="showAbgeschlossen" value=false}
+    {assign var="showAuftragsdatum" value=false}
+    {assign var="showGenehmigt" value=false}
+    {assign var="showTourkennung" value=true}
+    {assign var="showGeprueft" value=false}
+    {assign var="showLeistungen" value=true}
+
+    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth}
 {elseif $cat eq "aktive"}
     {assign var="showAbgeschlossen" value=false}
     {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth}
 {/if}
-
+<style>
+    .ulLinkList * {
+        box-sizing: border-box;
+    }
+    .ulLinkList .fld-cell {
+        float:left;
+        display:block;
+    }
+    .ulLinkList .flds-head-colnames .fld-cell {
+        float:left;
+        display:block;
+        font-weight:bold;
+    }
+    .ulLinkList .flds-head-colnames .order {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .ulLinkList .flds-head-colnames .order:hover {
+        color: #0078dc;
+    }
+    .ulLinkList .flds-head-colsearch .fld-cell input {
+        width: calc(100% - 2px);
+    }
+    .ulLinkList .fld-summe,
+    .ulLinkList .fld-summe input {
+        text-align: right;
+    }
+</style>
 <div style="clear:both"></div>
 {if $ListBrowsing}{$ListBrowsing}{/if}
+    <form id="frmList" method="get">
+        <input type="hidden" name="s" value="{$s|escape}">
+        <input type="hidden" name="cat" value="{$cat|escape}">
+        <input type="hidden" name="allusers" value="{$allusers|escape}">
+        <input type="hidden" name="ofld" value="{$ofld|escape}">
+        <input type="hidden" name="odir" value="{$odir|escape}">
+
   <ul class="ulLinkList"> 
-  <div>
-  <div style="float:left;display:block;width:30px;font-weight:bold;color:#00869c;" title="Auftrags-ID"><a href="{$ListBaseLink}&ofld=id{if $ofld eq "id" && $odir ne "DESC"}&odir=DESC{/if}">ID</a></div>
-  <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;" title="Uniper MitarbeiterNr."><a href="{$ListBaseLink}&ofld=kid{if $ofld eq "kid" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
-  {if $showLieferdatum}
-  <div style="float:left;display:block;width:{$lieferdatumWidth}px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Lieferdatum</a></div>
-  {/if}
-  <div style="float:left;display:block;width:60px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=land{if $ofld eq "land" && $odir ne "DESC"}&odir=DESC{/if}">Land</a></div>
-  <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=ort{if $ofld eq "ort" && $odir ne "DESC"}&odir=DESC{/if}">Lieferort</a></div>
-  <div style="float:left;display:block;width:50px;font-weight:bold;color:#00869c;" title="Postleitzahl"><a href="{$ListBaseLink}&ofld=plz{if $ofld eq 'plz' && $odir ne "DESC"}&odir=DESC{/if}">PLZ</a></div>
-  <div style="float:left;display:block;width:{$strasseWidth}px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=strasse{if $ofld eq 'strasse' && $odir ne "DESC"}&odir=DESC{/if}">Stra&szlig;e</a></div>
-  <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=service{if $ofld eq 'service' && $odir ne 'DESC'}&odir=DESC{/if}">Service</a></div>
-  <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;" title="Auftragsdatum"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Auftr.Dat.</a></div>
-  <div style="float:left;display:none;width:35px;font-weight:bold;color:#00869c;" title="Von Property genehmigt"><a href="{$ListBaseLink}&ofld=genehmigt{if $ofld eq "genehmigt_br" && $odir ne "DESC"}&odir=DESC{/if}">Gen</a></div>
-  <div style="float:left;display:none;width:35px;font-weight:bold;color:#00869c;" title="Von merTens geprueft / Avisisiert"><a href="{$ListBaseLink}&ofld=bestaetigt{if $ofld eq "bestaetigt" && $odir ne "DESC"}&odir=DESC{/if}">Avi</a></div>
-  {if $showAbgeschlossen}
-  <div style="float:left;display:block;width:{$abgeschlossenWidth}px;font-weight:bold;color:#00869c;" title="Abgeschlossen"><a href="{$ListBaseLink}&ofld=abgeschlossen{if $ofld eq "abgeschlossen" && $odir ne "DESC"}&odir=DESC{/if}">Abgeschl.</a></div>
-  {/if}
-      <div style="float:left;display:block;width:{$summeWidth}px;font-weight:bold;color:#00869c;" title="Auftragswert"><a href="{$ListBaseLink}&ofld=summe{if $ofld eq "summe" && $odir ne "DESC"}&odir=DESC{/if}">Summe</a></div>
-      <br clear=left></div>
-{foreach item=U from=$Umzuege}
-  <li><a class="iconRightContentMain" href="{$U.LinkOpen}">
-  <div>
-      <div style="float:left;display:block;width:30px;font-weight:bold;">{$U.aid}&nbsp;</div>
-      <div style="float:left;display:block;width:75px;" >{$U.kid}&nbsp;</div>
+  <div class="flds-head-colnames">
+      <div class="fld-cell fld-aid order" data-fld="aid" style="width:{$aidWidth}px;" title="Auftrags-ID">ID</div>
+      <div class="fld-cell fld-kid order" data-fld="kid" style="width:{$kidWidth}px;" title="Uniper MitarbeiterNr."><a href="{$ListBaseLink}&ofld=kid{if $ofld eq "kid" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
       {if $showLieferdatum}
-      <div style="float:left;display:block;width:{$lieferdatumWidth}px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
+      <div class="fld-cell fld-lieferdatum order" data-fld="termin" style="width:{$lieferdatumWidth}px;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Lieferdatum</a></div>
       {/if}
-      <div style="float:left;display:block;width:60px;">{if $U.land == "Deutschland"}DE{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if} &nbsp;</div>
-      <div style="float:left;display:block;width:100px;">{$U.ort}&nbsp;</div>
-      <div style="float:left;display:block;width:50px;">{$U.plz}&nbsp;</div>
-      <div style="float:left;display:block;width:{$strasseWidth}px;">{$U.strasse}&nbsp;</div>
-      <div style="float:left;display:block;width:75px;" >{$U.service}&nbsp&nbsp;</div>
-      <div style="float:left;display:block;width:100px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
-      <div style="float:left;display:none;width:35px;">{$U.Genehmigt}&nbsp;</div>
-      <div style="float:left;display:none;width:35px;">{$U.Geprueft}&nbsp;</div>
+      <div class="fld-cell fld-land order" data-fld="land" style="width:{$landWidth}px;"><a href="{$ListBaseLink}&ofld=land{if $ofld eq "land" && $odir ne "DESC"}&odir=DESC{/if}">Land</a></div>
+      <div class="fld-cell fld-ort order" data-fld="ort" style="width:{$ortWidth}px;"><a href="{$ListBaseLink}&ofld=ort{if $ofld eq "ort" && $odir ne "DESC"}&odir=DESC{/if}">Lieferort</a></div>
+      <div class="fld-cell fld-plz order" data-fld="plz" style="width:{$plzWidth}px;" title="Postleitzahl"><a href="{$ListBaseLink}&ofld=plz{if $ofld eq 'plz' && $odir ne "DESC"}&odir=DESC{/if}">PLZ</a></div>
+      <div class="fld-cell fld-strasse order" data-fld="strasse" style="width:{$strasseWidth}px;"><a href="{$ListBaseLink}&ofld=strasse{if $ofld eq 'strasse' && $odir ne "DESC"}&odir=DESC{/if}">Stra&szlig;e</a></div>
+      <div class="fld-cell fld-service order" data-fld="service" style="width:{$serviceWidth}px;"><a href="{$ListBaseLink}&ofld=service{if $ofld eq 'service' && $odir ne 'DESC'}&odir=DESC{/if}">Service</a></div>
+      {if $showAuftragsdatum}
+      <div class="fld-cell fld-beauftragt order" data-fld="antragsdatum" style="width:{$beauftragtWidth}px;" title="Auftragsdatum"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Auftr.Dat.</a></div>
+      {/if}
+      {if $showTourkennung}
+      <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:{$tourkennungWidth}px;"><a href="{$ListBaseLink}&ofld=tour_kennung{if $ofld eq 'tour_kennung' && $odir ne "DESC"}&odir=DESC{/if}">Tour</a></div>
+      {/if}
+      {if $showGenehmigt}
+      <div class="fld-cell fld-genehmigt order" data-fld="genehmigt" style="float:left;width:{$genehmigtWidth}px;" title="Von Property genehmigt"><a href="{$ListBaseLink}&ofld=genehmigt{if $ofld eq "genehmigt_br" && $odir ne "DESC"}&odir=DESC{/if}">Gen</a></div>
+      {/if}
+      {if $showBestaetigt}
+      <div class="fld-cell fld-bestaetigt order" data-fld="bestaetigt" style="float:left;width:{$bestaetigtWidth}px;" title="Von merTens avisisiert"><a href="{$ListBaseLink}&ofld=bestaetigt{if $ofld eq "bestaetigt" && $odir ne "DESC"}&odir=DESC{/if}">Avi</a></div>
+      {/if}
       {if $showAbgeschlossen}
-      <div style="float:left;display:block;width:{$abgeschlossenWidth}px;">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}&nbsp;</div>
+      <div class="fld-cell fld-abgeschlossen order" data-fld="abgeschlossen" style="width:{$leistungenWidth}px;" title="Leistungen"><a href="{$ListBaseLink}&ofld=abgeschlossen{if $ofld eq "abgeschlossen" && $odir ne "DESC"}&odir=DESC{/if}">Abgeschl.</a></div>
       {/if}
-      <div style="float:left;display:inline-block;width:{$summeWidth}px;text-align:right">{$U.summe|number_format:2:",":"."}&nbsp;</div>
-      <br clear=left></div>
-  </a></li>
+      {if $showLeistungen}
+      <div class="fld-cell fld-leistungen order" data-fld="leistungen" style="width:{$leistungenWidth}px;"><a href="{$ListBaseLink}&ofld=leistungen{if $ofld eq "leistungen" && $odir ne "DESC"}&odir=DESC{/if}">Lstg.</a></div>
+      {/if}
+      {if $showSumme}
+      <div class="fld-cell fld-summe order" data-fld="summe" style="width:{$summeWidth}px;" title="Auftragswert"><a href="{$ListBaseLink}&ofld=summe{if $ofld eq "summe" && $odir ne "DESC"}&odir=DESC{/if}">Summe</a></div>
+      {/if}
+      <br clear=left>
+  </div>
+      <div class="flds-head-colsearch">
+          <div class="fld-cell fld-aid" style="width:{$aidWidth}px;"><input name="q[aid]" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></div>
+          <div class="fld-cell fld-kid" style="width:{$kidWidth}px;"><input name="q[kid]" value="{if !empty($q) && isset($q.kid)}{$q.kid}{/if}"></div>
+          {if $showLieferdatum}
+          <div class="fld-cell fld-lieferdatum" style="width:{$lieferdatumWidth}px;"><input name="q[termin]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.termin)}{$q.termin}{/if}"></div>
+          {/if}
+          <div class="fld-cell fld-land" style="width:{$landWidth}px;"><input name="q[land]" value="{if !empty($q) && isset($q.land)}{$q.land}{/if}"></div>
+          <div class="fld-cell fld-ort" style="width:{$ortWidth}px;"><input name="q[ort]" value="{if !empty($q) && isset($q.ort)}{$q.ort}{/if}"></div>
+          <div class="fld-cell fld-plz" style="width:{$plzWidth}px;"><input name="q[plz]" value="{if !empty($q) && isset($q.plz)}{$q.plz}{/if}"></div>
+          <div class="fld-cell fld-strasse" style="width:{$strasseWidth}px;"><input name="q[strasse]" value="{if !empty($q) && isset($q.strasse)}{$q.strasse}{/if}"></div>
+          <div class="fld-cell fld-service" style="width:{$serviceWidth}px;"><input name="q[service]" value="{if !empty($q) && isset($q.service)}{$q.service}{/if}"></div>
+          {if $showAuftragsdatum}
+          <div class="fld-cell fld-beauftragt" style="width:{$beauftragtWidth}px;"><input name="q[antragsdatum]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.antragsdatum)}{$q.antragsdatum}{/if}"></div>
+          {/if}
+          {if $showTourkennung}
+          <div class="fld-cell fld-tour_kennung" style="width:{$tourkennungWidth}px;"><input name="q[tour_kennung]" value="{if !empty($q) && isset($q.tour_kennung)}{$q.tour_kennung}{/if}"></div>
+          {/if}
+          {if $showGenehmigt}
+          <div class="fld-cell fld-genehmigt" style="width:{$genehmigtWidth}px;"><input name="q[genehmigt_am]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.genehmigt_am)}{$q.genehmigt_am}{/if}"></div>
+          {/if}
+          {if $showBestaetigt}
+          <div class="fld-cell fld-bestaetigt" style="width:{$bestaetigtWidth}px;"><input name="q[bestaetigt_am]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.bestaetigt_am)}{$q.bestaetigt_am}{/if}"></div>
+          {/if}
+          {if $showAbgeschlossen}
+          <div class="fld-cell fld-abgeschlossen" style="width:{$abgeschlossenWidth}px;"><input name="q[abgeschlossen_am]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.abgeschlossen_am)}{$q.abgeschlossen_am}{/if}"></div>
+          {/if}
+          {if $showLeistungen}
+          <div class="fld-cell fld-leistungen" style="width:{$leistungenWidth}px;"><input name="q[Leistungen]" value="{if !empty($q) && isset($q.Leistungen)}{$q.Leistungen}{/if}"></div>
+          {/if}
+          {if $showSumme}
+          <div class="fld-cell fld-summe" style="width:{$summeWidth}px;"><input name="q[summe]" value="{if !empty($q) && isset($q.summe)}{$q.summe}{/if}"></div>
+          {/if}
+          <br clear=left>
+      </div>
+{foreach item=U from=$Umzuege}
+  <li class="flds-body-row-wrapper">
+      <a class="flds-body-row-link iconRightContentMain" href="{$U.LinkOpen}">
+          <div class="flds-body-row">
+              <div class="fld-cell fld-aid" style="width:{$aidWidth}px;font-weight:bold;">{$U.aid}&nbsp;</div>
+              <div class="fld-cell fld-kid" style="width:{$kidWidth}px;" >{$U.kid}&nbsp;</div>
+              {if $showLieferdatum}
+              <div class="fld-cell fld-lieferdatum" style="width:{$lieferdatumWidth}px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
+              {/if}
+              <div class="fld-cell fld-land" style="width:{$landWidth}px;">{if $U.land == "Deutschland"}DE{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if} &nbsp;</div>
+              <div class="fld-cell fld-ort" style="width:{$ortWidth}px;">{$U.ort}&nbsp;</div>
+              <div class="fld-cell fld-plz" style="width:{$plzWidth}px;">{$U.plz}&nbsp;</div>
+              <div class="fld-cell fld-strasse" style="width:{$strasseWidth}px;">{$U.strasse}&nbsp;</div>
+              <div class="fld-cell fld-service" style="width:{$serviceWidth}px;" >{$U.service}&nbsp&nbsp;</div>
+              {if $showAuftragsdatum}
+              <div class="fld-cell fld-beauftragt" style="width:{$beauftragtWidth}px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
+              {/if}
+              {if $showTourkennung}
+              <div class="fld-cell fld-tour_kennung" style="width:{$tourkennungWidth}px;">{$U.tour_kennung}&nbsp;</div>
+              {/if}
+              {if $showGenehmigt}
+              <div class="fld-cell fld-genehmigt" style="width:{$genehmigtWidth}px;">{$U.Genehmigt}&nbsp;</div>
+              {/if}
+              {if $showBestaetigt}
+              <div class="fld-cell fld-bestaetigt" style=";width:{$bestaetigtWidth}px;">{$U.Bestaetigt}&nbsp;</div>
+              {/if}
+              {if $showAbgeschlossen}
+              <div class="fld-cell fld-abgeschlossen" style="width:{$abgeschlossenWidth}px;">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}&nbsp;</div>
+              {/if}
+              {if $showLeistungen}
+              <div class="fld-cell fld-leistungen" style="width:{$leistungenWidth}px;" title="{$U.LeistungenFull}">{$U.Leistungen}&nbsp;</div>
+              {/if}
+              {if $showSumme}
+              <div class="fld-cell fld-summe" style="width:{$summeWidth}px;">{$U.summe|number_format:2:",":"."}&nbsp;</div>
+              {/if}
+              <br clear=left>
+          </div>
+      </a>
+  </li>
       {* <li>{$U|json_encode}</li> *}
 {/foreach}
 </ul>
+    </form>
 <h2 style="margin:1rem 0 0 0;padding-bottom:0;">Enthaltene Artikel</h2>
     <table class="tblList" width="100%">
         <thead>
@@ -130,4 +265,45 @@
 <br class="floatNone" /> 
 </div> 
 <!-- TAB BASIC MODULE (128585) END -->
+<script>
+    $(function() {
+        var ofld = "{$ofld}";
+        var odir = "{$odir}";
+
+        var send = function(addQuery = '') {
+            var url = "?" + $("#frmList :input")
+                .filter(function(index, element) {
+                    return $.trim($(element).val()) !== '';
+                })
+                .serialize();
+
+            if (addQuery && addQuery.charAt(0) !== '&') {
+                addQuery = '&' + addQuery;
+            }
+            self.location.href = url + addQuery;
+        };
+
+        $(".ulLinkList .flds-head-colnames .order").click(function(e){
+            e.preventDefault();
+            var fld = $(this).attr("data-fld");
+            $("input[name=ofld]").val( fld );
+            $("input[name=odir]").val( fld === ofld && odir === 'ASC' ? 'DESC' : 'ASC' );
+            send();
+            return false;
+        });
+
+        $(".ulLinkList .flds-head-colsearch input").keypress(function(e){
+            if ( (e.keyCode || e.which) === 13) send();
+        });
+
+        $(".ulLinkList .flds-head-colsearch input").bind('change', function(e){
+            send();
+        });
+
+        $("#btnCsvExport").bind("click", function() {
+            send('format=csv');
+        })
+    });
+</script>
+
 

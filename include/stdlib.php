@@ -69,19 +69,98 @@ function format_file_size($bytes) {
 function __autoload($class_name) {
     global $MConf;
 	$loadfile = $MConf["AppRoot"].$MConf["Class_Dir"].$class_name . '.class.php';
+    $vendorDir = $MConf["AppRoot"] . 'vendor/';
+/*
+	if (file_exists($loadfile)) {
+	    require_once $loadfile;
+	    return true;
+    }
+
+    $loadModFile = $MConf["AppRoot"] . '/module/' . str_replace('\\', '/', $class_name) . '.php';
+    if (file_exists($loadModFile)) {
+        if (file_exists($loadModFile)) {
+            require_once $loadModFile;
+            return true;
+        }
+    }
+
+    $appClassFile = $MConf["AppRoot"] . str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';
+    if (file_exists($appClassFile)) {
+        require_once $appClassFile;
+        return true;
+    }
+
+    if ($class_name == "Smarty") {
+        $loadfile = $MConf["AppRoot"] . 'smarty3/Smarty.class.php';
+        if (file_exists($loadfile)) {
+            require_once $loadfile;
+            return true;
+        }
+    }
+
+    if ($class_name == "Smarty_Autoloader") {
+        $loadfile = $MConf["AppRoot"] . 'smarty3/Autoloader.php';
+        if (file_exists($loadfile)) {
+            require_once $loadfile;
+            return true;
+        }
+    }
+
+    $vendorFile = '';
+    if ($class_name == 'TCPDF') {
+        $vendorFile = $vendorDir . 'tecnickcom/tcpdf/tcpdf.php';
+        // $vendorFile = $MConf["AppRoot"]."/vendor/TCPDF/tcpdf.php";
+        if (file_exists($vendorFile)) {
+            require_once $vendorFile;
+            return true;
+        }
+    }
+
+    if ($class_name === 'Swift' || strpos($class_name, 'Swift') === 0) {
+        $swiftDir = $vendorDir  . 'swiftmailer/swiftmailer/lib/classes/';
+        $classPath = str_replace('_', '/', $class_name) . '.php';
+        $vendorFile = $swiftDir . $classPath;
+        if (file_exists($vendorFile)) {
+            require_once $vendorFile;
+            return true;
+        }
+        // require_once __DIR__ . '/../module/Swift-5.0.0/lib/swift_required.php';
+    }
+    $files = compact('loadfile', 'loadModFile', 'appClassFile', 'vendorFile');
+
+    echo 'Searched for Class ' . $class_name . "<br>\n";
+    foreach($files as $k => $f) {
+        echo "Searched File $k : $f " . (file_exists($f) ? ' EXISTS ' : 'NOT EXISTS') . "<br>\n";
+    }
+    exit;
+*/
+
+	//
+// require_once __DIR__ . '/../module/Swift-5.0.0/lib/swift_required.php';
 	if (!file_exists($loadfile)) {
 		if ($class_name == "Smarty") {
-		    $loadfile = $MConf["AppRoot"]."smarty3/Smarty.class.php";
+		    $loadfile = $MConf["AppRoot"] . "smarty3/Smarty.class.php";
         }
 		elseif ($class_name == 'TCPDF') {
-            $loadfile = $MConf["AppRoot"]."/vendor/TCPDF/tcpdf.php";
+            $loadfile = $MConf["AppRoot"]."/vendor/tecnickcom/tcpdf/tcpdf.php";
+            // $loadfile = $MConf["AppRoot"]."/vendor/TCPDF/tcpdf.php";
+        }
+		elseif ($class_name === 'Swift' || strpos($class_name, 'Swift') === 0) {
+		    $vendorDir = $MConf["AppRoot"] . 'vendor/swiftmailer/swiftmailer/lib/classes/';
+		    $classPath = str_replace('_', '/', $class_name) . '.php';
+		    $loadfile = $vendorDir . $classPath;
+		    if (file_exists($loadfile)) {
+		        require_once $loadfile;
+		        return true;
+            }
+            // require_once __DIR__ . '/../module/Swift-5.0.0/lib/swift_required.php';
         }
 		else {
             $moduleClassFile = $MConf["AppRoot"] . str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';
             $moduleClassFileExists = file_exists($moduleClassFile);
             if ($moduleClassFileExists) {
                 require_once $moduleClassFile;
-                $loadfile = $moduleClassFile;
+                return true;
             } else {
                 return false;
             }

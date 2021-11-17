@@ -471,7 +471,7 @@ $_CONF["umzugsantrag"] = array(
             "deleteMinAccess" => null
         ),
         "tour_zugewiesen_von" => array(
-            "dbField" => "tour_zugeordnet_von",
+            "dbField" => "tour_zugewiesen_von",
             "key" => "",
             "label" => "Tourzuweisungg von",
             "listlabel" => "T.Zuwsg. von",
@@ -1561,7 +1561,7 @@ $_CONF["umzugsantrag"] = array(
 			"fieldGroup" => "main",
 			"description" => "",
 			"type" => "enum",
-			"size" => "'Init','Ja','Nein'",
+			"size" => "'Init','Ja','Storniert'",
 			"sysType" => "enum",
 			"htmlType" => "radio",
 			"default" => "Init",

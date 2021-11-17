@@ -10,7 +10,10 @@ require_once($InclBaseDir."umzugsmitarbeiter.inc.php");
 $CUA = &$_CONF['umzugsantrag'];
 $CUM = &$_CONF['umzugsmitarbeiter'];
 $Tpl = new myTplEngine();
-$Umzuege = array();
+$Auftraege = [];
+$NL = "\n";
+
+$exportFormat = 'html';
 
 
 if (empty($s)) {
@@ -22,15 +25,18 @@ $istUmzugsteam = $userGruppe === 'umzugsteam' || $s === 'auslieferung';
 
 $offset = getRequest('offset', 0);
 $limit = getRequest('limit', 100);
-$ofld = getRequest('ofld', "");
-$odir = getRequest('odir', "");
+$ofld = getRequest('ofld', '');
+$odir = getRequest('odir', '');
 $cat = getRequest('cat', '');
+$exportFormat = getRequest('format', 'html');
+$query = (!empty($_REQUEST['q']))   ? $_REQUEST['q'] : [];
 $allusers = (int)getRequest('allusers', 1);
+// die(print_r(compact('query'), 1));
 
 if (!$istUmzugsteam) {
     if (empty($cat) || !in_array($cat,
         [
-            'temp', 'zurueckgegeben', 'angeboten', 'abgelehnte', 'neue',
+            'temp', 'zurueckgegeben', 'angeboten', 'abgelehnte', 'neue', 'disponierte',
             'gepruefte', 'genehmigte', 'heute', 'aktive', 'abgeschlossene',
             'stornierte'
         ])) {
@@ -43,26 +49,76 @@ if (!$istUmzugsteam) {
     }
 }
 
-$defaultOrder = "ORDER BY antragsdatum ASC";
+$defaultOrder = 'ORDER BY antragsdatum ASC';
 $orderFields = array(
-	'id' => array('field'=>"U.aid", 'defaultOrder'=>'ASC'),
-	'termin' => array('field'=>'umzugstermin', 'defaultOrder'=>'ASC'),
+    'id' => array('field'=>"U.aid", 'defaultOrder'=>'ASC'),
+    'aid' => array('field'=>"U.aid", 'defaultOrder'=>'ASC'),
+    'kid' => array('field'=>"user.personalnr", 'defaultOrder'=>'ASC'),
+	'termin' => array('field'=>'U.umzugstermin', 'defaultOrder'=>'ASC'),
 	'von' => array('field'=>"M.gebaeude", 'defaultOrder'=>'ASC'),
 	'nach' => array('field'=>"M.ziel_gebaeude", 'defaultOrder'=>'ASC'),
-    'strasse' => array('field'=>'strasse', 'defaultOrder'=>'ASC'),
-    'plz' => array('field'=>'plz', 'defaultOrder'=>'ASC'),
-    'ort' => array('field'=>'ort', 'defaultOrder'=>'ASC'),
-    'kid' => array('field'=>"user.personalnr", 'defaultOrder'=>'ASC'),
+    'strasse' => array('field'=>'U.strasse', 'defaultOrder'=>'ASC'),
+    'plz' => array('field'=>'U.plz', 'defaultOrder'=>'ASC'),
+    'ort' => array('field'=>'U.ort', 'defaultOrder'=>'ASC'),
+    'land' => array('field'=>'U.land', 'defaultOrder'=>'ASC'),
 	'umzug' => array('field'=>'umzug', 'defaultOrder'=>'ASC'),
 	'mitarbeiter' => array('field'=>'mitarbeiter_num', 'defaultOrder'=>'ASC'),
-	'antragsdatum' => array('field'=>'antragsdatum', 'defaultOrder'=>'ASC'),
-	'geprueft' => array('field'=>'geprueft', 'defaultOrder'=>'ASC'),
-	'genehmigt' => array('field'=>'genehmigt_br', 'defaultOrder'=>'ASC'),
-	'bestaetigt' => array('field'=>'bestaetigt', 'defaultOrder'=>'ASC'),
-	'abgeschlossen' => array('field'=>'abgeschlossen', 'defaultOrder'=>'ASC'),
+	'antragsdatum' => array('field'=>'U.antragsdatum', 'defaultOrder'=>'ASC'),
+	'geprueft' => array('field'=>'U.geprueft_am', 'defaultOrder'=>'ASC'),
+	'genehmigt' => array('field'=>'genehmigt_am', 'defaultOrder'=>'ASC'),
+	'bestaetigt' => array('field'=>'bestaetigt_am', 'defaultOrder'=>'ASC'),
+	'abgeschlossen' => array('field'=>'U.abgeschlossen_am', 'defaultOrder'=>'ASC'),
+    'tour_kennung' =>  array('field'=>'tour_kennung', 'defaultOrder'=>'ASC'),
+    'Leistungen' =>  array('field'=>'Leistungen', 'defaultOrder'=>'ASC'),
+    'summe' =>  array('field'=>'summe', 'defaultOrder'=>'ASC'),
 );
+
+$validFields = array_keys($orderFields);
+
+$having = array();
+$w = array();
+foreach($validFields as $_f) {
+    if (empty($query[$_f]) || trim($query[$_f]) === '') {
+        continue;
+    }
+    $sqlQueryField = $orderFields[$_f]['field'];
+
+    if (strcmp($_f, 'Leistungen') === 0 && !empty($query[$_f])) {
+        $chars = str_split( trim($query[$_f]));
+        $chars = preg_replace('#[^A-Z]#', '', $chars);
+
+        foreach($chars as $_chr) {
+            $having[] = 'GROUP_CONCAT(kategorie_abk) LIKE "%' . $_chr . '%"';
+        }
+        continue;
+    }
+    elseif (strcmp($_f, 'land') === 0 && !empty($query[$_f]) && strcmp(trim($query[$_f]), 'NL') === 0 ) {
+        $w[] = $sqlQueryField . ' LIKE "Niederlande"';
+        continue;
+    }
+    elseif (strcmp($_f, 'land') === 0 && !empty($query[$_f]) && strcmp(trim($query[$_f]), 'DE') === 0 ) {
+        $w[] = $sqlQueryField . ' LIKE "Deutschland"';
+        continue;
+    }
+
+    if (!empty($query[$_f])) {
+        if (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
+            $_q = $sqlQueryField . ' ' . $m[1] . $db->quote($m[2]);
+        } else {
+            $_q = $sqlQueryField . ' ' . ' LIKE ' . $db->quote( str_replace('*','%', $query[$_f]) . '%');
+        }
+
+        if (strcmp($_f, 'summe') !== 0) {
+            $w[] = $_q;
+        }
+        else {
+            $having[] = $_q;
+        }
+    }
+}
+
 if ($ofld && isset($orderFields[$ofld])) {
-	$orderBy = "ORDER BY ".$orderFields[$ofld]['field']." ";
+	$orderBy = 'ORDER BY ' . $orderFields[$ofld]['field'] . ' ';
 	$orderBy.= ($odir) ? ($odir!='DESC' ? 'ASC' : 'DESC') : $orderFields[$ofld]['defaultOrder'];
 } else {
 	$orderBy = $defaultOrder;
@@ -70,18 +126,19 @@ if ($ofld && isset($orderFields[$ofld])) {
 
 $ListBaseLink = '?s='.urlencode($s).'&cat='.urlencode($cat).($allusers ? '&allusers=1' : '');
 
-$sqlFrom  = "FROM `".$CUA['Table']."` U LEFT JOIN `".$CUM['Table']."` M USING(aid)\n"
-    . " LEFT JOIN mm_user user ON U.antragsteller_uid = user.uid \n "
-    . " LEFT JOIN mm_stamm_gebaeude g  ON U.gebaeude = g.id \n"
-    . " LEFT JOIN mm_stamm_gebaeude vg ON U.von_gebaeude_id = vg.id \n"
-    . " LEFT JOIN mm_stamm_gebaeude ng ON U.nach_gebaeude_id = ng.id \n"
-    . ' LEFT JOIN mm_umzuege_leistungen ul ON (U.aid = ul.aid) ' . "\n"
-    . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n";
-$sqlJoinPreise = ' LEFT JOIN mm_leistungspreismatrix lm ON(' . "\n"
-    . '    l.leistung_id = lm.leistung_id ' . "\n"
-    . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . "\n"
-    . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . "\n"
-    . ' ) ' . "\n";
+$sqlFrom  = 'FROM `' . $CUA['Table'] . '` U LEFT JOIN `' . $CUM['Table'] . '` M USING(aid)' . $NL
+    . ' LEFT JOIN mm_user user ON U.antragsteller_uid = user.uid ' . $NL
+    . ' LEFT JOIN mm_stamm_gebaeude g  ON U.gebaeude = g.id ' . $NL
+    . ' LEFT JOIN mm_stamm_gebaeude vg ON U.von_gebaeude_id = vg.id ' . $NL
+    . ' LEFT JOIN mm_stamm_gebaeude ng ON U.nach_gebaeude_id = ng.id ' . $NL
+    . ' LEFT JOIN mm_umzuege_leistungen ul ON (U.aid = ul.aid) ' . $NL
+    . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . $NL
+    . ' LEFT JOIN mm_leistungskategorie lk ON(l.leistungskategorie_id = lk.leistungskategorie_id) ' . $NL
+    . ' LEFT JOIN mm_leistungspreismatrix lm ON('  . $NL
+    . '    l.leistung_id = lm.leistung_id '  . $NL
+    . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
+    . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
+    . ' ) '  . $NL;
 $sqlWhere = "WHERE 1\n";
 
 if (!$allusers) {
@@ -97,84 +154,98 @@ if (!$allusers) {
     }
 }
 
+
 switch($cat) {
 	case 'neue':
-	$sqlWhere.= "AND umzugsstatus IN ('angeboten', 'beantragt', 'erneutpruefen')\n";
+	$sqlWhere.= 'AND umzugsstatus IN ("angeboten", "beantragt", "erneutpruefen")' . $NL;
 	break;
     
 	case 'angeboten':
-	$sqlWhere.= "AND (umzugsstatus = 'angeboten' or umzugsstatus='geprueft' AND umzug='Ja')\n";
+	$sqlWhere.= 'AND (umzugsstatus = "angeboten" or umzugsstatus="geprueft" AND umzug="Ja")' . $NL;
 	break;
 	
 	case 'gepruefte':
-	$sqlWhere.= "AND umzugsstatus = 'geprueft'\n";
+	$sqlWhere.= 'AND umzugsstatus = "geprueft"' . $NL;
 	break;
 	
 	case 'genehmigte':
-	$sqlWhere.= "AND umzugsstatus = 'genehmigt'\n";
+	$sqlWhere.= 'AND umzugsstatus = "genehmigt"' . $NL;
 	break;
 
     case 'heute':
-        $sqlWhere.= "AND DATE_FORMAT(umzugstermin, '%Y-%m-%d') = '" . date('Y-m-d') . "'";
-        $sqlWhere.= "AND (umzugsstatus IN ('geprueft', 'bestaetigt','genehmigt') OR (umzug='Nein' AND umzugsstatus='angeboten'))\n";
+        $sqlWhere.= 'AND DATE_FORMAT(umzugstermin, "%Y-%m-%d") = "' . date('Y-m-d') . '"';
+        $sqlWhere.= 'AND (umzugsstatus IN ("geprueft", "bestaetigt","genehmigt") OR (umzug="Nein" AND umzugsstatus="angeboten"))' . $NL;
+        break;
+
+    case 'disponierte':
+        $sqlWhere.= 'AND (umzugsstatus IN ("beantragt", "disponiert") AND IFNULL(tour_kennung, "") LIKE "_%")' . $NL;
         break;
 
     case 'aktive':
-        $sqlWhere.= "AND (umzugsstatus IN ('geprueft', 'bestaetigt','genehmigt') OR (umzug='Nein' AND umzugsstatus='angeboten'))\n";
+        $sqlWhere.= 'AND (umzugsstatus IN ("geprueft", "bestaetigt", "genehmigt") OR (umzug="Nein" AND umzugsstatus="angeboten"))' . $NL;
         break;
 	
 	case 'abgeschlossene':
-	$sqlWhere.= "AND (umzugsstatus = 'abgeschlossen' AND abgeschlossen = 'Ja')\n";
+	$sqlWhere.= 'AND (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja")' . $NL;
 	//$sqlWhere.= "OR (abgeschlossen !=  'Init' AND  abgeschlossen IS NOT NULL)) \n";
 	break;
 	
 	case 'abgelehnte':
-	$sqlWhere.= "AND (umzugsstatus = 'abgelehnt')\n";
+	$sqlWhere.= 'AND (umzugsstatus = "abgelehnt")' . $NL;
 	break;
 	
 	case 'temp':
-	$sqlWhere.= "AND umzugsstatus IN ('temp','zurueckgegeben')\n";
+	$sqlWhere.= 'AND umzugsstatus IN ("temp", "zurueckgegeben")' . $NL;
 	break;
 	
 	case 'zurueckgegeben':
-	$sqlWhere.= "AND umzugsstatus = 'zurueckgegeben'\n";
+	$sqlWhere.= 'AND umzugsstatus = "zurueckgegeben"' . $NL;
 	break;
 	
 	case 'stornierte':
-	$sqlWhere.= "AND (abgeschlossen = 'Storniert' OR umzugsstatus = 'storniert')\n";
+	$sqlWhere.= 'AND (abgeschlossen = "Storniert" OR umzugsstatus = "storniert")' . $NL;
 	break;
 }
+if (count($w)) {
+    $sqlWhere.= ' AND (' . implode(' AND ', $w) . ') ' . $NL;
+}
 
-$sql = "SELECT COUNT(distinct(U.aid)) count \n";
-$sql.= $sqlFrom . $sqlJoinPreise . $sqlWhere;
-//$sql.= "GROUP BY aid\n";
+$sqlLimit = "LIMIT $offset, $limit" . $NL;
+$sqlGroup = ' GROUP BY U.aid' . $NL;
+$sqlHaving = ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' . $NL : '');
+
+
+$sqlSelect = 'SELECT U.*, ' . $NL
+    . ' user.personalnr AS kid, ' . $NL
+    . ' CONCAT(vg.stadtname, " ", vg.adresse) von_gebaeude, ' . $NL
+    . ' CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude, ' . $NL
+    . ' REPLACE(REPLACE(GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR ""), "P", ""), "R", "") AS Leistungen, ' . $NL
+    . ' GROUP_CONCAT(lk.leistungskategorie ORDER BY leistungskategorie SEPARATOR ", ") AS LeistungenFull, ' . $NL
+    . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . $NL;
+
+$sql = 'SELECT COUNT(1) AS `count` FROM (' . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t';
 $row = $db->query_singlerow($sql);
-//echo $db->error()."<br>\nsql: $sql <br>\n";
 $num_all = $row['count'];
 
-$sql = 'SELECT U.*,
-user.personalnr AS kid, 
-CONCAT(vg.stadtname, " ", vg.adresse) von_gebaeude,
-CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude ' . PHP_EOL;
-$sql.= ', SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . "\n";
-$sql.= $sqlFrom . $sqlJoinPreise . $sqlWhere;
-$sql.= "GROUP BY aid\n";
-$sql.= $orderBy."\n";
-$sql.= "LIMIT $offset, $limit";
+$sql = $sqlSelect . $sqlFrom . $sqlWhere;
+$sql.= $sqlGroup . $NL;
+$sql.= $sqlHaving . $NL;
+$sql.= $orderBy . $NL;
+if ($exportFormat !== 'html') {
+    $sql .= $sqlLimit . $NL;
+}
+
 $all = $db->query_rows($sql);
-// echo $db->error()."<br>\nsql: $sql <br>\n";
+// echo $db->error()."<pre>\nsql: $sql </pre>\n";
 $num = count($all);
 
-$sqlSummeTotal = 'SELECT SUM(summe) FROM (';
-$sqlSummeTotal.= substr($sql, 0, strpos($sql, "\nLIMIT "));
-$sqlSummeTotal.= ') AS SummenTable';
+$sqlSummeTotal = 'SELECT SUM(summe) FROM ( ' . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t';
 $summeTotal = $db->query_one($sqlSummeTotal);
 
-$sqlArtikel = "SELECT l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, COUNT(distinct(U.aid)) count, group_concat(ul.aid) aids \n";
-$sqlArtikel.= $sqlFrom . "\n" . $sqlWhere . " AND l.leistung_id IS NOT NULL\n";
-$sqlArtikel.= 'GROUP BY l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . "\n";
+$sqlArtikel = 'SELECT l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, COUNT(distinct(U.aid)) count, group_concat(ul.aid) aids' . $NL;
+$sqlArtikel.= $sqlFrom . $NL . $sqlWhere . ' AND l.leistung_id IS NOT NULL' . $NL;
+$sqlArtikel.= 'GROUP BY l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . $NL;
 $artikelStat = $db->query_rows($sqlArtikel);
-// echo '<pre>' . $sqlArtikel . '</pre>' . "\n";
 
 if ($num_all > $num) {
 	$rlist_nav = new listbrowser(array(
@@ -200,44 +271,88 @@ if (!function_exists('get_iconStatus')) {
         $alt.= (strtotime($date) ? date('d.m H:i', strtotime($date)) : $date);
         if ($statKey) $alt.= ' ' . $statKey . '(' . $statVal . ')';
         if ($von) $alt.= ' von ' . $von;
-	switch(strtoupper($statVal)) {
-		case 'JA': return "<img src=\"images/status_ja.png\" width=\"16\" height=\"16\" title=\"".fb_htmlEntities($alt)."\">";
-		case 'NEIN': return "<img src=\"images/status_nein.png\" width=\"16\" height=\"16\" title=\"".fb_htmlEntities($alt)."\">";
-		case 'INIT': return "<img src=\"images/status_init.png\" width=\"16\" height=\"16\" title=\"".fb_htmlEntities($statVal)."\">";
-		case 'STORNIERT': return "<img src=\"images/status_storniert.png\" width=\"16\" height=\"16\" title=\"".fb_htmlEntities($alt)."\">";
-		case 'WARNUNG': return "<img src=\"images/warning_triangle.png\" width=\"16\" height=\"16\" alt=\"".fb_htmlEntities($alt)."\">";
-	}
-	return '<span class="status' . $statVal.'" title="'.fb_htmlEntities($alt).'">' . $statVal . '</span>';
+
+        switch(strtoupper($statVal)) {
+            case 'JA': return '"<img src="images/status_ja.png" width="16" height="16" title="' . fb_htmlEntities($alt) . '">';
+            case 'NEIN': return '"<img src="images/status_nein.png" width="16" height="16" title="' . fb_htmlEntities($alt) . '">';
+            case 'INIT': return '"<img src="images/status_init.png" width="16" height="16" title="' . fb_htmlEntities($statVal) . '">';
+            case 'STORNIERT': return '"<img src="images/status_storniert.png" width="16" height="16" title="' . fb_htmlEntities($alt) . '">';
+            case 'WARNUNG': return '"<img src="images/warning_triangle.png" width="16" height="16" alt="' . fb_htmlEntities($alt) . '">';
+        }
+        return '<span class="status' . $statVal.'" title="'.fb_htmlEntities($alt).'">' . $statVal . '</span>';
 }}
 
 
 //echo MyDB::error()."<br>$sql<br> num_rows:".count($all).":".print_r($all,1)."\n";
 if (is_array($all)) {
     foreach($all as $i => $item) {
-        $Umzuege[$i] = $item;
+        $Auftraege[$i] = $item;
 
-        $Umzuege[$i]['LinkOpen'] = '?s=aantrag' . '&id=' . $item['aid'];
+        $Auftraege[$i]['LinkOpen'] = '?s=aantrag' . '&id=' . $item['aid'];
         if ($istUmzugsteam) {
-            $Umzuege[$i]['LinkOpen'] = '?s=aantrag' . '&id=' . $item['aid'] . '&top=' . $s;
+            $Auftraege[$i]['LinkOpen'] = '?s=aantrag' . '&id=' . $item['aid'] . '&top=' . $s;
         }
-        $Umzuege[$i]['Mitarbeiter'] = $item['mitarbeiter_num'];
-        $Umzuege[$i]['plz'] = $item['plz']."&nbsp;";
-        $Umzuege[$i]['Von'] = $item['gebaeude']."&nbsp;";
-        $Umzuege[$i]['Nach'] = $item['ziel_gebaeude']."&nbsp;";
-        $Umzuege[$i]['Antragsstatus'] =  $item['antragsstatus'];
-        $Umzuege[$i]['Termin'] = ($item['umzugstermin']?$item['umzugstermin']:$item['terminwunsch']);
-        $Umzuege[$i]['Antragsdatum'] = $item['antragsdatum'];
+        $Auftraege[$i]['Mitarbeiter'] = $item['mitarbeiter_num'];
+        $Auftraege[$i]['plz'] = $item['plz'];
+        $Auftraege[$i]['Von'] = $item['gebaeude'];
+        $Auftraege[$i]['Nach'] = $item['ziel_gebaeude'];
+        $Auftraege[$i]['Antragsstatus'] =  $item['antragsstatus'];
+        $Auftraege[$i]['Termin'] = ($item['umzugstermin']?$item['umzugstermin']:$item['terminwunsch']);
+        $Auftraege[$i]['Antragsdatum'] = $item['antragsdatum'];
 
-        $Umzuege[$i]['Avisiert']   = get_iconStatus($item['bestaetigt'], $item['geprueft_am'], $item['geprueft_von'], 'Avisiert');
-        $Umzuege[$i]['Geprueft']   = get_iconStatus($item['geprueft'], $item['geprueft_am'], $item['geprueft_von'], 'Geprueft');
-        $Umzuege[$i]['Genehmigt']  = get_iconStatus($item['genehmigt_br'], $item['genehmigt_br_am'], $item['genehmigt_br_von']);
-        $Umzuege[$i]['Bestaetigt'] = (empty($item['angeboten_am']) ? get_iconStatus($item['genehmigt_br'], $item['genehmigt_br_am']) : '');
-        $Umzuege[$i]['Abgeschlossen'] = get_iconStatus($item['abgeschlossen'], $item['abgeschlossen_am'], $item['abgeschlossen_von']);
+        if ($exportFormat === 'html') {
+            $Auftraege[$i]['Avisiert'] = get_iconStatus($item['bestaetigt'], $item['geprueft_am'], $item['geprueft_von'], 'Avisiert');
+            $Auftraege[$i]['Geprueft'] = get_iconStatus($item['geprueft'], $item['geprueft_am'], $item['geprueft_von'], 'Geprueft');
+            $Auftraege[$i]['Genehmigt'] = get_iconStatus($item['genehmigt_br'], $item['genehmigt_br_am'], $item['genehmigt_br_von']);
+            $Auftraege[$i]['Bestaetigt'] = get_iconStatus($item['bestaetigt'], $item['bestaetigt_am'], $item['bestaetigt_von']);
+            $Auftraege[$i]['Abgeschlossen'] = get_iconStatus($item['abgeschlossen'], $item['abgeschlossen_am'], $item['abgeschlossen_von']);
+        }
     }
 }
 
+if ($exportFormat === 'csv' && count($Auftraege)) {
+    $iNumItems = count($Auftraege);
+    $tmpfname = tempnam(sys_get_temp_dir(), "csv");
+    $csvSeparator = ';';
+    $csvEnclosure = '"';
+    $csvEscape = '"';
+    $csvEOL = "\n";
+
+    $fh = fopen($tmpfname, "w");
+
+    $cols = array_keys($Auftraege[0]);
+
+    fwrite($fh, "\xEF\xBB\xBF");
+    fputcsv($fh, $cols, $csvSeparator, $csvEnclosure, $csvEscape);
+    for($i = 0; $i < $iNumItems; $i++) {
+        $Auftraege[$i]['summe'] = round($Auftraege[$i]['summe'], 2);
+        $vals = array_map(function($val) {
+            $val = trim($val);
+            if (strlen($val) > 1) {
+                $firstChr = $val[0];
+                if (strpos('+-', $firstChr) !== false || preg_match('#^[+-]?[0-9]+[eE][0-9]+#', $val)) {
+                    return "'" . $val;
+                }
+            }
+            return $val;
+        }, $Auftraege[$i]);
+        fputcsv($fh, $vals, $csvSeparator, $csvEnclosure, $csvEscape);
+    }
+    fclose($fh);
+
+    header('Content-Type: text/csv; charset="' . $charset . '"');
+    header('Content-Disposition: attachment; filename="' . $cat . '_' . date('YmdHi'). '.csv"');
+    header('Content-Length: ' . filesize($tmpfname));
+
+    readfile($tmpfname);
+    unlink($tmpfname);
+    exit;
+}
+
+
 $Tpl->assign('s', $s);
 $Tpl->assign('cat', $cat);
+$Tpl->assign('q', $query);
 $Tpl->assign('allusers', $allusers);
 $Tpl->assign('ListBrowsing', $ListBrowsing);
 $Tpl->assign('ListBaseLink', $ListBaseLink);
@@ -247,7 +362,7 @@ $Tpl->assign('num_all', $num_all);
 $Tpl->assign('summeTotal', $summeTotal);
 $Tpl->assign('artikelStat', $artikelStat);
 
-$Tpl->assign('Umzuege', $Umzuege);
+$Tpl->assign('Umzuege', $Auftraege);
 
 //echo '<pre>#' . __LINE__ . ' '; // . print_r( filestat('html/antraege_liste.html'),1);
 try {

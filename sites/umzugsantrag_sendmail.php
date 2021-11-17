@@ -440,6 +440,17 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = [], $au
 	return $success && $iNumSentTo > 0;
 }
 
+$umzugsantrag_mailinform_num_mails = 0;
+$umzugsantrag_mailinform_error = '';
+function umzugsantrag_mailinform_get_errors() {
+    global $umzugsantrag_mailinform_error;
+    return $umzugsantrag_mailinform_error;
+}
+function umzugsantrag_mailinform_get_numMails() {
+    global $umzugsantrag_mailinform_num_mails;
+    return $umzugsantrag_mailinform_num_mails;
+}
+
 function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) {
 //  throw new Exception('#'.__LINE__ . ' ' . __FUNCTION__ . '(' . print_r(func_get_args(),1) . ')');
 	global $db;
@@ -450,6 +461,12 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
 	global $MConf;
 	global $connid;
 	global $user;
+	global $umzugsantrag_mailinform_error;
+	global $umzugsantrag_mailinform_num_mails;
+
+    $umzugsantrag_mailinform_error = '';
+
+    $umzugsantrag_mailinform_num_mails = 0;
 
 
 	if (!is_array($authorUser) || count(array_keys($authorUser)) === 0) {
@@ -461,9 +478,10 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
 	$TextBaseDir = $MConf["AppRoot"] . $MConf["Texte_Dir"];
         
 	if (!$AID) {
-		echo '#' . __LINE__ . ' AID: ' . $AID . '<br>' . PHP_EOL;
+        $umzugsantrag_mailinform_error.= 'Fehlende Auftrags-ID für Mailversand!';
 		return false;
 	}
+
 	$ASInput = getRequest('AS');
 	$bemerkung = (!empty($ASInput['bemerkungen'])) ? $ASInput['bemerkungen'] : '';
         
@@ -548,6 +566,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                     print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
                 }
                 $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($userMailTo);
+                }
             }
 
             $tplFile = $TextBaseDir."statusmail_umzug_bemerkung.txt";
@@ -566,7 +587,10 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                     $FILE = __FILE__;
                     print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
                 }
-                return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                $return = send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($aAdminMailTo);
+                }
             }
             return $return;
             break;
@@ -589,6 +613,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                     );
                 }
                 $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($userMailTo);
+                }
             }
 			$tplFile = $TextBaseDir."statusmail_umzug_neu.txt";
             $_configNameEnable = 'notify_property_beantragt';
@@ -600,6 +627,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                     $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $aPropertyMailTo, $_configNameEnable);
                 }
                 $return = send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($aPropertyMailTo);
+                }
             }
 
             $_configNameEnable = 'notify_mertens_beantragt';
@@ -615,7 +645,10 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                     $FILE = __FILE__;
                     print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
                 }
-                return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                $return = send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($aAdminMailTo);
+                }
             }
             return $return;
 			break;
@@ -634,7 +667,10 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                     $FILE = __FILE__;
                     print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
                 }
-                return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                $return = send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($aAdminMailTo);
+                }
             }
             return $return;
 		    break;
@@ -653,7 +689,10 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                     $FILE = __FILE__;
                     print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
                 }
-                return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                $return = send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($aPropertyMailTo);
+                }
             }
             return $return;
             break;
@@ -672,7 +711,10 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                     $FILE = __FILE__;
                     print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
                 }
-                return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                $return = send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($aPropertyMailTo);
+                }
             }
             return $return;
 		    break;
@@ -695,6 +737,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
                         }
                         $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                        if ($return) {
+                            $umzugsantrag_mailinform_num_mails+= count($userMailTo);
+                        }
                     }
 
                     $_configNameEnable = 'notify_property_genehmigt_Nein';
@@ -711,6 +756,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
                         }
                         $return = send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                        if ($return) {
+                            $umzugsantrag_mailinform_num_mails+= count($aPropertyMailTo);
+                        }
                     }
 
                     $_configNameEnable = 'notify_mertens_genehmigt_Nein';
@@ -727,6 +775,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
                         }
                         $return = send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                        if ($return) {
+                            $umzugsantrag_mailinform_num_mails+= count($aAdminMailTo);
+                        }
                     }
 				    return $return;
 				    break;
@@ -746,6 +797,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
                         }
                         $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                        if ($return) {
+                            $umzugsantrag_mailinform_num_mails+= count($userMailTo);
+                        }
                     }
 
                     $_configNameEnable = 'notify_property_genehmigt_Ja';
@@ -761,6 +815,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
                         }
                         $return = send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                        if ($return) {
+                            $umzugsantrag_mailinform_num_mails+= count($aPropertyMailTo);
+                        }
                     }
 
                     $_configNameEnable = 'notify_mertens_genehmigt_Ja';
@@ -775,8 +832,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             $FILE = __FILE__;
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aAdminMailTo'));
                         }
-                        return send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                        $return = send_status_mail($aAdminMailTo, $tplMail, $rplVars);
                     }
+				    return $return;
 			}
             return $return;
 		    break;
@@ -808,6 +866,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                 }
                 $sentToUser = send_status_mail($userMailTo, $tplMail, $rplVars);
                 $return  = $sentToUser;
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($userMailTo);
+                }
             }
 
             $_configNameEnable = 'notify_property_bestaetigt_' . ($value === 'Ja' ? 'Ja' : 'Nein');
@@ -821,7 +882,11 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                     $FILE = __FILE__;
                     print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
                 }
-                return (send_status_mail($aPropertyMailTo, $tplMail, $rplVars) && $sentToUser);
+                $return = send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($aPropertyMailTo);
+                }
+                $return = ($return && $sentToUser);
             }
             return $return;
             break;
@@ -841,7 +906,10 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                     $FILE = __FILE__;
                     print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
                 }
-                return send_status_mail($userMailTo, $tplMail, $rplVars);
+                $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($userMailTo);
+                }
             }
             return $return;
             break;
@@ -909,6 +977,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
                         }
                         $return = send_status_mail($userMailTo, $tplMail, $rplVars, $aAttachments);
+                        if ($return) {
+                            $umzugsantrag_mailinform_num_mails+= count($userMailTo);
+                        }
                     }
 
                     $_configNameEnable = 'notify_property_abgeschlossen';
@@ -922,7 +993,10 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             $FILE = __FILE__;
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
                         }
-                        return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                        $return = send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                        if ($return) {
+                            $umzugsantrag_mailinform_num_mails+= count($aPropertyMailTo);
+                        }
                     }
 				    return $return;
 				    break;
@@ -942,6 +1016,9 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
                         }
                         $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                        if ($return) {
+                            $umzugsantrag_mailinform_num_mails+= count($userMailTo);
+                        }
                     }
 
 				    $_configNameEnable = 'notify_property_storniert';
@@ -955,7 +1032,10 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             $FILE = __FILE__;
                             print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'aPropertyMailTo'));
                         }
-                        return send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                        $return = send_status_mail($aPropertyMailTo, $tplMail, $rplVars);
+                        if ($return) {
+                            $umzugsantrag_mailinform_num_mails+= count($aPropertyMailTo);
+                        }
                     }
 				    return $return;
 				    break;

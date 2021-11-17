@@ -139,7 +139,7 @@ switch($cmd) {
 				$LoadScript.= "if (typeof(umzugsantrag_auto_reload)==\"function\") umzugsantrag_auto_reload(\"$id\");\n";
 			} else {
 				if (umzugsantrag_status($id, $name, $value)) {
-					$msg.= "Der Auftragsstatus wurde aktualisiert $name:$value!<br>\n";
+					$msg.= "Der Auftragsstatus wurde aktualisiert: $name -> $value!<br>\n";
 					$JsonData = umzugsantrag_status_laden($id);
 					if ($JsonData) {
 						$LoadScript.= $JsonData;
