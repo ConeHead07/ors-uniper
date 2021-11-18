@@ -894,12 +894,12 @@ div.divInlay.borderTop {
   border-top-width: 1px;
 }
 div.divInlay h2 {
-  padding: 11px 0px 9px 0px;
+  padding: 11px 0px 2px  2px;
   font-size: 1.272727272em;
   font-weight: bolder;
 }
 div.divInlay h3 {
-  padding: 11px 0px 9px 0px;
+  padding: 11px 0px 3px 0px;
   font-size: 1.09090909em;
   font-weight: bold;
 }

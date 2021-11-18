@@ -25,30 +25,30 @@
   <table border=0 cellspacing=1 cellpadding=1>
     <tr>
       <td style="padding:0;height:auto;width:200px;"><label style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
-      <td style="padding:0;width:250px;">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</td>
+      <td style="padding:0;width:250px;"><div  class="itxt itxt2col">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</div></td>
     </tr>
     <tr>
       <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
-      <td style="padding:0;">{$AS.umzugszeit|escape}</td>
+      <td style="padding:0;"><div  class="itxt itxt2col">{$AS.umzugszeit|escape}</div></td>
     </tr>
 
     <tr>
       <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
-      <td style="padding:0;">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</td>
+      <td style="padding:0;"><div  class="itxt itxt2col">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
     </tr>
 
     <tr>
       <td style="padding:0;"><label style="display:block;width:auto;">Bestätigt:</label></td>
-      <td style="padding:0;" class="status_{$AS.genehmigt_br}"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></td>
+      <td style="padding:0;" class="status_{$AS.genehmigt_br}"><div  class="itxt itxt2col"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></div></td>
     </tr>
 
     <tr>
       <td style="padding:0;"><label style="display:block;width:auto;">Abgeschlossen:</label></td>
-      <td style="padding:0;" class="status_{$AS.abgeschlossen}"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></td>
+      <td style="padding:0;" class="status_{$AS.abgeschlossen}"><div  class="itxt itxt2col"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></div></td>
     </tr>
     <tr>
       <td style="padding:0;"><label style="display:block;width:auto;">Status:</label></td>
-      <td style="padding:0;">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</td>
+      <td style="padding:0;"><div  class="itxt itxt2col">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</div></td>
     </tr>
       <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
   </table>
@@ -58,38 +58,53 @@
   | <a href="%WebRoot%sites/etiketten.php?aid={$AS.aid}" target="_Etiketten{$AS.aid}">Etiketten (PDF)</a>
   <br>
 
-  <div id="BoxBemerkungen" style="display: none;">
-    <strong>Bemerkungen:</strong><br>
-    <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
-    <br>
-  </div>
-  <div id="BoxLieferhinweise">
+  {if $AS.lieferhinweise}
+  <div id="BoxLieferhinweise" style="margin-top:1.5rem">
     <strong>Lieferhinweise:</strong><br>
     <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
   </div>
+  {/if}
 
-  <div style="float:left">
-      <h2 style="margin:0;">Lieferdaten</h2>
-      <table>
-        <tr>
-          <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
-          <td style="padding:0;width:250px;"><span data-fld="AS[vorname]">{$AS.vorname|escape}</span> <span data-fld="AS[name]">{$AS.name|escape}</span></td>
-        </tr>
-        <tr>
-          <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
-          <td style="padding:0;" data-fld="AS[email]">{$AS.email|escape}</td>
-        </tr>
-        <tr>
-          <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
-          <td style="padding:0;" data-fld="AS[fon]">{$AS.fon|escape}</td>
-        </tr>
-          <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
-      </table>
-      <br>
+  <div style="margin-top:1.5rem">
+    <div style="float:left">
+        <h2 style="margin:0;">Lieferdaten</h2>
+        <table>
+          <tr>
+            <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
+            <td style="padding:0;width:250px;"><div  class="itxt itxt2col"><span data-fld="AS[vorname]">{$AS.vorname|escape}</span> <span data-fld="AS[name]">{$AS.name|escape}</span></div></td>
+          </tr>
+          <tr>
+            <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
+            <td style="padding:0;" data-fld="AS[email]"><div  class="itxt itxt2col">{$AS.email|escape}</div></td>
+          </tr>
+          <tr>
+            <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
+            <td style="padding:0;" data-fld="AS[fon]"><div  class="itxt itxt2col">{$AS.fon|escape}</div></td>
+          </tr>
+            <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+        </table>
+    </div>
+    {if !empty($DL) && !empty($DL.Firmenname)}
+    <div style="float:left; margin-left:50px;">
+        {include file="umzugsteam_umzugsformular_lieferauswahl.tpl.html"}
+    </div>
+    {/if}
+    <div style="clear: both"></div>
   </div>
-  {if !empty($DL) && !empty($DL.Firmenname)}
-  <div style="float:left; margin-left:50px;">
-      {include file="umzugsteam_umzugsformular_lieferauswahl.tpl.html"}
+
+  {if !empty($AS.ansprechpartner) or !empty($AS.ansprechpartner_fon)}
+  <div style="margin-top:1.5rem">
+    <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2>
+    <table>
+      <tr>
+        <td style="padding:0;width:200px;""><label style="width:100%;">Vor &amp; Nachname:</label></td>
+        <td style="padding:0;width:250px;"><div  class="itxt itxt2col">{$AS.ansprechpartner|escape}</div></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="width:100%;">Telefon:</label></td>
+        <td style="padding:0;"><div  class="itxt itxt2col">{$AS.ansprechpartner_fon|escape}</div></td>
+      </tr>
+    </table>
   </div>
   {/if}
 
@@ -105,9 +120,11 @@
       {include file="admin_umzugsformular_ortsauswahl.tpl.html"}
   {/if}
   {if 1}
+    <div style="margin-top:1.5rem"></div>
       {include file="umzugsteam_umzugsformular_leistungsauswahl.tpl.read.html"}
   {/if}
   {if !empty($UmzugsAnlagen)}
+    <div style="margin-top:1.5rem"></div>
     {include file="umzugsformular_attachments.tpl.read.html" internal=1}
   {/if}
   <br>
@@ -184,8 +201,8 @@
       /* background-color: #eaf9ff; */
     }
   </style>
-  <div id="KundenabnahmeBox" {if $umzugsstatus eq "abgeschlossen"}style="display:none"{/if}>
-    <h2>Kundenabnahme</h2>
+  <div id="KundenabnahmeBox" style="padding:1rem;{if $umzugsstatus eq "abgeschlossen"}display:none:{/if}">
+    <h2 style="margin-left:0">Kundenabnahme</h2>
 
     <form id="frmAbnahme" class="w3-container" action="%WebRoot%lieferscheinabnahme.php" method="POST"
           name="abnahme" enctype="multipart/form-data" target="_self">
@@ -209,12 +226,16 @@
         </div>
       </div>
 
-      <div style="min-height:1.5rem;margin-top:.8rem;">
-        <label style="margin-right:3rem;width:initial;">Ankunft <span style="border-bottom:1px solid black;margin-left:1rem;"><input name="ankunft" id="ankunftsZeit" type="time" size="8" class="input-bg-color"> Uhr</span></label>
-        <label style="margin-right:3rem;width:initial;">Abfahrt <span style="border-bottom:1px solid black;margin-left:1rem"><input name="abfahrt" id="abfahrtsZeit" type="time" size="8" class="input-bg-color"> Uhr</span></label>
+      <div style="min-height:1.5rem;margin-top:1.2rem;">
+        <label style="margin-right:3rem;width:initial;">Ankunft <span style="border-bottom:1px solid black;margin-left:1rem;"><input
+                name="ankunft" id="ankunftsZeit" type="time" size="8"
+                style="min-width:80px;" class="input-bg-color"> Uhr</span></label>
+        <label style="margin-right:3rem;width:initial;">Abfahrt <span style="border-bottom:1px solid black;margin-left:1rem"><input
+                name="abfahrt" id="abfahrtsZeit" type="time" size="8"
+                style="min-width:80px;" class="input-bg-color"> Uhr</span></label>
       </div>
 
-      <div style="min-height:1.5rem;margin-top:.8rem;">
+      <div style="min-height:1.5rem;margin-top:1.2rem;">
         <div><label style="margin-right:3rem;width:initial;" class="input-bg-color" > Etikettierung erfolgt</label></div>
         {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
          {foreach name=GList item=L from=$Umzugsleistungen}
@@ -225,6 +246,7 @@
           <input name="etikettierung_erfolgt[{$L.leistung_id|escape}]"
                  data-label="{$L.kategorie|escape}"
                  id="{$L.kategorie|escape}"
+                 style="width:1rem;height:1rem;"
                  value="{$L.kategorie|escape}" type="checkbox"> {$L.kategorie|escape}
         </label>
          {/foreach}
@@ -234,7 +256,7 @@
       {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
        {foreach name=GList item=L from=$Umzugsleistungen}
         {if $L.kategorie eq "Schreibtisch" }
-          <div>
+          <div style="min-height:1.5rem;margin-top:1.2rem;">
             <div>
               <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
               Funktionsprüfung erfolgt</label>
@@ -243,6 +265,7 @@
               <input name="funktionspruefung_erfolgt[]"
                      data-label="{$L.kategorie|escape}"
                      id="Schreibtischpruefung"
+                     style="width:1rem;height:1rem;"
                      value="{$L.kategorie|escape}" type="checkbox"> {$L.kategorie|escape}
             </label>
           </div>

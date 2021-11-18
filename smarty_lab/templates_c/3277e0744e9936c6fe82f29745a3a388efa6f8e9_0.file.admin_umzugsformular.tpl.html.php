@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-17 16:46:26
+/* Smarty version 3.1.34-dev-7, created on 2021-11-18 14:57:05
   from '/var/www/html/html/admin_umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_619523d22046a5_69982006',
+  'unifunc' => 'content_61965bb1058ae2_87137543',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3277e0744e9936c6fe82f29745a3a388efa6f8e9' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular.tpl.html',
-      1 => 1637163941,
+      1 => 1637243814,
       2 => 'file',
     ),
   ),
@@ -29,7 +29,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_619523d22046a5_69982006 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61965bb1058ae2_87137543 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 $_smarty_tpl->_assignInScope('laenderCsv', substr($_smarty_tpl->tpl_vars['ASConf']->value['land']['size'],1,-1));
 $_smarty_tpl->_assignInScope('laenderLst', explode("','",$_smarty_tpl->tpl_vars['laenderCsv']->value));?>
@@ -368,13 +368,14 @@ $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read2.html
  --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
  --><input type="submit" class="btn grey"
            onclick="umzugsantrag_save()"
+           title="Beim Speichern wird der Auftragsstatus nicht geändert und es werden keine Benachrichtigungen versendet"
            value="Speichern"><!--
  --><?php if (0) {?><input type="submit" class="btn red d-none"
            onclick="umzugsantrag_reload()"
            value="Neu laden"><?php }?><!--
  --><input type="submit" class="btn red"
            onclick="umzugsantrag_add_attachement()"
-           value="Dateianhnge">
+           value="Dateianhänge">
 <?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?>
   <input
           type="submit" class="btn red"
@@ -383,7 +384,7 @@ $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read2.html
 <br>
 <br>
 <?php if ($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] != "temp") {?>
-<strong>Status setzen: </strong> 
+<strong>Status mit Benachrichtung setzen: </strong>
 <div class="statusConsole">
   <?php if ($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] == "beantragt") {?>
     <input

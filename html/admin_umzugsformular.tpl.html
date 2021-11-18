@@ -309,13 +309,14 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
  --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
  --><input type="submit" class="btn grey"
            onclick="umzugsantrag_save()"
+           title="Beim Speichern wird der Auftragsstatus nicht geändert und es werden keine Benachrichtigungen versendet"
            value="Speichern"><!--
  -->{if 0}<input type="submit" class="btn red d-none"
            onclick="umzugsantrag_reload()"
            value="Neu laden">{/if}<!--
  --><input type="submit" class="btn red"
            onclick="umzugsantrag_add_attachement()"
-           value="Dateianhnge">
+           value="Dateianhänge">
 {if $creator == "mertens"}
   <input
           type="submit" class="btn red"
@@ -324,7 +325,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 <br>
 <br>
 {if $AS.umzugsstatus ne "temp"}
-<strong>Status setzen: </strong> 
+<strong>Status mit Benachrichtung setzen: </strong>
 <div class="statusConsole">
   {if $AS.umzugsstatus eq "beantragt"}
     <input

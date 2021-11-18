@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-10 12:12:28
+/* Smarty version 3.1.34-dev-7, created on 2021-11-18 14:50:18
   from '/var/www/html/html/umzugsteam_umzugsformular.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_618bb72c092b97_18802167',
+  'unifunc' => 'content_61965a1a9d47c3_64645737',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3980e6590adbc901815f7cf277dd110fe5dbc980' => 
     array (
       0 => '/var/www/html/html/umzugsteam_umzugsformular.tpl.read.html',
-      1 => 1636546337,
+      1 => 1637243372,
       2 => 'file',
     ),
   ),
@@ -28,7 +28,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_618bb72c092b97_18802167 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61965a1a9d47c3_64645737 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -65,95 +65,115 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
   <table border=0 cellspacing=1 cellpadding=1>
     <tr>
       <td style="padding:0;height:auto;width:200px;"><label style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
-      <td style="padding:0;width:250px;"><?php echo smarty_modifier_date_format(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugstermin'], ENT_QUOTES, 'UTF-8', true),"%d.%m.%Y");?>
-</td>
+      <td style="padding:0;width:250px;"><div  class="itxt itxt2col"><?php echo smarty_modifier_date_format(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugstermin'], ENT_QUOTES, 'UTF-8', true),"%d.%m.%Y");?>
+</div></td>
     </tr>
     <tr>
       <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
-      <td style="padding:0;"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugszeit'], ENT_QUOTES, 'UTF-8', true);?>
-</td>
+      <td style="padding:0;"><div  class="itxt itxt2col"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugszeit'], ENT_QUOTES, 'UTF-8', true);?>
+</div></td>
     </tr>
 
     <tr>
       <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
-      <td style="padding:0;"><?php echo smarty_modifier_date_format(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['antragsdatum'], ENT_QUOTES, 'UTF-8', true),"%d.%m.%Y");?>
-</td>
+      <td style="padding:0;"><div  class="itxt itxt2col"><?php echo smarty_modifier_date_format(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['antragsdatum'], ENT_QUOTES, 'UTF-8', true),"%d.%m.%Y");?>
+</div></td>
     </tr>
 
     <tr>
       <td style="padding:0;"><label style="display:block;width:auto;">Bestätigt:</label></td>
       <td style="padding:0;" class="status_<?php echo $_smarty_tpl->tpl_vars['AS']->value['genehmigt_br'];?>
-"><img id="imgStatGen" src="images/status_<?php echo mb_strtolower($_smarty_tpl->tpl_vars['AS']->value['genehmigt_br'], 'UTF-8');?>
+"><div  class="itxt itxt2col"><img id="imgStatGen" src="images/status_<?php echo mb_strtolower($_smarty_tpl->tpl_vars['AS']->value['genehmigt_br'], 'UTF-8');?>
 .png"><span id="txtStatGen"><?php if ($_smarty_tpl->tpl_vars['AS']->value['genehmigt_br'] != "Init") {?> <?php echo $_smarty_tpl->tpl_vars['AS']->value['genehmigt_br'];?>
  am <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['AS']->value['genehmigt_br_am'],"%d.%m.%Y %H:%M");?>
  <?php echo $_smarty_tpl->tpl_vars['AS']->value['genehmigt_br_von'];
-}?></span></td>
+}?></span></div></td>
     </tr>
 
     <tr>
       <td style="padding:0;"><label style="display:block;width:auto;">Abgeschlossen:</label></td>
       <td style="padding:0;" class="status_<?php echo $_smarty_tpl->tpl_vars['AS']->value['abgeschlossen'];?>
-"><img id="imgStatAbg" src="images/status_<?php echo mb_strtolower($_smarty_tpl->tpl_vars['AS']->value['abgeschlossen'], 'UTF-8');?>
+"><div  class="itxt itxt2col"><img id="imgStatAbg" src="images/status_<?php echo mb_strtolower($_smarty_tpl->tpl_vars['AS']->value['abgeschlossen'], 'UTF-8');?>
 .png"><span id="txtStatAbg"><?php if ($_smarty_tpl->tpl_vars['AS']->value['abgeschlossen'] != "Init") {?> <?php echo $_smarty_tpl->tpl_vars['AS']->value['abgeschlossen'];?>
  am <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['AS']->value['abgeschlossen_am'],"%d.%m.%Y %H:%M");?>
  <?php echo $_smarty_tpl->tpl_vars['AS']->value['abgeschlossen_von'];
-}?></span></td>
+}?></span></div></td>
     </tr>
     <tr>
       <td style="padding:0;"><label style="display:block;width:auto;">Status:</label></td>
-      <td style="padding:0;"><?php if (empty($_smarty_tpl->tpl_vars['AS']->value['angeboten_am']) && htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_QUOTES, 'UTF-8', true) == "genehmigt") {?>bestaetigt<?php } else {
+      <td style="padding:0;"><div  class="itxt itxt2col"><?php if (empty($_smarty_tpl->tpl_vars['AS']->value['angeboten_am']) && htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_QUOTES, 'UTF-8', true) == "genehmigt") {?>bestaetigt<?php } else {
 echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_QUOTES, 'UTF-8', true);
-}?></td>
+}?></div></td>
     </tr>
       <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
   </table>
+  <img src="%WebRoot%images/printer.png" width="16" height="16" alt="">
   <a href="%WebRoot%sites/umzugsblatt.php?id=<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
 " style="display: none" target="_Umzugsblatt<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
-"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Anforderungsblatt / Druckansicht</a>
-    <a href="%WebRoot%sites/lieferschein.php?id=<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
+">Anforderungsblatt / Druckansicht</a>
+  <a href="%WebRoot%sites/lieferschein.php?aid=<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
 " target="_Lieferschein<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
-"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Lieferschein (PDF)</a>
+">Lieferschein (PDF)</a>
+  | <a href="%WebRoot%sites/etiketten.php?aid=<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
+" target="_Etiketten<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
+">Etiketten (PDF)</a>
   <br>
 
-  <div id="BoxBemerkungen" style="display: none;">
-    <strong>Bemerkungen:</strong><br>
-    <div id="BemerkungenHistorie"><?php echo nl2br($_smarty_tpl->tpl_vars['AS']->value['bemerkungen']);?>
-</div>
-    <br>
-  </div>
-  <div id="BoxLieferhinweise">
+  <?php if ($_smarty_tpl->tpl_vars['AS']->value['lieferhinweise']) {?>
+  <div id="BoxLieferhinweise" style="margin-top:1.5rem">
     <strong>Lieferhinweise:</strong><br>
     <div id="LieferhinweiseContent"><?php echo nl2br($_smarty_tpl->tpl_vars['AS']->value['lieferhinweise']);?>
 </div>
   </div>
+  <?php }?>
 
-  <div style="float:left">
-      <h2 style="margin:0;">Lieferdaten</h2>
-      <table>
-        <tr>
-          <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
-          <td style="padding:0;width:250px;"><span data-fld="AS[vorname]"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['vorname'], ENT_QUOTES, 'UTF-8', true);?>
+  <div style="margin-top:1.5rem">
+    <div style="float:left">
+        <h2 style="margin:0;">Lieferdaten</h2>
+        <table>
+          <tr>
+            <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
+            <td style="padding:0;width:250px;"><div  class="itxt itxt2col"><span data-fld="AS[vorname]"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['vorname'], ENT_QUOTES, 'UTF-8', true);?>
 </span> <span data-fld="AS[name]"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['name'], ENT_QUOTES, 'UTF-8', true);?>
-</span></td>
-        </tr>
-        <tr>
-          <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
-          <td style="padding:0;" data-fld="AS[email]"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['email'], ENT_QUOTES, 'UTF-8', true);?>
-</td>
-        </tr>
-        <tr>
-          <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
-          <td style="padding:0;" data-fld="AS[fon]"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['fon'], ENT_QUOTES, 'UTF-8', true);?>
-</td>
-        </tr>
-          <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
-      </table>
-      <br>
-  </div>
-  <?php if (!empty($_smarty_tpl->tpl_vars['DL']->value) && !empty($_smarty_tpl->tpl_vars['DL']->value['Firmenname'])) {?>
-  <div style="float:left; margin-left:50px;">
-      <?php $_smarty_tpl->_subTemplateRender("file:umzugsteam_umzugsformular_lieferauswahl.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
+</span></div></td>
+          </tr>
+          <tr>
+            <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
+            <td style="padding:0;" data-fld="AS[email]"><div  class="itxt itxt2col"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['email'], ENT_QUOTES, 'UTF-8', true);?>
+</div></td>
+          </tr>
+          <tr>
+            <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
+            <td style="padding:0;" data-fld="AS[fon]"><div  class="itxt itxt2col"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['fon'], ENT_QUOTES, 'UTF-8', true);?>
+</div></td>
+          </tr>
+            <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+        </table>
+    </div>
+    <?php if (!empty($_smarty_tpl->tpl_vars['DL']->value) && !empty($_smarty_tpl->tpl_vars['DL']->value['Firmenname'])) {?>
+    <div style="float:left; margin-left:50px;">
+        <?php $_smarty_tpl->_subTemplateRender("file:umzugsteam_umzugsformular_lieferauswahl.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
+    </div>
+    <?php }?>
+    <div style="clear: both"></div>
+  </div>
+
+  <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner']) || !empty($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon'])) {?>
+  <div style="margin-top:1.5rem">
+    <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2>
+    <table>
+      <tr>
+        <td style="padding:0;width:200px;""><label style="width:100%;">Vor &amp; Nachname:</label></td>
+        <td style="padding:0;width:250px;"><div  class="itxt itxt2col"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner'], ENT_QUOTES, 'UTF-8', true);?>
+</div></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="width:100%;">Telefon:</label></td>
+        <td style="padding:0;"><div  class="itxt itxt2col"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon'], ENT_QUOTES, 'UTF-8', true);?>
+</div></td>
+      </tr>
+    </table>
   </div>
   <?php }?>
 
@@ -172,10 +192,12 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
 ?>
   <?php }?>
   <?php if (1) {?>
+    <div style="margin-top:1.5rem"></div>
       <?php $_smarty_tpl->_subTemplateRender("file:umzugsteam_umzugsformular_leistungsauswahl.tpl.read.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
   <?php }?>
   <?php if (!empty($_smarty_tpl->tpl_vars['UmzugsAnlagen']->value)) {?>
+    <div style="margin-top:1.5rem"></div>
     <?php $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('internal'=>1), 0, false);
 ?>
   <?php }?>
@@ -255,8 +277,8 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
       /* background-color: #eaf9ff; */
     }
   </style>
-  <div id="KundenabnahmeBox" <?php if ($_smarty_tpl->tpl_vars['umzugsstatus']->value == "abgeschlossen") {?>style="display:none"<?php }?>>
-    <h2>Kundenabnahme</h2>
+  <div id="KundenabnahmeBox" style="padding:1rem;<?php if ($_smarty_tpl->tpl_vars['umzugsstatus']->value == "abgeschlossen") {?>display:none:<?php }?>">
+    <h2 style="margin-left:0">Kundenabnahme</h2>
 
     <form id="frmAbnahme" class="w3-container" action="%WebRoot%lieferscheinabnahme.php" method="POST"
           name="abnahme" enctype="multipart/form-data" target="_self">
@@ -281,12 +303,16 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
         </div>
       </div>
 
-      <div style="min-height:1.5rem;margin-top:.8rem;">
-        <label style="margin-right:3rem;width:initial;">Ankunft <span style="border-bottom:1px solid black;margin-left:1rem;"><input name="ankunft" id="ankunftsZeit" type="time" size="8" class="input-bg-color"> Uhr</span></label>
-        <label style="margin-right:3rem;width:initial;">Abfahrt <span style="border-bottom:1px solid black;margin-left:1rem"><input name="abfahrt" id="abfahrtsZeit" type="time" size="8" class="input-bg-color"> Uhr</span></label>
+      <div style="min-height:1.5rem;margin-top:1.2rem;">
+        <label style="margin-right:3rem;width:initial;">Ankunft <span style="border-bottom:1px solid black;margin-left:1rem;"><input
+                name="ankunft" id="ankunftsZeit" type="time" size="8"
+                style="min-width:80px;" class="input-bg-color"> Uhr</span></label>
+        <label style="margin-right:3rem;width:initial;">Abfahrt <span style="border-bottom:1px solid black;margin-left:1rem"><input
+                name="abfahrt" id="abfahrtsZeit" type="time" size="8"
+                style="min-width:80px;" class="input-bg-color"> Uhr</span></label>
       </div>
 
-      <div style="min-height:1.5rem;margin-top:.8rem;">
+      <div style="min-height:1.5rem;margin-top:1.2rem;">
         <div><label style="margin-right:3rem;width:initial;" class="input-bg-color" > Etikettierung erfolgt</label></div>
         <?php if (!empty($_smarty_tpl->tpl_vars['Umzugsleistungen']->value) && is_array($_smarty_tpl->tpl_vars['Umzugsleistungen']->value)) {?>
          <?php
@@ -305,6 +331,7 @@ foreach ($_from as $_smarty_tpl->tpl_vars['L']->value) {
 "
                  id="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
 "
+                 style="width:1rem;height:1rem;"
                  value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
 " type="checkbox"> <?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
 
@@ -324,7 +351,7 @@ if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['L']->value) {
 ?>
         <?php if ($_smarty_tpl->tpl_vars['L']->value['kategorie'] == "Schreibtisch") {?>
-          <div>
+          <div style="min-height:1.5rem;margin-top:1.2rem;">
             <div>
               <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
               Funktionsprüfung erfolgt</label>
@@ -334,6 +361,7 @@ foreach ($_from as $_smarty_tpl->tpl_vars['L']->value) {
                      data-label="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
 "
                      id="Schreibtischpruefung"
+                     style="width:1rem;height:1rem;"
                      value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
 " type="checkbox"> <?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
 
