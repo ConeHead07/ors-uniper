@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-11 14:03:15
+/* Smarty version 3.1.34-dev-7, created on 2021-11-18 15:39:20
   from '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_618d22a316f828_02972241',
+  'unifunc' => 'content_61966598bc1b57_97772587',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f6b287127950a4b4dd8103490880f308965b3227' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1636639236,
+      1 => 1637246354,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_618d22a316f828_02972241 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61966598bc1b57_97772587 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div data-test="2" style="display:block;margin-top:15px;">
     <!-- admin_umzugsformular_leistungsauswahl.tpl.html -->
 </div>
@@ -291,6 +291,7 @@ $(function(){
 
 <?php echo '</script'; ?>
 >
+<h2 style="margin:0">Bestellte Leistungen</h2>
 <table class="MitarbeierItem" style="width:100%;">
     <thead>
         <tr>
@@ -310,9 +311,9 @@ if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['L']->value) {
 ?>
         <tr class="row inputRowVon">
-                        <td class="ktg1" onclick="get_Kategorie(this)"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
+                        <td class="ktg1" ><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
 </td>
-            <td class="lstg" onclick="get_Leistung(this)" data-p="<?php echo $_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'];?>
+            <td class="lstg"  data-p="<?php echo $_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'];?>
 " data-sum="<?php echo $_smarty_tpl->tpl_vars['L']->value['gesamtpreis'];?>
 ">
                 <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['image'])) {?>

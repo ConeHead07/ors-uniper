@@ -93,7 +93,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
   | <a href="%WebRoot%sites/etiketten.php?aid={$AS.aid}" target="_Etiketten{$AS.aid}">Etiketten</a>
 <br>
     {if !empty($AS.bemerkungen)}
-    <table width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1rem">
+    <table width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
         <tr>
           <td style="padding:0;width:200px;height:auto;width:auto;"><label style="width:180px;">Bisherige Bemerkungen:</label></td>
           <td></td>
@@ -107,7 +107,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     {/if}
 
     {if !empty($AS.lieferhinweise)}
-    <table width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1rem">
+    <table width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
       <tr>
         <td style="padding:0;width:200px;height:auto;width:auto;"><label style="width:180px;">Lieferhinweise:</label></td>
         <td></td>
@@ -120,7 +120,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     </table>
     {/if}
 
-  <div  style="margin-top: 1rem">
+  <div  style="margin-top: 2rem">
 <div style="float:left">
 <h2 style="margin:0;">Lieferdaten</h2>
 <input type="hidden" name="AS[aid]" value="{$AS.aid}">
@@ -144,7 +144,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
   </tr>
 </table>
 
-  <h2 style="margin:0;">Lieferadresse</h2>
+  <div style="margin-top:2rem;"><h2 style="margin:0;">Lieferadresse</h2></div>
   <table>
   <tr>
     <td style="padding:0;">
@@ -228,7 +228,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
   *}
 </table>
 <br>
-<h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2>
+<div style="margin-top:2rem;"><h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2></div>
 <table>
   <tr>
     <td style="padding:0;"><label for="ansprechpartner" style="width:180px;">Vor &amp; Nachname:</label></td>
@@ -270,7 +270,9 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 
 {if 1}
     {* include file="umzugsformular_leistungsauswahl.tpl.read.html" *}
+    <div style="margin-top:1.5rem">
     {include file="admin_umzugsformular_leistungsauswahl.tpl.html"}
+    </div>
 {/if}
 
 {if !empty($UmzugsAnlagen)}
@@ -287,25 +289,25 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 </div>
 {/if}
 <!-- <div style="color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="addMa();return false;">Weiteren Mitarbeiter ausw&auml;hlen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></div><br> -->
-<br>
 
-    <div id="BoxBemerkungen" style="margin-top: 1rem">
-        <strong>Bemerkung hinzufügen:</strong><br>
-        <textarea class="iarea bemerkungen" name="AS[bemerkungen]"></textarea>
-    </div>
 
-  <div style="margin-top: 1rem">
+  <div id="BoxBemerkungen" style="margin-top: 2rem">
+      <strong>Bemerkung hinzufügen:</strong><br>
+      <textarea class="iarea bemerkungen" name="AS[bemerkungen]" style="resize: vertical;overflow: auto"></textarea>
+  </div>
+
+  <div style="margin-top: 2rem">
     <strong>Lieferinweis (für Lieferschein):</strong><br>
 {if $AS.umzugsstatus ne "abgeschlossen" and $AS.umzugsstatus ne "storniert" and $AS.umzugsstatus ne "abgelehnt"}
     <div id="BoxLieferhinweise">
-        <textarea class="iarea bemerkungen lieferhinweise" name="AS[lieferhinweise]">{$AS.lieferhinweise|escape}</textarea>
+        <textarea class="iarea bemerkungen lieferhinweise" name="AS[lieferhinweise]" style="resize: vertical;overflow: auto">{$AS.lieferhinweise|escape}</textarea>
 {else}
       {$AS.lieferhinweise|escape}
 {/if}
     </div>
   </div>
 
-<div style="margin-top:1.5rem;width:100%;"><!--
+<div style="margin-top:1.5rem;width:100%;margin-top:2.5rem;"><!--
  --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
  --><input type="submit" class="btn grey"
            onclick="umzugsantrag_save()"
@@ -323,9 +325,8 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
           onclick="umzugsantrag_add_internal_attachement()"
           value="Interne Dateianhänge">{/if}
 <br>
-<br>
 {if $AS.umzugsstatus ne "temp"}
-<strong>Status mit Benachrichtung setzen: </strong>
+  <div style="margin-top:2.5rem;"><strong>Status mit Benachrichtung setzen: </strong></div>
 <div class="statusConsole">
   {if $AS.umzugsstatus eq "beantragt"}
     <input

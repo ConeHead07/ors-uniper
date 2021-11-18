@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-18 14:57:05
+/* Smarty version 3.1.34-dev-7, created on 2021-11-18 15:46:25
   from '/var/www/html/html/admin_umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61965bb1058ae2_87137543',
+  'unifunc' => 'content_619667418b8f26_93402755',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3277e0744e9936c6fe82f29745a3a388efa6f8e9' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular.tpl.html',
-      1 => 1637243814,
+      1 => 1637246778,
       2 => 'file',
     ),
   ),
@@ -29,7 +29,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_61965bb1058ae2_87137543 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619667418b8f26_93402755 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 $_smarty_tpl->_assignInScope('laenderCsv', substr($_smarty_tpl->tpl_vars['ASConf']->value['land']['size'],1,-1));
 $_smarty_tpl->_assignInScope('laenderLst', explode("','",$_smarty_tpl->tpl_vars['laenderCsv']->value));?>
@@ -171,7 +171,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
 ">Etiketten</a>
 <br>
     <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value['bemerkungen'])) {?>
-    <table width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1rem">
+    <table width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
         <tr>
           <td style="padding:0;width:200px;height:auto;width:auto;"><label style="width:180px;">Bisherige Bemerkungen:</label></td>
           <td></td>
@@ -186,7 +186,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
     <?php }?>
 
     <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value['lieferhinweise'])) {?>
-    <table width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1rem">
+    <table width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
       <tr>
         <td style="padding:0;width:200px;height:auto;width:auto;"><label style="width:180px;">Lieferhinweise:</label></td>
         <td></td>
@@ -200,7 +200,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
     </table>
     <?php }?>
 
-  <div  style="margin-top: 1rem">
+  <div  style="margin-top: 2rem">
 <div style="float:left">
 <h2 style="margin:0;">Lieferdaten</h2>
 <input type="hidden" name="AS[aid]" value="<?php echo $_smarty_tpl->tpl_vars['AS']->value['aid'];?>
@@ -232,7 +232,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['personalnr'], ENT_QUO
   </tr>
 </table>
 
-  <h2 style="margin:0;">Lieferadresse</h2>
+  <div style="margin-top:2rem;"><h2 style="margin:0;">Lieferadresse</h2></div>
   <table>
   <tr>
     <td style="padding:0;">
@@ -280,7 +280,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     </tr>
 </table>
 <br>
-<h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2>
+<div style="margin-top:2rem;"><h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2></div>
 <table>
   <tr>
     <td style="padding:0;"><label for="ansprechpartner" style="width:180px;">Vor &amp; Nachname:</label></td>
@@ -326,8 +326,11 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 }?>
 
 <?php if (1) {?>
-        <?php $_smarty_tpl->_subTemplateRender("file:admin_umzugsformular_leistungsauswahl.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
-}?>
+        <div style="margin-top:1.5rem">
+    <?php $_smarty_tpl->_subTemplateRender("file:admin_umzugsformular_leistungsauswahl.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
+?>
+    </div>
+<?php }?>
 
 <?php if (!empty($_smarty_tpl->tpl_vars['UmzugsAnlagen']->value)) {?>
   <?php $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
@@ -344,18 +347,18 @@ $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read2.html
 </div>
 <?php }?>
 <!-- <div style="color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="addMa();return false;">Weiteren Mitarbeiter ausw&auml;hlen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></div><br> -->
-<br>
 
-    <div id="BoxBemerkungen" style="margin-top: 1rem">
-        <strong>Bemerkung hinzufügen:</strong><br>
-        <textarea class="iarea bemerkungen" name="AS[bemerkungen]"></textarea>
-    </div>
 
-  <div style="margin-top: 1rem">
+  <div id="BoxBemerkungen" style="margin-top: 2rem">
+      <strong>Bemerkung hinzufügen:</strong><br>
+      <textarea class="iarea bemerkungen" name="AS[bemerkungen]" style="resize: vertical;overflow: auto"></textarea>
+  </div>
+
+  <div style="margin-top: 2rem">
     <strong>Lieferinweis (für Lieferschein):</strong><br>
 <?php if ($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] != "abgeschlossen" && $_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] != "storniert" && $_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] != "abgelehnt") {?>
     <div id="BoxLieferhinweise">
-        <textarea class="iarea bemerkungen lieferhinweise" name="AS[lieferhinweise]"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['lieferhinweise'], ENT_QUOTES, 'UTF-8', true);?>
+        <textarea class="iarea bemerkungen lieferhinweise" name="AS[lieferhinweise]" style="resize: vertical;overflow: auto"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['lieferhinweise'], ENT_QUOTES, 'UTF-8', true);?>
 </textarea>
 <?php } else { ?>
       <?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['lieferhinweise'], ENT_QUOTES, 'UTF-8', true);?>
@@ -364,7 +367,7 @@ $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read2.html
     </div>
   </div>
 
-<div style="margin-top:1.5rem;width:100%;"><!--
+<div style="margin-top:1.5rem;width:100%;margin-top:2.5rem;"><!--
  --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
  --><input type="submit" class="btn grey"
            onclick="umzugsantrag_save()"
@@ -382,9 +385,8 @@ $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read2.html
           onclick="umzugsantrag_add_internal_attachement()"
           value="Interne Dateianhänge"><?php }?>
 <br>
-<br>
 <?php if ($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] != "temp") {?>
-<strong>Status mit Benachrichtung setzen: </strong>
+  <div style="margin-top:2.5rem;"><strong>Status mit Benachrichtung setzen: </strong></div>
 <div class="statusConsole">
   <?php if ($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] == "beantragt") {?>
     <input
