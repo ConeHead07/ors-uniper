@@ -289,7 +289,7 @@ if ($exportFormat !== 'html' && count($all)) {
     }
 
     $sheet02Name = 'KumulierteLeistungen';
-    $sheet02Header = $assocLeistungsRowToSheetHeader($artikelStat[0] );
+    $sheet02Header = leistungsRowToSheetHeader($artikelStat[0] );
     $writer->writeSheetHeader($sheet02Name, $sheet02Header);
     foreach($artikelStat as $_row) {
         $writer->writeSheetRow($sheet02Name, $_row);
