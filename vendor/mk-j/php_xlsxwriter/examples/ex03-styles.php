@@ -24,6 +24,9 @@ $writer->writeSheetRow('Sheet1', $rowdata = array(300,234,456,789), $styles6 );
 $writer->writeSheetRow('Sheet1', $rowdata = array(300,234,456,789), $styles7 );
 $writer->writeSheetRow('Sheet1', $rowdata = array(300,234,456,789), $styles8 );
 $writer->writeSheetRow('Sheet1', $rowdata = array(300,234,456,789), $styles9 );
-$writer->writeToFile('xlsx-styles.xlsx');
+//$writer->writeToFile('xlsx-styles.xlsx');
+header('Content-Type: application/xls');
+header('Content-Disposition: attachment; filename="' . basename(__FILE__). '.xlsx"');
+$writer->writeToStdOut();
 
 

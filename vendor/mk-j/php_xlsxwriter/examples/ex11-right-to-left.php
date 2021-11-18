@@ -13,7 +13,12 @@ $writer = new XLSXWriter();
 $writer->setRightToLeft(true);
 
 $writer->writeSheetHeader('Sheet1', $header);
-foreach($rows as $row)
-	$writer->writeSheetRow('Sheet1', $row);
-$writer->writeToFile('xlsx-right-to-left.xlsx');
+foreach($rows as $row) {
+    $writer->writeSheetRow('Sheet1', $row);
+}
+//$writer->writeToFile('xlsx-right-to-left.xlsx');
 
+header('x-Memory-Usage: ' . floor((memory_get_peak_usage())/1024/1024) . 'MB');
+header('Content-Type: application/xls');
+header('Content-Disposition: attachment; filename="' . basename(__FILE__). '.xlsx"');
+$writer->writeToStdOut();

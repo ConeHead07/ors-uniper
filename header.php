@@ -23,7 +23,7 @@ require_once($MConf['AppRoot'] . $MConf['Class_Dir'] . 'myTplEngine.class.php');
 
 $vendorAutoloaderFile = __DIR__ . '/vendor/autoload.php';
 if (file_exists($vendorAutoloaderFile)) {
-    // require_once $vendorAutoloaderFile;
+    require_once $vendorAutoloaderFile;
 }
 
 spl_autoload_register(function($className) {

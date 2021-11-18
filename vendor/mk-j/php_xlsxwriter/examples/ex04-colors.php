@@ -15,4 +15,7 @@ foreach($colors as $b) {
 		$writer->writeSheetRow('Sheet1', $rowdata, $rowstyle );
 	}
 }
-$writer->writeToFile('xlsx-colors.xlsx');
+//$writer->writeToFile('xlsx-colors.xlsx');
+header('Content-Type: application/xls');
+header('Content-Disposition: attachment; filename="' . basename(__FILE__). '.xlsx"');
+$writer->writeToStdOut();

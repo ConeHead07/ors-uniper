@@ -29,7 +29,9 @@ foreach($rows as $row)
 
 //$writer->writeSheet($rows,'Sheet1', $header);//or write the whole sheet in 1 call
 
-$writer->writeToFile('xlsx-simple.xlsx');
-//$writer->writeToStdOut();
+//$writer->writeToFile('xlsx-simple.xlsx');
+header('Content-Type: application/xls');
+header('Content-Disposition: attachment; filename="' . basename(__FILE__). '.xlsx"');
+$writer->writeToStdOut();
 //echo $writer->writeToString();
 

@@ -52,7 +52,10 @@ $writer->writeSheetHeader('Dates',$sheet2header);
 $writer->writeSheetRow('Dates',array($date,$date,$date,$date,$date,$date,$date,$date,$date,$date,$time,$time) );
 $writer->writeSheetHeader('Currencies',$sheet3header);
 $writer->writeSheetRow('Currencies',array($amount,$amount,$amount,$amount,$amount,$amount,$amount,$amount,$amount) );
-$writer->writeToFile('xlsx-formats.xlsx');
+//$writer->writeToFile('xlsx-formats.xlsx');
+header('Content-Type: application/xls');
+header('Content-Disposition: attachment; filename="' . basename(__FILE__). '.xlsx"');
+$writer->writeToStdOut();
 //$writer->writeToStdOut();
 //echo $writer->writeToString();
 

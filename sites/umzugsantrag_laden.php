@@ -33,14 +33,18 @@ function umzugsantrag_laden() {
 	
 	$AID = getRequest("id","");
 	if (!$AID) {
-		$error.= "Daten können erst nach erstmaligem Speichern neu geladen werden!<br>\n";
+		$error.= "Daten kÃ¶nnen erst nach erstmaligem Speichern neu geladen werden!<br>\n";
 		return false;
 	}
-	$AS = new ItemEdit($_CONF["umzugsantrag"], $connid, $user, $AID);
+
+    $creator = ( preg_match('/user|kunde|property/', $user['gruppe'] ) ? 'property' : 'mertens');
+	$ASConf = $_CONF["umzugsantrag"];
+	$AS = new ItemEdit($ASConf, $connid, $user, $AID);
 	
 	$Tpl = new myTplEngine();
+    $Tpl->assign('user', $user);
 	$TplMaListItem = array("ID"=>1, "nachname"=>"", "vorname"=>"", "ort"=>"", "gebaeude"=>"", "raumnr"=>"");
-	
+
 	$MAConf = $_CONF["umzugsmitarbeiter"];
 	// If AID: Bearbeitungsformular mit DB-Daten
 	if ($AID) {
@@ -115,15 +119,55 @@ function umzugsantrag_laden() {
 		);
                 print_r($defaultAS);
 		$AS->loadInput($defaultAS, false);
-		$MA->loadInput(array(), false);
-		$Tpl->assign("AS", array($AS->arrInput));
+		// $MA->loadInput(array(), false);
 		//$MAItems = array($MA->arrInput);
 	}
+    $umzug_optionvals = explode("','", trim($_CONF["umzugsantrag"]['Fields']['umzug']['size'], "'"));
+
+    $AS->arrInput['gebaeude_text'] = '';
+    $AS->arrInput['von_gebaeude_text'] = '';
+    $AS->arrInput['nach_gebaeude_text'] = '';
+    if ((int)$AS->arrInput['gebaeude']) {
+        $AS->arrInput['gebaeude_text'] = $db->query_one(
+            'SELECT CONCAT(adresse, ", ", stadtname, " [", id, "]") adr '
+            .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['gebaeude']);
+    }
+    if ((int)$AS->arrInput['von_gebaeude_id']) {
+        $AS->arrInput['von_gebaeude_text'] = $db->query_one(
+            'SELECT CONCAT(adresse, ", ", stadtname) adr '
+            .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['von_gebaeude_id']);
+    }
+    if ((int)$AS->arrInput['nach_gebaeude_id']) {
+        $AS->arrInput['nach_gebaeude_text'] = $db->query_one(
+            'SELECT CONCAT(adresse, ", ", stadtname) adr '
+            .'FROM mm_stamm_gebaeude WHERE id = ' . (int)$AS->arrInput['nach_gebaeude_id']);
+    }
 	
 	$Tpl->assign("AS", $AS->arrInput);
-	if (!empty($MAItems) && count($MAItems)) $Tpl->assign("Mitarbeiterliste", $MAItems);
+    $Tpl->assign("s", 'aantrag');
+    $Tpl->assign('AID', $AID);
+    $Tpl->assign('AIDJson', json_encode($AID));
+    $Tpl->assign("ASConf", $ASConf['Fields']);$Tpl->assign("AS", $AS->arrInput);
+    $Tpl->assign("ASJson", json_encode($AS->arrInput));
+    $Tpl->assign("umzugsstatus", $AS->arrInput['umzugsstatus']);
+    $Tpl->assign("umzugsstatusJson", json_encode($AS->arrInput['umzugsstatus']));
+    $Tpl->assign("antragsstatus", $AS->arrInput['antragsstatus']);
+    $Tpl->assign("antragsstatusJson", json_encode($AS->arrInput['antragsstatus']));
+    $Tpl->assign("umzug_options", array_combine($umzug_optionvals, $umzug_optionvals));
+    $Tpl->assign("creator", $creator);
+    $Tpl->assign("creatorJson", json_encode($creator));
+    $Tpl->assign("user", $user);
+    $Tpl->assign('lkTreeItems', []);
+    $Tpl->assign('lkTreeItemsJson', '[]');
+    $Tpl->assign('lkmById', []);
+    $Tpl->assign('lkmByIdJson', '[]');
+    $Tpl->assign('Umzugsleistungen', []);
+    $Tpl->assign('UmzugsleistungenJson', '[]');
+
+	if (!empty($MAItems) && count($MAItems)) {
+	    $Tpl->assign("Mitarbeiterliste", $MAItems);
+    }
 	
 	return $Tpl->fetch("umzugsformular.tpl.html");
 }
 
-?>

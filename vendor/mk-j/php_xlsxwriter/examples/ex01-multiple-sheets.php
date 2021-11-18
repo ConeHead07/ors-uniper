@@ -25,8 +25,10 @@ foreach($data1 as $row)
 foreach($data2 as $row)
 	$writer->writeSheetRow('Sheet2', $row);
 
-$writer->writeToFile('xlsx-sheets.xlsx');
-//$writer->writeToStdOut();
+//$writer->writeToFile('xlsx-sheets.xlsx');
+header('Content-Type: application/xls');
+header('Content-Disposition: attachment; filename="' . basename(__FILE__). '.xlsx"');
+$writer->writeToStdOut();
 //echo $writer->writeToString();
 
 exit(0);

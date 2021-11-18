@@ -214,7 +214,7 @@
               <div class="fld-cell fld-leistungen" style="width:{$leistungenWidth}px;" title="{$U.LeistungenFull}">{$U.Leistungen}&nbsp;</div>
               {/if}
               {if $showSumme}
-              <div class="fld-cell fld-summe" style="width:{$summeWidth}px;">{$U.summe|number_format:2:",":"."}&nbsp;</div>
+              <div class="fld-cell fld-summe" style="width:{$summeWidth}px;">{$U.Summe|number_format:2:",":"."}&nbsp;</div>
               {/if}
               <br clear=left>
           </div>
@@ -228,20 +228,26 @@
     <table class="tblList" width="100%">
         <thead>
             <tr>
+                <th>Kategorie</th>
                 <th>Artikel</th>
                 <th>Farbe</th>
                 <th>Größe</th>
+                <th>Preis</th>
                 <th>Menge</th>
+                <th>Summe</th>
             </tr>
 
         </thead>
         <tbody>
     {foreach item=A from=$artikelStat}
     <tr>
+        <td>{$A.Kategorie}</td>
         <td>{$A.Bezeichnung}</td>
         <td>{$A.Farbe}</td>
         <td>{$A.Groesse}</td>
+        <td>{$A.Preis}</td>
         <td style="text-align:right">{$A.count}</td>
+        <td>{$A.Summe}</td>
     </tr>
     {/foreach}
         </tbody>
@@ -302,7 +308,7 @@
 
         $("#btnCsvExport").bind("click", function() {
             send('format=csv');
-        })
+        });
     });
 </script>
 

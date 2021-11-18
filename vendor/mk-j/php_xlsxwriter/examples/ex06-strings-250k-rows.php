@@ -18,6 +18,8 @@ for($i=0; $i<250000; $i++)
 	$s4 = substr($s, rand()%16000, rand()%5+5);
     $writer->writeSheetRow('Sheet1', array($s1, $s2, $s3, $s4) );
 }
-$writer->writeToFile('xlsx-strings-250k.xlsx');
-echo '#'.floor((memory_get_peak_usage())/1024/1024)."MB"."\n";
-
+//$writer->writeToFile('xlsx-strings-250k.xlsx');
+header('x-Memory-Usage: ' . floor((memory_get_peak_usage())/1024/1024) . 'MB');
+header('Content-Type: application/xls');
+header('Content-Disposition: attachment; filename="' . basename(__FILE__). '.xlsx"');
+$writer->writeToStdOut();

@@ -1,9 +1,11 @@
 <?php
 $Tpl = new myTplEngine();
 
+$error = '';
 $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
 $datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'antragsdatum';
+$exportFormat = getRequest('format', 'html');
 
 $aAuftragsstatus = (!empty($_REQUEST['auftragsstatus'])) ? $_REQUEST['auftragsstatus'] : ['beauftragt'];
 
@@ -63,18 +65,63 @@ $query = (!empty($_REQUEST['q']))   ? $_REQUEST['q'] : array();
 
 $finish = (!empty($_REQUEST['finish'])) ? (int)(bool)$_REQUEST['finish'] : 0;
 $aids = (!empty($_REQUEST['aids']))     ? $_REQUEST['aids'] : array();
-$tourkennung = (!empty($_REQUEST['tourkennung']))   ? $_REQUEST['tourkennung'] : '';
+$tourkennung = (!empty($_REQUEST['tourkennung']))   ? trim($_REQUEST['tourkennung']) : '';
+$tourdatum = (!empty($_REQUEST['tourdatum']))   ? trim($_REQUEST['tourdatum']) : '';
 $all   = (!empty($_REQUEST['all']))     ? $_REQUEST['all'] : '';
 
-if ($finish && $tourkennung && count($aids)) {
-    $sql = 'UPDATE mm_umzuege SET '
-        . ' tour_disponiert_am = NOW(), '
-        . ' tour_disponiert_von = :username, '
-        . ' tour_kennung = :tour_kennung '
-        . ' WHERE aid IN('.implode(',', $aids).')'
-        . ' AND IFNUL(tour_kennung, "") NOT LIKE :tour_kennung2';
-    $db->query($sql, array('tour_kennung' => $tourkennung, 'tour_kennung2' => $tourkennung, 'username' => $user['user']));
-    // echo $db->error() . '<br>' . $db->lastQuery . '<br>';
+if ($finish && ($tourkennung || $tourdatum) && is_array($aids) && count($aids)) {
+    $aids = array_map('intval', $aids);
+    $iNumConflicts = 0;
+
+    if ($tourkennung && $tourdaum) {
+        $sqlCount = 'FROM mm_umzuege 
+          WHERE 
+            umzugstermin NOT LIKE :tourdatum 
+            AND umzugsstatus NOT IN ("beantragt", "angeboten")
+            AND aid IN('.implode(',', $aids).')';
+
+        $iNumConflicts = $db->query_count($sqlCount);
+
+        if ($iNumConflicts > 0) {
+            $error.= '<div>Für die geplante Tourenzuweisung bestehen ' . $iNumConflicts . ' Konflikte!<br>' . "\n"
+                . 'Für bereits avisierte Touren kann das Lieferdatum mit dieser Funktion nicht geändert werden.<br>' . "\n"
+                . 'Wechsel hierzu bitte in den einzelnen Auftrag.</div>';
+        }
+    }
+    if (!empty($tourdatum)) {
+        if (!preg_match('#^(2\d{3}-\d\d-\d\d|\d\d?.\d\d?.\d\d\d\d)$#', $tourdatum)) {
+            $error.= '<div>Ungültiges Datumsformat für das Tourdatum. Zulässig ist TT.MM.YYYY oder YYYY-MM-TT</div>';
+        } else {
+            $t = strtotime($tourdatum);
+            if (!$t) {
+                $error.= '<div>Ungültige Datumsangabe für Tourdatum: ' . $tourdatum . '</div>';
+            }
+        }
+        $tourdatum = date('Y-m-d', strtotime($tourdatum));
+
+    }
+
+    if (!$error) {
+        if ($tourkennung) {
+            $sql = 'UPDATE mm_umzuege SET '
+                . ' tour_zugewiesen_am = NOW(), '
+                . ' tour_zugewiesen_von = :username, '
+                . ' tour_kennung = :tour_kennung '
+                . ' WHERE aid IN(' . implode(',', $aids) . ')'
+                . ' AND IFNULL(tour_kennung, "") NOT LIKE :tour_kennung2';
+            $db->query($sql, array('tour_kennung' => $tourkennung, 'tour_kennung2' => $tourkennung, 'username' => $user['user']));
+        }
+        if ($tourdatum) {
+            $sql = 'UPDATE mm_umzuege SET '
+                . ' tour_zugewiesen_am = NOW(), '
+                . ' tour_zugewiesen_von = :username, '
+                . ' umzugstermin = :tourdatum '
+                . ' WHERE aid IN(' . implode(',', $aids) . ')'
+                . ' AND IFNULL(umzugstermin, "") NOT LIKE :tourdatum2';
+            $db->query($sql, array('tourdatum' => $tourdatum, 'tourdatum2' => $tourdatum, 'username' => $user['user']));
+        }
+        // echo $db->error() . '<br>' . $db->lastQuery . '<br>';
+    }
 }
 
 $sql = 'SELECT date_format(umzugstermin, "%Y\W%u") kw '
@@ -202,6 +249,58 @@ $sqlLimit = '';
 $sql = $sqlSelect . $sqlFrom . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
 $rows = $db->query_rows($sql, 0, array('von'=> $datumvon, 'bis'=> $datumbis));
 
+if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
+    require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
+
+    $iNumItems = count($all);
+
+    $aSelectCols = [
+        'summe', 'aid', 'kid', 'tour_kennung', 'service', 'plz', 'ort', 'strasse',
+        'land', 'Leistungen', 'antragsdatum', 'Lieferdatum', 'tour_zugewiesen_am',
+        'bestaetigt_am', 'abgeschlossen_am'
+    ];
+
+    $writer = new XLSXWriter();
+    $writer->setAuthor('Frank Barthold, merTens AG');
+
+    $sheet01Name = 'Auftraege';
+    $sheet01Header = leistungsRowToSheetHeader($aSelectCols);
+    // die('<pre>' . print_r(compact('sheet01Header'), 1));
+    $writer->writeSheetHeader($sheet01Name , $sheet01Header);
+    foreach($rows as $_row) {
+        $_export = [];
+        $_styles = [];
+        foreach($aSelectCols as $k) {
+            $s = [];
+            $v = isset($_row[$k]) ? $_row[$k] : '';
+            if ($k === 'aid' && (int)$v > 0) {
+                $_link = $MConf["WebRoot"] . "?s=aantrag&id=" . (int)$v;
+                $_styles[] = [ 'color' => '#00F', 'font-style' => 'underline' ];
+                $_export[] = '=HYPERLINK("' . $_link . '","' . (int)$v . '")';
+                continue;
+            }
+            $_styles[] = $s;
+            $_export[] = $v;
+        }
+        $writer->writeSheetRow($sheet01Name, $_export, $_styles);
+    }
+
+    /*
+    $sheet02Name = 'KumulierteLeistungen';
+    $sheet02Header = $assocLeistungsRowToSheetHeader($artikelStat[0] );
+    $writer->writeSheetHeader($sheet02Name, $sheet02Header);
+    foreach($artikelStat as $_row) {
+        $writer->writeSheetRow($sheet02Name, $_row);
+    }
+    */
+
+    header('Content-Type: application/xls');
+    header('Content-Disposition: attachment; filename="UniperTourenplanungVom' . date('YmdHi') . '.xlsx"');
+    $writer->writeToStdOut();
+
+    exit;
+}
+
 if (0) {
     echo $db->error() . '<br>' . $db->lastQuery . '<br>' . PHP_EOL;
 }
@@ -209,8 +308,10 @@ $kwvon = date('Y\WW', strtotime($datumvon));
 $kwbis = date('Y\WW', strtotime($datumbis));
 
 $Tpl->assign('s', $s);
+$Tpl->assign('error', $error);
 $Tpl->assign('all', $all);
 $Tpl->assign('tourkennung', $tourkennung);
+$Tpl->assign('tourdatum', $tourdatum);
 $Tpl->assign('Auftraege', $rows);
 $Tpl->assign('kw_options', $kw_options);
 $Tpl->assign('kwvon', $kwvon);

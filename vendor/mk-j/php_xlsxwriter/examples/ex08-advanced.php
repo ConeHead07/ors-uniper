@@ -49,6 +49,9 @@ $writer->writeSheetHeader($sheet4, ["col1"=>"string", "col2"=>"string"], $col_op
 $writer->writeSheetRow($sheet4, array(101,'this text will wrap'    ), $row_options = array('height'=>30,'wrap_text'=>true));
 $writer->writeSheetRow($sheet4, array(201,'this text is hidden'    ), $row_options = array('height'=>30,'hidden'=>true));
 $writer->writeSheetRow($sheet4, array(301,'this text will not wrap'), $row_options = array('height'=>30,'collapsed'=>true));
-$writer->writeToFile('xlsx-advanced.xlsx');
-
+//$writer->writeToFile('xlsx-advanced.xlsx');
+header('x-Memory-Usage: ' . floor((memory_get_peak_usage())/1024/1024) . 'MB');
+header('Content-Type: application/xls');
+header('Content-Disposition: attachment; filename="' . basename(__FILE__). '.xlsx"');
+$writer->writeToStdOut();
 

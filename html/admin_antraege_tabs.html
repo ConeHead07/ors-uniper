@@ -2,7 +2,10 @@
 
     <ul>
         {if $cat eq "auftrag"}
-        <li {if $cat eq "auftrag"}class="activeTab"{/if}><a xhref="?s=aantraege&id={$aid}&cat=auftrag&allusers=1" style="width:90px">Auftrag &nbsp; #{$aid}</a></li>
+        <li {if $cat eq "auftrag"}class="activeTab"{/if}><a href="?s=aantraege&id={$aid}&cat=auftrag&allusers=1" style="width:90px">Auftrag &nbsp; #{$aid}</a></li>
+        {/if}
+        {if $cat eq "tourenplanung"}
+        <li {if $cat eq "tourenplanung"}class="activeTab"{/if}><a href="?s=tourenplanung" style="width:90px">Tourenplanung</a></li>
         {/if}
         <li {if $cat eq "neue"}class="activeTab"{/if}><a href="?s={$s}&cat=neue{if $allusers}&allusers=1{/if}" style="width:90px">Bestellungen</a></li>
         <li {if $cat eq "disponierte"}class="activeTab"{/if}><a href="?s={$s}&cat=disponierte{if $allusers}&allusers=1{/if}" style="width:90px">Mit TourId</a></li>

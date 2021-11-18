@@ -278,10 +278,14 @@ function umzugsantrag_speichern() {
         $AS->arrConf["Fields"]["umzugstermin"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
         $AS->arrConf["Fields"]["umzugszeit"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
     }
-	
+
+
+	$aDBG = [ '#' . __LINE__ . ' ' . print_r(compact('AID'), 1)];
 	if ($AID) {
+        $aDBG[] = '#' . __LINE__ . ' ' . print_r(compact('AID'), 1);
 		if (!$AS->itemExists) {
 			$error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
+            $aDBG[] = '#' . __LINE__ . ' NO ITEM FOUND WITH AID' . $AID ;
 			return false;
 		}
 		
@@ -290,7 +294,29 @@ function umzugsantrag_speichern() {
 			$error.= "Wenden Sie sich für Änderungen an die Bearbeitungsstelle!<br>\n";
 			return false;
 		}
+
+
+		$_umzugsstatus = $AS->arrDbdata['umzugsstatus'];
+        $aDBG[] = '#' . __LINE__ . ' CHECK UMZUGSSTATUS FÜR TOURZUWEISUNG ' . print_r(compact('_umzugsstatus'), 1);
+		if (in_array($AS->arrDbdata['umzugsstatus'], ['angeboten', 'beantragt', 'bestaetigt'])) {
+		    $_tourField = 'tour_kennung';
+		    $_tk = isset($ASPostItem[$_tourField]) ? $ASPostItem[$_tourField] : 'NO INPUT FOR ' . $_tourField;
+            $aDBG[] = '#' . __LINE__ . ' CHECK TOURZUWEISUNG' . print_r(compact('_tk'), 1);
+		    if (isset($ASPostItem['tour_kennung'])) {
+                $_strcmp = strcmp($ASPostItem['tour_kennung'], $AS->arrDbdata['tour_kennung']);
+                $aDBG[] = '#' . __LINE__ . ' Tourkennung gefunden: NEU ' . $ASPostItem['tour_kennung'] . ', ALT ' . $AS->arrDbdata['tour_kennung'] . ' strcmp: ' . json_encode($_strcmp);
+		        if (strcmp($ASPostItem['tour_kennung'], $AS->arrDbdata['tour_kennung']) !== 0) {
+                    $ASPostItem['tour_zugewiesen_am'] = date('Y-m-d H:i:s');
+                    $ASPostItem['tour_zugewiesen_von'] = $user['user'];
+                }
+            }
+        }
 	}
+    $aDBG[] = '#' . __LINE__ . ' CHECK ENDE TOURZUWEISUNG';
+	$arrInput = $AS->arrInput;
+	$arrDbdata = $AS->arrDbdata;
+	$_request = $_REQUEST;
+	// die(print_r(compact('aDBG', 'arrInput', 'arrDbdata', '_request', 'ASPostItem'), 1));
 	
 	$MAPostItems = get_ma_post_items();
 	if ($AID && $MConf['min_ma'] && (!is_array($MAPostItems) || !count($MAPostItems)) ) {

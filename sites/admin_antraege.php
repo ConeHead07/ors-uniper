@@ -5,8 +5,10 @@ if (strpos($user['gruppe'], 'admin') === false && $user['gruppe'] !== 'umzugstea
 }
 
 
-require_once($InclBaseDir."umzugsantrag.inc.php");
-require_once($InclBaseDir."umzugsmitarbeiter.inc.php");
+require_once( $InclBaseDir . "umzugsantrag.inc.php");
+require_once( $InclBaseDir . "umzugsmitarbeiter.inc.php");
+require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
+
 $CUA = &$_CONF['umzugsantrag'];
 $CUM = &$_CONF['umzugsmitarbeiter'];
 $Tpl = new myTplEngine();
@@ -70,7 +72,7 @@ $orderFields = array(
 	'abgeschlossen' => array('field'=>'U.abgeschlossen_am', 'defaultOrder'=>'ASC'),
     'tour_kennung' =>  array('field'=>'tour_kennung', 'defaultOrder'=>'ASC'),
     'Leistungen' =>  array('field'=>'Leistungen', 'defaultOrder'=>'ASC'),
-    'summe' =>  array('field'=>'summe', 'defaultOrder'=>'ASC'),
+    'summe' =>  array('field'=>'Summe', 'defaultOrder'=>'ASC'),
 );
 
 $validFields = array_keys($orderFields);
@@ -215,13 +217,13 @@ $sqlGroup = ' GROUP BY U.aid' . $NL;
 $sqlHaving = ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' . $NL : '');
 
 
-$sqlSelect = 'SELECT U.*, ' . $NL
+$sqlSelect = 'SELECT U.*, U.umzugstermin AS Lieferdatum, ' . $NL
     . ' user.personalnr AS kid, ' . $NL
     . ' CONCAT(vg.stadtname, " ", vg.adresse) von_gebaeude, ' . $NL
     . ' CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude, ' . $NL
     . ' REPLACE(REPLACE(GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR ""), "P", ""), "R", "") AS Leistungen, ' . $NL
     . ' GROUP_CONCAT(lk.leistungskategorie ORDER BY leistungskategorie SEPARATOR ", ") AS LeistungenFull, ' . $NL
-    . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . $NL;
+    . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Summe' . $NL;
 
 $sql = 'SELECT COUNT(1) AS `count` FROM (' . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t';
 $row = $db->query_singlerow($sql);
@@ -242,10 +244,63 @@ $num = count($all);
 $sqlSummeTotal = 'SELECT SUM(summe) FROM ( ' . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t';
 $summeTotal = $db->query_one($sqlSummeTotal);
 
-$sqlArtikel = 'SELECT l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, COUNT(distinct(U.aid)) count, group_concat(ul.aid) aids' . $NL;
+$sqlArtikel = 'SELECT lk.leistungskategorie AS Kategorie, l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, '
+    . ' COUNT(distinct(U.aid)) count, '
+    . ' MAX(l.preis_pro_einheit) Preis, '
+    . ' (l.preis_pro_einheit * COUNT(distinct(U.aid))) AS Summe, '
+    . 'group_concat(ul.aid) aids' . $NL;
 $sqlArtikel.= $sqlFrom . $NL . $sqlWhere . ' AND l.leistung_id IS NOT NULL' . $NL;
 $sqlArtikel.= 'GROUP BY l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . $NL;
 $artikelStat = $db->query_rows($sqlArtikel);
+
+if ($exportFormat !== 'html' && count($all)) {
+
+    $iNumItems = count($all);
+
+    $aSelectCols = [
+        'Summe', 'aid', 'kid', 'tour_kennung', 'service', 'plz', 'ort', 'strasse',
+        'land', 'Leistungen', 'antragsdatum', 'Lieferdatum', 'tour_zugewiesen_am',
+        'bestaetigt_am', 'abgeschlossen_am'
+    ];
+
+    $writer = new XLSXWriter();
+    $writer->setAuthor('Frank Barthold, merTens AG');
+
+    $sheet01Name = $cat . 'Auftraege';
+    $sheet01Header = leistungsRowToSheetHeader($aSelectCols);
+    // die('<pre>' . print_r(compact('sheet01Header'), 1));
+    $writer->writeSheetHeader($sheet01Name , $sheet01Header);
+    foreach($all as $_row) {
+        $_export = [];
+        $_styles = [];
+        foreach($aSelectCols as $k) {
+            $s = [];
+            $v = isset($_row[$k]) ? $_row[$k] : '';
+            if ($k === 'aid' && (int)$v > 0) {
+                $_link = $MConf["WebRoot"] . "?s=aantrag&id=" . (int)$v;
+                $_styles[] = [ 'color' => '#00F', 'font-style' => 'underline' ];
+                $_export[] = '=HYPERLINK("' . $_link . '","' . (int)$v . '")';
+                continue;
+            }
+            $_styles[] = $s;
+            $_export[] = $v;
+        }
+        $writer->writeSheetRow($sheet01Name, $_export, $_styles);
+    }
+
+    $sheet02Name = 'KumulierteLeistungen';
+    $sheet02Header = $assocLeistungsRowToSheetHeader($artikelStat[0] );
+    $writer->writeSheetHeader($sheet02Name, $sheet02Header);
+    foreach($artikelStat as $_row) {
+        $writer->writeSheetRow($sheet02Name, $_row);
+    }
+
+    header('Content-Type: application/xls');
+    header('Content-Disposition: attachment; filename="' . $cat . 'Auftraege_ExportVom' . date('YmdHi') . '.xlsx"');
+    $writer->writeToStdOut();
+
+    exit;
+}
 
 if ($num_all > $num) {
 	$rlist_nav = new listbrowser(array(
@@ -318,7 +373,7 @@ if ($exportFormat === 'csv' && count($Auftraege)) {
     $csvEscape = '"';
     $csvEOL = "\n";
 
-    $fh = fopen($tmpfname, "w");
+    $fh = fopen($tmpfname, 'w');
 
     $cols = array_keys($Auftraege[0]);
 

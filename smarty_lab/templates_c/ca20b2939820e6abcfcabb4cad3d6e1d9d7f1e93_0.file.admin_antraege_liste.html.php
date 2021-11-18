@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-16 16:58:11
+/* Smarty version 3.1.34-dev-7, created on 2021-11-18 13:12:43
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_6193e32324b961_85604135',
+  'unifunc' => 'content_6196433b829329_87396035',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1637081885,
+      1 => 1637236219,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_6193e32324b961_85604135 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6196433b829329_87396035 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN --> 
@@ -359,7 +359,7 @@ px;" title="<?php echo $_smarty_tpl->tpl_vars['U']->value['LeistungenFull'];?>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showSumme']->value) {?>
               <div class="fld-cell fld-summe" style="width:<?php echo $_smarty_tpl->tpl_vars['summeWidth']->value;?>
-px;"><?php echo number_format($_smarty_tpl->tpl_vars['U']->value['summe'],2,",",".");?>
+px;"><?php echo number_format($_smarty_tpl->tpl_vars['U']->value['Summe'],2,",",".");?>
 &nbsp;</div>
               <?php }?>
               <br clear=left>
@@ -376,10 +376,13 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <table class="tblList" width="100%">
         <thead>
             <tr>
+                <th>Kategorie</th>
                 <th>Artikel</th>
                 <th>Farbe</th>
                 <th>Größe</th>
+                <th>Preis</th>
                 <th>Menge</th>
+                <th>Summe</th>
             </tr>
 
         </thead>
@@ -390,13 +393,19 @@ if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['A']->value) {
 ?>
     <tr>
+        <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Kategorie'];?>
+</td>
         <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Bezeichnung'];?>
 </td>
         <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Farbe'];?>
 </td>
         <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Groesse'];?>
 </td>
+        <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Preis'];?>
+</td>
         <td style="text-align:right"><?php echo $_smarty_tpl->tpl_vars['A']->value['count'];?>
+</td>
+        <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Summe'];?>
 </td>
     </tr>
     <?php
@@ -465,7 +474,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 
         $("#btnCsvExport").bind("click", function() {
             send('format=csv');
-        })
+        });
     });
 <?php echo '</script'; ?>
 >

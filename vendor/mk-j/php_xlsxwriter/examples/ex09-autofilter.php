@@ -14,5 +14,9 @@ for($i=0; $i<1000; $i++)
         date('Y-m-d H:i:s',time()-(rand()%31536000))
     ));
 }
-$writer->writeToFile('xlsx-autofilter.xlsx');
-echo '#'.floor((memory_get_peak_usage())/1024/1024)."MB"."\n";
+//$writer->writeToFile('xlsx-autofilter.xlsx');
+//echo '#'.floor((memory_get_peak_usage())/1024/1024)."MB"."\n";
+header('x-Memory-Usage: ' . floor((memory_get_peak_usage())/1024/1024) . 'MB');
+header('Content-Type: application/xls');
+header('Content-Disposition: attachment; filename="' . basename(__FILE__). '.xlsx"');
+$writer->writeToStdOut();
