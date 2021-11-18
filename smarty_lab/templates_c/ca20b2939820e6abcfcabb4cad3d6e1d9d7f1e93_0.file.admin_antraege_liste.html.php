@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-18 13:12:43
+/* Smarty version 3.1.34-dev-7, created on 2021-11-18 18:28:37
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_6196433b829329_87396035',
+  'unifunc' => 'content_61968d45273a01_38336334',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1637236219,
+      1 => 1637256511,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_6196433b829329_87396035 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61968d45273a01_38336334 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN --> 
@@ -86,7 +86,8 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
 <?php if ($_smarty_tpl->tpl_vars['cat']->value == "neue") {?>
     <?php $_smarty_tpl->_assignInScope('showLieferdatum', false);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
-    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['lieferdatumWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value);
+    <?php $_smarty_tpl->_assignInScope('showLeistungen', true);?>
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value);
 } elseif ($_smarty_tpl->tpl_vars['cat']->value == "disponierte") {?>
     <?php $_smarty_tpl->_assignInScope('showBestaetigt', false);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
@@ -124,9 +125,13 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
     .ulLinkList .flds-head-colsearch .fld-cell input {
         width: calc(100% - 2px);
     }
+    .fld-cell-amount,
     .ulLinkList .fld-summe,
     .ulLinkList .fld-summe input {
         text-align: right;
+    }
+    .currency-euro::after {
+        content: " €";
     }
 </style>
 <div style="clear:both"></div>
@@ -380,9 +385,9 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                 <th>Artikel</th>
                 <th>Farbe</th>
                 <th>Größe</th>
-                <th>Preis</th>
-                <th>Menge</th>
-                <th>Summe</th>
+                <th class="menge fld-cell-amount">Preis</th>
+                <th class="menge fld-cell-amount">Menge</th>
+                <th class="menge fld-cell-amount">Summe</th>
             </tr>
 
         </thead>
@@ -401,11 +406,11 @@ foreach ($_from as $_smarty_tpl->tpl_vars['A']->value) {
 </td>
         <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Groesse'];?>
 </td>
-        <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Preis'];?>
+        <td class="fld-cell-amount"><?php echo $_smarty_tpl->tpl_vars['A']->value['Preis'];?>
 </td>
-        <td style="text-align:right"><?php echo $_smarty_tpl->tpl_vars['A']->value['count'];?>
+        <td class="fld-cell-amount" style="text-align:right"><?php echo $_smarty_tpl->tpl_vars['A']->value['count'];?>
 </td>
-        <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Summe'];?>
+        <td class="menge fld-summe currency-euro"><?php echo number_format($_smarty_tpl->tpl_vars['A']->value['Summe'],2,",",".");?>
 </td>
     </tr>
     <?php

@@ -238,20 +238,40 @@ if ($exportFormat !== 'html') {
 }
 
 $all = $db->query_rows($sql);
-// echo $db->error()."<pre>\nsql: $sql </pre>\n";
+// echo '<pre style="color:#0ba1b5;font-size:11px;border:1px solid #0ba1b5;padding:1rem;border-radius:5px;background-color: #dedede;margin:5px;">' . $sql . '</pre>' . $NL;
 $num = count($all);
 
 $sqlSummeTotal = 'SELECT SUM(summe) FROM ( ' . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t';
 $summeTotal = $db->query_one($sqlSummeTotal);
 
-$sqlArtikel = 'SELECT lk.leistungskategorie AS Kategorie, l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, '
-    . ' COUNT(distinct(U.aid)) count, '
-    . ' MAX(l.preis_pro_einheit) Preis, '
-    . ' (l.preis_pro_einheit * COUNT(distinct(U.aid))) AS Summe, '
-    . 'group_concat(ul.aid) aids' . $NL;
-$sqlArtikel.= $sqlFrom . $NL . $sqlWhere . ' AND l.leistung_id IS NOT NULL' . $NL;
-$sqlArtikel.= 'GROUP BY l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . $NL;
+
+$sqlArtikel = 'SELECT lk.leistungskategorie AS Kategorie, ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
+    . ' COUNT(distinct(ul.aid)) count, ' . $NL
+    . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
+    . ' (l.preis_pro_einheit * COUNT(distinct(ul.aid))) AS Summe, ' . $NL
+    . ' group_concat(ul.aid) aids' . $NL
+    . ' FROM (' . $NL . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t '
+    . ' JOIN mm_umzuege_leistungen ul ON (t.aid = ul.aid) ' . $NL
+    . ' JOIN mm_leistungskatalog l ON (ul.leistung_id = l.leistung_id) '
+    . ' JOIN mm_leistungskategorie lk ON (l.leistungskategorie_id = lk.leistungskategorie_id) '
+    . ' LEFT JOIN mm_leistungspreismatrix lm ON('  . $NL
+    . '    l.leistung_id = lm.leistung_id '  . $NL
+    . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
+    . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
+    . ' ) '  . $NL;
+$sqlArtikel.= 'GROUP BY ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . $NL;
 $artikelStat = $db->query_rows($sqlArtikel);
+
+//$sqlArtikel = 'SELECT lk.leistungskategorie AS Kategorie, l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
+//    . ' COUNT(distinct(U.aid)) count, ' . $NL
+//    . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
+//    . ' (l.preis_pro_einheit * COUNT(distinct(U.aid))) AS Summe, ' . $NL
+//    . 'group_concat(ul.aid) aids' . $NL;
+//$sqlArtikel.= $sqlFrom . $NL . $sqlWhere . ' AND l.leistung_id IS NOT NULL' . $NL;
+//$sqlArtikel.= 'GROUP BY l.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . $NL;
+//$sqlArtikel.= $sqlHaving . $NL;
+//$artikelStat = $db->query_rows($sqlArtikel);
+// echo '<pre style="color:#0ba1b5;font-size:11px;border:1px solid #0ba1b5;padding:1rem;border-radius:5px;background-color: #dedede;margin:5px;">' . $sqlArtikel . '</pre>' . $NL;
 
 if ($exportFormat !== 'html' && count($all)) {
 

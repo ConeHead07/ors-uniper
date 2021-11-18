@@ -93,9 +93,22 @@
 	color: #0075B5;
 	cursor: pointer;
 }
+
 .tblList td.int,
+.tblList th.int,
+.tblList thead td.int,
+.tblList thead th.int,
+.tblList tbody td.int,
 .tblList td.float,
-.tblList td.menge {
+.tblList th.float,
+.tblList thead td.float,
+.tblList thead th.float,
+.tblList tbody td.float,
+.tblList td.menge,
+.tblList th.menge,
+.tblList thead td.menge,
+.tblList thead th.menge,
+.tblList tbody td.menge {
 	text-align:right;
 }
 .tblList td.sum,

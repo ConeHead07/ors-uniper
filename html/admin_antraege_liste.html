@@ -60,7 +60,8 @@
 {if $cat eq "neue"}
     {assign var="showLieferdatum" value=false}
     {assign var="showAbgeschlossen" value=false}
-    {assign var="strasseWidth" value=$strasseWidth + $lieferdatumWidth + $abgeschlossenWidth}
+    {assign var="showLeistungen" value=true}
+    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth}
 {elseif $cat eq "disponierte"}
     {assign var="showBestaetigt" value=false}
     {assign var="showAbgeschlossen" value=false}
@@ -98,9 +99,13 @@
     .ulLinkList .flds-head-colsearch .fld-cell input {
         width: calc(100% - 2px);
     }
+    .fld-cell-amount,
     .ulLinkList .fld-summe,
     .ulLinkList .fld-summe input {
         text-align: right;
+    }
+    .currency-euro::after {
+        content: " €";
     }
 </style>
 <div style="clear:both"></div>
@@ -232,9 +237,9 @@
                 <th>Artikel</th>
                 <th>Farbe</th>
                 <th>Größe</th>
-                <th>Preis</th>
-                <th>Menge</th>
-                <th>Summe</th>
+                <th class="menge fld-cell-amount">Preis</th>
+                <th class="menge fld-cell-amount">Menge</th>
+                <th class="menge fld-cell-amount">Summe</th>
             </tr>
 
         </thead>
@@ -245,9 +250,9 @@
         <td>{$A.Bezeichnung}</td>
         <td>{$A.Farbe}</td>
         <td>{$A.Groesse}</td>
-        <td>{$A.Preis}</td>
-        <td style="text-align:right">{$A.count}</td>
-        <td>{$A.Summe}</td>
+        <td class="fld-cell-amount">{$A.Preis}</td>
+        <td class="fld-cell-amount" style="text-align:right">{$A.count}</td>
+        <td class="menge fld-summe currency-euro">{$A.Summe|number_format:2:",":"."}</td>
     </tr>
     {/foreach}
         </tbody>
