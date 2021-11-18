@@ -268,12 +268,13 @@ function umzugsantrag_speichern() {
 	}
 
     $isSpeicher = $cmd === 'speichern';
+	$isRueckgabe = ($cmd === 'status' && $name === 'zurueckgeben');
     $isStorno = (strcmp($name, 'abgeschlossen') === 0 && strcmp($value, 'Storniert') === 0);
     $issetStatus = isset($ASPostItem['umzugsstatus']);
     $isNewStatus = !$issetStatus || (0 === strcasecmp($ASPostItem, $AS->arrDbdata['umzugsstatus']));
 
     if (
-        $cmd !== 'speichern' && !$isStorno
+        $cmd !== 'speichern' && !$isStorno && !$isRueckgabe
         ) {
         $AS->arrConf["Fields"]["umzugstermin"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
         $AS->arrConf["Fields"]["umzugszeit"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
