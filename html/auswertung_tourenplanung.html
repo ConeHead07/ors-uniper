@@ -81,7 +81,7 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
                 cursor:pointer;
             }
         {/literal}</style>
-
+{assign var="hintValidColSearchOperator" value="Zulässige Suchoperatoren: > >= = < <= ! != UND * als Wildcard"}
 <table id="tblTourenplanung" class="tblList">
     <thead>
         <tr>
@@ -104,16 +104,16 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
         </tr>
         <tr class="flds-head-colsearch">
             <th></th>
-            <th><input name="q[aid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></th>
-            <th><input name="q[kid]" style="width:100%" value="{if !empty($q) && isset($q.kid)}{$q.kid}{/if}"></th>
-            <th><input name="q[land]" style="width:100%" value="{if !empty($q) && isset($q.land)}{$q.land}{/if}"></th>
-            <th><input name="q[ort]" style="width:100%" value="{if !empty($q) && isset($q.ort)}{$q.ort}{/if}"></th>
-            <th><input name="q[plz]" style="width:100%" value="{if !empty($q) && isset($q.plzd)}{$q.plz}{/if}"></th>
-            <th><input name="q[strasse]" style="width:100%" value="{if !empty($q) && isset($q.strasse)}{$q.strasse}{/if}"></th>
+            <th><input title="{$hintValidColSearchOperator|escape}" name="q[aid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></th>
+            <th><input title="{$hintValidColSearchOperator|escape}" name="q[kid]" style="width:100%" value="{if !empty($q) && isset($q.kid)}{$q.kid}{/if}"></th>
+            <th><input title="{$hintValidColSearchOperator|escape}" name="q[land]" style="width:100%" value="{if !empty($q) && isset($q.land)}{$q.land}{/if}"></th>
+            <th><input title="{$hintValidColSearchOperator|escape}" name="q[ort]" style="width:100%" value="{if !empty($q) && isset($q.ort)}{$q.ort}{/if}"></th>
+            <th><input title="{$hintValidColSearchOperator|escape}" name="q[plz]" style="width:100%" value="{if !empty($q) && isset($q.plzd)}{$q.plz}{/if}"></th>
+            <th><input title="{$hintValidColSearchOperator|escape}" name="q[strasse]" style="width:100%" value="{if !empty($q) && isset($q.strasse)}{$q.strasse}{/if}"></th>
             <th><input name="q[service]" style="width:100%" value="{if !empty($q) && isset($q.service)}{$q.service}{/if}"></th>
             <th><input name="q[antragsdatum]" placeholder="JJJJ-MM-TT" style="width:100%" value="{if !empty($q) && isset($q.antragsdatum)}{$q.antragsdatum}{/if}"></th>
             <th><input name="q[umzugstermin]" placeholder="JJJJ-MM-TT" style="width:100%" value="{if !empty($q) && isset($q.umzugstermin)}{$q.umzugstermin}{/if}"></th>
-            <th><input name="q[tour_kennung]" style="width:100%" value="{if !empty($q) && isset($q.tour_kennung)}{$q.tour_kennung}{/if}"></th>
+            <th><input title="{$hintValidColSearchOperator|escape}" name="q[tour_kennung]" style="width:100%" value="{if !empty($q) && isset($q.tour_kennung)}{$q.tour_kennung}{/if}"></th>
             <th><input name="q[Leistungen]" style="width:100%" value="{if !empty($q) && isset($q.Leistungen)}{$q.Leistungen}{/if}"></th>
             <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.summe)}{$q.summe}{/if}"></th>
         </tr>

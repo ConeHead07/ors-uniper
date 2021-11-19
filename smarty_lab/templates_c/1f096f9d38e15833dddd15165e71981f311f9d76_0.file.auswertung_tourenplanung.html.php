@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-19 09:45:04
+/* Smarty version 3.1.34-dev-7, created on 2021-11-19 10:08:21
   from '/var/www/html/html/auswertung_tourenplanung.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61976410928ce1_56455852',
+  'unifunc' => 'content_619769852f5171_53581373',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1f096f9d38e15833dddd15165e71981f311f9d76' => 
     array (
       0 => '/var/www/html/html/auswertung_tourenplanung.html',
-      1 => 1637311497,
+      1 => 1637312893,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61976410928ce1_56455852 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619769852f5171_53581373 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <pre style="display: none;">
@@ -103,7 +103,7 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
                 cursor:pointer;
             }
         </style>
-
+<?php $_smarty_tpl->_assignInScope('hintValidColSearchOperator', "Zulässige Suchoperatoren: > >= = < <= ! != UND * als Wildcard");?>
 <table id="tblTourenplanung" class="tblList">
     <thead>
         <tr>
@@ -126,22 +126,28 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
         </tr>
         <tr class="flds-head-colsearch">
             <th></th>
-            <th><input name="q[aid]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['hintValidColSearchOperator']->value, ENT_QUOTES, 'UTF-8', true);?>
+" name="q[aid]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['aid'];
 }?>"></th>
-            <th><input name="q[kid]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['kid'])) {
+            <th><input title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['hintValidColSearchOperator']->value, ENT_QUOTES, 'UTF-8', true);?>
+" name="q[kid]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['kid'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['kid'];
 }?>"></th>
-            <th><input name="q[land]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['land'])) {
+            <th><input title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['hintValidColSearchOperator']->value, ENT_QUOTES, 'UTF-8', true);?>
+" name="q[land]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['land'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['land'];
 }?>"></th>
-            <th><input name="q[ort]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['ort'])) {
+            <th><input title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['hintValidColSearchOperator']->value, ENT_QUOTES, 'UTF-8', true);?>
+" name="q[ort]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['ort'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['ort'];
 }?>"></th>
-            <th><input name="q[plz]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['plzd'])) {
+            <th><input title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['hintValidColSearchOperator']->value, ENT_QUOTES, 'UTF-8', true);?>
+" name="q[plz]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['plzd'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['plz'];
 }?>"></th>
-            <th><input name="q[strasse]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['strasse'])) {
+            <th><input title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['hintValidColSearchOperator']->value, ENT_QUOTES, 'UTF-8', true);?>
+" name="q[strasse]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['strasse'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['strasse'];
 }?>"></th>
             <th><input name="q[service]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['service'])) {
@@ -153,7 +159,8 @@ echo $_smarty_tpl->tpl_vars['q']->value['antragsdatum'];
             <th><input name="q[umzugstermin]" placeholder="JJJJ-MM-TT" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['umzugstermin'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['umzugstermin'];
 }?>"></th>
-            <th><input name="q[tour_kennung]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['tour_kennung'])) {
+            <th><input title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['hintValidColSearchOperator']->value, ENT_QUOTES, 'UTF-8', true);?>
+" name="q[tour_kennung]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['tour_kennung'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['tour_kennung'];
 }?>"></th>
             <th><input name="q[Leistungen]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['Leistungen'])) {
