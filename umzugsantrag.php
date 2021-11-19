@@ -52,8 +52,8 @@ switch($cmd) {
 	if (!$ua_errors) {
 		$reID = umzugsantrag_speichern();
 		if ($reID) {
-			$msg.= "Ihre Umzugsdaten wurden gespeichert!<br>\n";
-			$msg.= "Sie können sie zu einem späteren Zeitpunkt über das Menü 'Umzugsantrag->Meine Bestellungen' öffnen und bearbeiten!<br>\n";
+			$msg.= "Ihre Bestelldaten wurden gespeichert!<br>\n";
+			$msg.= "Sie können sie zu einem späteren Zeitpunkt über das Menü 'Bestellungen->Meine Bestellungen' öffnen und bearbeiten!<br>\n";
 			if ($reID!=$id) $LoadScript.= "if (typeof(umzugsformular_set_id)==\"function\") umzugsformular_set_id('".$reID."'); else alert(\"Fehler beim Setzen der Antrags-ID!\");\n";
 			$LoadScript.= "if (typeof(umzugsantrag_auto_reload)==\"function\") umzugsantrag_auto_reload('".$reID."');\n";
 		}
@@ -101,7 +101,7 @@ switch($cmd) {
 	
 	case "stornieren":
 	if (umzugsantrag_antrag_stornieren()) {
-		$msg.= "Ihre Umzugsdaten wurden storniert!<br>\n";
+		$msg.= "Ihre Bestellung wurde storniert!<br>\n";
 		$msg.= "Der Status wurde gespeichert, der Antrag selbst kann nicht mehr aufgerufen werden!<br>\n";
 		$LoadScript.= "if (typeof(umzugsantrag_clear)==\"function\") umzugsantrag_clear();\n";
 	}
@@ -111,7 +111,7 @@ switch($cmd) {
 	case "autoreload":
 	$formHtml = umzugsantrag_laden();
 	if ($formHtml) {
-		$msg.= "Ihre Umzugsdaten wurden neu geladen!<br>\n";
+		$msg.= "Ihre Daten wurden neu geladen!<br>\n";
 	}
 	break;
 	

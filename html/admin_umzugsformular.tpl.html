@@ -328,7 +328,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 {if $AS.umzugsstatus ne "temp"}
   <div style="margin-top:2.5rem;"><strong>Status mit Benachrichtung setzen: </strong></div>
 <div class="statusConsole">
-  {if $AS.umzugsstatus eq "beantragt"}
+  {if $AS.umzugsstatus eq "beantragt" or $AS.umzugsstatus eq "angeboten"}
     <input
           id="btnStatGeprBackToUser" type="submit"
           class="{if $AS.umzugsstatus eq 'beantragt' or $AS.umzugsstatus eq 'erneutpruefen' or $AS.umzugsstatus eq 'angeboten'}btn blue{else}cssHide{/if}"

@@ -276,6 +276,27 @@ function umzugsantrag_fehler() {
             return $error;
     }
     $leistungen = getRequest('L');
+
+    // START: Fit Leistungen
+    // Fit Leistungen and remove Leistungen without valid leistung_id
+    $aLeistungenMitIds = [];
+    if (is_array($leistungen) && isset($leistungen['leistung_id']) && is_array($leistungen['leistung_id'])) {
+        $aLeistungsProps = [ 'menge_mertens', 'menge2_mertens', 'menge_property', 'menge2_property'];
+        $iNumLeistungen = count($leistungen['leistung_id']);
+        for($i = 0; $i < $iNumLeistungen; $i++) {
+            if ((int)$leistungen['leistung_id'][$i] > 0) {
+                $aLeistungenMitIds['leistung_id'][$i] = $leistungen['leistung_id'][$i];
+                foreach($aLeistungsProps as $_prop) {
+                    if (isset($leistungen[$_prop][$i])) {
+                        $aLeistungenMitIds[$_prop][$i] = $leistungen[$_prop][$i];
+                    }
+                }
+            }
+        }
+    }
+    $leistungen = $aLeistungenMitIds;
+    // ENDE: Fit Leistungen
+
 //    die(print_r(['leistungen'=> $leistungen, 'REQUEST_L' => $_REQUEST['L']]));
     if (!empty($leistungen) && is_array($leistungen) && count($leistungen)) {
         $errLst = getLeistungenError();

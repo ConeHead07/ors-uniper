@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-15 17:48:15
+/* Smarty version 3.1.34-dev-7, created on 2021-11-19 02:45:28
   from '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61929d5f9645b8_84676104',
+  'unifunc' => 'content_619701b8b10912_59974813',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '346d952b773372d484fde33cfdf99fd837ff0bb3' => 
     array (
       0 => '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1636998488,
+      1 => 1637286320,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61929d5f9645b8_84676104 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619701b8b10912_59974813 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div style="display:block;margin-top:15px;">
     <!-- umzugsformular_leistungsauswahl.tpl.html -->
@@ -259,6 +259,11 @@ $(function(){
     var createSelectLstgInput = function(leistungen, name, value, disabled) {
 
         var selectBox = $("<select/>").attr({name});
+        selectBox.append(
+            $("<option/>")
+                .val('')
+                .text('Bitte auswählen')
+        );
         for (var it of leistungen) {
             var isSelected = it.leistung_id === value;
             var optText = '';
@@ -473,7 +478,7 @@ $(function(){
 
 
         for(var i = 0; i < umzugsleistungen.length; i++) {
-            selectedLIds.push(umzugsleistungen[i].leistung_id);
+            selectedLIds.push( +umzugsleistungen[i].leistung_id );
         }
 
         var lkItemsByKtg = lkItems;
@@ -588,25 +593,27 @@ $(function(){
                         console.log('click leistung');
                     });
 
+                    var inputSelect = null;
+                    var selectedLeistungId = isSelected ? it.leistung_id : 0;
                     if (numVarianten) {
+                        tr.addClass("leistung-mit-varianten");
                         var optionsLeistungen = [ it ];
-                        var selectedLeistungId = isSelected ? it.leistung_id : 0;
                         var variantenDisabled = false;
                         for (var itV of ktgItems) {
                             if (itV.leistung_stamm_id === stammId && itV.leistung_id !== lstId) {
                                 optionsLeistungen.push(itV);
-                                if (selectedLIds.indexOf(itV.leistung_id) > -1) {
+                                if (selectedLIds.indexOf(+itV.leistung_id) > -1) {
                                     selectedLeistungId = itV.leistung_id;
                                 }
                             }
                         }
-                        var inputSelect = createSelectLstgInput(optionsLeistungen, 'L[leistung_id][]', selectedLeistungId, variantenDisabled);
+                        inputSelect = createSelectLstgInput(optionsLeistungen, 'X[leistung_id][]', selectedLeistungId, variantenDisabled);
 
                         inputSelect.on("change", function() {
                             $(this).find("option:selected").each(function() {
                                 var row = $(this).closest(".row");
                                 var optVal = $(this).val();
-                                var optData = $(this).data();
+                                var lstgData = (optVal) ? $(this).data() : row.data('leistung');
 
                                 var lstgBeschreibung = row.find(".Beschreibung");
                                 var lstgBezeichnung = row.find(".Bezeichnung");
@@ -616,24 +623,24 @@ $(function(){
                                 var lstgImage = row.find(".bild img");
                                 var tdChck = row.find(".chck");
 
-                                lstgBezeichnung.html( optData.leistung );
-                                lstgBeschreibung.html( optData.Beschreibung );
-                                if (optData.produkt_link) {
-                                    lstgProduktLink.attr("href", optData.produkt_link);
+                                lstgBezeichnung.html( lstgData.leistung );
+                                lstgBeschreibung.html( lstgData.Beschreibung );
+                                if (lstgData.produkt_link) {
+                                    lstgProduktLink.attr("href", lstgData.produkt_link);
                                     lstgProduktLinkBox.show();
-                                    lstgImageHref.attr("href", optData.produkt_link);
+                                    lstgImageHref.attr("href", lstgData.produkt_link);
                                 } else {
                                     lstgProduktLinkBox.hide();
                                     lstgProduktLink.removeAttr("href");
                                     lstgImageHref.removeAttr("href");
                                 }
 
-                                if (optData.image) {
+                                if (lstgData.image) {
                                     var img = new Image();
                                     $(img).on("load", function() {
                                         lstgImage.attr("src", this.src).show();
                                     });
-                                    img.src = "images/leistungskatalog/" + optData.image;
+                                    img.src = "images/leistungskatalog/" + lstgData.image;
                                 } else {
                                     lstgImage.hide();
                                 }
@@ -643,6 +650,10 @@ $(function(){
                             });
                         });
                         tdLstg.append(inputSelect);
+
+                        if (selectedLeistungId && selectedLeistungId != it.leistung_id) {
+                            inputSelect.trigger("change");
+                        }
                     }
 
 
@@ -713,9 +724,14 @@ $(function(){
                     var _ldata = {leistung_id: it.leistung_id};
                     var _lclss = ' group-leistungid-' + it.leistung_id;
 
+                    var leistung_id = it.leistung_id;
+                    if (numVarianten) {
+                        leistung_id = selectedLeistungId;
+                    }
+
                     tdChck
                         .append(
-                            createHiddenLstgInput('L[leistung_id][]', it.leistung_id, true, 'leistung_id' + _lclss, _ldata)
+                            createHiddenLstgInput('L[leistung_id][]', leistung_id, true, 'leistung_id' + _lclss, _ldata)
                         )
                         .append(
                             createHiddenLstgInput('L[menge_property][]', 0, true, 'menge menge_property' + _lclss, _ldata)
@@ -736,11 +752,12 @@ $(function(){
                 }
 
 
-                if (isSelected) {
+                if (isSelected || (numVarianten && selectedLeistungId)) {
                     inputChck.prop('checked', true);
                     tr.addClass("checked");
                     tdChck.find("input.lstg-input").prop("disabled", false);
                     tdChck.find("input.lstg-input.menge").val(1);
+                    // labelChck.trigger("click");
                 }
             }
             box.appendTo(boxLeistungen);
