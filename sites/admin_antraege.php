@@ -104,10 +104,22 @@ foreach($validFields as $_f) {
     }
 
     if (!empty($query[$_f])) {
-        if (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
-            $_q = $sqlQueryField . ' ' . $m[1] . $db->quote($m[2]);
+//        if (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
+//            $_q = $sqlQueryField . ' ' . $m[1] . $db->quote($m[2]);
+//        } else {
+//            $_q = $sqlQueryField . ' ' . ' LIKE ' . $db->quote( str_replace('*','%', $query[$_f]) . '%');
+//        }
+
+        if (preg_match('#^(' . preg_quote('!=', '#') .')(.*)$#', trim($query[$_f]), $m)) {
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]);
+        }
+        elseif (preg_match('/^(!)(.+)$/', trim($query[$_f]), $m)) {
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") NOT LIKE ' . $db->quote( str_replace('*','%', $m[2]) . '%');
+        }
+        elseif (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]);
         } else {
-            $_q = $sqlQueryField . ' ' . ' LIKE ' . $db->quote( str_replace('*','%', $query[$_f]) . '%');
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") LIKE ' . $db->quote( str_replace('*','%', $query[$_f]) . '%');
         }
 
         if (strcmp($_f, 'summe') !== 0) {

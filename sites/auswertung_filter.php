@@ -115,8 +115,14 @@ foreach($validFields as $_f) {
             }
             break;
         }
+        elseif (preg_match('#^(!=)(.*)$#', trim($query[$_f]), $m)) {
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]);
+        }
+        elseif (preg_match('/^(!)(.+)$/', trim($query[$_f]), $m)) {
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") NOT LIKE ' . $db->quote( str_replace('*','%', $m[2]) . '%');
+        }
         elseif (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
-            $_q = $sqlQueryField . ' ' . $m[1] . $db->quote($m[2]);
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]);
         } else {
             $_term = str_replace('*','%', trim($query[$_f]));
             if ($_f === 'land' && strcmp($_term,'NL') === 0) {
@@ -125,7 +131,7 @@ foreach($validFields as $_f) {
             else {
                 $_term.= '%';
             }
-            $_q = $sqlQueryField . ' ' . ' LIKE ' . $db->quote( $_term);
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") LIKE ' . $db->quote( str_replace('*','%', $_term) . '%');
         }
         
         if ($sqlQueryField === 'nachname') {

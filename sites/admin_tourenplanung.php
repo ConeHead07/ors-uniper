@@ -1,7 +1,9 @@
 <?php
 $Tpl = new myTplEngine();
 
+$NL = "\n";
 $error = '';
+$debugInfos = [];
 $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
 $datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'antragsdatum';
@@ -35,7 +37,7 @@ if (in_array('abgeschlossen', $aAuftragsstatus)) {
     $aWhereStatusAnyOf[] = ' (umzugsstatus = "abgeschlossen" or abgeschlossen="Ja") ' . "\n";
 }
 if (in_array('disponiert', $aAuftragsstatus)) {
-    $aWhereStatusAnyOf[] = ' (IFNULL(berechnet_am, "") != "") ' . "\n";
+    $aWhereStatusAnyOf[] = ' (IFNULL(tour_kennung, "") != "") ' . "\n";
 }
 
 if (empty($datumvon)) {
@@ -67,7 +69,7 @@ $finish = (!empty($_REQUEST['finish'])) ? (int)(bool)$_REQUEST['finish'] : 0;
 $aids = (!empty($_REQUEST['aids']))     ? $_REQUEST['aids'] : array();
 $tourkennung = (!empty($_REQUEST['tourkennung']))   ? trim($_REQUEST['tourkennung']) : '';
 $tourdatum = (!empty($_REQUEST['tourdatum']))   ? trim($_REQUEST['tourdatum']) : '';
-$all   = (!empty($_REQUEST['all']))     ? $_REQUEST['all'] : '';
+$all   = (!empty($_REQUEST['all']))     ? (int)$_REQUEST['all'] : 0;
 
 if ($finish && ($tourkennung || $tourdatum) && is_array($aids) && count($aids)) {
     $aids = array_map('intval', $aids);
@@ -136,39 +138,30 @@ foreach($kws as $i => $_kw) {
 }
 
 $validFields = array(
-    'aid',
-    'kid',
-    'land',
-    'ort',
-    'plz',
-    'strasse',
-    'antragsdatum',
-    'umzugstermin',
-    'tour_kennung',
-    'Leistungen',
-    'summe',
-    'vorgangsnummer',
-    'nachname',
-    'bundesland',
-    'stadtname',
-    'Wirtschaftseinheit',
-    'kostenstelle',
-    'planonnr',
-    'abgeschlossen_am',
-    'abgerechnet_am',
+    'aid' => array('field'=> 'a.aid'),
+    'kid' => array('field'=> 'user.personalnr'),
+    'land' => array('field'=> 'a.land'),
+    'ort' => array('field'=> 'a.ort'),
+    'plz' => array('field'=> 'a.plz'),
+    'strasse' => array('field'=> 'a.strasse'),
+    'antragsdatum' => array('field'=> 'a.antragsdatum'),
+    'umzugstermin' => array('field'=> 'a.umzugstermin'),
+    'tour_kennung' => array('field'=> 'a.tour_kennung'),
+    'Leistungen' => array('field'=> 'Leistungen'),
+    'summe' => array('field'=> 'summe'),
+    'vorgangsnummer' => array('field'=> 'a.vorgangsnummer'),
+    'nachname' => array('field'=> 'user.name'),
+    'Wirtschaftseinheit' => array('field'=> 'g.id'),
+    'abgeschlossen_am' => array('field'=> 'a.abgeschlossen_am'),
+    'abgerechnet_am' => array('field'=> 'a.berechnet_am'),
+    'berechnet_am' => array('field'=> 'a.berechnet_am'),
 );
 
 $having = array();
 $w = array();
-foreach($validFields as $_f) {
-    $sqlQueryField = $_f;
-    if ($_f == 'Wirtschaftseinheit') {
-        $sqlQueryField = 'g.id';
-    }
-    elseif ($_f == 'aid') {
-        $sqlQueryField = 'a.aid';
-    }
-    elseif ($_f === 'Leistungen' && !empty($query[$_f])) {
+foreach($validFields as $_f => $_fOpts) {
+    $sqlQueryField = $_fOpts['field'];
+    if ($_f === 'Leistungen' && !empty($query[$_f])) {
         $chars = str_split( trim($query[$_f]));
         $chars = preg_replace('#[^A-Z]#', '', $chars);
 
@@ -177,14 +170,20 @@ foreach($validFields as $_f) {
         }
         break;
     }
-    elseif ($_f === 'land' && !empty($query[$_f]) && strcmp(trim($query[$_f]), 'NL') ) {
+    elseif ($_f === 'land' && !empty($query[$_f]) && strcmp(trim($query[$_f]), 'NL') === 0 ) {
         $w[] = 'a.land LIKE "Niederlande"';
     }
     if (!empty($query[$_f])) {
-        if (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
-            $_q = $sqlQueryField . ' ' . $m[1] . $db->quote($m[2]);
+        if (preg_match('#^(' . preg_quote('!=', '#') .')(.*)$#', trim($query[$_f]), $m)) {
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]);
+        }
+        elseif (preg_match('/^(!)(.+)$/', trim($query[$_f]), $m)) {
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") NOT LIKE ' . $db->quote( str_replace('*','%', $m[2]) . '%');
+        }
+        elseif (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]);
         } else {
-            $_q = $sqlQueryField . ' ' . ' LIKE ' . $db->quote( str_replace('*','%', $query[$_f]) . '%');
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") LIKE ' . $db->quote( str_replace('*','%', $query[$_f]) . '%');
         }
 
         if ($_f !== 'summe') {
@@ -195,6 +194,7 @@ foreach($validFields as $_f) {
         }
     }
 }
+$debugInfos[] = json_encode(compact('validFields', 'query', 'w', 'having', 'aWhereStatusAnyOf'), JSON_PRETTY_PRINT);
 
 if (!in_array($order, $validFields)) {
     $order = 'umzugstermin';
@@ -212,42 +212,43 @@ elseif ($order == 'aid') {
     $sqlOrderFld = 'GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "")';
 }
 
-$sqlSelect = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
-    . ' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
-    . ' u.nachname, u.nachname stom, '
-    . ' GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . "\n"
-    . ' GROUP_CONCAT(lk.leistungskategorie ORDER BY leistungskategorie SEPARATOR ", ") AS LeistungenFull, ' . "\n"
-    . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . "\n";
+$sqlSelect = 'SELECT a.*, user.personalnr, user.personalnr AS kid, ' . $NL
+    . ' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, ' . $NL
+    . ' u.nachname, u.nachname stom, ' . $NL
+    . ' GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . $NL
+    . ' GROUP_CONCAT(lk.leistungskategorie ORDER BY leistungskategorie SEPARATOR ", ") AS LeistungenFull, ' . $NL
+    . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . $NL;
 
-$sqlFrom = ' FROM mm_umzuege a '
-    . ' LEFT JOIN mm_user user ON (a.antragsteller_uid = user.uid) '
-    . ' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id '
-    . ' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid '
-    . ' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) '
-    . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
-    . ' LEFT JOIN mm_leistungskategorie lk ON(l.leistungskategorie_id = lk.leistungskategorie_id) ' . "\n"
-    . ' LEFT JOIN mm_leistungspreismatrix lm ON('
-    . '    l.leistung_id = lm.leistung_id '
-    . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
-    . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))'
+$sqlFrom = ' FROM mm_umzuege a ' . $NL
+    . ' LEFT JOIN mm_user user ON (a.antragsteller_uid = user.uid) ' . $NL
+    . ' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id ' . $NL
+    . ' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid ' . $NL
+    . ' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) ' . $NL
+    . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . $NL
+    . ' LEFT JOIN mm_leistungskategorie lk ON(l.leistungskategorie_id = lk.leistungskategorie_id) ' . $NL
+    . ' LEFT JOIN mm_leistungspreismatrix lm ON(' . $NL
+    . '    l.leistung_id = lm.leistung_id ' . $NL
+    . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
+    . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
     . ' ) ';
 
-$sqlWhere = ' WHERE '
-    . ' ' . $datumfeld . ' BETWEEN :von AND :bis '
-    . (!$all ? 'AND tour_kennung IS NULL' : '')
-    . ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '');
+$sqlWhere = ' WHERE ' . $NL
+    . ' ' . $datumfeld . ' BETWEEN :von AND :bis ' . $NL
+    . (!$all ? 'AND IFNULL(tour_kennung, "") = ""' . $NL : '')
+    . ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' . $NL : '');
 
     if (count($aWhereStatusAnyOf)) {
-        $sql.= ' AND ( ' . implode(' OR ', $aWhereStatusAnyOf) . ')' . "\n";
+        $sqlWhere.= ' AND ( ' . implode(' OR ', $aWhereStatusAnyOf) . ')' . $NL;
     }
 
-$sqlGroup = ' GROUP BY a.aid';
+$sqlGroup = ' GROUP BY a.aid' . $NL;
 $sqlHaving = ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' : '');
-$sqlOrder = ' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
+$sqlOrder = ' ORDER BY ' . $sqlOrderFld. ' ' . $odir . $NL;
 $sqlLimit = '';
 
-$sql = $sqlSelect . $sqlFrom . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
+$sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
 $rows = $db->query_rows($sql, 0, array('von'=> $datumvon, 'bis'=> $datumbis));
+$debugInfos[] =  $sql;
 
 if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
     require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
@@ -327,4 +328,11 @@ $Tpl->assign('odir', $odir);
 $Tpl->assign('s', $s);
 $Tpl->assign('q', $query);
 $body_content = $Tpl->fetch("auswertung_tourenplanung.html");
+
+$body_content.= '<div class="debug-infos-container" style="display:none;">' . $NL;
+foreach($debugInfos as $_dbg) {
+    $body_content.= '<pre style="color:#0ba1b5;font-size:11px;border:1px solid #0ba1b5;padding:1rem;border-radius:5px;background-color: #dedede;margin:5px;">'
+        . $_dbg . '</pre>' . $NL;
+}
+$body_content.= '</div>' . $NL;
 

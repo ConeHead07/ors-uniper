@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-18 13:04:35
+/* Smarty version 3.1.34-dev-7, created on 2021-11-19 09:45:04
   from '/var/www/html/html/auswertung_tourenplanung.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_619641533248a3_43313728',
+  'unifunc' => 'content_61976410928ce1_56455852',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1f096f9d38e15833dddd15165e71981f311f9d76' => 
     array (
       0 => '/var/www/html/html/auswertung_tourenplanung.html',
-      1 => 1637237067,
+      1 => 1637311497,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_619641533248a3_43313728 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61976410928ce1_56455852 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <pre style="display: none;">
@@ -64,7 +64,7 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
         <div id="frmFilterBox" style="margin-bottom:1rem; border:1px solid #E0E0E0;padding:1rem;border-radius:8px;">
             <span style="border:0;font-weight:bold;font-size:12px;">
                 Zeitraum
-                <select id="auswertungDatumsfeld" name="datumfeld">
+                <select id="auswertungDatumsfeld" name="datumfeld" style="margin-right:1rem;">
                     <option value="umzugstermin">Lieferdatum</option>
                     <option value="antragsdatum">Auftragsdatum</option>
                     <option value="tour_disponiert_am">Disponiert am</option>
@@ -72,11 +72,11 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
                     <option value="bestaetigt_am">Bestätigungsdatum</option>
                     <option value="berechnet_am">Rechnungsdatum</option>
                 </select>
-                Von: <input type="date" name="datumvon" value="<?php echo $_smarty_tpl->tpl_vars['datumvon']->value;?>
-" xonchange="document.forms['frmStat'].submit()">
-                Bis: <input type="date" name="datumbis" value="<?php echo $_smarty_tpl->tpl_vars['datumbis']->value;?>
-" xonchange="document.forms['frmStat'].submit()">
-                                <input style="margin-left:15px;" id="all" name="all" type="checkbox" value="1" <?php if ($_smarty_tpl->tpl_vars['all']->value) {?>checked="checked"<?php }?>><label for="all"><span title="Auch bereits disponierte Leistungen anzeigen">Auch bereit disponierte Aufträge</span></label>
+                Von: <input size="10" type="date" name="datumvon" value="<?php echo $_smarty_tpl->tpl_vars['datumvon']->value;?>
+" xonchange="document.forms['frmStat'].submit()" style="margin-right:1rem;border-bottom: 1px solid #a4cbe0;">
+                Bis: <input size="10" type="date" name="datumbis" value="<?php echo $_smarty_tpl->tpl_vars['datumbis']->value;?>
+" xonchange="document.forms['frmStat'].submit()" style="margin-right:1rem;border-bottom: 1px solid #a4cbe0;">
+                                <input style="margin-left:15px;" id="all" name="all" type="checkbox" value="1" <?php if ($_smarty_tpl->tpl_vars['all']->value) {?>checked="checked"<?php }?>><label for="all"> <span title="Auch bereits disponierte Leistungen anzeigen">Auch bereits disponierte Aufträge</span></label>
 
 
                 <div style="margin-top:5px;margin-bottom:5px;">
@@ -124,42 +124,42 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
             <th class="order" data-fld="Leistungen">Lstg.</th>
             <th class="order" data-fld="summe">Summe</th>
         </tr>
-        <tr>
+        <tr class="flds-head-colsearch">
             <th></th>
             <th><input name="q[aid]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['aid'];
 }?>"></th>
-            <th><input name="q[kid]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input name="q[kid]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['kid'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['kid'];
 }?>"></th>
-            <th><input name="q[land]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input name="q[land]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['land'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['land'];
 }?>"></th>
-            <th><input name="q[ort]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input name="q[ort]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['ort'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['ort'];
 }?>"></th>
-            <th><input name="q[plz]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input name="q[plz]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['plzd'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['plz'];
 }?>"></th>
-            <th><input name="q[strasse]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input name="q[strasse]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['strasse'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['strasse'];
 }?>"></th>
-            <th><input name="q[service]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input name="q[service]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['service'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['service'];
 }?>"></th>
-            <th><input name="q[antragsdatum]" placeholder="JJJJ-MM-TT" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input name="q[antragsdatum]" placeholder="JJJJ-MM-TT" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['antragsdatum'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['antragsdatum'];
 }?>"></th>
-            <th><input name="q[umzugstermin]" placeholder="JJJJ-MM-TT" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input name="q[umzugstermin]" placeholder="JJJJ-MM-TT" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['umzugstermin'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['umzugstermin'];
 }?>"></th>
-            <th><input name="q[tour_kennung]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input name="q[tour_kennung]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['tour_kennung'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['tour_kennung'];
 }?>"></th>
-            <th><input name="q[Leistungen]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input name="q[Leistungen]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['Leistungen'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['Leistungen'];
 }?>"></th>
-            <th><input name="q[summe]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
+            <th><input name="q[summe]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['summe'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['summe'];
 }?>"></th>
         </tr>
@@ -175,8 +175,8 @@ foreach ($_from as $_smarty_tpl->tpl_vars['item']->value) {
         <tr class="data-href" data-href="?s=<?php echo $_smarty_tpl->tpl_vars['site_antrag']->value;?>
 &id=<?php echo $_smarty_tpl->tpl_vars['item']->value['aid'];?>
 ">
-            <td><?php if (!$_smarty_tpl->tpl_vars['item']->value['berechnet_am']) {?><input type="checkbox" name="aids[]" value="<?php echo $_smarty_tpl->tpl_vars['item']->value['aid'];?>
-"><?php }?></td>
+            <td><input type="checkbox" name="aids[]" value="<?php echo $_smarty_tpl->tpl_vars['item']->value['aid'];?>
+"<?php if (!empty($_smarty_tpl->tpl_vars['aids']->value) && in_array($_smarty_tpl->tpl_vars['item']->value['aid'],$_smarty_tpl->tpl_vars['aids']->value)) {?> checked="checked"<?php }?>></td>
             <td><?php echo $_smarty_tpl->tpl_vars['item']->value['aid'];?>
 </td>
             <td><?php echo $_smarty_tpl->tpl_vars['item']->value['kid'];?>
@@ -279,6 +279,9 @@ $(function(){
     var send = function(addQuery = '') {
         var url = "?" + $("#frmStat :input")
             .filter(function(index, element) {
+                if (['radio', 'checkbox'].indexOf(element.type) !== -1) {
+                    return element.checked;
+                }
                 return $.trim($(element).val()) !== '';
             })
             .serialize();
@@ -297,6 +300,10 @@ $(function(){
 
     $("th input").keypress(function(e){
         if ( (e.keyCode || e.which) === 13) send();
+    });
+
+    $("#tblTourenplanung .flds-head-colsearch input[name^=q]").bind('change', function(e){
+        send();
     });
 
     $("#tblTourenplanung tr[data-href]").on("click", function() {
