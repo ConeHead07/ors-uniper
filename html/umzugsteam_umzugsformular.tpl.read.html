@@ -100,7 +100,7 @@
   <script>
     $(function() {
       $("i.geo-address[data-address]").each(function() {
-        var gmapUrl = "https://www.google.com/maps/dir/?api=1&destination=";
+        var gmapUrl = "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=";
         var query = encodeURIComponent( $(this).data("address") );
         // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
         $(this).wrap( $("<a/>").attr({

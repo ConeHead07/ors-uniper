@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-22 17:17:21
+/* Smarty version 3.1.34-dev-7, created on 2021-11-22 18:01:03
   from '/var/www/html/html/umzugsteam_umzugsformular.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_619bc2911c5219_81320508',
+  'unifunc' => 'content_619bcccf376dc7_79840239',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3980e6590adbc901815f7cf277dd110fe5dbc980' => 
     array (
       0 => '/var/www/html/html/umzugsteam_umzugsformular.tpl.read.html',
-      1 => 1637597830,
+      1 => 1637600265,
       2 => 'file',
     ),
   ),
@@ -28,7 +28,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_619bc2911c5219_81320508 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619bcccf376dc7_79840239 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -176,7 +176,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
 >
     $(function() {
       $("i.geo-address[data-address]").each(function() {
-        var gmapUrl = "https://www.google.com/maps/dir/?api=1&destination=";
+        var gmapUrl = "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=";
         var query = encodeURIComponent( $(this).data("address") );
         // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
         $(this).wrap( $("<a/>").attr({
