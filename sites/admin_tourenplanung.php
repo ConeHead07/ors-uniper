@@ -69,26 +69,30 @@ $finish = (!empty($_REQUEST['finish'])) ? (int)(bool)$_REQUEST['finish'] : 0;
 $aids = (!empty($_REQUEST['aids']))     ? $_REQUEST['aids'] : array();
 $tourkennung = (!empty($_REQUEST['tourkennung']))   ? trim($_REQUEST['tourkennung']) : '';
 $tourdatum = (!empty($_REQUEST['tourdatum']))   ? trim($_REQUEST['tourdatum']) : '';
-$all   = (!empty($_REQUEST['all']))     ? (int)$_REQUEST['all'] : 0;
+$all   = (!empty($_REQUEST['all']))     ? (int)$_REQUEST['all'] : 1;
 
 if ($finish && ($tourkennung || $tourdatum) && is_array($aids) && count($aids)) {
+    $debugInfos[] = '#' . __LINE__;
     $aids = array_map('intval', $aids);
     $iNumConflicts = 0;
 
-    if ($tourkennung && $tourdaum) {
-        $sqlCount = 'FROM mm_umzuege 
+    if ($tourkennung && $tourdatum) {
+        $sqlCount = 'mm_umzuege 
           WHERE 
-            umzugstermin NOT LIKE :tourdatum 
+            umzugstermin NOT LIKE ' . $db::quote($tourdatum) . '  
             AND umzugsstatus NOT IN ("beantragt", "angeboten")
             AND aid IN('.implode(',', $aids).')';
 
         $iNumConflicts = $db->query_count($sqlCount);
+        $sConflictErr = '';
 
         if ($iNumConflicts > 0) {
-            $error.= '<div>Für die geplante Tourenzuweisung bestehen ' . $iNumConflicts . ' Konflikte!<br>' . "\n"
+            $sConflictErr = '<div>Für die geplante Tourenzuweisung bestehen ' . $iNumConflicts . ' Konflikte!<br>' . "\n"
                 . 'Für bereits avisierte Touren kann das Lieferdatum mit dieser Funktion nicht geändert werden.<br>' . "\n"
                 . 'Wechsel hierzu bitte in den einzelnen Auftrag.</div>';
+            $error.= $sConflictErr;
         }
+        $debugInfos[] =  $db->lastQuery . ";\ncount \$iNumConflicts: $iNumConflicts\nError:  $sConflictErr\n";
     }
     if (!empty($tourdatum)) {
         if (!preg_match('#^(2\d{3}-\d\d-\d\d|\d\d?.\d\d?.\d\d\d\d)$#', $tourdatum)) {
@@ -105,6 +109,7 @@ if ($finish && ($tourkennung || $tourdatum) && is_array($aids) && count($aids)) 
 
     if (!$error) {
         if ($tourkennung) {
+            $debugInfos[] = '#' . __LINE__;
             $sql = 'UPDATE mm_umzuege SET '
                 . ' tour_zugewiesen_am = NOW(), '
                 . ' tour_zugewiesen_von = :username, '
@@ -216,7 +221,13 @@ $sqlSelect = 'SELECT a.*, user.personalnr, user.personalnr AS kid, ' . $NL
     . ' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, ' . $NL
     . ' u.nachname, u.nachname stom, ' . $NL
     . ' GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . $NL
-    . ' GROUP_CONCAT(lk.leistungskategorie ORDER BY leistungskategorie SEPARATOR ", ") AS LeistungenFull, ' . $NL
+    . '   GROUP_CONCAT(' . $NL
+    . '     IF (l.leistung_id is NULL, "", CONCAT_WS("<|#|>", '  . $NL
+    . '      l.leistung_id, lk.kategorie_abk, lk.leistungskategorie, ' . $NL
+    . '      l.Bezeichnung, l.Farbe, l.Groesse, "€", l.preis_pro_einheit' . $NL
+    . '     )) '
+    . '     ORDER BY leistungskategorie SEPARATOR ";\n"' . $NL
+    . '   ) AS LeistungenFull, ' . $NL
     . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . $NL;
 
 $sqlFrom = ' FROM mm_umzuege a ' . $NL
@@ -248,7 +259,7 @@ $sqlLimit = '';
 
 $sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
 $rows = $db->query_rows($sql, 0, array('von'=> $datumvon, 'bis'=> $datumbis));
-$debugInfos[] =  $sql;
+$debugInfos[] =  $db->lastQuery;
 
 if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
     require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
@@ -329,7 +340,7 @@ $Tpl->assign('s', $s);
 $Tpl->assign('q', $query);
 $body_content = $Tpl->fetch("auswertung_tourenplanung.html");
 
-$body_content.= '<div class="debug-infos-container" style="display:none;">' . $NL;
+$body_content.= '<div class="debug-infos-container" style="display:block;overflow: scroll;height: calc(100vh - 20px);width: 100%;">' . $NL;
 foreach($debugInfos as $_dbg) {
     $body_content.= '<pre style="color:#0ba1b5;font-size:11px;border:1px solid #0ba1b5;padding:1rem;border-radius:5px;background-color: #dedede;margin:5px;">'
         . $_dbg . '</pre>' . $NL;

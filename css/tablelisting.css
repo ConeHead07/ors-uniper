@@ -108,7 +108,12 @@
 .tblList th.menge,
 .tblList thead td.menge,
 .tblList thead th.menge,
-.tblList tbody td.menge {
+.tblList tbody td.menge,
+.tblList td.sum,
+.tblList th.sum,
+.tblList thead td.sum,
+.tblList thead th.sum,
+.tblList tbody td.sum {
 	text-align:right;
 }
 .tblList td.sum,
@@ -116,6 +121,13 @@
 .tblList tbody tr td.sum {
 	font-weight:bold;
 }
+
+.tblList .currency-euro::after,
+.tblList td.currency-euro::after,
+.tblList tbody td.currency-euro::after {
+	content: " €";
+}
+
 .tblList td.lbl,
 .tblList tr td.lbl,
 .tblList tbody tr td.lbl {

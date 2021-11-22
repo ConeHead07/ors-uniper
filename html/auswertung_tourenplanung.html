@@ -23,11 +23,6 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
     </div>
 </div>
 
-{if $error ne ""}
-    <div style="border:2px solid red; border-radius:5px;background-color:white;padding:1rem;">
-        {$error}
-    </div>
-{/if}
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
     <h1><span class="spanTitle">Zuordnung von Aufträgen zu Tourenplänen</span></h1>
 
@@ -56,8 +51,8 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
                     <option value="">auswählen</option>
                             {html_options options=$kw_options selected=$kwbis}
                     </select>
-                *}
                 <input style="margin-left:15px;" id="all" name="all" type="checkbox" value="1" {if $all}checked="checked"{/if}><label for="all"> <span title="Auch bereits disponierte Leistungen anzeigen">Auch bereits disponierte Aufträge</span></label>
+                *}
 
 
                 <div style="margin-top:5px;margin-bottom:5px;">
@@ -80,8 +75,29 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
             th.order {
                 cursor:pointer;
             }
+
+        #TourStats .title {
+            font-weight: bold;
+            color: #0075b5;
+            margin-top:1rem;
+        }
+        #TourStats .content,
+        #TourStats .content-table {
+            padding: 5px;
+        }
+        #TourStats .content-table {
+            border-top: 1px solid #a4cbe0;
+        }
+        #TourStats .content {
+            border: 1px solid #a4cbe0;
+            border-radius: 5px;
+            resize: vertical;
+            height: 3rem;
+            overflow: auto;
+         }
         {/literal}</style>
 {assign var="hintValidColSearchOperator" value="Zulässige Suchoperatoren: > >= = < <= ! != UND * als Wildcard"}
+        {if isset($Auftraege)}<h2>{$Auftraege|count} Aufträge</h2>{/if}
 <table id="tblTourenplanung" class="tblList">
     <thead>
         <tr>
@@ -121,32 +137,38 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
     </thead>
     <tbody>
     {foreach name=AList item=item from=$Auftraege}
-        <tr class="data-href" data-href="?s={$site_antrag}&id={$item.aid}">
+        <tr class="flds-body-row data-href"
+            data-href="?s={$site_antrag}&id={$item.aid}"
+            data-umzugstermin="{$item.umzugstermin|escape}"
+            data-tour="{$item.tour_kennung|escape}"
+            data-aid="{$item.aid|escape}"
+            data-leistungen="{$item.Leistungen|escape}"
+            data-leistungenfull="{$item.LeistungenFull|escape}">
             <td><input type="checkbox" name="aids[]" value="{$item.aid}"{if !empty($aids) && in_array($item.aid, $aids)} checked="checked"{/if}></td>
-            <td>{$item.aid}</td>
-            <td>{$item.kid}</td>
-            <td>{if $item.land eq "Deutschland"}D{elseif $item.land eq "Niederlande"}NL{else}{$item.land}{/if}</td>
-            <td>{$item.ort}</td>
-            <td>{$item.plz}</td>
-            <td>{$item.strasse}</td>
-            <td>{$item.service}</td>
-            <td title="{$item.antragsdatum|date_format:"%d.%m.%Y %H:%M"}">{if !empty($item.antragsdatum) && {$item.antragsdatum|date_format:"%Y"} eq {'Y'|date}}
+            <td class="fld-cell fld-aid" data-field="aid" data-value="{$item.aid|escape}">{$item.aid|escape}</td>
+            <td class="fld-cell fld-kid" data-field="kid" data-value="{$item.kid|escape}">{$item.kid|escape}</td>
+            <td class="fld-cell fld-land" data-field="land" data-value="{$item.land|escape}">{if $item.land eq "Deutschland"}D{elseif $item.land eq "Niederlande"}NL{else}{$item.land|escape}{/if}</td>
+            <td class="fld-cell fld-ort" data-field="ort" data-value="{$item.ort|escape}">{$item.ort|escape}</td>
+            <td class="fld-cell fld-plz" data-field="plz" data-value="{$item.plz|escape}">{$item.plz|escape}</td>
+            <td class="fld-cell fld-strasse" data-field="strasse" data-value="{$item.strasse|escape}">{$item.strasse|escape}</td>
+            <td class="fld-cell fld-service" data-field="service" data-value="{$item.service|escape}">{$item.service|escape}</td>
+            <td class="fld-cell fld-antragsdatum" data-field="antragsdatum" data-value="{$item.antragsdatum|escape}" title="{$item.antragsdatum|date_format:"%d.%m.%Y %H:%M"}">{if !empty($item.antragsdatum) && {$item.antragsdatum|date_format:"%Y"} eq {'Y'|date}}
                     {$item.antragsdatum|date_format:"%d.%m."}
                 {else}
                     {$item.antragsdatum|date_format:"%d.%m.'%y"}
                 {/if}
             </td>
-            <td title="{$item.umzugstermin|date_format:"%d.%m.%Y"}">{if !empty($item.umzugstermin) && {$item.umzugstermin|date_format:"%Y"} eq {'Y'|date}}
+            <td class="fld-cell fld-umzugstermin" data-field="umzugstermin" data-value="{$item.umzugstermin|escape}" title="{$item.umzugstermin|date_format:"%d.%m.%Y"}">{if !empty($item.umzugstermin) && {$item.umzugstermin|date_format:"%Y"} eq {'Y'|date}}
                 {$item.umzugstermin|date_format:"%d.%m."}
                 {else}
                 {$item.umzugstermin|date_format:"%d.%m.%y"}
                 {/if}
             </td>
-            <td {if !empty($item.tour_disponiert_am)}title="{$item.tour_disponiert_am}, {$item.tour_disponiert_von}"{/if}>
-                {$item.tour_kennung}
+            <td class="fld-cell fld-tour_kennung" data-field="tour_kennung" data-value="{$item.tour_kennung|escape}" {if !empty($item.tour_disponiert_am)}title="{$item.tour_disponiert_am}, {$item.tour_disponiert_von}"{/if}>
+                {$item.tour_kennung|escape}
             </td>
-            <td title="{$item.LeistungenFull}">{$item.Leistungen}</td>
-            <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
+            <td class="fld-cell fld-Leistungen" data-field="Leistungen" data-value="{$item.Leistungen|escape}" title="{$item.LeistungenFull|replace:';':''|replace:'<|#|>':'  '}">{$item.Leistungen|escape}</td>
+            <td class="fld-cell fld-summe" data-field="summe" data-value="{$item.summe|escape}" style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
         </tr>
         {/foreach}
     </tbody>
@@ -161,6 +183,9 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
 
             {/if}
         </div>
+        <div id="TourStats">
+
+        </div>
     </div>
 </div>
 <script>
@@ -168,6 +193,239 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
     var aAuftragsstatusFilter = {$aAuftragsstatus};
 </script>
 <script>{literal}
+
+function numberFormat(number, dec) {
+    var dec_point = ',';
+    var thousands_sep = '.';
+    if (isNaN(dec)) {
+        dec = 2;
+    }
+    if (isNaN(+number)) {
+        return number;
+    }
+    var parts = (+number).toFixed(dec).split(".");
+    parts[0] = parts[0].split("").reverse();
+    var fnum = [];
+    for(var i = 0; i < parts[0].length; i++) {
+        if ( i % 3 === 0 && !isNaN(parts[0][i]) ) {
+            fnum.push(thousands_sep);
+        }
+        fnum.push( parts[0][i] );
+    }
+
+    return fnum.reverse().join("") + dec_point + parts[1];
+}
+
+var statsMetaByLid = {};
+var statsOfAllItems = {};
+var statsOfSelectedItems = {};
+var selectorSelectedItems = "#tblTourenplanung input[type=checkbox][name^=aids\\[\\]]:checked";
+var selectorAllItems = "#tblTourenplanung input[type=checkbox][name^=aids\\[\\]]";
+
+function renderTourStats(stats) {
+    var container = $("div#TourStats");
+    container.html("");
+
+    var aids = ("aids" in stats && Array.isArray(stats.aids)) ? stats.aids : [];
+
+    var boxEnthalteneAids = $("<div/>")
+        .append( $("<div/>").addClass("title").text( (aids.length ? aids.length + ' ' : '') + "Aufträge" ) )
+        .append( $("<div/>").addClass("content").text( aids.join(", ") ) )
+        .appendTo(container);
+
+    var abks = ("LeistungenTotalAbk" in stats) ? stats.LeistungenTotalAbk : {};
+
+    var boxAbks = $("<div/>").addClass("content");
+    var boxEnthalteneAbks = $("<div/>")
+        .append( $("<div/>").addClass("title").text( "Leistungen" ) )
+        .append( boxAbks )
+        .appendTo(container);
+
+    for(var k in abks) {
+        if (abks.hasOwnProperty(k)) {
+            var n = abks[k];
+            boxAbks.append( $("<span/>").html( n.toString() + k + ' ' ));
+        }
+    }
+
+    var leistungen = ("LeistungenTotalLid" in stats && stats.LeistungenTotalLid) ? stats.LeistungenTotalLid : {};
+    var tblLstg = $("<table/>").addClass("tblList").css("width", "100%");
+    var boxEnthalteneAbks = $("<div/>")
+        .append( $("<div/>").addClass("title").text( "Leistungen" ) )
+        .append( $("<div/>").addClass("content-table").append( tblLstg ) )
+        .appendTo(container);
+
+    var thead = $("<thead/>").addClass("flds-head").appendTo(tblLstg);
+    var tbody = $("<tbody/>").addClass("flds-head").appendTo(tblLstg);
+    var thr = $("<tr/>").appendTo(thead);
+    var thAbk = $("<th/>").addClass("fld-cell fld-abk").text('L-Abk').appendTo(thr);
+    var thKtg = $("<th/>").addClass("fld-cell fld-ktg").text('Kategorie').appendTo(thr);
+    var thBez = $("<th/>").addClass("fld-cell fld-bezeichnung").text('Bezeichnung').appendTo(thr);
+    var thFarbe = $("<th/>").addClass("fld-cell fld-farbe").text('Farbe').appendTo(thr);
+    var thGroese = $("<th/>").addClass("fld-cell fld-groesse").text('Größe').appendTo(thr);
+    var thPreis = $("<th/>").addClass("fld-cell fld-preis menge float").text('Preis').appendTo(thr);
+    var thMenge = $("<th/>").addClass("fld-cell fld-menge menge").text('Menge').appendTo(thr);
+    var thSumme = $("<th/>").addClass("fld-cell fld-summe sum").text('Summe').appendTo(thr);
+
+
+    var total = 0.0;
+    for(var lg in leistungen) {
+        if (leistungen.hasOwnProperty(lg)) {
+            var menge = +leistungen[lg];
+            var info = statsMetaByLid[lg];
+            var preis = parseFloat(info.Preis);
+            var summe = menge * preis;
+            total+= summe;
+
+            var tr = $("<tr/>").appendTo(tbody);
+
+            tr
+                .append( $("<td/>").text(info.Abk) )
+                .append( $("<td/>").text(info.Kategorie) )
+                .append( $("<td/>").text(info.Bezeichnung) )
+                .append( $("<td/>").text(info.Farbe) )
+                .append( $("<td/>").text(info.Groesse) )
+                .append( $("<td/>").addClass("menge float currency-euro").text( numberFormat(preis) ) )
+                .append( $("<td/>").addClass("menge int").text( menge) )
+                .append( $("<td/>").addClass("menge sum float currency-euro").text( numberFormat(summe) ) )
+            ;
+        }
+    }
+    tbody.append(
+        $("<tr/>").append(
+            $("<td/>")
+                .attr("colspan", 8)
+                .addClass("menge sum float currency-euro")
+                .text( numberFormat(total)
+                )));
+}
+
+function procesTourStatsSelected() {
+    var selector = "#tblTourenplanung input[type=checkbox][name^=aids\\[\\]]:checked";
+    console.log('#188 ', { selector });
+    return procesTourStatsBySelector(selector);
+}
+
+function procesTourStatsAll() {
+    var selector = "#tblTourenplanung input[type=checkbox][name^=aids\\[\\]]";
+    return procesTourStatsBySelector(selector);
+}
+
+function procesTourStatsBySelector(selector) {
+
+    var stats = { aids: [], LeistungenTotalAbk: {}, LeistungenTotalKtg: {}, LeistungenTotalLid: {}, LeistungenByTermin: {}, LeistungenByTour: {} };
+    var numItems = $(selector).closest("tr").length;
+    console.log('#201 Found ', { numItems, selector });
+    $(selector).closest("tr").each(function() {
+        var d = $(this).data();
+        // console.log('#235 Tourenplanung', { d  });
+        // return;
+        if (!$.trim(d.leistungenfull)) {
+            console.log('#236 empty leistungenfull for aid ' + d.aid, d);
+            return;
+        }
+        if (!$.trim($.trim(d.leistungenfull).split(";\n").join("").split("<|#|>").join("") )) {
+            return;
+        }
+        var aLstFull = d.leistungenfull.split(";\n");
+        var tour = d.tour;
+        var liefertermin = d.umzugstermin;
+
+        var lstg = [];
+        for(li = 0; li < aLstFull.length; li++) {
+            var csv = aLstFull[li].split("<|#|>");
+            var lid = csv[0];
+            var Abk = csv[1];
+            if (!Abk) {
+                console.error('#253 empty abk', { d, aLstFull, tour, liefertermin, lid });
+            }
+            var Kategorie = csv[2];
+            var Bezeichnung = csv[3];
+            var Farbe = csv[4];
+            var Groesse = csv[5];
+            var Waehrung = csv[6];
+            var Preis = csv[7];
+            var lstObj = { lid, Abk, Kategorie, Bezeichnung, Farbe, Groesse, Waehrung, Preis, csv };
+            if (!(lid in statsMetaByLid)) {
+                statsMetaByLid[lid] = lstObj;
+            }
+            lstg.push({ lid, Abk, Kategorie, Bezeichnung, Farbe, Groesse, Waehrung, Preis, csv });
+        }
+        console.log('#235 Tourenplanung', { d, 'aLstFull.length': aLstFull.length, 'lstg.length': lstg.length, aLstFull, tour, liefertermin });
+
+        stats.aids.push(d.aid);
+        for(var li = 0; li < lstg.length; li++) {
+            var abk = lstg[li].Abk;
+            if (!(abk in stats.LeistungenTotalAbk)) {
+                stats.LeistungenTotalAbk[abk] = 1;
+            } else {
+                ++stats.LeistungenTotalAbk[abk];
+            }
+
+
+            var ktg = lstg[li].Kategorie;
+            if (!(ktg in stats.LeistungenTotalKtg)) {
+                stats.LeistungenTotalKtg[ktg] = 1;
+            } else {
+                ++stats.LeistungenTotalKtg[ktg];
+            }
+
+            var lid = lstg[li].lid;
+            if (!(lid in stats.LeistungenTotalLid)) {
+                stats.LeistungenTotalLid[lid] = 1;
+            } else {
+                ++stats.LeistungenTotalLid[lid];
+            }
+
+            if (tour) {
+                if (!(tour in stats.LeistungenByTour)) {
+                    stats.LeistungenByTour[tour] = {
+                        Abk: {}, Ktg: {}, Lid: {}
+                    };
+                }
+                if (!(abk in stats.LeistungenByTour[tour].Abk)) {
+                    stats.LeistungenByTour[tour].Abk[abk] = 1;
+                } else {
+                    ++stats.LeistungenByTour[tour].Abk[abk];
+                }
+                if (!(ktg in stats.LeistungenByTour[tour].Ktg)) {
+                    stats.LeistungenByTour[tour].Ktg[ktg] = 1;
+                } else {
+                    ++stats.LeistungenByTour[tour].Ktg[ktg];
+                }
+                if (!(lid in stats.LeistungenByTour[tour].Lid)) {
+                    stats.LeistungenByTour[tour].Lid[lid] = 1;
+                } else {
+                    ++stats.LeistungenByTour[tour].Lid[lid];
+                }
+            }
+            if (liefertermin) {
+                if (!(liefertermin in stats.LeistungenByTermin)) {
+                    stats.LeistungenByTermin[liefertermin] = {
+                        Liefertermin: liefertermin, Abk: {}, Ktg: {}, Lid: {}
+                    };
+                }
+                if (!(abk in stats.LeistungenByTermin[liefertermin].Abk)) {
+                    stats.LeistungenByTermin[liefertermin].Abk[abk] = 1;
+                } else {
+                    ++stats.LeistungenByTermin[liefertermin].Abk[abk];
+                }
+                if (!(ktg in stats.LeistungenByTermin[liefertermin].Ktg)) {
+                    stats.LeistungenByTermin[liefertermin].Ktg[ktg] = 1;
+                } else {
+                    ++stats.LeistungenByTermin[liefertermin].Ktg[ktg];
+                }
+                if (!(lid in stats.LeistungenByTermin[liefertermin].Lid)) {
+                    stats.LeistungenByTermin[liefertermin].Lid[lid] = 1;
+                } else {
+                    ++stats.LeistungenByTermin[liefertermin].Lid[lid];
+                }
+            }
+        }
+    });
+    console.log("335 stats", { stats, statsMetaByLid });
+    return stats;
+}
 
 $(function(){
 
@@ -217,14 +475,24 @@ $(function(){
         window.status= $(this).data("href");
     });
 
-    $("#tblTourenplanung input[type=checkbox][name^=aids]").on("click", function(e) {
+
+
+    $("#tblTourenplanung input[type=checkbox][name^=aids\\[\\]]").bind("click", function(e) {
         e.stopPropagation();
+
+        var numSelectedItems = $(selectorSelectedItems).length;
+        var stats = (numSelectedItems > 0) ? procesTourStatsSelected() : statsOfAllItems;
+        console.log("335 stats", { stats, statsMetaByLid });
+        renderTourStats(stats);
         return true;
     });
 
     $("#btnCsvExport").bind("click", function() {
         send('format=csv');
     });
+
+    statsOfAllItems = procesTourStatsAll();
+    renderTourStats(statsOfAllItems);
 
 });
 {/literal}
