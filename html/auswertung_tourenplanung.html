@@ -144,7 +144,11 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
             data-aid="{$item.aid|escape}"
             data-leistungen="{$item.Leistungen|escape}"
             data-leistungenfull="{$item.LeistungenFull|escape}">
-            <td><input type="checkbox" name="aids[]" value="{$item.aid}"{if !empty($aids) && in_array($item.aid, $aids)} checked="checked"{/if}></td>
+            <td>
+                <input type="checkbox" name="aids[]" value="{$item.aid}"{if !empty($aids) && in_array($item.aid, $aids)} checked="checked"{/if}>
+                <i class="geo-address"
+                     data-address="{$item.strasse|escape},{$item.plz|escape}+{$item.ort|escape},{$item.land|escape}"></i>
+            </td>
             <td class="fld-cell fld-aid" data-field="aid" data-value="{$item.aid|escape}">{$item.aid|escape}</td>
             <td class="fld-cell fld-kid" data-field="kid" data-value="{$item.kid|escape}">{$item.kid|escape}</td>
             <td class="fld-cell fld-land" data-field="land" data-value="{$item.land|escape}">{if $item.land eq "Deutschland"}D{elseif $item.land eq "Niederlande"}NL{else}{$item.land|escape}{/if}</td>
@@ -428,6 +432,23 @@ function procesTourStatsBySelector(selector) {
 }
 
 $(function(){
+
+    $("i.geo-address[data-address]").each(function() {
+        var gmapUrl = "https://www.google.com/maps/dir/?api=1&destination=";
+        var query = encodeURIComponent( $(this).data("address") );
+        // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
+        $(this)
+            .wrap(
+                $("<a/>").attr({
+                href: gmapUrl + query,
+                target: "gmap",
+                title: "Lieferadresse in Gmap anzeigen"
+            }) )
+            .addClass("marker icon")
+            .bind("click", function(e) {
+                e.stopPropagation();
+            });
+    });
 
     $("#auswertungDatumsfeld").val(datumFilterFeld);
 

@@ -221,12 +221,16 @@ div.statusConsole {
 	border-top:1px solid #0075B5;
 	width:100%;
 }
+
+table.form-table td {
+    box-sizing: border-box;
+    vertical-align: top;
+}
+table.form-table tr td:first-of-type:not([colspan]),
+table.form-table td.label,
 label {
-  display:inline-block;
   background:#0075B5;
-  height:18px;
   border:1px solid #0075B5;
-  width:120px;
   text-align:right;
   font-size:0.8rem;
   margin:0;
@@ -234,6 +238,13 @@ label {
   color:#fff;
   padding:0 5px 0 0;
 }
+
+label {
+    display:inline-block;
+    width:120px;
+    height:18px;
+}
+
 .itxt {
   display:inline-block;
   z-background:#f1f8ff;
@@ -266,6 +277,43 @@ input[readonly],
     background: #f6f6f6;
     color: #0078dc;
 }
+
+table.form-table tr td:first-of-type:not([colspan]),
+table.form-table td.label {
+    padding-top:4px;
+    height:auto;
+}
+table.form-table.lbl-w-200 tr td:first-of-type:not([colspan]),
+table.form-table.lbl-w-200 td.label {
+    width:200px;
+}
+table.form-table.lbl-w-180 tr td:first-of-type:not([colspan]),
+table.form-table.lbl-w-180 td.label {
+    width:180px;
+}
+table.form-table td.no-border {
+    border:none;
+}
+
+table.form-table tr td:nth-of-type(2):not(.no-border),
+table.form-table td.input {
+    border:1px solid #0075B5;
+    height:auto;
+    font-size:0.8rem;
+    padding:4px 0 0 8px;
+}
+table.form-table tr td:nth-of-type(2) .itxt,
+table.form-table td.input .itxt,
+table.form-table tr td:nth-of-type(2) input.itxt,
+table.form-table td.input input.itxt,
+table.form-table td.input .iselect,
+table.form-table tr td:nth-of-type(2) div.itxt,
+table.form-table tr td:nth-of-type(2) .iselect {
+    border:none;
+    min-height:25px;
+    padding-top:4px;
+}
+
 td label {
     box-sizing: border-box;
     height:25px;
@@ -485,3 +533,4 @@ input.menge.editable:focus:not([readonly]),
 input:focus.menge.editable:not([readonly]) {
     background-color:#fff;
 }
+

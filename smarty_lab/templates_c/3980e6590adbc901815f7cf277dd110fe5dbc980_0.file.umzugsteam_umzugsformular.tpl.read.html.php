@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-18 14:50:18
+/* Smarty version 3.1.34-dev-7, created on 2021-11-22 17:17:21
   from '/var/www/html/html/umzugsteam_umzugsformular.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61965a1a9d47c3_64645737',
+  'unifunc' => 'content_619bc2911c5219_81320508',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3980e6590adbc901815f7cf277dd110fe5dbc980' => 
     array (
       0 => '/var/www/html/html/umzugsteam_umzugsformular.tpl.read.html',
-      1 => 1637243372,
+      1 => 1637597830,
       2 => 'file',
     ),
   ),
@@ -28,7 +28,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_61965a1a9d47c3_64645737 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619bc2911c5219_81320508 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -158,6 +158,68 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
     <?php }?>
     <div style="clear: both"></div>
   </div>
+  <div style="margin-top:2rem;"><h2 style="margin:0;">Lieferadresse <i class="geo-address"
+                                                                       data-address="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
+,<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['plz'], ENT_QUOTES, 'UTF-8', true);?>
++<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ort'], ENT_QUOTES, 'UTF-8', true);?>
+,<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
+"
+                                                                       data-geo-strasse="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
+"
+                                                                       data-geo-plz="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['plz'], ENT_QUOTES, 'UTF-8', true);?>
+"
+                                                                       geo-geo-ort="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ort'], ENT_QUOTES, 'UTF-8', true);?>
+"
+                                                                       data-geo-land="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
+"></i></h2></div>
+  <?php echo '<script'; ?>
+>
+    $(function() {
+      $("i.geo-address[data-address]").each(function() {
+        var gmapUrl = "https://www.google.com/maps/dir/?api=1&destination=";
+        var query = encodeURIComponent( $(this).data("address") );
+        // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
+        $(this).wrap( $("<a/>").attr({
+          href: gmapUrl + query,
+          target: "gmap",
+          title: "Lieferadresse in Gmap anzeigen"
+        }) ).addClass("marker icon");
+      });
+    });
+  <?php echo '</script'; ?>
+>
+  <table class="form-table lbl-w-200" >
+    <tr>
+      <td>
+        <label>Stra&szlig;e &amp; Nr</label>
+      </td>
+      <td style="width:250px;"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
+</td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>PLZ</label></td>
+      <td><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['plz'], ENT_QUOTES, 'UTF-8', true);?>
+</td>
+    </tr>
+
+    <tr>
+      <td><label><?php echo $_smarty_tpl->tpl_vars['ASConf']->value['ort']['label'];?>
+</label></td>
+      <td><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ort'], ENT_QUOTES, 'UTF-8', true);?>
+</td>
+    </tr>
+
+
+    <tr>
+      <td style="padding:0;">
+        <label>Land</label></td>
+      <td><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
+
+      </td>
+    </tr>
+      </table>
 
   <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner']) || !empty($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon'])) {?>
   <div style="margin-top:1.5rem">

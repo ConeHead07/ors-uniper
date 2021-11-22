@@ -91,6 +91,103 @@
     {/if}
     <div style="clear: both"></div>
   </div>
+  <div style="margin-top:2rem;"><h2 style="margin:0;">Lieferadresse <i class="geo-address"
+                                                                       data-address="{$AS.strasse|escape},{$AS.plz|escape}+{$AS.ort|escape},{$AS.land|escape}"
+                                                                       data-geo-strasse="{$AS.strasse|escape}"
+                                                                       data-geo-plz="{$AS.plz|escape}"
+                                                                       geo-geo-ort="{$AS.ort|escape}"
+                                                                       data-geo-land="{$AS.land|escape}"></i></h2></div>
+  <script>
+    $(function() {
+      $("i.geo-address[data-address]").each(function() {
+        var gmapUrl = "https://www.google.com/maps/dir/?api=1&destination=";
+        var query = encodeURIComponent( $(this).data("address") );
+        // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
+        $(this).wrap( $("<a/>").attr({
+          href: gmapUrl + query,
+          target: "gmap",
+          title: "Lieferadresse in Gmap anzeigen"
+        }) ).addClass("marker icon");
+      });
+    });
+  </script>
+  <table class="form-table lbl-w-200" >
+    <tr>
+      <td>
+        <label>Stra&szlig;e &amp; Nr</label>
+      </td>
+      <td style="width:250px;">{$AS.strasse|escape}</td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>PLZ</label></td>
+      <td>{$AS.plz|escape}</td>
+    </tr>
+
+    <tr>
+      <td><label>{$ASConf.ort.label}</label></td>
+      <td>{$AS.ort|escape}</td>
+    </tr>
+
+
+    <tr>
+      <td style="padding:0;">
+        <label>Land</label></td>
+      <td>{$AS.land|escape}
+      </td>
+    </tr>
+    {*
+    <tr style="display: none">
+      <td style="padding:0;"><label for="gebaeude" style="width:180px;">{$ASConf.gebaeude.label}<span class="right">{if $ASConf.gebaeude.required}<span class="required">*</span>{/if}</span></label>
+        <input type="hidden" id="gebaeude" value="{$AS.gebaeude|escape}" name="AS[gebaeude]"></td>
+      <td style="padding:0;"><input type="text" onclick="get_standort_gebaeude(this, O('gebaeude'))" value="{$AS.gebaeude_text|escape}" name="AS[gebaeude_text]" class="itxt itxt2col"></td>
+    </tr>
+
+    <tr>
+      <td style="padding:0;"><label for="etage" style="display:block;width:auto;">{$ASConf.etage.label}<span class="right">{if $ASConf.etage.required}<span class="required">*</span>{/if}</span></label>
+        <input type="hidden" id="etage" value="{$AS.etage|escape}" {if $ASConf.etage.required}required="required"{/if} name="AS[etage]">
+      </td>
+      <td style="padding:0;"><input type="text" readonly="true" {if $ASConf.etage.required}required="required"{/if} id="ASEtageUsrInput" onclick="get_gebaeude_etage(this, O('etage'))" value="{$AS.etage|escape}" name="AS[etage_text]" class="itxt itxt2col"></td>
+    </tr>
+
+    <tr>
+      <td style="padding:0;"><label for="as_raumnr" style="display:block;width:auto;">{$ASConf.raumnr.label}<span class="right">{if $ASConf.raumnr.required}<span class="required">*</span>{/if}</span></label></td>
+      <td style="padding:0;"><input type="text" id="as_raumnr" xreadonly="true" {if $ASConf.raumnr.required}required="required"{/if} xonclick="get_standort_raumnr(this)" value="{$AS.raumnr|escape}" name="AS[raumnr]" class="itxt itxt2col"></td>
+    </tr>
+    <tr>
+      <td style="padding:0;"><label for="kostenstelle" style="width:180px;">{$ASConf.kostenstelle.label}<span class="right">{if $ASConf.kostenstelle.required}<span class="required">*</span>{/if}</span></label></td>
+      <td style="padding:0;"><input type="text" id="kostenstelle" value="{$AS.kostenstelle|escape}" name="AS[kostenstelle]" class="itxt itxt2col"></td>
+    </tr>
+    <tr>
+      <td style="padding:0;"><label for="planonnr" style="display:block;width:auto;">{$ASConf.planonnr.label}<span class="right">{if $ASConf.planonnr.required}<span class="required">*</span>{/if}</span></label></td>
+      <td style="padding:0;"><input id="planonnr" type="text" value="{$AS.planonnr|escape}" name="AS[planonnr]" class="itxt itxt2col"></td>
+    </tr>
+
+    <tr>
+      <td style="padding:0;"><label for="termin" style="width:180px;">Terminwunsch<span class="right">{if $ASConf.terminwunsch.required}<span class="required">*</span>{/if}</span></label></td>
+      <td style="padding:0;"><input type="text" value="{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}"
+        onfocus="showDtPicker(this)" id="terminwunsch" name="AS[terminwunsch]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/terminwunsch.php"></td>
+    </tr>
+    <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+    <tr>
+      <td style="padding:0;"><label style="width:180px;">Von<span class="right">{if $ASConf.von.required}<span class="required">*</span>{/if}</span></label>
+        <input type="hidden" readonly="readonly" id="von_gebaeude_id" value="{$AS.von_gebaeude_id|escape}" name="AS[von_gebaeude_id]">
+      </td>
+      <td style="padding:0;">
+        <input onclick="get_gebaeude(this, O('von_gebaeude_id'))" id="von_gebaeude_text" type="text" value="{$AS.von_gebaeude_text|escape}" readonly="readonly" class="itxt itxt2col">
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:0;"><label style="width:180px;">Nach<span class="right">{if $ASConf.nach.required}<span class="required">*</span>{/if}</span></label>
+        <input type="hidden" id="nach_gebaeude_id" value="{$AS.nach_gebaeude_id|escape}" name="AS[nach_gebaeude_id]">
+      </td>
+      <td style="padding:0;">
+        <input onclick="get_gebaeude(this, O('nach_gebaeude_id'))" id="nach_gebaeude_text" type="text" value="{$AS.nach_gebaeude_text|escape}" readonly="readonly" class="itxt itxt2col">
+      </td>
+    </tr>
+    *}
+  </table>
 
   {if !empty($AS.ansprechpartner) or !empty($AS.ansprechpartner_fon)}
   <div style="margin-top:1.5rem">

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-11 14:11:38
+/* Smarty version 3.1.34-dev-7, created on 2021-11-22 16:34:41
   from '/var/www/html/html/admin_umzugsformular_lieferauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_618d249a4d05b0_90267106',
+  'unifunc' => 'content_619bb891221ca3_61833464',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1eb71b97585ea7de3d34b9b8182ae973573e43e8' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular_lieferauswahl.tpl.html',
-      1 => 1636639891,
+      1 => 1637595272,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_618d249a4d05b0_90267106 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619bb891221ca3_61833464 (Smarty_Internal_Template $_smarty_tpl) {
 ?><h2 style="margin:0;">Lieferfirma / Dienstleister</h2> 
 
 <div class="SelBoxDienstleisterWidth" style="width:390px;">
@@ -45,9 +45,9 @@ Neu anlegen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" a
 
 <input type="hidden" id="dl_id" name="AS[dienstleister_id]" value="<?php echo $_smarty_tpl->tpl_vars['AS']->value['dienstleister_id'];?>
 ">
-<table id="InputDienstleister">
+<table class="form-table" id="InputDienstleister">
   <tr>
-    <td style="padding:0;"><label for="dl_firmenname" style="width:180px;">Firmenname</label></td>
+    <td style="padding:0;width:180px;"><label for="dl_firmenname" style="width:180px;">Firmenname</label></td>
     <td style="padding:0;width:200px;"><input id="dl_firmenname" type="text" readonly="true" value="<?php if (!empty($_smarty_tpl->tpl_vars['DL']->value['Firmenname'])) {
 echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Firmenname'], ENT_QUOTES, 'UTF-8', true);
 }?>" name="DL[Firmenname]" class="itxt itxt2col"></td>
@@ -90,7 +90,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['DL']->value['Email'], ENT_QUOTES, 
   </tr>
   <tr>
       <td colspan="2">
-          <label style="text-align: left;background:none;border:none;color:#000;width:100%;">Bemerkung Mertens intern</label>
+          <label style="width:182px;">Bemerkung Mertens intern</label>
           <textarea id="as_dl_bemerkung" style="width:100%;height:160px;resize:vertical;overflow:auto" class="iarea" name="AS[dienstleister_bemerkung]"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['dienstleister_bemerkung'], ENT_QUOTES, 'UTF-8', true);?>
 </textarea>
       </td>

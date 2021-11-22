@@ -8,164 +8,165 @@
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN -->
 {include file="admin_antraege_tabs.html" cat="auftrag" aid=$AS.aid s="aantraege" allusers=1}
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-<h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1> 
+  <h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1>
 
-<div id="Umzugsantrag" data-html="html/admin/umzugsformular/tpl/read/html" class="divInlay">
-<h2 style="margin:0;">Auftrags-Status</h2>
-<table border=0 cellspacing=1 cellpadding=1>
-  <tr>
-    <td style="padding:0;height:auto;width:200px;"><label style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
-    <td style="padding:0;width:250px;"><input type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
-	onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
-  </tr>
-  <tr>
-    <td style="padding:0;width:200px;height:auto;width:auto;"><label for="tour_kennung" style="display:block;width:auto;">Tour-Kennung/ID:</label></td>
-    <td style="padding:0;width:250px;"><input id="tour_kennung" type="text" value='{$AS.tour_kennung|escape}'
-                                              name="AS[tour_kennung]" class="itxt itxt2col"></td>
-  </tr>
-  <tr>
-    <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
-    <td style="padding:0;"><input type="text" value='{$AS.umzugszeit|escape}'
-	id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
-  </tr>
-  <tr>
-    <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
-    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
-  </tr>
-  {if $AS.angeboten_am}
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Genehmigt:</label></td>
-    <td style="padding:0;" class="status_{$AS.genehmigt_br}"><div class="itxt itxt2col ireadonly">
-      <img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span>
-    </div></td>
-  </tr>
-  {else}
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Bestätigt:</label></td>
-    <td style="padding:0;" class="status_{$AS.genehmigt_br}"><div class="itxt itxt2col ireadonly">
-      <img id="imgStatGenBr" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGenBr">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span>
-    </div></td>
-  </tr>
-  {/if}
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Abgeschlossen:</label></td>
-    <td style="padding:0;" class="status_{$AS.abgeschlossen}"><div class="itxt itxt2col ireadonly">
-      <img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span>
-    </div></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Status:</label></td>
-    <td style="padding:0;"><div class="itxt itxt2col ireadonly">
-      {if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}
-    </div></td>
-  </tr>
-	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
-</table>
-  <img src="%WebRoot%images/printer.png" width="16" height="16" alt="">
-<a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}" style="display: none" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Anforderungsblatt / Druckansicht</a>
-  <a href="%WebRoot%sites/lieferschein.php?aid={$AS.aid}" target="_Lieferschein{$AS.aid}">Lieferschein</a>
-  | <a href="%WebRoot%sites/etiketten.php?aid={$AS.aid}" target="_Etiketten{$AS.aid}">Etiketten</a>
-<br>
-
-<div style="float:left">
-<h2 style="margin:0;">Leistungsantragsteller</h2> 
-<table>
-  <tr>
-    <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
-    <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">
-      <span data-fld="AS[vorname]"></span>{$AS.vorname|escape}</span> <span data-fld="AS[name]"></span>{$AS.name|escape}</span>
-    </div></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
-    <td style="padding:0;" data-fld="AS[email]"><div class="itxt itxt2col ireadonly">{$AS.email|escape}</div></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
-    <td style="padding:0;" data-fld="AS[fon]"><div class="itxt itxt2col ireadonly">{$AS.fon|escape}</div></td>
-  </tr>
-
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Standort:</label></td>
-    <td style="padding:0;" data-fld="AS[ort]"><div class="itxt itxt2col ireadonly">{$AS.ort|escape}</div></td>
-  </tr>
-
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Gebäude:</label></td>
-    <td style="padding:0;" data-fld="AS[gebauede]"><div class="itxt itxt2col ireadonly">{$AS.gebaeude|escape}</div></td>
-  </tr>
-  
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Etage:</label></td>
-    <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[etage]">{$AS.etage|escape}</span></div></td>
-  </tr>
-  
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Raum-Nr:</label></td>
-    <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[raumnr]">{$AS.raumnr|escape}</span></div></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">{$ASConf.kostenstelle.label}:</label></td>
-    <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[kostenstelle]">{$AS.kostenstelle|escape}</span></div></td>
-  </tr>
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Ticket-Nr.:</label></td>
-    <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[planonr]">{$AS.planonnr|escape}</span></div></td>
-  </tr>
-  
-  <tr>
-    <td style="padding:0;"><label style="display:block;width:auto;">Terminwunsch:</label></td>
-    <td style="padding:0;" data-fld="AS[terminwunsch]"><div class="itxt itxt2col ireadonly">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</div></td>
-  </tr>
-	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
-</table>
-<br>
-</div>
-{if 1}
-<div style="float:left; margin-left:50px;">
-    {include file="admin_umzugsformular_lieferauswahl.tpl.html"}
-</div>
-{/if}
-
-<br clear= "all">
-<div style="clear:both;"></div>
-
-
-{if 0}
-    {include file="admin_umzugsformular_mitarbeiterauswahl.tpl.html"}
-{/if}
-{if 0}
-    {include file="admin_umzugsformular_geraeteauswahl.tpl.html"}
-{/if}
-{if 0}
-    {include file="admin_umzugsformular_ortsauswahl.tpl.html"}
-{/if}
-{if 1}
-    {include file="admin_umzugsformular_leistungsauswahl.tpl.html"}
-{/if}
-{if !empty($UmzugsAnlagen)}
-  {include file="umzugsformular_attachments.tpl.read.html" internal=1}
-{/if}
-<br>
-{if !empty($UmzugsAnlagenIntern)}
-  {include file="umzugsformular_attachments.tpl.read2.html" UmzugsAnlagen=$UmzugsAnlagenIntern internal=1}
-{/if}
-
-{if 0}
-<div style="width:100%">
-    {include file="admin_umzugsformular_gruppierung.tpl.html"}
-</div>
-{/if}
-  umzugsstatus: {$AS.umzugsstatus}
-  <div id="BoxBemerkungen">
-    <strong>Bemerkungen:</strong><br>
-    <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
-  </div>
+  <div id="Umzugsantrag" data-html="html/admin/umzugsformular/tpl/read/html" class="divInlay">
+  <h2 style="margin:0;">Auftrags-Status</h2>
+  <table class="form-table"  border=0 cellspacing=1 cellpadding=1>
+    <tr>
+      <td style="padding:0;height:auto;width:200px;"><label style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
+      <td style="padding:0;width:250px;"><input type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
+      onfocus="showDtPicker(this)" id="umzugstermin" name="AS[umzugstermin]" class="itxt itxt2col"></td>
+    </tr>
+    <tr>
+      <td style="padding:0;width:200px;height:auto;width:auto;"><label for="tour_kennung" style="display:block;width:auto;">Tour-Kennung/ID:</label></td>
+      <td style="padding:0;width:250px;"><input id="tour_kennung" type="text" value='{$AS.tour_kennung|escape}'
+                                                name="AS[tour_kennung]" class="itxt itxt2col"></td>
+    </tr>
+    <tr>
+      <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
+      <td style="padding:0;"><input type="text" value='{$AS.umzugszeit|escape}'
+      id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
+    </tr>
+    <tr>
+      <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
+      <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
+    </tr>
+    {if $AS.angeboten_am}
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Genehmigt:</label></td>
+      <td style="padding:0;" class="status_{$AS.genehmigt_br}"><div class="itxt itxt2col ireadonly">
+        <img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span>
+      </div></td>
+    </tr>
+    {else}
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Bestätigt:</label></td>
+      <td style="padding:0;" class="status_{$AS.genehmigt_br}"><div class="itxt itxt2col ireadonly">
+        <img id="imgStatGenBr" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGenBr">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span>
+      </div></td>
+    </tr>
+    {/if}
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Abgeschlossen:</label></td>
+      <td style="padding:0;" class="status_{$AS.abgeschlossen}"><div class="itxt itxt2col ireadonly">
+        <img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span>
+      </div></td>
+    </tr>
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Status:</label></td>
+      <td style="padding:0;"><div class="itxt itxt2col ireadonly">
+        {if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}
+      </div></td>
+    </tr>
+      <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+  </table>
+    <img src="%WebRoot%images/printer.png" width="16" height="16" alt="">
+  <a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}" style="display: none" target="_Umzugsblatt{$AS.aid}"><img src="%WebRoot%images/printer.png" width="16" height="16" alt="">Anforderungsblatt / Druckansicht</a>
+    <a href="%WebRoot%sites/lieferschein.php?aid={$AS.aid}" target="_Lieferschein{$AS.aid}">Lieferschein</a>
+    | <a href="%WebRoot%sites/etiketten.php?aid={$AS.aid}" target="_Etiketten{$AS.aid}">Etiketten</a>
   <br>
-  <div id="BoxLieferhinweise">
-    <strong>Lieferhinweise:</strong><br>
-    <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
-  </div>
-  <div id="LoadingBar"></div>
 
+  <div style="float:left">
+  <h2 style="margin:0;">Leistungsantragsteller</h2>
+  <table class="form-table" >
+    <tr>
+      <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
+      <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">
+        <span data-fld="AS[vorname]"></span>{$AS.vorname|escape}</span> <span data-fld="AS[name]"></span>{$AS.name|escape}</span>
+      </div></td>
+    </tr>
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">E-Mail:</label></td>
+      <td style="padding:0;" data-fld="AS[email]"><div class="itxt itxt2col ireadonly">{$AS.email|escape}</div></td>
+    </tr>
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
+      <td style="padding:0;" data-fld="AS[fon]"><div class="itxt itxt2col ireadonly">{$AS.fon|escape}</div></td>
+    </tr>
+
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Standort:</label></td>
+      <td style="padding:0;" data-fld="AS[ort]"><div class="itxt itxt2col ireadonly">{$AS.ort|escape}</div></td>
+    </tr>
+
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Gebäude:</label></td>
+      <td style="padding:0;" data-fld="AS[gebauede]"><div class="itxt itxt2col ireadonly">{$AS.gebaeude|escape}</div></td>
+    </tr>
+
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Etage:</label></td>
+      <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[etage]">{$AS.etage|escape}</span></div></td>
+    </tr>
+
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Raum-Nr:</label></td>
+      <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[raumnr]">{$AS.raumnr|escape}</span></div></td>
+    </tr>
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">{$ASConf.kostenstelle.label}:</label></td>
+      <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[kostenstelle]">{$AS.kostenstelle|escape}</span></div></td>
+    </tr>
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Ticket-Nr.:</label></td>
+      <td style="padding:0;"><div class="itxt itxt2col ireadonly"><span data-fld="AS[planonr]">{$AS.planonnr|escape}</span></div></td>
+    </tr>
+
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Terminwunsch:</label></td>
+      <td style="padding:0;" data-fld="AS[terminwunsch]"><div class="itxt itxt2col ireadonly">{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}</div></td>
+    </tr>
+      <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+  </table>
+  <br>
+  </div>
+  {if 1}
+  <div style="float:left; margin-left:50px;">
+      {include file="admin_umzugsformular_lieferauswahl.tpl.html"}
+  </div>
+  {/if}
+
+  <br clear= "all">
+  <div style="clear:both;"></div>
+
+
+  {if 0}
+      {include file="admin_umzugsformular_mitarbeiterauswahl.tpl.html"}
+  {/if}
+  {if 0}
+      {include file="admin_umzugsformular_geraeteauswahl.tpl.html"}
+  {/if}
+  {if 0}
+      {include file="admin_umzugsformular_ortsauswahl.tpl.html"}
+  {/if}
+  {if 1}
+      {include file="admin_umzugsformular_leistungsauswahl.tpl.html"}
+  {/if}
+  {if !empty($UmzugsAnlagen)}
+    {include file="umzugsformular_attachments.tpl.read.html" internal=1}
+  {/if}
+  <br>
+  {if !empty($UmzugsAnlagenIntern)}
+    {include file="umzugsformular_attachments.tpl.read2.html" UmzugsAnlagen=$UmzugsAnlagenIntern internal=1}
+  {/if}
+
+  {if 0}
+  <div style="width:100%">
+      {include file="admin_umzugsformular_gruppierung.tpl.html"}
+  </div>
+  {/if}
+    umzugsstatus: {$AS.umzugsstatus}
+    <div id="BoxBemerkungen">
+      <strong>Bemerkungen:</strong><br>
+      <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
+    </div>
+    <br>
+    <div id="BoxLieferhinweise">
+      <strong>Lieferhinweise:</strong><br>
+      <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
+    </div>
+    <div id="LoadingBar"></div>
+
+  </div>
 </div>

@@ -21,9 +21,9 @@ Neu anlegen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" a
 </div>
 
 <input type="hidden" id="dl_id" name="AS[dienstleister_id]" value="{$AS.dienstleister_id}">
-<table id="InputDienstleister">
+<table class="form-table" id="InputDienstleister">
   <tr>
-    <td style="padding:0;"><label for="dl_firmenname" style="width:180px;">Firmenname</label></td>
+    <td style="padding:0;width:180px;"><label for="dl_firmenname" style="width:180px;">Firmenname</label></td>
     <td style="padding:0;width:200px;"><input id="dl_firmenname" type="text" readonly="true" value="{if !empty($DL.Firmenname)}{$DL.Firmenname|escape}{/if}" name="DL[Firmenname]" class="itxt itxt2col"></td>
   </tr>
   <tr>
@@ -52,7 +52,7 @@ Neu anlegen <img align="absmiddle" src="images/uebernehmen_off.png" width="14" a
   </tr>
   <tr>
       <td colspan="2">
-          <label style="text-align: left;background:none;border:none;color:#000;width:100%;">Bemerkung Mertens intern</label>
+          <label style="width:182px;">Bemerkung Mertens intern</label>
           <textarea id="as_dl_bemerkung" style="width:100%;height:160px;resize:vertical;overflow:auto" class="iarea" name="AS[dienstleister_bemerkung]">{$AS.dienstleister_bemerkung|escape}</textarea>
       </td>
   </tr>

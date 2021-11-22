@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-19 02:49:27
+/* Smarty version 3.1.34-dev-7, created on 2021-11-22 16:27:01
   from '/var/www/html/html/admin_umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_619702a784a965_05103316',
+  'unifunc' => 'content_619bb6c5bd50e9_66256961',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3277e0744e9936c6fe82f29745a3a388efa6f8e9' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular.tpl.html',
-      1 => 1637286556,
+      1 => 1637594808,
       2 => 'file',
     ),
   ),
@@ -29,7 +29,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_619702a784a965_05103316 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619bb6c5bd50e9_66256961 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 $_smarty_tpl->_assignInScope('laenderCsv', substr($_smarty_tpl->tpl_vars['ASConf']->value['land']['size'],1,-1));
 $_smarty_tpl->_assignInScope('laenderLst', explode("','",$_smarty_tpl->tpl_vars['laenderCsv']->value));?>
@@ -78,9 +78,9 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 <div id="Umzugsantrag" data-html="html/admin/umzugsformular/tpl/html" class="divInlay">
 <h2 style="margin:0;">Auftragsdaten</h2>
   <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
-<table border=1 cellspacing=1 cellpadding=1>
+<table class="form-table" border=1 cellspacing=1 cellpadding=1>
   <tr>
-    <td style="padding:0;width:200px;height:auto;width:auto;"><label for="termin" style="width:180px;">Liefertermin:</label></td>
+    <td class="label" style="padding:0;width:200px;height:auto;width:auto;"><label for="termin" style="width:180px;">Liefertermin:</label></td>
     <td style="padding:0;width:250px;"><input id="termin" type="text" value='<?php echo smarty_modifier_date_format(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugstermin'], ENT_QUOTES, 'UTF-8', true),"%d.%m.%Y");?>
 '
     onfocus="showDtPicker(this)" name="AS[umzugstermin]" class="itxt itxt2col"></td>
@@ -171,10 +171,10 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
 ">Etiketten</a>
 <br>
     <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value['bemerkungen'])) {?>
-    <table width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
+    <table class="form-table" width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
         <tr>
-          <td style="padding:0;width:200px;height:auto;width:auto;"><label style="width:180px;">Bisherige Bemerkungen:</label></td>
-          <td></td>
+          <td>Bisherige Bemerkungen:</td>
+          <td class="no-border"></td>
         </tr>
         <tr>
           <td colspan="2">
@@ -186,7 +186,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
     <?php }?>
 
     <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value['lieferhinweise'])) {?>
-    <table width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
+    <table class="form-table"  width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
       <tr>
         <td style="padding:0;width:200px;height:auto;width:auto;"><label style="width:180px;">Lieferhinweise:</label></td>
         <td></td>
@@ -207,7 +207,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
 ">
 <input type="hidden" name="AS[token]" value="<?php echo $_smarty_tpl->tpl_vars['AS']->value['token'];?>
 ">
-<table>
+<table class="form-table" >
   <tr>
       <td style="padding:0;"><label for="mitarbeiter" style="width:180px;">Vor<?php if ($_smarty_tpl->tpl_vars['ASConf']->value['vorname']['required']) {?><span class="required">*</span><?php }?> &amp; Nachname<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['name']['required']) {?><span class="required">*</span><?php }?></span></label></td>
     <td style="padding:0;width:250px;"><input type="text" readonly="true" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['vorname'], ENT_QUOTES, 'UTF-8', true);?>
@@ -232,8 +232,37 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['personalnr'], ENT_QUO
   </tr>
 </table>
 
-  <div style="margin-top:2rem;"><h2 style="margin:0;">Lieferadresse</h2></div>
-  <table>
+  <div style="margin-top:2rem;"><h2 style="margin:0;">Lieferadresse <i class="geo-address"
+                                                                            data-address="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
+,<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['plz'], ENT_QUOTES, 'UTF-8', true);?>
++<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ort'], ENT_QUOTES, 'UTF-8', true);?>
+,<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
+"
+                                                                            data-geo-strasse="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
+"
+                                                                            data-geo-plz="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['plz'], ENT_QUOTES, 'UTF-8', true);?>
+"
+                                                                            geo-geo-ort="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ort'], ENT_QUOTES, 'UTF-8', true);?>
+"
+                                                                            data-geo-land="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
+"></i></h2></div>
+  <?php echo '<script'; ?>
+>
+    $(function() {
+      $("i.geo-address[data-address]").each(function() {
+        var gmapUrl = "https://www.google.com/maps/dir/?api=1&destination=";
+        var query = encodeURIComponent( $(this).data("address") );
+        // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
+        $(this).wrap( $("<a/>").attr({
+          href: gmapUrl + query,
+          target: "gmap",
+          title: "Lieferadresse in Gmap anzeigen"
+        }) ).addClass("marker icon");
+      });
+    });
+  <?php echo '</script'; ?>
+>
+  <table class="form-table" >
   <tr>
     <td style="padding:0;">
       <label for="as_strasse" style="display:block;width:180px;">Stra&szlig;e &amp; Nr<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['strasse']['required']) {?><span class="required">*</span><?php }?></span></label>
@@ -281,7 +310,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 </table>
 <br>
 <div style="margin-top:2rem;"><h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2></div>
-<table>
+<table class="form-table" >
   <tr>
     <td style="padding:0;"><label for="ansprechpartner" style="width:180px;">Vor &amp; Nachname:</label></td>
     <td style="padding:0;width:250px;"><input id="ansprechpartner" type="text" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner'], ENT_QUOTES, 'UTF-8', true);?>
@@ -294,7 +323,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
   </tr>
 </table>
 
-<table style="display:none;">
+<table class="form-table"  style="display:none;">
   <tr>
     <td style="padding:0;width:180px;"><label style="display:block;width:auto;"><?php echo $_smarty_tpl->tpl_vars['ASConf']->value['umzug']['label'];?>
 </label></td>
