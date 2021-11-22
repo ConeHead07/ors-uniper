@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-22 16:53:12
+/* Smarty version 3.1.34-dev-7, created on 2021-11-22 17:33:24
   from '/var/www/html/html/auswertung_tourenplanung.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_619bbce8e86b13_90464118',
+  'unifunc' => 'content_619bc654654b50_78566841',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1f096f9d38e15833dddd15165e71981f311f9d76' => 
     array (
       0 => '/var/www/html/html/auswertung_tourenplanung.html',
-      1 => 1637596379,
+      1 => 1637598786,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_619bbce8e86b13_90464118 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619bc654654b50_78566841 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),1=>array('file'=>'/var/www/html/smarty3/plugins/modifier.replace.php','function'=>'smarty_modifier_replace',),));
 ?>
 <pre style="display: none;">
@@ -211,12 +211,6 @@ foreach ($_from as $_smarty_tpl->tpl_vars['item']->value) {
             <td>
                 <input type="checkbox" name="aids[]" value="<?php echo $_smarty_tpl->tpl_vars['item']->value['aid'];?>
 "<?php if (!empty($_smarty_tpl->tpl_vars['aids']->value) && in_array($_smarty_tpl->tpl_vars['item']->value['aid'],$_smarty_tpl->tpl_vars['aids']->value)) {?> checked="checked"<?php }?>>
-                <i class="geo-address"
-                     data-address="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
-,<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['plz'], ENT_QUOTES, 'UTF-8', true);?>
-+<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['ort'], ENT_QUOTES, 'UTF-8', true);?>
-,<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
-"></i>
             </td>
             <td class="fld-cell fld-aid" data-field="aid" data-value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['aid'], ENT_QUOTES, 'UTF-8', true);?>
 "><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['aid'], ENT_QUOTES, 'UTF-8', true);?>
@@ -235,8 +229,15 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['land'], ENT_QUOTES,
 "><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['plz'], ENT_QUOTES, 'UTF-8', true);?>
 </td>
             <td class="fld-cell fld-strasse" data-field="strasse" data-value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
-"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
-</td>
+">
+                <span class="geo-address"
+                   data-address="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
+,<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['plz'], ENT_QUOTES, 'UTF-8', true);?>
++<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['ort'], ENT_QUOTES, 'UTF-8', true);?>
+,<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
+" style="color:red;">
+                <?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
+</span></td>
             <td class="fld-cell fld-service" data-field="service" data-value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['service'], ENT_QUOTES, 'UTF-8', true);?>
 "><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['item']->value['service'], ENT_QUOTES, 'UTF-8', true);?>
 </td>
@@ -556,7 +557,7 @@ function procesTourStatsBySelector(selector) {
 
 $(function(){
 
-    $("i.geo-address[data-address]").each(function() {
+    $(".geo-address[data-address]").each(function() {
         var gmapUrl = "https://www.google.com/maps/dir/?api=1&destination=";
         var query = encodeURIComponent( $(this).data("address") );
         // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
@@ -567,6 +568,7 @@ $(function(){
                 target: "gmap",
                 title: "Lieferadresse in Gmap anzeigen"
             }) )
+            .prepend( $("<i/>").addClass("marker icon").css("width","auto") )
             .addClass("marker icon")
             .bind("click", function(e) {
                 e.stopPropagation();
