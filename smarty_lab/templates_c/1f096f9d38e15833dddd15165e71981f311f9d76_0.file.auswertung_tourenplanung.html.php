@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-22 17:33:24
+/* Smarty version 3.1.34-dev-7, created on 2021-11-22 17:44:28
   from '/var/www/html/html/auswertung_tourenplanung.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_619bc654654b50_78566841',
+  'unifunc' => 'content_619bc8ec2f1493_27772323',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1f096f9d38e15833dddd15165e71981f311f9d76' => 
     array (
       0 => '/var/www/html/html/auswertung_tourenplanung.html',
-      1 => 1637598786,
+      1 => 1637599453,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_619bc654654b50_78566841 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619bc8ec2f1493_27772323 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),1=>array('file'=>'/var/www/html/smarty3/plugins/modifier.replace.php','function'=>'smarty_modifier_replace',),));
 ?>
 <pre style="display: none;">
@@ -635,6 +635,10 @@ $(function(){
 
     $("#btnCsvExport").bind("click", function() {
         send('format=csv');
+    });
+
+    $("#toggleDebugInfos").bind("click", function(e) {
+        $("#debugInfosContainer").toggle();
     });
 
     statsOfAllItems = procesTourStatsAll();

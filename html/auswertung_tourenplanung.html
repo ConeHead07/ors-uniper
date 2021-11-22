@@ -514,6 +514,10 @@ $(function(){
         send('format=csv');
     });
 
+    $("#toggleDebugInfos").bind("click", function(e) {
+        $("#debugInfosContainer").toggle();
+    });
+
     statsOfAllItems = procesTourStatsAll();
     renderTourStats(statsOfAllItems);
 

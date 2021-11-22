@@ -340,7 +340,8 @@ $Tpl->assign('s', $s);
 $Tpl->assign('q', $query);
 $body_content = $Tpl->fetch("auswertung_tourenplanung.html");
 
-$body_content.= '<div class="debug-infos-container" style="display:block;overflow: scroll;height: calc(100vh - 20px);width: 100%;">' . $NL;
+$body_content.= "<div id='toggleDebugInfos' style='margin-top:2rem;opacity:0.5;display:inline-block'>...</div>";
+$body_content.= '<div id="debugInfosContainer" class="debug-infos-container" style="display:none;overflow: scroll;height: calc(100vh - 20px);width: 100%;">' . $NL;
 foreach($debugInfos as $_dbg) {
     $body_content.= '<pre style="color:#0ba1b5;font-size:11px;border:1px solid #0ba1b5;padding:1rem;border-radius:5px;background-color: #dedede;margin:5px;">'
         . $_dbg . '</pre>' . $NL;
