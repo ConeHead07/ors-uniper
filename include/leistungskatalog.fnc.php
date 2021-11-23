@@ -12,6 +12,38 @@ function leistung_einheit2($id) {
     return (string)$db->query_one($sql, array('id' => $id));
 }
 
+function leistungskatalogListColNameHandler($fname, $num, $numAll) {
+    switch($fname) {
+        case 'preis_pro_einheit':
+            return '<span title="Preis pro Einheit">Preis</span>';
+
+        case 'verfuegbar':
+            return '<span title="Verfügbar">Verfügb</span>';
+
+        case 'produkt_link':
+            return '<span title="Produktlink">Link</span>';
+
+        default:
+            return $fname;
+    }
+}
+
+function leistungskatalogListColumnHandler(&$val, &$row, $tbl, $fname, &$cellClass, &$cellAttr, $nr) {
+    switch($fname) {
+        case 'preis_pro_einheit':
+            return number_format($val, 2, ',', '.') . ' €';
+
+        case 'verfuegbar':
+            $cellClass.= ($val === 'Ja' ? ' color-green' : 'color-red');
+            return $val;
+
+        case 'produkt_link':
+            return ($val === '') ? '' : '<a href="' . $val . '" title="' . $val . ' target="produktlink">' . basename($val) . '</a>';
+
+    }
+    return $val;
+}
+
 function formatEingabeLeistungskatalogImage(
         $editCmd,
         $fN,

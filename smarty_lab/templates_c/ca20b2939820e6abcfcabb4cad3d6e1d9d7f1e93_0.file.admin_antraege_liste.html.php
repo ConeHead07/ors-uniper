@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-18 18:28:37
+/* Smarty version 3.1.34-dev-7, created on 2021-11-23 11:01:50
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61968d45273a01_38336334',
+  'unifunc' => 'content_619cbc0e86bd46_74441576',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1637256511,
+      1 => 1637661700,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61968d45273a01_38336334 (Smarty_Internal_Template $_smarty_tpl) {
+function content_619cbc0e86bd46_74441576 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN --> 
@@ -324,8 +324,15 @@ px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['ort'];?>
 px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['plz'];?>
 &nbsp;</div>
               <div class="fld-cell fld-strasse" style="width:<?php echo $_smarty_tpl->tpl_vars['strasseWidth']->value;?>
-px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['strasse'];?>
-&nbsp;</div>
+px;">
+                  <span class="geo-address"
+                        data-address="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
+,<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['plz'], ENT_QUOTES, 'UTF-8', true);?>
++<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['ort'], ENT_QUOTES, 'UTF-8', true);?>
+,<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
+" style="color:red;">
+                <?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
+</span></div>
               <div class="fld-cell fld-service" style="width:<?php echo $_smarty_tpl->tpl_vars['serviceWidth']->value;?>
 px;" ><?php echo $_smarty_tpl->tpl_vars['U']->value['service'];?>
 &nbsp&nbsp;</div>
@@ -479,6 +486,24 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 
         $("#btnCsvExport").bind("click", function() {
             send('format=csv');
+        });
+
+        $(".geo-address[data-address]").each(function() {
+            var gmapUrl = "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=";
+            var query = encodeURIComponent( $(this).data("address") );
+            // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
+            $(this)
+                .wrap(
+                    $("<a/>").attr({
+                        href: gmapUrl + query,
+                        target: "gmap",
+                        title: "Lieferadresse in Gmap anzeigen"
+                    }) )
+                .prepend( $("<i/>").addClass("marker icon").css("width","auto") )
+                .addClass("marker icon")
+                .bind("click", function(e) {
+                    e.stopPropagation();
+                });
         });
     });
 <?php echo '</script'; ?>

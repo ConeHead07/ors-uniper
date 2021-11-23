@@ -7,6 +7,7 @@ $debugInfos = [];
 $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
 $datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'antragsdatum';
+$statByTour = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['t'] : '';
 $exportFormat = getRequest('format', 'html');
 
 $aAuftragsstatus = (!empty($_REQUEST['auftragsstatus'])) ? $_REQUEST['auftragsstatus'] : ['beauftragt'];
@@ -27,18 +28,6 @@ if (!in_array($datumfeld, $aValidDatumfelder)) {
         <label style="margin-right:2rem"><input type="checkbox" name="auftragsstatus[]" id="filter_abgeschlossen" value="abgeschlossen"> Abgeschlossen</label>
 */
 $aWhereStatusAnyOf = [];
-if (in_array('beauftragt', $aAuftragsstatus)) {
-    $aWhereStatusAnyOf[] = ' (umzugsstatus = "beauftragt" OR IFNULL(antragsdatum, "") != "") ' . "\n";
-}
-if (in_array( 'avisiert', $aAuftragsstatus)) {
-    $aWhereStatusAnyOf[] = ' (umzugsstatus = "bestaetigt" or bestaetigt="Ja" or IFNULL(umzugstermin, "") != "") ' . "\n";
-}
-if (in_array('abgeschlossen', $aAuftragsstatus)) {
-    $aWhereStatusAnyOf[] = ' (umzugsstatus = "abgeschlossen" or abgeschlossen="Ja") ' . "\n";
-}
-if (in_array('disponiert', $aAuftragsstatus)) {
-    $aWhereStatusAnyOf[] = ' (IFNULL(tour_kennung, "") != "") ' . "\n";
-}
 
 if (empty($datumvon)) {
 //    $timeMin1Month = strtotime('-1 month');
@@ -70,6 +59,53 @@ $aids = (!empty($_REQUEST['aids']))     ? $_REQUEST['aids'] : array();
 $tourkennung = (!empty($_REQUEST['tourkennung']))   ? trim($_REQUEST['tourkennung']) : '';
 $tourdatum = (!empty($_REQUEST['tourdatum']))   ? trim($_REQUEST['tourdatum']) : '';
 $all   = (!empty($_REQUEST['all']))     ? (int)$_REQUEST['all'] : 1;
+
+
+if ($statByTour) {
+    $aAuftragsstatus = [ 'beauftragt', 'disponiert', ];
+    $sql = 'SELECT aid, count(1) numAuftraege, '
+        . ' MIN(antragsdatum) min_at, MAX(antragsdatum) max_at, '
+        . ' MIN(umzugstermin) min_lt, MAX(umzugstermin), GROUP_CONCAT(DISTINCT(umzugsstatus)) csv_status, '
+        . ' SUM( IF(IFNULL(umzugstermin, "") = "", 1, 0) numOhneTermin'
+        . ' FROM mm_umzuege '
+        . ' WHERE tour_kennung LIKE :tour_kennung';
+    $row = $db->query_row($sql, [ 'tour_kennung' => $t ]);
+
+    if ((int)$row['numAuftraege'] > 0) {
+        if ( (int)$row['numOhneAuftraege'] > 0) {
+            $datumfeld = 'antragsdatum';
+            if ($row['min_at'] < $datumvon) {
+                $datumvon = $row['min_at'];
+            }
+            if ($row['max_at'] > $datumbis) {
+                $datumvbis = $row['max_at'];
+            }
+        } else {
+            $datumfeld = 'umzugstermin';
+            if ($row['min_lt'] < $datumvon) {
+                $datumvon = $row['min_lt'];
+            }
+            if ($row['max_lt'] > $datumbis) {
+                $datumvbis = $row['max_lt'];
+            }
+        }
+        $aStatus = array_map('trim', explode(',', $row['csv_status']));
+        $aAuftragsstatus = array_merge($aAuftragsstatus, $aStatus);
+    }
+}
+
+if (in_array('beauftragt', $aAuftragsstatus)) {
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "beauftragt" OR IFNULL(antragsdatum, "") != "") ' . "\n";
+}
+if (in_array( 'avisiert', $aAuftragsstatus)) {
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "bestaetigt" or bestaetigt="Ja" or IFNULL(umzugstermin, "") != "") ' . "\n";
+}
+if (in_array('abgeschlossen', $aAuftragsstatus)) {
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "abgeschlossen" or abgeschlossen="Ja") ' . "\n";
+}
+if (in_array('disponiert', $aAuftragsstatus)) {
+    $aWhereStatusAnyOf[] = ' (IFNULL(tour_kennung, "") != "") ' . "\n";
+}
 
 if ($finish && ($tourkennung || $tourdatum) && is_array($aids) && count($aids)) {
     $debugInfos[] = '#' . __LINE__;

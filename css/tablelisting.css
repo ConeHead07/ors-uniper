@@ -38,7 +38,9 @@
 	text-decoration: underline;
 }
 .tblList thead a,
-.tblList thead a:visited {
+.tblList thead a:visited,
+.tblList thead a *,
+.tblList thead a:visited * {
 	color:#333;
     font-weight:bold;
 }

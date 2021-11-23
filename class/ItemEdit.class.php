@@ -16,6 +16,7 @@ class ItemListClass
 {
 	var $classname  = "ItemEdit";
 	var $ItemClass  = NULL;
+	var $ItemConf = null;
 	var $baseLink   = "";
 	var $numAll     = NULL;
 	var $num = NULL;
@@ -34,6 +35,7 @@ class ItemListClass
 	var $arrListJoinsTbl2Name = array();
 	var $arrHideFields = array();
 	var $arrColumnHandler = array();
+	var $arrColNameHandler = [];
 	var $tmpZahl = 0;
 	var $tmpNull = NULL;
 	var $aFldByNum = array();
@@ -151,6 +153,12 @@ class ItemListClass
 				$this->addColumnHandler($colName, $fncName);
 			}
 		}
+
+        if (!empty($aListConf["addColNameHandler"]) && is_array($aListConf["addColNameHandler"])) {
+            foreach($aListConf["addColNameHandler"] as $colName => $fncName) {
+                $this->addColNameHandler($colName, $fncName);
+            }
+        }
 		//echo "#".__LINE__." ".basename(__FILE__)." this->selectFlds:".$this->selectFlds."<br>\n";
 	}
 	
@@ -246,7 +254,7 @@ class ItemListClass
 			}
 		} else {
 			$tmp1 = explode(",", $joinListFlds);
-			$tmp2 = "";
+			$tmp2 = '';
 			for($i = 0; $i < count($tmp1); $i++) {
 				// Vermeide Doppelte Feldbenennung in Select
 				// Daher Abfrage, ob JoinFld bereits in Select enthalten ist
@@ -381,11 +389,27 @@ class ItemListClass
 	
 	function addColumnHandler($colName, $fncName) {
 		$this->arrColumnHandler[$colName] = $fncName;
+        return $this;
 	}
 	
-	function dropColumnHandler($colName, $fncName) {
-		if (isset($this->arrColumnHandler[$colName])) unset($this->arrColumnHandler[$colName]);
+	function dropColumnHandler($colName) {
+		if (isset($this->arrColumnHandler[$colName])) {
+		    unset($this->arrColumnHandler[$colName]);
+        }
+        return $this;
 	}
+
+	function addColNameHandler($colName, $fncName) {
+        $this->arrColNameHandler[$colName] = $fncName;
+        return $this;
+    }
+
+    function dropColNameHandler($colName) {
+        if (isset($this->arrColNameHandler[$colName])) {
+            unset($this->arrColumnHandler[$colName]);
+        }
+        return $this;
+    }
 	
 	function addListFormField($name, $createByF, $label, $type, $inputName, $inputId, $valueByDbFld, $default, $defChck, $options) {
 		// echo "#".__LINE__." ".__FUNTION__." <br>\n";
@@ -739,9 +763,9 @@ class ItemListClass
 			}
 		}
                 
-                foreach($this->arrListJoins as $joinName => $joinProps) {
-                    if (trim($joinProps["joinListFlds"])) $this->selectFlds.= (trim($this->selectFlds)?', ':'') . $joinProps["joinListFlds"];
-                }
+        foreach($this->arrListJoins as $joinName => $joinProps) {
+            if (trim($joinProps["joinListFlds"])) $this->selectFlds.= (trim($this->selectFlds)?', ':'') . $joinProps["joinListFlds"];
+        }
 	}
 	
 	function get_fldConfNameByDbfld($dbfld, $dbtbl) {
@@ -863,6 +887,18 @@ class ItemListClass
 						$i = $arrShowFieldsById[$t];
 						$fname = MyDB::field_name($r, $i);
 						$tname = MyDB::field_table($r, $i);
+                        $colLabel = $fname;
+						if (!@empty($this->ItemConf['Fields'][$fname]['listlabel'])) {
+                            $colLabel = $this->ItemConf['Fields'][$fname]['listlabel'];
+                        }
+						if (isset($this->arrColNameHandler[$fname])) {
+						    $cnameFunc = $this->arrColNameHandler[$fname];
+						    try {
+						        $colLabel = $cnameFunc($fname, $this->num, $this->numAll);
+                            } catch(Exception $e) {
+						        // Nothing
+                            }
+                        }
 						// echo "#".__LINE__." fname:$fname, tname:$tname <br>\n";
 						
 						$link = strtr(
@@ -873,7 +909,7 @@ class ItemListClass
 							)
 						);
 						$link.= "&{trackVars}";
-						$thead.= "<td><a href=\"$link\">$fname</a></a></td>\n";	
+						$thead.= "<td><a href=\"$link\">$colLabel</a></a></td>\n";
 					}
 					// 
 					// $this->arrKeyRplInList[$tbl][$key] = array("tbl" => "", "fld" => "");
@@ -1022,19 +1058,24 @@ class ItemListClass
 						$SetRawDbVal = true;
 						if (isset($this->arrColumnHandler[$fld])) {
 							if(function_exists($this->arrColumnHandler[$fld])) {
-								 $cellClass = " class=\"{$fname}\"";
-								 $cellAttr = "";
-								 call_user_func(
+								 $cellClass = $fname . ' ' . $aFldToCnf[$i]["sysType"];
+								 $cellAttr = '';
+								 $cbVal = call_user_func_array(
 								 	$this->arrColumnHandler[$fld],
-									$val,
-									$this->e,
-									$tbl,
-									$fld,
-									$cellClass,
-									$cellAttr,
-									$nr
+									[
+									    &$val,
+                                        &$this->e,
+                                        $tbl,
+                                        $fld,
+                                        &$cellClass,
+                                        &$cellAttr,
+                                        $nr
+                                    ]
 								);
-								$this->strItemList.= "<td {$cellClass} {$cellAttr}>".$val."</td>\n";
+								 if (is_string($cbVal)) {
+								     $val = $cbVal;
+                                 }
+								$this->strItemList.= "<td class=\"{$cellClass}\" {$cellAttr}>".$val."</td>\n";
 								$SetRawDbVal = false;
 							} else {
 								echo "#".__LINE__." ".__FILE__." Funktion ".$this->arrColumnHandler[$fld]." für Feld $fld nicht gefunden!<br>\n";

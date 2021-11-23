@@ -198,7 +198,10 @@
               <div class="fld-cell fld-land" style="width:{$landWidth}px;">{if $U.land == "Deutschland"}DE{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if} &nbsp;</div>
               <div class="fld-cell fld-ort" style="width:{$ortWidth}px;">{$U.ort}&nbsp;</div>
               <div class="fld-cell fld-plz" style="width:{$plzWidth}px;">{$U.plz}&nbsp;</div>
-              <div class="fld-cell fld-strasse" style="width:{$strasseWidth}px;">{$U.strasse}&nbsp;</div>
+              <div class="fld-cell fld-strasse" style="width:{$strasseWidth}px;">
+                  <span class="geo-address"
+                        data-address="{$U.strasse|escape},{$U.plz|escape}+{$U.ort|escape},{$U.land|escape}" style="color:red;">
+                {$U.strasse|escape}</span></div>
               <div class="fld-cell fld-service" style="width:{$serviceWidth}px;" >{$U.service}&nbsp&nbsp;</div>
               {if $showAuftragsdatum}
               <div class="fld-cell fld-beauftragt" style="width:{$beauftragtWidth}px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
@@ -313,6 +316,24 @@
 
         $("#btnCsvExport").bind("click", function() {
             send('format=csv');
+        });
+
+        $(".geo-address[data-address]").each(function() {
+            var gmapUrl = "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=";
+            var query = encodeURIComponent( $(this).data("address") );
+            // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
+            $(this)
+                .wrap(
+                    $("<a/>").attr({
+                        href: gmapUrl + query,
+                        target: "gmap",
+                        title: "Lieferadresse in Gmap anzeigen"
+                    }) )
+                .prepend( $("<i/>").addClass("marker icon").css("width","auto") )
+                .addClass("marker icon")
+                .bind("click", function(e) {
+                    e.stopPropagation();
+                });
         });
     });
 </script>

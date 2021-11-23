@@ -661,7 +661,8 @@ $_CONF["leistungskatalog"] = array(
 			"ListFunction" => "",
 			"ListTemplate" => "",
 			"name" => "",
-			"select" => "aktiv, Bezeichnung, leistungseinheit_abk, preis_pro_einheit, modified, leistungskategorie_id",
+			"select" => "aktiv, verfuegbar, Bezeichnung, produkt_link, preis_pro_einheit, modified, leistungskategorie_id",
+//			"select" => "aktiv, Bezeichnung, leistungseinheit_abk, preis_pro_einheit, modified, leistungskategorie_id",
 			"from" => "",
 			"join" => "",
 			"where" => "",
@@ -676,11 +677,18 @@ $_CONF["leistungskatalog"] = array(
 			"addFormFields" => array(
 
 			),
-			"addColumnHandler" => array(
-
-			)
+			"addColumnHandler" => [
+				'produkt_link' => 'leistungskatalogListColumnHandler',
+				'preis_pro_einheit' => 'leistungskatalogListColumnHandler',
+				'verfuegbar' => 'leistungskatalogListColumnHandler',
+			],
+			"addColNameHandler" => [
+				'preis_pro_einheit' => 'leistungskatalogListColNameHandler',
+				'verfuegbar' => 'leistungskatalogListColNameHandler',
+				'produkt_link' => 'leistungskatalogListColNameHandler',
+			]
 		)
 	)
 );
 // ENDE BASE CONF
-?>
+
