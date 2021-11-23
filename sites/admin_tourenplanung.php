@@ -7,7 +7,7 @@ $debugInfos = [];
 $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
 $datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'antragsdatum';
-$statByTour = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['t'] : '';
+$statByTour = (!empty($_REQUEST['t']))   ? $_REQUEST['t'] : '';
 $exportFormat = getRequest('format', 'html');
 
 $aAuftragsstatus = (!empty($_REQUEST['auftragsstatus'])) ? $_REQUEST['auftragsstatus'] : ['beauftragt'];
@@ -60,25 +60,27 @@ $tourkennung = (!empty($_REQUEST['tourkennung']))   ? trim($_REQUEST['tourkennun
 $tourdatum = (!empty($_REQUEST['tourdatum']))   ? trim($_REQUEST['tourdatum']) : '';
 $all   = (!empty($_REQUEST['all']))     ? (int)$_REQUEST['all'] : 1;
 
-
+echo '<div>#' . __LINE__ . ' ' . json_encode(compact('statByTour')) . "</div>\n";
 if ($statByTour) {
+    $query['tour_kennung'] = $statByTour;
     $aAuftragsstatus = [ 'beauftragt', 'disponiert', ];
     $sql = 'SELECT aid, count(1) numAuftraege, '
         . ' MIN(antragsdatum) min_at, MAX(antragsdatum) max_at, '
-        . ' MIN(umzugstermin) min_lt, MAX(umzugstermin), GROUP_CONCAT(DISTINCT(umzugsstatus)) csv_status, '
-        . ' SUM( IF(IFNULL(umzugstermin, "") = "", 1, 0) numOhneTermin'
+        . ' MIN(umzugstermin) min_lt, MAX(umzugstermin) max_lt, '
+        . ' GROUP_CONCAT(DISTINCT(umzugsstatus)) csv_status, '
+        . ' SUM( IF(IFNULL(umzugstermin, "") = "", 1, 0)) numOhneTermin'
         . ' FROM mm_umzuege '
         . ' WHERE tour_kennung LIKE :tour_kennung';
-    $row = $db->query_row($sql, [ 'tour_kennung' => $t ]);
+    $row = $db->query_row($sql, [ 'tour_kennung' => $statByTour ]);
 
     if ((int)$row['numAuftraege'] > 0) {
-        if ( (int)$row['numOhneAuftraege'] > 0) {
+        if ( (int)$row['numOhneTermin'] > 0) {
             $datumfeld = 'antragsdatum';
             if ($row['min_at'] < $datumvon) {
                 $datumvon = $row['min_at'];
             }
             if ($row['max_at'] > $datumbis) {
-                $datumvbis = $row['max_at'];
+                $datumbis = $row['max_at'];
             }
         } else {
             $datumfeld = 'umzugstermin';
@@ -86,7 +88,7 @@ if ($statByTour) {
                 $datumvon = $row['min_lt'];
             }
             if ($row['max_lt'] > $datumbis) {
-                $datumvbis = $row['max_lt'];
+                $datumbis = $row['max_lt'];
             }
         }
         $aStatus = array_map('trim', explode(',', $row['csv_status']));

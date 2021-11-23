@@ -452,6 +452,32 @@ $(function(){
             });
     });
 
+    $("tbody tr td.fld-umzugstermin[data-value]:not([data-value=''])").each(function() {
+        var datum = $(this).data("value");
+        var url = "http://tourenplanung.mertens.ag/touren/index?date=" + encodeURIComponent(datum) + "&lager_id=1";
+        var html = $(this).html();
+
+        // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
+        $(this)
+            .html("")
+            .append(
+                $("<a/>")
+                    .attr({
+                        href: url,
+                        target: "tourenplanung",
+                        title: "Dispo / Tourenplanung für den Tag anzeigen"
+                    })
+                    .html(html)
+                    .css({color: "blue"})
+                    .bind("click", function(e) {
+                        e.stopPropagation();
+                    })
+            )
+            .bind("click", function(e) {
+                e.stopPropagation();
+            });
+    });
+
     $("#auswertungDatumsfeld").val(datumFilterFeld);
 
     if (aAuftragsstatusFilter && Array.isArray(aAuftragsstatusFilter) && aAuftragsstatusFilter.length > 0) {
