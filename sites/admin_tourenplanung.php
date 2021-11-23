@@ -60,7 +60,6 @@ $tourkennung = (!empty($_REQUEST['tourkennung']))   ? trim($_REQUEST['tourkennun
 $tourdatum = (!empty($_REQUEST['tourdatum']))   ? trim($_REQUEST['tourdatum']) : '';
 $all   = (!empty($_REQUEST['all']))     ? (int)$_REQUEST['all'] : 1;
 
-echo '<div>#' . __LINE__ . ' ' . json_encode(compact('statByTour')) . "</div>\n";
 if ($statByTour) {
     $query['tour_kennung'] = $statByTour;
     $aAuftragsstatus = [ 'beauftragt', 'disponiert', ];
