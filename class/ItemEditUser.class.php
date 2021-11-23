@@ -45,7 +45,7 @@ class ItemEditUser extends ItemEdit {
     }
     
     function saveInput() {
-        parent::saveInput();
+        return parent::saveInput();
     }
     
     function saveZustaendigkeiten($data) {

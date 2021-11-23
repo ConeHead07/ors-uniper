@@ -13,9 +13,11 @@ if (!empty($confName) && $confName === 'leistungskatalog') {
 if (!isset($showConfData)) {
     $showConfData = true;
 }
+
 if (!isset($showErrors)) {
     $showErrors = true;
 }
+
 if (!isset($showMsg)) {
     $showMsg = true;
 }
@@ -150,9 +152,11 @@ if (isset($confName) && isset($ConfRegData[$confName]) && file_exists($InclBaseD
 		if (!isset($editCmd)) {
 		    $editCmd = 'Edit';
         }
+
 		$inputItem->autorun_byConf(
-        // Per Default, Modifizierbar
-        $editCmd, $formAction, $fieldVals, $gotoNext);
+            // Per Default, Modifizierbar
+            $editCmd, $formAction, $fieldVals, $gotoNext
+        );
 
 		if ($inputItem->autorun_status == 0) {
 			// Datensatz ist noch im Bearbeitungsprozess, zeige Formular
@@ -198,6 +202,13 @@ if (isset($confName) && isset($ConfRegData[$confName]) && file_exists($InclBaseD
 				case -2:
 				    $body_content.= "<L".__LINE__." Interner Fehler beim Speichern!<br>\n";
                     $body_content.= $inputItem->Error . "<br>\n";
+                    if ($user['gruppe'] === 'admin' && $user['adminmode'] === 'superadmin') {
+                        if ($inputItem->dbError) {
+                            $body_content .= "<div style=\"color:red;\">" . $inputItem->dbError . "</div>\n";
+                        } else {
+                            $body_content .= "<div style=\"color:red;\">" . $inputItem->lastQuery . "</div>\n";
+                        }
+                    }
 				    break;
 				
 				default:

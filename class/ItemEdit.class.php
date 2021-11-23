@@ -1120,6 +1120,7 @@ class ItemEdit
 	var $SysError = "";
 	var $arrErrFlds = array();
 	var $dbConnId = "";
+	var $lastQuery = '';
 	var $checkRowAccess = false;
 	var $checkColAccess = false;
 	var $uname = "";
@@ -2114,12 +2115,13 @@ class ItemEdit
 
 	function saveInput() {
 		global $msg;
+        $success = false;
+
 		if (!$this->Error) {
 			
 			$SQL_SET = "";
 			$arrSysFlds = array();
-			
-			
+
 			foreach($this->arrConf["Fields"] as $fN => $fC) {
 				if (empty($fC["dbField"])) continue;
 				
@@ -2251,8 +2253,7 @@ class ItemEdit
 						}
 					}
 					$SQL.= "\n WHERE `".$this->arrConf["PrimaryKey"]."` = \"".MyDB::escape_string($this->id)."\"";
-					$this->db_query($SQL, __LINE__);
-					//echo "<pre>#".__LINE__." ".__FILE__." ".MyDB::error()."\n UPDATE:".print_r($SQL, true)."</pre>\n";
+					$success = $this->db_query($SQL, __LINE__);
 				} else {
 					foreach($arrSysFlds as $fN => $fC) {
 						switch($fC["sysType"]) {
@@ -2276,30 +2277,34 @@ class ItemEdit
 							break;
 						}
 					}
-					$this->db_query($SQL, __LINE__);
+                    $success = $this->db_query($SQL, __LINE__);
 					$this->id = MyDB::insert_id();
                                         
-                                        file_put_contents('tmp/' . $this->arrConf["Table"] . '_' . $this->editMode .'_'.$this->id . '.sql', $SQL);
+                    file_put_contents('tmp/' . $this->arrConf["Table"] . '_' . $this->editMode .'_'.$this->id . '.sql', $SQL);
 				}
 				
-				if (0) $msg.= "<pre>#".__LINE__." SQL:\n".fb_htmlEntities($SQL)."\nERROR:".MyDB::error()."</pre>\n";
-				
-				if (!MyDB::error()) {
-				    return true;
+				if (0) {
+				    $msg.= "<pre>#".__LINE__." SQL:\n".fb_htmlEntities($SQL)."\nERROR:".MyDB::error()."</pre>\n";
+                }
+
+                $db = dbconn::getInstance();
+                if (!MyDB::error()) {
+                    return true;
                 }
 				else {
-					$this->Error.= "Fehler beim Speichern (".$this->editMode.") der Daten!<br>\n";
+					$this->Error.= "Fehler beim Speichern (" . $this->editMode . ") der Daten!<br>\n";
 					$this->dbError.= "#".__LINE__." ".basename(__FILE__)."\n";
-					$this->dbError.= "MYSQL:".MyDB::error()."\n";
+                    $this->dbError.= "MYSQL:".MyDB::error()."\n";
+                    $this->dbError.= "dbconn:". $db->error()."\n";
 					$this->dbError.= "QUERY:".$SQL."\n";
 					return false;
 				}
 			}
 			
 		} else {
-			$this->Error.= "Datensatz kann nicht gespeichert, wenn bei der Pruefung Fehler aufgetreten sind!<br>\n";
+			$this->Error.= "Datensatz kann nicht gespeichert werden, wenn bei der Pruefung Fehler aufgetreten sind!<br>\n";
 		}
-		
+
 		return false;
 	}
 	
@@ -2344,17 +2349,17 @@ class ItemEdit
 	// private
 	function db_query($SQL, $line = "?") 
 	{
+	    $this->lastQuery = $SQL;
 		$r = @MyDB::query($SQL, $this->dbConnId);
 		if (MyDB::error()) {
 		    $error = MyDB::error();
-		    $this->db_error = "#$line error: $error.\nSQL: $SQL\n";
-		    echo $this->db_error;
-		    exit;
+		    $this->dbError = "#$line error: $error.\nSQL: $SQL\n";
 		    return false;
         }
 		if ($r) {
 			return $r;
 		}
+		return true;
 	}
 	
 	// private
@@ -2686,19 +2691,27 @@ class ItemEdit
 	    // echo "#".__LINE__." formAction:$formAction <br>\n";
 		global $_POST;
 		
-		if (!$gotoNext && isset($_POST["gotoNext"])) $gotoNext = $_POST["gotoNext"];
+		if (!$gotoNext && isset($_POST["gotoNext"])) {
+		    $gotoNext = $_POST["gotoNext"];
+        }
 		
 		$this->autorun_status = 0;
 		// $_POST["editCmd"][{key}] // Edit | Preview | Correct | Save | Read | Drop
 		
 		// Ermitteln des Bearbeitungsmodus / -ansicht
 		if (!$editCmd) {
-			if (!empty($_POST["editCmd"])) $editCmd = key($_POST["editCmd"]);
-			else $editCmd = "Edit";
+			if (!empty($_POST["editCmd"])) {
+			    $editCmd = key($_POST["editCmd"]);
+            }
+			else {
+			    $editCmd = "Edit";
+            }
 		}
 		
 		$SentInput = (isset($_POST["eingabe"]) && is_array($_POST["eingabe"])) ? $_POST["eingabe"] : array();
-		if (is_array($fieldVals) && !empty($fieldVals)) foreach($fieldVals as $k => $v) $SentInput[$k] = $v;
+		if (is_array($fieldVals) && !empty($fieldVals)) {
+		    foreach($fieldVals as $k => $v) $SentInput[$k] = $v;
+        }
 		
 		// Validieren gesendeter Daten
 		switch($editCmd) {
@@ -2736,8 +2749,8 @@ class ItemEdit
 		// Speichern der gesendeten
 		if ($editCmd == "Save") {
 			$this->set_editCmd("Save");
-			
-			if ($this->saveInput()) {
+			$saveResult = $this->saveInput();
+			if ($saveResult) {
 				$this->autorun_status = 2;
 				if (isset($gotoNext) && $gotoNext == "New") {
 					$editCmd = "Edit";
@@ -2752,6 +2765,7 @@ class ItemEdit
 					$this->Msg.= "Datensatz wurde gespeichert!<br>\n";
 				}
 			} else {
+                $editCmd = "Edit";
 				$this->autorun_status = -2;
 				$this->Error.= "Fehler beim Speichern der Daten!<br>\n";
 			}

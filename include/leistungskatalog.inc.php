@@ -92,7 +92,7 @@ $_CONF["leistungskatalog"] = array(
 			"sql" => "Select leistung_id, Bezeichnung FROM {TABLE.leistungskatalog} WHERE IFNULL(leistung_ref_id, 0) = 0 AND leistungskategorie_id = 18",
 			"sysType" => "int",
 			"htmlType" => "select single",
-			"default" => "",
+			"default" => '0',
 			"required" => false,
 			"null" => false,
 			"unique" => false,
