@@ -238,7 +238,7 @@ foreach($validFields as $_f => $_fOpts) {
 }
 $debugInfos[] = json_encode(compact('validFields', 'query', 'w', 'having', 'aWhereStatusAnyOf'), JSON_PRETTY_PRINT);
 
-if (!in_array($order, $validFields)) {
+if (!in_array($order, array_keys($validFields))) {
     $order = 'umzugstermin';
     $odir = 'ASC';
 } else {
