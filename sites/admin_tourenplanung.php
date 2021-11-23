@@ -8,6 +8,7 @@ $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
 $datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'antragsdatum';
 $statByTour = (!empty($_REQUEST['t']))   ? $_REQUEST['t'] : '';
+$statByDatum = (!empty($_REQUEST['d']))   ? $_REQUEST['d'] : '';
 $exportFormat = getRequest('format', 'html');
 
 $aAuftragsstatus = (!empty($_REQUEST['auftragsstatus'])) ? $_REQUEST['auftragsstatus'] : ['beauftragt'];
@@ -93,7 +94,19 @@ if ($statByTour) {
         $aStatus = array_map('trim', explode(',', $row['csv_status']));
         $aAuftragsstatus = array_merge($aAuftragsstatus, $aStatus);
     }
+} elseif ($statByDatum) {
+    $testTimeOfDatum = strtotime($statByDatum);
+    if ($testTimeOfDatum) {
+        $aAuftragsstatus = [ 'beauftragt', 'disponiert', ];
+
+        $statsByDatum = date('Y-m-d', $testTimeOfDatum);
+
+        $datumvon = $statsByDatum;
+        $datumbis = $statsByDatum;
+        $datumfeld = 'umzugstermin';
+    }
 }
+
 
 if (in_array('beauftragt', $aAuftragsstatus)) {
     $aWhereStatusAnyOf[] = ' (umzugsstatus = "beauftragt" OR IFNULL(antragsdatum, "") != "") ' . "\n";
