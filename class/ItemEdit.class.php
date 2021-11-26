@@ -2097,9 +2097,10 @@ class ItemEdit
 			}
 			
 			if (count($this->arrErrFlds) ) {
-				$this->Error.= "Es wurden einige Felder nicht korrekt ausgef&uuml;llt:<br>\n";
+				// $this->Error.= "Es wurden einige Felder nicht korrekt ausgef&uuml;llt:<br>\n";
 				foreach($this->arrErrFlds as $fld => $err) {
-					$this->Error.= '#2068 ' . $fld . ' ' . $err."<br>";
+					// $this->Error.= '#2068 ' . $fld . ' '; // Just for debugging
+					$this->Error.= $err."<br>";
 				}
 				return false;
 			}

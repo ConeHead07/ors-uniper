@@ -40,16 +40,13 @@ igWShowLoadingBar(mode,msg)
 
   function fb_AjaxRequest(reqUrl, reqMethod, callBackFn, reqPostData) {
     console.log('#43 fb_AjaxRequest', { reqUrl, reqMethod, reqPostData});
-	if ((typeof callBackFn) == "undefined" || callBackFn=="") callBackFn = "fb_AjaxXmlUpdate(%req%)";
-	if ((typeof reqPostData) == "undefined" || reqPostData=="") reqPostData = null;
+	if ((typeof callBackFn) == "undefined" || callBackFn=="") {
+	    callBackFn = "fb_AjaxXmlUpdate(%req%)";
+    }
+	if ((typeof reqPostData) == "undefined" || reqPostData=="") {
+	    reqPostData = null;
+    }
 	console.log('#45 FbAjaxUpdater.js ', { reqUrl, reqMethod, reqPostData });
-	var msxml = [
-		"MSXML2.XMLHTTP.5.0",
-		"MSXML2.XMLHTTP.4.0",
-		"MSXML2.XMLHTTP.3.0",
-		"MSXML2.XMLHTTP",
-		"Microsoft.XMLHTTP"
-	];
 
 	var ajaxSettings = {
         url: reqUrl,
@@ -68,6 +65,7 @@ igWShowLoadingBar(mode,msg)
             eval(callback);
         }
     };
+
 	if (reqMethod.toUpperCase() === 'POST') {
 	    ajaxSettings.header = {
             "Content-type": "application/x-www-form-urlencoded;charset=UTF-8",
@@ -79,9 +77,18 @@ igWShowLoadingBar(mode,msg)
 	        xhr.overrideMimeType('text/html');
         };
     }
+
 	return jQuery.ajax(ajaxSettings);
 	
 	// alert("23");
+    var msxml = [
+      "MSXML2.XMLHTTP.5.0",
+      "MSXML2.XMLHTTP.4.0",
+      "MSXML2.XMLHTTP.3.0",
+      "MSXML2.XMLHTTP",
+      "Microsoft.XMLHTTP"
+    ];
+
 	var req = false;
 	if (window.XMLHttpRequest) {
 		req = new XMLHttpRequest();

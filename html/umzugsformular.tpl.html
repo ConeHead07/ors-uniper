@@ -87,6 +87,7 @@
                     <td style="padding:0;"><input type="text" id="as_kid" name="AS[personalnr]"  readonly value="{if !empty($AS)}{$user.personalnr|escape}{/if}" class="itxt itxt2col ireadonly" ></td>
                 </tr>
             </table>
+
             {if !empty($AS) and !empty($AS.bemerkungen)}
             <table width="100%">
                 <tr>
@@ -340,18 +341,12 @@
             </div>
             <div style="margin-top:20px;">
                 <input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;">
-                <input
-                        class="btn grey"
-                        type="submit"
-                        onclick="umzugsantrag_save_notsend()"
-                        title="Nur Speichern, noch nicht bestellen"
-                        value="Speichern">
-                <input
+                <button
                         class="btn green"
                         type="submit"
                         onclick="umzugsantrag_send()"
                         title="{if $creator eq 'property'}Bestellung an merTens abenden {elseif $creator eq 'mertens'}An Property {/if}l."
-                        value="Bestellung absenden">
+                ><i class="icon thumbs up outline"></i> Bestellung jetzt absenden</button>
 
                 {if 0}<input
                         type="submit"
@@ -370,8 +365,16 @@
                         type="submit"
                         onclick="umzugsantrag_add_attachement()"
                         class="{if empty($AS.aid)}hide-not-saved{else}btn grey{/if}"
-                        value="Dateianhänge"></div>
+                        value="Dateianhänge">
                 {/if}
+
+            <button
+                    class="btn grey"
+                    style="float: right"
+                    type="submit"
+                    onclick="umzugsantrag_save_notsend()"
+                    title="Nur Speichern, noch nicht bestellen"
+                    value="Speichern"><i class="icon shopping cart"></i> Warenkorb speichern</button>
 
             <!-- Debug-Btn:
             <input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">
@@ -379,6 +382,8 @@
             <input type="submit" onclick="return umzugsantrag_submit_debug('stornieren')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="stornieren">
             <input type="submit" onclick="return umzugsantrag_submit_debug('laden')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="laden">
              -->
+                <div style="clear: both"></div>
+            </div>
         </form>
     </div>
     <div id="LoadingBar"></div>
