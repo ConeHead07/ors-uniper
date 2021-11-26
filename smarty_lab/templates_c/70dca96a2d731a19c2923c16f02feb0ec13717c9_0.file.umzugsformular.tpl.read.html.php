@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-11 09:38:04
+/* Smarty version 3.1.34-dev-7, created on 2021-11-26 11:28:29
   from '/var/www/html/html/umzugsformular.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_618ce47cde4024_96831690',
+  'unifunc' => 'content_61a0b6cda7f735_00960097',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '70dca96a2d731a19c2923c16f02feb0ec13717c9' => 
     array (
       0 => '/var/www/html/html/umzugsformular.tpl.read.html',
-      1 => 1636623481,
+      1 => 1637922503,
       2 => 'file',
     ),
   ),
@@ -24,16 +24,30 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:umzugsformular_attachments.tpl.read.html' => 1,
   ),
 ),false)) {
-function content_618ce47cde4024_96831690 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61a0b6cda7f735_00960097 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
-<link rel="STYLESHEET" type="text/css" href="../css/SelBox.easy.css">
-<link rel="STYLESHEET" type="text/css" href="css/SelBox.easy.css">
+
+<link rel="STYLESHEET" type="text/css" href="{WebRoot}css/SelBox.easy.css?%assetsRefreshId%">
+<link rel="STYLESHEET" type="text/css" href="{WebRoot}css/umzugsformular.css?%assetsRefreshId%">
+
+<?php echo '<script'; ?>
+ src="{WebRoot}js/FbAjaxUpdater.js?%assetsRefreshId%" type="text/javascript"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+ src="{WebRoot}js/PageInfo.js?%assetsRefreshId%" type="text/javascript"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+ src="{WebRoot}js/ObjectHandler.js?%assetsRefreshId%" type="text/javascript"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+ src="{WebRoot}js/SelBox.easy.js?%assetsRefreshId%" type="text/javascript"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+ src="{WebRoot}js/umzugsformular.easy.js?%assetsRefreshId%" type="text/javascript"><?php echo '</script'; ?>
+>
 
 <div id="SysInfoBox"></div>
-
-<link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
-<link rel="stylesheet" type="text/css" href="../css/umzugsformular.css">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
 <h1><span class="spanTitle">Auftrag</span></h1>
@@ -169,7 +183,10 @@ $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read.html"
 <textarea class="iarea bemerkungen" name="AS[add_bemerkungen]"></textarea>
 <br>
 
-<input class='btn blue' type="submit" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Bemerkung hinzufügen">
+<button class='btn blue'
+       onclick="umzugsantrag_add_bemerkung()"
+       style="cursor: pointer"
+        type="button">Bemerkung hinzufügen</button>
 </form>
 
 <div id="LoadingBar"></div>

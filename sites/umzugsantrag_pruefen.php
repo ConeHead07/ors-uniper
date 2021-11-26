@@ -172,6 +172,30 @@ function getLeistungenError() {
     
 }
 
+function umzugsantrag_addbemerkung_fehler() {
+    global $_CONF;
+    global $connid;
+    global $user;
+
+    $ASConf = $_CONF["umzugsantrag"];
+    $ASPostItem = getRequest("AS",false);
+
+    if (empty($ASPostItem['aid'])) {
+        return 'Es wurde keine Auftrags-ID übergeben!';
+    }
+    if (empty($ASPostItem['add_bemerkungen']) || trim($ASPostItem['add_bemerkungen']) === '') {
+        return 'Es wurde keine Bemerkung angegeben!';
+    }
+
+    $AID = $ASPostItem["aid"];
+    $AS = new ItemEdit($ASConf, $connid, $user, $AID);
+    if ($AS->itemExists) {
+        return '';
+    } else {
+        return 'Es existiert kein Auftrag mit der ID ' . $AID . '!';
+    }
+}
+
 function umzugsantrag_fehler() {
     global $db;
     global $_CONF;
@@ -190,6 +214,11 @@ function umzugsantrag_fehler() {
     $name = getRequest("name","");
     $value = getRequest("value","");
     $ASPostItem = getRequest("AS",false);
+    $leistungen = getRequest('L');
+
+    if (!$AID && !empty($ASPostItem["aid"])) {
+        $AID = $ASPostItem["aid"];
+    }
     
     $checkKundenInput = false;
 
@@ -197,10 +226,6 @@ function umzugsantrag_fehler() {
     if ( $cntAS > 0 && $cmd !== 'status' && empty($ASPostItem['name'])) {
             $error.= "Es wurden keine Daten zum Antragsteller übermittelt [P]!<br>\n";
             return $error;
-    }
-	
-    if (!$AID && !empty($ASPostItem["aid"])) {
-        $AID = $ASPostItem["aid"];
     }
 
     $AS = new ItemEdit($ASConf, $connid, $user, $AID);
@@ -275,7 +300,6 @@ function umzugsantrag_fehler() {
             }
             return $error;
     }
-    $leistungen = getRequest('L');
 
     // START: Fit Leistungen
     // Fit Leistungen and remove Leistungen without valid leistung_id
@@ -302,7 +326,7 @@ function umzugsantrag_fehler() {
         $errLst = getLeistungenError();
         if ($errLst && $errLst != 1) $error .= $errLst;
     } else {
-        $error.= 'Es wurde kein Artikel ausgewählt!';
+        $error.= 'Es wurde kein Artikel ausgewählt!<br>' . "\n";
     }
 	
     $MAError = false;
@@ -346,7 +370,7 @@ function umzugsantrag_fehler() {
     $AS->loadInput($ASPostItem);
     $AS->Error = "";
     if ( ($cntAS > 0 || $cmd !== 'status') && !$AS->checkInput()) {
-            $error.= "Überprüfen Sie die Basis-Angaben zum Antragssteller!<br>\n";
+            $error.= "Die Angaben zur Lieferadresse sind unvollständig!<br>\n";
             $error.= $AS->Error;
             return $error;
     }

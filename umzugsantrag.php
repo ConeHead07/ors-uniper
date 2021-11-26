@@ -46,6 +46,18 @@ switch($cmd) {
 		$error.= $ua_errors;
 	}
 	break;
+
+    case "add_bemerkung":
+        $ua_errors = umzugsantrag_addbemerkung_fehler();
+        if (!$ua_errors) {
+            $reID = umzugsantrag_add_bemerkung();
+            if ($reID) {
+                $msg.= "Ihre Bemerkung wurde aufgenommen!<br>\n";
+            }
+        } else {
+            $error.= $ua_errors;
+        }
+        break;
 	
 	case "speichern_ohne_status":
 	$ua_errors = umzugsantrag_fehler();
@@ -136,14 +148,16 @@ switch($cmd) {
 					umzugsantrag_status($id, $name, $value);
 				}
 				$msg.= "Aauftrag wurde abgeschlossen!<br>\n";
-				$LoadScript.= "if (typeof(umzugsantrag_auto_reload)==\"function\") umzugsantrag_auto_reload(\"$id\");\n";
+				$LoadScript.= "if (typeof(umzugsantrag_auto_reload) === \"function\") umzugsantrag_auto_reload(\"$id\");\n";
 			} else {
 				if (umzugsantrag_status($id, $name, $value)) {
 					$msg.= "Der Auftragsstatus wurde aktualisiert: $name -> $value!<br>\n";
 					$JsonData = umzugsantrag_status_laden($id);
 					if ($JsonData) {
 						$LoadScript.= $JsonData;
-						$LoadScript.= "if (UmzugsdatenAS && typeof(umzugsantrag_load_status)) umzugsantrag_load_status(UmzugsdatenAS); else alert('Fehler beim Laden der Daten');\n";
+						$LoadScript.= "if (UmzugsdatenAS && typeof(umzugsantrag_load_status) === \"function\") { "
+                            . "umzugsantrag_load_status(UmzugsdatenAS); else alert('Fehler beim Laden der Daten'); "
+                            . "}\n";
 					}
 				}
 			}
@@ -171,11 +185,14 @@ if ($msg || $error) {
             . htmlentities(print_r($_POST,1))
             . "</div>\n";
     }
-	
-	if ($error || $msg) {
-		if ($error) $LoadScript.= "\nif (typeof(ErrorBox)==\"function\") ErrorBox(\"".json_escape($error.($msg&&$error?"<br>\n":"").$msg)."\");\n";
-		elseif ($cmd!="autoreload" && $msg) $LoadScript.= "\nif (typeof(InfoBox)==\"function\") InfoBox(\"".json_escape($msg)."\");\n";
-	}
+
+    if ($error) {
+        $LoadScript.= "\nif (typeof(ErrorBox)==\"function\") ErrorBox(\"".json_escape($error.($msg&&$error?"<br>\n":"").$msg)."\");\n";
+    }
+
+    elseif ($cmd!="autoreload" && $msg) {
+        $LoadScript.= "\nif (typeof(InfoBox)==\"function\") InfoBox(\"".json_escape($msg)."\");\n";
+    }
 }
 
 if (!defined("NEWLINE")) define("NEWLINE", "\n");

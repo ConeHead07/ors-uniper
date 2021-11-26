@@ -1,10 +1,14 @@
-<link rel="STYLESHEET" type="text/css" href="../css/SelBox.easy.css?%assetsRefreshId%">
-<link rel="STYLESHEET" type="text/css" href="css/SelBox.easy.css?%assetsRefreshId%">
+{literal}
+<link rel="STYLESHEET" type="text/css" href="{WebRoot}css/SelBox.easy.css?%assetsRefreshId%">
+<link rel="STYLESHEET" type="text/css" href="{WebRoot}css/umzugsformular.css?%assetsRefreshId%">
 
+<script src="{WebRoot}js/FbAjaxUpdater.js?%assetsRefreshId%" type="text/javascript"></script>
+<script src="{WebRoot}js/PageInfo.js?%assetsRefreshId%" type="text/javascript"></script>
+<script src="{WebRoot}js/ObjectHandler.js?%assetsRefreshId%" type="text/javascript"></script>
+<script src="{WebRoot}js/SelBox.easy.js?%assetsRefreshId%" type="text/javascript"></script>
+<script src="{WebRoot}js/umzugsformular.easy.js?%assetsRefreshId%" type="text/javascript"></script>
+{/literal}
 <div id="SysInfoBox"></div>
-
-<link rel="stylesheet" type="text/css" href="css/umzugsformular.css?%assetsRefreshId%">
-<link rel="stylesheet" type="text/css" href="../css/umzugsformular.css?%assetsRefreshId%">
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
 <h1><span class="spanTitle">Auftrag</span></h1>
@@ -135,7 +139,10 @@
 <textarea class="iarea bemerkungen" name="AS[add_bemerkungen]"></textarea>
 <br>
 
-<input class='btn blue' type="submit" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Bemerkung hinzufügen">
+<button class='btn blue'
+       onclick="umzugsantrag_add_bemerkung()"
+       style="cursor: pointer"
+        type="button">Bemerkung hinzufügen</button>
 </form>
 
 <div id="LoadingBar"></div>
