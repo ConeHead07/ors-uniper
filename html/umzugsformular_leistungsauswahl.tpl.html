@@ -669,6 +669,11 @@ $(function(){
                         console.log('click label', {e});
                         if (!("srcElement" in e) || e.srcElement.nodeName !== 'SPAN') {
                             var tr = $(this).closest(".row");
+
+                            var lstgID = +tr.find("input[name=" + escapeSelector('L[leistung_id][]') + "]").val();
+                            var selectVar = tr.find("select[name*=leistung]");
+                            console.log({tr, lstgID, selectVar});
+
                             var chckCell = tr.find("div.chck");
                             var chckRadio = chckCell.find("label input[type=radio]");
                             console.log('checkRadio ', chckRadio.attr("name"), chckRadio.prop("checked"));
@@ -678,6 +683,13 @@ $(function(){
                                 chckRadio.prop("checked", false);
                             }
                             if (chckRadio.prop("checked")) {
+                                if (!lstgID) {
+                                    InfoBox("Bitte entscheiden Sie sich erst für eine Variante des Artikels!");
+                                    return false;
+                                }
+                                if (selectVar.length) {
+                                    selectVar.find("option[value='']").hide();
+                                }
                                 toggleBundleauswahl(ktg, ktgId, ktgBundleName, ktgBundleId);
                                 var checkedRows = boxLeistungen.find(".row .chck label input:checked");
                                 var maxCheckedPositionen = 9999;
@@ -687,7 +699,7 @@ $(function(){
                                     var isLampeChecked = checkedRows.find("[data-ktg=Schreibtischlampe],[data-ktg=23]").length > 0;
                                     console.log("Auswahlkontrolle ", {isStuhlChecked, isTischChecked, isLampeChecked});
 
-                                    alert("Es können maximal " + mmaxCheckedPositionen + " Einzelpositionen ausgewählt werden oder ein Komplettpaket!");
+                                    alert("Es können maximal " + maxCheckedPositionen + " Einzelpositionen ausgewählt werden oder ein Komplettpaket!");
                                     chckRadio.prop("checked", false);
                                 }
                             }

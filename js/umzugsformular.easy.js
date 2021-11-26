@@ -73,7 +73,7 @@ function umzugsformular_set_id(id) {
 
 function umzugsantrag_errors(AntragSenden) {
 	if (!AntragSenden) AntragSenden = false;
-        if (!document.forms["frmUmzugsantrag"]) return false;
+	if (!document.forms["frmUmzugsantrag"]) return false;
 	var namedArray = getNamedArrayOfForm(document.forms["frmUmzugsantrag"]);
 	var error = "";
 	var ma = "";
@@ -169,7 +169,7 @@ function umzugsantrag_num_rows() {
 function umzugsantrag_send() {
 	if (!document.forms["frmUmzugsantrag"]) return false;
 	var namedArray = getNamedArrayOfForm(document.forms["frmUmzugsantrag"]);
-        var AntragSenden = true;
+	var AntragSenden = true;
 	var error = umzugsantrag_errors(AntragSenden);
 	var ma = "";
 	var InputFields = false;
@@ -202,15 +202,67 @@ function umzugsantrag_submit_debug(cmd) {
 	document.forms["frmUmzugsantrag"].target = "_new";
 	document.forms["frmUmzugsantrag"].submit();
 }
+
 function umzugsantrag_save_notsend() {
-	id = umzugsantrag_id();
+	var id = umzugsantrag_id();
 	//alert("Antrag #"+id+" wird zur Zwischenspeicherung abgeschickt!");
 	document.forms["frmUmzugsantrag"].action = "umzugsantrag.php";
 	var selector = "MyInfoBoxTxt";
 	umzugsantrag_loadingBar('');
-        frmSerializeGeraete();
+	frmSerializeGeraete();
 	AjaxFormSend(document.forms["frmUmzugsantrag"], selector, "", "cmd=speichern_ohne_status&id="+id);
 }
+
+function umzugsantrag_add_bemerkung(e) {
+	var id = umzugsantrag_id();
+	var cmd= "add_bemerkung";
+	var frm = document.forms["frmUmzugsantrag"];
+	var url = "umzugsantrag.php?cmd=" + cmd + "&id=" + id;
+	//alert("Antrag #"+id+" wird zur Zwischenspeicherung abgeschickt!");
+	frm.action = "umzugsantrag.php";
+	var selector = "MyInfoBoxTxt";
+	if (arguments.length > 0 && e && "preventDefault" in e) {
+		e.preventDefault();
+	}
+	var InfoBoxLoading = umzugsantrag_loadingBar('Ihre Nachricht wird übertragen.');
+	var data = {
+		id,
+		"AS[aid]": $(frm).find(":input[name=AS\\[aid\\]]").val(),
+		"AS[token]": $(frm).find(":input[name=AS\\[token\\]]").val(),
+		"AS[add_bemerkungen]": $(frm).find(":input[name=AS\\[add_bemerkungen\\]]").val()
+	};
+	// alert("#234 umzugsantrag_add_bemerkung()\n" + JSON.stringify(data));
+	$.post(url, data, function(oData, sStatus, req) {
+		var cType = req.getResponseHeader("Content-Type"); // "text/plain", "text/html", "text/html", "application/xml"
+		if (cType.indexOf("/xml") > -1) {
+			if (!req.responseXML) {
+				req.responseXML = jQuery.parseXML(req.responseText); // $("<xml/>").html(req.responseText);
+				console.log('#516 req is missing responseXML', {req});
+			}
+		}
+		var nodeSuccess = $(req.responseXML).find("Success").text();
+		var nodeMsg = $(req.responseXML).find("Msg").text();
+		var nodeError = $(req.responseXML).find("Error").text();
+
+		if (nodeSuccess.toUpperCase() === "TRUE") {
+			InfoBox(nodeMsg || "Bemerkung wurde aktualisiert!");
+			$(frm).find(":input[name=AS\\[add_bemerkungen\\]]").val('');
+		} else {
+			ErrorBox(nodeError || "Es ist leider ein Fehler beim Speichern aufgetreten!");
+		}
+		console.log({nodeSuccess, nodeMsg, nodeError });
+
+		// self.location.reload(true);
+	});
+	return false;
+	if (fb_AjaxRequest(url, frm.method, 'fb_AjaxXmlUpdate(%req%, "'+selector+'","'+cmd+'")', data)) {
+		if (frm.preventDefault) frm.preventDefault();
+	}
+	AjaxFormSend(document.forms["frmUmzugsantrag"], selector, "", "cmd=" + cmd + "&id="+id);
+
+    return false;
+}
+
 function umzugsantrag_save() {
 	if (!document.forms["frmUmzugsantrag"]) return false;
 	var error = umzugsantrag_errors();
@@ -257,9 +309,13 @@ function umzugsantrag_auto_reload(id) {
 	//alert("Antrag wird neu geladen AID:"+aid+"!");
 	document.forms["frmUmzugsantrag"].action = "umzugsantrag.php";
 	var selector = "MyInfoBoxTxt";
-	frmSerializeGeraete();
+	if (typeof frmSerializeGeraete === 'function') {
+		frmSerializeGeraete();
+	}
 	AjaxFormSend(document.forms["frmUmzugsantrag"], selector, "", "cmd=autoreload&id="+escape(aid));
-        if (id) $(".hide-not-saved").removeClass("hide-not-saved");
+	if (id) {
+		$(".hide-not-saved").removeClass("hide-not-saved");
+	}
 }
 function umzugsantrag_reload(id) {
 	if (!document.forms["frmUmzugsantrag"]) return false;
