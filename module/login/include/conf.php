@@ -1,15 +1,30 @@
 <?php 
 @session_start();
 session_id();
-if (!empty($user_connid)) $ConnUserDB["connid"] = $user_connid;
-if (!empty($conn)) $ConnUserDB["connid"] = $conn;
+if (!empty($user_connid)) {
+    $ConnUserDB["connid"] = $user_connid;
+}
+
+if (!empty($conn)) {
+    $ConnUserDB["connid"] = $conn;
+}
+
 $RegBaseDir = "./login/";
 $LoginBaseDir = "./login/";
-if (!defined("PATH_TO_LOGIN_MODUL")) define("PATH_TO_LOGIN_MODUL", realpath(dirname(__FILE__)."./"));
+
+if (!defined("PATH_TO_LOGIN_MODUL")) {
+    define("PATH_TO_LOGIN_MODUL", realpath(dirname(__FILE__)."./"));
+}
 
 // if (!isset(PATH_TO_LOGIN_MODUL)) define('PATH_TO_LOGIN_MODUL', realpath(dirname(__FILE__)."/../")."/");
-if (empty($_CONF["email"]["webmaster"])) $_CONF["email"]["webmaster"] = "service-unipers@mertens.ag";
-if (empty($MConf["WebRoot"])) $MConf["WebRoot"] = "https://".$_SERVER["HTTP_HOST"]."/".dirname($_SERVER["PHP_SELF"])."/";
+if (empty($_CONF["email"]["webmaster"])) {
+    $_CONF["email"]["webmaster"] = "service-unipers@mertens.ag";
+}
+
+if (empty($MConf["WebRoot"])) {
+    $MConf["WebRoot"] = "https://".$_SERVER["HTTP_HOST"]."/".dirname($_SERVER["PHP_SELF"])."/";
+}
+
 $_CONF["WebRoot"] = $MConf["WebRoot"];
 $_CONF["user_tbl_prefix"] = $MConf["DB_TblPrefix"];
 $_CONF["HomepageTitle"] = $MConf["AppTitle"];
@@ -17,8 +32,11 @@ $_CONF["UrlToLoginModul"] = $MConf["WebRoot"]."module/login/";
 $_CONF["PATH_TO_LOGIN_MODUL"] = PATH_TO_LOGIN_MODUL;
 $_CONF["LOGIN_WEBPATH_MODUL"] = $MConf["WebRoot"]."module/login/";
 
-if (!isset($_CONF["defaultPruefeLogin"])) $_CONF["defaultPruefeLogin"] = true;
-$_CONF["redirectAfterLogin"] = "index.php?area=admin";
+if (!isset($_CONF["defaultPruefeLogin"])) {
+    $_CONF["defaultPruefeLogin"] = true;
+}
+
+$_CONF["redirectAfterLogin"] = "index.php?area=start";
 $_CONF["regc_subject"] = "Aktivieren Sie Ihren Account auf ".$MConf["WebRoot"];
 $_CONF["regc_authentlink"] = $MConf["WebRoot"]."login.php?ac={authentcode}";
 $_CONF["regc_mail_tld_only"] = '@uniper.energy'; // '@gmail.com'; // "@mertens.ag"; // "@mertens.ag"; // "@googlemail.com"; //

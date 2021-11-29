@@ -97,7 +97,6 @@ isset($_POST['password']) && !empty($_POST['password']))
                 }
 				
 				$ausgabe = implode('',file(PATH_TO_LOGIN_MODUL . 'html/login_bridge.html'));
-				$ausgabe.= '<div>Redirect: ' . $redirect . '</div>';
 				$ausgabe = str_replace('%redirect%', $redirect, $ausgabe);
 				$ausgabe = str_replace('%name%', $user['vorname'] . ' ' . $user['nachname'], $ausgabe);
 				db_close();
