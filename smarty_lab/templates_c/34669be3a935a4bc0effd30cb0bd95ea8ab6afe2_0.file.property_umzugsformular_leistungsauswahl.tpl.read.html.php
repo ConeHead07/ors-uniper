@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-09 11:20:26
+/* Smarty version 3.1.34-dev-7, created on 2021-11-29 13:01:00
   from '/var/www/html/html/property_umzugsformular_leistungsauswahl.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_618a597af045e1_90070959',
+  'unifunc' => 'content_61a4c0fc7ce9f4_38298886',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '34669be3a935a4bc0effd30cb0bd95ea8ab6afe2' => 
     array (
       0 => '/var/www/html/html/property_umzugsformular_leistungsauswahl.tpl.read.html',
-      1 => 1636456816,
+      1 => 1638187254,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_618a597af045e1_90070959 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61a4c0fc7ce9f4_38298886 (Smarty_Internal_Template $_smarty_tpl) {
 ?><style>
 
 tr.row * {
@@ -105,8 +105,17 @@ foreach ($_from as $_smarty_tpl->tpl_vars['L']->value) {
         <tr class="row inputRowVon">
             <td class="ktg1"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
 </td>
-            <td class="lstg"><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['leistung'], ENT_QUOTES, 'UTF-8', true);?>
-</td>
+            <td class="lstg">
+                <?php echo htmlspecialchars(trim($_smarty_tpl->tpl_vars['L']->value['leistung']), ENT_QUOTES, 'UTF-8', true);
+if (!empty($_smarty_tpl->tpl_vars['L']->value['Farbe']) || !empty($_smarty_tpl->tpl_vars['L']->value['Groesse'])) {?>,<?php }?>
+                <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['Farbe'])) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['Farbe'], ENT_QUOTES, 'UTF-8', true);
+if (!empty($_smarty_tpl->tpl_vars['L']->value['Groesse'])) {?>,<?php }
+}?>
+                <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['Groesse'])) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['Groesse'], ENT_QUOTES, 'UTF-8', true);
+}?>
+            </td>
             <td class="menge"><?php if (is_numeric($_smarty_tpl->tpl_vars['L']->value['menge_mertens'])) {
 echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge_mertens'], ENT_QUOTES, 'UTF-8', true),2,",",".");
 } else { ?>1<?php }?></td>
