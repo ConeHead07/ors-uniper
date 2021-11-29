@@ -25,10 +25,11 @@ $LKConf = &$_CONF["leistungskatalog"];
 $Tpl = new myTplEngine();
 
 $sql = 'SELECT leistung_id, l.leistung_ref_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
-      .' leistungskategorie AS kategorie, l.leistungskategorie_id AS kategorie_id, preis_pro_einheit, image '
-      .' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k ON l.leistungskategorie_id = k.leistungskategorie_id '
-      .' WHERE l.aktiv = 1 '
-      .' ORDER BY kategorie, Bezeichnung';
+      . ' leistungskategorie AS kategorie, l.leistungskategorie_id AS kategorie_id, preis_pro_einheit, image '
+      . ' FROM mm_leistungskatalog l '
+      . ' LEFT JOIN mm_leistungskategorie k ON l.leistungskategorie_id = k.leistungskategorie_id '
+      . ' WHERE l.aktiv = 1 '
+      . ' ORDER BY kategorie, Bezeichnung';
 
 $lkTreeItems = array();
 $lkTreeItemsJson = array();
@@ -202,14 +203,15 @@ if (!empty($aGItems) && count($aGItems)) {
 
 $SumBase = 'MH';
 $sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_property, '
-      .' ul.menge_mertens, ul.menge2_mertens, '
-      .' l.Bezeichnung leistung, lk.leistungskategorie kategorie, '
-      .' l.leistungseinheit, l.leistungseinheit2, if(lm.preis, lm.preis, preis_pro_einheit) preis_pro_einheit ' . "\n"
-      .' FROM mm_umzuege_leistungen ul ' . "\n"
-      .' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
-      .' LEFT JOIN mm_leistungskategorie lk ON(l.leistungskategorie_id = lk.leistungskategorie_id) ' . "\n"
-      .' LEFT JOIN mm_leistungspreismatrix lm ON('
-      .'    l.leistung_id = lm.leistung_id ';
+      . ' ul.menge_mertens, ul.menge2_mertens, '
+      . ' l.Bezeichnung leistung, lk.leistungskategorie kategorie, '
+      . ' l.leistungseinheit, l.leistungseinheit2, if(lm.preis, lm.preis, preis_pro_einheit) preis_pro_einheit, ' . "\n"
+      . ' l.Farbe, l.Groesse ' . "\n"
+      . ' FROM mm_umzuege_leistungen ul ' . "\n"
+      . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
+      . ' LEFT JOIN mm_leistungskategorie lk ON(l.leistungskategorie_id = lk.leistungskategorie_id) ' . "\n"
+      . ' LEFT JOIN mm_leistungspreismatrix lm ON('
+      . '    l.leistung_id = lm.leistung_id ';
       if ($SumBase == 'MH') {
             $sql.= '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
                   .'    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))';

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-18 15:39:20
+/* Smarty version 3.1.34-dev-7, created on 2021-11-29 13:01:45
   from '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61966598bc1b57_97772587',
+  'unifunc' => 'content_61a4c129bb30a3_55350348',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f6b287127950a4b4dd8103490880f308965b3227' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1637246354,
+      1 => 1638186760,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61966598bc1b57_97772587 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61a4c129bb30a3_55350348 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div data-test="2" style="display:block;margin-top:15px;">
     <!-- admin_umzugsformular_leistungsauswahl.tpl.html -->
 </div>
@@ -327,6 +327,17 @@ foreach ($_from as $_smarty_tpl->tpl_vars['L']->value) {
                 <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['Beschreibung'])) {?>
                 <div class="Beschreibung"><?php echo $_smarty_tpl->tpl_vars['L']->value['Beschreibung'];?>
 </div>
+                <?php }?>
+                <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['Farbe']) || !empty($_smarty_tpl->tpl_vars['L']->value['Groesse'])) {?>
+                <div class="produkt_varianten">
+                    <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['Farbe'])) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['Farbe'], ENT_QUOTES, 'UTF-8', true);
+}?>
+                    <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['Groesse'])) {
+if (!empty($_smarty_tpl->tpl_vars['L']->value['Farbe'])) {?>, <?php }
+echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['Groesse'], ENT_QUOTES, 'UTF-8', true);
+}?>
+                </div>
                 <?php }?>
                 <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['produkt_link'])) {?>
                 <div class="produkt_link">

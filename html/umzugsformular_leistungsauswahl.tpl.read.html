@@ -72,6 +72,12 @@ td.menge, td.menge, input.menge, td.preis, td.sum {
                 {if !empty($L.Beschreibung)}
                     <div class="Beschreibung">{$L.Beschreibung}</div>
                 {/if}
+                {if !empty($L.Farbe) || !empty($L.Groesse)}
+                <div class="produkt_varianten">
+                    {if !empty($L.Farbe)}{$L.Farbe|escape}{/if}
+                    {if !empty($L.Groesse)}{if !empty($L.Farbe)}, {/if}{$L.Groesse|escape}{/if}
+                </div>
+                {/if}
                 {if !empty($L.produkt_link)}
                     <div class="produkt_link">
                         <a href="{$L.produkt_link}" target="_PL{$L.leistung_id}">mehr Infos</a>

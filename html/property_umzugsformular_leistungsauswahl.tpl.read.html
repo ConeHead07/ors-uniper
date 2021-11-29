@@ -73,7 +73,11 @@ function blurBox(callback, hide) {
     {foreach name=LList item=L from=$Umzugsleistungen}
         <tr class="row inputRowVon">
             <td class="ktg1">{$L.kategorie|escape}</td>
-            <td class="lstg">{$L.leistung|escape}</td>
+            <td class="lstg">
+                {$L.leistung|trim|escape}{if !empty($L.Farbe) || !empty($L.Groesse)},{/if}
+                {if !empty($L.Farbe)}{$L.Farbe|escape}{if !empty($L.Groesse)},{/if}{/if}
+                {if !empty($L.Groesse)}{$L.Groesse|escape}{/if}
+            </td>
             <td class="menge">{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:2:",":"."}{else}1{/if}</td>
             {if $PreiseAnzeigen}<td class="preis">{if $L.preis_pro_einheit}{$L.preis_pro_einheit|number_format:2:",":"."}{/if}</td>
             <td class="preis sum">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|escape|number_format:2:",":"."}{/if}</td>
