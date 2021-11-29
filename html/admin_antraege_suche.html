@@ -97,6 +97,16 @@
 				</div>
 			</td>
 		</tr>
+		<tr>
+			<td style="padding:0;"><label for="q_bemerkungsstatus" style="display:block;width:auto;">Bemerkungsstatus</label></td>
+			<td style="padding:0;"><select id="q_bemerkungsstatus" value="{q[a.bemerkungsstatus]}" name="q[a.bemerkungsstatus]" class="iselect">
+				<option value=""></option>
+				<option value="allemit">mit Bemerkung</option>
+				<option value="neue">mit neuen Bemerkungen</option>
+				<option value="gelesene">mit abgearbeiteten Bemerkungen</option>
+				<option value="none">ohne Bemerkung</option>
+			</select></td>
+		</tr>
 	</table>
 	<script>
 		var selectedUmzugsstatus = "{q[a.umzugsstatus]}";
