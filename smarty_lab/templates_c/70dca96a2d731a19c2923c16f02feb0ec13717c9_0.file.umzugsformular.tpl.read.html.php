@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-26 11:28:29
+/* Smarty version 3.1.34-dev-7, created on 2021-11-28 18:12:56
   from '/var/www/html/html/umzugsformular.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61a0b6cda7f735_00960097',
+  'unifunc' => 'content_61a3b898a24ff5_05279271',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '70dca96a2d731a19c2923c16f02feb0ec13717c9' => 
     array (
       0 => '/var/www/html/html/umzugsformular.tpl.read.html',
-      1 => 1637922503,
+      1 => 1638119566,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:umzugsformular_attachments.tpl.read.html' => 1,
   ),
 ),false)) {
-function content_61a0b6cda7f735_00960097 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61a3b898a24ff5_05279271 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -79,7 +79,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
   <table width="100%">
     <tr>
       <td style="padding:0;">
-        <div id="BemerkungenHistorie"><?php echo nl2br($_smarty_tpl->tpl_vars['AS']->value['bemerkungen']);?>
+        <div id="BemerkungenHistorie" style="resize: vertical;overflow-y: auto; height: 4.5rem;"><?php echo nl2br($_smarty_tpl->tpl_vars['AS']->value['bemerkungen']);?>
 </div>
       </td>
     </tr>

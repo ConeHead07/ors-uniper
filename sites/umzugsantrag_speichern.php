@@ -350,8 +350,21 @@ function umzugsantrag_speichern() {
             $AS->arrInput["bemerkungen"].= $addBemerkung;
             $enrichedBemerkung = str_replace("\n", "\r\n", $AS->arrInput["bemerkungen"]);
 
-            if (!empty($AS->arrDbdata["bemerkungen"]) && trim($AS->arrDbdata["bemerkungen"])) {
-                $AS->arrInput["bemerkungen"].= "\n\n".$AS->arrDbdata["bemerkungen"];
+            if (!$AS->itemExists) {
+                $AS->arrInput['neue_bemerkungen_fuer_admin'] = 1;
+            } else {
+                if (!empty($AS->arrDbdata["bemerkungen"]) && trim($AS->arrDbdata["bemerkungen"])) {
+                    $AS->arrInput["bemerkungen"] .= "\n\n" . $AS->arrDbdata["bemerkungen"];
+                }
+
+                $kunde_uid = $AS->arrDbdata['antragsteller_uid'];
+                if ($kunde_uid == $user['uid'] || $user['gruppe'] !== 'admin') {
+                    $AS->arrInput['neue_bemerkungen_fuer_admin'] = new DbExpr('neue_bemerkungen_fuer_admin + 1');
+                }
+
+                if ($kunde_uid != $user['uid']) {
+                    $AS->arrInput['neue_bemerkungen_fuer_kunde'] = new DbExpr('neue_bemerkungen_fuer_kunde + 1');
+                }
             }
         } else {
             $AS->arrInput["bemerkungen"] = (!empty($AS->arrDbdata["bemerkungen"])) ? $AS->arrDbdata["bemerkungen"] : "";
@@ -514,15 +527,14 @@ function umzugsantrag_add_bemerkung() {
     $ASConf = $_CONF["umzugsantrag"];
 
     $AS = new ItemEdit($ASConf, $connid, $user, $AID);
+    $AS->arrConf["Fields"]["umzugstermin"]["required"] = false;
+    $AS->arrConf["Fields"]["umzugszeit"]["required"] = false;
 
     if (!$AS->itemExists) {
         $error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
         $aDBG[] = '#' . __LINE__ . ' NO ITEM FOUND WITH AID' . $AID ;
         return false;
     }
-
-    $AS->arrConf["Fields"]["umzugstermin"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
-    $AS->arrConf["Fields"]["umzugszeit"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
 
     $db = dbconn::getInstance();
 

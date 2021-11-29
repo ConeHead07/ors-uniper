@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-26 14:56:20
+/* Smarty version 3.1.34-dev-7, created on 2021-11-28 18:34:57
   from '/var/www/html/html/umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61a0e784d59636_80691687',
+  'unifunc' => 'content_61a3bdc1719158_15674109',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '750ec8a64cb73f4201add5544ebe0c754db6d27f' => 
     array (
       0 => '/var/www/html/html/umzugsformular.tpl.html',
-      1 => 1637920458,
+      1 => 1638120887,
       2 => 'file',
     ),
   ),
@@ -25,7 +25,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:umzugsformular_attachments.tpl.read.html' => 1,
   ),
 ),false)) {
-function content_61a0e784d59636_80691687 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61a3bdc1719158_15674109 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/function.ors_include_static_content.php','function'=>'smarty_function_ors_include_static_content',),1=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),2=>array('file'=>'/var/www/html/smarty3/plugins/function.html_radios.php','function'=>'smarty_function_html_radios',),));
 $_smarty_tpl->_assignInScope('laenderCsv', substr($_smarty_tpl->tpl_vars['ASConf']->value['land']['size'],1,-1));
 $_smarty_tpl->_assignInScope('laenderLst', explode("','",$_smarty_tpl->tpl_vars['laenderCsv']->value));?>
@@ -147,15 +147,21 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['user']->value['personalnr'], ENT_Q
             <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value) && !empty($_smarty_tpl->tpl_vars['AS']->value['bemerkungen'])) {?>
             <table width="100%">
                 <tr>
-                    <td style="padding:0;">
-                        <div id="BemerkungenHistorie"><?php echo nl2br($_smarty_tpl->tpl_vars['AS']->value['bemerkungen']);?>
+                    <td style="padding:0;width:200px;" valign="top">
+                        <label style="display:block;width:auto;">Bisherige Bemerkungen:</label>
+                    </td>
+                    <td style="padding:0;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding:0;">
+                        <div id="BemerkungenHistorie" style="resize: vertical;overflow-y: auto; height: 3rem;"><?php echo nl2br($_smarty_tpl->tpl_vars['AS']->value['bemerkungen']);?>
 </div>
                     </td>
                 </tr>
             </table>
             <?php }?>
 
-            <h2 style="margin:0;">Lieferadresse</h2>
+            <h2 style="margin:1.5rem 0 0 0;">Lieferadresse</h2>
             <table>
                 <tr>
                     <td style="padding:0;width:200px;">

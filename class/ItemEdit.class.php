@@ -2136,101 +2136,108 @@ class ItemEdit
 				
 				if (isset($fC["editByRuntime"]) && $fC["editByRuntime"]) continue;
 				if (isset($fC["key"]) && preg_match("/PRI/",$fC["key"])) continue;
-				
-				switch($fC["sysType"]) {
-					case "uid":
-					case "rechte":
-					case "gid":
-					case "created":
-					case "createdby":
-					case "createduid":
-					case "modified":
-					case "modifiedby":
-					case "modifieduid":
-					case "key":
-					$arrSysFlds[$fN] = &$this->arrConf["Fields"][$fN];
-					continue 2;
-					break;
-					
-					// NoString
-					case "int":
-					case "double":
-					case "float":
-					case "decimal":
-					if (isset($this->arrInput[$fN]) && is_numeric($this->arrInput[$fN]) ) {
-						if ($SQL_SET) $SQL_SET.= ",\n";
-						$SQL_SET.= "`".$fC["dbField"]."` = \"" . MyDB::escape_string($this->arrInput[$fN]) . "\"";
-					} elseif ($this->editMode != "Insert") {
-						 if ($SQL_SET) $SQL_SET.= ",\n";
-						 $SQL_SET.= "`".$fC["dbField"]."` = NULL";
-					}
-					break;
-					
-					case "set":
-                                            //die(print_r($this->arrInput,1));
-					$setVal = (isset($this->arrInput[$fN]) && is_array($this->arrInput[$fN])) ? implode(",", $this->arrInput[$fN]) : '';
-					if ($setVal !== "") {
-						if ($SQL_SET) $SQL_SET.= ",\n";
-						$SQL_SET.= "`".$fC["dbField"]."` = \"".MyDB::escape_string($setVal)."\"";
-					} else {
-					//} elseif ($this->editMode != "Insert") {
-						if ($SQL_SET) $SQL_SET.= ",\n";
-						$SQL_SET.= "`".$fC["dbField"]."` = ".($fC["null"] ? "NULL" : "''");
-					}
-					break;
 
-					case "password":
-					if ($this->arrInput[$fN] !== "") {
-						if ($SQL_SET) $SQL_SET.= ",\n";
-						$SQL_SET.= "`".$fC["dbField"]."` = \"".md5($this->arrInput[$fN])."\"";
-					}
-					break;
+                if (isset($this->arrInput[$fN]) && is_object($this->arrInput[$fN]) && $this->arrInput[$fN] instanceof DbExpr) {
+                    if ($SQL_SET) $SQL_SET .= ",\n";
+                    $SQL_SET.= "`".$fC["dbField"]."` = " . (string)$this->arrInput[$fN];
+                } else {
 
-					case "date":
-					case "datetime":
-					if ($SQL_SET) $SQL_SET.= ",\n";
-					if (!empty($this->arrInput[$fN])) {
-						$SQL_SET.= "`".$fC["dbField"]."` = \"".MyDB::escape_string($this->arrInput[$fN])."\"";
-					} else {
-						$SQL_SET.= "`".$fC["dbField"]."` = NULL";
-					}
-					break;
-					
-					//String
-					default:
-					    if ($fC['htmlType'] === 'file' ) {
-					        if (!empty($_FILES['eingabe']['name'][$fN])) {
-                                $PostData = $_POST;
-                                $FileData = $_FILES;
-                                $_file = [
-                                    'name' => $_FILES['eingabe']['name'][$fN],
-                                    'temp' => $_FILES['eingabe']['tmp_name'][$fN],
-                                    'type' => $_FILES['eingabe']['type'][$fN],
-                                    'size' => $_FILES['eingabe']['size'][$fN],
-                                    'error' => $_FILES['eingabe']['error'][$fN],
-                                ];
+                    switch ($fC["sysType"]) {
+                        case "uid":
+                        case "rechte":
+                        case "gid":
+                        case "created":
+                        case "createdby":
+                        case "createduid":
+                        case "modified":
+                        case "modifiedby":
+                        case "modifieduid":
+                        case "key":
+                            $arrSysFlds[$fN] = &$this->arrConf["Fields"][$fN];
+                            continue 2;
+                            break;
+
+                        // NoString
+                        case "int":
+                        case "double":
+                        case "float":
+                        case "decimal":
+                            if (isset($this->arrInput[$fN]) && is_numeric($this->arrInput[$fN])) {
+                                if ($SQL_SET) $SQL_SET .= ",\n";
+                                $SQL_SET .= "`" . $fC["dbField"] . "` = \"" . MyDB::escape_string($this->arrInput[$fN]) . "\"";
+                            } elseif ($this->editMode != "Insert") {
+                                if ($fC['null']) {
+                                    if ($SQL_SET) $SQL_SET .= ",\n";
+                                    $SQL_SET .= "`" . $fC["dbField"] . "` = NULL";
+                                }
+                            }
+                            break;
+
+                        case "set":
+                            //die(print_r($this->arrInput,1));
+                            $setVal = (isset($this->arrInput[$fN]) && is_array($this->arrInput[$fN])) ? implode(",", $this->arrInput[$fN]) : '';
+                            if ($setVal !== "") {
+                                if ($SQL_SET) $SQL_SET .= ",\n";
+                                $SQL_SET .= "`" . $fC["dbField"] . "` = \"" . MyDB::escape_string($setVal) . "\"";
+                            } else {
+                                //} elseif ($this->editMode != "Insert") {
+                                if ($SQL_SET) $SQL_SET .= ",\n";
+                                $SQL_SET .= "`" . $fC["dbField"] . "` = " . ($fC["null"] ? "NULL" : "''");
+                            }
+                            break;
+
+                        case "password":
+                            if ($this->arrInput[$fN] !== "") {
+                                if ($SQL_SET) $SQL_SET .= ",\n";
+                                $SQL_SET .= "`" . $fC["dbField"] . "` = \"" . md5($this->arrInput[$fN]) . "\"";
+                            }
+                            break;
+
+                        case "date":
+                        case "datetime":
+                            if ($SQL_SET) $SQL_SET .= ",\n";
+                            if (!empty($this->arrInput[$fN])) {
+                                $SQL_SET .= "`" . $fC["dbField"] . "` = \"" . MyDB::escape_string($this->arrInput[$fN]) . "\"";
+                            } else {
+                                $SQL_SET .= "`" . $fC["dbField"] . "` = NULL";
+                            }
+                            break;
+
+                        //String
+                        default:
+                            if ($fC['htmlType'] === 'file') {
+                                if (!empty($_FILES['eingabe']['name'][$fN])) {
+                                    $PostData = $_POST;
+                                    $FileData = $_FILES;
+                                    $_file = [
+                                        'name' => $_FILES['eingabe']['name'][$fN],
+                                        'temp' => $_FILES['eingabe']['tmp_name'][$fN],
+                                        'type' => $_FILES['eingabe']['type'][$fN],
+                                        'size' => $_FILES['eingabe']['size'][$fN],
+                                        'error' => $_FILES['eingabe']['error'][$fN],
+                                    ];
+                                    if ($SQL_SET) {
+                                        $SQL_SET .= ",\n";
+                                    }
+                                    $SQL_SET .= '`' . $fC['dbField'] . '` = "' . MyDB::escape_string(file_get_contents($_file['temp'])) . '"';
+
+                                    // print_r(compact('PostData', 'FileData', '_file'));
+                                }
+                            } elseif (isset($this->arrInput[$fN]) && $this->arrInput[$fN] !== "") {
                                 if ($SQL_SET) {
                                     $SQL_SET .= ",\n";
                                 }
-                                $SQL_SET .= '`' . $fC['dbField'] . '` = "' . MyDB::escape_string(file_get_contents($_file['temp'])) . '"';
-
-                                // print_r(compact('PostData', 'FileData', '_file'));
+                                $SQL_SET .= "`" . $fC["dbField"] . "` = \"" . MyDB::escape_string($this->arrInput[$fN]) . "\"";
+                            } else {
+                                //} elseif ($this->editMode != "Insert") {
+                                if ($SQL_SET) {
+                                    $SQL_SET .= ",\n";
+                                }
+                                $SQL_SET .= "`" . $fC["dbField"] . "` = " . ($fC["null"] ? "NULL" : "''");
                             }
-                        }
-                        elseif (isset($this->arrInput[$fN]) && $this->arrInput[$fN] !== "") {
-                            if ($SQL_SET) {
-                                $SQL_SET.= ",\n";
-                            }
-                            $SQL_SET.= "`".$fC["dbField"]."` = \"".MyDB::escape_string($this->arrInput[$fN])."\"";
-                        } else {
-                        //} elseif ($this->editMode != "Insert") {
-                            if ($SQL_SET){
-                                $SQL_SET.= ",\n";
-                            }
-                            $SQL_SET.= "`".$fC["dbField"]."` = ".($fC["null"] ? "NULL" : "''");
-                        }
-					    break;
-				}
+                            break;
+                    }
+                }
 			}
 			
 			if ($SQL_SET) {
@@ -2271,9 +2278,9 @@ class ItemEdit
 							case "createdby":
 							case "modifiedby": 
 							if ($fC["type"] == "int") {
-								$SQL.= ",\n `".$fC["dbField"]."` = \"".$this->uid."\" "; 
+								$SQL.= ",\n `".$fC["dbField"]."` = \"".$this->uid."\" ";
 							} else {
-								$SQL.= ",\n `".$fC["dbField"]."` = \"".$this->uname."\" "; 
+								$SQL.= ",\n `".$fC["dbField"]."` = \"".$this->uname."\" ";
 							}
 							break;
 						}
