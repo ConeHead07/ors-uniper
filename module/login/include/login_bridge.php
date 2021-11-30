@@ -75,7 +75,7 @@ isset($_POST['password']) && !empty($_POST['password']))
                     switch($user['gruppe']) {
 
                         case "kunde_report":
-                            $redirect = '?s=Property';
+                            $redirect = './?s=kreport';
                             break;
 
                         case "admin_standort":
