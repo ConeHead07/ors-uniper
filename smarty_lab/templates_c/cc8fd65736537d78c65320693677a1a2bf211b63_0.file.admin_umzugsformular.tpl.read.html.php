@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-23 14:22:53
+/* Smarty version 3.1.34-dev-7, created on 2021-12-01 13:30:18
   from '/var/www/html/html/admin_umzugsformular.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_619ceb2d3d8455_47376102',
+  'unifunc' => 'content_61a76ada5e23b4_00181889',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'cc8fd65736537d78c65320693677a1a2bf211b63' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular.tpl.read.html',
-      1 => 1637598947,
+      1 => 1638361811,
       2 => 'file',
     ),
   ),
@@ -29,7 +29,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_619ceb2d3d8455_47376102 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61a76ada5e23b4_00181889 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <link rel="STYLESHEET" type="text/css" href="../css/SelBox.easy.css">
@@ -130,6 +130,23 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
 ">Etiketten</a>
   <br>
 
+
+    <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value['bemerkungen'])) {?>
+    <table class="form-table" width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
+      <tr>
+        <td style="padding:0;height:auto;width:200px;">Bisherige Bemerkungen:</td>
+        <td class="no-border"></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div id="BemerkungenHistorie" style="resize: vertical;overflow:auto;height:4rem"><?php echo nl2br($_smarty_tpl->tpl_vars['AS']->value['bemerkungen']);?>
+</div>
+        </td>
+      </tr>
+    </table>
+    <?php }?>
+
+    <div style="margin-top:1.5rem">
   <div style="float:left">
   <h2 style="margin:0;">Leistungsantragsteller</h2>
   <table class="form-table" >
@@ -205,6 +222,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
 
   <br clear= "all">
   <div style="clear:both;"></div>
+    </div>
 
 
   <?php if (0) {?>
@@ -239,19 +257,23 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'], ENT_Q
 ?>
   </div>
   <?php }?>
-    umzugsstatus: <?php echo $_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'];?>
 
-    <div id="BoxBemerkungen">
+    <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value['bemerkungen'])) {?>
+    <div id="BoxBemerkungen" style="display:none;">
       <strong>Bemerkungen:</strong><br>
       <div id="BemerkungenHistorie"><?php echo nl2br($_smarty_tpl->tpl_vars['AS']->value['bemerkungen']);?>
 </div>
     </div>
     <br>
+    <?php }?>
+
+    <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value['lieferhinweise'])) {?>
     <div id="BoxLieferhinweise">
       <strong>Lieferhinweise:</strong><br>
       <div id="LieferhinweiseContent"><?php echo nl2br($_smarty_tpl->tpl_vars['AS']->value['lieferhinweise']);?>
 </div>
     </div>
+    <?php }?>
     <div id="LoadingBar"></div>
 
   </div>

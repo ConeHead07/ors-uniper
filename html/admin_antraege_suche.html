@@ -110,8 +110,12 @@
 	</table>
 	<script>
 		var selectedUmzugsstatus = "{q[a.umzugsstatus]}";
+		var selectedBmkstatus = "{q[a.bemerkungsstatus]}";
 		var aCheckedKategorien = [/*aCheckedKategorienJson*/];
+
 		$("#q_umzugsstatus").find("option[value="+selectedUmzugsstatus+"]").prop("selected", true);
+		$("#q_bemerkungsstatus").find("option[value="+selectedBmkstatus+"]").prop("selected", true);
+
 		if (Array.isArray(aCheckedKategorien) && aCheckedKategorien.length > 0) {
 			aCheckedKategorien.forEach(function(val, idx) {
 				$("input[type=checkbox][name*=leistungskategorie][value=" + val + "]").prop("checked", true);

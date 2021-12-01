@@ -67,6 +67,22 @@
     | <a href="%WebRoot%sites/etiketten.php?aid={$AS.aid}" target="_Etiketten{$AS.aid}">Etiketten</a>
   <br>
 
+
+    {if !empty($AS.bemerkungen)}
+    <table class="form-table" width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
+      <tr>
+        <td style="padding:0;height:auto;width:200px;">Bisherige Bemerkungen:</td>
+        <td class="no-border"></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div id="BemerkungenHistorie" style="resize: vertical;overflow:auto;height:4rem">{$AS.bemerkungen|nl2br}</div>
+        </td>
+      </tr>
+    </table>
+    {/if}
+
+    <div style="margin-top:1.5rem">
   <div style="float:left">
   <h2 style="margin:0;">Leistungsantragsteller</h2>
   <table class="form-table" >
@@ -129,6 +145,7 @@
 
   <br clear= "all">
   <div style="clear:both;"></div>
+    </div>
 
 
   {if 0}
@@ -156,16 +173,21 @@
       {include file="admin_umzugsformular_gruppierung.tpl.html"}
   </div>
   {/if}
-    umzugsstatus: {$AS.umzugsstatus}
-    <div id="BoxBemerkungen">
+
+    {if !empty($AS.bemerkungen)}
+    <div id="BoxBemerkungen" style="display:none;">
       <strong>Bemerkungen:</strong><br>
       <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
     </div>
     <br>
+    {/if}
+
+    {if !empty($AS.lieferhinweise)}
     <div id="BoxLieferhinweise">
       <strong>Lieferhinweise:</strong><br>
       <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
     </div>
+    {/if}
     <div id="LoadingBar"></div>
 
   </div>

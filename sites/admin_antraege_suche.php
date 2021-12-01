@@ -65,7 +65,8 @@ $searchFields = array(
 	"m.ziel_gf" => "",
 	"m.ziel_bereich" => "",
 	"m.ziel_abteilung" => "",
-	"m.umzugsart" => ""
+	"m.umzugsart" => "",
+    "a.bemerkungsstatus" => ""
 );
 
 $defaultOrder = "ORDER BY a.umzugstermin";
@@ -138,7 +139,7 @@ if ($sendquery) {
     $sqlWhereKtg = "";
 	if (!empty($q)) {
 		foreach($searchFields as $qField => $userQuery) {
-			if ($userQuery) {
+			if (!empty($userQuery)) {
 				
 				switch($qField) {
 					case "a.aid":
@@ -160,6 +161,30 @@ if ($sendquery) {
 					$sqlWhereUA.= userquery_parts2sql($aUQueryParts, $dbField);
 					$sqlWhereUA.= ")\n";
 					break;
+
+                    case 'a.bemerkungsstatus':
+                        $mitBmk = ' LENGTH(TRIM(IFNULL(a.bemerkungen, ""))) > 0 ';
+                        $ohneBmk = ' LENGTH(TRIM(IFNULL(a.bemerkungen, ""))) = 0 ';
+                        switch($userQuery) {
+                            case 'allemit':
+                                $sqlWhereUA.= ($sqlWhereUA ? ' AND ' : '') . $mitBmk;
+                                break;
+
+                            case 'neue':
+                                $sqlWhereUA.= ($sqlWhereUA ? ' AND ' : '') . $mitBmk;
+                                $sqlWhereUA.= ' AND IFNULL(a.neue_bemerkungen_fuer_admin, 0) > 0';
+                                break;
+
+                            case 'gelesene':
+                                $sqlWhereUA.= ($sqlWhereUA ? ' AND ' : '') . $mitBmk;
+                                $sqlWhereUA.= ' AND IFNULL(a.neue_bemerkungen_fuer_admin, 0) = 0';
+                                break;
+
+                            case 'none':
+                                $sqlWhereUA.= ($sqlWhereUA ? ' AND ' : '') . $ohneBmk;
+                                break;
+                        }
+                        break;
 
                     case 'kk.leistungskategorie':
                         if (is_array($userQuery)) {
