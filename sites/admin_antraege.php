@@ -245,7 +245,7 @@ $sql = $sqlSelect . $sqlFrom . $sqlWhere;
 $sql.= $sqlGroup . $NL;
 $sql.= $sqlHaving . $NL;
 $sql.= $orderBy . $NL;
-if ($exportFormat !== 'html') {
+if ($exportFormat === 'html') {
     $sql .= $sqlLimit . $NL;
 }
 
