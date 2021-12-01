@@ -295,6 +295,7 @@ $sqlFrom = ' FROM mm_umzuege a ' . $NL
 
 $sqlWhere = ' WHERE ' . $NL
     . ' ' . $datumfeld . ' BETWEEN :von AND :bis ' . $NL
+    . ' AND a.umzugsstatus NOT LIKE "temp" ' . $NL
     . (!$all ? 'AND IFNULL(tour_kennung, "") = ""' . $NL : '')
     . ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' . $NL : '');
 
