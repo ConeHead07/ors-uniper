@@ -8,6 +8,11 @@
     }
 </style>
 {/literal}
+{if $s eq "auswertung"}
+    {assign var="showStatus" value=1}
+{else}
+    {assign var="showStatus" value=0}
+{/if}
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
     <h1><span class="spanTitle">Auswertung beauftragter Aufträge</span></h1>
 
@@ -85,36 +90,42 @@
             <table class="tblList">
                 <thead>
                 <tr>
-                    <th class="order" data-fld="aid">ID</th>
+                    <th class="order" data-fld="aid" title="Auftrags-ID">ID</th>
                     <th class="order" data-fld="kid">KID</th>
                     <th class="order" data-fld="land" title="Land">L.</th>
-                    <th class="order" data-fld="ort">Lieferort</th>
+                    <th class="order" data-fld="ort" data-fld="ort">Lieferort</th>
                     <th class="order" data-fld="plz">PLZ</th>
                     <th class="order" data-fld="strasse">Stra&szlig;e</th>
                     <th class="order" data-fld="service">Service</th>
-                    <th class="order" data-fld="antragsdatum">Auftr.Dat.</th>
-                    <th class="order" data-fld="umzugstermin">Lief.Dat.</th>
-                    <th class="order" data-fld="abgeschlossen_am">Abschluss</th>
-                    <th class="order" data-fld="berechnet_am">RechDatum</th>
-                    <th class="order" data-fld="vorgangsnummer">Rechnungsnr</th>
-                    <th class="order" data-fld="Leistungen abgekürzt">Lstg.</th>
-                    <th class="order" data-fld="summe">Summe</th>
+                    <th class="order" data-fld="antragsdatum" title="Auftragsdatum">Auftr.Dat.</th>
+                    <th class="order" data-fld="umzugstermin" title="Liefertermin">Lief.Dat.</th>
+                    <th class="order" data-fld="abgeschlossen_am" title="Abgeschlossen am">Abschluss</th>
+                    <th class="order" data-fld="berechnet_am" title="Berechnet am">RechDatum</th>
+                    <th class="order" data-fld="vorgangsnummer" title="Rechnungsnummer">RechNr</th>
+                    {if $showStatus}
+                    <th class="order" data-fld="umzugsstatus" title="Auftragsstatus">Stat</th>
+                    {/if}
+                    <th class="order" data-fld="Leistungen abgekürzt" title="Leistungen abgekürzt">Lstg.</th>
+                    <th class="order" data-fld="summe" title="Summe">Summe</th>
                 </tr>
                 <tr>
                     <th><input name="q[aid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></th>
-                    <th><input name="q[kid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.kid}{/if}"></th>
-                    <th><input name="q[land]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.land}{/if}"></th>
-                    <th><input name="q[ort]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.ort}{/if}"></th>
-                    <th><input name="q[plz]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.plz}{/if}"></th>
-                    <th><input name="q[strasse]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.strasse}{/if}"></th>
-                    <th><input name="q[service]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.service}{/if}"></th>
-                    <th><input placeholder="JJJJ-MM-TT" name="q[antragsdatum]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.antragsdatum}{/if}"></th>
-                    <th><input placeholder="JJJJ-MM-TT" name="q[umzugstermin]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.umzugstermin}{/if}"></th>
-                    <th><input placeholder="JJJJ-MM-TT" name="q[abgeschlossen_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.abgeschlossen_am}{/if}"></th>
-                    <th><input placeholder="JJJJ-MM-TT" name="q[berechnet_am]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.berechnet_am}{/if}"></th>
-                    <th><input name="q[vorgangsnummer]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.vorgangsnummer}{/if}"></th>
-                    <th><input name="q[Leistungen]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.Leistungen}{/if}"></th>
-                    <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.summe}{/if}"></th>
+                    <th><input name="q[kid]" style="width:100%" value="{if !empty($q) && isset($q.kid)}{$q.kid}{/if}"></th>
+                    <th><input name="q[land]" style="width:100%" value="{if !empty($q) && isset($q.land)}{$q.land}{/if}"></th>
+                    <th><input name="q[ort]" style="width:100%" value="{if !empty($q) && isset($q.ort)}{$q.ort}{/if}"></th>
+                    <th><input name="q[plz]" style="width:100%" value="{if !empty($q) && isset($q.plz)}{$q.plz}{/if}"></th>
+                    <th><input name="q[strasse]" style="width:100%" value="{if !empty($q) && isset($q.strasse)}{$q.strasse}{/if}"></th>
+                    <th><input name="q[service]" style="width:100%" value="{if !empty($q) && isset($q.service)}{$q.service}{/if}"></th>
+                    <th><input placeholder="JJJJ-MM-TT" name="q[antragsdatum]" style="width:100%" value="{if !empty($q) && isset($q.antragsdatum)}{$q.antragsdatum}{/if}"></th>
+                    <th><input placeholder="JJJJ-MM-TT" name="q[umzugstermin]" style="width:100%" value="{if !empty($q) && isset($q.umzugstermin)}{$q.umzugstermin}{/if}"></th>
+                    <th><input placeholder="JJJJ-MM-TT" name="q[abgeschlossen_am]" style="width:100%" value="{if !empty($q) && isset($q.abgeschlossen_am)}{$q.abgeschlossen_am}{/if}"></th>
+                    <th><input placeholder="JJJJ-MM-TT" name="q[berechnet_am]" style="width:100%" value="{if !empty($q) && isset($q.berechnet_am)}{$q.berechnet_am}{/if}"></th>
+                    <th><input name="q[vorgangsnummer]" style="width:100%" value="{if !empty($q) && isset($q.vorgangsnummer)}{$q.vorgangsnummer}{/if}"></th>
+                    {if $showStatus}
+                    <th><input name="q[umzugsstatus]" style="width:100%" value="{if !empty($q) && isset($q.umzugsstatus)}{$q.umzugsstatus}{/if}"></th>
+                    {/if}
+                    <th><input name="q[Leistungen]" style="width:100%" value="{if !empty($q) && isset($q.Leistungen)}{$q.Leistungen}{/if}"></th>
+                    <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.summe)}{$q.summe}{/if}"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -162,6 +173,9 @@
                     </td>
 
                     <td>{$item.vorgangsnummer}</td>
+                    {if $showStatus}
+                    <td title="{$item.umzugsstatus|escape}">{$item.umzugsstatus|substr:0:5|escape}</td>
+                    {/if}
                     <td title="{$item.LeistungenFull}">{$item.Leistungen}</td>
                     <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
                 </tr>
