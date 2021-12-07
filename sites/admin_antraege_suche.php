@@ -65,7 +65,8 @@ $searchFields = array(
 	"m.ziel_gf" => "",
 	"m.ziel_bereich" => "",
 	"m.ziel_abteilung" => "",
-	"m.umzugsart" => ""
+	"m.umzugsart" => "",
+    "lk.leistung" => "",
 );
 
 $defaultOrder = "ORDER BY a.umzugstermin";
@@ -136,6 +137,7 @@ if ($sendquery) {
 	$sqlWhereUA = "";
     $sqlWhereUsr = "";
     $sqlWhereKtg = "";
+    $sqlWhereLst = "";
 	if (!empty($q)) {
 		foreach($searchFields as $qField => $userQuery) {
 			if ($userQuery) {
@@ -206,7 +208,13 @@ if ($sendquery) {
                         $sqlWhereUsr.= userquery_parts2sql($aUsrQueryParts, $dbField);
                         $sqlWhereUsr.= ")\n";
                         break;
-					
+
+                    case "lk.leistung":
+                        $dbField = 'CONCAT_WS(l.Bezeichnung, l.Beschreibung, l.Farbe, l.Groesse)';
+                        $aUsrQueryParts = userquery_parse($userQuery, "Both");
+                        $sqlWhereLst = userquery_parts2sql($aUsrQueryParts, $dbField);
+                        break;
+
 					default:
 					$dbField;
 				}
@@ -253,6 +261,15 @@ if ($sendquery) {
                     JOIN mm_leistungskatalog l ON (ul.leistung_id = l.leistung_id)
                     JOIN mm_leistungskategorie kk ON (l.leistungskategorie_id = kk.leistungskategorie_id)
                     WHERE ' . $sqlWhereKtg . '
+                )';
+        }
+        if ($sqlWhereLst) {
+            $sqlWhere.= 'AND a.aid IN(
+                    SELECT distinct(ul.aid) 
+                    FROM mm_umzuege_leistungen ul
+                    JOIN mm_leistungskatalog l ON (ul.leistung_id = l.leistung_id)
+                    JOIN mm_leistungskategorie k ON (l.leistungskategorie_id = k.leistungskategorie_id)
+                    WHERE ' . $sqlWhereLst . '
                 )';
         }
 		$sqlGroup = "GROUP BY a.aid\n";

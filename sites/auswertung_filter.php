@@ -181,7 +181,7 @@ if (in_array('beauftragt', $aAuftragsstatus)) {
     $aWhereStatusAnyOf[] = ' (umzugsstatus = "beauftragt" OR IFNULL(antragsdatum, "") != "") ' . "\n";
 }
 if (in_array( 'avisiert', $aAuftragsstatus)) {
-    $aWhereStatusAnyOf[] = ' (umzugsstatus = "bestaetigt" or bestaetigt="Ja" or IFNULL(umzugstermin, "") != "") ' . "\n";
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "bestaetigt") ' . "\n";
 }
 if (in_array('abgeschlossen', $aAuftragsstatus)) {
     $aWhereStatusAnyOf[] = ' (umzugsstatus = "abgeschlossen" or abgeschlossen="Ja") ' . "\n";
