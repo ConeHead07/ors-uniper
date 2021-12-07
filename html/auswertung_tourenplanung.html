@@ -115,6 +115,7 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
             <th class="order" data-fld="antragsdatum">Auftr.Dat.</th>
             <th class="order" data-fld="umzugstermin">Lieferdatum</th>
             <th class="order" data-fld="tour_kennung">Tour</th>
+            <th class="order" data-fld="umzugsstatus" title="Auftragsstatus">Stat</th>
             <th class="order" data-fld="Leistungen">Lstg.</th>
             <th class="order" data-fld="summe">Summe</th>
         </tr>
@@ -131,6 +132,7 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
             <th><input name="q[umzugstermin]" placeholder="JJJJ-MM-TT" style="width:100%" value="{if !empty($q) && isset($q.umzugstermin)}{$q.umzugstermin}{/if}"></th>
             <th><input title="{$hintValidColSearchOperator|escape}" name="q[tour_kennung]" style="width:100%" value="{if !empty($q) && isset($q.tour_kennung)}{$q.tour_kennung}{/if}"></th>
             <th><input name="q[Leistungen]" style="width:100%" value="{if !empty($q) && isset($q.Leistungen)}{$q.Leistungen}{/if}"></th>
+            <th><input name="q[umzugsstatus]" style="width:100%" value="{if !empty($q) && isset($q.umzugsstatus)}{$q.umzugsstatus}{/if}"></th>
             <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.summe)}{$q.summe}{/if}"></th>
         </tr>
     </thead>
@@ -172,6 +174,7 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
             <td class="fld-cell fld-tour_kennung" data-field="tour_kennung" data-value="{$item.tour_kennung|escape}" {if !empty($item.tour_disponiert_am)}title="{$item.tour_disponiert_am}, {$item.tour_disponiert_von}"{/if}>
                 {$item.tour_kennung|escape}
             </td>
+            <td class="fld-cell fld-umzugsstatus" data-field="umzugsstatus" data-value="{$item.umzugsstatus|escape}" title="{$item.umzugsstatus|escape}">{$item.umzugsstatus|substr:0:3|escape}</td>
             <td class="fld-cell fld-Leistungen" data-field="Leistungen" data-value="{$item.Leistungen|escape}" title="{$item.LeistungenFull|replace:';':''|replace:'<|#|>':'  '}">{$item.Leistungen|escape}</td>
             <td class="fld-cell fld-summe" data-field="summe" data-value="{$item.summe|escape}" style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
         </tr>
