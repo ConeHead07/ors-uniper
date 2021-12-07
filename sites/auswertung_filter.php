@@ -1,6 +1,7 @@
 <?php
 $Tpl = new myTplEngine();
 
+$NL = "\n";
 $request = $_REQUEST;
 $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
@@ -197,7 +198,14 @@ $sqlSelect = 'SELECT a.*, ' . "\n"
       . ' u.nachname, u.nachname stom, ua.nachname antragsteller_name, ' . "\n"
       . ' ua.gruppe antragsteller_gruppe, ' . "\n"
       . ' GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . "\n"
-      . ' GROUP_CONCAT(lk.leistungskategorie ORDER BY leistungskategorie SEPARATOR ", ") AS LeistungenFull, ' . "\n"
+      . ' GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . $NL
+      . '   GROUP_CONCAT(' . $NL
+      . '     IF (l.leistung_id is NULL, "", CONCAT_WS("<|#|>", '  . $NL
+      . '      l.leistung_id, lk.kategorie_abk, lk.leistungskategorie, ' . $NL
+      . '      l.Bezeichnung, l.Farbe, l.Groesse, "€", l.preis_pro_einheit' . $NL
+      . '     )) '
+      . '     ORDER BY leistungskategorie SEPARATOR ";\n"' . $NL
+      . '   ) AS LeistungenFull, ' . $NL
       . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . "\n";
 
 $sqlFrom = ' FROM mm_umzuege a ' . "\n"
