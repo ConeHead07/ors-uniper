@@ -387,17 +387,17 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
             id="btnStatAbgJa" type="submit"
             class="{if $AS.abgeschlossen ne 'Init'}cssHide{else}btn green{/if}"
             onclick="umzugsantrag_set_status('abgeschlossen','Ja')"
-            value="Auftrag ist abgeschlossen">
+            value="Auftrag jetzt abschließen">
 &nbsp; {/if}
   {if $user.gruppe eq "admin" and $user.adminmode eq "superadmin"}
   <input id="btnStatAbgReset" type="submit"
          class="{if $AS.abgeschlossen eq 'Init'}cssHide{else}btn blue{/if}"
          onclick="umzugsantrag_set_status('abgeschlossen','Init')"
-         value="Abschluss aufheben">
+         value="Abschluss wieder aufheben">
   <input id="btnStatAbgStorno" type="submit"
          class="{if $AS.abgeschlossen ne 'Init'}cssHide{else}btn red{/if}"
          onclick="umzugsantrag_set_status('abgeschlossen','Storniert')"
-         value="Stornieren">
+         value="Auftrag Stornieren">
   {/if}
 </div>
 
