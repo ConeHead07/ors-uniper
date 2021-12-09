@@ -1,5 +1,49 @@
 <?php 
 
+function getLieferscheineByAid(int $aid, array $opts = []) {
+
+    global $db, $_CONF, $MConf, $user, $connid, $InclBaseDir;
+    require_once($InclBaseDir."umzugsanlagen.inc.php");
+
+    $sql = 'SELECT 
+              lid, 
+              aid, 
+              leistungen, 
+              lieferdatum, 
+              ankunft, 
+              abfahrt, 
+              LENGTH(IFNULL(lieferschein, "")) AS PdfSize,
+              source,
+              umzuege_anlagen_dokid,
+              sig_mt_size,
+              sig_kd_size,
+              sig_kd_unterzeichner,
+              created_uid,
+              created_user,
+              created_at,
+              modified_uid,
+              modified_user,
+              modified_at
+            FROM mm_lieferscheine 
+            WHERE aid = ' . $aid . '
+            ORDER BY lid DESC';
+
+    $aRows = $db->query_rows($sql);
+    echo $db->error();
+
+    for($i = 0; $i < count($aRows); $i++) {
+
+        $_row = $aRows[$i];
+        $_aid = (int)$_row['aid'];
+        $_lid = (int)$_row['lid'];
+        $_lsidx = strrev(base64_encode(json_encode(['aid' => $_aid, 'lid' => $_lid])));
+        $aRows[$i]["datei_link"] = $MConf['WebRoot'] . 'sites/lieferschein.php?idx=' . $_lsidx;
+        $aRows[$i]["datei_groesse"] = format_file_size($_row["PdfSize"]);
+    }
+
+    return $aRows;
+}
+
 function getAttachements($data, $internal) {
 
 	global $db, $_CONF, $MConf, $user, $connid, $InclBaseDir;
@@ -7,10 +51,12 @@ function getAttachements($data, $internal) {
 	
 	$ATConf = &$_CONF["umzugsanlagen"];
 	$items = array();
+	$aid = (int)$data['aid'];
 	
-	$sql = "SELECT dokid FROM `".$ATConf["Table"]."` "
-			  ." WHERE (aid = ".intval($data['aid'])
-			  ." or token = " . $db->quote($data['token']) . ")";
+	$sql = 'SELECT dokid FROM `' . $ATConf['Table'] . '` '
+          . ' WHERE (aid = '. $aid . ' or token = ' . $db::quote($data['token']) . ')'
+          . ' AND IFNULL(target, "") = ""';
+
 	if ($internal) {
 			$sql.= " AND internal = 1";
 	} else {
@@ -116,7 +162,7 @@ function get_arbeitsplatz_hinzuege($raumid, $apnr=false) {
 		return $RowsCacheHinzuege[$CacheId];
 	}
 	
-	// Hole anstehende Umzüge zu diesem Arbeitsplatz
+	// Hole anstehende Umzï¿½ge zu diesem Arbeitsplatz
 	$sql = "SELECT m.*, a.umzugsstatus, a.umzugsstatus_vom \n";
 	$sql.= "FROM `".$MAConf["Table"]."` m LEFT JOIN `".$ASConf["Table"]."` a USING(aid) \n";
 	$sql.= "WHERE ziel_raumid LIKE \"".$db->escape($raumid)."\" \n";
@@ -142,7 +188,7 @@ function get_arbeitsplatz_wegzuege($raumid, $apnr=false) {
 		return $RowsCacheWegzuege[$CacheId];
 	}
 	
-	// Hole anstehende Umzüge zu diesem Arbeitsplatz
+	// Hole anstehende Umzï¿½ge zu diesem Arbeitsplatz
 	$sql = "SELECT m.*, a.umzugsstatus, a.umzugsstatus_vom \n";
 	$sql.= "FROM `".$MAConf["Table"]."` m LEFT JOIN `".$ASConf["Table"]."` a USING(aid) \n";
 	$sql.= "WHERE raumid LIKE \"".$db->escape($raumid)."\" \n";

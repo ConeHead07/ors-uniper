@@ -133,6 +133,8 @@ if ($AID) {
 	$aAtItems = getAttachements($AS->arrDbdata, 0);
 	$aAtIntItems = getAttachements($AS->arrDbdata, 1);
 	$aGroupItems = getGruppierungen($AID);
+
+    $aLSItems = getLieferscheineByAid($AID);
 	
 } else {
 	// else: lade Eingabeformular
@@ -207,11 +209,19 @@ if (!empty($aMaItems) && count($aMaItems)) {
 if (!empty($aAtItems) && count($aAtItems)) {
     $Tpl->assign("UmzugsAnlagen", $aAtItems);
 }
+
 if (!empty($aAtIntItems) && count($aAtIntItems)) {
     $Tpl->assign("UmzugsAnlagenIntern", $aAtIntItems);
 } else {
     $Tpl->assign("UmzugsAnlagenIntern", []);
 }
+
+if (!empty($aLSItems) && count($aLSItems)) {
+    $Tpl->assign("UmzugLieferscheine", $aLSItems);
+} else {
+    $Tpl->assign("UmzugLieferscheine", []);
+}
+
 if (!empty($aGroupItems) && count($aGroupItems)) {
     $Tpl->assign("UmzugsGruppierungen", $aGroupItems);
 }

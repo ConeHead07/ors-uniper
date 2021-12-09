@@ -302,6 +302,11 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 {include file="umzugsformular_attachments.tpl.read2.html" UmzugsAnlagen=$UmzugsAnlagenIntern internal=1}
 {/if}
 
+{if !empty($UmzugLieferscheine)}
+    <div style="margin-top:1.5rem"></div>
+  {include file="umzugsformular_lieferscheine.tpl.read2.html" UmzugsAnlagen=$UmzugLieferscheine internal=1}
+{/if}
+
 {if 0}
 <div style="width:100%">
     {include file="admin_umzugsformular_gruppierung.tpl.html"}
@@ -342,7 +347,14 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
   <input
           type="submit" class="btn red"
           onclick="umzugsantrag_add_internal_attachement()"
-          value="Interne Dateianhänge">{/if}
+          value="Interne Dateianhänge">
+  {/if}
+  {if $creator == "mertens"}
+  <input
+          type="submit" class="btn red"
+          onclick="umzugsantrag_add_lieferschein()"
+          value="Quittierten Lieferschein hinzufügen">
+  {/if}
 <br>
 {if $AS.umzugsstatus ne "temp"}
   <div style="margin-top:2.5rem;"><strong>Status mit Benachrichtung setzen: </strong></div>

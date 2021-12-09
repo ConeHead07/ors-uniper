@@ -1,0 +1,67 @@
+{if empty($noOuterBox)}
+{if empty($noCss)}<link rel="stylesheet" type="text/css" href="{if !empty($WebRoot)}{$WebRoot}{/if}css/umzugsformular_attachements.css" />{/if}
+<!--
+              lid,
+              aid,
+              leistungen,
+              lieferdatum,
+              ankunft,
+              abfahrt,
+              LENGTH(IFNULL(lieferschein, "")) AS PdfSize,
+              source,
+              umzuege_anlagen_dokid,
+              sig_mt_size,
+              sig_kd_size,
+              sig_kd_unterzeichner,
+              created_uid,
+              created_user,
+              created_at,
+              modified_uid,
+              modified_user,
+              modified_at
+            FROM mm_lieferscheine
+
+            datei_link"] = $MConf['WebRoot'] . 'sites/lieferschein.php?idx=' . $_lsidx;
+        $aRows[$i]["datei_groesse
+-->
+<fieldset><legend><strong>Lieferscheine</strong></legend>
+	<div class="lieferscheine_list" style="padding:5px;">
+	{/if}
+
+		<table class="tblList" width="100%">
+			<thead>
+				<tr>
+					<th class="col fLid">LS-ID</th>
+					<th class="col ftermin">Liefertermin</th>
+					<th class="col fexists">PDF</th>
+					<th class="col fsize">Groesse</th>
+					<th class="col funterzeichner">Unterzeichner</th>
+					<th class="col fquelle">Quelle</th>
+					<th class="col fdate">Datum</th>
+					<th class="col fuser">Von</th>
+				</tr>
+			</thead>
+			<tbody>
+			{foreach name=ATList item=AT from=$UmzugsAnlagen}
+				<tr>
+					<td class="col fLid" title="{$AT.lid}">
+						{if $AT.PdfSize >0}<a href="{$AT.datei_link}" target="_blank">{$AT.lid}</a>
+						{else}{$AT.lid}{/if}
+					</td>
+					<td class="col ftermin">{$AT.lieferdatum}</td>
+					<td class="col fexists">{if $AT.PdfSize >0}Ja{else}Nein{/if}</td>
+					<td class="col fsize">{$AT.datei_groesse}</td>
+					<td class="col funterzeichner">{$AT.sig_kd_unterzeichner}</td>
+					<td class="col fquelle">{$AT.source}</td>
+					<td class="col fdate">{$AT.created_at}</td>
+					<td class="col fuser">{$AT.created_user}</td>
+				</tr>
+			{foreachelse}
+			<tr><td colspan="8"><li class="none"><em>keine</em></li></td></tr>
+			{/foreach}
+			</tbody>
+		</table>
+	{if empty($noOuterBox)}
+	</div>
+</fieldset>
+{/if}

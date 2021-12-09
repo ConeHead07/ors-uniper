@@ -68,8 +68,22 @@ function format_file_size($bytes) {
 
 function __autoload($class_name) {
     global $MConf;
-	$loadfile = $MConf["AppRoot"].$MConf["Class_Dir"].$class_name . '.class.php';
     $vendorDir = $MConf["AppRoot"] . 'vendor/';
+
+
+    switch($class_name) {
+        case 'LS_Model':
+            $loadfile = $MConf["AppRoot"] . '/module/lieferschein/lieferschein.model.php';
+            break;
+
+            case 'LS_PDF':
+                $loadfile = $MConf["AppRoot"] . '/module/lieferschein/pdf.lib.php';
+            break;
+
+        default:
+            $loadfile = $MConf["AppRoot"].$MConf["Class_Dir"].$class_name . '.class.php';
+    }
+
 /*
 	if (file_exists($loadfile)) {
 	    require_once $loadfile;
@@ -148,30 +162,24 @@ function __autoload($class_name) {
 		elseif ($class_name === 'Swift' || strpos($class_name, 'Swift') === 0) {
 		    $vendorDir = $MConf["AppRoot"] . 'vendor/swiftmailer/swiftmailer/lib/classes/';
 		    $classPath = str_replace('_', '/', $class_name) . '.php';
-		    $loadfile = $vendorDir . $classPath;
-		    if (file_exists($loadfile)) {
-		        require_once $loadfile;
-		        return true;
+		    $checkfile = $vendorDir . $classPath;
+		    if (file_exists($checkfile)) {
+                $loadfile = $checkfile;
             }
             // require_once __DIR__ . '/../module/Swift-5.0.0/lib/swift_required.php';
         }
 		else {
             $moduleClassFile = $MConf["AppRoot"] . str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';
-            $moduleClassFileExists = file_exists($moduleClassFile);
-            if ($moduleClassFileExists) {
-                require_once $moduleClassFile;
-                return true;
+            if (file_exists($moduleClassFile)) {
+                $loadfile = $moduleClassFile;
             } else {
                 return false;
             }
-//            die('#'. __LINE__ . ' ' . __FILE__ . ' '
-//                . json_encode(compact('class_name', 'moduleClassFile', 'moduleClassFileExists'))
-//            );
-//			echo "CanNotAutoLoad: ".$loadfile."<br>\n";
-			return false;
 		}
 	}
+
 	require_once $loadfile;
+	return true;
 }
 
 function getTplEngine($tplDir = "", $cnfDir = "") {

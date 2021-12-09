@@ -5,6 +5,17 @@
  * Date: 25.10.2021
  * Time: 09:42
  */
+if (empty($InclBaseDir)) {
+    global $InclBaseDir;
+}
+if (empty($InclBaseDir)) {
+    $_line = __LINE__;
+    $_file = __FILE__;
+    $includedFiles = get_included_files();
+    echo '$InclBaseDir is undefined or empty!' . "\n";
+    echo '<pre>' . json_encode(compact('_line', '_file', 'MConf', '_CONF', 'includedFiles'), JSON_PRETTY_PRINT) . '</pre>';
+    exit;
+}
 
 include_once($InclBaseDir . '/lieferscheine.inc.php');
 
@@ -221,6 +232,21 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
             $this->createLieferschein();
         }
         return $this;
+    }
+
+    public function getLieferscheinPDF(int $lid = 0) {
+        if (!$lid) {
+            $lid = $this->lid;
+        }
+        if (!$lid) {
+            return 0;
+        }
+        $sql = 'SELECT lieferschein FROM mm_lieferscheine '
+            . ' WHERE aid = ' . $this->AID . ' '
+            . '    AND lid = ' . $lid . ' '
+            . ' LIMIT 1';
+
+        return $this->db->query_one($sql);
     }
 
     public function getAbgenommenenLieferscheinPDF() {

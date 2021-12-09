@@ -22,9 +22,25 @@ require_once $MConf['AppRoot'] . $MConf['Inc_Dir'] . 'tcpdf_include.php';
 require_once $MConf['AppRoot'] . $MConf['Modul_Dir'] . 'lieferschein/lieferschein.model.php';
 require_once $MConf['AppRoot'] . $MConf['Modul_Dir'] . 'lieferschein/lieferschein.model.php';
 
-$AID = $_REQUEST['aid'] ?? 0;
+$IDX = $_REQUEST['idx'] ?? '';
+$lid = 0;
+if ($IDX) {
+    $AID = 0;
+    $aIdxParts = json_decode(base64_decode(strrev($IDX)), JSON_OBJECT_AS_ARRAY);
+
+    if (is_array($aIdxParts)) {
+        if (!empty($aIdxParts['aid']) && !empty($aIdxParts['lid'])) {
+            $AID = $aIdxParts['aid'];
+            $lid = $aIdxParts['lid'];
+        }
+    }
+    if (!$AID) {
+        die('Ungültiger Lieferschein-Aufruf!');
+    }
+}
+
 if (empty($AID)) {
-    $AID = $_REQUEST['id'] ?? 0;
+    $AID = $_REQUEST['aid'] ?? $_REQUEST['id'] ?? 0;
 }
 
 if (empty($AID)) {
@@ -35,11 +51,21 @@ $art = $_REQUEST['art'] ?? '';
 $istKommissionsSchein = $art === 'kommission';
 
 if ($AID ) {
-    $lsmodel = new LS_Model((int)$AID);
+    $lsmodel = new LS_Model((int)$AID, (int)$lid);
     $auftrag = $lsmodel->getAuftragsdaten();
     if (!$auftrag) {
         die('UNGUELTIGER SEITENAUFRUF! Es wurde kein Auftrag zur übergebenen ID gefunden!');
     }
+
+    if ($lid) {
+        $lsPdf = $lsmodel->getLieferscheinPDF();
+        if ($lsPdf) {
+            header('Content-Type: application/pdf');
+            echo $lsPdf;
+            exit;
+        }
+    }
+
     if ($auftrag['umzugsstatus'] === 'abgeschlossen') {
         $lsPdf = $lsmodel->getAbgenommenenLieferscheinPDF();
         if ($lsPdf) {
@@ -48,27 +74,28 @@ if ($AID ) {
             exit;
         }
     }
-    }
-    $leistungen = $lsmodel->getLeistungen();
-    $lieferschein = $lsmodel->loadLieferschein(true)->getData();
+}
 
-    $aLeistungsLabels = array_map(function($item) { return $item['Kategorie']; }, $leistungen);
+$leistungen = $lsmodel->getLeistungen();
+$lieferschein = $lsmodel->loadLieferschein(true)->getData();
 
-    if (!count($leistungen)) {
-        die('UNGUELTIGER SEITENAUFRUF! Es wurde keine Leistungen zum angegebenen Auftrag gefunden!');
-    }
+$aLeistungsLabels = array_map(function($item) { return $item['Kategorie']; }, $leistungen);
 
-    if (!$istKommissionsSchein) {
-        $pdfclass = new \module\Pdf\MertensLieferscheinPDF();
-    } else {
-        $pdfclass = new \module\Pdf\MertensKommissionsscheinPDF();
-    }
+if (!count($leistungen)) {
+    die('UNGUELTIGER SEITENAUFRUF! Es wurde keine Leistungen zum angegebenen Auftrag gefunden!');
+}
 
-    $pdfclass->setAuftragsdaten($auftrag);
-    $pdfclass->setLeistungen($leistungen);
-    if (!$istKommissionsSchein) {
-        $pdfclass->setLieferscheindaten($lieferschein);
-    }
-    $pdfclass->create();
-    $pdfclass->Output('example_001.pdf', 'I');
+if (!$istKommissionsSchein) {
+    $pdfclass = new \module\Pdf\MertensLieferscheinPDF();
+} else {
+    $pdfclass = new \module\Pdf\MertensKommissionsscheinPDF();
+}
+
+$pdfclass->setAuftragsdaten($auftrag);
+$pdfclass->setLeistungen($leistungen);
+if (!$istKommissionsSchein) {
+    $pdfclass->setLieferscheindaten($lieferschein);
+}
+$pdfclass->create();
+$pdfclass->Output('Lieferschein_' . $AID . '.pdf', 'I');
 

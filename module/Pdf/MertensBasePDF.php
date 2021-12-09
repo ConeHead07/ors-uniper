@@ -10,6 +10,7 @@ namespace module\Pdf;
 // Extend the TCPDF class to create custom Header and Footer
 class MertensBasePDF extends \TCPDF {
 
+    protected $aBriefkopfDaten = [];
 
     public function __construct(string $orientation = 'P', string $unit = 'mm', $format = 'A4', bool $unicode = true, string $encoding = 'UTF-8', bool $diskcache = false, $pdfa = false)
     {
@@ -52,6 +53,27 @@ class MertensBasePDF extends \TCPDF {
 
 // set default font subsetting mode
         $this->setFontSubsetting(true);
+    }
+
+
+    /**
+     * [ [ 'label1', 'value1'], ['', ''] als Leerzeiche ]
+     * @param array $aDaten
+     * @return MertensBasePDF
+     */
+    public function setBriefReferenzDaten(array $aDaten): self {
+        $this->aBriefkopfDaten = $aDaten;
+        return $this;
+    }
+
+    /**
+     * [ [ 'label1', 'value1'], ['', ''] als Leerzeiche ]
+     * @param array $aDaten
+     * @return MertensBasePDF
+     */
+    public function addBriefReferenzDaten(array $aDaten): self {
+        $this->aBriefkopfDaten = array_merge($this->aBriefkopfDaten, $aDaten);
+        return $this;
     }
 
     //Page header

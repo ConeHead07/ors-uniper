@@ -5,14 +5,16 @@
     }
     
     #attachments_list .row .col.fname {
-        width:50%;
+        width:40%;
     }
     #attachments_list .row .col.fsize {
         width:20%;
     }
-    
     #attachments_list .row .col.fdate {
-        width:25%;
+        width:20%;
+    }
+    #attachments_list .row .col.ftarget {
+        width:20%;
     }
     #attachments_list .row.names {
         background:#eee;
@@ -62,7 +64,10 @@
 <div id="attachments_list" data-url="sites/umzugsantrag_attachements_list.php?aid={$AS.aid}" style="padding:5px;">
 
     <div class="row names{if empty($UmzugsAnlagen)} hidden{/if}">
-    <span class="col fname">Datei</span><span class="col fsize">Gr&ouml;&szlig;e</span><span class="col fdate">Upload vom</span>
+    <span class="col fname">Datei</span>
+        <span class="col fsize">Gr&ouml;&szlig;e</span>
+        <span class="col fdate">Upload vom</span>
+        <span class="col ftarget">Target</span>
 </div>
 
 <ul class="ulAttachements row-values">
@@ -71,9 +76,12 @@
 {* <li><a href="{$AT.datei_link}" target="_blank">{if $AT.titel}{$AT.titel}{else}{$AT.dok_datei}{/if}</a> {$AT.datei_groesse}</li> *}
 
 <li class="row values">
- <span class="col fname" title="{$AT.titel}"><a href="{$AT.datei_link}" target="_blank">{if $AT.titel}{$AT.titel|truncate:60:"..."}{else}{$AT.dok_datei|truncate:60:"..."}{/if}</a></span> 
- <span class="col fsize">{$AT.datei_groesse}</span> 
- <span class="col fdate">{$AT.created}</span>
+    <span class="col fname" title="{$AT.titel}">
+        <a href="{$AT.datei_link}" target="_blank">{if $AT.titel}{$AT.titel|truncate:60:"..."}{else}{$AT.dok_datei|truncate:60:"..."}{/if}</a>
+    </span>
+    <span class="col fsize">{$AT.datei_groesse}</span>
+    <span class="col fdate">{$AT.created}</span>
+    <span class="col ftarget">{if !empty($AT.target)}{$AT.target}{/if}</span>
 </li>
 {/foreach}
 {else}

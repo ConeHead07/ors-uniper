@@ -4,14 +4,17 @@
     }
     
     .attachements_list .row .col.fname {
-        width:50%;
+        width:40%;
     }
     .attachements_list .row .col.fsize {
         width:20%;
     }
     
     .attachements_list .row .col.fdate {
-        width:25%;
+        width:20%;
+    }
+    #attachments_list .row .col.ftarget {
+        width:20%;
     }
     .attachements_list .row.names {
         background:#eee;

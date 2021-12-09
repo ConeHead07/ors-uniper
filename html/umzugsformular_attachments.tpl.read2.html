@@ -8,6 +8,7 @@
 			<span class="col fname">Datei</span>
 			<span class="col fsize">Gr&ouml;&szlig;e</span>
 			<span class="col fdate">Upload vom</span>
+			<span class="col ftarget">Target</span>
 		</div>
 
 		<ul class="ulAttachements row-values">
@@ -16,8 +17,9 @@
 
 			<li class="row values">
 			 <span class="col fname" title="{$AT.titel}"><a href="{$AT.datei_link}" target="_blank">{if $AT.titel}{$AT.titel|truncate:60:"..."}{else}{$AT.dok_datei|truncate:60:"..."}{/if}</a></span> 
-			 <span class="col fsize">{$AT.datei_groesse}</span> 
-			 <span class="col fdate">{$AT.created}</span>
+			 <span class="col fsize">{$AT.datei_groesse}</span>
+				<span class="col fdate">{$AT.created}</span>
+				<span class="col ftarget">{if !empty($AT.target)}{$AT.target}{/if}</span>
 			</li>
 		{foreachelse}
 			<li class="none"><em>keine</em></li>

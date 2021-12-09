@@ -182,14 +182,14 @@ class MertensLieferscheinPDF extends MertensBasePDF
         $recipient.= $auftrag['strasse'] . "\r\n";
         $recipient.= $this->getLaenderKuerzelByLand($auftrag['land']) . "-{$auftrag['plz']} {$auftrag['ort']}\r\n";
 
-        $aBriefkopfRefData = [
+        $aBriefkopfRefData = array_merge([
 //            ['Referenznummer', '12345'],
             ['Ihre KID', !empty($auftrag['kid']) ? $auftrag['kid'] : ''],
             ['Ihre Durchwahl', $auftrag['fon']],
             ['Ihr Bestellzeichen', 'UNIPER-ORS-' . $auftrag['aid']],
             ['', ''],
             ['', 'Willich, ' . date('d.m.Y')],
-        ];
+        ], $this->aBriefkopfDaten);
         $auftragsliste = $this->getAuftragsliste();
 
         $kundenAbnahme = $this->getKundenabnahme();
@@ -250,18 +250,16 @@ class MertensLieferscheinPDF extends MertensBasePDF
 
     public function getAuftragsliste() {
         $table = <<<EOT
-<table style="border:1px solid gray" width="99%" cellspacing="0" cellpadding="1" border="0">
+<table style="border:1px solid gray" width="99%" cellspacing="0" cellpadding="0" border="0">
     <tr>
-        <td style="font-weight:bold;padding-bottom:10px;" width="8%" align="left">Anzahl</td>
+        <td style="font-weight:bold;padding-bottom:10px" height="24" width="8%" align="left">Anzahl</td>
         <td style="padding-bottom:10px;" width="8%">&nbsp;</td>
-        <td style="font-weight:bold;padding-bottom:10px;" width="63%">Artikel</td>
-        <td style="font-weight:bold;padding-bottom:10px;" width="10%" align="right">B-Menge</td>
-        <td style="font-weight:bold;padding-bottom:10px;" width="10%" align="right">R-Menge</td>
+        <td style="font-weight:bold;padding-bottom:10px;" width="64%">Artikel</td>
+        <td style="font-weight:bold;padding-bottom:3px;" width="10%" align="right">B-Menge</td>
+        <td style="font-weight:bold;padding-bottom:3px;" width="10%" align="right">R-Menge</td>
     </tr>
     <tr>
-        <td colspan="5">
-        <hr style="height:2px;margin-top:10px"/>
-        </td>
+        <td colspan="5"><hr style="height:2px"/></td>
     </tr>
 EOT;
 
@@ -275,15 +273,21 @@ EOT;
             $kategorie = $_item['Kategorie'];
             $anzahl = $_item['menge_mertens'];
             $artikel = $_item['Bezeichnung'];
+            if (!empty($_item['Farbe'])) {
+                $artikel.= ', ' . $_item['Farbe'];
+            }
+            if (!empty($_item['Groesse'])) {
+                $artikel.= ', ' . $_item['Groesse'];
+            }
             $BMenge = $anzahl;
             $RMenge = 0;
             $table.= <<<EOT
     <tr>
         <td style="font-weight:bold;" align="left"><font weight="bold">$anzahl</font></td>
-        <td style="font-weight:bold;" align="right">$unit</td>
+        <td style="font-weight:bold;" align="right"><i>$unit &nbsp;</i></td>
         <td align="left">
-<div style="font-weight:bold;">$kategorie</div>
-$artikel</td>
+<div style="font-weight:bold;"><i>$kategorie</i></div>
+$artikel<div style="font-size:xx-small">&nbsp;</div></td>
         <td style="font-weight:bold;" align="right">$BMenge</td>
         <td style="font-weight:bold;" align="right">$RMenge</td>
     </tr>
