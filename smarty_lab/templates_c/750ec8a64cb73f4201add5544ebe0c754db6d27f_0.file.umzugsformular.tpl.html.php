@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-11 12:52:55
+/* Smarty version 3.1.34-dev-7, created on 2021-12-09 22:18:41
   from '/var/www/html/html/umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_618d1227905229_52119227',
+  'unifunc' => 'content_61b272b14ea2d7_82751748',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '750ec8a64cb73f4201add5544ebe0c754db6d27f' => 
     array (
       0 => '/var/www/html/html/umzugsformular.tpl.html',
-      1 => 1636635170,
+      1 => 1638885167,
       2 => 'file',
     ),
   ),
@@ -25,7 +25,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:umzugsformular_attachments.tpl.read.html' => 1,
   ),
 ),false)) {
-function content_618d1227905229_52119227 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61b272b14ea2d7_82751748 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/function.ors_include_static_content.php','function'=>'smarty_function_ors_include_static_content',),1=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),2=>array('file'=>'/var/www/html/smarty3/plugins/function.html_radios.php','function'=>'smarty_function_html_radios',),));
 $_smarty_tpl->_assignInScope('laenderCsv', substr($_smarty_tpl->tpl_vars['ASConf']->value['land']['size'],1,-1));
 $_smarty_tpl->_assignInScope('laenderLst', explode("','",$_smarty_tpl->tpl_vars['laenderCsv']->value));?>
@@ -143,6 +143,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['user']->value['personalnr'], ENT_Q
 }?>" class="itxt itxt2col ireadonly" ></td>
                 </tr>
             </table>
+
             <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value) && !empty($_smarty_tpl->tpl_vars['AS']->value['bemerkungen'])) {?>
             <table width="100%">
                 <tr>
@@ -446,18 +447,12 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon']
             </div>
             <div style="margin-top:20px;">
                 <input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;">
-                <input
-                        class="btn grey"
-                        type="submit"
-                        onclick="umzugsantrag_save_notsend()"
-                        title="Nur Speichern, noch nicht bestellen"
-                        value="Speichern">
-                <input
+                <button
                         class="btn green"
                         type="submit"
                         onclick="umzugsantrag_send()"
                         title="<?php if ($_smarty_tpl->tpl_vars['creator']->value == 'property') {?>Bestellung an merTens abenden <?php } elseif ($_smarty_tpl->tpl_vars['creator']->value == 'mertens') {?>An Property <?php }?>l."
-                        value="Bestellung absenden">
+                ><i class="icon thumbs up outline"></i> Bestellung jetzt absenden</button>
 
                 <?php if (0) {?><input
                         type="submit"
@@ -476,8 +471,16 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon']
                         type="submit"
                         onclick="umzugsantrag_add_attachement()"
                         class="<?php if (empty($_smarty_tpl->tpl_vars['AS']->value['aid'])) {?>hide-not-saved<?php } else { ?>btn grey<?php }?>"
-                        value="Dateianhänge"></div>
+                        value="Dateianhänge">
                 <?php }?>
+
+            <button
+                    class="btn grey"
+                    style="float: right"
+                    type="submit"
+                    onclick="umzugsantrag_save_notsend()"
+                    title="Nur Speichern, noch nicht bestellen"
+                    value="Speichern"><i class="icon shopping cart"></i> Warenkorb speichern</button>
 
             <!-- Debug-Btn:
             <input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">
@@ -485,6 +488,8 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon']
             <input type="submit" onclick="return umzugsantrag_submit_debug('stornieren')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="stornieren">
             <input type="submit" onclick="return umzugsantrag_submit_debug('laden')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="laden">
              -->
+                <div style="clear: both"></div>
+            </div>
         </form>
     </div>
     <div id="LoadingBar"></div>

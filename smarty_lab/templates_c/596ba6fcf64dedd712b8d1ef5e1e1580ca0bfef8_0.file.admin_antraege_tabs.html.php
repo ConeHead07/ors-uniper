@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-18 12:51:10
+/* Smarty version 3.1.34-dev-7, created on 2021-12-09 22:21:25
   from '/var/www/html/html/admin_antraege_tabs.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61963e2e10d6d0_96762094',
+  'unifunc' => 'content_61b27355dd9b19_20570005',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61963e2e10d6d0_96762094 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61b27355dd9b19_20570005 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="divTabbedList" style="width:100%;">
 
     <ul>

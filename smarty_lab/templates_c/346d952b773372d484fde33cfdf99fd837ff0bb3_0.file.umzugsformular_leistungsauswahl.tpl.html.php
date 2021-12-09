@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-11-19 02:45:28
+/* Smarty version 3.1.34-dev-7, created on 2021-12-09 22:18:41
   from '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_619701b8b10912_59974813',
+  'unifunc' => 'content_61b272b16f13d9_24698923',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '346d952b773372d484fde33cfdf99fd837ff0bb3' => 
     array (
       0 => '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1637286320,
+      1 => 1637944685,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_619701b8b10912_59974813 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61b272b16f13d9_24698923 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div style="display:block;margin-top:15px;">
     <!-- umzugsformular_leistungsauswahl.tpl.html -->
@@ -679,6 +679,11 @@ $(function(){
                         console.log('click label', {e});
                         if (!("srcElement" in e) || e.srcElement.nodeName !== 'SPAN') {
                             var tr = $(this).closest(".row");
+
+                            var lstgID = +tr.find("input[name=" + escapeSelector('L[leistung_id][]') + "]").val();
+                            var selectVar = tr.find("select[name*=leistung]");
+                            console.log({tr, lstgID, selectVar});
+
                             var chckCell = tr.find("div.chck");
                             var chckRadio = chckCell.find("label input[type=radio]");
                             console.log('checkRadio ', chckRadio.attr("name"), chckRadio.prop("checked"));
@@ -688,6 +693,13 @@ $(function(){
                                 chckRadio.prop("checked", false);
                             }
                             if (chckRadio.prop("checked")) {
+                                if (!lstgID) {
+                                    InfoBox("Bitte entscheiden Sie sich erst für eine Variante des Artikels!");
+                                    return false;
+                                }
+                                if (selectVar.length) {
+                                    selectVar.find("option[value='']").hide();
+                                }
                                 toggleBundleauswahl(ktg, ktgId, ktgBundleName, ktgBundleId);
                                 var checkedRows = boxLeistungen.find(".row .chck label input:checked");
                                 var maxCheckedPositionen = 9999;
@@ -697,7 +709,7 @@ $(function(){
                                     var isLampeChecked = checkedRows.find("[data-ktg=Schreibtischlampe],[data-ktg=23]").length > 0;
                                     console.log("Auswahlkontrolle ", {isStuhlChecked, isTischChecked, isLampeChecked});
 
-                                    alert("Es können maximal " + mmaxCheckedPositionen + " Einzelpositionen ausgewählt werden oder ein Komplettpaket!");
+                                    alert("Es können maximal " + maxCheckedPositionen + " Einzelpositionen ausgewählt werden oder ein Komplettpaket!");
                                     chckRadio.prop("checked", false);
                                 }
                             }
