@@ -110,7 +110,7 @@ function save_lieferschein($aid, $file, array $opts = []) {
 
     $input = [
         'aid' => $aid,
-        'lieferdatum' => $auftrag['umzugstermin'],
+        'lieferdatum' => $opts['lieferdatum'] ?? $auftrag['umzugstermin'],
         'source' => 'fileupload',
         'umzuege_anlagen_dokid' => $opts['dokid'] ?? 0,
         'leistungen' => !empty($opts['leistungen']) ? json_encode($opts['leistungen']) : null,

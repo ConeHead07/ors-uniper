@@ -142,6 +142,7 @@ if ($cmd === 'upload') {
                         'dokid' => $dokid,
                     'leistungen' => $selectedLeistungen,
                     'uebergeben_an' => $uebergeben_an,
+                    'lieferdatum' => $lieferdatum,
                     'tracking_id' => $tracking_id,
                     'tracking_link' => $tracking_link,
                 ]);
