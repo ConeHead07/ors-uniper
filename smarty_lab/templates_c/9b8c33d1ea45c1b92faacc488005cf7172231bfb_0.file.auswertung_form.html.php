@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-09 16:48:29
+/* Smarty version 3.1.34-dev-7, created on 2021-12-09 19:58:26
   from '/var/www/html/html/auswertung_form.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b2254debe729_68876470',
+  'unifunc' => 'content_61b251d226dde4_80292181',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '9b8c33d1ea45c1b92faacc488005cf7172231bfb' => 
     array (
       0 => '/var/www/html/html/auswertung_form.html',
-      1 => 1639064901,
+      1 => 1639076289,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61b2254debe729_68876470 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61b251d226dde4_80292181 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <pre style="display: none;">
@@ -170,7 +170,13 @@ if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['item']->value) {
 ?>
         <tr>
-            <td><?php if (!$_smarty_tpl->tpl_vars['item']->value['berechnet_am']) {?><input type="checkbox" name="aids[]" value="<?php echo $_smarty_tpl->tpl_vars['item']->value['aid'];?>
+            <?php if (!empty($_smarty_tpl->tpl_vars['aAids']->value) && in_array($_smarty_tpl->tpl_vars['item']->value['aid'],$_smarty_tpl->tpl_vars['aAids']->value)) {?>
+            <?php $_smarty_tpl->_assignInScope('checked', "checked=\"checked\"");?>
+            <?php } else { ?>
+            <?php $_smarty_tpl->_assignInScope('checked', '');?>
+            <?php }?>
+            <td><?php if (!$_smarty_tpl->tpl_vars['item']->value['berechnet_am']) {?><input type="checkbox" name="aids[]" <?php echo $_smarty_tpl->tpl_vars['checked']->value;?>
+ value="<?php echo $_smarty_tpl->tpl_vars['item']->value['aid'];?>
 "><?php }?></td>
             <td><a href="?s=<?php echo $_smarty_tpl->tpl_vars['site_antrag']->value;?>
 &id=<?php echo $_smarty_tpl->tpl_vars['item']->value['aid'];?>
@@ -259,7 +265,13 @@ if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['item']->value) {
 ?>
     <tr>
-        <td><?php if (!$_smarty_tpl->tpl_vars['item']->value['berechnet_am']) {?><input type="checkbox" name="ulids[]" value="<?php echo $_smarty_tpl->tpl_vars['item']->value['ulid'];?>
+        <?php if (!empty($_smarty_tpl->tpl_vars['aUlids']->value) && in_array($_smarty_tpl->tpl_vars['item']->value['ulid'],$_smarty_tpl->tpl_vars['aUlids']->value)) {?>
+            <?php $_smarty_tpl->_assignInScope('checked', "checked=\"checked\"");?>
+        <?php } else { ?>
+            <?php $_smarty_tpl->_assignInScope('checked', '');?>
+        <?php }?>
+        <td><?php if (!$_smarty_tpl->tpl_vars['item']->value['berechnet_am']) {?><input type="checkbox" name="ulids[]" <?php echo $_smarty_tpl->tpl_vars['checked']->value;?>
+ value="<?php echo $_smarty_tpl->tpl_vars['item']->value['ulid'];?>
 "><?php }?></td>
         <td><a href="?s=<?php echo $_smarty_tpl->tpl_vars['site_antrag']->value;?>
 &id=<?php echo $_smarty_tpl->tpl_vars['item']->value['aid'];?>

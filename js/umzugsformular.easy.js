@@ -453,7 +453,11 @@ function umzugsantrag_add_attachement() {
 	var aid = umzugsantrag_id();
 	var token = umzugsantrag_token();
 	if (typeof(winUp)=="object" && typeof(winUp.closed)!="undefined" && !winUp.closed) winUp.close();
-	winUp = window.open("./sites/umzugsantrag_add_attachement.php?aid="+escape(aid)+"&token="+escape(token),"winUp","width=400,height=400,scrollbars=yes,status=yes");
+	winUp = window.open(
+		"./sites/umzugsantrag_add_attachement.php?aid="+escape(aid)+"&token="+escape(token),
+		"winUp",
+		"width=600,height=400,scrollbars=yes,status=yes"
+	);
 	winUp.focus();
 }
 
@@ -461,7 +465,11 @@ function umzugsantrag_add_internal_attachement() {
 	var aid = umzugsantrag_id();
 	var token = umzugsantrag_token();
 	if (typeof(winUp)=="object" && typeof(winUp.closed)!="undefined" && !winUp.closed) winUp.close();
-	winUp = window.open("./sites/umzugsantrag_add_attachement.php?internal=1&aid="+escape(aid)+"&token="+escape(token),"winUp","width=400,height=400,scrollbars=yes,status=yes");
+	winUp = window.open(
+		"./sites/umzugsantrag_add_attachement.php?internal=1&aid="+escape(aid)+"&token="+escape(token),
+		"winUp",
+		"width=600,height=400,scrollbars=yes,status=yes"
+	);
 	winUp.focus();
 }
 
@@ -475,7 +483,7 @@ function umzugsantrag_add_lieferschein() {
 	var qToken = encodeURIComponent(token);
 	var url ="./sites/umzugsantrag_add_attachement.php?internal=1&aid=" + qAid + "&target=lieferscheine&token=" + qToken;
 	var windowName = "winUp";
-	var windowProps = "width=400,height=400,scrollbars=yes,status=yes";
+	var windowProps = "width=600,height=400,scrollbars=yes,status=yes";
 	winUp = window.open(url,windowName,windowProps);
 	winUp.focus();
 }

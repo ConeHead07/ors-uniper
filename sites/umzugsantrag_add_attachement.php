@@ -37,10 +37,38 @@ $odir = getRequest('odir','');
 $response = getRequest('response','');
 $internal = getRequest('internal',0);
 
+$lieferdatum = getRequest("lieferdatum", '');
 $uebergeben_an = getRequest("uebergeben_an", '');
 $leistungen = getRequest("leistungen", []);
 $tracking_id = getRequest("tracking_id", '');
 $tracking_link = getRequest("tracking_link", '');
+
+$aLeistungen = [];
+$selectedLeistungen = [];
+
+if (!empty($target) && $target === 'lieferscheine') {
+    require_once $ModulBaseDir . 'lieferschein/lieferschein.model.php';
+
+    $lsmodel = new LS_Model($aid);
+    $lrows = $lsmodel->getLeistungen();
+
+    if (empty($lrows)) {
+        $uploadError = 'Es wurden keine Leistungen zur der Auftrags-ID ' . $aid . ' gefunden!';
+    } else {
+        foreach($lrows as $_row) {
+            $leistung_id = $_row['leistung_id'];
+            $aLeistungen[$leistung_id] = $_row['Kategorie'];
+        }
+    }
+
+    if (!empty($leistungen)) {
+        foreach($leistungen as $_idx => $_id) {
+            if (!empty($aLeistungen)) {
+                $selectedLeistungen[$_id] = $aLeistungen[$_id];
+            }
+        }
+    }
+}
 
 if (!$token && $aid) {
     switch($response) {
@@ -53,7 +81,6 @@ if (!$token && $aid) {
             ]);
         
         default:
-
             echo
                 '<strong>Es wurde kein token &uuml;bergeben!</strong> <br>'
                 . '<br>'
@@ -113,7 +140,7 @@ if ($cmd === 'upload') {
 
                 $saveCheckLS = save_lieferschein($aid, $uploadFile, [
                         'dokid' => $dokid,
-                    'leistungen' => $leistungen,
+                    'leistungen' => $selectedLeistungen,
                     'uebergeben_an' => $uebergeben_an,
                     'tracking_id' => $tracking_id,
                     'tracking_link' => $tracking_link,
@@ -194,6 +221,7 @@ table.tblList.tblAdminAttachments {
 </style><link rel='STYLESHEET' type='text/css' href="<?php echo $MConf['WebRoot']; ?>css/tablelisting.css">
 </head>
 <body>
+<?php if ($uploadError || $uploadMsg): ?>
 <div style="min-height:15px;margin:4px 0;">
     <?php
     if ($uploadError) {
@@ -204,9 +232,9 @@ table.tblList.tblAdminAttachments {
         echo '<div class="upMsg">' . $uploadMsg . "</div>\n";
         echo "<script>window.opener.umzugsantrag_reload_attachments()</script>\n";
     }
-
     ?>
 </div>
+<?php endif; ?>
 <script>
     function checkUpload(e) {
         var frm = document.forms['frmImUp'];
@@ -220,6 +248,7 @@ table.tblList.tblAdminAttachments {
         var error = '';
         var up = document.getElementById('uploadfile').value;
         var ue = document.getElementById('uebergebenAn').value;
+        var ld = document.getElementById('lieferdatum').value;
         var tid = document.getElementById('trackingId').value;
         var tlnk = document.getElementById('trackingLink').value;
 
@@ -240,6 +269,11 @@ table.tblList.tblAdminAttachments {
             error += 'Die Angabe "Übergeben an" ist leer oder zu kurz, mind. 3 Zeichen.';
         }
 
+        if (!ld || ld.length < 3) {
+            error += (error.length > 0 ? "\n" : "");
+            error += 'Bitte geben Sie noch das Liefer- bzw. Übergabedatum an.';
+        }
+
         if (numLeistungenChecked === 0) {
             error += (error.length > 0 ? "\n" : "");
             error += "Es wurden keine enthaltenen Artikel / Leistungen ausgewählt.";
@@ -251,15 +285,20 @@ table.tblList.tblAdminAttachments {
             return false;
         }
 
-        showLoadingBar(1, '');
+        if (typeof showLoadingBar === 'function') {
+            showLoadingBar(1, '');
+        }
         console.log("checkUpload #240 return true", { frm, error, up, ue, numLeistungenChecked });
-        return true;
+
+        frm.submit();
 
     }
 </script>
-<form name="frmImUp" <?php if ($target !== 'lieferscheine'): ?> onsubmit="showLoadingBar(1, '')"<?php else: ?> onsubmit="checkUpload()"<?php endif; ?>
+<form name="frmImUp" <?php if ($target !== 'lieferscheine'): ?> onsubmit="showLoadingBar(1, '')"<?php else: ?> onsubmit="return false;"<?php endif; ?>
       action="umzugsantrag_add_attachement.php"
       method='post' enctype="multipart/form-data">
+    <div style="margin:0 0 1rem 0"><b>Lieferschein hochladen</b></div>
+
     <input type="hidden" name="MAX_FILE_SIZE" value="26214400"><!-- Angabe in Bytes; MAX:25MB; 1MB=1048576 -->
     <input type="File" name="uploadfile" id="uploadfile"
         <?php if ($target !== 'lieferscheine'): ?>
@@ -274,36 +313,45 @@ table.tblList.tblAdminAttachments {
     <input type="hidden" name="cmd" value="upload">
     <?php if ($target === 'lieferscheine'): ?>
         <div class="form-group">
-            <label for="uebergebenAn">Übergeben an:</label><br>
+            <label for="uebergebenAn" style="font-weight: bold;">Übergeben an:</label><br>
             <input required type="text" style="width:100%" name="uebergebenAn" id="uebergebenAn" value="<?= htmlentities($uebergeben_an ?? '') ?>">
         </div>
         <div class="form-group">
-            <label for="leistungen">Ausgelierter Artikel:</label><br>
+            <label for="lieferdatum" style="font-weight: bold;">Übergabedatum:</label><br>
+            <input required type="date" style="width:100%" name="lieferdatum" id="lieferdatum" value="<?= htmlentities($lieferdatum ?? '') ?>">
+        </div>
+        <div class="form-group">
+            <label for="leistungen" style="font-weight: bold;">Ausgelieferte Artikel markieren:</label><br>
+            <?php foreach($aLeistungen as $_id => $_label): ?>
+            <input type="checkbox" name="leistungen[]" id="leistungen<?= $_id ?>" value="<?= $_id ?>">
+            <label for="leistungen<?= $_id ?>" class="inline"><?= $_label ?></label> &nbsp;
+            <?php endforeach; ?>
+
+            <?php /*
             <input type="checkbox" name="leistungen[]" id="leistungenSchreibtsich" value="Schreibtisch">
             <label for="leistungenSchreibtsich" class="inline">Schreibtisch</label> &nbsp;
-            <input type="checkbox" name="leistungen[]" id="leistungenStuhl" value="Stuhl">
-            <label for="leistungenStuhl" class="inline">Stuhl</label> &nbsp;
-            <input type="checkbox" name="leistungen[]" id="leistungenLampe" value="Lampe">
-            <label for="leistungenLampe" class="inline">Lampe</label> &nbsp;
-            <input type="checkbox" name="leistungen[]" id="leistungenSonstiges" value="Sonstiges">
-            <label for="leistungenSonstiges" class="inline">Sonstiges</label>
+                <input type="checkbox" name="leistungen[]" id="leistungenStuhl" value="Stuhl">
+                <label for="leistungenStuhl" class="inline">Stuhl</label> &nbsp;
+                <input type="checkbox" name="leistungen[]" id="leistungenLampe" value="Lampe">
+                <label for="leistungenLampe" class="inline">Lampe</label> &nbsp;
+                <input type="checkbox" name="leistungen[]" id="leistungenSonstiges" value="Sonstiges">
+                <label for="leistungenSonstiges" class="inline">Sonstiges</label>
+            */ ?>
         </div>
         <?php /* <input type="text" name="leistungen" id="leistungen" value="<?= htmlentities($leistungen ?? ''); ?>"><br> */ ?>
         <div class="form-group">
-            <label for="trackingId">TrackingID:</label><br>
+            <label for="trackingId" style="font-weight: bold;">TrackingID:</label><br>
             <input type="text" style="width:100%" name="tracking_id" id="trackingId" value="<?= htmlentities($tracking_id ?? '') ?>">
         </div>
         <div class="form-group">
-            <label for="trackingLink">TrackingLink:</label><br>
+            <label for="trackingLink" style="font-weight: bold;">TrackingLink:</label><br>
             <input type="text" style="width:100%" name="tracking_link" id="trackingLink" value="<?= htmlentities($tracking_link ?? '') ?>">
         </div>
     <?php endif; ?>
     <noscript><input type="submit" value="senden"></noscript>
-    <?php if ($target === 'lieferscheine'): ?><input type="submit" value="senden"><?php endif; ?>
-</form>
-</body>
-</html>
-<?php 
+    <?php if ($target === 'lieferscheine'): ?><input type="submit" value="senden" onclick="checkUpload()"><?php endif; ?>
+</form><br>
+<?php
 
 $dropLink = "<a href=\"" . $Self."&drop={dokid}&token={token}&ofld=$ofld&odir=$odir\" style=\"text-decoration:none;border:0;\">";
 $dropLink.= '<img src="' . $MConf['WebRoot'] . 'images/status_storniert.png" style="text-decoration:none;border:0;" border=0 align="absmiddle" width="16" height="16"> L&ouml;schen';
@@ -311,36 +359,41 @@ $dropLink.= "</a>";
 
 $fileList = '';
 
-if (is_array($rows) && count($rows)) for($i = 0; $i < count($rows); $i++) {
-	$row = $rows[$i];
-	$fileList.= '<tr>';
-	$fileList.= '<td align=right>'.($i+1)."</td>\n";
-	$fileList.= "<td><a href=\"" . $webdir . $row['dok_datei'] . "\" title=\"" . $row['titel'] . "\">" . ($row['titel']?:$row['dok_datei']) . "</a></td>\n";
-	$fileList.= '<td align=right>' . format_file_size($row['dok_groesse']) . "</td>\n";
-    $fileList.= '<td>' . $row['created'] . "</td>\n";
-    $fileList.= '<td>' . $row['target'] . "</td>\n";
-	if ($isAdmin) {
-	    $fileList.= '<td>' . strtr($dropLink, ['{dokid}'=>$row['dokid'], '{token}'=>$row['token']] ). " </td>\n";
+if (is_array($rows) && count($rows)) {
+    $iNumRows = count($rows);
+    for($i = 0; $i < $iNumRows; $i++) {
+        $row = $rows[$i];
+        $fileList.= '<tr>';
+        $fileList.= '<td align=right>'.($i+1)."</td>\n";
+        $fileList.= '<td><a href="' . $webdir . $row['dok_datei'] . '" title="' . $row['titel'] . '">' . ($row['titel']?:$row['dok_datei']) . "</a></td>\n";
+        $fileList.= '<td align=right>' . format_file_size($row['dok_groesse']) . "</td>\n";
+        $fileList.= '<td>' . $row['created'] . "</td>\n";
+        $fileList.= '<td>' . $row['target'] . "</td>\n";
+        if ($isAdmin) {
+            $fileList.= '<td>' . strtr($dropLink, ['{dokid}'=>$row['dokid'], '{token}'=>$row['token']] ). " </td>\n";
+        }
+        $fileList.= "</tr>\n";
     }
-	$fileList.= "</tr>\n";
 }
 
 if ($fileList) {
 	$fileListHd = '<thead>';
 	$fileListHd.= '<tr>';
 	$fileListHd.= "<td align=right>#</td>\n";
-	$fileListHd.= '"<td><a href="' . $Self . '&' . getOrderLink('dok_datei', $ofld, $odir) . "\">Datei</a></td>\n";
-	$fileListHd.= '<td align=right><a href=""' . $Self . '&' . getOrderLink('dok_groesse', $ofld, $odir) . "\">Gr&ouml;&szlig;e</a></td>\n";
-    $fileListHd.= '<td><a href=""' . $Self . '&' . getOrderLink('created', $ofld, $odir) . "\">Upload vom</a></td>\n";
-    $fileListHd.= '<td><a href=""' . $Self . '&' . getOrderLink('target', $ofld, $odir) . "\">Target</a></td>\n";
+	$fileListHd.= '<td><a href="' . $Self . '&' . getOrderLink('dok_datei', $ofld, $odir) . "\">Datei</a></td>\n";
+	$fileListHd.= '<td align=right><a href="' . $Self . '&' . getOrderLink('dok_groesse', $ofld, $odir) . "\">Gr&ouml;&szlig;e</a></td>\n";
+    $fileListHd.= '<td><a href="' . $Self . '&' . getOrderLink('created', $ofld, $odir) . "\">Upload vom</a></td>\n";
+    $fileListHd.= '<td><a href="' . $Self . '&' . getOrderLink('target', $ofld, $odir) . "\">Target</a></td>\n";
 	if ($isAdmin) {
 	    $fileListHd.= "<td>L&ouml;schen</td>\n";
     }
 	$fileListHd.= "</tr>\n";
 	$fileListHd.= "</thead>\n";
-	
+
 	echo "<table class=\"tblList tblAdminAttachments\">\n";
 	echo $fileListHd;
 	echo "<tbody>\n" . $fileList . "</tbody>\n</table>\n";
 }
-
+?>
+</body>
+</html>

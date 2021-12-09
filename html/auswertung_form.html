@@ -119,7 +119,12 @@ $(function(){
     <tbody>
     {foreach name=AList item=item from=$Auftraege}
         <tr>
-            <td>{if !$item.berechnet_am}<input type="checkbox" name="aids[]" value="{$item.aid}">{/if}</td>
+            {if !empty($aAids) and in_array($item.aid, $aAids)}
+            {assign var="checked" value="checked=\"checked\""}
+            {else}
+            {assign var="checked" value=""}
+            {/if}
+            <td>{if !$item.berechnet_am}<input type="checkbox" name="aids[]" {$checked} value="{$item.aid}">{/if}</td>
             <td><a href="?s={$site_antrag}&id={$item.aid}">{$item.aid}</a></td>
             <td>{$item.kid}</td>
             <td>{if $item.land eq "Deutschland"}DE{elseif $item.land eq "Niederlande"}NL{else}{$item.land}{/if}</td>
@@ -161,7 +166,12 @@ $(function(){
     </tr>
     {foreach name=AList item=item from=$TeilLieferungen}
     <tr>
-        <td>{if !$item.berechnet_am}<input type="checkbox" name="ulids[]" value="{$item.ulid}">{/if}</td>
+        {if !empty($aUlids) and in_array($item.ulid, $aUlids)}
+            {assign var="checked" value="checked=\"checked\""}
+        {else}
+            {assign var="checked" value=""}
+        {/if}
+        <td>{if !$item.berechnet_am}<input type="checkbox" name="ulids[]" {$checked} value="{$item.ulid}">{/if}</td>
         <td><a href="?s={$site_antrag}&id={$item.aid}">TL-{$item.ulid}</a></td>
         <td>{$item.kid}</td>
         <td>{if $item.land eq "Deutschland"}DE{elseif $item.land eq "Niederlande"}NL{else}{$item.land}{/if}</td>

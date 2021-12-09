@@ -72,7 +72,7 @@ $sqlAuftraege = 'SELECT
     JOIN mm_umzuege_leistungen AS ul ON (a.aid = ul.aid)
     JOIN mm_leistungskatalog AS lk ON (ul.leistung_id = lk.leistung_id)
     LEFT JOIN mm_leistungskategorie k ON (lk.leistungskategorie_id = k.leistungskategorie_id)
-    WHERE umzugsstatus = "abgeschlossen" 
+    WHERE umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja"
     AND ' . $datumfeld . ' BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
     GROUP BY a.aid
 ';
@@ -152,7 +152,7 @@ $linkUrl.= '&datumfeld=' . rawurlencode($datumfeld);
 $linkUrl.= '&q[aids]=' . rawurlencode(implode(',', $csvAids));
 $linkUrl.= '&q[ulids]=' . rawurlencode(implode(',', $csvUlids));
 
-if (strcmp($output, 'pdf') !== 0) {
+if (strcmp($output, 'web') === 0) {
     echo "<link rel='stylesheet' type='text/css' href='/css/tablelisting.css' />";
     echo '<pre>' . $sqlAuftraege . ";\n" . $sqlLeistungen . ";\n" . '</pre>';
     echo '<h6>Aufträge</h6>' . "\n";
@@ -167,6 +167,82 @@ if (strcmp($output, 'pdf') !== 0) {
     echo 'CSV-Ulids: ' . json_encode($csvUlids) . "<br>\n";
     echo '<a href="' . $linkUrl . '" target="abrechnung">Abrechnungs-Link</a>';
 
+} elseif (strcmp($output, 'mail') === 0)  {
+
+    $aTo = [ ['email' => 'frank.barthold@gmail.com', 'anrede' => 'Frank Barthold'] ];
+    $sSubject = 'Reporting';
+    $sHtmlBody = 'Hallo, <br>
+<br>
+anbei das Reporting abrechenbarer Leistungen für den Zeitraum 
+vom ' . date('d.m.', $timevon) . ' bis ' . date('d.m.Y', $timebis) . '.<br>
+<br>
+<b>Link zur Abrechnung:</b><br>
+<a href="' . $linkUrl . '" target="abrechnung">Abrechnungs-Link</a><br>
+<br>
+Im Anhang befindet sich eine kumulierte Auflistung der Leistungen als PDF.<br>
+<br>
+
+Zusätzliche Informationen:<br>
+<b>Aufträge: ' . count($rowsA) . '</b><br>
+' . (count($rowsA) ? array2Table($rowsA) . '<br>' : '') . '<br>
+
+<b>Kumulierte Leistungen: ' . count($rowsL) . '</b><br>
+' . (count($rowsL) ? array2Table($rowsL) . '<br>' : '') . '<br>
+
+<b>Kumulierte Leistungen aus Teillieferungen: ' . count($rowsT) . '</b><br>
+' . (count($rowsT) ? array2Table($rowsT) . '<br>' : '') . '<br>
+
+Mit besten Grüßen
+Uniper NewNormal Homeoffice
+
+    ';
+    $sTxtBody = '';
+    $aAttachments = [];
+    $aUseHeaders = [];
+
+    $tmp = sys_get_temp_dir();
+    $filename = 'AbrechnungsLeisungen_' . $datumvon . '_bis_' . $datumbis. '.pdf';
+    $tmpFile = "$tmp/$filename";
+    $pdf = new \module\Pdf\MertensAbrechnungPDF();
+
+    $pdf->setAuftragsdaten([
+        'vorname' => '',
+        'name' => 'Uniper NewNormal HomeOffice',
+    ]);
+    $pdf->setZeitraum(date('d.m.', $timevon) . ' bis ' . date('d.m.Y') );
+
+    $pdf->setLeistungen($rowsL);
+    $pdf->create();
+    $pdf->Output($tmpFile, 'F' );
+
+    $aAttachments[] = [
+        'type' => 'file',
+        'mimeType' => 'application/pdf',
+        'name' => $filename,
+        'file' => $tmpFile,
+    ];
+
+    if (!empty($rowsT) && count($rowsT) > 0) {
+        $filenameT = 'Teillieferungen_' . $datumvon . '_bis_' . $datumbis. '.pdf';
+        $tmpFileT = "$tmp/$filenameT";
+
+        $pdf->setLeistungen($rowsT);
+        $pdf->create();
+        $pdf->Output($tmpFileT, 'F' );
+
+        $aAttachments[] = [
+            'type' => 'file',
+            'mimeType' => 'application/pdf',
+            'name' => $filename,
+            'file' => $tmpFileT,
+        ];
+    }
+
+    SmtpMailer::getNewInstance()
+        ->sendMultiMail($aTo, $sSubject, $sHtmlBody, $sTxtBody, $aAttachments, $aUseHeaders);
+
+    echo 'Mail wurde gesendet an ' . json_encode($aTo);
+
 } else {
     $filename = 'AbrechnungsLeisungen_' . $datumvon . '_bis_' . $datumbis. '.pdf';
     $pdf = new \module\Pdf\MertensAbrechnungPDF();
@@ -176,13 +252,8 @@ if (strcmp($output, 'pdf') !== 0) {
         'name' => 'Uniper NewNormal HomeOffice',
     ]);
     $pdf->setZeitraum(date('d.m.', $timevon) . ' bis ' . date('d.m.Y') );
+
     $pdf->setLeistungen($rowsL);
     $pdf->create();
-    $pdf->Output($filename, 'I');
-
-    $lsPdf = $pdf->Output($filename, 'S' );
-
-    if (0) fbmail($to, 'Reporting', '
-        
-    ');
+    $pdf->Output($filename, 'I' );
 }

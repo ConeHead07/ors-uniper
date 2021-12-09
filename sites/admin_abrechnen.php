@@ -37,12 +37,19 @@ $queriedodir  = (!empty($_REQUEST['queriedodir']))  ? $_REQUEST['queriedodir']  
 $query = (!empty($_REQUEST['q']))   ? $_REQUEST['q'] : array();
 
 $finish = (!empty($_REQUEST['finish'])) ? (int)(bool)$_REQUEST['finish'] : 0;
-$aids = (!empty($_REQUEST['aids']))     ? $_REQUEST['aids'] : array();
 $wwsnr = (!empty($_REQUEST['wwsnr']))   ? $_REQUEST['wwsnr'] : '';
 $all   = (!empty($_REQUEST['all']))     ? $_REQUEST['all'] : '';
 
+$aAids = [];
+$aUlids = [];
+
 if ($finish && $wwsnr && count($aids)) {
     $sql = 'UPDATE mm_umzuege SET berechnet_am = NOW(), vorgangsnummer = :wwsnr WHERE aid IN('.implode(',', $aids).')';
+    $db->query($sql, array('wwsnr' => $wwsnr));
+    //    echo $db->error() . '<br>' . $db->lastQuery . '<br>';
+}
+if ($finish && $wwsnr && count($ulids)) {
+    $sql = 'UPDATE mm_umzuege SET berechnet_am = NOW(), vorgangsnummer = :wwsnr WHERE aid IN('.implode(',', $ulids).')';
     $db->query($sql, array('wwsnr' => $wwsnr));
     //    echo $db->error() . '<br>' . $db->lastQuery . '<br>';
 }
@@ -88,13 +95,13 @@ foreach($validFields as $_f) {
     }
     elseif (!empty($query[$_f]) && strcmp($_f,'aids') === 0) {
         $_aids = explode(',', $query[$_f]);
-        $_aids = array_map('intval', array_map('trim', $_aids));
+        $aAids = array_map('intval', array_map('trim', $_aids));
         $w[] = ' a.aid IN (' . implode(',', $_aids) . ')';
         continue;
     }
     elseif (!empty($query[$_f]) && strcmp($_f,'ulids') === 0) {
         $_ulids = explode(',', $query[$_f]);
-        $_ulids = array_map('intval', array_map('trim', $_ulids));
+        $aUlids = array_map('intval', array_map('trim', $_ulids));
         $wTL[] = ' ul.id IN (' . implode(',', $_ulids) . ')';
         continue;
     }
@@ -152,7 +159,6 @@ $sql = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
     .( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' : '')
     .' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
 $rows = $db->query_rows($sql, 0, array('von'=> $datumvon, 'bis'=> $datumbis));
-echo strtr($sql, [':von'=> $db::quote($datumvon), ':bis'=> $db::quote($datumbis)]);
 
 if (empty($wTL)) {
     $sqlTL = 'SELECT ul.id AS ulid, a.*, `user`.personalnr, `user`.personalnr AS kid, '
@@ -199,6 +205,7 @@ $Tpl->assign('datumfeld', $datumfeld);
 $Tpl->assign('order', $order);
 $Tpl->assign('odir', $odir);
 $Tpl->assign('s', $s);
-$Tpl->assign('q', $query);
+$Tpl->assign('aAids', $aAids);
+$Tpl->assign('aUlids', $aUlids);
 $body_content = $Tpl->fetch("auswertung_form.html");
 
