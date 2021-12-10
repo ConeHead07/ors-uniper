@@ -560,6 +560,9 @@ function fb_AjaxXmlUpdate(req, selector, cmd) {
 					igWShowLoadingBar(0, "<span class=upMsg>Fertig!</span>");
 					setTimeout("igWShowLoadingBar(0, '')", 600);
 				}
+				if (cmd === 'status') {
+				    setTimeout(function() { self.location.reload(true); }, 3000);
+                }
 			} else {
 				alert("type:"+type+"\n"+req.responseText);
 				if (aIgWData["Err"]) igWShowLoadingBar(0, "<span class=upErr>"+aIgWData["Err"]+"</span>");

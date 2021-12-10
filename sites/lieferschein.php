@@ -53,11 +53,12 @@ $istKommissionsSchein = $art === 'kommission';
 if ($AID ) {
     $lsmodel = new LS_Model((int)$AID, (int)$lid);
     $auftrag = $lsmodel->getAuftragsdaten();
+
     if (!$auftrag) {
         die('UNGUELTIGER SEITENAUFRUF! Es wurde kein Auftrag zur übergebenen ID gefunden!');
     }
 
-    if ($lid) {
+    if ($lid && !$istKommissionsSchein) {
         $lsPdf = $lsmodel->getLieferscheinPDF();
         if ($lsPdf) {
             header('Content-Type: application/pdf');
@@ -66,7 +67,7 @@ if ($AID ) {
         }
     }
 
-    if ($auftrag['umzugsstatus'] === 'abgeschlossen') {
+    if (!$istKommissionsSchein && $auftrag['umzugsstatus'] === 'abgeschlossen') {
         $lsPdf = $lsmodel->getAbgenommenenLieferscheinPDF();
         if ($lsPdf) {
             header('Content-Type: application/pdf');

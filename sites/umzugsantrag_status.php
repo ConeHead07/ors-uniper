@@ -174,9 +174,24 @@ function umzugsantrag_status($AID, $name, $value) {
 			break;
 			
 			case "abgeschlossen":
-			$sql_set = "`abgeschlossen` = \"".$db->escape($value)."\",\n `abgeschlossen_am`=NOW(),\n`abgeschlossen_von`=\"".$db->escape($user["user"])."\"";
-			$sendmail_newstatus = "abgeschlossen";
-			$newstatus = "abgeschlossen";
+			    if ($value !== 'Init') {
+                    $sql_set = "`abgeschlossen` = \"" . $db->escape($value) . "\",\n `abgeschlossen_am`=NOW(),\n`abgeschlossen_von`=\"" . $db->escape($user["user"]) . "\"";
+                    $sendmail_newstatus = 'abgeschlossen';
+                    $newstatus = 'abgeschlossen';
+                } else {
+                    $sql_set = "`abgeschlossen` = \"" . $db->escape($value) . "\",\n `abgeschlossen_am`= NULL,\n`abgeschlossen_von`= NULL";
+                    $newstatus = 'beantragt';
+                    if ($AS->arrDbdata['bestaetigt'] === 'Ja') {
+                        $newstatus = 'bestaetigt';
+                    } elseif ($AS->arrDbdata['genehmigt_br'] === 'Ja') {
+                        $newstatus = 'genehmigt';
+                    } elseif ($AS->arrDbdata['geprueft'] === 'Ja') {
+                        $newstatus = 'geprueft';
+                    } elseif ($AS->arrDbdata['zurueckgegeben'] === 'Ja') {
+                        $newstatus = 'zurueckgegeben';
+                    }
+                    $sendmail_newstatus = $newstatus;
+                }
 			break;
 			
 			case "storniert":

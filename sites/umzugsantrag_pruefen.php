@@ -361,7 +361,7 @@ function umzugsantrag_fehler() {
 
     if ( $cntAS > 0 || $cmd !== 'status' ) {
         //die('<pre>' . print_r($ASPostItem,1).'</pre>');
-        $error.= umzugsantrag_get_zuordnungs_fehler($ASPostItem, $MAPostItems);
+        // $error.= umzugsantrag_get_zuordnungs_fehler($ASPostItem, $MAPostItems);
     }
     return $error;
 }

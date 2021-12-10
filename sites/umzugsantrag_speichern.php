@@ -230,7 +230,7 @@ function umzugsantrag_speichern() {
     $enrichedBemerkung = '';
 	
     $cntAS = count(array_diff(array_keys($ASPostItem), array('aid', 'lieferhinweise', 'bemerkungen')));
-	if ( ($cntAS > 0 && $cmd !== 'status') && !isset($ASPostItem["name"])) {
+	if ( ($cntAS > 0 && $cmd !== 'status') && !$AID && !isset($ASPostItem["name"])) {
 		$error.= "Es wurden keine Daten zum Antragsteller übermittelt. Daten konnten nicht gespeichert werden![sp]<br>\n";
 		return false;
 	}
@@ -247,7 +247,7 @@ function umzugsantrag_speichern() {
     }
 
 	if (!$AID) {
-	    $ASPostItem['personalnr'] = $user['personalnr'];
+	    $ASPostItem['personalnummer'] = $user['personalnr'];
     }
 	
 	$ASConf = $_CONF["umzugsantrag"];

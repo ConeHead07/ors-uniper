@@ -33,6 +33,8 @@ $topService = getRequest('top', '');
 
 $userGruppe = $user['gruppe'];
 $istUmzugsteam = $userGruppe === 'umzugsteam' || $topService === 'auslieferung';
+$istAdmin = $userGruppe === 'admin';
+$istSuperAdmin = $istAdmin && $user['adminmode'] === 'superadmin';
 
 if (empty($AID)) $AID = (!empty($_POST["AS"]["aid"]) ? $_POST["AS"]["aid"] : (!empty($_GET["AS"]["aid"]) ? $_GET["AS"]["aid"] : ''));
 
@@ -318,7 +320,7 @@ $AS->loadDbdata();
 
 if ($istUmzugsteam && $istAktiv) {
     $body_content = $Tpl->fetch("umzugsteam_umzugsformular.tpl.read.html");
-} elseif($istEditierbar) {
+} elseif($istEditierbar || $istSuperAdmin) {
     $body_content = $Tpl->fetch("admin_umzugsformular.tpl.html");
 } else {
     $body_content = $Tpl->fetch("admin_umzugsformular.tpl.read.html");

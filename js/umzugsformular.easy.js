@@ -567,7 +567,12 @@ function umzugsantrag_set_status(name, value) {
 	if (typeof(frmSerializeGeraete) == "function") {
 		frmSerializeGeraete();
 	}
-	AjaxFormSend(document.forms["frmUmzugsantrag"], selector, "", "cmd=status&name="+escape(name)+"&value="+escape(value)+"&id="+escape(aid)+additionalHttpVars);
+	AjaxFormSend(
+		document.forms["frmUmzugsantrag"],
+		selector,
+		"",
+		"cmd=status&name="+escape(name)+"&value="+escape(value)+"&id="+escape(aid)+additionalHttpVars,
+		"status");
 }
 
 function umzugsantrag_clear() {
