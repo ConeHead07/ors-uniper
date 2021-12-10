@@ -126,7 +126,7 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
         return $this->db->query_rows(
             'SELECT 
 l.*,
-k.leistungskategorie_id, k.Bezeichnung, k.leistungseinheit, k.preis_pro_einheit, k.waehrung,
+k.leistungskategorie_id, k.Bezeichnung, Farbe, Groesse, k.leistungseinheit, k.preis_pro_einheit, k.waehrung,
 ktg.leistungskategorie AS Kategorie
 FROM mm_umzuege_leistungen l
 LEFT JOIN  `mm_leistungskatalog` k ON l.leistung_id = k.leistung_id
