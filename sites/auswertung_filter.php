@@ -179,13 +179,13 @@ elseif ($order == 'plz') {
 
 $aWhereStatusAnyOf = [];
 if (in_array('beauftragt', $aAuftragsstatus)) {
-    $aWhereStatusAnyOf[] = ' (umzugsstatus = "beauftragt" OR IFNULL(antragsdatum, "") != "") ' . "\n";
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "beauftragt") ' . "\n";
 }
 if (in_array( 'avisiert', $aAuftragsstatus)) {
     $aWhereStatusAnyOf[] = ' (umzugsstatus = "bestaetigt") ' . "\n";
 }
 if (in_array('abgeschlossen', $aAuftragsstatus)) {
-    $aWhereStatusAnyOf[] = ' (umzugsstatus = "abgeschlossen" or abgeschlossen="Ja") ' . "\n";
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja") ' . "\n";
 }
 if (in_array('abgerechnet', $aAuftragsstatus)) {
     $aWhereStatusAnyOf[] = ' (IFNULL(berechnet_am, "") != "") ' . "\n";
@@ -235,7 +235,7 @@ $sqlLimit = '';
 
 $sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
 $rows = $db->query_rows($sql, 0, array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis)));
-// echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
+echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
 
 if ($s === 'vauswertung') $site_antrag = 'pantrag';
 
