@@ -179,7 +179,7 @@ elseif ($order == 'plz') {
 
 $aWhereStatusAnyOf = [];
 if (in_array('beauftragt', $aAuftragsstatus)) {
-    $aWhereStatusAnyOf[] = ' (umzugsstatus = "beauftragt") ' . "\n";
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "beantragt") ' . "\n";
 }
 if (in_array( 'avisiert', $aAuftragsstatus)) {
     $aWhereStatusAnyOf[] = ' (umzugsstatus = "bestaetigt") ' . "\n";
