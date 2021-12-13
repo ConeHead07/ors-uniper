@@ -45,7 +45,7 @@
   <table>
   <tr>
     <td style="padding:0;width:200px;"><label style="background:#f00;border:0;display:block;width:auto;">Liefertermin:</label></td>
-    <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</div></td>
+    <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">{if $AS.umzugsstatus ne "beantragt" and $AS.umzugsstatus ne "temp"}{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}{/if}</div></td>
   </tr>
   <tr>
     <td style="padding:0;"><label style="display:block;width:auto;">Vor &amp; Nachname:</label></td>
