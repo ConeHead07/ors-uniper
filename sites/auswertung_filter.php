@@ -235,7 +235,7 @@ $sqlLimit = '';
 
 $sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
 $rows = $db->query_rows($sql, 0, array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis)));
-echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
+// echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
 
 if ($s === 'vauswertung') $site_antrag = 'pantrag';
 
