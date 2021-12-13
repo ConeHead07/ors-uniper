@@ -197,7 +197,6 @@ $sqlSelect = 'SELECT a.*, ' . "\n"
       . ' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, ' . "\n"
       . ' u.nachname, u.nachname stom, ua.nachname antragsteller_name, ' . "\n"
       . ' ua.gruppe antragsteller_gruppe, ' . "\n"
-      . ' GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . "\n"
       . ' GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . $NL
       . '   GROUP_CONCAT(' . $NL
       . '     IF (l.leistung_id is NULL, "", CONCAT_WS("<|#|>", '  . $NL
@@ -233,12 +232,20 @@ $sqlHaving = ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ') ' :
 $sqlOrder = ' ORDER BY ' . $sqlOrderFld . ' ' . $odir . "\n";
 $sqlLimit = '';
 
+$aParams = array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis));
 $sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
-$rows = $db->query_rows($sql, 0, array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis)));
+$sqlForNum = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving;
+$rows = $db->query_rows($sql, 0, $aParams);
 // echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
+
+$sqlStat = 'SELECT COUNT(1) numAll, SUM(summe) sumAll FROM (' . $sqlForNum . ') AS t';
+$stat = $db->query_row($sqlStat, $aParams);
+
 
 if ($s === 'vauswertung') $site_antrag = 'pantrag';
 
+$Tpl->assign('numAll', $stat['numAll']);
+$Tpl->assign('sumAll', $stat['sumAll']);
 $Tpl->assign('Auftraege', $rows);
 $Tpl->assign('kw_options', $kw_options);
 $Tpl->assign('kwvon', $kwvon);

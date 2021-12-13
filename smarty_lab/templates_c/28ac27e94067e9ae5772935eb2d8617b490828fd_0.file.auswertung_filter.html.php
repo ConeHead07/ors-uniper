@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-09 22:21:31
+/* Smarty version 3.1.34-dev-7, created on 2021-12-13 16:38:15
   from '/var/www/html/html/auswertung_filter.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b2735becba14_05568643',
+  'unifunc' => 'content_61b768e792cd77_19975120',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '28ac27e94067e9ae5772935eb2d8617b490828fd' => 
     array (
       0 => '/var/www/html/html/auswertung_filter.html',
-      1 => 1638895403,
+      1 => 1639409892,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61b2735becba14_05568643 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61b768e792cd77_19975120 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),1=>array('file'=>'/var/www/html/smarty3/plugins/modifier.replace.php','function'=>'smarty_modifier_replace',),));
 ?>
 
@@ -137,6 +137,15 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
             
             <?php echo '</script'; ?>
 >
+
+            <div>
+                <h2 style="float:left;" data-site="admin/antraege/liste/html"><?php echo $_smarty_tpl->tpl_vars['numAll']->value;?>
+ Aufträge</h2>
+                <h2 style="float:right"><?php echo number_format($_smarty_tpl->tpl_vars['sumAll']->value,2,",",".");?>
+ &euro;</h2>
+                <span style="clear: both"></span>
+            </div>
+            <span style="clear:both"></span>
 
             <div style="width:100%;overflow-x:scroll">
             <table id="tblTourenplanung" class="tblList">
