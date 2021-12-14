@@ -12,6 +12,7 @@ namespace module\Pdf;
 class MertensAbrechnungPDF extends MertensLieferscheinPDF
 {
     private $abrechnungsZeitraum = '';
+    private $tableCaption = '';
 
     public function __construct(string $orientation = 'P', string $unit = 'mm', string $format = 'A4', bool $unicode = true, string $encoding = 'UTF-8', bool $diskcache = false, bool $pdfa = false)
     {
@@ -108,6 +109,13 @@ class MertensAbrechnungPDF extends MertensLieferscheinPDF
             $this->Ln($iRecipientHeight);
         }
 
+        $tableCaption = $this->getTableCaption();
+
+        if ($tableCaption) {
+            $this->writeHTML("<h2>$tableCaption</h2>");
+            $this->Ln(10);
+        }
+
         $this->writeHTML($auftragsliste);
 
         $this->SetFont('helvetica', '', 9);
@@ -119,8 +127,16 @@ class MertensAbrechnungPDF extends MertensLieferscheinPDF
         return $this;
     }
 
+    public function setTableCaption(string $caption) {
+        $this->tableCaption = $caption;
+        return $this;
+    }
+
+    public function getTableCaption() {
+        return $this->tableCaption;
+    }
+
     public function getCaption() {
-        $auftrag = $this->auftragsdaten;
         return 'Leistungen';
     }
 }

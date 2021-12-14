@@ -1,26 +1,27 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-13 16:38:15
+/* Smarty version 3.1.34-dev-7, created on 2021-12-14 09:34:33
   from '/var/www/html/html/auswertung_filter.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b768e792cd77_19975120',
+  'unifunc' => 'content_61b85719e86973_78804211',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '28ac27e94067e9ae5772935eb2d8617b490828fd' => 
     array (
       0 => '/var/www/html/html/auswertung_filter.html',
-      1 => 1639409892,
+      1 => 1639470867,
       2 => 'file',
     ),
   ),
   'includes' => 
   array (
+    'file:admin_auswertung_tabs.html' => 1,
   ),
 ),false)) {
-function content_61b768e792cd77_19975120 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61b85719e86973_78804211 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),1=>array('file'=>'/var/www/html/smarty3/plugins/modifier.replace.php','function'=>'smarty_modifier_replace',),));
 ?>
 
@@ -38,6 +39,16 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
 } else { ?>
     <?php $_smarty_tpl->_assignInScope('showStatus', 0);
 }?>
+
+
+<div style="display: flex;justify-content: space-between">
+    <div><?php $_smarty_tpl->_subTemplateRender("file:admin_auswertung_tabs.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('cat'=>"auswertung",'allusers'=>1,'s'=>"aantraege"), 0, false);
+?></div>
+    <div style="align-self: flex-end;margin-right:5px;margin-bottom:2px;">
+        <button id="btnCsvExport" class="btn btn-blue" style="padding:10px;cursor: pointer;">CSV-Export</button>
+    </div>
+</div>
+
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
     <h1><span class="spanTitle">Auswertung beauftragter Aufträge</span></h1>
 
@@ -371,7 +382,7 @@ function numberFormat(number, dec) {
     parts[0] = parts[0].split("").reverse();
     var fnum = [];
     for(var i = 0; i < parts[0].length; i++) {
-        if ( i % 3 === 0 && !isNaN(parts[0][i]) ) {
+        if ( i > 0 && i % 3 === 0 && !isNaN(parts[0][i]) ) {
             fnum.push(thousands_sep);
         }
         fnum.push( parts[0][i] );
@@ -619,6 +630,29 @@ $(function() {
 
     statsOfAllItems = procesTourStatsAll();
     renderTourStats(statsOfAllItems);
+
+
+
+    var send = function(addQuery = '') {
+        var url = "?" + $("#frmStat :input")
+            .filter(function(index, element) {
+                if (['radio', 'checkbox'].indexOf(element.type) !== -1) {
+                    return element.checked;
+                }
+                return $.trim($(element).val()) !== '';
+            })
+            .serialize();
+
+        if (addQuery && addQuery.charAt(0) !== '&') {
+            addQuery = '&' + addQuery;
+        }
+        // alert('url: ' + url + "\naddQuery: " + addQuery);
+        self.location.href = url + addQuery;
+    };
+
+    $("#btnCsvExport").bind("click", function() {
+        send('format=csv');
+    });
 });
 
 <?php echo '</script'; ?>

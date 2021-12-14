@@ -77,6 +77,7 @@ $limit = getRequest("limit", 50);
 $ofld = getRequest("ofld", "");
 $odir = getRequest("odir", "ASC");
 $View = getRequest("View", "Antraege");
+$tabs = getRequest("tabs", "antraege");
 $trackGetQuery = "&sendquery=1";
 
 $originOFld = $ofld;
@@ -487,7 +488,11 @@ if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) {
 $body_content.= '<div id="ID128585" class="divTabbedNavigation" style="width:100%;">' . "\n";
 
 $Tpl->assign('s', 'aantraege');
-$body_content.= $Tpl->fetch('admin_antraege_tabs.html');
+if ($tabs !== 'auswertung') {
+    $body_content .= $Tpl->fetch('admin_antraege_tabs.html');
+} else {
+    $body_content .= $Tpl->fetch('admin_auswertung_tabs.html');
+}
 
 $body_content.= "<div class=\"divModuleBasic padding12px width5Col heightAuto colorContentMain\">
 <div class=\"divInlay noMarginBottom borderTop\"></div> 

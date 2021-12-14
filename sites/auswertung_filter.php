@@ -6,6 +6,8 @@ $request = $_REQUEST;
 $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
 $datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'umzugstermin';
+$exportFormat = getRequest('format', 'html');
+$all   = (!empty($_REQUEST['all']))     ? (int)$_REQUEST['all'] : 1;
 
 
 $aAuftragsstatus = (!empty($_REQUEST['auftragsstatus'])) ? $_REQUEST['auftragsstatus'] : ['beauftragt'];
@@ -233,14 +235,84 @@ $sqlOrder = ' ORDER BY ' . $sqlOrderFld . ' ' . $odir . "\n";
 $sqlLimit = '';
 
 $aParams = array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis));
+
 $sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
-$sqlForNum = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving;
 $rows = $db->query_rows($sql, 0, $aParams);
 // echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
 
-$sqlStat = 'SELECT COUNT(1) numAll, SUM(summe) sumAll FROM (' . $sqlForNum . ') AS t';
+$sqlForStat = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving;
+$sqlStat = 'SELECT COUNT(1) numAll, SUM(summe) sumAll FROM (' . $sqlForStat . ') AS t';
 $stat = $db->query_row($sqlStat, $aParams);
 
+if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
+    require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
+
+    $sqlArtikel = 'SELECT ul.leistung_id, lk.leistungskategorie AS Kategorie, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
+        . ' COUNT(distinct(ul.aid)) count, ' . $NL
+        . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
+        . ' (l.preis_pro_einheit * COUNT(distinct(ul.aid))) AS Summe, ' . $NL
+        . ' group_concat(ul.aid) aids' . $NL
+        . ' FROM (' . $NL . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t '
+        . ' JOIN mm_umzuege_leistungen ul ON (t.aid = ul.aid) ' . $NL
+        . ' JOIN mm_leistungskatalog l ON (ul.leistung_id = l.leistung_id) '
+        . ' JOIN mm_leistungskategorie lk ON (l.leistungskategorie_id = lk.leistungskategorie_id) '
+        . ' LEFT JOIN mm_leistungspreismatrix lm ON('  . $NL
+        . '    l.leistung_id = lm.leistung_id '  . $NL
+        . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
+        . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
+        . ' ) '  . $NL;
+    $sqlArtikel.= 'GROUP BY ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . $NL;
+    $artikelStat = $db->query_rows($sqlArtikel, 0, $aParams);
+
+    $iNumItems = count($all);
+
+    $aSelectCols = [
+        'summe', 'aid', 'kid', 'tour_kennung', 'service', 'plz', 'ort', 'strasse',
+        'land', 'Leistungen', 'antragsdatum', 'Lieferdatum', 'tour_zugewiesen_am',
+        'bestaetigt_am', 'abgeschlossen_am'
+    ];
+
+    $writer = new XLSXWriter();
+    $writer->setAuthor('Frank Barthold, merTens AG');
+
+    $sheet01Name = 'Auftraege';
+    $sheet01Header = leistungsRowToSheetHeader($aSelectCols);
+    // die('<pre>' . print_r(compact('sheet01Header'), 1));
+    $writer->writeSheetHeader($sheet01Name , $sheet01Header);
+    foreach($rows as $_row) {
+        $_export = [];
+        $_styles = [];
+        foreach($aSelectCols as $k) {
+            $s = [];
+            $v = isset($_row[$k]) ? $_row[$k] : '';
+            if ($k === 'aid' && (int)$v > 0) {
+                $_link = $MConf["WebRoot"] . "?s=aantrag&id=" . (int)$v;
+                $_styles[] = [ 'color' => '#00F', 'font-style' => 'underline' ];
+                $_export[] = '=HYPERLINK("' . $_link . '","' . (int)$v . '")';
+                continue;
+            }
+            $_styles[] = $s;
+            $_export[] = $v;
+        }
+        $writer->writeSheetRow($sheet01Name, $_export, $_styles);
+    }
+
+    $aSelectStat = [
+        'ID', 'Kategorie', 'Bezeichnung', 'Farbe', 'Größe', 'Menge', 'Preis', 'Summe', 'aids'
+    ];
+    $sheet02Name = 'KumulierteLeistungen';
+    $sheet02Header = leistungsRowToSheetHeader($aSelectStat );
+    $writer->writeSheetHeader($sheet02Name, $sheet02Header);
+    foreach($artikelStat as $_row) {
+        $writer->writeSheetRow($sheet02Name, $_row);
+    }
+
+    header('Content-Type: application/xls');
+    header('Content-Disposition: attachment; filename="UniperAuswertungVom' . date('YmdHi') . '.xlsx"');
+    $writer->writeToStdOut();
+
+    exit;
+}
 
 if ($s === 'vauswertung') $site_antrag = 'pantrag';
 

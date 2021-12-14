@@ -1,45 +1,38 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-09 22:21:36
+/* Smarty version 3.1.34-dev-7, created on 2021-12-14 08:48:42
   from '/var/www/html/html/auswertung_form.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b27360c768a5_81723075',
+  'unifunc' => 'content_61b84c5a20f210_83192395',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '9b8c33d1ea45c1b92faacc488005cf7172231bfb' => 
     array (
       0 => '/var/www/html/html/auswertung_form.html',
-      1 => 1639084702,
+      1 => 1639468104,
       2 => 'file',
     ),
   ),
   'includes' => 
   array (
+    'file:admin_auswertung_tabs.html' => 1,
   ),
 ),false)) {
-function content_61b27360c768a5_81723075 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61b84c5a20f210_83192395 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
-<pre style="display: none;">
-html/auswertung_form.html
-Rechnungsstellung nur Mertens-Henk:
- 
-Es wird eine Funktion zur Abrechnung der Vorgänge benötigt.
-Hierzu soll eine Auswahl von KW bis KW  und das Jahr angegeben werden.
-Daraus soll eine Liste mit allen Vorgängen die Abgeschlossen worden sind
-und noch nicht abgerechnet worden sind mit
-Folgenden Feldern ausgegeben werden:
- 
-ID|STOM|Region|Standort|Wirtschaftseinheit|PSP-Element|Planon Nr.|Leistungsdatum|AbschlussDatum|Summe
- 
-Unter dieser Tabelle muss es ein Feld geben wo wir unsere WWS Vorgangs Nr. 
-eintragen können und dann ein Fertigsstellungsbutton.
-Beim Bestätigen müssen der Status alle angezeigten Vorgänge auf Berechnet
-gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
-</pre>
+
+<div style="display: flex;justify-content: space-between">
+    <div><?php $_smarty_tpl->_subTemplateRender("file:admin_auswertung_tabs.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('cat'=>"abrechnung",'allusers'=>1,'s'=>"aantraege"), 0, false);
+?></div>
+    <div style="align-self: flex-end;margin-right:5px;margin-bottom:2px;">
+        <button id="btnCsvExport" class="btn btn-blue" style="padding:10px;cursor: pointer;">CSV-Export</button>
+    </div>
+</div>
+
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
     <h1><span class="spanTitle">Abrechnung abgeschlossener Aufträge</span></h1>
 

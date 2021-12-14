@@ -1,0 +1,15 @@
+<div class="divTabbedList" style="width:100%;">
+
+    <ul>
+        {if $cat eq "auftrag"}
+        <li {if $cat eq "auftrag"}class="activeTab"{/if}><a href="?s=aantraege&id={$aid}&cat=auftrag&allusers=1&tabs=auswertung" style="width:90px">Auftrag &nbsp; #{$aid}</a></li>
+        {/if}
+        {if $cat eq "tourenplanung"}
+        <li {if $cat eq "tourenplanung"}class="activeTab"{/if}><a href="?s=tourenplanung&tabs=auswertung" style="width:90px">Tourenplanung</a></li>
+        {/if}
+        <li {if $cat eq "auswertung"}class="activeTab"{/if}><a href="?s=auswertung&tabs=auswertung" style="width:90px">Auswertung</a></li>
+        <li {if $cat eq "abrechnung"}class="activeTab"{/if}><a href="?s=abrechnung&tabs=auswertung" style="width:90px">Abrechnung</a></li>
+        <li {if $cat eq "suche"}class="activeTab"{/if}><a href="?s=umzugssuche&tabs=auswertung">Suche</a></li>
+        <!-- <li><a href="#ID128586" style="width:60px">&nbsp;</a></li> -->
+    </ul><br clear="all">
+</div>

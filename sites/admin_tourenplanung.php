@@ -308,14 +308,35 @@ $sqlHaving = ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' : 
 $sqlOrder = ' ORDER BY ' . $sqlOrderFld. ' ' . $odir . $NL;
 $sqlLimit = '';
 
+$aParams = array('von'=> $datumvon, 'bis'=> $datumbis);
+
 $sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
-$rows = $db->query_rows($sql, 0, array('von'=> $datumvon, 'bis'=> $datumbis));
+$rows = $db->query_rows($sql, 0, $aParams);
 $debugInfos[] =  $db->lastQuery;
+
+$sqlForStat = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving;
+$sqlStat = 'SELECT COUNT(1) numAll, SUM(summe) sumAll FROM (' . $sqlForStat . ') AS t';
+$stat = $db->query_row($sqlStat, $aParams);
 
 if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
     require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
 
-    $iNumItems = count($all);
+    $sqlArtikel = 'SELECT ul.leistung_id, lk.leistungskategorie AS Kategorie, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
+        . ' COUNT(distinct(ul.aid)) count, ' . $NL
+        . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
+        . ' (l.preis_pro_einheit * COUNT(distinct(ul.aid))) AS Summe, ' . $NL
+        . ' group_concat(ul.aid) aids' . $NL
+        . ' FROM (' . $NL . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t '
+        . ' JOIN mm_umzuege_leistungen ul ON (t.aid = ul.aid) ' . $NL
+        . ' JOIN mm_leistungskatalog l ON (ul.leistung_id = l.leistung_id) '
+        . ' JOIN mm_leistungskategorie lk ON (l.leistungskategorie_id = lk.leistungskategorie_id) '
+        . ' LEFT JOIN mm_leistungspreismatrix lm ON('  . $NL
+        . '    l.leistung_id = lm.leistung_id '  . $NL
+        . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
+        . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
+        . ' ) '  . $NL;
+    $sqlArtikel.= 'GROUP BY ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . $NL;
+    $artikelStat = $db->query_rows($sqlArtikel, 0, $aParams);
 
     $aSelectCols = [
         'summe', 'aid', 'kid', 'tour_kennung', 'service', 'plz', 'ort', 'strasse',
@@ -348,14 +369,23 @@ if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
         $writer->writeSheetRow($sheet01Name, $_export, $_styles);
     }
 
-    /*
+/*
+ * Kategorie, leistung_id, Bezeichnung, Farbe, Groesse, count, Preis, Summe, aids
+ * leistungskategorie AS Kategorie, ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
+        . ' COUNT(distinct(ul.aid)) Menge, ' . $NL
+        . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
+        . ' (l.preis_pro_einheit * COUNT(distinct(ul.aid))) AS Summe, ' . $NL
+        . ' group_concat(ul.aid) aids
+ */
+    $aSelectStat = [
+        'ID', 'Kategorie', 'Bezeichnung', 'Farbe', 'Größe', 'Menge', 'Preis', 'Summe', 'aids'
+    ];
     $sheet02Name = 'KumulierteLeistungen';
-    $sheet02Header = $assocLeistungsRowToSheetHeader($artikelStat[0] );
+    $sheet02Header =leistungsRowToSheetHeader($aSelectStat );
     $writer->writeSheetHeader($sheet02Name, $sheet02Header);
     foreach($artikelStat as $_row) {
         $writer->writeSheetRow($sheet02Name, $_row);
     }
-    */
 
     header('Content-Type: application/xls');
     header('Content-Disposition: attachment; filename="UniperTourenplanungVom' . date('YmdHi') . '.xlsx"');

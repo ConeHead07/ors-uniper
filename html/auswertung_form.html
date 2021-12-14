@@ -1,20 +1,11 @@
-<pre style="display: none;">
-html/auswertung_form.html
-Rechnungsstellung nur Mertens-Henk:
- 
-Es wird eine Funktion zur Abrechnung der Vorgänge benötigt.
-Hierzu soll eine Auswahl von KW bis KW  und das Jahr angegeben werden.
-Daraus soll eine Liste mit allen Vorgängen die Abgeschlossen worden sind
-und noch nicht abgerechnet worden sind mit
-Folgenden Feldern ausgegeben werden:
- 
-ID|STOM|Region|Standort|Wirtschaftseinheit|PSP-Element|Planon Nr.|Leistungsdatum|AbschlussDatum|Summe
- 
-Unter dieser Tabelle muss es ein Feld geben wo wir unsere WWS Vorgangs Nr. 
-eintragen können und dann ein Fertigsstellungsbutton.
-Beim Bestätigen müssen der Status alle angezeigten Vorgänge auf Berechnet
-gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
-</pre>
+
+<div style="display: flex;justify-content: space-between">
+    <div>{include file="admin_auswertung_tabs.html" cat="abrechnung" allusers=1 s="aantraege"}</div>
+    <div style="align-self: flex-end;margin-right:5px;margin-bottom:2px;">
+        <button id="btnCsvExport" class="btn btn-blue" style="padding:10px;cursor: pointer;">CSV-Export</button>
+    </div>
+</div>
+
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
     <h1><span class="spanTitle">Abrechnung abgeschlossener Aufträge</span></h1>
 

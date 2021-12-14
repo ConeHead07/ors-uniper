@@ -13,6 +13,15 @@
 {else}
     {assign var="showStatus" value=0}
 {/if}
+
+
+<div style="display: flex;justify-content: space-between">
+    <div>{include file="admin_auswertung_tabs.html" cat="auswertung" allusers=1 s="aantraege"}</div>
+    <div style="align-self: flex-end;margin-right:5px;margin-bottom:2px;">
+        <button id="btnCsvExport" class="btn btn-blue" style="padding:10px;cursor: pointer;">CSV-Export</button>
+    </div>
+</div>
+
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
     <h1><span class="spanTitle">Auswertung beauftragter Aufträge</span></h1>
 
@@ -245,7 +254,7 @@ function numberFormat(number, dec) {
     parts[0] = parts[0].split("").reverse();
     var fnum = [];
     for(var i = 0; i < parts[0].length; i++) {
-        if ( i % 3 === 0 && !isNaN(parts[0][i]) ) {
+        if ( i > 0 && i % 3 === 0 && !isNaN(parts[0][i]) ) {
             fnum.push(thousands_sep);
         }
         fnum.push( parts[0][i] );
@@ -493,6 +502,29 @@ $(function() {
 
     statsOfAllItems = procesTourStatsAll();
     renderTourStats(statsOfAllItems);
+
+
+
+    var send = function(addQuery = '') {
+        var url = "?" + $("#frmStat :input")
+            .filter(function(index, element) {
+                if (['radio', 'checkbox'].indexOf(element.type) !== -1) {
+                    return element.checked;
+                }
+                return $.trim($(element).val()) !== '';
+            })
+            .serialize();
+
+        if (addQuery && addQuery.charAt(0) !== '&') {
+            addQuery = '&' + addQuery;
+        }
+        // alert('url: ' + url + "\naddQuery: " + addQuery);
+        self.location.href = url + addQuery;
+    };
+
+    $("#btnCsvExport").bind("click", function() {
+        send('format=csv');
+    });
 });
 {/literal}
 </script>
