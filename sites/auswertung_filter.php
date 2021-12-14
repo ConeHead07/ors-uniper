@@ -70,6 +70,7 @@ $validFields = array(
     'vorgangsnummer',
     'service',
     'umzugstermin',
+    'umzugsstatus',
     'nachname',
     'bundesland',
     'stadtname',

@@ -210,6 +210,7 @@ $validFields = array(
     'abgeschlossen_am' => array('field'=> 'a.abgeschlossen_am'),
     'abgerechnet_am' => array('field'=> 'a.berechnet_am'),
     'berechnet_am' => array('field'=> 'a.berechnet_am'),
+    'umzugsstatus' => array('field' => 'a.umzugsstatus'),
 );
 
 $having = array();
