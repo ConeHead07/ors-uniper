@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-14 19:48:45
+/* Smarty version 3.1.34-dev-7, created on 2021-12-14 20:06:03
   from '/var/www/html/html/umzugsteam_umzugsformular.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b8e70d5ff5f2_21061770',
+  'unifunc' => 'content_61b8eb1bbd06f8_26031990',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3980e6590adbc901815f7cf277dd110fe5dbc980' => 
     array (
       0 => '/var/www/html/html/umzugsteam_umzugsformular.tpl.read.html',
-      1 => 1639507720,
+      1 => 1639508740,
       2 => 'file',
     ),
   ),
@@ -28,7 +28,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_61b8e70d5ff5f2_21061770 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61b8eb1bbd06f8_26031990 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -519,7 +519,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
   <div id="SigDialogMA" class="signature-dialog dialog-back-layer">
     <div class="dialog-wrapper">
       <div id="signature-pad-ma" style="display:none;width:90vw;" data-refpad="" data-refimage="#imgSignatureMA" data-refinput="#lsSignatureMA" class="signature-pad m-signature-pad">
-        <div style="font-weight:bold;">Name Kunde Blockbuchstaben / Unterschrift</div>
+        <div style="font-weight:bold;">Kunde: Unterschrift</div>
         <div class="signature-pad--body m-signature-pad--body">
           <canvas id="canvas-sig-ma" class="canvas-sig canvas-sig-ma"></canvas>
         </div>
