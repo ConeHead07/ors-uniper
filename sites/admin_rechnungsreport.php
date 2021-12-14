@@ -7,11 +7,30 @@
  */
 require_once('../header.php');
 
+$userGruppe = $user['gruppe'];
+$istAdmin = $userGruppe === 'admin';
+$istSuperAdmin = $istAdmin && $user['adminmode'] === 'superadmin';
+
+if (!$istAdmin) {
+    die('Du hast leider keine Berechtigung die Seite aufzurufen. Bitte wende dich an einen Administrator!');
+}
+
 $datumvon = trim((!empty($_REQUEST['datumvon'])) ? $_REQUEST['datumvon'] : ''); // '2021-11-01'
 $datumbis = trim((!empty($_REQUEST['datumbis'])) ? $_REQUEST['datumbis'] : ''); // '2021-12-31'
 
 $output = getRequest('output', 'web');
+$mailto = getRequest('mailto', 'k.gerring@mertens.ag');
+$abgerechnet = getRequest('abgerechnet', 'alle');
+$vorgangsnr = strip_tags(getRequest('vorgangsnummer', ''));
+$wwsnr = strip_tags(getRequest('wwsnr', ''));
+if (empty($vorgangsnr) && !empty($wwsnr)) {
+    $vorgangsnr = $wwsnr;
+}
 $datumfeld = 'abgeschlossen_am';
+
+$abgerechnet_alle = ($abgerechnet === 'alle') ? 'checked' : '';
+$abgerechnet_ja = ($abgerechnet === 'ja') ? 'checked' : '';
+$abgerechnet_nein = ($abgerechnet === 'nein') ? 'checked' : '';
 
 if ($datumvon && strtotime($datumvon) && $datumbis && strtotime($datumbis)) {
     $timevon = strtotime($datumvon);
@@ -58,6 +77,17 @@ function array2Table(array $array) {
     return $tbl;
 }
 
+if (strtolower($abgerechnet) === 'ja') {
+    if ($vorgangsnr) {
+        $andWhere = 'AND IFNULL(a.vorgangnsr, "") = ' . $db::quote($vorgangsnr);
+    } else {
+        $andWhere = 'AND IFNULL(a.vorgangnsr, "") != ""';
+    }
+} elseif (strtolower($abgerechnet) === 'nein') {
+    $andnWhere = 'AND IFNULL(a.vorgangnsr, "") = ""';
+} else {
+    $andWhere = '';
+}
 $sqlAuftraege = 'SELECT 
       a.aid, u.personalnr AS kid, a.umzugsstatus, a.abgeschlossen_am, 
       a.umzugstermin, a.tour_kennung, a.plz, a.ort, a.umzug, a.service,
@@ -75,6 +105,7 @@ $sqlAuftraege = 'SELECT
     LEFT JOIN mm_leistungskategorie k ON (lk.leistungskategorie_id = k.leistungskategorie_id)
     WHERE umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja"
     AND ' . $datumfeld . ' BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
+    ' . $andWhere . '
     GROUP BY a.aid
 ';
 
@@ -93,6 +124,7 @@ $sqlLeistungen = 'SELECT
       WHERE umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja" 
       AND (vorgangsnummer IS NULL OR TRIM(vorgangsnummer) = "")
       AND ' . $datumfeld . ' BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
+      ' .$andWhere . '
     )
     GROUP BY lk.leistung_id, k.leistungskategorie, lk.Bezeichnung, lk.Farbe, lk.Groesse, lk.preis_pro_einheit
 ';
@@ -251,6 +283,14 @@ if (strcmp($output, 'web') === 0) {
                 <label><input type="radio" name="output" value="web" checked> Webansicht</label>
                 <label><input type="radio" name="output" value="pdf"> PDF</label>
                 <label><input type="radio" name="output" value="mail"> Mail</label>
+                <input type="text" name="mailto" value="$mailto" placeholder="Mailempfänger">
+                </div>
+                <div style="margin: 0.5rem 0">
+                <b>Abgerechnete (mit Rechnungsr): </b>
+                <label><input type="radio" name="abgerechnet" $abgerechnet_alle value="alle"> Alle</label>
+                <label><input type="radio" name="abgerechnet" $abgerechnet_nein value="nein"> Ohne RNR</label>
+                <label><input type="radio" name="abgerechnet" $abgerechnet_ja value="ja"> Mit RNR</label>
+                <input type="text" name="vorgangsnummer" value="$vorgangsnr" placeholder="Rechnungsnr">
                 </div>
                 <button type="submit"> Starten </button>
             </div>

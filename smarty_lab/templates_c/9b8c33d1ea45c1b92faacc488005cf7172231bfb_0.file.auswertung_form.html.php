@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-14 08:48:42
+/* Smarty version 3.1.34-dev-7, created on 2021-12-14 15:20:27
   from '/var/www/html/html/auswertung_form.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b84c5a20f210_83192395',
+  'unifunc' => 'content_61b8a82b439580_03901137',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '9b8c33d1ea45c1b92faacc488005cf7172231bfb' => 
     array (
       0 => '/var/www/html/html/auswertung_form.html',
-      1 => 1639468104,
+      1 => 1639491620,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_auswertung_tabs.html' => 1,
   ),
 ),false)) {
-function content_61b84c5a20f210_83192395 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61b8a82b439580_03901137 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -29,7 +29,7 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
     <div><?php $_smarty_tpl->_subTemplateRender("file:admin_auswertung_tabs.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('cat'=>"abrechnung",'allusers'=>1,'s'=>"aantraege"), 0, false);
 ?></div>
     <div style="align-self: flex-end;margin-right:5px;margin-bottom:2px;">
-        <button id="btnCsvExport" class="btn btn-blue" style="padding:10px;cursor: pointer;">CSV-Export</button>
+        <button id="btnPdfReport" data-href="{WebRoot}sites/admin_rechnungsreport.php" class="btn btn-blue" style="padding:10px;cursor: pointer;">Rechnungs-Report</button>
     </div>
 </div>
 
@@ -79,9 +79,44 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
 $(function(){
 
     $("#auswertungDatumsfeld").val(datumFilterFeld);
+
+    var pdfReportLink = "{WebRoot}sites/admin_rechnungsreport.php";
     
-    var send = function() {
-        self.location.href = "?" + $("#frmStat").serialize();
+    var send = function(addQuery = '') {
+        var url = "?" + $("#frmStat :input")
+            .filter(function(index, element) {
+                if (['radio', 'checkbox'].indexOf(element.type) !== -1) {
+                    return element.checked;
+                }
+                return $.trim($(element).val()) !== '';
+            })
+            .serialize();
+
+        if (addQuery && addQuery.charAt(0) !== '&') {
+            addQuery = '&' + addQuery;
+        }
+        // alert('url: ' + url + "\naddQuery: " + addQuery);
+        self.location.href = url + addQuery;
+    };
+
+
+    var openPdfReport = function(addQuery = '') {
+        var url = pdfReportLink + "?" + $("#frmStat :input")
+            .filter(function(index, element) {
+                if (['radio', 'checkbox'].indexOf(element.type) !== -1) {
+                    return element.checked;
+                }
+                return $.trim($(element).val()) !== '';
+            })
+            .serialize();
+
+        if (addQuery && addQuery.charAt(0) !== '&') {
+            addQuery = '&' + addQuery;
+        }
+
+        window.open(url + addQuery, 'pdfreport');
+        // alert('url: ' + url + "\naddQuery: " + addQuery);
+        // self.location.href = url + addQuery;
     };
     
     $("th.order").click(function(e){        
@@ -91,6 +126,15 @@ $(function(){
     
     $("th input").keypress(function(e){
         if ( (e.keyCode || e.which) === 13) send();
+    });
+
+
+    $("#btnCsvExport").bind("click", function() {
+        send('format=csv');
+    });
+
+    $("#btnPdfReport").bind("click", function() {
+        openPdfReport();
     });
     
 });
@@ -349,7 +393,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['q']->value['ulids'], ENT_QUOTES, '
     <?php }?>
     <div style="margin-top:.5rem">
         <label style="font-weight: bold;">Rechnungsnr zuweisen</label><br>
-    <input type="text" name="wwsnr" placeholder="Vorgangsnummer" size="15" style="border:1px solid #888888;width:180px;font-size:11px;border-radius:5px;padding:5px;" value="<?php echo $_smarty_tpl->tpl_vars['wwsnr']->value;?>
+    <input type="text" name="wwsnr" placeholder="Rechnungsnr" size="15" style="border:1px solid #888888;width:180px;font-size:11px;border-radius:5px;padding:5px;" value="<?php echo $_smarty_tpl->tpl_vars['wwsnr']->value;?>
 ">
     </div>
     <input type="submit" name="finish" value="Rechnungsnummer jetzt zuweisen"
