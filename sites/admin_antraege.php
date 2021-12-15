@@ -255,7 +255,7 @@ $sql = 'SELECT COUNT(1) AS `count` FROM (' . $sqlSelect . $sqlFrom . $sqlWhere .
 $row = $db->query_singlerow($sql);
 $num_all = $row['count'];
 
-if ($cat === 'heute' || ($s === 'auslieferung' && $cat === 'aktive') ) {
+if ($cat === 'heute' || $cat === 'aktive' || $cat === 'disponierte' ) {
     $sTourBaseLink = "/?s=$s&cat=$cat&q%5Btour_kennung%5D=";
     $sqlTourNrs = 'SELECT tour_kennung,
     count(1) AS num_auftraege,
