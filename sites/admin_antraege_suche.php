@@ -25,6 +25,7 @@ if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) {
 if (empty($s)) {
 	$s = getRequest("s", "umzugssuche");
 }
+$top = getRequest("top", '');
 $queryForm = file_get_contents($HtmlBaseDir."admin_antraege_suche.html");
 $queryForm = str_replace("{s}", $s, $queryForm);
 require_once($InclBaseDir."parse_userquery.php");
@@ -32,6 +33,7 @@ require_once($InclBaseDir."parse_userquery.php");
 $Tpl = new myTplEngine();
 $Tpl->assign('cat', 'suche');
 $Tpl->assign('allusers', 1);
+$Tpl->assign('top', $top);
 
 $searchFields = array(
 	"a.aid" => "",
@@ -488,7 +490,9 @@ if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) {
 $body_content.= '<div id="ID128585" class="divTabbedNavigation" style="width:100%;">' . "\n";
 
 $Tpl->assign('s', 'aantraege');
-if ($tabs !== 'auswertung') {
+if ($top === 'auslieferung') {
+    $body_content .= $Tpl->fetch('umzugsteam_antraege_tabs.html');
+} elseif ($tabs !== 'auswertung') {
     $body_content .= $Tpl->fetch('admin_antraege_tabs.html');
 } else {
     $body_content .= $Tpl->fetch('admin_auswertung_tabs.html');

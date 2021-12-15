@@ -30,6 +30,7 @@ $limit = getRequest('limit', 100);
 $ofld = getRequest('ofld', '');
 $odir = getRequest('odir', '');
 $cat = getRequest('cat', '');
+$top = getRequest('top', '');
 $exportFormat = getRequest('format', 'html');
 $query = (!empty($_REQUEST['q']))   ? $_REQUEST['q'] : [];
 $allusers = (int)getRequest('allusers', 1);
@@ -135,7 +136,17 @@ if ($ofld && isset($orderFields[$ofld])) {
 	$orderBy = 'ORDER BY ' . $orderFields[$ofld]['field'] . ' ';
 	$orderBy.= ($odir) ? ($odir!='DESC' ? 'ASC' : 'DESC') : $orderFields[$ofld]['defaultOrder'];
 } else {
-	$orderBy = $defaultOrder;
+    if ($cat === 'heute') {
+        $orderBy = 'ORDER BY umzugszeit ASC';
+    } elseif($cat === 'disponierte') {
+        $orderBy = 'ORDER BY umzugstermin ASC, umzugszeit ASC';
+    } elseif($cat === 'aktive') {
+        $orderBy = 'ORDER BY umzugstermin DESC, umzugszeit ASC';
+    } elseif($cat === 'abgeschlossene') {
+        $orderBy = 'ORDER BY abgeschlossen_am DESC';
+    } else {
+        $orderBy = $defaultOrder;
+    }
 }
 
 $ListBaseLink = '?s='.urlencode($s).'&cat='.urlencode($cat).($allusers ? '&allusers=1' : '');
@@ -168,18 +179,18 @@ if (!$allusers) {
     }
 }
 
-
+$sqlWhereStatus = '';
 switch($cat) {
 	case 'neue':
-	$sqlWhere.= 'AND umzugsstatus IN ("angeboten", "beantragt", "erneutpruefen") AND IFNULL(tour_kennung, "") = ""' . $NL;
+	$sqlWhereStatus.= 'AND umzugsstatus IN ("angeboten", "beantragt", "erneutpruefen") AND IFNULL(tour_kennung, "") = ""' . $NL;
 	break;
     
 	case 'angeboten':
-	$sqlWhere.= 'AND (umzugsstatus = "angeboten" or umzugsstatus="geprueft" AND umzug="Ja")' . $NL;
+	$sqlWhereStatus.= 'AND (umzugsstatus = "angeboten" or umzugsstatus="geprueft" AND umzug="Ja")' . $NL;
 	break;
 	
 	case 'gepruefte':
-	$sqlWhere.= 'AND umzugsstatus = "geprueft"' . $NL;
+	$sqlWhereStatus.= 'AND umzugsstatus = "geprueft"' . $NL;
 	break;
 	
 	case 'genehmigte':
@@ -187,38 +198,41 @@ switch($cat) {
 	break;
 
     case 'heute':
-        $sqlWhere.= 'AND DATE_FORMAT(umzugstermin, "%Y-%m-%d") = "' . date('Y-m-d') . '"';
-        $sqlWhere.= 'AND (umzugsstatus IN ("geprueft", "bestaetigt","genehmigt") OR (umzug="Nein" AND umzugsstatus="angeboten"))' . $NL;
+        $sqlWhereStatus.= 'AND DATE_FORMAT(umzugstermin, "%Y-%m-%d") = "' . date('Y-m-d') . '"';
+        $sqlWhereStatus.= 'AND (umzugsstatus IN ("geprueft", "bestaetigt","genehmigt") OR (umzug="Nein" AND umzugsstatus="angeboten"))' . $NL;
         break;
 
     case 'disponierte':
-        $sqlWhere.= 'AND (umzugsstatus IN ("beantragt", "disponiert") AND IFNULL(tour_kennung, "") LIKE "_%")' . $NL;
+        $sqlWhereStatus.= 'AND (umzugsstatus IN ("beantragt", "disponiert") AND IFNULL(tour_kennung, "") LIKE "_%")' . $NL;
         break;
 
     case 'aktive':
-        $sqlWhere.= 'AND (umzugsstatus IN ("geprueft", "bestaetigt", "genehmigt") OR (umzug="Nein" AND umzugsstatus="angeboten"))' . $NL;
+        $sqlWhereStatus.= 'AND (umzugsstatus IN ("geprueft", "bestaetigt", "genehmigt") OR (umzug="Nein" AND umzugsstatus="angeboten"))' . $NL;
         break;
 	
 	case 'abgeschlossene':
-	$sqlWhere.= 'AND (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja")' . $NL;
+	$sqlWhereStatus.= 'AND (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja")' . $NL;
 	//$sqlWhere.= "OR (abgeschlossen !=  'Init' AND  abgeschlossen IS NOT NULL)) \n";
 	break;
 	
 	case 'abgelehnte':
-	$sqlWhere.= 'AND (umzugsstatus = "abgelehnt")' . $NL;
+	$sqlWhereStatus.= 'AND (umzugsstatus = "abgelehnt")' . $NL;
 	break;
 	
 	case 'temp':
-	$sqlWhere.= 'AND umzugsstatus IN ("temp", "zurueckgegeben")' . $NL;
+	$sqlWhereStatus.= 'AND umzugsstatus IN ("temp", "zurueckgegeben")' . $NL;
 	break;
 	
 	case 'zurueckgegeben':
-	$sqlWhere.= 'AND umzugsstatus = "zurueckgegeben"' . $NL;
+	$sqlWhereStatus.= 'AND umzugsstatus = "zurueckgegeben"' . $NL;
 	break;
 	
 	case 'stornierte':
-	$sqlWhere.= 'AND (abgeschlossen = "Storniert" OR umzugsstatus = "storniert")' . $NL;
+	$sqlWhereStatus.= 'AND (abgeschlossen = "Storniert" OR umzugsstatus = "storniert")' . $NL;
 	break;
+}
+if ($sqlWhereStatus) {
+    $sqlWhere.= $sqlWhereStatus;
 }
 if (count($w)) {
     $sqlWhere.= ' AND (' . implode(' AND ', $w) . ') ' . $NL;
@@ -240,6 +254,21 @@ $sqlSelect = 'SELECT U.*, U.umzugstermin AS Lieferdatum, ' . $NL
 $sql = 'SELECT COUNT(1) AS `count` FROM (' . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t';
 $row = $db->query_singlerow($sql);
 $num_all = $row['count'];
+
+if ($cat === 'heute' || ($s === 'auslieferung' && $cat === 'aktive') ) {
+    $sTourBaseLink = "/?s=$s&cat=$cat&q%5Btour_kennung%5D=";
+    $sqlTourNrs = 'SELECT tour_kennung,
+    count(1) AS num_auftraege,
+    CONCAT(' . $db::quote($sTourBaseLink) . ', tour_kennung) AS url 
+    FROM mm_umzuege 
+    WHERE 1 > 0 
+    ' . $sqlWhereStatus . '
+    GROUP BY tour_kennung
+    ORDER BY MIN(umzugstermin) ASC, MIN(umzugszeit) ASC';
+    $aTourNrs = $db->query_rows($sqlTourNrs);
+} else {
+    $aTourNrs = [];
+}
 
 $sql = $sqlSelect . $sqlFrom . $sqlWhere;
 $sql.= $sqlGroup . $NL;
@@ -305,15 +334,18 @@ if ($exportFormat !== 'html' && count($all)) {
     foreach($all as $_row) {
         $_export = [];
         $_styles = [];
+        $_link = $MConf["WebRoot"] . "?s=aantrag&id=" . (int)$_row['aid'];
+
         foreach($aSelectCols as $k) {
             $s = [];
             $v = isset($_row[$k]) ? $_row[$k] : '';
+
             if ($k === 'aid' && (int)$v > 0) {
-                $_link = $MConf["WebRoot"] . "?s=aantrag&id=" . (int)$v;
-                $_styles[] = [ 'color' => '#00F', 'font-style' => 'underline' ];
-                $_export[] = '=HYPERLINK("' . $_link . '","' . (int)$v . '")';
+                $_styles[] = $s; // [ 'color' => '#00F', 'font-style' => 'underline' ];
+                $_export[] = (int)$v; // '=HYPERLINK("' . $_link . '","' . (int)$v . '")';
                 continue;
             }
+
             $_styles[] = $s;
             $_export[] = $v;
         }
@@ -438,6 +470,7 @@ if ($exportFormat === 'csv' && count($Auftraege)) {
 
 
 $Tpl->assign('s', $s);
+$Tpl->assign('top', $top);
 $Tpl->assign('cat', $cat);
 $Tpl->assign('q', $query);
 $Tpl->assign('allusers', $allusers);
@@ -448,12 +481,13 @@ $Tpl->assign('odir', $odir);
 $Tpl->assign('num_all', $num_all);
 $Tpl->assign('summeTotal', $summeTotal);
 $Tpl->assign('artikelStat', $artikelStat);
+$Tpl->assign('aTourNrs', $aTourNrs);
 
 $Tpl->assign('Umzuege', $Auftraege);
 
 //echo '<pre>#' . __LINE__ . ' '; // . print_r( filestat('html/antraege_liste.html'),1);
 try {
-    if (!$istUmzugsteam) {
+    if (!$istUmzugsteam || true) {
         $body_content .= $Tpl->fetch("admin_antraege_liste.html");
     } else {
         $body_content .= $Tpl->fetch("umzugsteam_antraege_liste.html");

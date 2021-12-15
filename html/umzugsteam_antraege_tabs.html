@@ -1,22 +1,10 @@
 <div class="divTabbedList" style="width:100%;">
 
     <ul>
-        {if $cat eq "auftrag"}
-        <li {if $cat eq "auftrag"}class="activeTab"{/if}><a href="?s=aantraege&id={$aid}&cat=auftrag&allusers=1" style="width:90px">Auftrag &nbsp; #{$aid}</a></li>
-        {/if}
-        {if $cat eq "tourenplanung"}
-        <li {if $cat eq "tourenplanung"}class="activeTab"{/if}><a href="?s=tourenplanung" style="width:90px">Tourenplanung</a></li>
-        {/if}
-        <li {if $cat eq "neue"}class="activeTab"{/if}><a href="?s={$s}&cat=neue{if $allusers}&allusers=1{/if}" style="width:90px">Bestellungen</a></li>
-        <li {if $cat eq "disponierte"}class="activeTab"{/if}><a href="?s={$s}&cat=disponierte{if $allusers}&allusers=1{/if}" style="width:90px">Mit TourId</a></li>
-        <li {if $cat eq "angeboten"}class="activeTab"{/if} style="display:none"><a href="?s={$s}&cat=angeboten{if $allusers}&allusers=1{/if}" style="width:125px">zur Genehmigung</a></li>
+        <li {if $cat eq "heute"}class="activeTab"{/if}><a href="?s={$s}&cat=heute{if $allusers}&allusers=1{/if}">Auslieferung heute</a></li>
         <li {if $cat eq "aktive"}class="activeTab"{/if}><a href="?s={$s}&cat=aktive{if $allusers}&allusers=1{/if}">Aktive Aufträge</a></li>
-        <li {if $cat eq "abgeschlossene"}class="activeTab"{/if}><a href="?s={$s}&cat=abgeschlossene{if $allusers}&allusers=1{/if}">Abgeschlossen</a></li>
-        <li {if $cat eq "temp"}class="activeTab"{/if}><a href="?s={$s}&cat=temp{if $allusers}&allusers=1{/if}" style="display:none;">Tmp</a></li>
-        <li {if $cat eq "zurueckgegeben"}class="activeTab"{/if}><a href="?s={$s}&cat=zurueckgegeben{if $allusers}&allusers=1{/if}" style="color:#ffd700;display:none;">Zur&uuml;ck</a></li>
-        <li {if $cat eq "abgelehnte"}class="activeTab"{/if}><a href="?s={$s}&cat=abgelehnte{if $allusers}&allusers=1{/if}" style="color:#ffd700;display:none;">Abgelehnt</a></li>
-        <li {if $cat eq "stornierte"}class="activeTab"{/if}><a href="?s={$s}&cat=stornierte{if $allusers}&allusers=1{/if}" style="color:#ffd700;display:none;">Storno</a></li>
-        <li {if $cat eq "suche"}class="activeTab"{/if}><a href="?s=umzugssuche{if $allusers}&allusers=1{/if}">Suche</a></li>
+        <li {if $cat eq "abgeschlossene"}class="activeTab"{/if}><a href="?s={$s}&cat=abgeschlossene{if $allusers}&allusers=1{/if}" style="width:150px">Abgeschlossen</a></li>
+        <li {if $cat eq "suche"}class="activeTab"{/if}><a href="?s=umzugssuche{if $allusers}&allusers=1{/if}&top=auslieferung">Suche</a></li>
         <!-- <li><a href="#ID128586" style="width:60px">&nbsp;</a></li> -->
     </ul><br clear="all">
 </div>
