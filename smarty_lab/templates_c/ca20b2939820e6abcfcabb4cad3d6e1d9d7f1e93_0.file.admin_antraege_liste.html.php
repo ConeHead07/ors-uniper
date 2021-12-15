@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-15 14:31:45
+/* Smarty version 3.1.34-dev-7, created on 2021-12-15 14:45:01
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b9ee41130435_53448655',
+  'unifunc' => 'content_61b9f15db46124_19925181',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1639574826,
+      1 => 1639575571,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61b9ee41130435_53448655 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61b9f15db46124_19925181 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN -->
@@ -232,6 +232,11 @@ px;" title="Auftrags-ID">ID</div>
       <div class="fld-cell fld-kid order" data-fld="kid" style="width:<?php echo $_smarty_tpl->tpl_vars['kidWidth']->value;?>
 px;" title="Uniper MitarbeiterNr."><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=kid<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "kid" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">KID</a></div>
+      <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
+      <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourkennungWidth']->value;?>
+px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
+&ofld=tour_kennung<?php if ($_smarty_tpl->tpl_vars['ofld']->value == 'tour_kennung' && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Tour</a></div>
+      <?php }?>
       <?php if ($_smarty_tpl->tpl_vars['showLieferdatum']->value) {?>
       <div class="fld-cell fld-lieferdatum order" data-fld="termin" style="width:<?php echo $_smarty_tpl->tpl_vars['lieferdatumWidth']->value;?>
 px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
@@ -272,11 +277,6 @@ px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 px;" title="Auftragsdatum"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=antragsdatum<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "antragsdatum" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Auftr.Dat.</a></div>
       <?php }?>
-      <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
-      <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourkennungWidth']->value;?>
-px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
-&ofld=tour_kennung<?php if ($_smarty_tpl->tpl_vars['ofld']->value == 'tour_kennung' && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Tour</a></div>
-      <?php }?>
       <?php if ($_smarty_tpl->tpl_vars['showGenehmigt']->value) {?>
       <div class="fld-cell fld-genehmigt order" data-fld="genehmigt" style="float:left;width:<?php echo $_smarty_tpl->tpl_vars['genehmigtWidth']->value;?>
 px;" title="Von Property genehmigt"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
@@ -313,6 +313,12 @@ echo $_smarty_tpl->tpl_vars['q']->value['aid'];
 px;"><input name="q[kid]" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['kid'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['kid'];
 }?>"></div>
+          <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
+          <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourkennungWidth']->value;?>
+px;"><input name="q[tour_kennung]" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['tour_kennung'])) {
+echo $_smarty_tpl->tpl_vars['q']->value['tour_kennung'];
+}?>"></div>
+          <?php }?>
           <?php if ($_smarty_tpl->tpl_vars['showLieferdatum']->value) {?>
           <div class="fld-cell fld-lieferdatum" style="width:<?php echo $_smarty_tpl->tpl_vars['lieferdatumWidth']->value;?>
 px;"><input name="q[termin]" placeholder="JJJJ-MM-TT" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['termin'])) {
@@ -363,12 +369,6 @@ px;"><input name="q[antragsdatum]" placeholder="JJJJ-MM-TT" value="<?php if (!em
 echo $_smarty_tpl->tpl_vars['q']->value['antragsdatum'];
 }?>"></div>
           <?php }?>
-          <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
-          <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourkennungWidth']->value;?>
-px;"><input name="q[tour_kennung]" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['tour_kennung'])) {
-echo $_smarty_tpl->tpl_vars['q']->value['tour_kennung'];
-}?>"></div>
-          <?php }?>
           <?php if ($_smarty_tpl->tpl_vars['showGenehmigt']->value) {?>
           <div class="fld-cell fld-genehmigt" style="width:<?php echo $_smarty_tpl->tpl_vars['genehmigtWidth']->value;?>
 px;"><input name="q[genehmigt_am]" placeholder="JJJJ-MM-TT" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['genehmigt_am'])) {
@@ -416,6 +416,11 @@ px;font-weight:bold;"><?php echo $_smarty_tpl->tpl_vars['U']->value['aid'];?>
               <div class="fld-cell fld-kid" style="width:<?php echo $_smarty_tpl->tpl_vars['kidWidth']->value;?>
 px;" ><?php echo $_smarty_tpl->tpl_vars['U']->value['kid'];?>
 &nbsp;</div>
+              <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
+              <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourkennungWidth']->value;?>
+px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['tour_kennung'];?>
+&nbsp;</div>
+              <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showLieferdatum']->value) {?>
               <div class="fld-cell fld-lieferdatum" style="width:<?php echo $_smarty_tpl->tpl_vars['lieferdatumWidth']->value;?>
 px;font-weight:bold;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Termin'],"%d.%m.%Y");?>
@@ -463,11 +468,6 @@ px;" ><?php echo $_smarty_tpl->tpl_vars['U']->value['service'];?>
               <?php if ($_smarty_tpl->tpl_vars['showAuftragsdatum']->value) {?>
               <div class="fld-cell fld-beauftragt" style="width:<?php echo $_smarty_tpl->tpl_vars['beauftragtWidth']->value;?>
 px;font-style:italic;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Antragsdatum'],"%d.%m.%Y");?>
-&nbsp;</div>
-              <?php }?>
-              <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
-              <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourkennungWidth']->value;?>
-px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['tour_kennung'];?>
 &nbsp;</div>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showGenehmigt']->value) {?>

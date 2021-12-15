@@ -261,7 +261,7 @@ if ($cat === 'heute' || $cat === 'aktive' || $cat === 'disponierte' ) {
     count(1) AS num_auftraege,
     CONCAT(' . $db::quote($sTourBaseLink) . ', tour_kennung) AS url 
     FROM mm_umzuege 
-    WHERE 1 > 0 
+    WHERE 1 > 0 AND IFNULL(tour_kennung, "") != ""
     ' . $sqlWhereStatus . '
     GROUP BY tour_kennung
     ORDER BY MIN(umzugstermin) ASC, MIN(umzugszeit) ASC';
