@@ -184,6 +184,9 @@
   <div class="flds-head-colnames">
       <div class="fld-cell fld-aid order" data-fld="aid" style="width:{$aidWidth}px;" title="Auftrags-ID">ID</div>
       <div class="fld-cell fld-kid order" data-fld="kid" style="width:{$kidWidth}px;" title="Uniper MitarbeiterNr."><a href="{$ListBaseLink}&ofld=kid{if $ofld eq "kid" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
+      {if $showTourkennung}
+      <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:{$tourkennungWidth}px;"><a href="{$ListBaseLink}&ofld=tour_kennung{if $ofld eq 'tour_kennung' && $odir ne "DESC"}&odir=DESC{/if}">Tour</a></div>
+      {/if}
       {if $showLieferdatum}
       <div class="fld-cell fld-lieferdatum order" data-fld="termin" style="width:{$lieferdatumWidth}px;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Lieferdatum</a></div>
       {/if}
@@ -203,9 +206,6 @@
       <div class="fld-cell fld-service order" data-fld="service" style="width:{$serviceWidth}px;"><a href="{$ListBaseLink}&ofld=service{if $ofld eq 'service' && $odir ne 'DESC'}&odir=DESC{/if}">Service</a></div>
       {if $showAuftragsdatum}
       <div class="fld-cell fld-beauftragt order" data-fld="antragsdatum" style="width:{$beauftragtWidth}px;" title="Auftragsdatum"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Auftr.Dat.</a></div>
-      {/if}
-      {if $showTourkennung}
-      <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:{$tourkennungWidth}px;"><a href="{$ListBaseLink}&ofld=tour_kennung{if $ofld eq 'tour_kennung' && $odir ne "DESC"}&odir=DESC{/if}">Tour</a></div>
       {/if}
       {if $showGenehmigt}
       <div class="fld-cell fld-genehmigt order" data-fld="genehmigt" style="float:left;width:{$genehmigtWidth}px;" title="Von Property genehmigt"><a href="{$ListBaseLink}&ofld=genehmigt{if $ofld eq "genehmigt_br" && $odir ne "DESC"}&odir=DESC{/if}">Gen</a></div>
@@ -227,6 +227,9 @@
       <div class="flds-head-colsearch">
           <div class="fld-cell fld-aid" style="width:{$aidWidth}px;"><input name="q[aid]" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></div>
           <div class="fld-cell fld-kid" style="width:{$kidWidth}px;"><input name="q[kid]" value="{if !empty($q) && isset($q.kid)}{$q.kid}{/if}"></div>
+          {if $showTourkennung}
+          <div class="fld-cell fld-tour_kennung" style="width:{$tourkennungWidth}px;"><input name="q[tour_kennung]" value="{if !empty($q) && isset($q.tour_kennung)}{$q.tour_kennung}{/if}"></div>
+          {/if}
           {if $showLieferdatum}
           <div class="fld-cell fld-lieferdatum" style="width:{$lieferdatumWidth}px;"><input name="q[termin]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.termin)}{$q.termin}{/if}"></div>
           {/if}
@@ -246,9 +249,6 @@
           <div class="fld-cell fld-service" style="width:{$serviceWidth}px;"><input name="q[service]" value="{if !empty($q) && isset($q.service)}{$q.service}{/if}"></div>
           {if $showAuftragsdatum}
           <div class="fld-cell fld-beauftragt" style="width:{$beauftragtWidth}px;"><input name="q[antragsdatum]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.antragsdatum)}{$q.antragsdatum}{/if}"></div>
-          {/if}
-          {if $showTourkennung}
-          <div class="fld-cell fld-tour_kennung" style="width:{$tourkennungWidth}px;"><input name="q[tour_kennung]" value="{if !empty($q) && isset($q.tour_kennung)}{$q.tour_kennung}{/if}"></div>
           {/if}
           {if $showGenehmigt}
           <div class="fld-cell fld-genehmigt" style="width:{$genehmigtWidth}px;"><input name="q[genehmigt_am]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.genehmigt_am)}{$q.genehmigt_am}{/if}"></div>
@@ -273,6 +273,9 @@
           <div class="flds-body-row">
               <div class="fld-cell fld-aid" style="width:{$aidWidth}px;font-weight:bold;">{$U.aid}&nbsp;</div>
               <div class="fld-cell fld-kid" style="width:{$kidWidth}px;" >{$U.kid}&nbsp;</div>
+              {if $showTourkennung}
+              <div class="fld-cell fld-tour_kennung" style="width:{$tourkennungWidth}px;">{$U.tour_kennung}&nbsp;</div>
+              {/if}
               {if $showLieferdatum}
               <div class="fld-cell fld-lieferdatum" style="width:{$lieferdatumWidth}px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
               {/if}
@@ -296,9 +299,6 @@
               <div class="fld-cell fld-service" style="width:{$serviceWidth}px;" >{$U.service}&nbsp&nbsp;</div>
               {if $showAuftragsdatum}
               <div class="fld-cell fld-beauftragt" style="width:{$beauftragtWidth}px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
-              {/if}
-              {if $showTourkennung}
-              <div class="fld-cell fld-tour_kennung" style="width:{$tourkennungWidth}px;">{$U.tour_kennung}&nbsp;</div>
               {/if}
               {if $showGenehmigt}
               <div class="fld-cell fld-genehmigt" style="width:{$genehmigtWidth}px;">{$U.Genehmigt}&nbsp;</div>
