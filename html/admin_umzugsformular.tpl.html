@@ -35,6 +35,11 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     onfocus="showDtPicker(this)" name="AS[umzugstermin]" class="itxt itxt2col"></td>
   </tr>
   <tr>
+    <td style="padding:0;height:auto;width:auto;"><label for="AS[Umzugszeit]" style="width:180px;">Uhrzeit:</label></td>
+    <td style="padding:0;width:250px;"><input id="AS[Umzugszeit]" type="time" value='{$AS.umzugszeit|escape|substr:0:5}'
+                                              id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
     <td style="padding:0;width:200px;height:auto;width:auto;"><label for="tour_kennung" style="width:180px;">Tour-Kennung/ID:</label></td>
     <td style="padding:0;width:250px;"><input
             id="tour_kennung" name="AS[tour_kennung]" type="text" value='{$AS.tour_kennung|escape}'
@@ -48,11 +53,6 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     </td>
   </tr>
   {/if}
-  <tr style="display: none;">
-    <td style="padding:0;height:auto;width:auto;"><label for="AS[Umzugszeit]" style="width:180px;">Uhrzeit:</label></td>
-    <td style="padding:0;width:250px;"><input id="AS[Umzugszeit]" type="time" value='{$AS.umzugszeit|escape|substr:0:5}'
-    id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
-  </tr>
   <tr>
     <td style="padding:0;height:auto;width:auto;"><label style="width:180px;">Antragsdatum:</label></td>
     <td style="padding:0;width:auto;"><div  class="itxt itxt2col">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
@@ -349,12 +349,11 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
           onclick="umzugsantrag_add_internal_attachement()"
           value="Interne Dateianhänge">
   {/if}
-  {if $creator == "mertens"}
+
   <input
           type="submit" class="btn red"
           onclick="umzugsantrag_add_lieferschein()"
           value="Quittierten Lieferschein hinzufügen">
-  {/if}
 <br>
 {if $AS.umzugsstatus ne "temp"}
   <div style="margin-top:2.5rem;"><strong>Status mit Benachrichtung setzen: </strong></div>

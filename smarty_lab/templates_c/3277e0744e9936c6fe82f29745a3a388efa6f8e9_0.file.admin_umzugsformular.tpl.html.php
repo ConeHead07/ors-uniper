@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-13 09:55:55
+/* Smarty version 3.1.34-dev-7, created on 2021-12-14 22:17:42
   from '/var/www/html/html/admin_umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b70a9b8e3527_80124405',
+  'unifunc' => 'content_61b909f66e63c8_01242530',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3277e0744e9936c6fe82f29745a3a388efa6f8e9' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular.tpl.html',
-      1 => 1639151131,
+      1 => 1639516648,
       2 => 'file',
     ),
   ),
@@ -30,7 +30,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_61b70a9b8e3527_80124405 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61b909f66e63c8_01242530 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 $_smarty_tpl->_assignInScope('laenderCsv', substr($_smarty_tpl->tpl_vars['ASConf']->value['land']['size'],1,-1));
 $_smarty_tpl->_assignInScope('laenderLst', explode("','",$_smarty_tpl->tpl_vars['laenderCsv']->value));?>
@@ -87,6 +87,12 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     onfocus="showDtPicker(this)" name="AS[umzugstermin]" class="itxt itxt2col"></td>
   </tr>
   <tr>
+    <td style="padding:0;height:auto;width:auto;"><label for="AS[Umzugszeit]" style="width:180px;">Uhrzeit:</label></td>
+    <td style="padding:0;width:250px;"><input id="AS[Umzugszeit]" type="time" value='<?php echo substr(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugszeit'], ENT_QUOTES, 'UTF-8', true),0,5);?>
+'
+                                              id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
+  </tr>
+  <tr>
     <td style="padding:0;width:200px;height:auto;width:auto;"><label for="tour_kennung" style="width:180px;">Tour-Kennung/ID:</label></td>
     <td style="padding:0;width:250px;"><input
             id="tour_kennung" name="AS[tour_kennung]" type="text" value='<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['tour_kennung'], ENT_QUOTES, 'UTF-8', true);?>
@@ -103,12 +109,6 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     </td>
   </tr>
   <?php }?>
-  <tr style="display: none;">
-    <td style="padding:0;height:auto;width:auto;"><label for="AS[Umzugszeit]" style="width:180px;">Uhrzeit:</label></td>
-    <td style="padding:0;width:250px;"><input id="AS[Umzugszeit]" type="time" value='<?php echo substr(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['umzugszeit'], ENT_QUOTES, 'UTF-8', true),0,5);?>
-'
-    id="umzugszeit" name="AS[umzugszeit]" class="itxt itxt2col"></td>
-  </tr>
   <tr>
     <td style="padding:0;height:auto;width:auto;"><label style="width:180px;">Antragsdatum:</label></td>
     <td style="padding:0;width:auto;"><div  class="itxt itxt2col"><?php echo smarty_modifier_date_format(htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['antragsdatum'], ENT_QUOTES, 'UTF-8', true),"%d.%m.%Y");?>
