@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-14 22:17:42
+/* Smarty version 3.1.34-dev-7, created on 2021-12-16 15:36:52
   from '/var/www/html/html/admin_umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b909f66e63c8_01242530',
+  'unifunc' => 'content_61bb4f0458cf05_92416618',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3277e0744e9936c6fe82f29745a3a388efa6f8e9' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular.tpl.html',
-      1 => 1639516648,
+      1 => 1639665405,
       2 => 'file',
     ),
   ),
@@ -30,7 +30,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_61b909f66e63c8_01242530 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61bb4f0458cf05_92416618 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 $_smarty_tpl->_assignInScope('laenderCsv', substr($_smarty_tpl->tpl_vars['ASConf']->value['land']['size'],1,-1));
 $_smarty_tpl->_assignInScope('laenderLst', explode("','",$_smarty_tpl->tpl_vars['laenderCsv']->value));?>
@@ -402,34 +402,36 @@ $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read2.html
     </div>
   </div>
 
-<div style="margin-top:1.5rem;width:100%;margin-top:2.5rem;"><!--
- --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
+<div style="margin-top:1.5rem;width:100%;margin-top:2.5rem;">
+  <div>
+  <input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!--
  --><input type="submit" class="btn grey"
            onclick="umzugsantrag_save()"
-           title="Beim Speichern wird der Auftragsstatus nicht geändert und es werden keine Benachrichtigungen versendet"
-           value="Speichern"><!--
- --><?php if (0) {?><input type="submit" class="btn red d-none"
+           title="Speichern ohne Statusänderung.
+Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
+           value="Speichern ohne Status"><!--
+ --><?php if (0) {?><input type="submit" class="btn blue d-none" style="margin-right:5px;"
            onclick="umzugsantrag_reload()"
            value="Neu laden"><?php }?><!--
- --><input type="submit" class="btn red"
+ --><input type="submit" class="btn blue" style="float:right;margin-left:5px;"
            onclick="umzugsantrag_add_attachement()"
            value="Dateianhänge">
 <?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?>
   <input
-          type="submit" class="btn red"
+          type="submit" class="btn blue" style="float:right;margin-left:5px;"
           onclick="umzugsantrag_add_internal_attachement()"
           value="Interne Dateianhänge">
   <?php }?>
-  <?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?>
+
   <input
-          type="submit" class="btn red"
+          type="submit" class="btn blue" style="float:right;margin-left:5px;"
           onclick="umzugsantrag_add_lieferschein()"
           value="Quittierten Lieferschein hinzufügen">
-  <?php }?>
+  </div>
 <br>
 <?php if ($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] != "temp") {?>
   <div style="margin-top:2.5rem;"><strong>Status mit Benachrichtung setzen: </strong></div>
-<div class="statusConsole">
+  <div class="statusConsole">
   <?php if ($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] == "beantragt" || $_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] == "angeboten") {?>
     <input
           id="btnStatGeprBackToUser" type="submit"
@@ -438,7 +440,7 @@ $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read2.html
           value="Zurueckgeben">
 
     <input
-            id="btnStatGenJa" type="submit"
+            id="btnStatBestJa" type="submit"
             class="btn green"
             onclick="umzugsantrag_set_status('bestaetigt','Ja')"
             title="Senden als Bestätigt"
@@ -471,16 +473,35 @@ $_smarty_tpl->_subTemplateRender("file:umzugsformular_attachments.tpl.read2.html
             onclick="umzugsantrag_set_status('abgeschlossen','Ja')"
             value="Auftrag jetzt abschließen">
 &nbsp; <?php }?>
+
+
+
+  <?php if ($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] == 'genehmigt' && $_smarty_tpl->tpl_vars['user']->value['adminmode'] == "superadmin") {?>
+  <input
+          id="btnStatGenInit" type="submit" style="float:right;margin-left:5px;"
+          class="<?php if ($_smarty_tpl->tpl_vars['AS']->value['abgeschlossen'] != 'Init') {?>cssHide<?php } else { ?>btn blue<?php }?>"
+          onclick="umzugsantrag_set_status('genehmigt','Init')"
+          value="Genehmigung wieder aufheben">
+  <?php }?>
+  <?php if ($_smarty_tpl->tpl_vars['AS']->value['umzugsstatus'] == 'bestaetigt' && $_smarty_tpl->tpl_vars['user']->value['adminmode'] == "superadmin") {?>
+  <input
+          id="btnStatBestInit" type="submit" style="float:right;margin-left:5px;"
+          class="<?php if ($_smarty_tpl->tpl_vars['AS']->value['abgeschlossen'] != 'Init') {?>cssHide<?php } else { ?>btn red<?php }?>"
+          onclick="umzugsantrag_set_status('bestaetigt','Init')"
+          value="Avisierung wieder aufheben">
+  <?php }?>
   <?php if ($_smarty_tpl->tpl_vars['user']->value['gruppe'] == "admin" && $_smarty_tpl->tpl_vars['user']->value['adminmode'] == "superadmin") {?>
-  <input id="btnStatAbgReset" type="submit"
-         class="<?php if ($_smarty_tpl->tpl_vars['AS']->value['abgeschlossen'] == 'Init') {?>cssHide<?php } else { ?>btn blue<?php }?>"
+  <input id="btnStatAbgReset" type="submit" style="float:rightmargin-left:5px;"
+         class="<?php if ($_smarty_tpl->tpl_vars['AS']->value['abgeschlossen'] == 'Init') {?>cssHide<?php } else { ?>btn red<?php }?>"
          onclick="umzugsantrag_set_status('abgeschlossen','Init')"
          value="Abschluss wieder aufheben">
-  <input id="btnStatAbgStorno" type="submit"
+
+  <input id="btnStatAbgStorno" type="submit" style="float:right;margin-left:5px;"
          class="<?php if ($_smarty_tpl->tpl_vars['AS']->value['abgeschlossen'] != 'Init') {?>cssHide<?php } else { ?>btn red<?php }?>"
          onclick="umzugsantrag_set_status('abgeschlossen','Storniert')"
          value="Auftrag Stornieren">
   <?php }?>
+  <div style="display: inline-block;clear: both"></div>
 </div>
 
 <?php }?>

@@ -331,33 +331,36 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     </div>
   </div>
 
-<div style="margin-top:1.5rem;width:100%;margin-top:2.5rem;"><!--
- --><input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!-- 
+<div style="margin-top:1.5rem;width:100%;margin-top:2.5rem;">
+  <div>
+  <input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!--
  --><input type="submit" class="btn grey"
            onclick="umzugsantrag_save()"
-           title="Beim Speichern wird der Auftragsstatus nicht geändert und es werden keine Benachrichtigungen versendet"
-           value="Speichern"><!--
- -->{if 0}<input type="submit" class="btn red d-none"
+           title="Speichern ohne Statusänderung.
+Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
+           value="Speichern ohne Status"><!--
+ -->{if 0}<input type="submit" class="btn blue d-none" style="margin-right:5px;"
            onclick="umzugsantrag_reload()"
            value="Neu laden">{/if}<!--
- --><input type="submit" class="btn red"
+ --><input type="submit" class="btn blue" style="float:right;margin-left:5px;"
            onclick="umzugsantrag_add_attachement()"
            value="Dateianhänge">
 {if $creator == "mertens"}
   <input
-          type="submit" class="btn red"
+          type="submit" class="btn blue" style="float:right;margin-left:5px;"
           onclick="umzugsantrag_add_internal_attachement()"
           value="Interne Dateianhänge">
   {/if}
 
   <input
-          type="submit" class="btn red"
+          type="submit" class="btn blue" style="float:right;margin-left:5px;"
           onclick="umzugsantrag_add_lieferschein()"
           value="Quittierten Lieferschein hinzufügen">
+  </div>
 <br>
 {if $AS.umzugsstatus ne "temp"}
   <div style="margin-top:2.5rem;"><strong>Status mit Benachrichtung setzen: </strong></div>
-<div class="statusConsole">
+  <div class="statusConsole">
   {if $AS.umzugsstatus eq "beantragt" or $AS.umzugsstatus eq "angeboten"}
     <input
           id="btnStatGeprBackToUser" type="submit"
@@ -366,7 +369,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
           value="Zurueckgeben">
 
     <input
-            id="btnStatGenJa" type="submit"
+            id="btnStatBestJa" type="submit"
             class="btn green"
             onclick="umzugsantrag_set_status('bestaetigt','Ja')"
             title="Senden als Bestätigt"
@@ -399,16 +402,35 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
             onclick="umzugsantrag_set_status('abgeschlossen','Ja')"
             value="Auftrag jetzt abschließen">
 &nbsp; {/if}
+
+
+
+  {if  $AS.umzugsstatus eq 'genehmigt' and $user.adminmode eq "superadmin"}
+  <input
+          id="btnStatGenInit" type="submit" style="float:right;margin-left:5px;"
+          class="{if $AS.abgeschlossen ne 'Init'}cssHide{else}btn blue{/if}"
+          onclick="umzugsantrag_set_status('genehmigt','Init')"
+          value="Genehmigung wieder aufheben">
+  {/if}
+  {if  $AS.umzugsstatus eq 'bestaetigt' and $user.adminmode eq "superadmin"}
+  <input
+          id="btnStatBestInit" type="submit" style="float:right;margin-left:5px;"
+          class="{if $AS.abgeschlossen ne 'Init'}cssHide{else}btn red{/if}"
+          onclick="umzugsantrag_set_status('bestaetigt','Init')"
+          value="Avisierung wieder aufheben">
+  {/if}
   {if $user.gruppe eq "admin" and $user.adminmode eq "superadmin"}
-  <input id="btnStatAbgReset" type="submit"
-         class="{if $AS.abgeschlossen eq 'Init'}cssHide{else}btn blue{/if}"
+  <input id="btnStatAbgReset" type="submit" style="float:rightmargin-left:5px;"
+         class="{if $AS.abgeschlossen eq 'Init'}cssHide{else}btn red{/if}"
          onclick="umzugsantrag_set_status('abgeschlossen','Init')"
          value="Abschluss wieder aufheben">
-  <input id="btnStatAbgStorno" type="submit"
+
+  <input id="btnStatAbgStorno" type="submit" style="float:right;margin-left:5px;"
          class="{if $AS.abgeschlossen ne 'Init'}cssHide{else}btn red{/if}"
          onclick="umzugsantrag_set_status('abgeschlossen','Storniert')"
          value="Auftrag Stornieren">
   {/if}
+  <div style="display: inline-block;clear: both"></div>
 </div>
 
 {/if}

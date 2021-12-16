@@ -1,8 +1,10 @@
 <?php 
-if (basename(__FILE__)==basename($_SERVER["PHP_SELF"])) require_once("../header.php");
+if (basename(__FILE__)==basename($_SERVER['PHP_SELF'])) {
+    require_once('../header.php');
+}
 
-require_once($InclBaseDir."umzugsantrag.inc.php");
-require_once($InclBaseDir."umzugsmitarbeiter.inc.php");
+require_once($InclBaseDir.'umzugsantrag.inc.php');
+require_once($InclBaseDir.'umzugsmitarbeiter.inc.php');
 
 function umzugsantrag_status($AID, $name, $value) {
     /// die('#'.__LINE__ . ' ' . __FILE__ . ' ' . __FUNCTION__ . '(' . print_r(func_get_args(),1) . ')');
@@ -20,9 +22,9 @@ function umzugsantrag_status($AID, $name, $value) {
 	}
 	
 	$sql_set = "";
-	$ASConf = $_CONF["umzugsantrag"];
-	$MAConf = $_CONF["umzugsmitarbeiter"];
-    $userIsAdmin = preg_match('/admin|umzugsteam/', $user["gruppe"]);
+	$ASConf = $_CONF['umzugsantrag'];
+	$MAConf = $_CONF['umzugsmitarbeiter'];
+    $userIsAdmin = preg_match('/admin|umzugsteam/', $user['gruppe']);
 	
 	$ASError = "";
 	$AS = new ItemEdit($ASConf, $connid, $user, $AID);
@@ -33,15 +35,15 @@ function umzugsantrag_status($AID, $name, $value) {
     $isRueckgabe = ($name === 'zurueckgeben');
 
 	if (!$istStorno && !$isRueckgabe) {
-        if (!$AS->arrInput["umzugstermin"]) {
+        if (!$AS->arrInput['umzugstermin']) {
             $ASError .= "Der Umzugstermin wurde noch nicht festgesetzt!<br>\n";
         }
 
-        if (!$AS->arrInput["fon"]) {
+        if (!$AS->arrInput['fon']) {
             $ASError .= "Telefon: fehlende Eingabe!<br>\n";
         }
 
-        if (!$AS->arrInput["email"]) {
+        if (!$AS->arrInput['email']) {
             $ASError .= "Email: fehlende Eingabe!<br>\n";
         }
 
@@ -65,10 +67,10 @@ function umzugsantrag_status($AID, $name, $value) {
 	$MAError = false;
 	foreach($MAPostItems as $i => $MAItem) {
 		$MA = new ItemEdit($MAConf, $connid, $user, false);
-		$MAItem["aid"] = $AID;
+		$MAItem['aid'] = $AID;
 		$MA->loadInput($MAItem);
 		if (!$MA->checkInput()) {
-			$error.= "Fehlerhafte Angaben beim ".($i+1).". Mitarbeiter ".$MAItem["name"]."!<br>\n";
+			$error.= "Fehlerhafte Angaben beim ".($i+1).". Mitarbeiter ".$MAItem['name']."!<br>\n";
 			$MAError = true;
 		}
 	}
@@ -77,20 +79,20 @@ function umzugsantrag_status($AID, $name, $value) {
 	}
 	
 	
-	$errIstAbgeschlossen = (!$AS->arrDbdata["abgeschlossen"] || $AS->arrDbdata["abgeschlossen"]=="Init")
+	$errIstAbgeschlossen = (!$AS->arrDbdata['abgeschlossen'] || $AS->arrDbdata['abgeschlossen']=='Init')
         ? ""
-        : "Der Auftrag wurde bereits abgeschlossen (".$AS->arrDbdata["abgeschlossen"].")!";
+        : "Der Auftrag wurde bereits abgeschlossen (".$AS->arrDbdata['abgeschlossen'].")!";
 
-	$errIstGenehmigt     = ($AS->arrDbdata["genehmigt"]=="Init")
+	$errIstGenehmigt     = ($AS->arrDbdata['genehmigt']=='Init')
         ? ""
-        : "Der Auftrag wurde bereits " . ($AS->arrDbdata["genehmigt"]=="Ja" ? "genehmigt" : "abgelehnt") . "!";
+        : "Der Auftrag wurde bereits " . ($AS->arrDbdata['genehmigt']=='Ja' ? 'genehmigt' : 'abgelehnt') . "!";
 
-	$errIstBestaetigt    = ($AS->arrDbdata["bestaetigt"] !== "Ja")
+	$errIstBestaetigt    = ($AS->arrDbdata['bestaetigt'] !== 'Ja')
         ? ""
         : "Der Auftrag wurde bereits bestätigt!";
 	
 	$sendmail_newstatus = "";
-	$new_status = "";
+	$newstatus = '';
 	if ($AID) {
 		if (!$AS->itemExists) {
 			$error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
@@ -98,105 +100,150 @@ function umzugsantrag_status($AID, $name, $value) {
 		}
 		
 		switch($name) {
-			case "gesendet":
+			case 'gesendet':
 			break;
                     
-            case "erneutpruefen":
-                $sendmail_newstatus = "erneutpruefen";
-                $newstatus = "erneutpruefen";
+            case 'erneutpruefen':
+                $sendmail_newstatus = 'erneutpruefen';
+                $newstatus = 'erneutpruefen';
             break;
 			
-			case "geprueft":
-			if (!$errIstAbgeschlossen && $AS->arrDbdata["antragsstatus"]!="bearbeitung") {
-                $sql_set = "`geprueft` = \"".$db->escape($value)."\",\n geprueft_am=NOW(),\ngeprueft_von=\"".$db->escape($user["user"])."\"";
-                $sendmail_newstatus = "geprueft";
-                $newstatus = "geprueft";
+			case 'geprueft':
+			if (!$errIstAbgeschlossen && $AS->arrDbdata['antragsstatus']!='bearbeitung') {
+                $sql_set = "`geprueft` = \"".$db->escape($value)."\",\n geprueft_am=NOW(),\ngeprueft_von=\"".$db->escape($user['user'])."\"";
+                $sendmail_newstatus = 'geprueft';
+                $newstatus = 'geprueft';
 
                 if ($value === 'Ja' && $AS->arrDbdata['umzug'] === 'Nein' ) {
-                    $newstatus = "genehmigt";
-                    $sql_set.= ",`genehmigt_br` = \"".$db->escape($value)."\",\n `genehmigt_br_am`=NOW(),\n`genehmigt_br_von`=\"".$db->escape($user["user"])."\"";
-                    $sendmail_newstatus = "genehmigt";
+                    $newstatus = 'genehmigt';
+                    $sql_set.= ",`genehmigt_br` = \"".$db->escape($value)."\",\n `genehmigt_br_am`=NOW(),\n`genehmigt_br_von`=\"".$db->escape($user['user'])."\"";
+                    $sendmail_newstatus = 'genehmigt';
                 }
 			} else {
                 if ($errIstAbgeschlossen) {
                     $error.= $errIstAbgeschlossen."<br>\n";
                 }
-                if ($AS->arrDbdata["antragsstatus"]=="bearbeitung") {
+                if ($AS->arrDbdata['antragsstatus']=='bearbeitung') {
                     $error.= "Antrag wurde vom Antragsteller noch nicht gesendet!<br>\n";
                 }
 			}
 			break;
 			
-			case "zurueckgegeben":
-			case "zurueckgeben":
-                $sql_set = " `antragsstatus`=\"bearbeitung\", `zurueckgegeben` = \"".$db->escape($value)."\",\n zurueckgegeben_am=NOW(),\nzurueckgegeben_von=\"".$db->escape($user["user"])."\"";
-                $sendmail_newstatus = "zurueckgegeben";
-                $newstatus = "zurueckgegeben";
+			case 'zurueckgegeben':
+			case 'zurueckgeben':
+                $sql_set = " `antragsstatus`=\"bearbeitung\", `zurueckgegeben` = \"".$db->escape($value)."\",\n zurueckgegeben_am=NOW(),\nzurueckgegeben_von=\"".$db->escape($user['user'])."\"";
+                $sendmail_newstatus = 'zurueckgegeben';
+                $newstatus = 'zurueckgegeben';
 			break;
 			
-			case "genehmigt":
-			if (!$errIstAbgeschlossen) { // && !$errIstBestaetigt && $AS->arrDbdata["geprueft"] == "Ja") {
-                $newstatus = ($value == "Ja") ? "genehmigt" :"abgelehnt";
-                $sql_set = "`genehmigt_br` = \"".$db->escape($value)."\",\n `genehmigt_br_am`=NOW(),\n`genehmigt_br_von`=\"".$db->escape($user["user"])."\"";
-                $sendmail_newstatus = "genehmigt";
+			case 'genehmigt':
+                if ($value !== 'Init') {
+                    if (!$errIstAbgeschlossen) { // && !$errIstBestaetigt && $AS->arrDbdata['geprueft'] == 'Ja') {
+                        $newstatus = ($value == 'Ja') ? 'genehmigt' : 'abgelehnt';
+                        $sql_set = "`genehmigt_br` = \"" . $db->escape($value) . "\",\n `genehmigt_br_am`=NOW(),\n`genehmigt_br_von`=\"" . $db->escape($user['user']) . "\"";
+                        $sendmail_newstatus = 'genehmigt';
 
-                if ($userIsAdmin && $value=='Ja' && $AS->arrInput['geprueft']!=='Ja') {
-                    $sql_set.= ",`geprueft` = \"".$db->escape($value)."\",\n geprueft_am=NOW(),\ngeprueft_von=\"".$db->escape($user["user"])."\"";
+                        if ($userIsAdmin && $value == 'Ja' && $AS->arrInput['geprueft'] !== 'Ja') {
+                            $sql_set .= ",`geprueft` = \"" . $db->escape($value) . "\",\n geprueft_am=NOW(),\ngeprueft_von=\"" . $db->escape($user['user']) . "\"";
+                        }
+                    } else {
+                        if ($errIstAbgeschlossen) {
+                            $error .= $errIstAbgeschlossen . "<br>\n";
+                        }
+                        if (0 && $errIstBestaetigt) {
+                            $error .= $errIstBestaetigt . "<br>\n";
+                        }
+                        if ($MConf['genehmigung_requires_pruefung'] && $AS->arrDbdata['geprueft'] != 'Ja') {
+                            $error .= "Auftrag kann erst nach Prüfung genehmigt werden!";
+                        }
+                        return false;
+                    }
+                } else {
+                    $sql_set = '`abgeschlossen` = ' . $db::quote('Init') . ",\n"
+                        . '`abgeschlossen_am`= NULL, ' . "\n"
+                        . '`abgeschlossen_von`= NULL'
+                    ;
+                    if ($AS->arrDbdata['geprueft'] === 'Ja') {
+                        $sql_set.= ', umzugsstatus_vom = geprueft_am';
+                    } elseif ($AS->arrDbdata['zurueckgegeben'] === 'Ja') {
+                        $sql_set.= ', umzugsstatus_vom = zurueckgegeben_am';
+                    } elseif (!empty($AS->arrDbdata['angboten_von'])) {
+                        $sql_set.= ', umzugsstatus_vom = angeboten_am';
+                    } else {
+                        $sql_set.= ', umzugsstatus_vom = antragsdatum';
+                    }
+                    $sendmail_newstatus = '';
+                    $newstatus = '';
                 }
-			} else {
-                if ($errIstAbgeschlossen) {
-                    $error.= $errIstAbgeschlossen."<br>\n";
-                }
-                if (0 && $errIstBestaetigt) {
-                    $error.= $errIstBestaetigt."<br>\n";
-                }
-                if ($MConf['genehmigung_requires_pruefung'] && $AS->arrDbdata["geprueft"] != "Ja") {
-                    $error.= "Auftrag kann erst nach Prüfung genehmigt werden!";
-                }
-                return false;
-			}
 			break;
 			
-			case "bestaetigt":
-			if ($AS->arrDbdata["abgeschlossen"]=="Init" && (!$MConf['bestaetigung_requires_genehmigung'] || $AS->arrDbdata["genehmigt_br"] === "Ja")) {
-				$sql_set = "`bestaetigt` = \"".$db->escape($value)."\",\n `bestaetigt_am`=NOW(),\n`bestaetigt_von`=\"".$db->escape($user["user"])."\"";
-				$sendmail_newstatus = "bestaetigt";
-				$newstatus = "bestaetigt";
-			} else {
-				if ($errIstAbgeschlossen) {
-				    $error.= $errIstAbgeschlossen."<br>\n";
+			case 'bestaetigt':
+                if ($value !== 'Init') {
+                    if ($AS->arrDbdata['abgeschlossen'] == 'Init' && (!$MConf['bestaetigung_requires_genehmigung'] || $AS->arrDbdata['genehmigt_br'] === 'Ja')) {
+                        $sql_set = "`bestaetigt` = \"" . $db->escape($value) . "\",\n `bestaetigt_am`=NOW(),\n`bestaetigt_von`=\"" . $db->escape($user['user']) . "\"";
+                        $sendmail_newstatus = 'bestaetigt';
+                        $newstatus = 'bestaetigt';
+                    } else {
+                        if ($errIstAbgeschlossen) {
+                            $error .= $errIstAbgeschlossen . "<br>\n";
+                        }
+                        if ($AS->arrDbdata['genehmigt_br'] != 'Ja') {
+                            $error .= "Auftrag kann erst nach Genehmigung bestätigt werden!";
+                        }
+                        return false;
+                    }
+                } else {
+                    $sql_set = ' `bestaetigt` = ' . $db::quote('Init') . ', ' . "\n"
+                        . ' `bestaetigt_am`= NULL, ' . "\n"
+                        . ' `bestaetigt_von`= NULL ';
+
+                    if (!empty($AS->arrDbdata['angboten_von'])) {
+                        $newstatus = 'angeboten';
+                        $sql_set.= ', umzugsstatus_vom = angeboten_am';
+                    } else {
+                        $newstatus = 'beantragt';
+                        $sql_set.= ', umzugsstatus_vom = antragsdatum';
+                    }
+                    $sendmail_newstatus = '';
                 }
-				if ($AS->arrDbdata["genehmigt_br"] != "Ja") {
-				    $error.= "Auftrag kann erst nach Genehmigung bestätigt werden!";
-                }
-				return false;
-			}
 			break;
 			
-			case "abgeschlossen":
+			case 'abgeschlossen':
 			    if ($value !== 'Init') {
-                    $sql_set = "`abgeschlossen` = \"" . $db->escape($value) . "\",\n `abgeschlossen_am`=NOW(),\n`abgeschlossen_von`=\"" . $db->escape($user["user"]) . "\"";
+                    $sql_set = '`abgeschlossen` = ' . $db::quote($value) . ",\n"
+                        . ' `abgeschlossen_am`=NOW(), ' . "\n"
+                        . ' `abgeschlossen_von`=' . $db::quote($user['user'])
+                    ;
                     $sendmail_newstatus = 'abgeschlossen';
                     $newstatus = 'abgeschlossen';
                 } else {
-                    $sql_set = "`abgeschlossen` = \"" . $db->escape($value) . "\",\n `abgeschlossen_am`= NULL,\n`abgeschlossen_von`= NULL";
-                    $newstatus = 'beantragt';
+                    $sql_set = '`abgeschlossen` = ' . $db::quote('Init') . ",\n"
+                        . '`abgeschlossen_am`= NULL, ' . "\n"
+                        . '`abgeschlossen_von`= NULL'
+                    ;
                     if ($AS->arrDbdata['bestaetigt'] === 'Ja') {
-                        $newstatus = 'bestaetigt';
+                        $sql_set.= ', umzugsstatus_vom = bestaetigt_am';
+                    } elseif ($AS->arrDbdata['genehmigt'] === 'Ja') {
+                        $sql_set.= ', umzugsstatus_vom = genehmigt_am';
                     } elseif ($AS->arrDbdata['genehmigt_br'] === 'Ja') {
-                        $newstatus = 'genehmigt';
+                        $sql_set.= ', umzugsstatus_vom = genehmigt_br_am';
                     } elseif ($AS->arrDbdata['geprueft'] === 'Ja') {
-                        $newstatus = 'geprueft';
+                        $sql_set.= ', umzugsstatus_vom = geprueft_am';
                     } elseif ($AS->arrDbdata['zurueckgegeben'] === 'Ja') {
-                        $newstatus = 'zurueckgegeben';
+                        $sql_set.= ', umzugsstatus_vom = zurueckgegeben_am';
+                    } elseif (!empty($AS->arrDbdata['angboten_von'])) {
+                        $sql_set.= ', umzugsstatus_vom = angeboten_am';
+                    } else {
+                        $sql_set.= ', umzugsstatus_vom = antragsdatum';
                     }
-                    $sendmail_newstatus = $newstatus;
+                    $sendmail_newstatus = '';
+                    $newstatus = '';
                 }
 			break;
 			
-			case "storniert":
-			$sql_set = "`abgeschlossen` = \"Storniert\",\n `abgeschlossen_am`=NOW(),\n`abgeschlossen_von`=\"".$db->escape($user["user"])."\"";
-			$newstatus = "storniert";
+			case 'storniert':
+			$sql_set = "`abgeschlossen` = \"Storniert\",\n `abgeschlossen_am`=NOW(),\n`abgeschlossen_von`=\"".$db->escape($user['user'])."\"";
+			$newstatus = 'storniert';
 			break;
 			
 			default:
@@ -209,7 +256,7 @@ function umzugsantrag_status($AID, $name, $value) {
 		}
 		
 		if ($sql_set) {
-			$sql = "UPDATE `".$ASConf["Table"]."` SET ".$sql_set."\n WHERE aid = \"".$db->escape($AID)."\"";
+			$sql = "UPDATE `".$ASConf['Table']."` SET ".$sql_set."\n WHERE aid = \"".$db->escape($AID)."\"";
 			$db->query($sql);
 			if ($db->error()) {
 				$error.= "Beim Setzen des Umzugsstatus ist ein Fehler aufgetreten!<br>\n";
@@ -217,7 +264,7 @@ function umzugsantrag_status($AID, $name, $value) {
 		}
 	}
 	
-	if (getRequest("umzugsart") != "Datenpflege") {
+	if (getRequest('umzugsart') != 'Datenpflege') {
 		if ($sendmail_newstatus) {
 			if (umzugsantrag_mailinform($AID, $sendmail_newstatus, $value)) {
                 $iNumMails = umzugsantrag_mailinform_get_numMails();
