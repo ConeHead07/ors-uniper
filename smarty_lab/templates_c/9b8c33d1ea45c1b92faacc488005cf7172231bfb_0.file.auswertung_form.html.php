@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-17 14:49:00
+/* Smarty version 3.1.34-dev-7, created on 2021-12-17 15:08:47
   from '/var/www/html/html/auswertung_form.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61bc954c195873_69328892',
+  'unifunc' => 'content_61bc99efada932_70565995',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '9b8c33d1ea45c1b92faacc488005cf7172231bfb' => 
     array (
       0 => '/var/www/html/html/auswertung_form.html',
-      1 => 1639748934,
+      1 => 1639750123,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_auswertung_tabs.html' => 1,
   ),
 ),false)) {
-function content_61bc954c195873_69328892 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61bc99efada932_70565995 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -40,25 +40,26 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
 <form id="frmStat" name="frmStat" method="get" action="?" data-site="auswertung/form/html">
     <span style="border:0;font-weight:bold;font-size:12px;">
     Zeitraum
-    <select id="auswertungDatumsfeld" name="datumfeld">
+    <select style="display: none;" readonly id="auswertungDatumsfeld" name="datumfeld">
         <option value="umzugstermin">Lieferdatum</option>
         <option value="antragsdatum">Auftragsdatum</option>
         <option value="abgeschlossen_am">Abschlussdatum</option>
         <!-- option value="bestaetigt_am">Bestätigungsdatum</option -->
         <option value="berechnet_am">Rechnungsdatum</option>
     </select>
+        <input type="hidden" name="datumfeld" value="abgeschlossen_am">
     Von: <input type="date" name="datumvon" value="<?php echo $_smarty_tpl->tpl_vars['datumvon']->value;?>
 " xonchange="document.forms['frmStat'].submit()">
     Bis: <input type="date" name="datumbis" value="<?php echo $_smarty_tpl->tpl_vars['datumbis']->value;?>
 " xonchange="document.forms['frmStat'].submit()">
-    <input style="margin-left:15px;" id="all" name="all" type="checkbox" value="1" <?php if ($_smarty_tpl->tpl_vars['all']->value) {?>checked="checked"<?php }?>><label for="all"><span title="Auch bereits abgerechnete Leistungen anzeigen">Alle</span></label>
+    <input style="margin-left:15px;" id="all" name="all" type="checkbox" value="1" <?php if ($_smarty_tpl->tpl_vars['all']->value) {?>checked="checked"<?php }?>><label for="all"><span title="Auch bereits abgerechnete Leistungen anzeigen">Alle (auch abgerechnet)</span></label>
 <input type="hidden" name="s" value="<?php echo $_smarty_tpl->tpl_vars['s']->value;?>
 ">
 <input type="hidden" name="order" value="" id="orderby">
 <input type="hidden" name="queriedorder" value="<?php echo $_smarty_tpl->tpl_vars['order']->value;?>
 ">
 <input type="hidden" name="queriedodir" value="<?php echo $_smarty_tpl->tpl_vars['odir']->value;?>
-">
+"><br>
 <button type="submit" class="btn btn-apply">Auswertung starten</button>
 <noscript>&lt;input type="submit" value="Auswertung starten"&gt;</noscript>
 </span>
