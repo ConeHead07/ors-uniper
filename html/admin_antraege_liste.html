@@ -85,7 +85,7 @@
     {assign var="aidWidth" value=35}
     {assign var="kidWidth" value=65}
     {assign var="landWidth" value=45}
-    {assign var="ortWidth" value=105}
+    {assign var="ortWidth" value=110}
     {assign var="plzWidth" value=50}
     {assign var="zeitWidth" value=50}
     {assign var="tourWidth" value=50}
@@ -95,7 +95,7 @@
     {assign var="bestaetigtWidth" value=75}
     {assign var="genehmigtWidth" value=60}
     {assign var="leistungenWidth" value=50}
-    {assign var="lieferdatumWidth" value=75}
+    {assign var="lieferdatumWidth" value=70}
     {assign var="abgeschlossenWidth" value=75}
     {assign var="summeWidth" value=60}
 
@@ -201,7 +201,7 @@
       <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:{$tourWidth}px;"><a href="{$ListBaseLink}&ofld=tour_kennung{if $ofld eq 'tour_kennung' && $odir ne "DESC"}&odir=DESC{/if}">Tour</a></div>
       {/if}
       {if $showLieferdatum}
-      <div class="fld-cell fld-lieferdatum order" data-fld="termin" style="width:{$lieferdatumWidth}px;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Lieferdatum</a></div>
+      <div class="fld-cell fld-lieferdatum order" data-fld="termin" style="width:{$lieferdatumWidth}px;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">LiefDat</a></div>
       {/if}
       {if $showZeit}
       <div class="fld-cell fld-umzugszeit order" data-fld="umzugszeit" style="width:{$zeitWidth}px;"><a href="{$ListBaseLink}&ofld=umzugszeit{if $ofld eq "umzugszeit" && $odir ne "DESC"}&odir=DESC{/if}">Zeit</a></div>
