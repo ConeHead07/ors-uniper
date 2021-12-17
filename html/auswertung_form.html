@@ -133,28 +133,28 @@ $(function(){
             })(){/literal}">x</th>
             <th class="order" data-fld="aid">ID</th>
             <th class="order" data-fld="kid">KID</th>
-            <th class="order" data-fld="land">Land</th>
-            <th class="order" data-fld="ort">Lieferort</th>
             <th class="order" data-fld="PLZ">PLZ</th>
             <th class="order" data-fld="strasse">Stra&szlig;e</th>
             <th class="order" data-fld="service">Service</th>
             <th class="order" data-fld="antragsdatum">Auftr.Dat.</th>
             <th class="order" data-fld="umzugstermin">Geliefert</th>
             <th class="order" data-fld="abgeschlossen_am">Abschluss</th>
+            <th class="order" data-fld="berechnet_am" title="Berechnet am">RechDatum</th>
+            <th class="order" data-fld="vorgangsnummer" title="Rechnungsnummer">RechNr</th>
             <th class="order" data-fld="summe">Summe</th>
         </tr>
         <tr>
             <th></th>
             <th><input name="q[aid]" style="width:100%" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></th>
             <th><input name="q[kid]" style="width:100%" value="{if !empty($q) && isset($q.kid)}{$q.kid}{/if}"></th>
-            <th><input name="q[land]" style="width:100%" value="{if !empty($q) && isset($q.land)}{$q.land}{/if}"></th>
-            <th><input name="q[ort]" style="width:100%" value="{if !empty($q) && isset($q.ort)}{$q.ort}{/if}"></th>
             <th><input name="q[plz]" style="width:100%" value="{if !empty($q) && isset($q.plz)}{$q.plz}{/if}"></th>
             <th><input name="q[strasse]" style="width:100%" value="{if !empty($q) && isset($q.strasse)}{$q.strasse}{/if}"></th>
             <th><input name="q[service]" style="width:100%" value="{if !empty($q) && isset($q.service)}{$q.service}{/if}"></th>
             <th><input name="q[antragsdatum]" placeholder="JJJJ-MM-TT" style="width:100%" value="{if !empty($q) && isset($q.antragsdatum)}{$q.antragsdatum}{/if}"></th>
             <th><input name="q[umzugstermin]" placeholder="JJJJ-MM-TT" style="width:100%" value="{if !empty($q) && isset($q.umzugstermin)}{$q.umzugstermin}{/if}"></th>
             <th><input name="q[abgeschlossen_am]" placeholder="JJJJ-MM-TT" style="width:100%" value="{if !empty($q) && isset($q.abgeschlossen_am)}{$q.abgeschlossen_am}{/if}"></th>
+            <th><input placeholder="JJJJ-MM-TT" name="q[berechnet_am]" style="width:100%" value="{if !empty($q) && isset($q.berechnet_am)}{$q.berechnet_am}{/if}"></th>
+            <th><input name="q[vorgangsnummer]" style="width:100%" value="{if !empty($q) && isset($q.vorgangsnummer)}{$q.vorgangsnummer}{/if}"></th>
             <th><input name="q[summe]" style="width:100%" value="{if !empty($q) && isset($q.summe)}{$q.summe}{/if}"></th>
         </tr>
     </thead>
@@ -170,8 +170,6 @@ $(function(){
             <td>{if !$item.berechnet_am}<input type="checkbox" name="aids[]" {$checked} value="{$item.aid}">{/if}</td>
             <td><a href="?s={$site_antrag}&id={$item.aid}">{$item.aid}</a></td>
             <td>{$item.kid}</td>
-            <td>{if $item.land eq "Deutschland"}DE{elseif $item.land eq "Niederlande"}NL{else}{$item.land}{/if}</td>
-            <td>{$item.ort}</td>
             <td>{$item.plz}</td>
             <td>{$item.strasse}</td>
             <td>{$item.service}</td>
@@ -198,6 +196,16 @@ $(function(){
             {$item.abgeschlossen_am|date_format:"%d.%m.%y"}
             {/if}
             </td>
+
+            <td title="{$item.berechnet_am|date_format:"%d.%m.%Y %H:%M"}">
+            {if !empty($item.berechnet_am) && {$item.berechnet_am|date_format:"%Y"} eq {'Y'|date}}
+            {$item.berechnet_am|date_format:"%d.%m."}
+            {else}
+            {$item.berechnet_am|date_format:"%d.%m.%y"}
+            {/if}
+            </td>
+
+            <td>{$item.vorgangsnummer}</td>
 
             <td style="text-align:right;">{$item.summe|number_format:2:",":"."} &euro;</td>
         </tr>

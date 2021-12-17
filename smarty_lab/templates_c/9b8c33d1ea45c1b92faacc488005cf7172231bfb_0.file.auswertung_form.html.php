@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-17 17:15:51
+/* Smarty version 3.1.34-dev-7, created on 2021-12-17 17:20:23
   from '/var/www/html/html/auswertung_form.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61bcb7b7324d21_91323541',
+  'unifunc' => 'content_61bcb8c7c63459_87207759',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '9b8c33d1ea45c1b92faacc488005cf7172231bfb' => 
     array (
       0 => '/var/www/html/html/auswertung_form.html',
-      1 => 1639757577,
+      1 => 1639758016,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_auswertung_tabs.html' => 1,
   ),
 ),false)) {
-function content_61bcb7b7324d21_91323541 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61bcb8c7c63459_87207759 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -161,14 +161,14 @@ $(function(){
             })()">x</th>
             <th class="order" data-fld="aid">ID</th>
             <th class="order" data-fld="kid">KID</th>
-            <th class="order" data-fld="land">Land</th>
-            <th class="order" data-fld="ort">Lieferort</th>
             <th class="order" data-fld="PLZ">PLZ</th>
             <th class="order" data-fld="strasse">Stra&szlig;e</th>
             <th class="order" data-fld="service">Service</th>
             <th class="order" data-fld="antragsdatum">Auftr.Dat.</th>
             <th class="order" data-fld="umzugstermin">Geliefert</th>
             <th class="order" data-fld="abgeschlossen_am">Abschluss</th>
+            <th class="order" data-fld="berechnet_am" title="Berechnet am">RechDatum</th>
+            <th class="order" data-fld="vorgangsnummer" title="Rechnungsnummer">RechNr</th>
             <th class="order" data-fld="summe">Summe</th>
         </tr>
         <tr>
@@ -178,12 +178,6 @@ echo $_smarty_tpl->tpl_vars['q']->value['aid'];
 }?>"></th>
             <th><input name="q[kid]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['kid'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['kid'];
-}?>"></th>
-            <th><input name="q[land]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['land'])) {
-echo $_smarty_tpl->tpl_vars['q']->value['land'];
-}?>"></th>
-            <th><input name="q[ort]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['ort'])) {
-echo $_smarty_tpl->tpl_vars['q']->value['ort'];
 }?>"></th>
             <th><input name="q[plz]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['plz'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['plz'];
@@ -202,6 +196,12 @@ echo $_smarty_tpl->tpl_vars['q']->value['umzugstermin'];
 }?>"></th>
             <th><input name="q[abgeschlossen_am]" placeholder="JJJJ-MM-TT" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['abgeschlossen_am'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['abgeschlossen_am'];
+}?>"></th>
+            <th><input placeholder="JJJJ-MM-TT" name="q[berechnet_am]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['berechnet_am'])) {
+echo $_smarty_tpl->tpl_vars['q']->value['berechnet_am'];
+}?>"></th>
+            <th><input name="q[vorgangsnummer]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['vorgangsnummer'])) {
+echo $_smarty_tpl->tpl_vars['q']->value['vorgangsnummer'];
 }?>"></th>
             <th><input name="q[summe]" style="width:100%" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['summe'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['summe'];
@@ -230,11 +230,6 @@ foreach ($_from as $_smarty_tpl->tpl_vars['item']->value) {
 "><?php echo $_smarty_tpl->tpl_vars['item']->value['aid'];?>
 </a></td>
             <td><?php echo $_smarty_tpl->tpl_vars['item']->value['kid'];?>
-</td>
-            <td><?php if ($_smarty_tpl->tpl_vars['item']->value['land'] == "Deutschland") {?>DE<?php } elseif ($_smarty_tpl->tpl_vars['item']->value['land'] == "Niederlande") {?>NL<?php } else {
-echo $_smarty_tpl->tpl_vars['item']->value['land'];
-}?></td>
-            <td><?php echo $_smarty_tpl->tpl_vars['item']->value['ort'];?>
 </td>
             <td><?php echo $_smarty_tpl->tpl_vars['item']->value['plz'];?>
 </td>
@@ -293,6 +288,26 @@ if (!empty($_smarty_tpl->tpl_vars['item']->value['abgeschlossen_am']) && $_prefi
             <?php }?>
             </td>
 
+            <td title="<?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['berechnet_am'],"%d.%m.%Y %H:%M");?>
+">
+            <?php ob_start();
+echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['berechnet_am'],"%Y");
+$_prefixVariable7 = ob_get_clean();
+ob_start();
+echo date('Y');
+$_prefixVariable8 = ob_get_clean();
+if (!empty($_smarty_tpl->tpl_vars['item']->value['berechnet_am']) && $_prefixVariable7 == $_prefixVariable8) {?>
+            <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['berechnet_am'],"%d.%m.");?>
+
+            <?php } else { ?>
+            <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['berechnet_am'],"%d.%m.%y");?>
+
+            <?php }?>
+            </td>
+
+            <td><?php echo $_smarty_tpl->tpl_vars['item']->value['vorgangsnummer'];?>
+</td>
+
             <td style="text-align:right;"><?php echo number_format($_smarty_tpl->tpl_vars['item']->value['summe'],2,",",".");?>
  &euro;</td>
         </tr>
@@ -344,11 +359,11 @@ echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['antragsd
 }?>">
         <?php ob_start();
 echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['antragsdatum'],"%Y");
-$_prefixVariable7 = ob_get_clean();
+$_prefixVariable9 = ob_get_clean();
 ob_start();
 echo date('Y');
-$_prefixVariable8 = ob_get_clean();
-if (!empty($_smarty_tpl->tpl_vars['item']->value['antragsdatum']) && $_prefixVariable7 == $_prefixVariable8) {?>
+$_prefixVariable10 = ob_get_clean();
+if (!empty($_smarty_tpl->tpl_vars['item']->value['antragsdatum']) && $_prefixVariable9 == $_prefixVariable10) {?>
         <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['antragsdatum'],"%d.%m.");?>
 
         <?php } else { ?>
@@ -362,11 +377,11 @@ echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['lieferda
 }?>">
         <?php ob_start();
 echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['lieferdatum'],"%Y");
-$_prefixVariable9 = ob_get_clean();
+$_prefixVariable11 = ob_get_clean();
 ob_start();
 echo date('Y');
-$_prefixVariable10 = ob_get_clean();
-if (!empty($_smarty_tpl->tpl_vars['item']->value['lieferdatum']) && $_prefixVariable9 == $_prefixVariable10) {?>
+$_prefixVariable12 = ob_get_clean();
+if (!empty($_smarty_tpl->tpl_vars['item']->value['lieferdatum']) && $_prefixVariable11 == $_prefixVariable12) {?>
             <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['lieferdatum'],"%d.%m.");?>
 
         <?php } elseif (!empty($_smarty_tpl->tpl_vars['item']->value['lieferdatum'])) {?>
