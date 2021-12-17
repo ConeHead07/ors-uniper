@@ -116,7 +116,14 @@ $(function(){
 });
 {/literal}
 </script>
-
+<div style="width:100%;float:left;">
+    <div>
+        <h2 style="float:left;" data-site="admin/antraege/liste/html">{$numAll} Aufträge</h2>
+        <h2 style="float:right">{$sumAll|number_format:2:",":"."} &euro;</h2>
+        <span style="clear: both"></span>
+    </div>
+    <span style="clear:both"></span>
+</div><br>
 <table class="tblList">
     <thead>
         <tr>
@@ -260,5 +267,34 @@ $(function(){
     <input type="submit" name="finish" value="Rechnungsnummer jetzt zuweisen"
        style="margin-top:0.5rem;cursor:pointer;border:1px solid #41b3f3;background-color:#41b3f3;color:#fff;font-weight:bold;border-radius:5px;padding:5px;">
 </form>
+
+        <h2 style="margin:1rem 0 0 0;padding-bottom:0;">Enthaltene Artikel</h2>
+        <table class="tblList" width="100%">
+            <thead>
+            <tr>
+                <th>Kategorie</th>
+                <th>Artikel</th>
+                <th>Farbe</th>
+                <th>Größe</th>
+                <th class="menge fld-cell-amount">Preis</th>
+                <th class="menge fld-cell-amount">Menge</th>
+                <th class="menge fld-cell-amount">Summe</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {foreach item=A from=$artikelStat}
+            <tr>
+                <td>{$A.Kategorie}</td>
+                <td>{$A.Bezeichnung}</td>
+                <td>{$A.Farbe}</td>
+                <td>{$A.Groesse}</td>
+                <td class="fld-cell-amount">{$A.Preis}</td>
+                <td class="fld-cell-amount" style="text-align:right">{$A.count}</td>
+                <td class="menge fld-summe currency-euro">{$A.Summe|number_format:2:",":"."}</td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
     </div>
 </div>

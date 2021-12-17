@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-17 15:19:51
+/* Smarty version 3.1.34-dev-7, created on 2021-12-17 17:15:51
   from '/var/www/html/html/auswertung_form.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61bc9c872b0818_87361478',
+  'unifunc' => 'content_61bcb7b7324d21_91323541',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '9b8c33d1ea45c1b92faacc488005cf7172231bfb' => 
     array (
       0 => '/var/www/html/html/auswertung_form.html',
-      1 => 1639750784,
+      1 => 1639757577,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_auswertung_tabs.html' => 1,
   ),
 ),false)) {
-function content_61bc9c872b0818_87361478 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61bcb7b7324d21_91323541 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -142,7 +142,16 @@ $(function(){
 
 <?php echo '</script'; ?>
 >
-
+<div style="width:100%;float:left;">
+    <div>
+        <h2 style="float:left;" data-site="admin/antraege/liste/html"><?php echo $_smarty_tpl->tpl_vars['numAll']->value;?>
+ Aufträge</h2>
+        <h2 style="float:right"><?php echo number_format($_smarty_tpl->tpl_vars['sumAll']->value,2,",",".");?>
+ &euro;</h2>
+        <span style="clear: both"></span>
+    </div>
+    <span style="clear:both"></span>
+</div><br>
 <table class="tblList">
     <thead>
         <tr>
@@ -404,6 +413,49 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['q']->value['ulids'], ENT_QUOTES, '
     <input type="submit" name="finish" value="Rechnungsnummer jetzt zuweisen"
        style="margin-top:0.5rem;cursor:pointer;border:1px solid #41b3f3;background-color:#41b3f3;color:#fff;font-weight:bold;border-radius:5px;padding:5px;">
 </form>
+
+        <h2 style="margin:1rem 0 0 0;padding-bottom:0;">Enthaltene Artikel</h2>
+        <table class="tblList" width="100%">
+            <thead>
+            <tr>
+                <th>Kategorie</th>
+                <th>Artikel</th>
+                <th>Farbe</th>
+                <th>Größe</th>
+                <th class="menge fld-cell-amount">Preis</th>
+                <th class="menge fld-cell-amount">Menge</th>
+                <th class="menge fld-cell-amount">Summe</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            <?php
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['artikelStat']->value, 'A');
+if ($_from !== null) {
+foreach ($_from as $_smarty_tpl->tpl_vars['A']->value) {
+?>
+            <tr>
+                <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Kategorie'];?>
+</td>
+                <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Bezeichnung'];?>
+</td>
+                <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Farbe'];?>
+</td>
+                <td><?php echo $_smarty_tpl->tpl_vars['A']->value['Groesse'];?>
+</td>
+                <td class="fld-cell-amount"><?php echo $_smarty_tpl->tpl_vars['A']->value['Preis'];?>
+</td>
+                <td class="fld-cell-amount" style="text-align:right"><?php echo $_smarty_tpl->tpl_vars['A']->value['count'];?>
+</td>
+                <td class="menge fld-summe currency-euro"><?php echo number_format($_smarty_tpl->tpl_vars['A']->value['Summe'],2,",",".");?>
+</td>
+            </tr>
+            <?php
+}
+}
+$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
+            </tbody>
+        </table>
     </div>
 </div>
 <?php }

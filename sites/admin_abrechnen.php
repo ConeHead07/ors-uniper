@@ -5,6 +5,7 @@ $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
 $datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'abgeschlossen_am';
 
+$NL = "\n";
 $aValidDatumfelder = ['umzugstermin', 'antragsdatum', 'geprueft_am', 'bestaetigt_am', 'abgeschlossen_am', 'berechnet_am'];
 if (!in_array($datumfeld, $aValidDatumfelder)) {
     echo "$datumfeld is not " . json_encode($aValidDatumfelder) . "!<br>\n";
@@ -136,11 +137,11 @@ elseif ($order == 'aid') {
     $sqlOrderFld = 'a.aid';
 }
 
-$sql = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
+$sqlSelect = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
     .' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
     .' u.nachname, u.nachname stom, '
-    .' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe'
-    .' FROM mm_umzuege a '
+    .' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe';
+$sqlFrom = ' FROM mm_umzuege a '
     .' LEFT JOIN mm_user AS `user` ON (a.antragsteller_uid = user.uid) '
     .' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id '
     .' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid '
@@ -150,16 +151,42 @@ $sql = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
     .'    l.leistung_id = lm.leistung_id '
     .'    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
     .'    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))'
-    .' ) '
-    .' WHERE '
+    .' ) ';
+$sqlWhere = ' WHERE '
     // .' abgeschlossen_am IS NOT NULL AND '
     .' abgeschlossen = "Ja" AND abgeschlossen_am IS NOT NULL AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN :von AND :bis '
     .(!$all ? 'AND berechnet_am IS NULL' : '')
     .( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
-    .' GROUP BY a.aid'
-    .( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' : '')
-    .' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
-$rows = $db->query_rows($sql, 0, array('von'=> $datumvon, 'bis'=> $datumbis));
+    ;
+$sqlGroup = ' GROUP BY a.aid';
+$sqlHaving = ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' : '');
+$sqlOrder = ' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
+$sqlLimit = '';
+$aParams = array('von'=> $datumvon, 'bis'=> $datumbis);
+$sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
+$rows = $db->query_rows($sql, 0, $aParams);
+
+$sqlArtikel = 'SELECT lk.leistungskategorie AS Kategorie, ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
+    . ' COUNT(distinct(ul.aid)) count, ' . $NL
+    . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
+    . ' (l.preis_pro_einheit * COUNT(distinct(ul.aid))) AS Summe, ' . $NL
+    . ' group_concat(ul.aid) aids' . $NL
+    . ' FROM (' . $NL . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t '
+    . ' JOIN mm_umzuege_leistungen ul ON (t.aid = ul.aid) ' . $NL
+    . ' JOIN mm_leistungskatalog l ON (ul.leistung_id = l.leistung_id) '
+    . ' JOIN mm_leistungskategorie lk ON (l.leistungskategorie_id = lk.leistungskategorie_id) '
+    . ' LEFT JOIN mm_leistungspreismatrix lm ON('  . $NL
+    . '    l.leistung_id = lm.leistung_id '  . $NL
+    . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
+    . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
+    . ' ) '  . $NL;
+$sqlArtikel.= 'GROUP BY ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . $NL;
+$artikelStat = $db->query_rows($sqlArtikel, 0, $aParams);
+
+
+$sqlForStat = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving;
+$sqlStat = 'SELECT COUNT(1) numAll, SUM(summe) sumAll FROM (' . $sqlForStat . ') AS t';
+$stat = $db->query_row($sqlStat, $aParams);
 
 if (false && empty($wTL)) {
     $sqlTL = 'SELECT ul.id AS ulid, a.*, `user`.personalnr, `user`.personalnr AS kid, '
@@ -191,12 +218,15 @@ if (0) {
 $kwvon = date('Y\WW', strtotime($datumvon));
 $kwbis = date('Y\WW', strtotime($datumbis));
 
+$Tpl->assign('numAll', $stat['numAll']);
+$Tpl->assign('sumAll', $stat['sumAll']);
 $Tpl->assign('s', $s);
 $Tpl->assign('all', $all);
 $Tpl->assign('wwsnr', $wwsnr);
 $Tpl->assign('site_antrag', $site_antrag);
 $Tpl->assign('Auftraege', $rows);
 $Tpl->assign('TeilLieferungen', $rowsTL);
+$Tpl->assign('artikelStat', $artikelStat);
 $Tpl->assign('kw_options', $kw_options);
 $Tpl->assign('kwvon', $kwvon);
 $Tpl->assign('kwbis', $kwbis);
