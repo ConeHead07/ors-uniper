@@ -84,7 +84,7 @@
 
     {assign var="aidWidth" value=35}
     {assign var="kidWidth" value=65}
-    {assign var="landWidth" value=45}
+    {assign var="landWidth" value=40}
     {assign var="ortWidth" value=115}
     {assign var="plzWidth" value=50}
     {assign var="zeitWidth" value=50}
@@ -292,7 +292,7 @@
               {if $showTour}
               <div class="fld-cell fld-tour_kennung" style="width:{$tourWidth}px;">{$U.tour_kennung}&nbsp;</div>
               {/if}
-              <div class="fld-cell fld-land" style="width:{$landWidth}px;">{if $U.land == "Deutschland"}DE{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if} &nbsp;</div>
+              <div class="fld-cell fld-land" title="{$U.land|escape}" style="width:{$landWidth}px;text-overflow: ellipsis">{if $U.land == "Deutschland"}DE{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if} &nbsp;</div>
               <div class="fld-cell fld-plz" style="width:{$plzWidth}px;">{$U.plz}&nbsp;</div>
               <div class="fld-cell fld-ort" style="width:{$ortWidth}px;">{$U.ort}&nbsp;</div>
               <div class="fld-cell fld-strasse" style="width:{$strasseWidth}px;">
