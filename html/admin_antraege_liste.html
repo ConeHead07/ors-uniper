@@ -124,7 +124,7 @@
     {assign var="showLieferdatum" value=false}
     {assign var="showAbgeschlossen" value=false}
     {assign var="showLeistungen" value=true}
-    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth}
+    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $lieferdatumWidth}
 {elseif $cat eq "temp"}
     {assign var="showLieferdatum" value=false}
     {assign var="showAbgeschlossen" value=false}

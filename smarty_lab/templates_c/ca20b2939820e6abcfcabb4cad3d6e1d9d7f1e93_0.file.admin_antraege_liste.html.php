@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-17 13:27:11
+/* Smarty version 3.1.34-dev-7, created on 2021-12-17 13:55:59
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61bc821fec7692_61775577',
+  'unifunc' => 'content_61bc88dfab4ab4_16772268',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1639744026,
+      1 => 1639745749,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61bc821fec7692_61775577 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61bc88dfab4ab4_16772268 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN -->
@@ -120,21 +120,21 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('showName', false);?>
     <?php $_smarty_tpl->_assignInScope('showTour', false);?>
 
-    <?php $_smarty_tpl->_assignInScope('aidWidth', 30);?>
+    <?php $_smarty_tpl->_assignInScope('aidWidth', 35);?>
     <?php $_smarty_tpl->_assignInScope('kidWidth', 65);?>
-    <?php $_smarty_tpl->_assignInScope('landWidth', 45);?>
-    <?php $_smarty_tpl->_assignInScope('ortWidth', 110);?>
+    <?php $_smarty_tpl->_assignInScope('landWidth', 40);?>
+    <?php $_smarty_tpl->_assignInScope('ortWidth', 115);?>
     <?php $_smarty_tpl->_assignInScope('plzWidth', 50);?>
     <?php $_smarty_tpl->_assignInScope('zeitWidth', 50);?>
     <?php $_smarty_tpl->_assignInScope('tourWidth', 50);?>
-    <?php $_smarty_tpl->_assignInScope('strasseWidth', 135);?>
-    <?php $_smarty_tpl->_assignInScope('serviceWidth', 60);?>
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', 140);?>
+    <?php $_smarty_tpl->_assignInScope('serviceWidth', 50);?>
     <?php $_smarty_tpl->_assignInScope('beauftragtWidth', 80);?>
-    <?php $_smarty_tpl->_assignInScope('bestaetigtWidth', 80);?>
+    <?php $_smarty_tpl->_assignInScope('bestaetigtWidth', 75);?>
     <?php $_smarty_tpl->_assignInScope('genehmigtWidth', 60);?>
     <?php $_smarty_tpl->_assignInScope('leistungenWidth', 50);?>
-    <?php $_smarty_tpl->_assignInScope('lieferdatumWidth', 80);?>
-    <?php $_smarty_tpl->_assignInScope('abgeschlossenWidth', 80);?>
+    <?php $_smarty_tpl->_assignInScope('lieferdatumWidth', 70);?>
+    <?php $_smarty_tpl->_assignInScope('abgeschlossenWidth', 75);?>
     <?php $_smarty_tpl->_assignInScope('summeWidth', 60);?>
 
 <?php if ($_smarty_tpl->tpl_vars['s']->value == "auslieferung") {?>
@@ -162,7 +162,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('showLieferdatum', false);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
     <?php $_smarty_tpl->_assignInScope('showLeistungen', true);?>
-    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value);
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value+$_smarty_tpl->tpl_vars['lieferdatumWidth']->value);
 } elseif ($_smarty_tpl->tpl_vars['cat']->value == "temp") {?>
     <?php $_smarty_tpl->_assignInScope('showLieferdatum', false);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
@@ -253,7 +253,7 @@ px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
       <?php if ($_smarty_tpl->tpl_vars['showLieferdatum']->value) {?>
       <div class="fld-cell fld-lieferdatum order" data-fld="termin" style="width:<?php echo $_smarty_tpl->tpl_vars['lieferdatumWidth']->value;?>
 px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
-&ofld=termin<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "termin" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Lieferdatum</a></div>
+&ofld=termin<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "termin" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">LiefDat</a></div>
       <?php }?>
       <?php if ($_smarty_tpl->tpl_vars['showZeit']->value) {?>
       <div class="fld-cell fld-umzugszeit order" data-fld="umzugszeit" style="width:<?php echo $_smarty_tpl->tpl_vars['zeitWidth']->value;?>
@@ -425,7 +425,7 @@ px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['tour_kennung'];?>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showLieferdatum']->value) {?>
               <div class="fld-cell fld-lieferdatum" style="width:<?php echo $_smarty_tpl->tpl_vars['lieferdatumWidth']->value;?>
-px;font-weight:bold;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Termin'],"%d.%m.%Y");?>
+px;font-weight:bold;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Termin'],"%d.%m.%y");?>
 &nbsp;</div>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showZeit']->value) {?>
@@ -438,8 +438,9 @@ px;"><?php echo substr($_smarty_tpl->tpl_vars['U']->value['umzugszeit'],0,5);?>
 px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['tour_kennung'];?>
 &nbsp;</div>
               <?php }?>
-              <div class="fld-cell fld-land" style="width:<?php echo $_smarty_tpl->tpl_vars['landWidth']->value;?>
-px;"><?php if ($_smarty_tpl->tpl_vars['U']->value['land'] == "Deutschland") {?>DE<?php } elseif ($_smarty_tpl->tpl_vars['U']->value['land'] == "Niederlande") {?>NL<?php } else {
+              <div class="fld-cell fld-land" title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
+" style="width:<?php echo $_smarty_tpl->tpl_vars['landWidth']->value;?>
+px;text-overflow: ellipsis"><?php if ($_smarty_tpl->tpl_vars['U']->value['land'] == "Deutschland") {?>DE<?php } elseif ($_smarty_tpl->tpl_vars['U']->value['land'] == "Niederlande") {?>NL<?php } else {
 echo $_smarty_tpl->tpl_vars['U']->value['land'];
 }?> &nbsp;</div>
               <div class="fld-cell fld-plz" style="width:<?php echo $_smarty_tpl->tpl_vars['plzWidth']->value;?>
@@ -469,7 +470,7 @@ px;" ><?php echo $_smarty_tpl->tpl_vars['U']->value['service'];?>
 &nbsp&nbsp;</div>
               <?php if ($_smarty_tpl->tpl_vars['showAuftragsdatum']->value) {?>
               <div class="fld-cell fld-beauftragt" style="width:<?php echo $_smarty_tpl->tpl_vars['beauftragtWidth']->value;?>
-px;font-style:italic;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Antragsdatum'],"%d.%m.%Y");?>
+px;font-style:italic;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Antragsdatum'],"%d.%m.%y");?>
 &nbsp;</div>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showGenehmigt']->value) {?>
@@ -479,7 +480,7 @@ px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['Genehmigt'];?>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showBestaetigt']->value) {?>
               <div class="fld-cell fld-bestaetigt" style=";width:<?php echo $_smarty_tpl->tpl_vars['bestaetigtWidth']->value;?>
-px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['Bestaetigt'];?>
+px;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Bestaetigt'],"%d.%m.%y");?>
 &nbsp;</div>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showAbgeschlossen']->value) {?>
