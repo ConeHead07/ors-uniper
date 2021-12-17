@@ -336,7 +336,7 @@ HEREDOC;
 
 } elseif (strcmp($output, 'mail') === 0)  {
 
-    $aTo = [ ['email' => 'frank.barthold@gmail.com', 'anrede' => 'Frank Barthold'] ];
+    $aTo = [ ['email' => $mailto, 'anrede' => 'Frank Barthold'] ];
     $sSubject = 'Reporting';
     $sHtmlBody = 'Hallo, <br>
 <br>
