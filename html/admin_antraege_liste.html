@@ -91,7 +91,7 @@
     {assign var="tourWidth" value=50}
     {assign var="strasseWidth" value=140}
     {assign var="serviceWidth" value=50}
-    {assign var="beauftragtWidth" value=80}
+    {assign var="beauftragtWidth" value=75}
     {assign var="bestaetigtWidth" value=75}
     {assign var="genehmigtWidth" value=60}
     {assign var="leistungenWidth" value=50}
@@ -130,7 +130,7 @@
     {assign var="showAbgeschlossen" value=false}
     {assign var="showBestaetigt" value=false}
     {assign var="showLeistungen" value=true}
-    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $bestaetigtWidth}
+    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $lieferdatumWidth + $bestaetigtWidth}
 {elseif $cat eq "disponierte"}
     {assign var="showBestaetigt" value=false}
     {assign var="showAbgeschlossen" value=false}
@@ -141,12 +141,12 @@
     {assign var="showLeistungen" value=true}
     {assign var="showZeit" value=true}
 
-    {assign var="strasseWidth" value=$strasseWidth + $bestaetigtWidth + $abgeschlossenWidth - $zeitWidth}
+    {assign var="strasseWidth" value=$strasseWidth + $bestaetigtWidth + $abgeschlossenWidth + $beauftragtWidth - $zeitWidth - $tourWidth}
 {elseif $cat eq "aktive"}
     {assign var="showAbgeschlossen" value=false}
     {assign var="showTourkennung" value=true}
     {assign var="showZeit" value=true}
-    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth - $zeitWidth - $tourWidth}
+    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth - $zeitWidth - $tourWidth + 50}
 {elseif $cat eq "abgeschlossene"}
     {assign var="showBestaetigt" value=false}
     {assign var="strasseWidth" value=$strasseWidth + $bestaetigtWidth + $zeitWidth}

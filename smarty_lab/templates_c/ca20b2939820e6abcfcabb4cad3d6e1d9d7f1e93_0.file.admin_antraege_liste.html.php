@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-17 13:55:59
+/* Smarty version 3.1.34-dev-7, created on 2021-12-17 14:08:17
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61bc88dfab4ab4_16772268',
+  'unifunc' => 'content_61bc8bc15b1748_03115959',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1639745749,
+      1 => 1639746486,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61bc88dfab4ab4_16772268 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61bc8bc15b1748_03115959 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN -->
@@ -129,7 +129,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('tourWidth', 50);?>
     <?php $_smarty_tpl->_assignInScope('strasseWidth', 140);?>
     <?php $_smarty_tpl->_assignInScope('serviceWidth', 50);?>
-    <?php $_smarty_tpl->_assignInScope('beauftragtWidth', 80);?>
+    <?php $_smarty_tpl->_assignInScope('beauftragtWidth', 75);?>
     <?php $_smarty_tpl->_assignInScope('bestaetigtWidth', 75);?>
     <?php $_smarty_tpl->_assignInScope('genehmigtWidth', 60);?>
     <?php $_smarty_tpl->_assignInScope('leistungenWidth', 50);?>
@@ -168,7 +168,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
     <?php $_smarty_tpl->_assignInScope('showBestaetigt', false);?>
     <?php $_smarty_tpl->_assignInScope('showLeistungen', true);?>
-    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value);
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value+$_smarty_tpl->tpl_vars['lieferdatumWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value);
 } elseif ($_smarty_tpl->tpl_vars['cat']->value == "disponierte") {?>
     <?php $_smarty_tpl->_assignInScope('showBestaetigt', false);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
@@ -179,12 +179,12 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('showLeistungen', true);?>
     <?php $_smarty_tpl->_assignInScope('showZeit', true);?>
 
-    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value-$_smarty_tpl->tpl_vars['zeitWidth']->value);
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value+$_smarty_tpl->tpl_vars['beauftragtWidth']->value-$_smarty_tpl->tpl_vars['zeitWidth']->value-$_smarty_tpl->tpl_vars['tourWidth']->value);
 } elseif ($_smarty_tpl->tpl_vars['cat']->value == "aktive") {?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
     <?php $_smarty_tpl->_assignInScope('showTourkennung', true);?>
     <?php $_smarty_tpl->_assignInScope('showZeit', true);?>
-    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value-$_smarty_tpl->tpl_vars['zeitWidth']->value-$_smarty_tpl->tpl_vars['tourWidth']->value);
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value-$_smarty_tpl->tpl_vars['zeitWidth']->value-$_smarty_tpl->tpl_vars['tourWidth']->value+50);
 } elseif ($_smarty_tpl->tpl_vars['cat']->value == "abgeschlossene") {?>
     <?php $_smarty_tpl->_assignInScope('showBestaetigt', false);?>
     <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value+$_smarty_tpl->tpl_vars['zeitWidth']->value);?>
