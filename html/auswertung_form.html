@@ -206,15 +206,15 @@ $(function(){
         {else}
             {assign var="checked" value=""}
         {/if}
-        <td>{if !$item.berechnet_am}<input type="checkbox" name="ulids[]" {$checked} value="{$item.ulid}">{/if}</td>
-        <td><a href="?s={$site_antrag}&id={$item.aid}">TL-{$item.ulid}</a></td>
+        <td>{if !$item.berechnet_am}<input type="checkbox" name="ulids[]" {$checked} value="{if !empty($item.ulid)}{$item.ulid}{/if}">{/if}</td>
+        <td><a href="?s={$site_antrag}&id={$item.aid}">TL-{if !empty($item.ulid)}{$item.ulid}{/if}</a></td>
         <td>{$item.kid}</td>
         <td>{if $item.land eq "Deutschland"}DE{elseif $item.land eq "Niederlande"}NL{else}{$item.land}{/if}</td>
         <td>{$item.ort}</td>
         <td>{$item.plz}</td>
         <td>{$item.strasse}</td>
         <td>{$item.service}</td>
-        <td title="{$item.antragsdatum|date_format:"%d.%m.%Y %H:%M"}">
+        <td title="{if !empty($item.antragsdatum)}{$item.antragsdatum|date_format:"%d.%m.%Y %H:%M"}{/if}">
         {if !empty($item.antragsdatum) && {$item.antragsdatum|date_format:"%Y"} eq {'Y'|date}}
         {$item.antragsdatum|date_format:"%d.%m."}
         {else}
@@ -222,11 +222,11 @@ $(function(){
         {/if}
         </td>
 
-        <td title="{$item.lieferdatum|date_format:"%d.%m.%Y"}">
+        <td title="{if !empty($item.lieferdatum)}{$item.lieferdatum|date_format:"%d.%m.%Y"}{/if}">
         {if !empty($item.lieferdatum) && {$item.lieferdatum|date_format:"%Y"} eq {'Y'|date}}
-        {$item.lieferdatum|date_format:"%d.%m."}
-        {else}
-        {$item.lieferdatum|date_format:"%d.%m.%y"}
+            {$item.lieferdatum|date_format:"%d.%m."}
+        {elseif !empty($item.lieferdatum)}
+            {$item.lieferdatum|date_format:"%d.%m.%y"}
         {/if}
         </td>
 

@@ -30,6 +30,7 @@ if (empty($datumbis) || $datumbis < $datumvon) {
     $datumbis = date('Y-m-d', strtotime('next wednesday', strtotime($datumvon)));
 }
 
+$site_antrag = 'aantrag';
 
 $order = (!empty($_REQUEST['order']))   ? $_REQUEST['order'] : '';
 $queriedorder = (!empty($_REQUEST['queriedorder'])) ? $_REQUEST['queriedorder'] : '';
@@ -160,7 +161,7 @@ $sql = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
     .' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
 $rows = $db->query_rows($sql, 0, array('von'=> $datumvon, 'bis'=> $datumbis));
 
-if (empty($wTL)) {
+if (false && empty($wTL)) {
     $sqlTL = 'SELECT ul.id AS ulid, a.*, `user`.personalnr, `user`.personalnr AS kid, '
         .' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
         .' u.nachname, u.nachname stom, '
@@ -193,6 +194,7 @@ $kwbis = date('Y\WW', strtotime($datumbis));
 $Tpl->assign('s', $s);
 $Tpl->assign('all', $all);
 $Tpl->assign('wwsnr', $wwsnr);
+$Tpl->assign('site_antrag', $site_antrag);
 $Tpl->assign('Auftraege', $rows);
 $Tpl->assign('TeilLieferungen', $rowsTL);
 $Tpl->assign('kw_options', $kw_options);

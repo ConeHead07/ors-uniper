@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-14 15:20:27
+/* Smarty version 3.1.34-dev-7, created on 2021-12-17 14:49:00
   from '/var/www/html/html/auswertung_form.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b8a82b439580_03901137',
+  'unifunc' => 'content_61bc954c195873_69328892',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '9b8c33d1ea45c1b92faacc488005cf7172231bfb' => 
     array (
       0 => '/var/www/html/html/auswertung_form.html',
-      1 => 1639491620,
+      1 => 1639748934,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_auswertung_tabs.html' => 1,
   ),
 ),false)) {
-function content_61b8a82b439580_03901137 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61bc954c195873_69328892 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -308,12 +308,14 @@ foreach ($_from as $_smarty_tpl->tpl_vars['item']->value) {
             <?php $_smarty_tpl->_assignInScope('checked', '');?>
         <?php }?>
         <td><?php if (!$_smarty_tpl->tpl_vars['item']->value['berechnet_am']) {?><input type="checkbox" name="ulids[]" <?php echo $_smarty_tpl->tpl_vars['checked']->value;?>
- value="<?php echo $_smarty_tpl->tpl_vars['item']->value['ulid'];?>
-"><?php }?></td>
+ value="<?php if (!empty($_smarty_tpl->tpl_vars['item']->value['ulid'])) {
+echo $_smarty_tpl->tpl_vars['item']->value['ulid'];
+}?>"><?php }?></td>
         <td><a href="?s=<?php echo $_smarty_tpl->tpl_vars['site_antrag']->value;?>
 &id=<?php echo $_smarty_tpl->tpl_vars['item']->value['aid'];?>
-">TL-<?php echo $_smarty_tpl->tpl_vars['item']->value['ulid'];?>
-</a></td>
+">TL-<?php if (!empty($_smarty_tpl->tpl_vars['item']->value['ulid'])) {
+echo $_smarty_tpl->tpl_vars['item']->value['ulid'];
+}?></a></td>
         <td><?php echo $_smarty_tpl->tpl_vars['item']->value['kid'];?>
 </td>
         <td><?php if ($_smarty_tpl->tpl_vars['item']->value['land'] == "Deutschland") {?>DE<?php } elseif ($_smarty_tpl->tpl_vars['item']->value['land'] == "Niederlande") {?>NL<?php } else {
@@ -327,8 +329,9 @@ echo $_smarty_tpl->tpl_vars['item']->value['land'];
 </td>
         <td><?php echo $_smarty_tpl->tpl_vars['item']->value['service'];?>
 </td>
-        <td title="<?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['antragsdatum'],"%d.%m.%Y %H:%M");?>
-">
+        <td title="<?php if (!empty($_smarty_tpl->tpl_vars['item']->value['antragsdatum'])) {
+echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['antragsdatum'],"%d.%m.%Y %H:%M");
+}?>">
         <?php ob_start();
 echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['antragsdatum'],"%Y");
 $_prefixVariable7 = ob_get_clean();
@@ -344,8 +347,9 @@ if (!empty($_smarty_tpl->tpl_vars['item']->value['antragsdatum']) && $_prefixVar
         <?php }?>
         </td>
 
-        <td title="<?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['lieferdatum'],"%d.%m.%Y");?>
-">
+        <td title="<?php if (!empty($_smarty_tpl->tpl_vars['item']->value['lieferdatum'])) {
+echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['lieferdatum'],"%d.%m.%Y");
+}?>">
         <?php ob_start();
 echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['lieferdatum'],"%Y");
 $_prefixVariable9 = ob_get_clean();
@@ -353,10 +357,10 @@ ob_start();
 echo date('Y');
 $_prefixVariable10 = ob_get_clean();
 if (!empty($_smarty_tpl->tpl_vars['item']->value['lieferdatum']) && $_prefixVariable9 == $_prefixVariable10) {?>
-        <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['lieferdatum'],"%d.%m.");?>
+            <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['lieferdatum'],"%d.%m.");?>
 
-        <?php } else { ?>
-        <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['lieferdatum'],"%d.%m.%y");?>
+        <?php } elseif (!empty($_smarty_tpl->tpl_vars['item']->value['lieferdatum'])) {?>
+            <?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['item']->value['lieferdatum'],"%d.%m.%y");?>
 
         <?php }?>
         </td>
