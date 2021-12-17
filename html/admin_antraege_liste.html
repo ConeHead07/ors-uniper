@@ -92,11 +92,11 @@
     {assign var="strasseWidth" value=135}
     {assign var="serviceWidth" value=60}
     {assign var="beauftragtWidth" value=80}
-    {assign var="bestaetigtWidth" value=80}
+    {assign var="bestaetigtWidth" value=75}
     {assign var="genehmigtWidth" value=60}
     {assign var="leistungenWidth" value=50}
-    {assign var="lieferdatumWidth" value=80}
-    {assign var="abgeschlossenWidth" value=80}
+    {assign var="lieferdatumWidth" value=75}
+    {assign var="abgeschlossenWidth" value=75}
     {assign var="summeWidth" value=60}
 
 {if $s eq "auslieferung"}
@@ -284,7 +284,7 @@
               <div class="fld-cell fld-tour_kennung" style="width:{$tourWidth}px;">{$U.tour_kennung}&nbsp;</div>
               {/if}
               {if $showLieferdatum}
-              <div class="fld-cell fld-lieferdatum" style="width:{$lieferdatumWidth}px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
+              <div class="fld-cell fld-lieferdatum" style="width:{$lieferdatumWidth}px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%y"}&nbsp;</div>
               {/if}
               {if $showZeit}
               <div class="fld-cell fld-umzugszeit" style="width:{$zeitWidth}px;">{$U.umzugszeit|substr:0:5}&nbsp;</div>
@@ -305,13 +305,13 @@
               {/if}
               <div class="fld-cell fld-service" style="width:{$serviceWidth}px;" >{$U.service}&nbsp&nbsp;</div>
               {if $showAuftragsdatum}
-              <div class="fld-cell fld-beauftragt" style="width:{$beauftragtWidth}px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
+              <div class="fld-cell fld-beauftragt" style="width:{$beauftragtWidth}px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%y"}&nbsp;</div>
               {/if}
               {if $showGenehmigt}
               <div class="fld-cell fld-genehmigt" style="width:{$genehmigtWidth}px;">{$U.Genehmigt}&nbsp;</div>
               {/if}
               {if $showBestaetigt}
-              <div class="fld-cell fld-bestaetigt" style=";width:{$bestaetigtWidth}px;">{$U.Bestaetigt}&nbsp;</div>
+              <div class="fld-cell fld-bestaetigt" style=";width:{$bestaetigtWidth}px;">{$U.Bestaetigt|date_format:"%d.%m.%y"}&nbsp;</div>
               {/if}
               {if $showAbgeschlossen}
               <div class="fld-cell fld-abgeschlossen" style="width:{$abgeschlossenWidth}px;">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}&nbsp;</div>
