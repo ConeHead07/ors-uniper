@@ -336,9 +336,9 @@ HEREDOC;
 
 } elseif (strcmp($output, 'mail') === 0)  {
 
-    if ($mailTo === 'k.gerring@mertens.ag') {
+    if ($mailto === 'k.gerring@mertens.ag') {
         $aTo = [ ['email' => $mailto, 'anrede' => 'Kim Gerring'] ];
-    } elseif ($mailTo === 'f.barthold@mertens.ag' || $mailto === 'frank.barthold@mertens.ag') {
+    } elseif ($mailto === 'f.barthold@mertens.ag' || $mailto === 'frank.barthold@mertens.ag') {
         $aTo = [ ['email' => $mailto, 'anrede' => 'Frank Barthold'] ];
     } else {
         $aTo = [ ['email' => $mailto ] ];
