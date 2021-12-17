@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-09 22:21:25
+/* Smarty version 3.1.34-dev-7, created on 2021-12-17 12:46:27
   from '/var/www/html/html/admin_antraege_tabs.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b27355dd9b19_20570005',
+  'unifunc' => 'content_61bc789339b846_78569665',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '596ba6fcf64dedd712b8d1ef5e1e1580ca0bfef8' => 
     array (
       0 => '/var/www/html/html/admin_antraege_tabs.html',
-      1 => 1637236261,
+      1 => 1639741581,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61b27355dd9b19_20570005 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61bc789339b846_78569665 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="divTabbedList" style="width:100%;">
 
     <ul>
@@ -50,6 +50,8 @@ function content_61b27355dd9b19_20570005 (Smarty_Internal_Template $_smarty_tpl)
 &cat=abgelehnte<?php if ($_smarty_tpl->tpl_vars['allusers']->value) {?>&allusers=1<?php }?>" style="color:#ffd700;display:none;">Abgelehnt</a></li>
         <li <?php if ($_smarty_tpl->tpl_vars['cat']->value == "stornierte") {?>class="activeTab"<?php }?>><a href="?s=<?php echo $_smarty_tpl->tpl_vars['s']->value;?>
 &cat=stornierte<?php if ($_smarty_tpl->tpl_vars['allusers']->value) {?>&allusers=1<?php }?>" style="color:#ffd700;display:none;">Storno</a></li>
+        <li <?php if ($_smarty_tpl->tpl_vars['cat']->value == "temp") {?>class="activeTab"<?php }?>><a href="?s=<?php echo $_smarty_tpl->tpl_vars['s']->value;?>
+&cat=temp<?php if ($_smarty_tpl->tpl_vars['allusers']->value) {?>&allusers=1<?php }?>" style="color:#ffd700;">Temp</a></li>
         <li <?php if ($_smarty_tpl->tpl_vars['cat']->value == "suche") {?>class="activeTab"<?php }?>><a href="?s=umzugssuche<?php if ($_smarty_tpl->tpl_vars['allusers']->value) {?>&allusers=1<?php }?>">Suche</a></li>
         <!-- <li><a href="#ID128586" style="width:60px">&nbsp;</a></li> -->
     </ul><br clear="all">

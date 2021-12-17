@@ -18,6 +18,9 @@
         background-color: #dbdada;
         text-decoration: none;
     }
+    .flds-body-row .fld-cell {
+        word-break: break-all;
+    }
 </style>
 <div id="ID128585" class="divTabbedNavigation" style="width:100%;">
 
@@ -80,21 +83,20 @@
     {assign var="showTour" value=false}
 
     {assign var="aidWidth" value=30}
-    {assign var="kidWidth" value=75}
+    {assign var="kidWidth" value=65}
     {assign var="landWidth" value=45}
-    {assign var="ortWidth" value=100}
+    {assign var="ortWidth" value=110}
     {assign var="plzWidth" value=50}
     {assign var="zeitWidth" value=50}
     {assign var="tourWidth" value=50}
-    {assign var="strasseWidth" value=140}
+    {assign var="strasseWidth" value=135}
     {assign var="serviceWidth" value=60}
     {assign var="beauftragtWidth" value=80}
     {assign var="bestaetigtWidth" value=80}
     {assign var="genehmigtWidth" value=60}
     {assign var="leistungenWidth" value=50}
-    {assign var="lieferdatumWidth" value=100}
+    {assign var="lieferdatumWidth" value=80}
     {assign var="abgeschlossenWidth" value=80}
-    {assign var="tourkennungWidth" value=80}
     {assign var="summeWidth" value=60}
 
 {if $s eq "auslieferung"}
@@ -123,6 +125,12 @@
     {assign var="showAbgeschlossen" value=false}
     {assign var="showLeistungen" value=true}
     {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth}
+{elseif $cat eq "temp"}
+    {assign var="showLieferdatum" value=false}
+    {assign var="showAbgeschlossen" value=false}
+    {assign var="showBestaetigt" value=false}
+    {assign var="showLeistungen" value=true}
+    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $bestaetigtWidth}
 {elseif $cat eq "disponierte"}
     {assign var="showBestaetigt" value=false}
     {assign var="showAbgeschlossen" value=false}
@@ -133,11 +141,16 @@
     {assign var="showLeistungen" value=true}
     {assign var="showZeit" value=true}
 
-    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth - $zeitWidth}
+    {assign var="strasseWidth" value=$strasseWidth + $bestaetigtWidth + $abgeschlossenWidth - $zeitWidth}
 {elseif $cat eq "aktive"}
     {assign var="showAbgeschlossen" value=false}
-    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth - $zeitWidth}
+    {assign var="showTourkennung" value=true}
     {assign var="showZeit" value=true}
+    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth - $zeitWidth - $tourWidth}
+{elseif $cat eq "abgeschlossene"}
+    {assign var="showBestaetigt" value=false}
+    {assign var="strasseWidth" value=$strasseWidth + $bestaetigtWidth + $zeitWidth}
+    {assign var="showZeit" value=false}
 {/if}
 <style>
     .ulLinkList * {
@@ -185,7 +198,7 @@
       <div class="fld-cell fld-aid order" data-fld="aid" style="width:{$aidWidth}px;" title="Auftrags-ID">ID</div>
       <div class="fld-cell fld-kid order" data-fld="kid" style="width:{$kidWidth}px;" title="Uniper MitarbeiterNr."><a href="{$ListBaseLink}&ofld=kid{if $ofld eq "kid" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
       {if $showTourkennung}
-      <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:{$tourkennungWidth}px;"><a href="{$ListBaseLink}&ofld=tour_kennung{if $ofld eq 'tour_kennung' && $odir ne "DESC"}&odir=DESC{/if}">Tour</a></div>
+      <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:{$tourWidth}px;"><a href="{$ListBaseLink}&ofld=tour_kennung{if $ofld eq 'tour_kennung' && $odir ne "DESC"}&odir=DESC{/if}">Tour</a></div>
       {/if}
       {if $showLieferdatum}
       <div class="fld-cell fld-lieferdatum order" data-fld="termin" style="width:{$lieferdatumWidth}px;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Lieferdatum</a></div>
@@ -193,15 +206,12 @@
       {if $showZeit}
       <div class="fld-cell fld-umzugszeit order" data-fld="umzugszeit" style="width:{$zeitWidth}px;"><a href="{$ListBaseLink}&ofld=umzugszeit{if $ofld eq "umzugszeit" && $odir ne "DESC"}&odir=DESC{/if}">Zeit</a></div>
       {/if}
-      {if $showTour}
-      <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:{$tourWidth}px;"><a href="{$ListBaseLink}&ofld=tour_kennung{if $ofld eq "tour_kennung" && $odir ne "DESC"}&odir=DESC{/if}">Tour</a></div>
-      {/if}
       <div class="fld-cell fld-land order" data-fld="land" style="width:{$landWidth}px;"><a href="{$ListBaseLink}&ofld=land{if $ofld eq "land" && $odir ne "DESC"}&odir=DESC{/if}">Land</a></div>
       <div class="fld-cell fld-plz order" data-fld="plz" style="width:{$plzWidth}px;" title="Postleitzahl"><a href="{$ListBaseLink}&ofld=plz{if $ofld eq 'plz' && $odir ne "DESC"}&odir=DESC{/if}">PLZ</a></div>
       <div class="fld-cell fld-ort order" data-fld="ort" style="width:{$ortWidth}px;"><a href="{$ListBaseLink}&ofld=ort{if $ofld eq "ort" && $odir ne "DESC"}&odir=DESC{/if}">Lieferort</a></div>
       <div class="fld-cell fld-strasse order" data-fld="strasse" style="width:{$strasseWidth}px;"><a href="{$ListBaseLink}&ofld=strasse{if $ofld eq 'strasse' && $odir ne "DESC"}&odir=DESC{/if}">Stra&szlig;e</a></div>
       {if $showName}
-      <div class="fld-cell fld-strasse order" data-fld="strasse" style="float:left;display:block;width:{$nameWidth}px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=name{if $ofld eq 'name' && $odir ne "DESC"}&odir=DESC{/if}">Name</a></div>
+      <div class="fld-cell fld-strasse order" data-fld="name" style="float:left;display:block;width:{$nameWidth}px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=name{if $ofld eq 'name' && $odir ne "DESC"}&odir=DESC{/if}">Name</a></div>
       {/if}
       <div class="fld-cell fld-service order" data-fld="service" style="width:{$serviceWidth}px;"><a href="{$ListBaseLink}&ofld=service{if $ofld eq 'service' && $odir ne 'DESC'}&odir=DESC{/if}">Service</a></div>
       {if $showAuftragsdatum}
@@ -214,7 +224,7 @@
       <div class="fld-cell fld-bestaetigt order" data-fld="bestaetigt" style="float:left;width:{$bestaetigtWidth}px;" title="Von merTens avisisiert"><a href="{$ListBaseLink}&ofld=bestaetigt{if $ofld eq "bestaetigt" && $odir ne "DESC"}&odir=DESC{/if}">Avi</a></div>
       {/if}
       {if $showAbgeschlossen}
-      <div class="fld-cell fld-abgeschlossen order" data-fld="abgeschlossen" style="width:{$leistungenWidth}px;" title="Leistungen"><a href="{$ListBaseLink}&ofld=abgeschlossen{if $ofld eq "abgeschlossen" && $odir ne "DESC"}&odir=DESC{/if}">Abgeschl.</a></div>
+      <div class="fld-cell fld-abgeschlossen order" data-fld="abgeschlossen" style="width:{$abgeschlossenWidth}px;" title="Leistungen"><a href="{$ListBaseLink}&ofld=abgeschlossen{if $ofld eq "abgeschlossen" && $odir ne "DESC"}&odir=DESC{/if}">Abgeschl.</a></div>
       {/if}
       {if $showLeistungen}
       <div class="fld-cell fld-leistungen order" data-fld="leistungen" style="width:{$leistungenWidth}px;"><a href="{$ListBaseLink}&ofld=leistungen{if $ofld eq "leistungen" && $odir ne "DESC"}&odir=DESC{/if}">Lstg.</a></div>
@@ -228,16 +238,13 @@
           <div class="fld-cell fld-aid" style="width:{$aidWidth}px;"><input name="q[aid]" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></div>
           <div class="fld-cell fld-kid" style="width:{$kidWidth}px;"><input name="q[kid]" value="{if !empty($q) && isset($q.kid)}{$q.kid}{/if}"></div>
           {if $showTourkennung}
-          <div class="fld-cell fld-tour_kennung" style="width:{$tourkennungWidth}px;"><input name="q[tour_kennung]" value="{if !empty($q) && isset($q.tour_kennung)}{$q.tour_kennung}{/if}"></div>
+          <div class="fld-cell fld-tour_kennung" style="width:{$tourWidth}px;"><input name="q[tour_kennung]" value="{if !empty($q) && isset($q.tour_kennung)}{$q.tour_kennung}{/if}"></div>
           {/if}
           {if $showLieferdatum}
           <div class="fld-cell fld-lieferdatum" style="width:{$lieferdatumWidth}px;"><input name="q[termin]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.termin)}{$q.termin}{/if}"></div>
           {/if}
           {if $showZeit}
           <div class="fld-cell fld-umzugszeit" style="width:{$zeitWidth}px;"><input name="q[umzugszeit]" placeholder="SS:MM" value="{if !empty($q) && isset($q.umzugszeit)}{$q.umzugszeit}{/if}"></div>
-          {/if}
-          {if $showZeit}
-          <div class="fld-cell fld-tour_kennung" style="width:{$tourWidth}px;"><input name="q[tour_kennung]" placeholder="" value="{if !empty($q) && isset($q.tour_kennung)}{$q.tour_kennung}{/if}"></div>
           {/if}
           <div class="fld-cell fld-land" style="width:{$landWidth}px;"><input name="q[land]" value="{if !empty($q) && isset($q.land)}{$q.land}{/if}"></div>
           <div class="fld-cell fld-plz" style="width:{$plzWidth}px;"><input name="q[plz]" value="{if !empty($q) && isset($q.plz)}{$q.plz}{/if}"></div>
@@ -274,7 +281,7 @@
               <div class="fld-cell fld-aid" style="width:{$aidWidth}px;font-weight:bold;">{$U.aid}&nbsp;</div>
               <div class="fld-cell fld-kid" style="width:{$kidWidth}px;" >{$U.kid}&nbsp;</div>
               {if $showTourkennung}
-              <div class="fld-cell fld-tour_kennung" style="width:{$tourkennungWidth}px;">{$U.tour_kennung}&nbsp;</div>
+              <div class="fld-cell fld-tour_kennung" style="width:{$tourWidth}px;">{$U.tour_kennung}&nbsp;</div>
               {/if}
               {if $showLieferdatum}
               <div class="fld-cell fld-lieferdatum" style="width:{$lieferdatumWidth}px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>

@@ -123,6 +123,9 @@ $MConf = array(
     'notify_user_beantragt' => true,
     'notify_user_beantragt_tpl' => 'statusmail_user_beantragt.txt',
 
+    'notify_user_temp_remember' => true,
+    'notify_user_temp_remember_tpl' => 'statusmail_user_temp_remember.txt',
+
     'notify_user_bemerkung' => true,
     'notify_user_bemerkung_tpl' => 'statusmail_umzug_bemerkung.txt',
 

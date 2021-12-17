@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-15 14:45:01
+/* Smarty version 3.1.34-dev-7, created on 2021-12-17 13:27:11
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b9f15db46124_19925181',
+  'unifunc' => 'content_61bc821fec7692_61775577',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1639575571,
+      1 => 1639744026,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61b9f15db46124_19925181 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61bc821fec7692_61775577 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN -->
@@ -44,6 +44,9 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
     a.tour-link:hover {
         background-color: #dbdada;
         text-decoration: none;
+    }
+    .flds-body-row .fld-cell {
+        word-break: break-all;
     }
 </style>
 <div id="ID128585" class="divTabbedNavigation" style="width:100%;">
@@ -118,21 +121,20 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('showTour', false);?>
 
     <?php $_smarty_tpl->_assignInScope('aidWidth', 30);?>
-    <?php $_smarty_tpl->_assignInScope('kidWidth', 75);?>
+    <?php $_smarty_tpl->_assignInScope('kidWidth', 65);?>
     <?php $_smarty_tpl->_assignInScope('landWidth', 45);?>
-    <?php $_smarty_tpl->_assignInScope('ortWidth', 100);?>
+    <?php $_smarty_tpl->_assignInScope('ortWidth', 110);?>
     <?php $_smarty_tpl->_assignInScope('plzWidth', 50);?>
     <?php $_smarty_tpl->_assignInScope('zeitWidth', 50);?>
     <?php $_smarty_tpl->_assignInScope('tourWidth', 50);?>
-    <?php $_smarty_tpl->_assignInScope('strasseWidth', 140);?>
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', 135);?>
     <?php $_smarty_tpl->_assignInScope('serviceWidth', 60);?>
     <?php $_smarty_tpl->_assignInScope('beauftragtWidth', 80);?>
     <?php $_smarty_tpl->_assignInScope('bestaetigtWidth', 80);?>
     <?php $_smarty_tpl->_assignInScope('genehmigtWidth', 60);?>
     <?php $_smarty_tpl->_assignInScope('leistungenWidth', 50);?>
-    <?php $_smarty_tpl->_assignInScope('lieferdatumWidth', 100);?>
+    <?php $_smarty_tpl->_assignInScope('lieferdatumWidth', 80);?>
     <?php $_smarty_tpl->_assignInScope('abgeschlossenWidth', 80);?>
-    <?php $_smarty_tpl->_assignInScope('tourkennungWidth', 80);?>
     <?php $_smarty_tpl->_assignInScope('summeWidth', 60);?>
 
 <?php if ($_smarty_tpl->tpl_vars['s']->value == "auslieferung") {?>
@@ -161,6 +163,12 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
     <?php $_smarty_tpl->_assignInScope('showLeistungen', true);?>
     <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value);
+} elseif ($_smarty_tpl->tpl_vars['cat']->value == "temp") {?>
+    <?php $_smarty_tpl->_assignInScope('showLieferdatum', false);?>
+    <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
+    <?php $_smarty_tpl->_assignInScope('showBestaetigt', false);?>
+    <?php $_smarty_tpl->_assignInScope('showLeistungen', true);?>
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value);
 } elseif ($_smarty_tpl->tpl_vars['cat']->value == "disponierte") {?>
     <?php $_smarty_tpl->_assignInScope('showBestaetigt', false);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
@@ -171,11 +179,16 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('showLeistungen', true);?>
     <?php $_smarty_tpl->_assignInScope('showZeit', true);?>
 
-    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value-$_smarty_tpl->tpl_vars['zeitWidth']->value);
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value-$_smarty_tpl->tpl_vars['zeitWidth']->value);
 } elseif ($_smarty_tpl->tpl_vars['cat']->value == "aktive") {?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
-    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value-$_smarty_tpl->tpl_vars['zeitWidth']->value);?>
-    <?php $_smarty_tpl->_assignInScope('showZeit', true);
+    <?php $_smarty_tpl->_assignInScope('showTourkennung', true);?>
+    <?php $_smarty_tpl->_assignInScope('showZeit', true);?>
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value-$_smarty_tpl->tpl_vars['zeitWidth']->value-$_smarty_tpl->tpl_vars['tourWidth']->value);
+} elseif ($_smarty_tpl->tpl_vars['cat']->value == "abgeschlossene") {?>
+    <?php $_smarty_tpl->_assignInScope('showBestaetigt', false);?>
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value+$_smarty_tpl->tpl_vars['zeitWidth']->value);?>
+    <?php $_smarty_tpl->_assignInScope('showZeit', false);
 }?>
 <style>
     .ulLinkList * {
@@ -233,7 +246,7 @@ px;" title="Auftrags-ID">ID</div>
 px;" title="Uniper MitarbeiterNr."><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=kid<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "kid" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">KID</a></div>
       <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
-      <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourkennungWidth']->value;?>
+      <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourWidth']->value;?>
 px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=tour_kennung<?php if ($_smarty_tpl->tpl_vars['ofld']->value == 'tour_kennung' && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Tour</a></div>
       <?php }?>
@@ -246,11 +259,6 @@ px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
       <div class="fld-cell fld-umzugszeit order" data-fld="umzugszeit" style="width:<?php echo $_smarty_tpl->tpl_vars['zeitWidth']->value;?>
 px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=umzugszeit<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "umzugszeit" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Zeit</a></div>
-      <?php }?>
-      <?php if ($_smarty_tpl->tpl_vars['showTour']->value) {?>
-      <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourWidth']->value;?>
-px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
-&ofld=tour_kennung<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "tour_kennung" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Tour</a></div>
       <?php }?>
       <div class="fld-cell fld-land order" data-fld="land" style="width:<?php echo $_smarty_tpl->tpl_vars['landWidth']->value;?>
 px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
@@ -265,7 +273,7 @@ px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=strasse<?php if ($_smarty_tpl->tpl_vars['ofld']->value == 'strasse' && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Stra&szlig;e</a></div>
       <?php if ($_smarty_tpl->tpl_vars['showName']->value) {?>
-      <div class="fld-cell fld-strasse order" data-fld="strasse" style="float:left;display:block;width:<?php echo $_smarty_tpl->tpl_vars['nameWidth']->value;?>
+      <div class="fld-cell fld-strasse order" data-fld="name" style="float:left;display:block;width:<?php echo $_smarty_tpl->tpl_vars['nameWidth']->value;?>
 px;font-weight:bold;color:#00869c;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=name<?php if ($_smarty_tpl->tpl_vars['ofld']->value == 'name' && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Name</a></div>
       <?php }?>
@@ -288,7 +296,7 @@ px;" title="Von merTens avisisiert"><a href="<?php echo $_smarty_tpl->tpl_vars['
 &ofld=bestaetigt<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "bestaetigt" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Avi</a></div>
       <?php }?>
       <?php if ($_smarty_tpl->tpl_vars['showAbgeschlossen']->value) {?>
-      <div class="fld-cell fld-abgeschlossen order" data-fld="abgeschlossen" style="width:<?php echo $_smarty_tpl->tpl_vars['leistungenWidth']->value;?>
+      <div class="fld-cell fld-abgeschlossen order" data-fld="abgeschlossen" style="width:<?php echo $_smarty_tpl->tpl_vars['abgeschlossenWidth']->value;?>
 px;" title="Leistungen"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=abgeschlossen<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "abgeschlossen" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Abgeschl.</a></div>
       <?php }?>
@@ -314,7 +322,7 @@ px;"><input name="q[kid]" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->v
 echo $_smarty_tpl->tpl_vars['q']->value['kid'];
 }?>"></div>
           <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
-          <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourkennungWidth']->value;?>
+          <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourWidth']->value;?>
 px;"><input name="q[tour_kennung]" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['tour_kennung'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['tour_kennung'];
 }?>"></div>
@@ -329,12 +337,6 @@ echo $_smarty_tpl->tpl_vars['q']->value['termin'];
           <div class="fld-cell fld-umzugszeit" style="width:<?php echo $_smarty_tpl->tpl_vars['zeitWidth']->value;?>
 px;"><input name="q[umzugszeit]" placeholder="SS:MM" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['umzugszeit'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['umzugszeit'];
-}?>"></div>
-          <?php }?>
-          <?php if ($_smarty_tpl->tpl_vars['showZeit']->value) {?>
-          <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourWidth']->value;?>
-px;"><input name="q[tour_kennung]" placeholder="" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['tour_kennung'])) {
-echo $_smarty_tpl->tpl_vars['q']->value['tour_kennung'];
 }?>"></div>
           <?php }?>
           <div class="fld-cell fld-land" style="width:<?php echo $_smarty_tpl->tpl_vars['landWidth']->value;?>
@@ -417,7 +419,7 @@ px;font-weight:bold;"><?php echo $_smarty_tpl->tpl_vars['U']->value['aid'];?>
 px;" ><?php echo $_smarty_tpl->tpl_vars['U']->value['kid'];?>
 &nbsp;</div>
               <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
-              <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourkennungWidth']->value;?>
+              <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourWidth']->value;?>
 px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['tour_kennung'];?>
 &nbsp;</div>
               <?php }?>

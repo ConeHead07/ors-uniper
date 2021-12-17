@@ -17,18 +17,18 @@ if (!function_exists('getLaenderKuerzelByLand')) {
     }
 }
 
-$op = ""; // Ausgabebuffer 
-if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) {
-	require_once("../header.php");
+$op = ''; // Ausgabebuffer
+if (basename($_SERVER['PHP_SELF'])==basename(__FILE__)) {
+	require_once('../header.php');
 }
 
 if (empty($s)) {
-	$s = getRequest("s", "umzugssuche");
+	$s = getRequest('s', 'umzugssuche');
 }
-$top = getRequest("top", '');
-$queryForm = file_get_contents($HtmlBaseDir."admin_antraege_suche.html");
+$top = getRequest('top', '');
+$queryForm = file_get_contents($HtmlBaseDir.'admin_antraege_suche.html');
 $queryForm = str_replace("{s}", $s, $queryForm);
-require_once($InclBaseDir."parse_userquery.php");
+require_once($InclBaseDir.'parse_userquery.php');
 
 $Tpl = new myTplEngine();
 $Tpl->assign('cat', 'suche');
@@ -36,51 +36,51 @@ $Tpl->assign('allusers', 1);
 $Tpl->assign('top', $top);
 
 $searchFields = array(
-	"a.aid" => "",
-    "a.vorname" => "",
-    "a.name" => "",
-	"a.ort" => "",
-    "a.plz" => "",
-    "a.strasse" => "",
-    "a.land" => "",
-	"a.gebaeude" => "",
-	"a.umzugstermin" => "",
-	"a.umzugsstatus" => "",
-	"a.tour_kennung" => "",
-	"kk.leistungskategorie" => [],
-	"u.kid" => "",
-	"m.name" => "",
-	"m.vorname" => "",
-	"m.nutzung" => "",
-	"m.extern_firma" => "",
-    "m.ort" => "",
-	"m.gebaeude" => "",
-	"m.etage" => "",
-	"m.raumnr" => "",
-	"m.gf" => "",
-	"m.bereich" => "",
-	"m.abteilung" => "",
-	"m.ziel_ort" => "",
-	"m.ziel_gebaeude" => "",
-	"m.ziel_etage" => "",
-	"m.ziel_raumnr" => "",
-	"m.ziel_gf" => "",
-	"m.ziel_bereich" => "",
-	"m.ziel_abteilung" => "",
-	"m.umzugsart" => "",
-    "lk.leistung" => "",
+	'a.aid' => '',
+    'a.vorname' => '',
+    'a.name' => '',
+	'a.ort' => '',
+    'a.plz' => '',
+    'a.strasse' => '',
+    'a.land' => '',
+	'a.gebaeude' => '',
+	'a.umzugstermin' => '',
+	'a.umzugsstatus' => '',
+	'a.tour_kennung' => '',
+	'kk.leistungskategorie' => [],
+	'u.kid' => '',
+	'm.name' => '',
+	'm.vorname' => '',
+	'm.nutzung' => '',
+	'm.extern_firma' => '',
+    'm.ort' => '',
+	'm.gebaeude' => '',
+	'm.etage' => '',
+	'm.raumnr' => '',
+	'm.gf' => '',
+	'm.bereich' => '',
+	'm.abteilung' => '',
+	'm.ziel_ort' => '',
+	'm.ziel_gebaeude' => '',
+	'm.ziel_etage' => '',
+	'm.ziel_raumnr' => '',
+	'm.ziel_gf' => '',
+	'm.ziel_bereich' => '',
+	'm.ziel_abteilung' => '',
+	'm.umzugsart' => '',
+    'lk.leistung' => '',
 );
 
 $defaultOrder = "ORDER BY a.umzugstermin";
-$q = getRequest("q");
-$sendquery = getRequest("sendquery");
-$offset = getRequest("offset", 0);
-$limit = getRequest("limit", 50);
-$ofld = getRequest("ofld", "");
-$odir = getRequest("odir", "ASC");
-$View = getRequest("View", "Antraege");
-$tabs = getRequest("tabs", "antraege");
-$trackGetQuery = "&sendquery=1";
+$q = getRequest('q');
+$sendquery = getRequest('sendquery');
+$offset = getRequest('offset', 0);
+$limit = getRequest('limit', 50);
+$ofld = getRequest('ofld', '');
+$odir = getRequest('odir', 'ASC');
+$View = getRequest('View', 'Antraege');
+$tabs = getRequest('tabs', 'antraege');
+$trackGetQuery = '&sendquery=1';
 
 $originOFld = $ofld;
 //echo "<pre>".print_r($q,1)."</pre>\n";
@@ -89,7 +89,7 @@ if ($ofld === 'TicketID') {
     $ofld = 'a.aid';
 }
 
-if (in_array($ofld, ['ort', 'PLZ', 'Land', 'Vorname', 'Name'])) {
+if (in_array($ofld, ['Strasse', 'Ort', 'PLZ', 'Land', 'Vorname', 'Name'])) {
 	$ofld = 'a.' . strtolower($ofld);
 } elseif($ofld === 'Liefertermin') {
 	$ofld = 'a.umzugstermin';
@@ -100,7 +100,9 @@ if (in_array($ofld, ['ort', 'PLZ', 'Land', 'Vorname', 'Name'])) {
 }
 
 if ($ofld && isset($searchFields[$ofld])) {
-	$orderBy = "ORDER BY ".$ofld." ".($odir!="DESC" ? "ASC" : "DESC");
+	$orderBy = 'ORDER BY ' . $ofld . ' ' . ($odir != 'DESC' ? 'ASC' : 'DESC');
+} elseif($ofld === 'Leistungen') {
+    $orderBy = 'ORDER BY GROUP_CONCAT(kategorie_abk ORDER BY leistungskategorie)' . ($odir != 'DESC' ? 'ASC' : 'DESC');
 } else {
 	$orderBy = $defaultOrder;
 }
@@ -120,7 +122,7 @@ foreach($searchFields as $f => $v) {
     } elseif (is_scalar($searchFields[$f])) {
         $queryFormReplacePart = fb_htmlEntities($searchFields[$f]);
     }
-	$queryForm = str_replace("{"."q[$f]"."}", $queryFormReplacePart, $queryForm);
+	$queryForm = str_replace('{'."q[$f]".'}', $queryFormReplacePart, $queryForm);
 
 	if ($searchFields[$f]) {
 	    if (is_array($searchFields[$f])) {
@@ -133,35 +135,35 @@ foreach($searchFields as $f => $v) {
     }
 }
 $queryForm = str_replace("chck_View=\"".$View."\"", "checked=\"true\"", $queryForm);
-$ListBaseLink = "?s=$s".$trackGetQuery."&View=".urlencode($View);
+$ListBaseLink = "?s=$s" . $trackGetQuery . '&View=' . urlencode($View);
 
 if ($sendquery) {
-	$sqlWhereMa = "";
-	$sqlWhereUA = "";
-    $sqlWhereUsr = "";
-    $sqlWhereKtg = "";
-    $sqlWhereLst = "";
+	$sqlWhereMa = '';
+	$sqlWhereUA = '';
+    $sqlWhereUsr = '';
+    $sqlWhereKtg = '';
+    $sqlWhereLst = '';
 	if (!empty($q)) {
 		foreach($searchFields as $qField => $userQuery) {
 			if ($userQuery) {
 				
 				switch($qField) {
-					case "a.aid":
-					case "a.name":
-                    case "a.ort":
-                    case "a.plz":
-                    case "a.strasse":
-                    case "a.land":
-                    case "a.vorname":
-                    case "a.name":
-                    case "a.umzugsstatus":
-					case "a.gebaeude":
-					case "a.umzugstermin":
-					case "a.umzugsstatus":
-                    case "a.tour_kennung":
+					case 'a.aid':
+					case 'a.name':
+                    case 'a.ort':
+                    case 'a.plz':
+                    case 'a.strasse':
+                    case 'a.land':
+                    case 'a.vorname':
+                    case 'a.name':
+                    case 'a.umzugsstatus':
+					case 'a.gebaeude':
+					case 'a.umzugstermin':
+					case 'a.umzugsstatus':
+                    case 'a.tour_kennung':
 					$dbField = $qField;
-					$sqlWhereUA.= ($sqlWhereUA?"AND ":"")." (";
-					$aUQueryParts = userquery_parse($userQuery, "Both");
+					$sqlWhereUA.= ($sqlWhereUA ? 'AND ' : '') . ' (';
+					$aUQueryParts = userquery_parse($userQuery, 'Both');
 					$sqlWhereUA.= userquery_parts2sql($aUQueryParts, $dbField);
 					$sqlWhereUA.= ")\n";
 					break;
@@ -177,44 +179,44 @@ if ($sendquery) {
                         }
                         break;
 					
-					case "m.name":
-					case "m.vorname":
-					case "m.nutzung":
-					case "m.extern_firma":
-					case "m.ort":
-					case "m.gebaeude":
-					case "m.etage":
-					case "m.raumnr":
-					case "m.gf":
-					case "m.bereich":
-					case "m.abteilung":
-					case "m.ziel_ort":
-					case "m.ziel_gebaeude":
-					case "m.ziel_etage":
-					case "m.ziel_raumnr":
-					case "m.ziel_gf":
-					case "m.ziel_bereich":
-					case "m.ziel_abteilung":
-					case "m.umzugsart":
-					$dbField = ($qField!="m.nutzung" ? $qField : "m.extern");
-					$sqlWhereMa.= ($sqlWhereMa?"AND ":"")." (";
-					$aUQueryParts = userquery_parse($userQuery, "Both");
+					case 'm.name':
+					case 'm.vorname':
+					case 'm.nutzung':
+					case 'm.extern_firma':
+					case 'm.ort':
+					case 'm.gebaeude':
+					case 'm.etage':
+					case 'm.raumnr':
+					case 'm.gf':
+					case 'm.bereich':
+					case 'm.abteilung':
+					case 'm.ziel_ort':
+					case 'm.ziel_gebaeude':
+					case 'm.ziel_etage':
+					case 'm.ziel_raumnr':
+					case 'm.ziel_gf':
+					case 'm.ziel_bereich':
+					case 'm.ziel_abteilung':
+					case 'm.umzugsart':
+					$dbField = ($qField!='m.nutzung' ? $qField : 'm.extern');
+					$sqlWhereMa.= ($sqlWhereMa?'AND ':'')." (";
+					$aUQueryParts = userquery_parse($userQuery, 'Both');
 					$sqlWhereMa.= userquery_parts2sql($aUQueryParts, $dbField);
 					$sqlWhereMa.= ")\n";
 					break;
 
-                    case "u.kid":
-                    case "u.personalnr":
-                        $dbField = "u.personalnr";
-                        $sqlWhereUsr.= ($sqlWhereUsr ? "AND " : "") . " (";
-                        $aUsrQueryParts = userquery_parse($userQuery, "Both");
+                    case 'u.kid':
+                    case 'u.personalnr':
+                        $dbField = 'u.personalnr';
+                        $sqlWhereUsr.= ($sqlWhereUsr ? 'AND ' : '') . " (";
+                        $aUsrQueryParts = userquery_parse($userQuery, 'Both');
                         $sqlWhereUsr.= userquery_parts2sql($aUsrQueryParts, $dbField);
                         $sqlWhereUsr.= ")\n";
                         break;
 
-                    case "lk.leistung":
+                    case 'lk.leistung':
                         $dbField = 'CONCAT_WS(l.Bezeichnung, l.Beschreibung, l.Farbe, l.Groesse)';
-                        $aUsrQueryParts = userquery_parse($userQuery, "Both");
+                        $aUsrQueryParts = userquery_parse($userQuery, 'Both');
                         $sqlWhereLst = userquery_parts2sql($aUsrQueryParts, $dbField);
                         break;
 
@@ -226,7 +228,7 @@ if ($sendquery) {
 		}
 	}
 	
-	if ($View == "Antraege") {
+	if ($View == 'Antraege') {
 		
 		$sqlSelect = 'Select a.aid, a.aid AS AID, u.personalnr AS kid, '  . "\n"
             . ' a.tour_kennung AS Tour, ' . "\n"
@@ -235,8 +237,8 @@ if ($sendquery) {
             . ' GROUP_CONCAT(kategorie_abk ORDER BY leistungskategorie) AS Leistungen, ' . "\n"
             . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe ' . "\n"
         ;
-		$sqlFrom = "FROM `" . $_TABLE["umzugsantrag"] . "` a " . "\n"
-			. " LEFT JOIN `".$_TABLE["user"]."` u ON (a.antragsteller_uid = u.uid) \n"
+		$sqlFrom = 'FROM `' . $_TABLE['umzugsantrag'] . '` a ' . "\n"
+			. ' LEFT JOIN `' . $_TABLE['user'] . '` u ON (a.antragsteller_uid = u.uid) ' . "\n"
             . ' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) ' . "\n"
             . ' LEFT JOIN mm_leistungskatalog l ON (ul.leistung_id = l.leistung_id) ' . "\n"
             . ' LEFT JOIN mm_leistungskategorie kk ON (l.leistungskategorie_id = kk.leistungskategorie_id) ' . "\n"
@@ -248,13 +250,13 @@ if ($sendquery) {
 		;
 		$sqlWhere = "WHERE 1\n";
 		if ($sqlWhereUA) {
-            $sqlWhere.= " AND ".$sqlWhereUA."\n";
+            $sqlWhere.= ' AND ' . $sqlWhereUA . "\n";
         }
 		if ($sqlWhereMa) {
-            $sqlWhere.= "AND a.aid IN(SELECT aid FROM `".$_TABLE["umzugsmitarbeiter"]."` m WHERE $sqlWhereMa)\n";
+            $sqlWhere.= 'AND a.aid IN(SELECT aid FROM `' . $_TABLE['umzugsmitarbeiter'] . "` m WHERE $sqlWhereMa)\n";
         }
         if ($sqlWhereUsr) {
-            $sqlWhere.= "AND a.antragsteller_uid IN(SELECT uid FROM `".$_TABLE["user"]."` u WHERE $sqlWhereUsr)\n";
+            $sqlWhere.= 'AND a.antragsteller_uid IN(SELECT uid FROM `' . $_TABLE['user'] . "` u WHERE $sqlWhereUsr)\n";
         }
         if ($sqlWhereKtg) {
             $sqlWhere.= 'AND a.aid IN(
@@ -276,36 +278,39 @@ if ($sendquery) {
                 )';
         }
 		$sqlGroup = "GROUP BY a.aid\n";
-		$sqlOrder = $orderBy."\n";
+		$sqlOrder = $orderBy . "\n";
 		$sqlLimit = "LIMIT $offset, $limit";
 
 		$sqlCount = 'SELECT count(1) AS count FROM (SELECT a.aid ' . $sqlFrom . $sqlWhere . $sqlGroup . ') AS t';
 		$row = $db->query_singlerow($sqlCount);
-		$num_all = $row["count"];
+		$num_all = $row['count'];
 
 		$sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlOrder . $sqlLimit;
 		$rows = $db->query_rows($sql);
 		$num = count($rows);
 		// echo "<pre>".print_r($sql,1)."</pre>\n";
 	} else {
-		$sql = "Select a.aid, a.umzugstermin, a.umzugsstatus, m.name, m.vorname, m.ort, m.gebaeude, m.etage, m.raumnr, m.ziel_ort, m.ziel_gebaeude, m.ziel_etage, m.ziel_raumnr\n";
-		$sql.= "FROM `".$_TABLE["umzugsmitarbeiter"] . "` AS m"
-			."` LEFT JOIN `".$_TABLE["umzugsantrag"]."` a USING (aid) \n"
-		//	."` LEFT JOIN `".$_TABLE["user"]."` a ON (a.antragsteller_uid = user.uid) \n"
+		$sql = 'Select ' . "\n"
+            . 'a.aid, a.umzugstermin, a.umzugsstatus, m.name, ' . "\n"
+            . 'm.vorname, m.ort, m.gebaeude, m.etage, m.raumnr, ' . "\n"
+            . 'm.ziel_ort, m.ziel_gebaeude, m.ziel_etage, m.ziel_raumnr ' . "\n";
+		$sql.= 'FROM `' . $_TABLE['umzugsmitarbeiter'] . '` AS m' . "\n"
+			. '` LEFT JOIN `' . $_TABLE['umzugsantrag'] . '` a USING (aid) ' . "\n"
+		//	. '` LEFT JOIN `' . $_TABLE['user']."` a ON (a.antragsteller_uid = user.uid) \n"
 		;
 		$sql.= "WHERE 1\n";
 		if ($sqlWhereMa) {
-		    $sql.= " AND ".$sqlWhereMa."\n";
+		    $sql.= ' AND ' . $sqlWhereMa . "\n";
         }
 		if ($sqlWhereUA) {
-		    $sql.= " AND ".$sqlWhereUA."\n";
+		    $sql.= ' AND ' . $sqlWhereUA . "\n";
         }
-        $sqlOrder = $orderBy."\n";
+        $sqlOrder = $orderBy . "\n";
         $sqlLimit = "LIMIT $offset, $limit";
 
         $sqlCount = 'SELECT count(1) FROM (' . $sql . ') AS t';
         $row = $db->query_singlerow($sql);
-        $num_all = $row["count"];
+        $num_all = $row['count'];
 
         $sql.= $sqlOrder . $sqlLimit;
 		$rows = $db->query_rows($sql);
@@ -321,11 +326,11 @@ $withActionColumn = false;
 if ($sendquery) {
 	if (is_array($rows) && count($rows)) {
 		$rlist_nav = new listbrowser(array(
-			"offset"     => $offset,
-			"limit"      => $limit,
-			"num_result" => $num,
-			"num_all"    => $num_all,
-			"baselink"   => $ListBaseLink."&offset={offset}&limit={limit}&ofld=$ofld&odir=$odir"));
+			'offset'     => $offset,
+			'limit'      => $limit,
+			'num_result' => $num,
+			'num_all'    => $num_all,
+			'baselink'   => $ListBaseLink."&offset={offset}&limit={limit}&ofld=$ofld&odir=$odir"));
 		$rlist_nav->render_browser();
 
         $rows2Tbl = <<<EOT
@@ -364,17 +369,17 @@ if ($sendquery) {
 EOT;
 		// $rows2Tbl.= '<pre>' . htmlentities($sql) . '</pre>';
         $currYear = date('Y');
-		$rows2Tbl.= $rlist_nav->get_nav("all")."\n";
+		$rows2Tbl.= $rlist_nav->get_nav('all')."\n";
 		//if ($db->error()) 
 		//$rows2Tbl.= $db->error()."<br>\nsql:".$sql."<br>\n";
-		$wz = "";
-		$rows2Tbl.= "<table id='auftragsSuchResult' class=\"tblList\" width='100%' border=1 cellpadding=1 cellspacing=0>\n";
+		$wz = '';
+		$rows2Tbl.= '<table id="auftragsSuchResult" class="tblList" width="100%" border=1 cellpadding=1 cellspacing=0>' . "\n";
 		$rows2Tbl.= "<thead>\n";
 		if ($withRowNumbers) {
-            $rows2Tbl .= "<td>#</td>";
+            $rows2Tbl .= '<td>#</td>';
         }
 		if ($withActionColumn) {
-            $rows2Tbl .= "<td colspan=1>Aktion</td>";
+            $rows2Tbl .= '<td colspan=1>Aktion</td>';
         }
 		foreach($rows[0] as $fld => $v) {
 		    $_lnk = $ListBaseLink."&ofld=$fld&odir=".listbrowser::get_oDir($fld, $originOFld, $odir);
@@ -403,7 +408,7 @@ EOT;
             }
 
 			if ($fld !=='aid' && $fld !== 'Land') {
-			    $rows2Tbl.= "<td title='$_tdTitle'><a href=\"" . $_lnk . "\">" . $colLabel . "</a></td>";
+			    $rows2Tbl.= "<td title='$_tdTitle'><a href=\"" . $_lnk . '">' . $colLabel . '</a></td>';
             }
 		}
 		$rows2Tbl.= "</thead>\n";
@@ -412,13 +417,13 @@ EOT;
 		$iNumRows = count($rows);
 		for($i = 0; $i < $iNumRows; $i++) {
 			$wz = ($wz!=1)?1:2;
-			$lnk = "?s=aantrag&id=".urlencode($rows[$i]["aid"]);
+			$lnk = '?s=aantrag&id=' . urlencode($rows[$i]['aid']);
 			$rows2Tbl.= "<tr class=\"wz$wz data-href\" data-href='$lnk'>";
 			if ($withRowNumbers) {
-                $rows2Tbl .= "<td>" . ($offset + $i + 1) . "</td>";
+                $rows2Tbl .= '<td>' . ($offset + $i + 1) . '</td>';
             }
 			if ($withActionColumn) {
-			    $rows2Tbl.= "<td><a href=\"?s=aantrag&id=".urlencode($rows[$i]["aid"])."\">anzeigen</a></td>";
+			    $rows2Tbl.= '<td><a href="?s=aantrag&id=' . urlencode($rows[$i]['aid']) . '">anzeigen</a></td>';
             }
 			foreach($rows[$i] as $k => $v) {
 			    switch($k) {
@@ -436,7 +441,7 @@ EOT;
 
                     case 'PLZ':
                         $laenderKuerzel = !empty($rows[$i]['Land']) ? getLaenderKuerzelByLand($rows[$i]['Land']).' ' : '';
-                        $rows2Tbl.= "<td>" . $laenderKuerzel . $v . "</td>\n";
+                        $rows2Tbl.= '<td>' . $laenderKuerzel . $v . "</td>\n";
                         break;
 
                     case 'Liefertermin':
@@ -449,13 +454,13 @@ EOT;
                                 $v = date('d.m.y');
                             }
                         }
-                        $rows2Tbl.= "<td>" . $v . "</td>\n";
+                        $rows2Tbl.= '<td>' . $v . "</td>\n";
                         break;
 
                     case 'Kategorien':
                     case 'Leistungen':
                         $ktgAbk = str_replace(',', '', $v); // strtr($v, $aKtgAbk);
-                        $rows2Tbl.= "<td>" . $ktgAbk . "</td>\n";
+                        $rows2Tbl.= '<td>' . $ktgAbk . "</td>\n";
                         break;
                     default:
                         $rows2Tbl.= "<td>$v</td>";
@@ -464,7 +469,7 @@ EOT;
 			$rows2Tbl.= "</tr>\n";
 		}
 		$rows2Tbl.= "</tbody>\n";
-		$rows2Tbl.= "</table>";
+		$rows2Tbl.= '</table>';
 		$rows2Tbl.= <<<EOT
 <script>
 	$(function() {
@@ -483,7 +488,7 @@ EOT;
         }
 	}
 }
-if (basename($_SERVER["PHP_SELF"])==basename(__FILE__)) {
+if (basename($_SERVER['PHP_SELF'])==basename(__FILE__)) {
     echo $op;
 }
 

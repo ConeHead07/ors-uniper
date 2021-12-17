@@ -1,0 +1,16 @@
+Betreff=Bestellung ID {AID} - Warenkorb
+
+Hallo {Vorname} {Name},
+
+in Ihrem Warenkorb befinden noch nicht beauftragte Positionen vom {antragsdatum}.
+
+Bitte prüfen Sie, ob sie diese noch beauftragen möchten.
+
+Sie können die Bestellung  unter folgendem Link  einsehen:
+{StatusLink}
+
+Mit freundlichen Grüßen
+
+Ihr Team von
+merTens AG für {HomepageTitle}
+
