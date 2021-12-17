@@ -153,7 +153,7 @@ $sql = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
     .' ) '
     .' WHERE '
     // .' abgeschlossen_am IS NOT NULL AND '
-    .' abgeschlossen = "Ja" AND abgeschlossen_am IS NOT NULL AND ' . $datumfeld . ' BETWEEN :von AND :bis '
+    .' abgeschlossen = "Ja" AND abgeschlossen_am IS NOT NULL AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN :von AND :bis '
     .(!$all ? 'AND berechnet_am IS NULL' : '')
     .( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
     .' GROUP BY a.aid'
@@ -178,7 +178,7 @@ if (false && empty($wTL)) {
         .' WHERE '
         . ' abgeschlossen = "Init" AND (ul.rechnungsnr IS NULL OR ul.rechnungsnr = "") '
         . (count($wTL) ? ' AND ' . implode(' AND ', $wTL) : '')
-        . ' AND ul.lieferdatum BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . ' '
+        . ' AND ul.abgeschlossen_am BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . ' '
         .' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
     $rowsTL = $db->query_rows($sql, 0, array('von'=> $datumvon, 'bis'=> $datumbis));
 } else {
