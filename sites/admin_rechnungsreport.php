@@ -336,8 +336,14 @@ HEREDOC;
 
 } elseif (strcmp($output, 'mail') === 0)  {
 
-    $aTo = [ ['email' => $mailto, 'anrede' => 'Frank Barthold'] ];
-    $sSubject = 'Reporting';
+    if ($mailTo === 'k.gerring@mertens.ag') {
+        $aTo = [ ['email' => $mailto, 'anrede' => 'Kim Gerring'] ];
+    } elseif ($mailTo === 'f.barthold@mertens.ag' || $mailto === 'frank.barthold@mertens.ag') {
+        $aTo = [ ['email' => $mailto, 'anrede' => 'Frank Barthold'] ];
+    } else {
+        $aTo = [ ['email' => $mailto ] ];
+    }
+    $sSubject = 'ORS Uniper: Reporting abgeschlossener Auftraege';
     $sHtmlBody = 'Hallo, <br>
 <br>
 anbei das Reporting abrechenbarer Leistungen für den Zeitraum 
