@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-17 14:08:17
+/* Smarty version 3.1.34-dev-7, created on 2021-12-20 14:43:57
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61bc8bc15b1748_03115959',
+  'unifunc' => 'content_61c0889de9d2b8_68262815',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1639746486,
+      1 => 1640007830,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61bc8bc15b1748_03115959 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61c0889de9d2b8_68262815 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN -->
@@ -48,6 +48,11 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
     .flds-body-row .fld-cell {
         word-break: break-all;
     }
+    .fld-cell.fld-checkbox {
+        display: inline-block;
+        width:24px;
+    }
+
 </style>
 <div id="ID128585" class="divTabbedNavigation" style="width:100%;">
 
@@ -107,6 +112,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         <span style="clear:both"></span>
     </div>
     <?php }?>
+    <?php $_smarty_tpl->_assignInScope('showCheck', !empty($_smarty_tpl->tpl_vars['selectable']->value));?>
     <?php $_smarty_tpl->_assignInScope('showTourkennung', false);?>
     <?php $_smarty_tpl->_assignInScope('showAuftragsdatum', true);?>
     <?php $_smarty_tpl->_assignInScope('showLieferdatum', true);?>
@@ -119,7 +125,9 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('showZeit', false);?>
     <?php $_smarty_tpl->_assignInScope('showName', false);?>
     <?php $_smarty_tpl->_assignInScope('showTour', false);?>
+    <?php $_smarty_tpl->_assignInScope('showErinnert', false);?>
 
+    <?php $_smarty_tpl->_assignInScope('checkWidth', 24);?>
     <?php $_smarty_tpl->_assignInScope('aidWidth', 35);?>
     <?php $_smarty_tpl->_assignInScope('kidWidth', 65);?>
     <?php $_smarty_tpl->_assignInScope('landWidth', 40);?>
@@ -136,6 +144,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('lieferdatumWidth', 70);?>
     <?php $_smarty_tpl->_assignInScope('abgeschlossenWidth', 75);?>
     <?php $_smarty_tpl->_assignInScope('summeWidth', 60);?>
+    <?php $_smarty_tpl->_assignInScope('erinnertWidth', 75);?>
 
 <?php if ($_smarty_tpl->tpl_vars['s']->value == "auslieferung") {?>
     <?php $_smarty_tpl->_assignInScope('zeitWidth', 45);?>
@@ -168,7 +177,8 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
     <?php $_smarty_tpl->_assignInScope('showBestaetigt', false);?>
     <?php $_smarty_tpl->_assignInScope('showLeistungen', true);?>
-    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value+$_smarty_tpl->tpl_vars['lieferdatumWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value);
+    <?php $_smarty_tpl->_assignInScope('showErinnert', true);?>
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value+$_smarty_tpl->tpl_vars['lieferdatumWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value-$_smarty_tpl->tpl_vars['checkWidth']->value-$_smarty_tpl->tpl_vars['erinnertWidth']->value);
 } elseif ($_smarty_tpl->tpl_vars['cat']->value == "disponierte") {?>
     <?php $_smarty_tpl->_assignInScope('showBestaetigt', false);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
@@ -238,8 +248,46 @@ echo $_smarty_tpl->tpl_vars['ListBrowsing']->value;
         <input type="hidden" name="odir" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['odir']->value, ENT_QUOTES, 'UTF-8', true);?>
 ">
 
+    <span style="border:0;font-weight:bold;font-size:12px;">
+        <?php if (!empty($_smarty_tpl->tpl_vars['showDateRangeFilter']->value)) {?>
+            <?php if (!empty($_smarty_tpl->tpl_vars['rangeDateFields']->value) && count($_smarty_tpl->tpl_vars['rangeDateFields']->value) > 1) {?>
+            Aufträge zeitlich eingrenzen:<br>
+            <select id="datumfeld" name="datumfeld">
+                <?php
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['rangeDateFields']->value, 'opt');
+if ($_from !== null) {
+foreach ($_from as $_smarty_tpl->tpl_vars['opt']->value) {
+?>
+                    <option value="<?php echo $_smarty_tpl->tpl_vars['opt']->value['value'];?>
+" <?php if (!empty($_smarty_tpl->tpl_vars['opt']->value['checked'])) {?>selected<?php }?>><?php echo $_smarty_tpl->tpl_vars['opt']->value['label'];?>
+</option>
+                <?php
+}
+}
+$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
+            </select>
+            <?php } elseif (!empty($_smarty_tpl->tpl_vars['rangeDateFields']->value) && count($_smarty_tpl->tpl_vars['rangeDateFields']->value) > 0) {?>
+                <?php echo $_smarty_tpl->tpl_vars['rangeDateFields']->value[0]['label'];?>
+ zeitlich eingrenzen:<br>
+                <input type="hidden" name="datumfeld" value="<?php echo $_smarty_tpl->tpl_vars['rangeDateFields']->value[0]['value'];?>
+">
+            <?php }?>
+            Von: <input type="date" id="rangeDatumvon" name="datumvon" value="<?php if (!empty($_smarty_tpl->tpl_vars['rangeDatumvon']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['rangeDatumvon']->value, ENT_QUOTES, 'UTF-8', true);
+}?>">
+            Bis: <input type="date" id="rangeDatumbis" name="datumbis" value="<?php if (!empty($_smarty_tpl->tpl_vars['rangeDatumvon']->value)) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['rangeDatumbis']->value, ENT_QUOTES, 'UTF-8', true);
+}?>">
+            <button type="submit">Filter anwenden</button>
+        <?php }?>
+    </span>
+
   <ul class="ulLinkList"> 
   <div class="flds-head-colnames">
+      <?php if ($_smarty_tpl->tpl_vars['showCheck']->value) {?>
+        <div class="fld-cell fld-checkbox" style="width:<?php echo $_smarty_tpl->tpl_vars['checkWidth']->value;?>
+px;"><input type="checkbox" id="toggleCheckboxes" name="aids_toggle" value="1"></div>
+      <?php }?>
       <div class="fld-cell fld-aid order" data-fld="aid" style="width:<?php echo $_smarty_tpl->tpl_vars['aidWidth']->value;?>
 px;" title="Auftrags-ID">ID</div>
       <div class="fld-cell fld-kid order" data-fld="kid" style="width:<?php echo $_smarty_tpl->tpl_vars['kidWidth']->value;?>
@@ -285,6 +333,11 @@ px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 px;" title="Auftragsdatum"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=antragsdatum<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "antragsdatum" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Auftr.Dat.</a></div>
       <?php }?>
+      <?php if ($_smarty_tpl->tpl_vars['showErinnert']->value) {?>
+      <div class="fld-cell fld-erinnert order" data-fld="temp_erinnerungsmail_am" style="width:<?php echo $_smarty_tpl->tpl_vars['erinnertWidth']->value;?>
+px;" title="ErinnertAm"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
+&ofld=antragsdatum<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "temp_erinnerungsmail_am" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">ErinnertAm</a></div>
+      <?php }?>
       <?php if ($_smarty_tpl->tpl_vars['showGenehmigt']->value) {?>
       <div class="fld-cell fld-genehmigt order" data-fld="genehmigt" style="float:left;width:<?php echo $_smarty_tpl->tpl_vars['genehmigtWidth']->value;?>
 px;" title="Von Property genehmigt"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
@@ -313,6 +366,10 @@ px;" title="Auftragswert"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLi
       <br clear=left>
   </div>
       <div class="flds-head-colsearch">
+          <?php if ($_smarty_tpl->tpl_vars['showCheck']->value) {?>
+          <div class="fld-cell fld-checkbox" style="width:<?php echo $_smarty_tpl->tpl_vars['checkWidth']->value;?>
+px;"></div>
+          <?php }?>
           <div class="fld-cell fld-aid" style="width:<?php echo $_smarty_tpl->tpl_vars['aidWidth']->value;?>
 px;"><input name="q[aid]" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['aid'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['aid'];
@@ -371,6 +428,12 @@ px;"><input name="q[antragsdatum]" placeholder="JJJJ-MM-TT" value="<?php if (!em
 echo $_smarty_tpl->tpl_vars['q']->value['antragsdatum'];
 }?>"></div>
           <?php }?>
+          <?php if ($_smarty_tpl->tpl_vars['showErinnert']->value) {?>
+          <div class="fld-cell fld-erinnert" style="width:<?php echo $_smarty_tpl->tpl_vars['erinnertWidth']->value;?>
+px;"><input name="q[temp_erinnerungsmail_am]" placeholder="JJJJ-MM-TT" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['temp_erinnerungsmail_am'])) {
+echo $_smarty_tpl->tpl_vars['q']->value['temp_erinnerungsmail_am'];
+}?>"></div>
+          <?php }?>
           <?php if ($_smarty_tpl->tpl_vars['showGenehmigt']->value) {?>
           <div class="fld-cell fld-genehmigt" style="width:<?php echo $_smarty_tpl->tpl_vars['genehmigtWidth']->value;?>
 px;"><input name="q[genehmigt_am]" placeholder="JJJJ-MM-TT" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['genehmigt_am'])) {
@@ -412,6 +475,11 @@ foreach ($_from as $_smarty_tpl->tpl_vars['U']->value) {
       <a class="flds-body-row-link iconRightContentMain" href="<?php echo $_smarty_tpl->tpl_vars['U']->value['LinkOpen'];?>
 ">
           <div class="flds-body-row">
+              <?php if ($_smarty_tpl->tpl_vars['showCheck']->value) {?>
+                <div class="fld-cell fld-checkbox" style="width:<?php echo $_smarty_tpl->tpl_vars['checkWidth']->value;?>
+px;"><input type="checkbox" name="aids[]" value="<?php echo $_smarty_tpl->tpl_vars['U']->value['aid'];?>
+"></div>
+              <?php }?>
               <div class="fld-cell fld-aid" style="width:<?php echo $_smarty_tpl->tpl_vars['aidWidth']->value;?>
 px;font-weight:bold;"><?php echo $_smarty_tpl->tpl_vars['U']->value['aid'];?>
 &nbsp;</div>
@@ -458,7 +526,8 @@ px;">
 ,<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
 " style="color:red;">
                 <?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['strasse'], ENT_QUOTES, 'UTF-8', true);?>
-</span></div>
+</span>
+              </div>
 
               <?php if ($_smarty_tpl->tpl_vars['showName']->value) {?>
               <div class="fld-cell fld-service" style="width:<?php echo $_smarty_tpl->tpl_vars['nameWidth']->value;?>
@@ -472,6 +541,12 @@ px;" ><?php echo $_smarty_tpl->tpl_vars['U']->value['service'];?>
               <div class="fld-cell fld-beauftragt" style="width:<?php echo $_smarty_tpl->tpl_vars['beauftragtWidth']->value;?>
 px;font-style:italic;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Antragsdatum'],"%d.%m.%y");?>
 &nbsp;</div>
+              <?php }?>
+              <?php if ($_smarty_tpl->tpl_vars['showErinnert']->value) {?>
+              <div class="fld-cell fld-erinnert" style="width:<?php echo $_smarty_tpl->tpl_vars['erinnertWidth']->value;?>
+px;font-style:italic;"><?php if (!empty($_smarty_tpl->tpl_vars['U']->value['temp_erinnerungsmail_am'])) {
+echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['temp_erinnerungsmail_am'],"%d.%m.%y");
+}?>&nbsp;</div>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showGenehmigt']->value) {?>
               <div class="fld-cell fld-genehmigt" style="width:<?php echo $_smarty_tpl->tpl_vars['genehmigtWidth']->value;?>
@@ -510,6 +585,10 @@ px;"><?php echo number_format($_smarty_tpl->tpl_vars['U']->value['Summe'],2,",",
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 </ul>
+        <?php if (!empty($_smarty_tpl->tpl_vars['selectable']->value) && !empty($_smarty_tpl->tpl_vars['selectableActionTemplate']->value)) {?>
+            <?php $_smarty_tpl->_subTemplateRender($_smarty_tpl->tpl_vars['selectableActionTemplate']->value, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, true);
+?>
+        <?php }?>
     </form>
 <h2 style="margin:1rem 0 0 0;padding-bottom:0;">Enthaltene Artikel</h2>
     <table class="tblList" width="100%">

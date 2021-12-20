@@ -5,6 +5,17 @@ if (strpos($user['gruppe'], 'admin') === false && $user['gruppe'] !== 'umzugstea
 }
 
 
+$batchCmd = getRequest('batchCmd', '');
+$aids = getRequest('aids', []);
+if ($batchCmd = 'erinnerungsmail') {
+    if (is_array($aids) && count($aids) > 0) {
+        $batchErinnern = new \module\Auftragsbearbeitung\BatchErinnerungsmails();
+        $batchErinnern->setAuftragsIds($aids);
+        $batchErinnern->run();
+    }
+}
+
+
 require_once( $InclBaseDir . "umzugsantrag.inc.php");
 require_once( $InclBaseDir . "umzugsmitarbeiter.inc.php");
 require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
@@ -24,6 +35,8 @@ if (empty($s)) {
 
 $userGruppe = $user['gruppe'];
 $istUmzugsteam = $userGruppe === 'umzugsteam' || $s === 'auslieferung';
+$istAdmin = $userGruppe === 'admin';
+$istSuperAdmin = $istAdmin && $user['adminmode'] === 'superadmin';
 
 $offset = getRequest('offset', 0);
 $limit = getRequest('limit', 100);
@@ -35,6 +48,27 @@ $exportFormat = getRequest('format', 'html');
 $query = (!empty($_REQUEST['q']))   ? $_REQUEST['q'] : [];
 $allusers = (int)getRequest('allusers', 1);
 // die(print_r(compact('query'), 1));
+
+$datumvon = !empty($_REQUEST['datumvon'])   ? $_REQUEST['datumvon'] : '';
+$datumbis = !empty($_REQUEST['datumbis'])  ? $_REQUEST['datumbis'] : '';
+$datumfeld = !empty($_REQUEST['datumfeld']) ? $_REQUEST['datumfeld'] : 'antragsdatum';
+
+$aValidRangeDateFields = [
+    'angeboten_am',
+    'antragsdatum', 'temp_erinnerungsmail_am', 'umzugstermin', 'bestaetigt_am',
+    'abgeschlossen_am', 'berechnet_am',
+];
+
+if ($datumfeld && !in_array($datumfeld, $aValidRangeDateFields)) {
+    $datumfeld = '';
+}
+
+if ($datumvon & strtotime($datumvon)) {
+    $datumvon = date('Y-m-d', strtotime($datumvon));
+}
+if ($datumbis & strtotime($datumbis)) {
+    $datumbis = date('Y-m-d', strtotime($datumbis));
+}
 
 if (!$istUmzugsteam) {
     if (empty($cat) || !in_array($cat,
@@ -165,6 +199,22 @@ $sqlFrom  = 'FROM `' . $CUA['Table'] . '` U LEFT JOIN `' . $CUM['Table'] . '` M 
     . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
     . ' ) '  . $NL;
 $sqlWhere = "WHERE 1\n";
+
+if ($datumfeld && $datumvon && $datumbis && $datumvon <= $datumbis) {
+    if ($datumvon && $datumbis) {
+        if ($datumvon > $datumbis) {
+            $error = '';
+        } else {
+            $sqlWhere.= 'AND (DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . ')';
+        }
+    }
+    elseif ($datumvon) {
+        $sqlWhere.= 'AND (DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") >= ' . $db::quote($datumvon) . ')';
+    } else {
+        $sqlWhere.= 'AND (DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") <= ' . $db::quote($datumbis) . ')';
+    }
+
+}
 
 if (!$allusers) {
     if ($user['gruppe']=='admin_standort') {
@@ -468,6 +518,28 @@ if ($exportFormat === 'csv' && count($Auftraege)) {
     exit;
 }
 
+$showDateRangeFilter = false;
+$selectable = false;
+$selectableActionTemplate = '';
+$rangeDateFields = [];
+
+if ($cat === 'temp' & $istSuperAdmin) {
+    $selectable = true;
+    $selectableActionTemplate = 'admin_antraege_temp_action.html';
+    $showDateRangeFilter = true;
+    $rangeDateFields = [
+        [
+            'value' => 'antragsdatum',
+            'label' => 'Auftragsdatum',
+            'checked' => $datumfeld === 'antragsdatum'
+        ],
+        [
+            'value' => 'temp_erinnerugsmail_am',
+            'label' => 'Erinnerungsdatum',
+            'checked' => $datumfeld === 'temp_erinnerugsmail_am'
+        ]
+    ];
+}
 
 $Tpl->assign('s', $s);
 $Tpl->assign('top', $top);
@@ -482,6 +554,13 @@ $Tpl->assign('num_all', $num_all);
 $Tpl->assign('summeTotal', $summeTotal);
 $Tpl->assign('artikelStat', $artikelStat);
 $Tpl->assign('aTourNrs', $aTourNrs);
+
+$Tpl->assign('selectable', $selectable);
+$Tpl->assign('selectableActionTemplate', $selectableActionTemplate);
+$Tpl->assign('showDateRangeFilter', $showDateRangeFilter);
+$Tpl->assign('rangeDateFields', $rangeDateFields);
+$Tpl->assign('rangeDatumvon', $datumvon);
+$Tpl->assign('rangeDatumbis', $datumbis);
 
 $Tpl->assign('Umzuege', $Auftraege);
 

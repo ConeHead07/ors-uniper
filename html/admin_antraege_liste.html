@@ -21,6 +21,11 @@
     .flds-body-row .fld-cell {
         word-break: break-all;
     }
+    .fld-cell.fld-checkbox {
+        display: inline-block;
+        width:24px;
+    }
+
 </style>
 <div id="ID128585" class="divTabbedNavigation" style="width:100%;">
 
@@ -69,6 +74,7 @@
         <span style="clear:both"></span>
     </div>
     {/if}
+    {assign var="showCheck" value=!empty($selectable)}
     {assign var="showTourkennung" value=false}
     {assign var="showAuftragsdatum" value=true}
     {assign var="showLieferdatum" value=true}
@@ -81,7 +87,9 @@
     {assign var="showZeit" value=false}
     {assign var="showName" value=false}
     {assign var="showTour" value=false}
+    {assign var="showErinnert" value=false}
 
+    {assign var="checkWidth" value=24}
     {assign var="aidWidth" value=35}
     {assign var="kidWidth" value=65}
     {assign var="landWidth" value=40}
@@ -98,6 +106,7 @@
     {assign var="lieferdatumWidth" value=70}
     {assign var="abgeschlossenWidth" value=75}
     {assign var="summeWidth" value=60}
+    {assign var="erinnertWidth" value=75}
 
 {if $s eq "auslieferung"}
     {assign var="zeitWidth" value=45}
@@ -130,7 +139,8 @@
     {assign var="showAbgeschlossen" value=false}
     {assign var="showBestaetigt" value=false}
     {assign var="showLeistungen" value=true}
-    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $lieferdatumWidth + $bestaetigtWidth}
+    {assign var="showErinnert" value=true}
+    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $lieferdatumWidth + $bestaetigtWidth - $checkWidth - $erinnertWidth}
 {elseif $cat eq "disponierte"}
     {assign var="showBestaetigt" value=false}
     {assign var="showAbgeschlossen" value=false}
@@ -193,8 +203,30 @@
         <input type="hidden" name="ofld" value="{$ofld|escape}">
         <input type="hidden" name="odir" value="{$odir|escape}">
 
+    <span style="border:0;font-weight:bold;font-size:12px;">
+        {if !empty($showDateRangeFilter)}
+            {if !empty($rangeDateFields) && count($rangeDateFields) > 1}
+            Aufträge zeitlich eingrenzen:<br>
+            <select id="datumfeld" name="datumfeld">
+                {foreach item=opt from=$rangeDateFields}
+                    <option value="{$opt.value}" {if !empty($opt.checked)}selected{/if}>{$opt.label}</option>
+                {/foreach}
+            </select>
+            {elseif !empty($rangeDateFields) && count($rangeDateFields) > 0}
+                {$rangeDateFields[0].label} zeitlich eingrenzen:<br>
+                <input type="hidden" name="datumfeld" value="{$rangeDateFields[0].value}">
+            {/if}
+            Von: <input type="date" id="rangeDatumvon" name="datumvon" value="{if !empty($rangeDatumvon)}{$rangeDatumvon|escape}{/if}">
+            Bis: <input type="date" id="rangeDatumbis" name="datumbis" value="{if !empty($rangeDatumvon)}{$rangeDatumbis|escape}{/if}">
+            <button type="submit">Filter anwenden</button>
+        {/if}
+    </span>
+
   <ul class="ulLinkList"> 
   <div class="flds-head-colnames">
+      {if $showCheck}
+        <div class="fld-cell fld-checkbox" style="width:{$checkWidth}px;"><input type="checkbox" id="toggleCheckboxes" name="aids_toggle" value="1"></div>
+      {/if}
       <div class="fld-cell fld-aid order" data-fld="aid" style="width:{$aidWidth}px;" title="Auftrags-ID">ID</div>
       <div class="fld-cell fld-kid order" data-fld="kid" style="width:{$kidWidth}px;" title="Uniper MitarbeiterNr."><a href="{$ListBaseLink}&ofld=kid{if $ofld eq "kid" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
       {if $showTourkennung}
@@ -217,6 +249,9 @@
       {if $showAuftragsdatum}
       <div class="fld-cell fld-beauftragt order" data-fld="antragsdatum" style="width:{$beauftragtWidth}px;" title="Auftragsdatum"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Auftr.Dat.</a></div>
       {/if}
+      {if $showErinnert}
+      <div class="fld-cell fld-erinnert order" data-fld="temp_erinnerungsmail_am" style="width:{$erinnertWidth}px;" title="ErinnertAm"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "temp_erinnerungsmail_am" && $odir ne "DESC"}&odir=DESC{/if}">ErinnertAm</a></div>
+      {/if}
       {if $showGenehmigt}
       <div class="fld-cell fld-genehmigt order" data-fld="genehmigt" style="float:left;width:{$genehmigtWidth}px;" title="Von Property genehmigt"><a href="{$ListBaseLink}&ofld=genehmigt{if $ofld eq "genehmigt_br" && $odir ne "DESC"}&odir=DESC{/if}">Gen</a></div>
       {/if}
@@ -235,6 +270,9 @@
       <br clear=left>
   </div>
       <div class="flds-head-colsearch">
+          {if $showCheck}
+          <div class="fld-cell fld-checkbox" style="width:{$checkWidth}px;"></div>
+          {/if}
           <div class="fld-cell fld-aid" style="width:{$aidWidth}px;"><input name="q[aid]" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></div>
           <div class="fld-cell fld-kid" style="width:{$kidWidth}px;"><input name="q[kid]" value="{if !empty($q) && isset($q.kid)}{$q.kid}{/if}"></div>
           {if $showTourkennung}
@@ -257,6 +295,9 @@
           {if $showAuftragsdatum}
           <div class="fld-cell fld-beauftragt" style="width:{$beauftragtWidth}px;"><input name="q[antragsdatum]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.antragsdatum)}{$q.antragsdatum}{/if}"></div>
           {/if}
+          {if $showErinnert}
+          <div class="fld-cell fld-erinnert" style="width:{$erinnertWidth}px;"><input name="q[temp_erinnerungsmail_am]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.temp_erinnerungsmail_am)}{$q.temp_erinnerungsmail_am}{/if}"></div>
+          {/if}
           {if $showGenehmigt}
           <div class="fld-cell fld-genehmigt" style="width:{$genehmigtWidth}px;"><input name="q[genehmigt_am]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.genehmigt_am)}{$q.genehmigt_am}{/if}"></div>
           {/if}
@@ -278,6 +319,9 @@
   <li class="flds-body-row-wrapper">
       <a class="flds-body-row-link iconRightContentMain" href="{$U.LinkOpen}">
           <div class="flds-body-row">
+              {if $showCheck}
+                <div class="fld-cell fld-checkbox" style="width:{$checkWidth}px;"><input type="checkbox" name="aids[]" value="{$U.aid}"></div>
+              {/if}
               <div class="fld-cell fld-aid" style="width:{$aidWidth}px;font-weight:bold;">{$U.aid}&nbsp;</div>
               <div class="fld-cell fld-kid" style="width:{$kidWidth}px;" >{$U.kid}&nbsp;</div>
               {if $showTourkennung}
@@ -298,7 +342,8 @@
               <div class="fld-cell fld-strasse" style="width:{$strasseWidth}px;">
                   <span class="geo-address"
                         data-address="{$U.strasse|escape},{$U.plz|escape}+{$U.ort|escape},{$U.land|escape}" style="color:red;">
-                {$U.strasse|escape}</span></div>
+                {$U.strasse|escape}</span>
+              </div>
 
               {if $showName}
               <div class="fld-cell fld-service" style="width:{$nameWidth}px;" >{$U.name}&nbsp&nbsp;</div>
@@ -306,6 +351,9 @@
               <div class="fld-cell fld-service" style="width:{$serviceWidth}px;" >{$U.service}&nbsp&nbsp;</div>
               {if $showAuftragsdatum}
               <div class="fld-cell fld-beauftragt" style="width:{$beauftragtWidth}px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%y"}&nbsp;</div>
+              {/if}
+              {if $showErinnert}
+              <div class="fld-cell fld-erinnert" style="width:{$erinnertWidth}px;font-style:italic;">{if !empty($U.temp_erinnerungsmail_am)}{$U.temp_erinnerungsmail_am|date_format:"%d.%m.%y"}{/if}&nbsp;</div>
               {/if}
               {if $showGenehmigt}
               <div class="fld-cell fld-genehmigt" style="width:{$genehmigtWidth}px;">{$U.Genehmigt}&nbsp;</div>
@@ -329,6 +377,9 @@
       {* <li>{$U|json_encode}</li> *}
 {/foreach}
 </ul>
+        {if !empty($selectable) && !empty($selectableActionTemplate)}
+            {include file=$selectableActionTemplate}
+        {/if}
     </form>
 <h2 style="margin:1rem 0 0 0;padding-bottom:0;">Enthaltene Artikel</h2>
     <table class="tblList" width="100%">

@@ -1,0 +1,89 @@
+<link rel="stylesheet" type="text/css" href="{literal}{WebRoot}{/literal}css/umzugsformular.css?%assetsRefreshId%">
+<style>
+    .btn,
+    .btn.link {
+        cursor: pointer;
+        color: #0a53be;
+    }
+    .btn:hover {
+        text-decoration: underline;
+    }
+</style>
+<div>
+    <button id="btnTempDelete" type="button" class="btn red">Anträge löschen</button>
+    <button id="btnSendErinnerungsmail" type="button" class="btn blue">Erinnerungsmail an Antragsteller senden</button>
+    <button id="btnPreview" class="btn link">Vorschau für Erinnerungsmail anzeigen</button>
+</div>
+{literal}
+<script>
+    var validateRangeForm = function() {
+        var datumvon = $("#rangeDatumvon").val();
+        var datumbis = $("#rangeDatumbis").val();
+
+        if (datumvon && datumbis && datumvon > datumbis) {
+            alert('Im Datumsfilter darf die Angabe "Von" nicht größer ala "Bis" sein!');
+            return false;
+        }
+        return true;
+    };
+    var getNumChecked = function() {
+        return $("input[type=checkbox][name=aids\\[\\]]:checked").length;
+    };
+    var getCheckedAids = function() {
+        var aids = [];
+        $("input[type=checkbox][name=aids\\[\\]]:checked").each(function() {
+            aids.push( $(this).val() );
+        });
+        return aids;
+    };
+$(function() {
+
+    $("#btnPreview").bind("click", function(e) {
+        var elm = $("input[type=checkbox][name=aids\\[\\]]:checked").first();
+        if (!elm.length) {
+            alert('Es muss mind. ein Eintrag für die Vorschau markiert sein!');
+            return false;
+        }
+        var aid = elm.val();
+        var url = '/sites/admin_erinnerungsmail.php?batchCmd=erinnerungsmailPreview&aids=' + aid;
+
+        window.open(url, 'erinnerungsmailPreview');
+    });
+
+    $("#btnTempDelete").bind("click", function(e) {
+        var numChecked = getNumChecked();
+        var checkedAids = getCheckedAids();
+        if (!numChecked) {
+            e.preventDefault();
+            alert("Es wurden keine Aufträge zum Löschen ausgewählt!");
+            return false;
+        }
+        if (confirm('Möchten Sie die ' + numChecked + ' ausgewählten Aufträge wirklich löschen?')) {
+            var url = '/sites/admin_temp_delete.php?batchCmd=tempDelete&aids=' + checkedAids.join(",");
+            window.open(url, 'tempDelete');
+            return true;
+        }
+        return false;
+    });
+
+
+    $("#btnSendErinnerungsmail").bind("click", function(e) {
+        var numChecked = getNumChecked();
+        var checkedAids = getCheckedAids();
+        if (!numChecked) {
+            e.preventDefault();
+            alert("Es wurden keine Aufträge für die Erinnerungsmail ausgewählt!");
+            return false;
+        }
+        if (confirm('Möchten Sie für die ' + numChecked + ' ausgewählten Aufträge wirklich Erinnerungsmails senden?')) {
+            // alert("Die Erinnerungsmails wurde noch nicht implementiert!");
+
+            var url = '/sites/admin_erinnerungsmail.php?batchCmd=erinnerungsmail&aids=' + checkedAids.join(",");
+
+            window.open(url, 'erinnerungsmailSend');
+        }
+        return false;
+    });
+});
+</script>
+{/literal}
