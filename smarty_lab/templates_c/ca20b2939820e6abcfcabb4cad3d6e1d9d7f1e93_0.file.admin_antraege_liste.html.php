@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-20 14:43:57
+/* Smarty version 3.1.34-dev-7, created on 2021-12-20 20:55:18
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61c0889de9d2b8_68262815',
+  'unifunc' => 'content_61c0dfa61a4c82_62957179',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1640007830,
+      1 => 1640030105,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61c0889de9d2b8_68262815 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61c0dfa61a4c82_62957179 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN -->
@@ -539,12 +539,14 @@ px;" ><?php echo $_smarty_tpl->tpl_vars['U']->value['service'];?>
 &nbsp&nbsp;</div>
               <?php if ($_smarty_tpl->tpl_vars['showAuftragsdatum']->value) {?>
               <div class="fld-cell fld-beauftragt" style="width:<?php echo $_smarty_tpl->tpl_vars['beauftragtWidth']->value;?>
-px;font-style:italic;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Antragsdatum'],"%d.%m.%y");?>
+px;font-style:italic;" title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['Antragsdatum'], ENT_QUOTES, 'UTF-8', true);?>
+"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Antragsdatum'],"%d.%m.%y");?>
 &nbsp;</div>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showErinnert']->value) {?>
               <div class="fld-cell fld-erinnert" style="width:<?php echo $_smarty_tpl->tpl_vars['erinnertWidth']->value;?>
-px;font-style:italic;"><?php if (!empty($_smarty_tpl->tpl_vars['U']->value['temp_erinnerungsmail_am'])) {
+px;font-style:italic;" title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['temp_erinnerungsmail_am'], ENT_QUOTES, 'UTF-8', true);?>
+"><?php if (!empty($_smarty_tpl->tpl_vars['U']->value['temp_erinnerungsmail_am'])) {
 echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['temp_erinnerungsmail_am'],"%d.%m.%y");
 }?>&nbsp;</div>
               <?php }?>
@@ -555,12 +557,14 @@ px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['Genehmigt'];?>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showBestaetigt']->value) {?>
               <div class="fld-cell fld-bestaetigt" style=";width:<?php echo $_smarty_tpl->tpl_vars['bestaetigtWidth']->value;?>
-px;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Bestaetigt'],"%d.%m.%y");?>
+px;" title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['Bestaetigt'], ENT_QUOTES, 'UTF-8', true);?>
+"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Bestaetigt'],"%d.%m.%y");?>
 &nbsp;</div>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showAbgeschlossen']->value) {?>
               <div class="fld-cell fld-abgeschlossen" style="width:<?php echo $_smarty_tpl->tpl_vars['abgeschlossenWidth']->value;?>
-px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['Abgeschlossen'];?>
+px;" title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['abgeschlossen_am'], ENT_QUOTES, 'UTF-8', true);?>
+"><?php echo $_smarty_tpl->tpl_vars['U']->value['Abgeschlossen'];?>
  <?php if ($_smarty_tpl->tpl_vars['U']->value['abgeschlossen_am']) {
 echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['abgeschlossen_am'],"%d.%m.%y");
 }?>&nbsp;</div>
@@ -659,6 +663,10 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 ";
         var odir = "<?php echo $_smarty_tpl->tpl_vars['odir']->value;?>
 ";
+
+        $("#toggleCheckboxes").bind("change", function() {
+            $(":input[type=checkbox][name=aids\\[\\]]").prop("checked", this.checked );
+        });
 
         var send = function(addQuery = '') {
             var url = "?" + $("#frmList :input")

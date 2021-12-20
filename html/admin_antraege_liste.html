@@ -433,6 +433,10 @@
         var ofld = "{$ofld}";
         var odir = "{$odir}";
 
+        $("#toggleCheckboxes").bind("change", function() {
+            $(":input[type=checkbox][name=aids\\[\\]]").prop("checked", this.checked );
+        });
+
         var send = function(addQuery = '') {
             var url = "?" + $("#frmList :input")
                 .filter(function(index, element) {
