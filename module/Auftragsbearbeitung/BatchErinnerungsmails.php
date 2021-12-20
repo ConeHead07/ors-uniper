@@ -154,12 +154,18 @@ class BatchErinnerungsmails
         return $rplVars;
     }
 
+    public function updateErinnertAm(int $aid) {
+        $sql = 'UPDATE mm_umzuege SET temp_erinnerungsmail_am = NOW() WHERE aid = ' . $aid . ' LIMIT 1';
+        $this->db->query($sql);
+    }
+
     public function run() {
         $rows = $this->getAuftraege();
         $numSent = 0;
         $aUserHeader = $this->aHeader;
 
         foreach($rows as $row) {
+            $aid = (int)$row['aid'];
             $rplVars = $this->getTplVars($row);
             $to = $this->getTo($row);
             $su = $this->tplSubject;
@@ -167,7 +173,11 @@ class BatchErinnerungsmails
             $aAttachements = [];
             $mailer = \SmtpMailer::getNewInstance();
             $mailer->setTplVars($rplVars);
-            $numSent+= $mailer->sendMultiMail([ ['email' => $to, 'anrede' => ''] ], $su, null, $body, $aAttachements, $aUserHeader);
+            $sent = $mailer->sendMultiMail([ ['email' => $to, 'anrede' => ''] ], $su, null, $body, $aAttachements, $aUserHeader);
+            if ($sent) {
+                $numSent++;
+                $this->updateErinnertAm($aid);
+            }
         }
         return $numSent;
     }

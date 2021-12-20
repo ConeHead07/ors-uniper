@@ -350,19 +350,19 @@
               {/if}
               <div class="fld-cell fld-service" style="width:{$serviceWidth}px;" >{$U.service}&nbsp&nbsp;</div>
               {if $showAuftragsdatum}
-              <div class="fld-cell fld-beauftragt" style="width:{$beauftragtWidth}px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%y"}&nbsp;</div>
+              <div class="fld-cell fld-beauftragt" style="width:{$beauftragtWidth}px;font-style:italic;" title="{$U.Antragsdatum|escape}">{$U.Antragsdatum|date_format:"%d.%m.%y"}&nbsp;</div>
               {/if}
               {if $showErinnert}
-              <div class="fld-cell fld-erinnert" style="width:{$erinnertWidth}px;font-style:italic;">{if !empty($U.temp_erinnerungsmail_am)}{$U.temp_erinnerungsmail_am|date_format:"%d.%m.%y"}{/if}&nbsp;</div>
+              <div class="fld-cell fld-erinnert" style="width:{$erinnertWidth}px;font-style:italic;" title="{$U.temp_erinnerungsmail_am|escape}">{if !empty($U.temp_erinnerungsmail_am)}{$U.temp_erinnerungsmail_am|date_format:"%d.%m.%y"}{/if}&nbsp;</div>
               {/if}
               {if $showGenehmigt}
               <div class="fld-cell fld-genehmigt" style="width:{$genehmigtWidth}px;">{$U.Genehmigt}&nbsp;</div>
               {/if}
               {if $showBestaetigt}
-              <div class="fld-cell fld-bestaetigt" style=";width:{$bestaetigtWidth}px;">{$U.Bestaetigt|date_format:"%d.%m.%y"}&nbsp;</div>
+              <div class="fld-cell fld-bestaetigt" style=";width:{$bestaetigtWidth}px;" title="{$U.Bestaetigt|escape}">{$U.Bestaetigt|date_format:"%d.%m.%y"}&nbsp;</div>
               {/if}
               {if $showAbgeschlossen}
-              <div class="fld-cell fld-abgeschlossen" style="width:{$abgeschlossenWidth}px;">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}&nbsp;</div>
+              <div class="fld-cell fld-abgeschlossen" style="width:{$abgeschlossenWidth}px;" title="{$U.abgeschlossen_am|escape}">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}&nbsp;</div>
               {/if}
               {if $showLeistungen}
               <div class="fld-cell fld-leistungen" style="width:{$leistungenWidth}px;" title="{$U.LeistungenFull}">{$U.Leistungen}&nbsp;</div>
