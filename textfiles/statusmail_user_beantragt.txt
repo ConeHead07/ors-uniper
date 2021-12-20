@@ -1,4 +1,4 @@
-Betreff=Bestellung ID {AID} - Bestaetigt
+Betreff=Bestellung ID {AID} - Bearbeitung
 
 Hallo {Vorname} {Name},
 
@@ -11,4 +11,3 @@ Mit freundlichen Grüßen
 
 Ihr Team von
 merTens AG für {HomepageTitle}
-
