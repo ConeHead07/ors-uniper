@@ -317,10 +317,11 @@
       </div>
 {foreach item=U from=$Umzuege}
   <li class="flds-body-row-wrapper">
-      <a class="flds-body-row-link iconRightContentMain" href="{$U.LinkOpen}">
-          <div class="flds-body-row">
+      <a class="flds-body-row-link iconRightContentMain">
+          <div class="flds-body-row flds-body-row-link" data-href="{$U.LinkOpen}">
               {if $showCheck}
-                <div class="fld-cell fld-checkbox" style="width:{$checkWidth}px;"><input type="checkbox" name="aids[]" value="{$U.aid}"></div>
+                <div class="fld-cell fld-checkbox" style="width:{$checkWidth}px;"><input type="checkbox" name="aids[]" value="{$U.aid}">
+                </div>
               {/if}
               <div class="fld-cell fld-aid" style="width:{$aidWidth}px;font-weight:bold;">{$U.aid}&nbsp;</div>
               <div class="fld-cell fld-kid" style="width:{$kidWidth}px;" >{$U.kid}&nbsp;</div>
@@ -429,12 +430,23 @@
 </div> 
 <!-- TAB BASIC MODULE (128585) END -->
 <script>
+    {literal}
+
     $(function() {
         var ofld = "{$ofld}";
         var odir = "{$odir}";
 
-        $("#toggleCheckboxes").bind("change", function() {
+        $("#toggleCheckboxes").bind("change", function(e) {
             $(":input[type=checkbox][name=aids\\[\\]]").prop("checked", this.checked );
+            return false;
+        });
+
+        $("input[type=checkbox][name^=aids\\[\\]]").bind("click", function(e) {
+            e.stopPropagation();
+        });
+
+        $(".flds-body-row-link[data-href]").bind("click", function(e) {
+            self.location.href= $(this).data("href");
         });
 
         var send = function(addQuery = '') {
@@ -489,6 +501,7 @@
                 });
         });
     });
+    {/literal}
 </script>
 
 

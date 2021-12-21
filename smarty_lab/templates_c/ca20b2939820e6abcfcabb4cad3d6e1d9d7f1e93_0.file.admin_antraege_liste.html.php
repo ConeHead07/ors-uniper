@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-20 20:55:18
+/* Smarty version 3.1.34-dev-7, created on 2021-12-21 11:45:06
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61c0dfa61a4c82_62957179',
+  'unifunc' => 'content_61c1b0328c36f8_60596477',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1640030105,
+      1 => 1640083497,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61c0dfa61a4c82_62957179 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61c1b0328c36f8_60596477 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN -->
@@ -472,13 +472,14 @@ if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['U']->value) {
 ?>
   <li class="flds-body-row-wrapper">
-      <a class="flds-body-row-link iconRightContentMain" href="<?php echo $_smarty_tpl->tpl_vars['U']->value['LinkOpen'];?>
+      <a class="flds-body-row-link iconRightContentMain">
+          <div class="flds-body-row flds-body-row-link" data-href="<?php echo $_smarty_tpl->tpl_vars['U']->value['LinkOpen'];?>
 ">
-          <div class="flds-body-row">
               <?php if ($_smarty_tpl->tpl_vars['showCheck']->value) {?>
                 <div class="fld-cell fld-checkbox" style="width:<?php echo $_smarty_tpl->tpl_vars['checkWidth']->value;?>
 px;"><input type="checkbox" name="aids[]" value="<?php echo $_smarty_tpl->tpl_vars['U']->value['aid'];?>
-"></div>
+">
+                </div>
               <?php }?>
               <div class="fld-cell fld-aid" style="width:<?php echo $_smarty_tpl->tpl_vars['aidWidth']->value;?>
 px;font-weight:bold;"><?php echo $_smarty_tpl->tpl_vars['U']->value['aid'];?>
@@ -658,14 +659,23 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 <!-- TAB BASIC MODULE (128585) END -->
 <?php echo '<script'; ?>
 >
-    $(function() {
-        var ofld = "<?php echo $_smarty_tpl->tpl_vars['ofld']->value;?>
-";
-        var odir = "<?php echo $_smarty_tpl->tpl_vars['odir']->value;?>
-";
+    
 
-        $("#toggleCheckboxes").bind("change", function() {
+    $(function() {
+        var ofld = "{$ofld}";
+        var odir = "{$odir}";
+
+        $("#toggleCheckboxes").bind("change", function(e) {
             $(":input[type=checkbox][name=aids\\[\\]]").prop("checked", this.checked );
+            return false;
+        });
+
+        $("input[type=checkbox][name^=aids\\[\\]]").bind("click", function(e) {
+            e.stopPropagation();
+        });
+
+        $(".flds-body-row-link[data-href]").bind("click", function(e) {
+            self.location.href= $(this).data("href");
         });
 
         var send = function(addQuery = '') {
@@ -720,6 +730,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                 });
         });
     });
+    
 <?php echo '</script'; ?>
 >
 
