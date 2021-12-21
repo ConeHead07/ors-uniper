@@ -65,12 +65,18 @@ function array2Table(array $array) {
     $tbl = "<table class='tblList' width='100%'>$NL"
         . "$t<thead>$NL"
         . "$t2<tr>$NL"
-        . "$t3<th>" . implode('</th><th>', $cols) . "</th>$NL"
+        . implode( '', array_map(function($v) use($t3) { return "$t3<th class=\"fld-$v\">$v</th>\n"; }, $cols))
+       // . "$t3<th>" . implode('</th><th>', $cols) . "</th>$NL"
         . "$t2</tr>$NL"
+        . "$t2</thead>$NL"
         . "$t<tbody>$NL";
     for($i = 0; $i < $num; $i++) {
         $row = $array[$i];
-        $tbl.= "$t2<tr>$NL$t3<td>" . implode("</td>$NL$t3<td>", $row) . "</td>$NL$t2</tr>$NL";
+        $tbl.= "$t2<tr>";
+        foreach($row as $fld => $val) {
+            $tbl.= "$NL$t3<td class='fld-$fld'>" . $val . "</td>$NL";
+        }
+        $tbl.= "$NL$t2</tr>$NL";
     }
     $tbl.= "$t</tbody>$NL</table>"
     ;
@@ -104,7 +110,7 @@ $sqlAuftraege = 'SELECT
     JOIN mm_leistungskatalog AS lk ON (ul.leistung_id = lk.leistung_id)
     LEFT JOIN mm_leistungskategorie k ON (lk.leistungskategorie_id = k.leistungskategorie_id)
     WHERE umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja"
-    AND ' . $datumfeld . ' BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
+    AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
     ' . $andWhere . '
     GROUP BY a.aid
 ';
@@ -114,7 +120,7 @@ $sqlLeistungen = 'SELECT
       COUNT(DISTINCT ul.aid ) AS Auftraege,
       COUNT(1) AS Menge,
       COUNT(1) AS menge_mertens,
-      SUM(lk.preis_pro_einheit),
+      SUM(lk.preis_pro_einheit) AS Summe,
       GROUP_CONCAT(ul.aid ORDER BY ul.aid SEPARATOR ",") AS csv_ul_aids 
     FROM mm_umzuege_leistungen AS ul
     JOIN mm_leistungskatalog AS lk ON (ul.leistung_id = lk.leistung_id)
@@ -123,7 +129,7 @@ $sqlLeistungen = 'SELECT
       SELECT aid FROM mm_umzuege 
       WHERE umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja" 
       AND (vorgangsnummer IS NULL OR TRIM(vorgangsnummer) = "")
-      AND ' . $datumfeld . ' BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
+      AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
       ' .$andWhere . '
     )
     GROUP BY lk.leistung_id, k.leistungskategorie, lk.Bezeichnung, lk.Farbe, lk.Groesse, lk.preis_pro_einheit
@@ -143,11 +149,11 @@ $sqlTeilLeistungen = 'SELECT
       SELECT aid FROM mm_umzuege 
       WHERE umzugsstatus = "bestaetigt"
       AND (vorgangsnummer IS NULL OR TRIM(vorgangsnummer) = "")
-      AND ' . $datumfeld . ' BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
+      AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
     ) AND (
         ul.lieferstatus = "Geliefert" 
         AND (ul.rechnungsnr IS NULL OR TRIM(ul.rechnungsnr) = "")
-        AND ul.lieferdatum BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
+        AND DATE_FORMAT(ul.lieferdatum, "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
     )
     GROUP BY lk.leistung_id, k.leistungskategorie, lk.Bezeichnung, lk.Farbe, lk.Groesse, lk.preis_pro_einheit
 ';
@@ -159,6 +165,8 @@ $sthT = $db->query($sqlTeilLeistungen);
 $rowsA = $sthA->fetch_all(MYSQLI_ASSOC);
 $rowsL = $sthL->fetch_all(MYSQLI_ASSOC);
 $rowsT = $sthT->fetch_all(MYSQLI_ASSOC);
+
+// echo '<pre>' . print_r(compact('sqlAuftraege', 'sqlLeistungen', 'rowsA', 'rowsL'), 1) . '</pre>';
 
 $csvAids = [];
 $csvAidsGrouped = array_column($rowsL, 'csv_ul_aids');
@@ -268,6 +276,19 @@ if (strcmp($output, 'web') === 0) {
         button:hover {
             background-color: #006ed1;
         }
+        
+        .fld-Auftraege, .fld-Menge, .fld-menge_mertens, .fld-preis_pro_einheit, 
+        th.fld-Auftraege, th.fld-Menge, th.fld-menge_mertens,        
+        .fld-Summe,
+        .tblList td.fld-Summe,
+         .tblList thead tr th.fld-Summe,
+         .tblList thead tr th.fld-Auftraege,
+         .tblList thead tr th.fld-Menge,
+         .tblList thead tr th.fld-menge_mertens,
+         .tblList thead tr th.fld-preis_pro_einheit  { 
+            text-align: right;
+        }
+        
         </style>
     </head>
     <body>
@@ -301,6 +322,42 @@ HEREDOC;
     echo '<h2 style="margin-top: 0">Abrechenbare Leistungen, erbracht im Zeitraum ' . date('d.m.', $timevon) . ' bis ' . date('d.m.Y', $timebis) . '</h2>';
     echo '<h3>Aufträge</h3>' . "\n";
     if (count($rowsA)) {
+        $summeA = array_sum(array_column($rowsA, 'Summe'));
+        $rowsA = array_map(function($v) use($summeA) {
+            $orig = $v;
+            $re = [
+                'aid' => $v['aid'],
+                'kid' => $v['kid'],
+                'LiefDat' => $v['umzugstermin'],
+                'Abgeschl.' => $v['abgeschlossen_am'],
+                'Tour' => $v['tour_kennung'],
+                'Ort' => $v['ort'],
+                'lstAbk' => $v['LstAbk'],
+                'Leistungen' => $v['Lstg'],
+                'Summe' => $v['Summe']
+            ];
+            foreach($re as $col => $val) {
+                switch($col) {
+                    case 'Lstg':
+                    case 'Leistungen':
+                        $re[$col] = '<div>' . implode("</div>\n<div>", explode("\n", $val)) . '</div>';
+                        break;
+
+                    case 'Abgeschl.':
+                    case 'abgeschlossen_am':
+                    case 'umzugstermin':
+                    case 'LiefDat':
+                        $re[$col] = date("d.m.Y", strtotime($val));
+                        break;
+
+                    case 'Summe':
+                        $re[$col] = number_format((float)$val, 2, ',', '.');
+                        break;
+                }
+            }
+            return $re;
+        }, $rowsA);
+        echo '<div style="text-align:right;font-weight:bold;">' . number_format($summeA, 2, ',', '.') . '&euro;</div>' . "\n";
         echo array2Table($rowsA);
     } else {
         echo '<div><i>Keine</i></div>' . "\n";
@@ -308,8 +365,32 @@ HEREDOC;
     echo "<br>\n";
     echo "<h3>Leistungen</h3>\n";
     if (count($rowsL)) {
+        $summeL = array_sum(array_column($rowsL, 'Summe'));
+        $rowsL = array_map(function($v) {
+            $summe = $v['Summe'];
+            unset($v['Kategorie']);
+            unset($v['leistungseinheit']);
+            unset($v['waehrung']);
+            unset($v['leistung_id']);
+            unset($v['csv_ul_aids']);
+            unset($v['Summe']);
+            $v['Summe'] = $summe;
+            foreach($v as $col => $val) {
+                switch($col) {
+                    case 'Summe':
+                        $v[$col] = number_format((float)$val, 2, ',', '.');
+                        break;
+
+                    case 'csv_ul_aids':
+                        $v[$col] = str_replace(',', ', ', $val);
+                        break;
+                }
+            }
+            return $v;
+        }, $rowsL);
+        echo '<div style="text-align:right;font-weight:bold;">' . number_format($summeL, 2, ',', '.') . '&euro;</div>' . "\n";
         echo array2Table($rowsL);
-        echo '<div style="font-size: x-small">CSV-Aids: ' . json_encode($csvAids) . "</div>>\n";
+        echo '<div style="font-size: x-small;display: none;">CSV-Aids: ' . json_encode($csvAids) . "</div>\n";
     } else {
         echo '<div><i>Keine</i></div>' . "\n";
     }
@@ -317,7 +398,7 @@ HEREDOC;
     echo "<h3>Teil-Leistungen</h3>\n";
     if (count($rowsT)) {
         echo array2Table($rowsT);
-        echo '<div style="font-size: x-small">CSV-Ulids: ' . json_encode($csvUlids) . "</div>>\n";
+        echo '<div style="font-size: x-small;display: none;">CSV-Ulids: ' . json_encode($csvUlids) . "</div>\n";
     } else {
         echo '<div><i>Keine</i></div>' . "\n";
     }
