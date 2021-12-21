@@ -42,16 +42,20 @@ $finish = (!empty($_REQUEST['finish'])) ? (int)(bool)$_REQUEST['finish'] : 0;
 $wwsnr = (!empty($_REQUEST['wwsnr']))   ? $_REQUEST['wwsnr'] : '';
 $all   = (!empty($_REQUEST['all']))     ? $_REQUEST['all'] : '';
 
-$aAids = [];
-$aUlids = [];
+$aids = getRequest('aids', []);
+$ulids = getRequest('ulids', []);
+
+$aAids = is_array($aids) && count($aids) ? array_map('intval', array_unique($aids)) : [];
+$aUlids = is_array($ulids) && count($ulids) ? array_map('intval', array_unique($ulids)) : [];
 
 if ($finish && $wwsnr && count($aids)) {
-    $sql = 'UPDATE mm_umzuege SET berechnet_am = NOW(), vorgangsnummer = :wwsnr WHERE aid IN('.implode(',', $aids).')';
+    $sql = 'UPDATE mm_umzuege SET berechnet_am = NOW(), vorgangsnummer = :wwsnr WHERE aid IN('.implode(',', $aAids ).')';
     $db->query($sql, array('wwsnr' => $wwsnr));
     //    echo $db->error() . '<br>' . $db->lastQuery . '<br>';
 }
-if ($finish && $wwsnr && count($ulids)) {
-    $sql = 'UPDATE mm_umzuege SET berechnet_am = NOW(), vorgangsnummer = :wwsnr WHERE aid IN('.implode(',', $ulids).')';
+
+if ($finish && $wwsnr && count($aUlids)) {
+    $sql = 'UPDATE mm_umzuege_leistungen SET rechnungsnr = :wwsnr WHERE aid IN('.implode(',', $aUlids).')';
     $db->query($sql, array('wwsnr' => $wwsnr));
     //    echo $db->error() . '<br>' . $db->lastQuery . '<br>';
 }
@@ -157,7 +161,7 @@ $sqlWhere = ' WHERE '
     .' abgeschlossen = "Ja" AND abgeschlossen_am IS NOT NULL AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN :von AND :bis '
     .(!$all ? 'AND berechnet_am IS NULL' : '')
     .( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
-    ;
+;
 $sqlGroup = ' GROUP BY a.aid';
 $sqlHaving = ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' : '');
 $sqlOrder = ' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
