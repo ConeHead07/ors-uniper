@@ -20,9 +20,18 @@ $datumbis = trim((!empty($_REQUEST['datumbis'])) ? $_REQUEST['datumbis'] : ''); 
 
 $output = getRequest('output', 'web');
 $mailto = getRequest('mailto', 'k.gerring@mertens.ag');
-$abgerechnet = getRequest('abgerechnet', 'alle');
+$abgerechnet = getRequest('abgerechnet', '');
+$all = getRequest('all', '');
 $vorgangsnr = strip_tags(getRequest('vorgangsnummer', ''));
 $wwsnr = strip_tags(getRequest('wwsnr', ''));
+
+if (empty($abgerechnet)) {
+    $abgerechnet = empty($all) ? 'nein' : 'alle';
+}
+if (empty($abgerechnet)) {
+    $abgerechnet = 'nein';
+}
+
 if (empty($vorgangsnr) && !empty($wwsnr)) {
     $vorgangsnr = $wwsnr;
 }
@@ -85,12 +94,12 @@ function array2Table(array $array) {
 
 if (strtolower($abgerechnet) === 'ja') {
     if ($vorgangsnr) {
-        $andWhere = 'AND IFNULL(a.vorgangnsr, "") = ' . $db::quote($vorgangsnr);
+        $andWhere = 'AND IFNULL(vorgangsnummer, "") = ' . $db::quote($vorgangsnr);
     } else {
-        $andWhere = 'AND IFNULL(a.vorgangnsr, "") != ""';
+        $andWhere = 'AND IFNULL(vorgangsnummer, "") != ""';
     }
 } elseif (strtolower($abgerechnet) === 'nein') {
-    $andnWhere = 'AND IFNULL(a.vorgangnsr, "") = ""';
+    $andWhere = 'AND IFNULL(vorgangsnummer, "") = ""';
 } else {
     $andWhere = '';
 }
@@ -110,7 +119,7 @@ $sqlAuftraege = 'SELECT
     JOIN mm_leistungskatalog AS lk ON (ul.leistung_id = lk.leistung_id)
     LEFT JOIN mm_leistungskategorie k ON (lk.leistungskategorie_id = k.leistungskategorie_id)
     WHERE umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja"
-    AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
+      AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
     ' . $andWhere . '
     GROUP BY a.aid
 ';
@@ -128,7 +137,6 @@ $sqlLeistungen = 'SELECT
     WHERE ul.aid IN (
       SELECT aid FROM mm_umzuege 
       WHERE umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja" 
-      AND (vorgangsnummer IS NULL OR TRIM(vorgangsnummer) = "")
       AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
       ' .$andWhere . '
     )
@@ -308,7 +316,7 @@ if (strcmp($output, 'web') === 0) {
                 </div>
                 <div style="margin: 0.5rem 0">
                 <b>Abgerechnete (mit Rechnungsr): </b>
-                <label><input type="radio" name="abgerechnet" $abgerechnet_alle value="alle"> Alle</label>
+                <label><input type="radio" name="abgerechnet" $abgerechnet_alle value="alle"> Alle (Mit und ohne RNR)</label>
                 <label><input type="radio" name="abgerechnet" $abgerechnet_nein value="nein"> Ohne RNR</label>
                 <label><input type="radio" name="abgerechnet" $abgerechnet_ja value="ja"> Mit RNR</label>
                 <input type="text" name="vorgangsnummer" value="$vorgangsnr" placeholder="Rechnungsnr">
