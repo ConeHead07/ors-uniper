@@ -46,7 +46,7 @@ $PreiseAnzeigen = ($user['darf_preise_sehen'] === 'Ja') ? 1 : 0;
 // die('<pre>' . print_r($user,1));
 $Tpl->assign('PreiseAnzeigen', $PreiseAnzeigen);
 
-$sql = 'SELECT l.leistung_id, l.leistung_ref_id, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
+$sql = 'SELECT l.leistung_id, l.leistung_ref_id, l.leistung_ref_id2, l.leistung_ref_id3, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
       . ' leistungskategorie AS kategorie, l.leistungskategorie_id AS kategorie_id, '
       . ' l.aktiv, l.verfuegbar, '
       . ' preis_pro_einheit, image, '

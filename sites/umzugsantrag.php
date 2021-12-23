@@ -31,6 +31,8 @@ $NL = "\n";
 $sql = 'SELECT ' . $NL
     . ' l.leistung_id, ' . $NL
     . ' l.leistung_ref_id, ' . $NL
+    . ' l.leistung_ref_id2, ' . $NL
+    . ' l.leistung_ref_id3, ' . $NL
     . ' IFNULL(l.leistung_stamm_id, StammIds.leistung_stamm_id) AS leistung_stamm_id, ' . $NL
     . ' IFNULL(StammIds.numVarianten, 0) AS NumVarianten, ' . $NL
     . ' l.Bezeichnung, ' . $NL
@@ -76,6 +78,8 @@ if ($db->error()) {
 foreach($lkItems as $k => $v) {
     $v['leistung_id'] = (int)$v['leistung_id'];
     $v['leistung_ref_id'] = (int)$v['leistung_ref_id'];
+    $v['leistung_ref_id2'] = (int)$v['leistung_ref_id2'];
+    $v['leistung_ref_id3'] = (int)$v['leistung_ref_id3'];
     $v['leistung_stamm_id'] = (int)$v['leistung_stamm_id'];
     $v['NumVarianten'] = (int)$v['NumVarianten'];
     $v['preis_pro_einheit'] = (float)$v['preis_pro_einheit'];
