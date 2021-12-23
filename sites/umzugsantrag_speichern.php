@@ -52,7 +52,7 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
         ];
     }
 
-    $sql = 'SELECT l.leistung_id, l.leistung_ref_id, l.leistungskategorie_id, k.leistungskategorie '
+    $sql = 'SELECT l.leistung_id, l.leistung_ref_id, l.leistung_ref_id2, l.leistung_ref_id3, l.leistungskategorie_id, k.leistungskategorie '
         . ' FROM mm_leistungskatalog AS l'
         . ' JOIN mm_leistungskategorie AS k ON (l.leistungskategorie_id = k.leistungskategorie_id) '
         . ' WHERE leistung_id IN (' . implode(', ', $aLIds) . ') '
@@ -68,6 +68,8 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
         foreach ($rows as $_row) {
             $_id = $_row['leistung_id'];
             $_refId = $_row['leistung_ref_id'];
+            $_refId2 = $_row['leistung_ref_id2'];
+            $_refId3 = $_row['leistung_ref_id3'];
             $_ktgId = (int)$_row['leistungskategorie_id'];
             if ($_ktgId === 21) {
                 $aHasPos['Stuhl']++;
@@ -76,24 +78,64 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
             } elseif ($_ktgId === 23) {
                 $aHasPos['Leuchte']++;
             }
-            if (!$_refId) {
+            if (!$_refId && !$_refId2 && !$_refId3) {
                 continue;
             }
-            if (!isset($rowsByRefId[$_refId])) {
-                $rowsByRefId[$_refId] = [
-                    'aid' => $AID,
-                    'leistung_id' => $_refId,
-                    'menge_property' => 0,
-                    'menge2_property' => 1,
-                    'menge_mertens' => 0,
-                    'menge2_mertens' => 1,
-                ];
+            if ($_refId) {
+                if (!isset($rowsByRefId[$_refId])) {
+                    $rowsByRefId[$_refId] = [
+                        'aid' => $AID,
+                        'leistung_id' => $_refId,
+                        'menge_property' => 0,
+                        'menge2_property' => 1,
+                        'menge_mertens' => 0,
+                        'menge2_mertens' => 1,
+                    ];
+                }
+                if (isset($rowsById[$_refId])) {
+                    unset($rowsById[$_refId]);
+                }
+
+                $rowsByRefId[$_refId]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
+                $rowsByRefId[$_refId]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
             }
-            if (isset($rowsById[$_refId])) {
-                unset($rowsById[$_refId]);
+
+            if ($_refId2) {
+                if (!isset($rowsByRefId[$_refId2])) {
+                    $rowsByRefId[$_refId2] = [
+                        'aid' => $AID,
+                        'leistung_id' => $_refId2,
+                        'menge_property' => 0,
+                        'menge2_property' => 1,
+                        'menge_mertens' => 0,
+                        'menge2_mertens' => 1,
+                    ];
+                }
+                if (isset($rowsById[$_refId2])) {
+                    unset($rowsById[$_refId2]);
+                }
+
+                $rowsByRefId[$_refId2]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
+                $rowsByRefId[$_refId2]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
             }
-            $rowsByRefId[$_refId]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
-            $rowsByRefId[$_refId]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
+            if ($_refId3) {
+                if (!isset($rowsByRefId[$_refId3])) {
+                    $rowsByRefId[$_refId3] = [
+                        'aid' => $AID,
+                        'leistung_id' => $_refId3,
+                        'menge_property' => 0,
+                        'menge2_property' => 1,
+                        'menge_mertens' => 0,
+                        'menge2_mertens' => 1,
+                    ];
+                }
+                if (isset($rowsById[$_refId3])) {
+                    unset($rowsById[$_refId3]);
+                }
+
+                $rowsByRefId[$_refId3]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
+                $rowsByRefId[$_refId3]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
+            }
         }
 
         if ($aHasPos['Stuhl'] > 0 && $aHasPos['Schreibtisch'] > 0 && $aHasPos['Leuchte'] > 0) {
