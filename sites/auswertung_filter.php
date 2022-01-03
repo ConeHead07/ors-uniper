@@ -271,7 +271,7 @@ if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
 
     $aSelectCols = [
         'summe', 'aid', 'kid', 'tour_kennung', 'service', 'plz', 'ort', 'strasse',
-        'land', 'Leistungen', 'antragsdatum', 'Lieferdatum', 'tour_zugewiesen_am',
+        'land', 'Leistungen', 'antragsdatum', 'umzugstermin', 'umzugsstatus', 'tour_zugewiesen_am',
         'bestaetigt_am', 'abgeschlossen_am'
     ];
 
