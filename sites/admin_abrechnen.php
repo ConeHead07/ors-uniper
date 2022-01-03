@@ -243,5 +243,5 @@ $Tpl->assign('odir', $odir);
 $Tpl->assign('s', $s);
 $Tpl->assign('aAids', $aAids);
 $Tpl->assign('aUlids', $aUlids);
-$body_content = $Tpl->fetch("auswertung_form.html");
+$body_content = $Tpl->fetch('auswertung_form.html');
 

@@ -31,6 +31,7 @@
                 <span style="border:0;font-weight:bold;">Zeitraum
                     <select id="auswertungDatumsfeld" name="datumfeld">
                         <option value="umzugstermin">Lieferdatum</option>
+                        <option value="abgeschlossen_am">Abschlussdatum</option>
                         <option value="antragsdatum">Auftragsdatum</option>
                         <!-- option value="geprueft_am">Bestätigungsdatum</option -->
                         <option value="berechnet_am">Rechnungsdatum</option>
@@ -397,36 +398,39 @@ function procesTourStatsBySelector(selector) {
             var Groesse = csv[5];
             var Waehrung = csv[6];
             var Preis = csv[7];
-            var lstObj = { lid, Abk, Kategorie, Bezeichnung, Farbe, Groesse, Waehrung, Preis, csv };
+            var Menge = parseFloat(csv[8]);
+            var lstObj = { lid, Abk, Kategorie, Bezeichnung, Farbe, Groesse, Waehrung, Preis, Menge, csv };
             if (!(lid in statsMetaByLid)) {
                 statsMetaByLid[lid] = lstObj;
             }
-            lstg.push({ lid, Abk, Kategorie, Bezeichnung, Farbe, Groesse, Waehrung, Preis, csv });
+            lstg.push({ lid, Abk, Kategorie, Bezeichnung, Farbe, Groesse, Waehrung, Preis, Menge, csv });
         }
         console.log('#235 Tourenplanung', { d, 'aLstFull.length': aLstFull.length, 'lstg.length': lstg.length, aLstFull, tour, liefertermin });
 
         stats.aids.push(d.aid);
         for(var li = 0; li < lstg.length; li++) {
             var abk = lstg[li].Abk;
+            var menge = lstg[li].Menge;
+            console.log({ "lstg[i].Menge": lstg[li].Menge, menge });
             if (!(abk in stats.LeistungenTotalAbk)) {
-                stats.LeistungenTotalAbk[abk] = 1;
+                stats.LeistungenTotalAbk[abk] = menge;
             } else {
-                ++stats.LeistungenTotalAbk[abk];
+                stats.LeistungenTotalAbk[abk] += menge;
             }
 
 
             var ktg = lstg[li].Kategorie;
             if (!(ktg in stats.LeistungenTotalKtg)) {
-                stats.LeistungenTotalKtg[ktg] = 1;
+                stats.LeistungenTotalKtg[ktg] = menge;
             } else {
-                ++stats.LeistungenTotalKtg[ktg];
+                stats.LeistungenTotalKtg[ktg] += menge;
             }
 
             var lid = lstg[li].lid;
             if (!(lid in stats.LeistungenTotalLid)) {
-                stats.LeistungenTotalLid[lid] = 1;
+                stats.LeistungenTotalLid[lid] = menge;
             } else {
-                ++stats.LeistungenTotalLid[lid];
+                stats.LeistungenTotalLid[lid] += menge;
             }
 
             if (tour) {
@@ -436,19 +440,19 @@ function procesTourStatsBySelector(selector) {
                     };
                 }
                 if (!(abk in stats.LeistungenByTour[tour].Abk)) {
-                    stats.LeistungenByTour[tour].Abk[abk] = 1;
+                    stats.LeistungenByTour[tour].Abk[abk] = menge;
                 } else {
-                    ++stats.LeistungenByTour[tour].Abk[abk];
+                    stats.LeistungenByTour[tour].Abk[abk] += menge;
                 }
                 if (!(ktg in stats.LeistungenByTour[tour].Ktg)) {
-                    stats.LeistungenByTour[tour].Ktg[ktg] = 1;
+                    stats.LeistungenByTour[tour].Ktg[ktg] = menge;
                 } else {
-                    ++stats.LeistungenByTour[tour].Ktg[ktg];
+                    stats.LeistungenByTour[tour].Ktg[ktg] += menge;
                 }
                 if (!(lid in stats.LeistungenByTour[tour].Lid)) {
-                    stats.LeistungenByTour[tour].Lid[lid] = 1;
+                    stats.LeistungenByTour[tour].Lid[lid] = menge;
                 } else {
-                    ++stats.LeistungenByTour[tour].Lid[lid];
+                    stats.LeistungenByTour[tour].Lid[lid] += menge;
                 }
             }
             if (liefertermin) {
@@ -458,19 +462,19 @@ function procesTourStatsBySelector(selector) {
                     };
                 }
                 if (!(abk in stats.LeistungenByTermin[liefertermin].Abk)) {
-                    stats.LeistungenByTermin[liefertermin].Abk[abk] = 1;
+                    stats.LeistungenByTermin[liefertermin].Abk[abk] = menge;
                 } else {
-                    ++stats.LeistungenByTermin[liefertermin].Abk[abk];
+                    stats.LeistungenByTermin[liefertermin].Abk[abk] += menge;
                 }
                 if (!(ktg in stats.LeistungenByTermin[liefertermin].Ktg)) {
-                    stats.LeistungenByTermin[liefertermin].Ktg[ktg] = 1;
+                    stats.LeistungenByTermin[liefertermin].Ktg[ktg] = menge;
                 } else {
-                    ++stats.LeistungenByTermin[liefertermin].Ktg[ktg];
+                    stats.LeistungenByTermin[liefertermin].Ktg[ktg] += menge;
                 }
                 if (!(lid in stats.LeistungenByTermin[liefertermin].Lid)) {
-                    stats.LeistungenByTermin[liefertermin].Lid[lid] = 1;
+                    stats.LeistungenByTermin[liefertermin].Lid[lid] = menge;
                 } else {
-                    ++stats.LeistungenByTermin[liefertermin].Lid[lid];
+                    stats.LeistungenByTermin[liefertermin].Lid[lid] += menge;
                 }
             }
         }

@@ -12,7 +12,7 @@ $all   = (!empty($_REQUEST['all']))     ? (int)$_REQUEST['all'] : 1;
 
 $aAuftragsstatus = (!empty($_REQUEST['auftragsstatus'])) ? $_REQUEST['auftragsstatus'] : ['beauftragt'];
 
-$aValidDatumfelder = ['umzugstermin', 'antragsdatum', 'geprueft_am', 'berechnet_am'];
+$aValidDatumfelder = ['umzugstermin', 'abgeschlossen_am', 'antragsdatum', 'geprueft_am', 'berechnet_am'];
 if (!in_array($datumfeld, $aValidDatumfelder)) {
     $datumfeld = current($aValidDatumfelder);
 }
@@ -205,6 +205,7 @@ $sqlSelect = 'SELECT a.*, ' . "\n"
       . '     IF (l.leistung_id is NULL, "", CONCAT_WS("<|#|>", '  . $NL
       . '      l.leistung_id, lk.kategorie_abk, lk.leistungskategorie, ' . $NL
       . '      l.Bezeichnung, l.Farbe, l.Groesse, "€", l.preis_pro_einheit' . $NL
+      . ',     (ul.menge_mertens * IFNULL(ul.menge2_mertens,1))' . $NL
       . '     )) '
       . '     ORDER BY leistungskategorie SEPARATOR ";\n"' . $NL
       . '   ) AS LeistungenFull, ' . $NL
@@ -224,7 +225,7 @@ $sqlFrom = ' FROM mm_umzuege a ' . "\n"
       . ' ) ' . "\n";
 
 $sqlWhere = ' WHERE 1 ' . "\n"
-      . ' AND ' . $datumfeld . ' BETWEEN :von AND :bis ' . "\n";
+      . ' AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN :von AND :bis ' . "\n";
 if (count($aWhereStatusAnyOf)) {
     $sqlWhere.= ' AND ( ' . implode(' OR ', $aWhereStatusAnyOf) . ')' . "\n";
 }
@@ -249,7 +250,8 @@ if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
     require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
 
     $sqlArtikel = 'SELECT ul.leistung_id, lk.leistungskategorie AS Kategorie, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
-        . ' COUNT(distinct(ul.aid)) count, ' . $NL
+        . ' COUNT(distinct(ul.aid)) count2, ' . $NL
+        . ' ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) count, ' . $NL
         . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
         . ' (l.preis_pro_einheit * COUNT(distinct(ul.aid))) AS Summe, ' . $NL
         . ' group_concat(ul.aid) aids' . $NL
