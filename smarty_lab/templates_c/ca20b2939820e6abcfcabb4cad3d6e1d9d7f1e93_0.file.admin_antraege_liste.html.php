@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-21 11:45:06
+/* Smarty version 3.1.34-dev-7, created on 2022-01-04 10:38:13
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61c1b0328c36f8_60596477',
+  'unifunc' => 'content_61d41585a09423_42740714',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1640083497,
+      1 => 1641289087,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61c1b0328c36f8_60596477 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61d41585a09423_42740714 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN -->
@@ -113,7 +113,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     </div>
     <?php }?>
     <?php $_smarty_tpl->_assignInScope('showCheck', !empty($_smarty_tpl->tpl_vars['selectable']->value));?>
-    <?php $_smarty_tpl->_assignInScope('showTourkennung', false);?>
+    <?php $_smarty_tpl->_assignInScope('showTour', false);?>
     <?php $_smarty_tpl->_assignInScope('showAuftragsdatum', true);?>
     <?php $_smarty_tpl->_assignInScope('showLieferdatum', true);?>
     <?php $_smarty_tpl->_assignInScope('showBestaetigt', true);?>
@@ -126,7 +126,6 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('showName', false);?>
     <?php $_smarty_tpl->_assignInScope('showTour', false);?>
     <?php $_smarty_tpl->_assignInScope('showErinnert', false);?>
-
     <?php $_smarty_tpl->_assignInScope('checkWidth', 24);?>
     <?php $_smarty_tpl->_assignInScope('aidWidth', 35);?>
     <?php $_smarty_tpl->_assignInScope('kidWidth', 65);?>
@@ -184,7 +183,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
     <?php $_smarty_tpl->_assignInScope('showAuftragsdatum', false);?>
     <?php $_smarty_tpl->_assignInScope('showGenehmigt', false);?>
-    <?php $_smarty_tpl->_assignInScope('showTourkennung', true);?>
+    <?php $_smarty_tpl->_assignInScope('showTour', true);?>
     <?php $_smarty_tpl->_assignInScope('showGeprueft', false);?>
     <?php $_smarty_tpl->_assignInScope('showLeistungen', true);?>
     <?php $_smarty_tpl->_assignInScope('showZeit', true);?>
@@ -192,7 +191,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value+$_smarty_tpl->tpl_vars['beauftragtWidth']->value-$_smarty_tpl->tpl_vars['zeitWidth']->value-$_smarty_tpl->tpl_vars['tourWidth']->value);
 } elseif ($_smarty_tpl->tpl_vars['cat']->value == "aktive") {?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
-    <?php $_smarty_tpl->_assignInScope('showTourkennung', true);?>
+    <?php $_smarty_tpl->_assignInScope('showTour', true);?>
     <?php $_smarty_tpl->_assignInScope('showZeit', true);?>
     <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value-$_smarty_tpl->tpl_vars['zeitWidth']->value-$_smarty_tpl->tpl_vars['tourWidth']->value+50);
 } elseif ($_smarty_tpl->tpl_vars['cat']->value == "abgeschlossene") {?>
@@ -293,7 +292,7 @@ px;" title="Auftrags-ID">ID</div>
       <div class="fld-cell fld-kid order" data-fld="kid" style="width:<?php echo $_smarty_tpl->tpl_vars['kidWidth']->value;?>
 px;" title="Uniper MitarbeiterNr."><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=kid<?php if ($_smarty_tpl->tpl_vars['ofld']->value == "kid" && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">KID</a></div>
-      <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
+      <?php if ($_smarty_tpl->tpl_vars['showTour']->value) {?>
       <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourWidth']->value;?>
 px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=tour_kennung<?php if ($_smarty_tpl->tpl_vars['ofld']->value == 'tour_kennung' && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Tour</a></div>
@@ -321,7 +320,7 @@ px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 px;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=strasse<?php if ($_smarty_tpl->tpl_vars['ofld']->value == 'strasse' && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Stra&szlig;e</a></div>
       <?php if ($_smarty_tpl->tpl_vars['showName']->value) {?>
-      <div class="fld-cell fld-strasse order" data-fld="name" style="float:left;display:block;width:<?php echo $_smarty_tpl->tpl_vars['nameWidth']->value;?>
+      <div class="fld-cell fld-name order" data-fld="name" style="float:left;display:block;width:<?php echo $_smarty_tpl->tpl_vars['nameWidth']->value;?>
 px;font-weight:bold;color:#00869c;"><a href="<?php echo $_smarty_tpl->tpl_vars['ListBaseLink']->value;?>
 &ofld=name<?php if ($_smarty_tpl->tpl_vars['ofld']->value == 'name' && $_smarty_tpl->tpl_vars['odir']->value != "DESC") {?>&odir=DESC<?php }?>">Name</a></div>
       <?php }?>
@@ -378,7 +377,7 @@ echo $_smarty_tpl->tpl_vars['q']->value['aid'];
 px;"><input name="q[kid]" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['kid'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['kid'];
 }?>"></div>
-          <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
+          <?php if ($_smarty_tpl->tpl_vars['showTour']->value) {?>
           <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourWidth']->value;?>
 px;"><input name="q[tour_kennung]" value="<?php if (!empty($_smarty_tpl->tpl_vars['q']->value) && isset($_smarty_tpl->tpl_vars['q']->value['tour_kennung'])) {
 echo $_smarty_tpl->tpl_vars['q']->value['tour_kennung'];
@@ -487,7 +486,7 @@ px;font-weight:bold;"><?php echo $_smarty_tpl->tpl_vars['U']->value['aid'];?>
               <div class="fld-cell fld-kid" style="width:<?php echo $_smarty_tpl->tpl_vars['kidWidth']->value;?>
 px;" ><?php echo $_smarty_tpl->tpl_vars['U']->value['kid'];?>
 &nbsp;</div>
-              <?php if ($_smarty_tpl->tpl_vars['showTourkennung']->value) {?>
+              <?php if ($_smarty_tpl->tpl_vars['showTour']->value) {?>
               <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourWidth']->value;?>
 px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['tour_kennung'];?>
 &nbsp;</div>
@@ -500,11 +499,6 @@ px;font-weight:bold;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_v
               <?php if ($_smarty_tpl->tpl_vars['showZeit']->value) {?>
               <div class="fld-cell fld-umzugszeit" style="width:<?php echo $_smarty_tpl->tpl_vars['zeitWidth']->value;?>
 px;"><?php echo substr($_smarty_tpl->tpl_vars['U']->value['umzugszeit'],0,5);?>
-&nbsp;</div>
-              <?php }?>
-              <?php if ($_smarty_tpl->tpl_vars['showTour']->value) {?>
-              <div class="fld-cell fld-tour_kennung" style="width:<?php echo $_smarty_tpl->tpl_vars['tourWidth']->value;?>
-px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['tour_kennung'];?>
 &nbsp;</div>
               <?php }?>
               <div class="fld-cell fld-land" title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
