@@ -19,7 +19,7 @@ $datumvon = trim((!empty($_REQUEST['datumvon'])) ? $_REQUEST['datumvon'] : ''); 
 $datumbis = trim((!empty($_REQUEST['datumbis'])) ? $_REQUEST['datumbis'] : ''); // '2021-12-31'
 
 $output = getRequest('output', 'web');
-$mailto = getRequest('mailto', 'k.gerring@mertens.ag');
+$mailto = getRequest('mailto', 'Customer_Support@mertens.ag');
 $abgerechnet = getRequest('abgerechnet', '');
 $all = getRequest('all', '');
 $vorgangsnr = strip_tags(getRequest('vorgangsnummer', ''));
@@ -75,7 +75,7 @@ function array2Table(array $array) {
         . "$t<thead>$NL"
         . "$t2<tr>$NL"
         . implode( '', array_map(function($v) use($t3) { return "$t3<th class=\"fld-$v\">$v</th>\n"; }, $cols))
-       // . "$t3<th>" . implode('</th><th>', $cols) . "</th>$NL"
+        // . "$t3<th>" . implode('</th><th>', $cols) . "</th>$NL"
         . "$t2</tr>$NL"
         . "$t2</thead>$NL"
         . "$t<tbody>$NL";
@@ -424,10 +424,11 @@ HEREDOC;
 
 
 } elseif (strcmp($output, 'mail') === 0)  {
-
-    if ($mailto === 'k.gerring@mertens.ag') {
+    if ($mailto === 'Customer_Support@mertens.ag') {
+        $aTo = [ ['email' => $mailto, 'anrede' => 'MAG_Customer_Support'] ];
+    } elseif ($mailto === 'k.gerring@mertens.ag') {
         $aTo = [ ['email' => $mailto, 'anrede' => 'Kim Gerring'] ];
-    } elseif ($mailto === 'f.barthold@mertens.ag' || $mailto === 'frank.barthold@mertens.ag') {
+    } elseif ($mailto === 'f.barthold@mertens.ag' || $mailto === 'frank.barthold@gmail.com') {
         $aTo = [ ['email' => $mailto, 'anrede' => 'Frank Barthold'] ];
     } else {
         $aTo = [ ['email' => $mailto ] ];
