@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-21 11:33:07
+/* Smarty version 3.1.34-dev-7, created on 2022-01-03 09:07:42
   from '/var/www/html/html/auswertung_tourenplanung.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61c1ad6358fb12_83802302',
+  'unifunc' => 'content_61d2aecef1e4d5_77528856',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1f096f9d38e15833dddd15165e71981f311f9d76' => 
     array (
       0 => '/var/www/html/html/auswertung_tourenplanung.html',
-      1 => 1640020433,
+      1 => 1641197255,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61c1ad6358fb12_83802302 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61d2aecef1e4d5_77528856 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),1=>array('file'=>'/var/www/html/smarty3/plugins/modifier.replace.php','function'=>'smarty_modifier_replace',),));
 ?>
 <pre style="display: none;">
@@ -481,36 +481,38 @@ function procesTourStatsBySelector(selector) {
             var Groesse = csv[5];
             var Waehrung = csv[6];
             var Preis = csv[7];
-            var lstObj = { lid, Abk, Kategorie, Bezeichnung, Farbe, Groesse, Waehrung, Preis, csv };
+            var Menge = parseFloat(csv[8]);
+            var lstObj = { lid, Abk, Kategorie, Bezeichnung, Farbe, Groesse, Waehrung, Preis, Menge, csv };
             if (!(lid in statsMetaByLid)) {
                 statsMetaByLid[lid] = lstObj;
             }
-            lstg.push({ lid, Abk, Kategorie, Bezeichnung, Farbe, Groesse, Waehrung, Preis, csv });
+            lstg.push({ lid, Abk, Kategorie, Bezeichnung, Farbe, Groesse, Waehrung, Preis, Menge, csv });
         }
         console.log('#235 Tourenplanung', { d, 'aLstFull.length': aLstFull.length, 'lstg.length': lstg.length, aLstFull, tour, liefertermin });
 
         stats.aids.push(d.aid);
         for(var li = 0; li < lstg.length; li++) {
             var abk = lstg[li].Abk;
+            var menge = lstg[li].Menge;
             if (!(abk in stats.LeistungenTotalAbk)) {
-                stats.LeistungenTotalAbk[abk] = 1;
+                stats.LeistungenTotalAbk[abk] = menge;
             } else {
-                ++stats.LeistungenTotalAbk[abk];
+                stats.LeistungenTotalAbk[abk] += menge;
             }
 
 
             var ktg = lstg[li].Kategorie;
             if (!(ktg in stats.LeistungenTotalKtg)) {
-                stats.LeistungenTotalKtg[ktg] = 1;
+                stats.LeistungenTotalKtg[ktg] = menge;
             } else {
-                ++stats.LeistungenTotalKtg[ktg];
+                stats.LeistungenTotalKtg[ktg] += menge;
             }
 
             var lid = lstg[li].lid;
             if (!(lid in stats.LeistungenTotalLid)) {
-                stats.LeistungenTotalLid[lid] = 1;
+                stats.LeistungenTotalLid[lid] = menge;
             } else {
-                ++stats.LeistungenTotalLid[lid];
+                stats.LeistungenTotalLid[lid] += menge;
             }
 
             if (tour) {
@@ -520,19 +522,19 @@ function procesTourStatsBySelector(selector) {
                     };
                 }
                 if (!(abk in stats.LeistungenByTour[tour].Abk)) {
-                    stats.LeistungenByTour[tour].Abk[abk] = 1;
+                    stats.LeistungenByTour[tour].Abk[abk] = menge;
                 } else {
-                    ++stats.LeistungenByTour[tour].Abk[abk];
+                    stats.LeistungenByTour[tour].Abk[abk] += menge;
                 }
                 if (!(ktg in stats.LeistungenByTour[tour].Ktg)) {
-                    stats.LeistungenByTour[tour].Ktg[ktg] = 1;
+                    stats.LeistungenByTour[tour].Ktg[ktg] = menge;
                 } else {
-                    ++stats.LeistungenByTour[tour].Ktg[ktg];
+                    stats.LeistungenByTour[tour].Ktg[ktg] += menge;
                 }
                 if (!(lid in stats.LeistungenByTour[tour].Lid)) {
-                    stats.LeistungenByTour[tour].Lid[lid] = 1;
+                    stats.LeistungenByTour[tour].Lid[lid] = menge;
                 } else {
-                    ++stats.LeistungenByTour[tour].Lid[lid];
+                    stats.LeistungenByTour[tour].Lid[lid] += menge;
                 }
             }
             if (liefertermin) {
@@ -542,19 +544,19 @@ function procesTourStatsBySelector(selector) {
                     };
                 }
                 if (!(abk in stats.LeistungenByTermin[liefertermin].Abk)) {
-                    stats.LeistungenByTermin[liefertermin].Abk[abk] = 1;
+                    stats.LeistungenByTermin[liefertermin].Abk[abk] = menge;
                 } else {
-                    ++stats.LeistungenByTermin[liefertermin].Abk[abk];
+                    stats.LeistungenByTermin[liefertermin].Abk[abk] += menge;
                 }
                 if (!(ktg in stats.LeistungenByTermin[liefertermin].Ktg)) {
-                    stats.LeistungenByTermin[liefertermin].Ktg[ktg] = 1;
+                    stats.LeistungenByTermin[liefertermin].Ktg[ktg] = menge;
                 } else {
-                    ++stats.LeistungenByTermin[liefertermin].Ktg[ktg];
+                    stats.LeistungenByTermin[liefertermin].Ktg[ktg] += menge;
                 }
                 if (!(lid in stats.LeistungenByTermin[liefertermin].Lid)) {
-                    stats.LeistungenByTermin[liefertermin].Lid[lid] = 1;
+                    stats.LeistungenByTermin[liefertermin].Lid[lid] = menge;
                 } else {
-                    ++stats.LeistungenByTermin[liefertermin].Lid[lid];
+                    stats.LeistungenByTermin[liefertermin].Lid[lid] += menge;
                 }
             }
         }

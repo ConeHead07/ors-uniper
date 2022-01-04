@@ -112,7 +112,7 @@ $sqlAuftraege = 'SELECT
       GROUP_CONCAT(
         CONCAT_WS(" ", k.leistungskategorie, lk.Bezeichnung, lk.Farbe, lk.Groesse, lk.preis_pro_einheit) ORDER BY k.kategorie_abk SEPARATOR "\n"
       )  AS Lstg,
-      SUM(lk.preis_pro_einheit) AS Summe
+      SUM(lk.preis_pro_einheit * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Summe
     FROM mm_umzuege AS a
     JOIN mm_user AS u ON (a.antragsteller_uid = u.uid)
     JOIN mm_umzuege_leistungen AS ul ON (a.aid = ul.aid)
@@ -127,9 +127,9 @@ $sqlAuftraege = 'SELECT
 $sqlLeistungen = 'SELECT 
       k.leistungskategorie, k.leistungskategorie AS Kategorie, lk.leistungseinheit, lk.waehrung, lk.leistung_id, lk.Bezeichnung, lk.Farbe, lk.Groesse, lk.preis_pro_einheit,
       COUNT(DISTINCT ul.aid ) AS Auftraege,
-      COUNT(1) AS Menge,
-      COUNT(1) AS menge_mertens,
-      SUM(lk.preis_pro_einheit) AS Summe,
+      SUM(ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Menge,
+      SUM(ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS menge_mertens,
+      SUM(lk.preis_pro_einheit * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Summe,
       GROUP_CONCAT(ul.aid ORDER BY ul.aid SEPARATOR ",") AS csv_ul_aids 
     FROM mm_umzuege_leistungen AS ul
     JOIN mm_leistungskatalog AS lk ON (ul.leistung_id = lk.leistung_id)

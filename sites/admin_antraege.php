@@ -299,7 +299,8 @@ $sqlSelect = 'SELECT U.*, U.umzugstermin AS Lieferdatum, ' . $NL
     . ' CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude, ' . $NL
     . ' REPLACE(REPLACE(GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR ""), "P", ""), "R", "") AS Leistungen, ' . $NL
     . ' GROUP_CONCAT(lk.leistungskategorie ORDER BY leistungskategorie SEPARATOR ", ") AS LeistungenFull, ' . $NL
-    . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Summe' . $NL;
+    . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Summe, ' . $NL
+    . ' (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Menge' . $NL;
 
 $sql = 'SELECT COUNT(1) AS `count` FROM (' . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t';
 $row = $db->query_singlerow($sql);
@@ -337,9 +338,9 @@ $summeTotal = $db->query_one($sqlSummeTotal);
 
 
 $sqlArtikel = 'SELECT lk.leistungskategorie AS Kategorie, ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
-    . ' COUNT(distinct(ul.aid)) count, ' . $NL
+    . ' SUM(ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) count, ' . $NL
     . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
-    . ' (l.preis_pro_einheit * COUNT(distinct(ul.aid))) AS Summe, ' . $NL
+    . ' SUM(l.preis_pro_einheit * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Summe, ' . $NL
     . ' group_concat(ul.aid) aids' . $NL
     . ' FROM (' . $NL . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t '
     . ' JOIN mm_umzuege_leistungen ul ON (t.aid = ul.aid) ' . $NL
