@@ -235,6 +235,9 @@ WHERE aid = ' . (int)$AID . ' AND k.leistungskategorie_id NOT IN (' . $ktgIdLief
             case 'Deutschland':
                 return 'D';
                 break;
+            case 'England':
+                return 'EN';
+                break;
             case 'Niederlande':
                 return 'NL';
                 break;

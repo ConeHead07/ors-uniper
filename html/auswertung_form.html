@@ -225,7 +225,7 @@ $(function(){
         <td>{if !$item.berechnet_am}<input type="checkbox" name="ulids[]" {$checked} value="{if !empty($item.ulid)}{$item.ulid}{/if}">{/if}</td>
         <td><a href="?s={$site_antrag}&id={$item.aid}">TL-{if !empty($item.ulid)}{$item.ulid}{/if}</a></td>
         <td>{$item.kid}</td>
-        <td>{if $item.land eq "Deutschland"}DE{elseif $item.land eq "Niederlande"}NL{else}{$item.land}{/if}</td>
+        <td>{if $item.land eq "Deutschland"}DE{elseif $item.land eq "England"}EN{elseif $item.land eq "Niederlande"}NL{else}{$item.land}{/if}</td>
         <td>{$item.ort}</td>
         <td>{$item.plz}</td>
         <td>{$item.strasse}</td>

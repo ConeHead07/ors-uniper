@@ -199,6 +199,8 @@ Thomas R. Brünger, Unsere AGB finden Sie unter: www.mertens.ag/agb';
         switch($land) {
             case 'Deutschland':
                 return 'D';
+            case 'England':
+                return 'EN';
             case 'Niederlande':
                 return 'NL';
                 break;

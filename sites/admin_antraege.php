@@ -133,6 +133,10 @@ foreach($validFields as $_f) {
         $w[] = $sqlQueryField . ' LIKE "Niederlande"';
         continue;
     }
+    elseif (strcmp($_f, 'land') === 0 && !empty($query[$_f]) && strcmp(trim($query[$_f]), 'EN') === 0 ) {
+        $w[] = $sqlQueryField . ' LIKE "England"';
+        continue;
+    }
     elseif (strcmp($_f, 'land') === 0 && !empty($query[$_f]) && strcmp(trim($query[$_f]), 'DE') === 0 ) {
         $w[] = $sqlQueryField . ' LIKE "Deutschland"';
         continue;

@@ -229,6 +229,9 @@ foreach($validFields as $_f => $_fOpts) {
     elseif ($_f === 'land' && !empty($query[$_f]) && strcmp(trim($query[$_f]), 'NL') === 0 ) {
         $w[] = 'a.land LIKE "Niederlande"';
     }
+    elseif ($_f === 'land' && !empty($query[$_f]) && strcmp(trim($query[$_f]), 'EN') === 0 ) {
+        $w[] = 'a.land LIKE "England"';
+    }
     if (!empty($query[$_f])) {
         if (preg_match('#^(' . preg_quote('!=', '#') .')(.*)$#', trim($query[$_f]), $m)) {
             $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]);

@@ -185,6 +185,9 @@ switch($auftrag['land']) {
     case 'Deutschland':
         $laenderKuerzel = 'D';
         break;
+    case 'England':
+        $laenderKuerzel = 'EN';
+        break;
     case 'Niederlande':
         $laenderKuerzel = 'NL';
         break;

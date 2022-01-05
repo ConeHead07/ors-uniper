@@ -5,6 +5,8 @@ if (!function_exists('getLaenderKuerzelByLand')) {
         switch($land) {
             case 'Deutschland':
                 return 'D';
+            case 'England':
+                return 'EN';
             case 'Niederlande':
                 return 'NL';
                 break;

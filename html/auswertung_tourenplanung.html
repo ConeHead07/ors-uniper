@@ -151,7 +151,7 @@ gesetzt werden und das Rechnungsdatum des aktuellen Tages eingetragen werden.
             </td>
             <td class="fld-cell fld-aid" data-field="aid" data-value="{$item.aid|escape}">{$item.aid|escape}</td>
             <td class="fld-cell fld-kid" data-field="kid" data-value="{$item.kid|escape}">{$item.kid|escape}</td>
-            <td class="fld-cell fld-land" data-field="land" data-value="{$item.land|escape}">{if $item.land eq "Deutschland"}D{elseif $item.land eq "Niederlande"}NL{else}{$item.land|escape}{/if}</td>
+            <td class="fld-cell fld-land" data-field="land" data-value="{$item.land|escape}">{if $item.land eq "Deutschland"}D{elseif $item.land eq "England"}EN{elseif $item.land eq "Niederlande"}NL{else}{$item.land|escape}{/if}</td>
             <td class="fld-cell fld-ort" data-field="ort" data-value="{$item.ort|escape}">{$item.ort|escape}</td>
             <td class="fld-cell fld-plz" data-field="plz" data-value="{$item.plz|escape}">{$item.plz|escape}</td>
             <td class="fld-cell fld-strasse" data-field="strasse" data-value="{$item.strasse|escape}">

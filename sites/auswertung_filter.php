@@ -132,6 +132,9 @@ foreach($validFields as $_f) {
             if ($_f === 'land' && strcmp($_term,'NL') === 0) {
                 $_term = 'Niederlande';
             }
+            elseif ($_f === 'land' && strcmp($_term,'EN') === 0) {
+                $_term = 'England';
+            }
             else {
                 $_term.= '%';
             }
