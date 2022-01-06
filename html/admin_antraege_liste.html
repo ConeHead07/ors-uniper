@@ -425,11 +425,13 @@
 </div> 
 <!-- TAB BASIC MODULE (128585) END -->
 <script>
+var ofld = "{$ofld}";
+var odir = "{$odir}";
+</script>
+<script>
     {literal}
 
     $(function() {
-        var ofld = "{$ofld}";
-        var odir = "{$odir}";
 
         $("#toggleCheckboxes").bind("change", function(e) {
             $(":input[type=checkbox][name=aids\\[\\]]").prop("checked", this.checked );
@@ -460,8 +462,10 @@
         $(".ulLinkList .flds-head-colnames .order").click(function(e){
             e.preventDefault();
             var fld = $(this).attr("data-fld");
+            var dir = fld === ofld && odir === 'ASC' ? 'DESC' : 'ASC';
+            // alert(JSON.stringify({fld, dir, ofld, odir}));
             $("input[name=ofld]").val( fld );
-            $("input[name=odir]").val( fld === ofld && odir === 'ASC' ? 'DESC' : 'ASC' );
+            $("input[name=odir]").val( dir );
             send();
             return false;
         });
