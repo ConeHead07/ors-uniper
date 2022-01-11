@@ -129,9 +129,11 @@
     {/if}
 {elseif $cat eq "neue"}
     {assign var="showLieferdatum" value=false}
+    {assign var="showBestaetigt" value=false}
     {assign var="showAbgeschlossen" value=false}
     {assign var="showLeistungen" value=true}
-    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $lieferdatumWidth}
+    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $lieferdatumWidth + $bestaetigtWidth}
+
 {elseif $cat eq "temp"}
     {assign var="showLieferdatum" value=false}
     {assign var="showAbgeschlossen" value=false}
@@ -355,7 +357,7 @@
               <div class="fld-cell fld-genehmigt" style="width:{$genehmigtWidth}px;">{$U.Genehmigt}&nbsp;</div>
               {/if}
               {if $showBestaetigt}
-              <div class="fld-cell fld-bestaetigt" style=";width:{$bestaetigtWidth}px;" title="{$U.Bestaetigt|escape}">{$U.Bestaetigt|date_format:"%d.%m.%y"}&nbsp;</div>
+              <div class="fld-cell fld-bestaetigt" style=";width:{$bestaetigtWidth}px;" title="{$U.bestaetigt_am|escape}">{$U.bestaetigt_am|date_format:"%d.%m.%y"}&nbsp;</div>
               {/if}
               {if $showAbgeschlossen}
               <div class="fld-cell fld-abgeschlossen" style="width:{$abgeschlossenWidth}px;" title="{$U.abgeschlossen_am|escape}">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}&nbsp;</div>
