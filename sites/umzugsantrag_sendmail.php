@@ -603,6 +603,64 @@ function umzugsantrag_mailinform($AID, $status='neu', $value, $authorUser = []) 
             return $return;
             break;
 
+        case 'teillieferung':
+            $teilAid = $value;
+
+            $AR = new ItemEdit($_CONF['umzugsantrag'], $connid, $user, $teilAid);
+            $AR->loadDbdata();
+            $AR->dbdataToInput();
+            $reklaDaten = $AR->arrDbdata;
+            $rplVars['bemerkungen'] = $reklaDaten['bemerkungen'] ?? 'Ohne Angaben';
+
+            $_configNameEnable = 'notify_user_teillieferung';
+            if ((int)$authorUser['user'] === (int)$auftragsDaten['teilmenge_von']) {
+                $_configNameEnable.= '_selfcreated';
+            }
+            if (!empty($MConf[$_configNameEnable])) {
+                $tplFile = $TextBaseDir . $MConf[$_configNameEnable . '_tpl'];
+                $tplMail = file_get_contents($tplFile);
+                $rplVars['StatusLink'] = $MConf['WebRoot'] . '?s=kantrag&id=' . $AID;
+                $rplVars['TeilStatusLink'] = $MConf['WebRoot'] . "?s=kantrag&id=" . $teilAid;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $userMailTo, $_configNameEnable);
+                }
+                if ($dbg) {
+                    $LINE = __LINE__;
+                    $FILE = __FILE__;
+                    print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
+                }
+                $return = send_status_mail($userMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($userMailTo);
+                }
+            }
+
+            $_configNameEnable = 'notify_mertens_teillieferung';
+            if ((int)$authorUser['user'] === (int)$auftragsDaten['teilmenge_von']) {
+                $_configNameEnable.= '_selfcreated';
+            }
+            if (!empty($MConf[$_configNameEnable])) {
+                $tplFile = $TextBaseDir . $MConf[$_configNameEnable . '_tpl'];
+                $tplMail = file_get_contents($tplFile);
+                $rplVars['StatusLink'] = $MConf['WebRoot'] . '?s=aantrag&id=' . $AID;
+                $rplVars['TeilStatusLink'] = $MConf['WebRoot'] . "?s=aantrag&id=" . $teilAid;
+                if ($_CONF['STATUSMAIL_ADD_STEUERINFOS']) {
+                    $tplMail .= $getDebugSteuerinfosAsPlaintext($status, $tplFile, $authorUser, $userMailTo, $_configNameEnable);
+                }
+                if ($dbg) {
+                    $LINE = __LINE__;
+                    $FILE = __FILE__;
+                    print_r(compact('LINE', 'FILE', 'tplFile', 'tplMail', 'rplVars', 'userMailTo'));
+                }
+                $return = send_status_mail($aAdminMailTo, $tplMail, $rplVars);
+                if ($return) {
+                    $umzugsantrag_mailinform_num_mails+= count($userMailTo);
+                }
+            }
+
+            return $return;
+            break;
+
         case 'neuebemerkung':
             $rplVars['neuebemerkung'] = $value;
             $tplFile = $TextBaseDir . 'statusmail_umzug_bemerkung.txt';

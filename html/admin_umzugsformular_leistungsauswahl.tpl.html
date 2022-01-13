@@ -15,10 +15,14 @@
 {if !empty($addReklas)}
 {assign var="colspan" value=$colspan+1}
 {/if}
-{if !empty($showLiefermenge)}
+{if !empty($showReklas)}
 {assign var="colspan" value=$colspan+1}
 {/if}
-{if !empty($showReklas)}
+
+{if !empty($addTeilmengen)}
+{assign var="colspan" value=$colspan+1}
+{/if}
+{if !empty($showLiefermenge)}
 {assign var="colspan" value=$colspan+1}
 {/if}
 <div data-test="2" style="display:block;margin-top:15px;">
@@ -302,30 +306,36 @@ $(function(){
     .table-leistungen .col.field-add_rekla {
         max-width:7vh;
     }
+    .table-leistungen thead th {
+        font-size: 0.75rem;
+    }
 </style>
 {/literal}
 <h2 style="margin:0">{if empty($title)}Bestellte Leistungen{else}{$title}{/if}</h2>
 <table class="table-leistungen MitarbeierItem" style="width:100%;">
     <thead>
         <tr>
-            {* <td style="width:14px;padding:0;"> X </td> *}
+            {* <th style="width:14px;padding:0;"> X </th> *}
             {if isset($enableLeistungCheckbox) && !empty($enableLeistungCheckbox)}
-            <td style="width:14px;padding:0;"> [-] </td>
+            <th style="width:14px;padding:0;"> [-] </th>
             {/if}
-            <td class="col field-kategorie">Kategorie</td>
-            <td class="col field-leistung">Leistung</td>
-            <td class="col field-menge_mertens menge">Menge</td>
+            <th class="col field-kategorie">Kategorie</th>
+            <th class="col field-leistung">Leistung</th>
+            <th class="col field-menge_mertens menge">B-Menge</th>
             {if !empty($showReklas)}
-            <td class="col field-menge_rekla menge">Reklas</td>
+            <th class="col field-menge_rekla menge">R-Menge</th>
             {/if}
             {if !empty($addReklas)}
-            <td class="col field-add_rekla menge" style="background-color:red;color:#fff;">Neue Reklas</td>
+            <th class="col field-add_rekla menge" style="background-color:red;color:#fff;">Neue Reklas</th>
             {/if}
             {if !empty($showLiefermenge)}
-            <td class="col field-menge_geliefert menge">Gelief</td>
+            <th class="col field-menge_geliefert menge">Gelief</th>
             {/if}
-            {if $PreiseAnzeigen}<td class="col col-preis preis">Preis</td>
-            <td class="col field-sum sum">Gesamt</td>
+            {if !empty($addTeilmengen)}
+            <th class="col field-add_teil menge" style="background-color:darkgreen;color:#fff;">T-Menge</th>
+            {/if}
+            {if $PreiseAnzeigen}<th class="col col-preis preis">Preis</th>
+            <th class="col field-sum sum">Gesamt</th>
             {/if}
         </tr>
     </thead>
@@ -386,6 +396,10 @@ $(function(){
                 {$L.menge_geliefert|number_format:2:",":"."}{else}
                 <input class="menge" name="L[menge_geliefert][{$L.leistung_id}]" value="{$L.menge_geliefert|number_format:2:',':'.'}" type="text">
                 {/if}</td>
+            {/if}
+
+            {if !empty($addTeilmengen)}
+            <td class="col field-add_teil menge"><input style="color:darkgreen" class="menge" name="L[neue_teilmenge][{$L.leistung_id}]" value="0" type="text"></td>
             {/if}
 
             {if $PreiseAnzeigen}

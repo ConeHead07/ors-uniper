@@ -135,7 +135,8 @@ if ($AID) {
 	$aAtItems = getAttachements($AS->arrDbdata, 0);
 	$aAtIntItems = getAttachements($AS->arrDbdata, 1);
 	$aGroupItems = getGruppierungen($AID);
-	$aReklas = getReklamationenByAid($AID);
+    $aReklas = getReklamationenByAid($AID);
+    $aTeillieferungen = getTeillieferungenByAid($AID);
 
     $aLSItems = getLieferscheineByAid($AID);
 	
@@ -239,6 +240,13 @@ if (!empty($aReklas) && count($aReklas)) {
 } else {
     $Tpl->assign("Reklamationen", []);
 }
+
+if (!empty($aTeillieferungen) && count($aTeillieferungen)) {
+    $Tpl->assign("Teillieferungen", $aTeillieferungen);
+} else {
+    $Tpl->assign("Teillieferungen", []);
+}
+
 
 // Erzeuge GeraeteListe (Array) für Smarty-Template
 $CsvLines = explode("\n", $AS->arrInput["geraete_csv"]);

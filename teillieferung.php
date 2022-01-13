@@ -5,7 +5,7 @@ require_once($InclBaseDir . 'umzugsantrag.inc.php');
 
 $grund = getRequest('grund', '');
 $aid = (int)getRequest('aid', 0);
-$inputReklaLeistungen = (array)getRequest('leistungen', []);
+$inputTeilLeistungen = (array)getRequest('leistungen', []);
 $leistungsIds = [];
 $leistungsMengen = [];
 $leistungsMengenById = [];
@@ -14,13 +14,13 @@ $errors = [];
 $sFormattedGrund = '';
 
 
-if (count($inputReklaLeistungen)) {
+if (count($inputTeilLeistungen)) {
     $log[] = __LINE__;
     $leistungsIds = [];
     $leistungsMengen = [];
     $tmpLeistungsMengenById = [];
 
-    foreach($inputReklaLeistungen as $_lstg) {
+    foreach($inputTeilLeistungen as $_lstg) {
         $log[] = __LINE__;
         $_id = (int)$_lstg['leistung_id'];
         $_mng = ((int)$_lstg['menge'] > 0 ) ? (int)$_lstg['menge'] : 1;
@@ -33,7 +33,7 @@ if (count($inputReklaLeistungen)) {
     $leistungsMengenById = $tmpLeistungsMengenById;
 }
 
-function reklaResponseError(int $aid, array $errors = []) {
+function teilResponseError(int $aid, array $errors = []) {
     global $inputTeilLeistungen, $leistungsIds, $leistungsMengen, $leistungsMengenById, $log;
     header('Content-Type: application/json; charset=UTF-8');
     echo json_encode([
@@ -51,7 +51,7 @@ function reklaResponseError(int $aid, array $errors = []) {
     exit;
 }
 
-function reklaResponseSuccess(array $daten = []) {
+function teilResponseSuccess(array $daten = []) {
     header('Content-Type: application/json; charset=UTF-8');
     $daten['type'] = 'success';
     echo json_encode($daten);
@@ -85,11 +85,11 @@ function getFormattedBemerkung(string $grund, array $leistungen) {
 if (!$aid) {
     $errors[] = 'Fehlende Auftrags-ID!';
 }
-if (!trim($grund)) {
-    $errors[] = 'Für die Reklamation ist die Angabe eines Grundes erforderlich!';
+if (false && !trim($grund)) {
+    $errors[] = 'Für die Teillieferung ist die Angabe eines Grundes erforderlich!';
 }
 if (!is_array($leistungsIds) || empty($leistungsIds)) {
-    $errors[] = 'Für die Reklamation ist die Angabe der Leistungen erforderlich!';
+    $errors[] = 'Für die Teillieferung ist die Angabe der Leistungen erforderlich!';
 } else {
 
     $leistungsIds = array_filter($leistungsIds, 'is_numeric');
@@ -97,7 +97,7 @@ if (!is_array($leistungsIds) || empty($leistungsIds)) {
     $leistungsIds = array_unique($leistungsIds);
 
     if (empty($leistungsIds)) {
-        $errors[] = 'Für die Reklamation wurden keine Artikel/Leistungen ausgewählt!';
+        $errors[] = 'Für die Teillieferung wurden keine Artikel/Leistungen ausgewählt!';
     }
 }
 
@@ -147,7 +147,7 @@ foreach($akLeistungen as $_lstg) {
     $_gl = $_lstg['Leistung'];
     $_lid = $_lstg['leistung_id'];
     if (!empty($leistungsMengenById[$_lid])) {
-        $_gl.= ', Rekla-Menge: ' . $leistungsMengenById[$_lid];
+        $_gl.= ', Teil-Menge: ' . $leistungsMengenById[$_lid];
     }
     $aGrundLeistungen[] = $_gl;
 }
@@ -156,7 +156,7 @@ $sFormattedGrund = getFormattedBemerkung($grund, $aGrundLeistungen);
 
 
 $colNames = ['ref_aid', 'umzug', 'service', ];
-$quotedDaten = [ $aid, $db::quote('Rekla'), $db::quote('Rekla') ];
+$quotedDaten = [ $aid, $db::quote('Teil'), $db::quote('Teil') ];
 $antrag['bemerkungen'] = $sFormattedGrund;
 $antrag['antragsdatum'] = $db->expr('NOW()');
 $antrag['umzugsstatus'] = 'beantragt';
@@ -171,50 +171,44 @@ $db->query(
  VALUES(' . implode(',', $quotedDaten) . ')'
 );
 
-$reklaAid = $db->insert_id();
-if (!$reklaAid) {
-    return teilResponseError($aid, ['Systemfehler: Reklamation konnte nicht angelegt werden!']);
+$teilAid = $db->insert_id();
+if (!$teilAid) {
+    return teilResponseError($aid, ['Systemfehler: Teillieferung konnte nicht angelegt werden!']);
 }
 
 $NL = "\n";
 $sqlStatusUpdate = 'UPDATE mm_umzuege SET 
-  reklamiert_am = :reklamiert_am,
-  reklamiert_von = :reklamiert_von,
+  teilmenge_am = :teilmenge_am,
+  teilmenge_von = :teilmenge_von,
   bemerkungen = CONCAT(bemerkungen, IF(TRIM(IFNULL(bemerkungen, ""))="", "", :separator), :grund)
   WHERE aid = :aid
 ';
 $db->query($sqlStatusUpdate, [
-    'reklamiert_am' => $db->expr('NOW()'),
-    'reklamiert_von' => $user['user'],
+    'teilmenge_am' => $db->expr('NOW()'),
+    'teilmenge_von' => $user['user'],
     'separator' => "\n\n",
     'grund' => $sFormattedGrund,
     'aid' => $aid
 ]);
 
-$reklaLeistungen = [];
+$teilLeistungen = [];
 foreach($akLeistungenRefs as $_lstg) {
     $_id = (int)$_lstg['id'];
     $_lid = $_lstg['leistung_id'];
-    $_rekla = $_lstg;
-    unset($_rekla['id']);
-    $_rekla['aid'] = $reklaAid;
+    $_teil = $_lstg;
+    unset($_teil['id']);
+    $_teil['aid'] = $teilAid;
     if (!empty($leistungsMengenById[$_lid])) {
-        $_rekla['menge_mertens'] = (int)$leistungsMengenById[$_lid];
+        $_teil['menge_mertens'] = (int)$leistungsMengenById[$_lid];
     } else {
-        $_rekla['menge_mertens'] = (int)$_lstg['menge_mertens'];
+        $_teil['menge_mertens'] = (int)$_lstg['menge_mertens'];
     }
-    $reklaLeistungen[] = $_rekla;
-
-    $_sqlUp = 'UPDATE mm_umzuege_leistungen SET 
-menge_rekla = ' . $_rekla['menge_mertens'] . ', 
-menge2_rekla = ' . $_rekla['menge2_mertens'] . ' 
-WHERE id = ' . $_id;
-    $db->query($_sqlUp);
+    $teilLeistungen[] = $_teil;
 }
 
-foreach( $reklaLeistungen as $_lstg) {
+foreach($teilLeistungen as $_lstg) {
     $_data = [
-        'aid' => $reklaAid,
+        'aid' => $teilAid,
         'leistung_id' => $_lstg['leistung_id'],
         'menge_mertens' => $_lstg['menge_mertens'],
         'menge2_mertens' => $_lstg['menge2_mertens'],
@@ -232,7 +226,7 @@ foreach( $reklaLeistungen as $_lstg) {
     $db->query($_sqlIns);
 }
 
-if (umzugsantrag_mailinform($aid, 'reklamation', $reklaAid)) {
+if (false && umzugsantrag_mailinform($aid, 'teillieferung', $teilAid)) {
     $iNumMails = umzugsantrag_mailinform_get_numMails();
     if ($iNumMails > 0) {
         if ($user['gruppe'] === 'admin') {
@@ -252,5 +246,5 @@ if (umzugsantrag_mailinform($aid, 'reklamation', $reklaAid)) {
 teilResponseSuccess([
     'aid' => $aid,
     'leistungen' => $leistungsMengenById,
-    'reklaAid' => $reklaAid
+    'teilAid' => $teilAid
 ]);
