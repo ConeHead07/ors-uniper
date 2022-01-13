@@ -1,0 +1,33 @@
+
+<table class="tblList table-reklamationen" style="width:100%;">
+    <thead>
+        <tr>
+            <td class="col field-aid">ID</td>
+            <td class="col field-antragsdatum">ReklaDatum</td>
+            <td class="col field-LeistungenKtg">Kateg</td>
+            <td class="col field-LeistungenBez">Artikel</td>
+            <td class="col field-umzugstermin">Liefertermin</td>
+            <td class="col field-umzugsstatus">Status</td>
+            <td class="col field-bestaetigt_am">AvisiertAm</td>
+            <td class="col field-abgeschlossen">Abgeschlossen</td>
+            <td class="col field-Summe sum menge">Summe</td>
+        </tr>
+    </thead>
+    <tbody id="TblGruppierungenBody">
+    {if !empty($aReklas)}
+        {foreach name=GList item=G from=$aReklas}
+            <tr data-id="{$G.aid}" class="row inputRowVon">
+                <td class="col field-aid"><a href="?s=aantrag&id={$G.aid}">{$G.aid}</a></td>
+                <td class="col field-antragsdatum">{if $G.antragsdatum}{$G.antragsdatum}{/if}</td>
+                <td class="col field-LeistungenKtg">{$G.LeistungenKtg}</td>
+                <td class="col field-LeistungenBez">{$G.LeistungenBez|replace:";":"<br>"|unescape:"htmlall"}</td>
+                <td class="col field-umzugstermin">{if $G.umzugstermin}{$G.umzugstermin}{/if}</td>
+                <td class="col field-field-umzugsstatus">{$G.umzugsstatus}</td>
+                <td class="col field-bestaetigt_am">{if $G.bestaetigt_am}{$G.bestaetigt_am}{/if}</td>
+                <td class="col field-abgeschlossen">{$G.abgeschlossen}{if $G.abgeschlossen_am}{$G.abgeschlossen_am}{/if}</td>
+                <td class="col field-Summe sum menge">{$G.Summe|number_format:2:",":"."} €</td>
+            </tr>
+        {/foreach}
+    {/if}
+    </tbody>
+</table>

@@ -135,6 +135,7 @@ if ($AID) {
 	$aAtItems = getAttachements($AS->arrDbdata, 0);
 	$aAtIntItems = getAttachements($AS->arrDbdata, 1);
 	$aGroupItems = getGruppierungen($AID);
+	$aReklas = getReklamationenByAid($AID);
 
     $aLSItems = getLieferscheineByAid($AID);
 	
@@ -233,6 +234,12 @@ if (!empty($aids) && count($aids)) {
     $Tpl->assign("UmzugsGruppierungsIds", implode(',', $aids));
 }
 
+if (!empty($aReklas) && count($aReklas)) {
+    $Tpl->assign("Reklamationen", $aReklas);
+} else {
+    $Tpl->assign("Reklamationen", []);
+}
+
 // Erzeuge GeraeteListe (Array) für Smarty-Template
 $CsvLines = explode("\n", $AS->arrInput["geraete_csv"]);
 $aGItems = array();
@@ -255,6 +262,8 @@ if (!empty($aGItems) && count($aGItems)) {
 $SumBase = 'MH';
 $sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_property, ' . "\n"
       .' ul.menge_mertens, ul.menge2_mertens, ' . "\n"
+      .' ul.menge_rekla, ul.menge2_rekla, ' . "\n"
+      .' ul.menge_geliefert, ul.menge2_geliefert, ' . "\n"
       .' l.Bezeichnung leistung, lk.leistungskategorie kategorie, lk.leistungskategorie_id kategorie_id, ' . "\n"
       .' l.image, l.Beschreibung, l.produkt_link, l.Farbe, l.Groesse, ' . "\n"
       .' l.leistungseinheit, l.leistungseinheit2, if(lm.preis, lm.preis, preis_pro_einheit) preis_pro_einheit ' . "\n"
@@ -308,6 +317,7 @@ if (!empty($aLItems) && count($aLItems)) {
     $Tpl->assign("Umzugsleistungen", []);
 }
 $Tpl->assign("Gesamtsumme", $Gesamtsumme);
+$Tpl->assign('enableLeistungCheckbox', false);
 
 //die("#".__LINE__." aAtItems: ".print_r($aAtItems,1)."<br>\n");
 

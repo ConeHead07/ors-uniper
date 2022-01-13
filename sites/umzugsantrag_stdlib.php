@@ -1,5 +1,37 @@
 <?php 
 
+function getReklamationenByAid(int $aid, array $opts = []) {
+
+	global $db;
+
+	$sql = 'SELECT a.*, stat.LeistungenKtg, stat.Summe, stat.LeistungenBez
+            FROM mm_umzuege a 
+            JOIN (
+				SELECT a.aid,
+				 GROUP_CONCAT(ktg.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS LeistungenKtg, 
+				 GROUP_CONCAT(
+				 	CONCAT(
+				 		lk.Bezeichnung,
+				 		IF (IFNULL(lk.Farbe, "") != "", CONCAT(", ", lk.Farbe), ""),
+				 		IF (IFNULL(lk.Groesse, "") != "", CONCAT(", ", lk.Groesse), "")
+				 	) ORDER BY leistungskategorie SEPARATOR ";"
+				  ) AS LeistungenBez,
+				 SUM(IFNULL(lk.preis_pro_einheit,0) * IFNULL(al.menge_rekla, 1) * IFNULL(al.menge2_rekla,1)) AS Summe
+				FROM mm_umzuege a
+				JOIN mm_umzuege_leistungen al ON (a.aid = al.aid)
+				JOIN mm_leistungskatalog lk ON (al.leistung_id = lk.leistung_id)
+				JOIN mm_leistungskategorie ktg ON (lk.leistungskategorie_id = ktg.leistungskategorie_id)
+				WHERE ref_aid = ' . $aid . '
+				GROUP BY a.aid
+            ) AS stat ON (a.aid = stat.aid)
+            WHERE ref_aid = ' . $aid . '
+            ORDER BY aid DESC';
+
+	$aRows = $db->query_rows($sql);
+
+	return $aRows;
+}
+
 function getLieferscheineByAid(int $aid, array $opts = []) {
 
     global $db, $_CONF, $MConf, $user, $connid, $InclBaseDir;

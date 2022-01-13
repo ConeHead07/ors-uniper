@@ -1,0 +1,23 @@
+Betreff=Bestellung ID {AID} - Reklamation
+
+Hallo {Vorname} {Name},
+
+es wurde eine Reklamation zum Auftrag #{AID} von {reklamiert_von} angelegt.
+
+Die aktuelle Bestellung kann unter folgendem Link bearbeitet werden:
+{StatusLink}
+
+Die angelegte Reklamation können Sie auch direkt hier aufrufen:
+{ReklaStatusLink}
+
+
+Angaben zur Reklamation:
+{bemerkungen}
+
+
+Mit freundlichen Grüßen
+
+
+Ihr Team von
+merTens AG für {HomepageTitle}
+

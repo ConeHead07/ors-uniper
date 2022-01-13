@@ -259,6 +259,10 @@ class dbconn {
         }
     }
 
+    public function expr(string $val): DbExpr {
+        return new DbExpr($val);
+    }
+
     public function connect_error() {
         return $this->connect_error;
     }

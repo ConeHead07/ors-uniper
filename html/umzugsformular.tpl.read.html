@@ -3,12 +3,12 @@
 
 <div id="SysInfoBox"></div>
 
-<link rel="stylesheet" type="text/css" href="css/umzugsformular.css?%assetsRefreshId%">
-<link rel="stylesheet" type="text/css" href="../css/umzugsformular.css?%assetsRefreshId%">
+<link rel="stylesheet" type="text/css" href="css/umzugsformular.css?%assetsRefreshId%"/>
+<link rel="stylesheet" type="text/css" href="../css/umzugsformular.css?%assetsRefreshId%"/>
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
 <h1><span class="spanTitle">Auftrag</span></h1>
-<p>
+
 <div id="Umzugsantrag" class="divInlay" data-site="umzugsformular/tpl/read/html">
   <h2 style="margin:0;">Auftragsstatus</h2>
   <table>
@@ -135,10 +135,67 @@
 <textarea class="iarea bemerkungen" name="AS[add_bemerkungen]"></textarea>
 <br>
 
+
 <input class='btn blue' type="submit" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Bemerkung hinzufügen">
+
+  <button type="button" class="btn red">Leistung reklamieren</button>
 </form>
 
 <div id="LoadingBar"></div>
 
-</p>
-</div> 
+</div>
+</div>
+
+<div id="ReklaDialog" class="dialog dialog-back-layer">
+  <div class="dialog-wrapper" style="width:90vw">
+    <div style="width:90%;">
+      <div id="datenschutzContent" style="max-height:80vh;overflow-y: scroll;text-align:left;">
+
+        {include file="umzugsformular_leistungsauswahl.tpl.read.html" enableLeistungCheckbox="1"}
+
+      </div>
+
+      <div style="text-align: center">
+        <button type="button" onclick="return false;" class="btn gray btn-cancel">Schließen</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+  function showReklaDialog() {
+
+    var container = $("#RekaDialog");
+    $("body").addClass("doc-body-no-scrollbars");
+    container.closest(".dialog")
+            .addClass("dialog-active")
+            .find("button.btn-cancel")
+            .on("click", function() {
+              $("#eingabe_datenschutz_confirm").prop("checked", false);
+              container.removeClass("dialog-active");
+            }).end()
+            .find("button.btn-apply")
+            .on("click", function() {
+              $("#eingabe_datenschutz_confirm").prop("checked", true);
+              container.removeClass("dialog-active");
+            }).end();
+    return;
+  }
+
+  function confirmDatenschutz() {
+
+  }
+
+  $(function() {
+    $("#datenschutzContent").load("/textfiles/datenschutz.html");
+
+    $("#showDatenschutz").on("click", function(e) {
+      e.preventDefault();
+      showDsgvoDialog();
+      return false;
+    });
+    $(".cluetip").cluetip({activation: 'click', closePosition: 'title', arrows: true});
+
+
+  });
+</script>

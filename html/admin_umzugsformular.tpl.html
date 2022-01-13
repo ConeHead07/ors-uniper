@@ -29,6 +29,22 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 <h2 style="margin:0;">Auftragsdaten</h2>
   <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
 <table class="form-table" border=1 cellspacing=1 cellpadding=1>
+    <tr>
+      <td class="label" style="padding:0;width:180px;"><label style="display:block;width:180px;">{$ASConf.service.label}</label></td>
+      <td style="padding:0;width:250px;" class="options-onoff"><label class='{if $AS.service eq "Ja"}on{else}off{/if} active' style="width: 100%;box-sizing: border-box">{$AS.service}</label></td>
+    </tr>
+  {if !empty($AS.ref_aid)}
+  <tr>
+    <td class="label" style="padding:0;width:200px;height:auto;width:auto;"><label for="termin" style="width:180px;">Bezieht sich auf:</label></td>
+    <td style="padding:0;width:250px;"><a href="/?s=aantrag&id={$AS.ref_aid}">{$AS.ref_aid}</a></td>
+  </tr>
+  {/if}
+  {if !empty($AS.reklamiert_von) or !empty($AS.reklamiert_am)}
+  <tr>
+    <td style="padding:0;"><label style="width:180px;">Reklamiert:</label></td>
+    <td style="padding:0;" class="options-onoff"><label class="itxt itxt2col off active">{$AS.reklamiert_am} von {$AS.reklamiert_von}</label></td>
+  </tr>
+  {/if}
   <tr>
     <td class="label" style="padding:0;width:200px;height:auto;width:auto;"><label for="termin" style="width:180px;">Liefertermin:</label></td>
     <td style="padding:0;width:250px;"><input id="termin" type="text" value='{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}'
@@ -258,13 +274,6 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     <td style="padding:0;"><input id="ansprechpartner_fon" type="text" value="{$AS.ansprechpartner_fon|escape}" name="AS[ansprechpartner_fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
   </tr>
 </table>
-
-<table class="form-table"  style="display:none;">
-  <tr>
-    <td style="padding:0;width:180px;"><label style="display:block;width:auto;">{$ASConf.umzug.label}</label></td>
-    <td style="padding:0;width:300px;" class="options-onoff"><label class='{if $AS.umzug eq "Ja"}on{else}off{/if} active'>{$AS.umzug}</label></td>
-  </tr>
-</table>
 </div>
 
 {if 1}
@@ -289,9 +298,23 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 
 {if 1}
     {* include file="umzugsformular_leistungsauswahl.tpl.read.html" *}
+    {if !empty($Reklamationen)}
+    {assign var="showReklas" value="1"}
+    {else}
+    {assign var="showReklas" value="0"}
+    {/if}
     <div style="margin-top:1.5rem">
-    {include file="admin_umzugsformular_leistungsauswahl.tpl.html"}
+    {include file="admin_umzugsformular_leistungsauswahl.tpl.html" showLiefermenge="1" showReklas="1"}
     </div>
+{/if}
+
+{if !empty($Reklamationen)}
+  <div style="margin-top:1.5rem"></div>
+    <fieldset><legend><strong>Reklamationen</strong></legend>
+      <div style="padding:5px">
+  {include file="admin_umzugsformular_reklamationen.tpl.html" aReklas=$Reklamationen}
+      </div>
+    </fieldset>
 {/if}
 
 {if !empty($UmzugsAnlagen)}
@@ -430,6 +453,7 @@ Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
          onclick="umzugsantrag_set_status('abgeschlossen','Storniert')"
          value="Auftrag Stornieren">
   {/if}
+    <button type="button" class="btn red" id="showReklaDialog">Leistungen reklamieren</button>
   <div style="display: inline-block;clear: both"></div>
 </div>
 
@@ -456,7 +480,178 @@ Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
 </p>
 </div> 
 <style>
+  .hint-box {
+    margin-top: 1rem;
+    border: 1px solid #0075b5;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    background-color: #f1f8ff;
+    color: #d7081e;
+    border-radius: 0.5rem;
+    font-style: italic;
+  }
+  .hint-box-title {
+    color: #000;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 1rem;
+  }
 </style>
+
+
+
+<div id="ReklaDialog" class="dialog dialog-back-layer">
+  <div class="dialog-wrapper" style="width:90%">
+    <div style="width:90%;">
+      <form>
+      <div id="reklaContent" style="max-height:80vh;overflow-y: auto;text-align:left;">
+
+        {include file="admin_umzugsformular_leistungsauswahl.tpl.html"
+          enableLeistungCheckbox="1"
+          addReklas="1"
+          showReklas="1"
+          title="Welche Leistung möchten Sie reklamieren"}
+
+      </div>
+      <div id="BoxBemerkungen" style="margin-top: 1rem">
+        <strong>Reklamationsgrund hinzufügen: (<em>erforderlich</em>)</strong><br>
+        <textarea class="iarea bemerkungen" name="grund" style="resize: vertical;overflow: auto"></textarea>
+      </div>
+
+        <div class="hint-box">
+          <div class="hint-box-title">Wichtiger Hinweis, bitte lesen und beachten!</div>
+          Beim Anlegen einer Reklamation erhält der Kunde eine Benachrichtigung mit dem angegebenen Reklamationsgrund.<br>
+          Bitte prüfen Sie vor dem Absenden die ausgewählten Leistungen, Mengen und Reklamationsgrund.
+        </div>
+
+      <div style="text-align: center;margin-top: 1rem">
+        <input type="hidden" name="aid" value="{$AS.aid}">
+        <button type="button" onclick="return false;" class="btn red btn-apply">Reklamation anlegen</button>
+        <button type="button" onclick="return false;" class="btn gray btn-cancel">Schließen</button>
+      </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+{literal}
+<script>
+  function showReklaDialog() {
+
+    var container = $("#ReklaDialog");
+    $("body").addClass("doc-body-no-scrollbars");
+    var dialog = container.closest(".dialog");
+    console.log({containerLength: container.length, dialogLength: dialog.length });
+    dialog
+            .addClass("dialog-active")
+            .find("button.btn-cancel")
+            .off("click")
+            .on("click", function() {
+              $("body").removeClass("doc-body-no-scrollbars");
+              $("#eingabe_datenschutz_confirm").prop("checked", false);
+              container.removeClass("dialog-active");
+            }).end()
+            .find("button.btn-apply")
+            .off("click")
+            .on("click", function() {
+              var btnApply = $(this);
+              var frm = $(this).closest("form");
+              var btnCancel = frm.find("button.btn-cancel");
+              btnApply.prop("disabled", true);
+              btnCancel.prop("disabled", true);
+
+              var aid = frm.find('[name=aid]').val();
+              var grund = frm.find('[name=grund]').val();
+              var chckLeistungen = frm.find('[name=chckLeistung\\[\\]]:checked').serializeArray();
+              console.log({ aid, chckLeistungen });
+
+              var leistungen = [];
+              for(var i = 0; i < chckLeistungen.length; i++) {
+                var lid = chckLeistungen[i].value;
+                var sel = '[name^=L\\[neue_rekla\\]\\[' + lid + '\\]]';
+                console.log('Rekla-Mengen Selector: ', sel, frm.find(sel).length, frm.find(sel).val());
+                var mng = frm.find('[name^=L\\[neue_rekla\\]\\[' + lid + '\\]]').val();
+                if (!parseInt(mng)) {
+                  alert("Für die " + (i+1) + ". ausgewählte Position wurde keine Menge angegeben!");
+                  return;
+                }
+                leistungen.push({ leistung_id: lid, menge: mng });
+              }
+              console.log({ aid, chckLeistungen, leistungen });
+
+              btnApply.prop("disabled", false);
+              btnCancel.prop("disabled", false);
+
+              if(!leistungen.length) {
+                alert("Es wurden keine Leistungen für die Reklamation ausgewählt!");
+                return;
+              }
+              if ($.trim(grund) === "") {
+                alert("Es wurden kein Grund für die Reklamation angegeben!");
+                return;
+              }
+
+              var request = $.post('/reklamieren.php',
+                      {
+                        aid,
+                        leistungen,
+                        grund
+                    }, function(response) {
+                      console.log({ response });
+                      if (response.type === "success") {
+                        alert("Reklamation wurde angelegt mit der ID " + response.reklaAid);
+                      } else {
+                        alert("Es sind Fehler aufgetreten!\n" + response.msg);
+                      }
+                    }
+              );
+              request.always(function() {
+                $("body").removeClass("doc-body-no-scrollbars");
+                btnApply.prop("disabled", false);
+                btnCancel.prop("disabled", false);
+              });
+            }).end();
+    return;
+  }
+
+  $(function() {
+    $("#ReklaDialog").appendTo("body");
+    var frm = $("#ReklaDialog").find("form");
+    var tplTable = $("#ReklaDialog").find("#TplLeistungTable");
+    frm.after(tplTable);
+
+    frm.find("[name=chckLeistung\\[\\]]").on("change", function(e) {
+      var lid = $(this).val();
+      var row = $(this).closest(".row[data-row]").data("row");
+      var neu = $(this).closest(".row").find("[name^=L\\[neue_rekla\\]]");
+      if (!$(this).prop("checked")) {
+        neu.val(0);
+        return;
+      }
+      var mtMenge = parseFloat(row.menge_mertens || 1);
+      var rkMenge = parseFloat(row.menge_rekla || 0);
+      var glMenge = parseFloat(row.menge_geliefert || 0);
+      var neuVal = Math.max(1, mtMenge - rkMenge - glMenge);
+
+      neu.val(neuVal);
+    });
+
+    // $("#reklaContent").load("/textfiles/rekla.html");
+
+    $("#showReklaDialog").on("click", function(e) {
+      e.preventDefault();
+      showReklaDialog();
+      return false;
+    });
+    $(".cluetip").cluetip({activation: 'click', closePosition: 'title', arrows: true});
+
+
+  });
+</script>
+{/literal}
+
 
 <div style="display:none;">
 <table id="MA_SELECT" class="MitarbeierItem">

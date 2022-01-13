@@ -1,0 +1,24 @@
+Betreff=Bestellung ID {AID} - Reklamation
+
+Hallo {Vorname} {Name},
+
+Ihre Reklamation zum Auftrag mit der ID {AID} wurde in unserem
+System erfasst und befindet sich in Bearbeitung
+
+Ihre aktuelle Bestellung können Sie unter folgendem Link  einsehen:
+{StatusLink}
+
+Den Status der Reklamation können Sie auch direkt hier aufrufen:
+{ReklaStatusLink}
+
+
+Angaben zur Reklamation:
+{bemerkungen}
+
+
+Mit freundlichen Grüßen
+
+
+Ihr Team von
+merTens AG für {HomepageTitle}
+

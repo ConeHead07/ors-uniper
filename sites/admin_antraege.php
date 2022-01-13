@@ -307,6 +307,7 @@ $sqlSelect = 'SELECT U.*, U.umzugstermin AS Lieferdatum, ' . $NL
     . ' (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Menge' . $NL;
 
 $sql = 'SELECT COUNT(1) AS `count` FROM (' . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t';
+
 $row = $db->query_singlerow($sql);
 $num_all = $row['count'];
 

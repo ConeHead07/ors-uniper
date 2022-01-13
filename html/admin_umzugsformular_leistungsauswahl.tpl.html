@@ -1,3 +1,26 @@
+{assign var="colspan" value=3}
+
+{if !isset($mengeReklasReadOnly)}
+{assign var="mengeReklasReadOnly" value=1}
+{/if}
+
+{if $PreiseAnzeigen}
+{assign var="colspan" value=$colspan+2}
+{/if}
+
+{if !empty($enableLeistungCheckbox)}
+{assign var="colspan" value=$colspan+1}
+{/if}
+
+{if !empty($addReklas)}
+{assign var="colspan" value=$colspan+1}
+{/if}
+{if !empty($showLiefermenge)}
+{assign var="colspan" value=$colspan+1}
+{/if}
+{if !empty($showReklas)}
+{assign var="colspan" value=$colspan+1}
+{/if}
 <div data-test="2" style="display:block;margin-top:15px;">
     <!-- admin_umzugsformular_leistungsauswahl.tpl.html -->
 {*
@@ -270,27 +293,55 @@ $(function(){
 });
 {/literal}
 </script>
-<h2 style="margin:0">Bestellte Leistungen</h2>
-<table class="MitarbeierItem" style="width:100%;">
+{literal}
+<style>
+    .table-leistungen .col.menge,
+    .table-leistungen .col.field-menge_mertens,
+    .table-leistungen .col.field-menge_rekla,
+    .table-leistungen .col.field-menge_geliefert,
+    .table-leistungen .col.field-add_rekla {
+        max-width:7vh;
+    }
+</style>
+{/literal}
+<h2 style="margin:0">{if empty($title)}Bestellte Leistungen{else}{$title}{/if}</h2>
+<table class="table-leistungen MitarbeierItem" style="width:100%;">
     <thead>
         <tr>
             {* <td style="width:14px;padding:0;"> X </td> *}
-            <td>Kategorie</td>
-            <td>Leistung</td>
-            <td>Menge</td>
-            {if $PreiseAnzeigen}<td>Preis</td>
-            <td class="sum">Gesamt</td>
+            {if isset($enableLeistungCheckbox) && !empty($enableLeistungCheckbox)}
+            <td style="width:14px;padding:0;"> [-] </td>
+            {/if}
+            <td class="col field-kategorie">Kategorie</td>
+            <td class="col field-leistung">Leistung</td>
+            <td class="col field-menge_mertens menge">Menge</td>
+            {if !empty($showReklas)}
+            <td class="col field-menge_rekla menge">Reklas</td>
+            {/if}
+            {if !empty($addReklas)}
+            <td class="col field-add_rekla menge" style="background-color:red;color:#fff;">Neue Reklas</td>
+            {/if}
+            {if !empty($showLiefermenge)}
+            <td class="col field-menge_geliefert menge">Gelief</td>
+            {/if}
+            {if $PreiseAnzeigen}<td class="col col-preis preis">Preis</td>
+            <td class="col field-sum sum">Gesamt</td>
             {/if}
         </tr>
     </thead>
     <tbody id="TblLeistungenBody">
     {foreach name=LList item=L from=$Umzugsleistungen}
-        <tr class="row inputRowVon">
+        <tr class="row inputRowVon" data-lid="{$L.leistung_id}" data-row="{$L|json_encode|escape}">
             {*
             <td style="padding:0;"><span onclick="drop_Leistung(this)" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""></span></td>
             *}
-            <td class="ktg1" {* onclick="get_Kategorie(this)"*}>{$L.kategorie|escape}</td>
-            <td class="lstg" {* onclick="get_Leistung(this)" *} data-p="{$L.preis_pro_einheit}" data-sum="{$L.gesamtpreis}">
+            {if isset($enableLeistungCheckbox) && !empty($enableLeistungCheckbox)}
+            <td>
+                <input type="checkbox" name="chckLeistung[]" value="{$L.leistung_id}">
+            </td>
+            {/if}
+            <td class="col field-kategorie ktg1" {* onclick="get_Kategorie(this)"*}>{$L.kategorie|escape}</td>
+            <td class="col field-leistung lstg" {* onclick="get_Leistung(this)" *} data-p="{$L.preis_pro_einheit}" data-sum="{$L.gesamtpreis}">
                 {if !empty($L.image)}
                 <div class="bild">
                     <img src="images/leistungskatalog/{$L.image}" style="float:left;max-width:120px;max-height:120px;border:0;margin-right:1rem;margin-bottom:.5rem;">
@@ -312,18 +363,40 @@ $(function(){
                 </div>
                 {/if}
             </td>
-            <td><input class="ilstg" name="L[leistung_id][]" value="{$L.leistung_id}" type="hidden"><!-- 
-             --><input class="menge name="L[menge_mertens][]" value="{$L.menge_property|escape|number_format:2:",":"."}" type="text">
+
+            <td class="col field-mertens_menge menge">{if !empty($mengeMertensReadOnly)}
+                {$L.menge_mertens|number_format:2:",":"."}{else}
+                <input class="menge" name="L[menge_mertens][]" value="{$L.menge_mertens|number_format:2:',':'.'}" type="text">
+            {/if}<input class="ilstg" name="L[leistung_id][]" value="{$L.leistung_id}" type="hidden"></td>
+
+            {if !empty($showReklas)}
+            <td class="col field-menge_rekla menge">{if !empty($mengeReklasReadOnly)}
+                {$L.menge_rekla|number_format:2:",":"."}{else}
+                <input class="menge" name="L[menge_rekla][{$L.leistung_id}]" value="{$L.menge_rekla|number_format:2:',':'.'}" type="text">
+            {/if}
             </td>
+            {/if}
+
+            {if !empty($addReklas)}
+            <td class="col field-add_rekla menge"><input style="color:red" class="menge" name="L[neue_rekla][{$L.leistung_id}]" value="0" type="text"></td>
+            {/if}
+
+            {if !empty($showLiefermenge)}
+            <td class="col field-menge_geliefert menge">{if !empty($mengeGeliefertReadOnly)}
+                {$L.menge_geliefert|number_format:2:",":"."}{else}
+                <input class="menge" name="L[menge_geliefert][{$L.leistung_id}]" value="{$L.menge_geliefert|number_format:2:',':'.'}" type="text">
+                {/if}</td>
+            {/if}
+
             {if $PreiseAnzeigen}
-            <td class="preis">{if $L.preis_pro_einheit}{$L.preis_pro_einheit|number_format:2:",":"."}{/if}</td>
-            <td class="sum">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|escape|number_format:2:",":"."}{/if}</td>
+            <td class="preis">{if $L.preis_pro_einheit}{$L.preis_pro_einheit|number_format:2:",":"."} €{/if}</td>
+            <td class="sum">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|number_format:2:",":"."} €{/if}</td>
             {/if}
         </tr>
     {/foreach}
         <tr id="summary">
     {if $PreiseAnzeigen}
-            <td colspan="{if $PreiseAnzeigen}6{else}4{/if}"><span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
+            <td colspan="{$colspan}"><span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
     {/if}
         </tr>
     </tbody>
@@ -377,3 +450,4 @@ $(function(){
         </tr>
 </table>
 <input type="hidden" name="AS[leistungen_csv]" value="">
+

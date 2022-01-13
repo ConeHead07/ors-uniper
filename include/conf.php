@@ -198,6 +198,18 @@ $MConf = array(
 
     'notify_property_storniert' => false,
     'notify_property_storniert_tpl' => 'statusmail_umzug_storniert.txt',
+
+    'notify_user_reklamation' => true,
+    'notify_user_reklamation_tpl' => 'statusmail_user_reklamation.txt',
+
+    'notify_user_reklamation_selfcreated' => true,
+    'notify_user_reklamation_selfcreated_tpl' => 'statusmail_user_reklamation.txt',
+
+    'notify_mertens_reklamation' => true,
+    'notify_mertens_reklamation_tpl' => 'statusmail_admin_reklamation.txt',
+
+    'notify_mertens_reklamation_selfcreated' => true,
+    'notify_mertens_reklamation_selfcreated_tpl' => 'statusmail_admin_reklamation.txt',
 );
 
 /* statusmails:
