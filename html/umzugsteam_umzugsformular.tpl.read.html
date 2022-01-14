@@ -421,6 +421,8 @@
         <div style="clear: both"></div>
       </div>
       <button id="btnSubmit" class="btn blue btn-submit" type="button" onclick="return false;">Speichern</button>
+      <button id="btnLaden" class="btn grey btn-submit" type="button" onclick="lieferscheinVonLocalStorageLaden()">Letzte Eingabe laden</button>
+
       <div id="output" style="display: none;"></div>
     </form>
   </div>
@@ -906,7 +908,8 @@
       var daten = getLieferscheinDaten(aid);
 
       if (!daten) {
-        console.log('Es existieren keine Lieferschein-Daten im LocalStorage für die AID' + aid);
+        console.log('Es existieren keine Lieferschein-Daten im LocalStorage für die AID ' + aid);
+        alert('Es existieren keine Lieferschein-Daten im lokalen Speicher für die AID ' + aid);
         return false;
       }
 

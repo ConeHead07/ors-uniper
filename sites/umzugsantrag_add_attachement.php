@@ -46,7 +46,10 @@ $tracking_link = getRequest("tracking_link", '');
 $aLeistungen = [];
 $selectedLeistungen = [];
 
+$pageTitel = ($internal ? 'Interne ' : '') . 'Datei hochladen';
+
 if (!empty($target) && $target === 'lieferscheine') {
+    $pageTitel = 'Lieferschein hochladen';
     require_once $ModulBaseDir . 'lieferschein/lieferschein.model.php';
 
     $lsmodel = new LS_Model($aid);
@@ -193,7 +196,7 @@ $rows = $db->query_rows($sql);
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>Upload</title>
+	<title><?= $pageTitel ?></title>
 <style>
 .upMsg { font-size:11px; color:#228b22; font-family:Arial,Helvetica,sans-serif; }
 .upErr { font-size:11px; color:#f00; font-family:Arial,Helvetica,sans-serif; }
@@ -298,8 +301,18 @@ table.tblList.tblAdminAttachments {
 <form name="frmImUp" <?php if ($target !== 'lieferscheine'): ?> onsubmit="showLoadingBar(1, '')"<?php else: ?> onsubmit="return false;"<?php endif; ?>
       action="umzugsantrag_add_attachement.php"
       method='post' enctype="multipart/form-data">
-    <div style="margin:0 0 1rem 0"><b>Lieferschein hochladen</b></div>
-
+    <div style="margin:0 0 1rem 0">
+        <div><b><?= $pageTitel ?></b></div>
+    <?php if (empty($target) || $target !== 'lieferscheine'): ?>
+        <div style="font-size:smaller">
+            <?php if ($internal): ?>
+                Interne Dokumente sind für den Kunden nicht sichtbar!
+            <?php else: ?>
+                Normale Dokumente sind auch für den Kunden einsehbar!
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+    </div>
     <input type="hidden" name="MAX_FILE_SIZE" value="26214400"><!-- Angabe in Bytes; MAX:25MB; 1MB=1048576 -->
     <input type="File" name="uploadfile" id="uploadfile"
         <?php if ($target !== 'lieferscheine'): ?>
