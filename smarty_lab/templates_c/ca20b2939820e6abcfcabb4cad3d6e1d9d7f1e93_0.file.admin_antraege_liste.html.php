@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2022-01-06 10:55:14
+/* Smarty version 3.1.34-dev-7, created on 2022-01-19 14:47:02
   from '/var/www/html/html/admin_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61d6bc825fdc14_54057217',
+  'unifunc' => 'content_61e816560be670_37914955',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca20b2939820e6abcfcabb4cad3d6e1d9d7f1e93' => 
     array (
       0 => '/var/www/html/html/admin_antraege_liste.html',
-      1 => 1641462905,
+      1 => 1642599595,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_antraege_tabs.html' => 1,
   ),
 ),false)) {
-function content_61d6bc825fdc14_54057217 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61e816560be670_37914955 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB NAVIGATION ITEMS BEGIN -->
@@ -167,10 +167,12 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <?php }
 } elseif ($_smarty_tpl->tpl_vars['cat']->value == "neue") {?>
     <?php $_smarty_tpl->_assignInScope('showLieferdatum', false);?>
+    <?php $_smarty_tpl->_assignInScope('showBestaetigt', false);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
     <?php $_smarty_tpl->_assignInScope('showLeistungen', true);?>
-    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value+$_smarty_tpl->tpl_vars['lieferdatumWidth']->value);
-} elseif ($_smarty_tpl->tpl_vars['cat']->value == "temp") {?>
+    <?php $_smarty_tpl->_assignInScope('strasseWidth', $_smarty_tpl->tpl_vars['strasseWidth']->value+$_smarty_tpl->tpl_vars['abgeschlossenWidth']->value+$_smarty_tpl->tpl_vars['lieferdatumWidth']->value+$_smarty_tpl->tpl_vars['bestaetigtWidth']->value);?>
+
+<?php } elseif ($_smarty_tpl->tpl_vars['cat']->value == "temp") {?>
     <?php $_smarty_tpl->_assignInScope('showLieferdatum', false);?>
     <?php $_smarty_tpl->_assignInScope('showAbgeschlossen', false);?>
     <?php $_smarty_tpl->_assignInScope('showBestaetigt', false);?>
@@ -279,8 +281,6 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['rangeDatumbis']->value, ENT_QUOTES
             <button type="submit">Filter anwenden</button>
         <?php }?>
     </span>
-ofld: <?php echo $_smarty_tpl->tpl_vars['ofld']->value;?>
-, odir: <?php echo $_smarty_tpl->tpl_vars['odir']->value;?>
 
   <ul class="ulLinkList"> 
   <div class="flds-head-colnames">
@@ -504,7 +504,7 @@ px;"><?php echo substr($_smarty_tpl->tpl_vars['U']->value['umzugszeit'],0,5);?>
               <?php }?>
               <div class="fld-cell fld-land" title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['land'], ENT_QUOTES, 'UTF-8', true);?>
 " style="width:<?php echo $_smarty_tpl->tpl_vars['landWidth']->value;?>
-px;text-overflow: ellipsis"><?php if ($_smarty_tpl->tpl_vars['U']->value['land'] == "Deutschland") {?>DE<?php } elseif ($_smarty_tpl->tpl_vars['U']->value['land'] == "England") {?>EN<?php } elseif ($_smarty_tpl->tpl_vars['U']->value['land'] == "Niederlande") {?>NL<?php } else {
+px;text-overflow: ellipsis"><?php if ($_smarty_tpl->tpl_vars['U']->value['land'] == "Deutschland") {?>DE<?php } elseif ($_smarty_tpl->tpl_vars['U']->value['land'] == "Belgien") {?>BE<?php } elseif ($_smarty_tpl->tpl_vars['U']->value['land'] == "England") {?>EN<?php } elseif ($_smarty_tpl->tpl_vars['U']->value['land'] == "Niederlande") {?>NL<?php } else {
 echo $_smarty_tpl->tpl_vars['U']->value['land'];
 }?> &nbsp;</div>
               <div class="fld-cell fld-plz" style="width:<?php echo $_smarty_tpl->tpl_vars['plzWidth']->value;?>
@@ -553,8 +553,8 @@ px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['Genehmigt'];?>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showBestaetigt']->value) {?>
               <div class="fld-cell fld-bestaetigt" style=";width:<?php echo $_smarty_tpl->tpl_vars['bestaetigtWidth']->value;?>
-px;" title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['Bestaetigt'], ENT_QUOTES, 'UTF-8', true);?>
-"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Bestaetigt'],"%d.%m.%y");?>
+px;" title="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['U']->value['bestaetigt_am'], ENT_QUOTES, 'UTF-8', true);?>
+"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['bestaetigt_am'],"%d.%m.%y");?>
 &nbsp;</div>
               <?php }?>
               <?php if ($_smarty_tpl->tpl_vars['showAbgeschlossen']->value) {?>
@@ -696,9 +696,9 @@ var odir = "<?php echo $_smarty_tpl->tpl_vars['odir']->value;?>
             e.preventDefault();
             var fld = $(this).attr("data-fld");
             var dir = fld === ofld && odir === 'ASC' ? 'DESC' : 'ASC';
-            alert(JSON.stringify({fld, dir, ofld, odir}));
+            // alert(JSON.stringify({fld, dir, ofld, odir}));
             $("input[name=ofld]").val( fld );
-            $("input[name=odir]").val( fld === ofld && odir === 'ASC' ? 'DESC' : 'ASC' );
+            $("input[name=odir]").val( dir );
             send();
             return false;
         });

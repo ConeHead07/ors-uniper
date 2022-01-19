@@ -1,11 +1,12 @@
 <?php 
-require_once('header.php');
+require_once 'header.php';
 
-require_once($InclBaseDir . 'umzugsantrag.inc.php');
-require_once($InclBaseDir . 'umzugsmitarbeiter.inc.php');
+require_once $InclBaseDir . 'umzugsantrag.inc.php';
+require_once $InclBaseDir . 'umzugsmitarbeiter.inc.php';
 
-require_once($ModulBaseDir . '/lieferschein/lieferschein.model.php');
-require_once($SitesBaseDir . '/umzugsantrag_sendmail.php');
+require_once $ModulBaseDir . '/lieferschein/lieferschein.model.php';
+require_once $SitesBaseDir . '/umzugsantrag_sendmail.php';
+require_once $SitesBaseDir . '/umzugsantrag_speichern.php';
 
 if (function_exists('activity_log')) {
     register_shutdown_function('activity_log');
@@ -68,6 +69,8 @@ if (false !== $input) {
     $pdf->setLieferscheindaten($lsdaten);
     $pdf->create();
     $lsPdf = $pdf->Output('lsdoc_' . $lid . '.pdf', 'S' );
+
+    // $iNumMengenUpdates = update_gelieferte_mengen($aid, $aLeistungenMitMengen, $lieferdatum, $lieferschein_id);
 
     if (empty($lsPdf) || strlen($lsPdf) < 10) {
         $error = 'Lieferschein konnte nicht generiert werden!';

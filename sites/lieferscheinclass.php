@@ -182,6 +182,9 @@ $pdf->setFooterData(array(0,64,0), array(0,64,128));
 $sender = 'merTens AG - Stahlwerk Becker 8 - D-47877 Willich';
 
 switch($auftrag['land']) {
+    case 'Belgien':
+        $laenderKuerzel = 'BE';
+        break;
     case 'Deutschland':
         $laenderKuerzel = 'D';
         break;

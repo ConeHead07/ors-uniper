@@ -195,6 +195,8 @@ class BatchErinnerungsmails
         switch($land) {
             case 'Deutschland':
                 return 'D';
+            case 'Belgien':
+                return 'BE';
             case 'England':
                 return 'EN';
             case 'Niederlande':

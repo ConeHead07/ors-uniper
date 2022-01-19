@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-14 20:06:03
+/* Smarty version 3.1.34-dev-7, created on 2022-01-19 16:17:56
   from '/var/www/html/html/umzugsteam_umzugsformular.tpl.read.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b8eb1bbd06f8_26031990',
+  'unifunc' => 'content_61e82ba48a6cc2_14440414',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3980e6590adbc901815f7cf277dd110fe5dbc980' => 
     array (
       0 => '/var/www/html/html/umzugsteam_umzugsformular.tpl.read.html',
-      1 => 1639508740,
+      1 => 1642598245,
       2 => 'file',
     ),
   ),
@@ -28,7 +28,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_umzugsformular_gruppierung.tpl.html' => 1,
   ),
 ),false)) {
-function content_61b8eb1bbd06f8_26031990 (Smarty_Internal_Template $_smarty_tpl) {
+function content_61e82ba48a6cc2_14440414 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 
@@ -489,6 +489,8 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         <div style="clear: both"></div>
       </div>
       <button id="btnSubmit" class="btn blue btn-submit" type="button" onclick="return false;">Speichern</button>
+      <button id="btnLaden" class="btn grey btn-submit" type="button" onclick="lieferscheinVonLocalStorageLaden()">Letzte Eingabe laden</button>
+
       <div id="output" style="display: none;"></div>
     </form>
   </div>
@@ -978,7 +980,8 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
       var daten = getLieferscheinDaten(aid);
 
       if (!daten) {
-        console.log('Es existieren keine Lieferschein-Daten im LocalStorage für die AID' + aid);
+        console.log('Es existieren keine Lieferschein-Daten im LocalStorage für die AID ' + aid);
+        alert('Es existieren keine Lieferschein-Daten im lokalen Speicher für die AID ' + aid);
         return false;
       }
 

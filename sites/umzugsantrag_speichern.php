@@ -201,9 +201,9 @@ function umzugsleistungen_speichern($AID) {
     //die('<pre>#' . __LINE__ . ' ' . __FILE__ . ' '.print_r($delete_ids,1) . '</pre>');
     
     if (count($data)) {
-        $sqlInsert = 'INSERT INTO mm_umzuege_leistungen(aid, leistung_id, createdby,'
-             . ' menge_property, menge2_property, menge_mertens, menge2_mertens) '
-             . 'VALUES(:aid, :leistung_id, :createdby, '
+        $sqlInsert = 'INSERT INTO mm_umzuege_leistungen(aid, leistung_id, createdby, '
+             . 'hauptauftragsmenge, menge_property, menge2_property, menge_mertens, menge2_mertens) '
+             . 'VALUES(:aid, :leistung_id, :createdby, :hauptauftragsmenge, '
              . ($creator == 'property' ? ':menge_property ' : ':menge_mertens') . ','
              . ($creator == 'property' ? ':menge2_property ': ':menge2_mertens') . ','
              . ($creator == 'mertens'  ? ':menge_mertens '  : ':menge_property ') . ','
@@ -225,6 +225,7 @@ function umzugsleistungen_speichern($AID) {
             if (!is_numeric($row['menge2_mertens']))  $row['menge2_mertens']  = new DbExpr ('NULL');
             
             if (in_array($row['leistung_id'], $existing_ids)) {
+                $row['hauptauftragsmenge'] = $row['menge_mertens'];
                 $db->query($sqlUpdate, $row);
 //                die('#' . __LINE__ . ' ' . $db->lastQuery);
             } else {
@@ -511,4 +512,69 @@ function umzugsantrag_speichern() {
         }
     }
 	return $AID;
+}
+
+
+function update_gelieferte_mengen($aid, array $aLeistungenMitMengen, string $lieferdatum = '', int $lieferschein_id = 0) {
+    global $db, $user;
+
+    $sql = 'UPDATE mm_umzuege_leistungen 
+    SET 
+    menge_geliefert = IFNULL(:menge, menge_mertens),
+    menge2_geliefert = menge2_mertens,
+    lieferdatum = IFNULL(:lieferdatum, NOW()),
+    lieferschein_id = IFNULL(:lieferschein_id, lieferschein_id),
+    lieferstatus = "Geliefert"
+    WHERE aid = :aid AND leistung_id = :leistung_id
+    LIMIT 1
+    ';
+
+    if (!empty($lieferdatum) && strtotime($lieferdatum)) {
+        $lieferdatum = date('Y-m-d', strtotime($lieferdatum));
+    } else {
+        $lieferdatum = '';
+    }
+
+    $numUpdates = 0;
+    foreach($aLeistungenMitMengen as $_lst) {
+        if (empty($_lst['leistung_id'])) {
+            continue;
+        }
+
+        $_leistung_id = $_lst['leistung_id'];
+        $_menge = isset($_lst['menge']) && is_numeric($_lst['menge']) ? (float)$_lst['menge'] : $db->expr('null');
+
+        if (!empty($lieferdatum)) {
+            $_lieferdatum = $lieferdatum;
+        }
+        elseif (!empty($_lst['datum']) && strtotime($_lst['datum'])) {
+            $_lieferdatum = date('Y-m-d', strtotime($_lst['datum']));
+        } else {
+            $_lieferdatum = $db->expr('null');
+        }
+
+
+        if (!empty($lieferschein_id)) {
+            $_lieferschein_id = $lieferschein_id;
+        }
+        elseif (!empty($_lst['lieferschein_id']) && is_numeric($_lst['lieferschein_id'])) {
+            $_lieferschein_id = (int)$_lst['lieferschein_id'];
+        } else {
+            $_lieferschein_id = $db->expr('null');
+        }
+
+        $res = $db->query($sql, [
+            'menge' => $_menge,
+            'aid' => $aid,
+            'leistung_id' => $_leistung_id,
+            'lieferdatum' => $_lieferdatum,
+            'lieferschein_id' => $_lieferschein_id
+        ]);
+        echo $db->lastQuery . "<br>\n";
+
+        if ($res) {
+            $numUpdates++;
+        }
+    }
+    return $numUpdates;
 }

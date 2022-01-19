@@ -90,7 +90,7 @@
       {if $showLieferdatum}
       <div style="float:left;display:block;width:{$lieferdatumWidth}px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
       {/if}
-      <div style="float:left;display:block;width:70px;">{if $U.land == "Deutschland"}DE{elseif $U.land == "England"}EN{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if}&nbsp;</div>
+      <div style="float:left;display:block;width:70px;">{if $U.land == "Deutschland"}DE{elseif $U.land == "Belgien"}BE{elseif $U.land == "England"}EN{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if}&nbsp;</div>
       <div style="float:left;display:block;width:100px;">{$U.ort}&nbsp;</div>
       <div style="float:left;display:block;width:60px;">{$U.plz}&nbsp;</div>
       <div style="float:left;display:block;width:{$strasseWidth}px;">{$U.strasse}&nbsp;</div>

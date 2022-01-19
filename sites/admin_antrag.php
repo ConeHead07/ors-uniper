@@ -2,6 +2,11 @@
 require_once($InclBaseDir."php_json.php");
 require_once("sites/umzugsantrag_stdlib.php");
 require_once($InclBaseDir."umzugsgruppierungen.lib.php");
+
+
+// Get ID, falls Antrag bereits vorhanden
+$AID = getRequest("id",'');
+
 if (strpos($user["gruppe"], "admin") === false) {
     if ($user['gruppe'] === 'kunde_report' && strpos($_SERVER['REQUEST_URI'], '=aantrag')) {
         $_alt = str_replace('=aantrag', '=pantrag', $_SERVER['REQUEST_URI']);
@@ -11,6 +16,14 @@ if (strpos($user["gruppe"], "admin") === false) {
     if ($user['gruppe'] === 'umzugsteam') {
 
     } else {
+        if ($AID) {
+            $row = $db->query_row('SELECT * FROM mm_umzuege WHERE aid = :aid', [ 'aid' => $AID]);
+            if ($row && $row['antragsteller_uid'] == $user['uid']) {
+                $_alt = str_replace('=aantrag', '=kantrag', $_SERVER['REQUEST_URI']);
+                Header('Location: ' . $_alt);
+                exit;
+            }
+        }
         die("UNERLAUBTER ZUGRIFF! Zugriff nur für Administratoren");
     }
 }
@@ -27,8 +40,6 @@ $ASConf = &$_CONF["umzugsantrag"];
 $MAConf = &$_CONF["umzugsmitarbeiter"];
 $LKConf = &$_CONF["leistungskatalog"];
 
-// Get ID, falls Antrag bereits vorhanden
-$AID = getRequest("id",'');
 $topService = getRequest('top', '');
 
 $userGruppe = $user['gruppe'];

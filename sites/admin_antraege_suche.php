@@ -3,6 +3,8 @@
 if (!function_exists('getLaenderKuerzelByLand')) {
     function getLaenderKuerzelByLand($land) {
         switch($land) {
+            case 'Belgien':
+                return 'BE';
             case 'Deutschland':
                 return 'D';
             case 'England':

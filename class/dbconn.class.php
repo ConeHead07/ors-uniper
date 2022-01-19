@@ -218,6 +218,7 @@ class DbConnStatement extends mysqli_result {
 }
 
 class dbconn {
+    /** @var mysqli|null  */
     var $conn = null;
     var $mysqli = null;
     var $dbconn = false;
@@ -233,7 +234,8 @@ class dbconn {
     public function __construct($Host, $Db, $User, $Pass, $Port = 3306, $aOptions = []) {
         try {
             $this->conn = new mysqli($Host, $User, $Pass, $Db, $Port);
-            $this->mysqli = $this->conn;            $this->link = mysqli_connect($Host, $User, $Pass, $Db, $Port);
+            $this->mysqli = $this->conn;
+            $this->link = mysqli_connect($Host, $User, $Pass, $Db, $Port);
             // die('mysqli conntected in LINE ' . __LINE__ . ' in FILE ' . __FILE__ );
         } finally {
             $this->connect_error = isset($this->conn->connect_error) ? $this->conn->connect_error : '';

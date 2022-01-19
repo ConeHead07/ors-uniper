@@ -197,6 +197,8 @@ Thomas R. Brünger, Unsere AGB finden Sie unter: www.mertens.ag/agb';
 
     public function getLaenderKuerzelByLand($land) {
         switch($land) {
+            case 'Belgien':
+                return 'BE';
             case 'Deutschland':
                 return 'D';
             case 'England':

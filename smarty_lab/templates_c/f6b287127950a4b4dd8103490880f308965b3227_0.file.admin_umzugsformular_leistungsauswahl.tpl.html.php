@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-10 15:01:11
+/* Smarty version 3.1.34-dev-7, created on 2022-01-19 14:18:48
   from '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b35da7d2b5d2_74959493',
+  'unifunc' => 'content_61e80fb8c325c4_18316269',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f6b287127950a4b4dd8103490880f308965b3227' => 
     array (
       0 => '/var/www/html/html/admin_umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1638187842,
+      1 => 1642598245,
       2 => 'file',
     ),
   ),
@@ -20,8 +20,35 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61b35da7d2b5d2_74959493 (Smarty_Internal_Template $_smarty_tpl) {
-?><div data-test="2" style="display:block;margin-top:15px;">
+function content_61e80fb8c325c4_18316269 (Smarty_Internal_Template $_smarty_tpl) {
+$_smarty_tpl->_assignInScope('colspan', 3);?>
+
+<?php if (!isset($_smarty_tpl->tpl_vars['mengeReklasReadOnly']->value)) {
+$_smarty_tpl->_assignInScope('mengeReklasReadOnly', 1);
+}?>
+
+<?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {
+$_smarty_tpl->_assignInScope('colspan', $_smarty_tpl->tpl_vars['colspan']->value+2);
+}?>
+
+<?php if (!empty($_smarty_tpl->tpl_vars['enableLeistungCheckbox']->value)) {
+$_smarty_tpl->_assignInScope('colspan', $_smarty_tpl->tpl_vars['colspan']->value+1);
+}?>
+
+<?php if (!empty($_smarty_tpl->tpl_vars['addReklas']->value)) {
+$_smarty_tpl->_assignInScope('colspan', $_smarty_tpl->tpl_vars['colspan']->value+1);
+}
+if (!empty($_smarty_tpl->tpl_vars['showReklas']->value)) {
+$_smarty_tpl->_assignInScope('colspan', $_smarty_tpl->tpl_vars['colspan']->value+1);
+}?>
+
+<?php if (!empty($_smarty_tpl->tpl_vars['addTeilmengen']->value)) {
+$_smarty_tpl->_assignInScope('colspan', $_smarty_tpl->tpl_vars['colspan']->value+1);
+}
+if (!empty($_smarty_tpl->tpl_vars['showLiefermenge']->value)) {
+$_smarty_tpl->_assignInScope('colspan', $_smarty_tpl->tpl_vars['colspan']->value+1);
+}?>
+<div data-test="2" style="display:block;margin-top:15px;">
     <!-- admin_umzugsformular_leistungsauswahl.tpl.html -->
 </div>
 
@@ -291,15 +318,46 @@ $(function(){
 
 <?php echo '</script'; ?>
 >
-<h2 style="margin:0">Bestellte Leistungen</h2>
-<table class="MitarbeierItem" style="width:100%;">
+
+<style>
+    .table-leistungen .col.menge,
+    .table-leistungen .col.field-menge_mertens,
+    .table-leistungen .col.field-menge_rekla,
+    .table-leistungen .col.field-menge_geliefert,
+    .table-leistungen .col.field-add_rekla {
+        max-width:7vh;
+    }
+    .table-leistungen thead th {
+        font-size: 0.75rem;
+    }
+</style>
+
+<h2 style="margin:0"><?php if (empty($_smarty_tpl->tpl_vars['title']->value)) {?>Bestellte Leistungen<?php } else {
+echo $_smarty_tpl->tpl_vars['title']->value;
+}?></h2>
+<table class="table-leistungen MitarbeierItem" style="width:100%;">
     <thead>
         <tr>
-                        <td>Kategorie</td>
-            <td>Leistung</td>
-            <td>Menge</td>
-            <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?><td>Preis</td>
-            <td class="sum">Gesamt</td>
+                        <?php if (isset($_smarty_tpl->tpl_vars['enableLeistungCheckbox']->value) && !empty($_smarty_tpl->tpl_vars['enableLeistungCheckbox']->value)) {?>
+            <th style="width:14px;padding:0;"> [-] </th>
+            <?php }?>
+            <th class="col field-kategorie">Kategorie</th>
+            <th class="col field-leistung">Leistung</th>
+            <th class="col field-menge_mertens menge">B-Menge</th>
+            <?php if (!empty($_smarty_tpl->tpl_vars['showReklas']->value)) {?>
+            <th class="col field-menge_rekla menge">R-Menge</th>
+            <?php }?>
+            <?php if (!empty($_smarty_tpl->tpl_vars['addReklas']->value)) {?>
+            <th class="col field-add_rekla menge" style="background-color:red;color:#fff;">Neue Reklas</th>
+            <?php }?>
+            <?php if (!empty($_smarty_tpl->tpl_vars['showLiefermenge']->value)) {?>
+            <th class="col field-menge_geliefert menge">Gelief</th>
+            <?php }?>
+            <?php if (!empty($_smarty_tpl->tpl_vars['addTeilmengen']->value)) {?>
+            <th class="col field-add_teil menge" style="background-color:darkgreen;color:#fff;">T-Menge</th>
+            <?php }?>
+            <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?><th class="col col-preis preis">Preis</th>
+            <th class="col field-sum sum">Gesamt</th>
             <?php }?>
         </tr>
     </thead>
@@ -310,10 +368,18 @@ $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->t
 if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['L']->value) {
 ?>
-        <tr class="row inputRowVon">
-                        <td class="ktg1" ><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
+        <tr class="row inputRowVon" data-lid="<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
+" data-row="<?php echo htmlspecialchars(json_encode($_smarty_tpl->tpl_vars['L']->value), ENT_QUOTES, 'UTF-8', true);?>
+">
+                        <?php if (isset($_smarty_tpl->tpl_vars['enableLeistungCheckbox']->value) && !empty($_smarty_tpl->tpl_vars['enableLeistungCheckbox']->value)) {?>
+            <td>
+                <input type="checkbox" name="chckLeistung[]" value="<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
+">
+            </td>
+            <?php }?>
+            <td class="col field-kategorie ktg1" ><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['kategorie'], ENT_QUOTES, 'UTF-8', true);?>
 </td>
-            <td class="lstg"  data-p="<?php echo $_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'];?>
+            <td class="col field-leistung lstg"  data-p="<?php echo $_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'];?>
 " data-sum="<?php echo $_smarty_tpl->tpl_vars['L']->value['gesamtpreis'];?>
 ">
                 <?php if (!empty($_smarty_tpl->tpl_vars['L']->value['image'])) {?>
@@ -347,18 +413,53 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['Groesse'], ENT_QUOTES,
                 </div>
                 <?php }?>
             </td>
-            <td><input class="ilstg" name="L[leistung_id][]" value="<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
-" type="hidden"><!-- 
-             --><input class="menge name="L[menge_mertens][]" value="<?php echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['menge_property'], ENT_QUOTES, 'UTF-8', true),2,",",".");?>
+
+            <td class="col field-mertens_menge menge"><?php if (!empty($_smarty_tpl->tpl_vars['mengeMertensReadOnly']->value)) {?>
+                <?php echo number_format($_smarty_tpl->tpl_vars['L']->value['menge_mertens'],2,",",".");
+} else { ?>
+                <input class="menge" name="L[menge_mertens][]" value="<?php echo number_format($_smarty_tpl->tpl_vars['L']->value['menge_mertens'],2,',','.');?>
 " type="text">
+            <?php }?><input class="ilstg" name="L[leistung_id][]" value="<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
+" type="hidden"></td>
+
+            <?php if (!empty($_smarty_tpl->tpl_vars['showReklas']->value)) {?>
+            <td class="col field-menge_rekla menge"><?php if (!empty($_smarty_tpl->tpl_vars['mengeReklasReadOnly']->value)) {?>
+                <?php echo number_format($_smarty_tpl->tpl_vars['L']->value['menge_rekla'],2,",",".");
+} else { ?>
+                <input class="menge" name="L[menge_rekla][<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
+]" value="<?php echo number_format($_smarty_tpl->tpl_vars['L']->value['menge_rekla'],2,',','.');?>
+" type="text">
+            <?php }?>
             </td>
+            <?php }?>
+
+            <?php if (!empty($_smarty_tpl->tpl_vars['addReklas']->value)) {?>
+            <td class="col field-add_rekla menge"><input style="color:red" class="menge" name="L[neue_rekla][<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
+]" value="0" type="text"></td>
+            <?php }?>
+
+            <?php if (!empty($_smarty_tpl->tpl_vars['showLiefermenge']->value)) {?>
+            <td class="col field-menge_geliefert menge"><?php if (!empty($_smarty_tpl->tpl_vars['mengeGeliefertReadOnly']->value)) {?>
+                <?php echo number_format($_smarty_tpl->tpl_vars['L']->value['menge_geliefert'],2,",",".");
+} else { ?>
+                <input class="menge" name="L[menge_geliefert][<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
+]" value="<?php echo number_format($_smarty_tpl->tpl_vars['L']->value['menge_geliefert'],2,',','.');?>
+" type="text">
+                <?php }?></td>
+            <?php }?>
+
+            <?php if (!empty($_smarty_tpl->tpl_vars['addTeilmengen']->value)) {?>
+            <td class="col field-add_teil menge"><input style="color:darkgreen" class="menge" name="L[neue_teilmenge][<?php echo $_smarty_tpl->tpl_vars['L']->value['leistung_id'];?>
+]" value="0" type="text"></td>
+            <?php }?>
+
             <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>
             <td class="preis"><?php if ($_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit']) {
-echo number_format($_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'],2,",",".");
-}?></td>
+echo number_format($_smarty_tpl->tpl_vars['L']->value['preis_pro_einheit'],2,",",".");?>
+ €<?php }?></td>
             <td class="sum"><?php if (is_numeric($_smarty_tpl->tpl_vars['L']->value['gesamtpreis'])) {
-echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['gesamtpreis'], ENT_QUOTES, 'UTF-8', true),2,",",".");
-}?></td>
+echo number_format($_smarty_tpl->tpl_vars['L']->value['gesamtpreis'],2,",",".");?>
+ €<?php }?></td>
             <?php }?>
         </tr>
     <?php
@@ -367,7 +468,8 @@ echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['L']->value['gesamtpr
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         <tr id="summary">
     <?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>
-            <td colspan="<?php if ($_smarty_tpl->tpl_vars['PreiseAnzeigen']->value) {?>6<?php } else { ?>4<?php }?>"><span id="allsum" data-allsum="0"><?php echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['Gesamtsumme']->value, ENT_QUOTES, 'UTF-8', true),2,",",".");?>
+            <td colspan="<?php echo $_smarty_tpl->tpl_vars['colspan']->value;?>
+"><span id="allsum" data-allsum="0"><?php echo number_format(htmlspecialchars($_smarty_tpl->tpl_vars['Gesamtsumme']->value, ENT_QUOTES, 'UTF-8', true),2,",",".");?>
 </span><span style="margin-left:5px">&euro;</span></td>
     <?php }?>
         </tr>
@@ -403,5 +505,6 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         </tr>
 </table>
 <input type="hidden" name="AS[leistungen_csv]" value="">
+
 <?php }
 }

@@ -334,7 +334,7 @@
               {if $showZeit}
               <div class="fld-cell fld-umzugszeit" style="width:{$zeitWidth}px;">{$U.umzugszeit|substr:0:5}&nbsp;</div>
               {/if}
-              <div class="fld-cell fld-land" title="{$U.land|escape}" style="width:{$landWidth}px;text-overflow: ellipsis">{if $U.land == "Deutschland"}DE{elseif $U.land == "England"}EN{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if} &nbsp;</div>
+              <div class="fld-cell fld-land" title="{$U.land|escape}" style="width:{$landWidth}px;text-overflow: ellipsis">{if $U.land == "Deutschland"}DE{elseif $U.land=="Belgien"}BE{elseif $U.land == "England"}EN{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if} &nbsp;</div>
               <div class="fld-cell fld-plz" style="width:{$plzWidth}px;">{$U.plz}&nbsp;</div>
               <div class="fld-cell fld-ort" style="width:{$ortWidth}px;">{$U.ort}&nbsp;</div>
               <div class="fld-cell fld-strasse" style="width:{$strasseWidth}px;">

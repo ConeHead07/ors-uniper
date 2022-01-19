@@ -141,6 +141,10 @@ foreach($validFields as $_f) {
         $w[] = $sqlQueryField . ' LIKE "Deutschland"';
         continue;
     }
+    elseif (strcmp($_f, 'land') === 0 && !empty($query[$_f]) && strcmp(trim($query[$_f]), 'BE') === 0 ) {
+        $w[] = $sqlQueryField . ' LIKE "Belgien"';
+        continue;
+    }
 
     if (!empty($query[$_f])) {
 //        if (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
