@@ -34,6 +34,7 @@ class LS_Model {
 
     private $ktgIdLieferung = 18;
     private $ktgIdRabatt = 25;
+    private $ktgIdMontage = 28;
 
     public function __construct(int $aid = 0, int $lid = 0)
     {
@@ -113,7 +114,7 @@ WHERE aid = ' . (int)$this->AID
 l.leistung_id
 FROM mm_umzuege_leistungen l
 LEFT JOIN  `mm_leistungskatalog` k ON l.leistung_id = k.leistung_id
-WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $this->ktgIdLieferung . ', ' . $this->ktgIdRabatt . ')');
+WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $this->ktgIdLieferung . ', ' . $this->ktgIdRabatt . ', ' . $this->ktgIdMontage . ')');
 
         if (empty($rows)) {
             return [];
@@ -131,7 +132,7 @@ ktg.leistungskategorie AS Kategorie
 FROM mm_umzuege_leistungen l
 LEFT JOIN  `mm_leistungskatalog` k ON l.leistung_id = k.leistung_id
 LEFT JOIN  `mm_leistungskategorie` ktg ON k.leistungskategorie_id = ktg.leistungskategorie_id
-WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $this->ktgIdLieferung . ', ' . $this->ktgIdRabatt . ')');
+WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $this->ktgIdLieferung . ', ' . $this->ktgIdRabatt . ', ' . $this->ktgIdMontage . ')');
     }
 
     public function setLieferscheinId(int $lid) {
@@ -250,12 +251,19 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
     }
 
     public function getAbgenommenenLieferscheinPDF() {
-        $sql = 'SELECT lieferschein FROM mm_lieferscheine '
-            . ' WHERE aid = ' . $this->AID . ' '
-            . '    AND lieferschein IS NOT NULL AND LENGTH(lieferschein) > 0 '
-            . '    AND sig_kd_dataurl IS NOT NULL '
-            . '    AND LENGTH(sig_kd_dataurl) > 50 '
-            . ' ORDER BY lid DESC '
+        $NL = "\n";
+        $sql = 'SELECT lieferschein FROM mm_lieferscheine ' . $NL
+            . ' WHERE aid = ' . $this->AID . ' ' . $NL
+            . '    AND lieferschein IS NOT NULL AND LENGTH(lieferschein) > 0 ' . $NL
+            . '    AND (' . $NL
+            . '           (' . $NL
+            . '              sig_kd_dataurl IS NOT NULL ' . $NL
+            . '              AND LENGTH(sig_kd_dataurl) > 50 ' . $NL
+            . '           )' . $NL
+            . '           OR ' . $NL
+            . '           source = "fileupload"' . $NL
+            . '        )' . $NL
+            . ' ORDER BY lid DESC ' . $NL
             . ' LIMIT 1';
 
         return $this->db->query_one($sql);

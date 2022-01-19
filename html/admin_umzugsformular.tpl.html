@@ -321,7 +321,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
   </div>
 
   <div style="margin-top: 2rem">
-    <strong>Lieferinweis (für Lieferschein):</strong><br>
+    <strong>Lieferhinweis (für Lieferschein):</strong><br>
 {if $AS.umzugsstatus ne "abgeschlossen" and $AS.umzugsstatus ne "storniert" and $AS.umzugsstatus ne "abgelehnt"}
     <div id="BoxLieferhinweise">
         <textarea class="iarea bemerkungen lieferhinweise" name="AS[lieferhinweise]" style="resize: vertical;overflow: auto">{$AS.lieferhinweise|escape}</textarea>

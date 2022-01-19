@@ -5,7 +5,7 @@ Hallo {Vorname} {Name},
 Ihre Bestellung mit der ID {AID} wurde ausgeliefert und wird nun als erledigt markiert.
 
 Lieferdaten:  {vorname} {name}
-Endgegengenommen von: {sig_kd_unterzeichner}
+Endgegengenommen von: {entgegengenommen_von}
 Ausführungszeit: {ausgefuehrtam}
 
 Sie können die Bestellung  unter folgendem Link  einsehen:

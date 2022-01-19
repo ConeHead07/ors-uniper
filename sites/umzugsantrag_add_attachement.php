@@ -9,7 +9,8 @@ if (function_exists('activity_log')) {
     register_shutdown_function('activity_log');
 }
 
-require_once($MConf['AppRoot'] . 'sites' . DS . 'umzugsantrag_save_attachement.php');
+require_once($SitesBaseDir . '/umzugsantrag_save_attachement.php');
+require_once($SitesBaseDir . '/umzugsantrag_sendmail.php');
 
 function getOrderLink($chckfld, $ofld, $odir) {
 	if ($chckfld !== $ofld || strcmp($odir, 'DESC') === 0) {
@@ -36,8 +37,9 @@ $ofld = getRequest('ofld','');
 $odir = getRequest('odir','');
 $response = getRequest('response','');
 $internal = getRequest('internal',0);
+$autoclose = getRequest('autoclose',0);
 
-$lieferdatum = getRequest("lieferdatum", '');
+$lieferdatum = getRequest("lieferdatum", date('Y-m-d'));
 $uebergeben_an = getRequest("uebergeben_an", '');
 $leistungen = getRequest("leistungen", []);
 $tracking_id = getRequest("tracking_id", '');
@@ -45,11 +47,17 @@ $tracking_link = getRequest("tracking_link", '');
 
 $aLeistungen = [];
 $selectedLeistungen = [];
+$defaultUebergebenAn = '';
 
 if (!empty($target) && $target === 'lieferscheine') {
     require_once $ModulBaseDir . 'lieferschein/lieferschein.model.php';
 
     $lsmodel = new LS_Model($aid);
+    $auftragsDaten = $lsmodel->getAuftragsdaten();
+    $defaultUebergebenAn = $auftragsDaten['name'] . ', ' . $auftragsDaten['vorname'];
+    if (!$cmd) {
+        $uebergeben_an = $defaultUebergebenAn;
+    }
     $lrows = $lsmodel->getLeistungen();
 
     if (empty($lrows)) {
@@ -135,7 +143,7 @@ if ($cmd === 'upload') {
             $responseData['dokid'] = $dokid;
             $responseData['success'] = true;
             if (strcmp($target, 'lieferscheine') === 0) {
-                $uploadMsg = 'Hochgeladene Datei wurde gespeichert!';
+                $uploadMsg = 'Hochgeladene Datei wurde gespeichert!' . "\n";
                 $uploadFile = $saveCheck['savedas'];
 
                 $saveCheckLS = save_lieferschein($aid, $uploadFile, [
@@ -146,11 +154,43 @@ if ($cmd === 'upload') {
                     'tracking_id' => $tracking_id,
                     'tracking_link' => $tracking_link,
                 ]);
+
+                if ($autoclose) {
+                    $lsmodel = new LS_Model((int)$aid);
+                    $leistungen = $lsmodel->getLeistungen();
+
+                    $numArtikelGeliefert = 0;
+                    $numArtikelTotal = count($leistungen);
+                    for($i = 0; $i < $numArtikelTotal; $i++) {
+                        $_lst = $leistungen[$i];
+                        $_lid = $_lst['leistung_id'];
+                        $_mng = (int)$_lst['menge_mertens'];
+                        if ($_mng === 1 && !empty($selectedLeistungen[$_lid])) {
+                            $numArtikelGeliefert++;
+                        }
+                    }
+
+                    if ($numArtikelGeliefert === $numArtikelTotal) {
+                        $wurdeAbgeschlossen = $lsmodel->auftragAbschliessen();
+                        if ($wurdeAbgeschlossen) {
+                            $uploadMsg.= 'Auftrag wurde abgeschlossen!' . "\n";;
+                        } else {
+                            $uploadError.= 'Systemfehler: Auftrag konnte leider nicht abgeschlossen werden!' . "\n";
+                        }
+
+                        if ($wurdeAbgeschlossen && umzugsantrag_mailinform((int)$aid, 'abgeschlossen', 'Ja')) {
+                            $uploadMsg.= 'Unterzeichneter Lieferschein wurde per Mail an den Kunden verschickt!' . "\n";
+                        }
+                    }
+                }
+
                 if ($saveCheckLS['success']) {
-                    $uploadMsg = "<br>\n" . 'Lieferschein wurde importiert!';
+                    $uploadMsg.= 'Lieferschein wurde importiert!' . "\n";
                     $responseData['lid'] = $saveCheckLS['lid'];
                 } else {
-                    $responseData['error'] = 'Upload konnte als Anlage importiert werden, aber beim Lieferscheinimport sind Fehler aufgetreten!' . "\n";
+                    $_err = 'Upload konnte als Anlage importiert werden, aber beim Lieferscheinimport sind Fehler aufgetreten!' . "\n";
+                    $uploadError.= $_err;
+                    $responseData['error'] = $_err;
                     $responseData['error'].= $saveCheckLS['error'];
                     $responseData['success'] = false;
                 }
@@ -176,7 +216,7 @@ if (!empty($drop)) {
 		    $uploadError.= ($uploadError ? '<br>' . "\n" : '') . $dropError;
         }
         else {
-            $uploadMsg = 'Datei wurde gelöscht!';
+            $uploadMsg.= 'Datei wurde gelöscht!' . "\n";
         }
 	} else {
 		$uploadError.= 'Nur Administratoren dürfen Dateianhünge l&ouml;schen!<br>' . "\n";
@@ -195,8 +235,16 @@ $rows = $db->query_rows($sql);
 <head>
 	<title>Upload</title>
 <style>
-.upMsg { font-size:11px; color:#228b22; font-family:Arial,Helvetica,sans-serif; }
-.upErr { font-size:11px; color:#f00; font-family:Arial,Helvetica,sans-serif; }
+    .upMsg, upErr {
+        font-size:1rem;
+        font-family:Arial,Helvetica,sans-serif;
+        border:solid 2px gray;
+        border-radius:5px;
+        padding:5px;
+        margin-top: 1rem;
+    }
+.upMsg { color:#228b22; }
+.upErr { color:#f00; }
 table.tblList.tblAdminAttachments {
     width:100%;
     max-width:650px;
@@ -226,12 +274,12 @@ table.tblList.tblAdminAttachments {
 <div style="min-height:15px;margin:4px 0;">
     <?php
     if ($uploadError) {
-        echo '<div class="upErr">' . $uploadError . "</div>\n";
+        echo '<div class="upErr">' . str_replace("\n", "<br>\n", trim($uploadError)) . "</div>\n";
     }
 
     if ($uploadMsg) {
-        echo '<div class="upMsg">' . $uploadMsg . "</div>\n";
-        echo "<script>window.opener.umzugsantrag_reload_attachments()</script>\n";
+        echo '<div class="upMsg">' . str_replace("\n", "<br>\n", trim($uploadMsg)) . "</div>\n";
+        echo "<script>window.opener.location.reload()</script>\n";
     }
     ?>
 </div>
@@ -248,7 +296,7 @@ table.tblList.tblAdminAttachments {
 
         var error = '';
         var up = document.getElementById('uploadfile').value;
-        var ue = document.getElementById('uebergebenAn').value;
+        var ue = document.getElementById('uebergeben_an').value;
         var ld = document.getElementById('lieferdatum').value;
         var tid = document.getElementById('trackingId').value;
         var tlnk = document.getElementById('trackingLink').value;
@@ -314,8 +362,8 @@ table.tblList.tblAdminAttachments {
     <input type="hidden" name="cmd" value="upload">
     <?php if ($target === 'lieferscheine'): ?>
         <div class="form-group">
-            <label for="uebergebenAn" style="font-weight: bold;">Übergeben an:</label><br>
-            <input required type="text" style="width:100%" name="uebergebenAn" id="uebergebenAn" value="<?= htmlentities($uebergeben_an ?? '') ?>">
+            <label for="uebergeben_an" style="font-weight: bold;">Übergeben an:</label><br>
+            <input required type="text" style="width:100%" name="uebergeben_an" id="uebergeben_an" value="<?= htmlentities($uebergeben_an ?? '') ?>">
         </div>
         <div class="form-group">
             <label for="lieferdatum" style="font-weight: bold;">Übergabedatum:</label><br>
@@ -324,21 +372,15 @@ table.tblList.tblAdminAttachments {
         <div class="form-group">
             <label for="leistungen" style="font-weight: bold;">Ausgelieferte Artikel markieren:</label><br>
             <?php foreach($aLeistungen as $_id => $_label): ?>
-            <input type="checkbox" name="leistungen[]" id="leistungen<?= $_id ?>" value="<?= $_id ?>">
+            <input type="checkbox" name="leistungen[]" id="leistungen<?= $_id ?>" value="<?= $_id ?>" style="height:1rem;width:1rem">
             <label for="leistungen<?= $_id ?>" class="inline"><?= $_label ?></label> &nbsp;
             <?php endforeach; ?>
 
-            <?php /*
-            <input type="checkbox" name="leistungen[]" id="leistungenSchreibtsich" value="Schreibtisch">
-            <label for="leistungenSchreibtsich" class="inline">Schreibtisch</label> &nbsp;
-                <input type="checkbox" name="leistungen[]" id="leistungenStuhl" value="Stuhl">
-                <label for="leistungenStuhl" class="inline">Stuhl</label> &nbsp;
-                <input type="checkbox" name="leistungen[]" id="leistungenLampe" value="Lampe">
-                <label for="leistungenLampe" class="inline">Lampe</label> &nbsp;
-                <input type="checkbox" name="leistungen[]" id="leistungenSonstiges" value="Sonstiges">
-                <label for="leistungenSonstiges" class="inline">Sonstiges</label>
-            */ ?>
         </div>
+    <div class="form-group" style="border:1px solid gray; border-radius:5px;padding:5px;display: flex">
+        <input type="checkbox" id="autoclose" name="autoclose" value="1" checked style="height:2rem;width:2rem;">
+        <label for="autoclose" style="font-size:.9rem;line-height:1.2rem;padding-left:1rem;display:block;flex-grow: 2">Vorgang automatisch schließen und Statusmail an Kunde versenden, <br>wenn alle Artikel als ausgeliefert markiert werden.</label>
+    </div>
         <?php /* <input type="text" name="leistungen" id="leistungen" value="<?= htmlentities($leistungen ?? ''); ?>"><br> */ ?>
         <div class="form-group">
             <label for="trackingId" style="font-weight: bold;">TrackingID:</label><br>

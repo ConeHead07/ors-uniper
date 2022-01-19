@@ -2,12 +2,13 @@
 
 if (basename($_SERVER["PHP_SELF"]) == basename(__FILE__)) {
 	require_once("../header.php");
-	require_once($InclBaseDir."umzugsantrag.inc.php");
-	require_once($InclBaseDir."umzugsmitarbeiter.inc.php");
-	require_once($InclBaseDir."umzugsanlagen.inc.php");
 }
 
-require($MConf["AppRoot"]."sites".DS."umzugsantrag_datenblatt.php");
+require_once($InclBaseDir . 'umzugsantrag.inc.php');
+require_once($InclBaseDir . 'umzugsmitarbeiter.inc.php');
+require_once($InclBaseDir . 'umzugsanlagen.inc.php');
+
+require( $MConf["AppRoot"]."sites".DS."umzugsantrag_datenblatt.php");
 if (empty($_CONF["umzugsanlagen"])) {
     require_once($InclBaseDir."umzugsanlagen.inc.php");
 }
@@ -941,6 +942,13 @@ function umzugsantrag_mailinform($AID, $status="neu", $value, $authorUser = []) 
                             case 'sig_kd_unterzeichner':
                                 $rplVars[$k] = $v;
                                 $rplVars['entgegengenommen_von'] = $v;
+                                break;
+
+                            case 'uebergeben_an':
+                                $rplVars[$k] = $v;
+                                if (empty($lsdaten['sig_kd_unterzeichner'])) {
+                                    $rplVars['entgegengenommen_von'] = $v;
+                                }
                                 break;
 
                             case 'etikettierung_erfolgt':
