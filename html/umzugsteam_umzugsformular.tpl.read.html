@@ -297,14 +297,130 @@
     form#frmAbnahme .input-bg-color {
       /* background-color: #eaf9ff; */
     }
-  </style>
-  <div id="KundenabnahmeBox" style="padding:1rem;{if $umzugsstatus eq "abgeschlossen"}display:none:{/if}">
-    <h2 style="margin-left:0">Kundenabnahme</h2>
 
+    .options-box .options-item,
+    .options-box label {
+      display:flex;
+      align-items: center;
+      width:100%;
+      text-align:left;
+      padding: 0 0 0 5px;
+      margin: 0.7rem 0;
+      background-color: #ebedef;
+      color: gray;
+      box-sizing: border-box;
+      min-height: 2.5rem;
+      border-radius:3px;
+    }
+
+    .options-box input[type=radio],
+    .options-box input[type=checkbox] {
+      width:1.4rem;
+      height:1.4rem;
+    }
+
+    .options-box input + span,
+    .options-box input + .label-text {
+      font-size: 1rem;
+      padding-left: 1rem;
+      margin: 1px 1px 1px 5px;
+      flex-grow: 2;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .options-box input:checked + span,
+    .options-box input:checked + .label-text {
+      font-weight: bold;
+      background-color: red;
+      color: #fff;
+    }
+
+    .options-box .options-item.checked,
+    .options-box label.checked {
+      background-color: red;
+      font-weight: bold;
+      color: #fff;
+    }
+    .options-item-caption {
+      display:inline-block;
+      width:100%;
+      font-weight:bold;
+    }
+    .inline-dialog-box,
+    #UnzustellbarBox {
+      background-color: #f1f8ff;
+      border: 1px solid #0075B5;
+      /* border-bottom: 1px solid red; */
+      padding: 5px 5px 5px 5px;
+    }
+    .alert-dialog-label,
+    .unzustellbar-label {
+      color: red;
+      font-weight: bold;
+      font-size: 1.1rem;
+      /* margin-bottom: 1rem; */
+      padding: 0.3rem 0 0.3rem 0.2em;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    $(function() {
+        $(".options-box").each(function() {
+          var box = this;
+          $(box).find("input[type=radio],input[type=checkbox]").on("change", function() {
+            console.log("input changed #373");
+            var checked = this.checked;
+            if (this.type === 'radio') {
+              console.log("input radio changed #373", { checked });
+              $(box).find("input[type=radio]:not(:checked)").closest("label").removeClass("checked");
+              $(box).find("input[type=radio]:not(:checked)").closest(".options-item").removeClass("checked");
+
+              $(box).find("input[type=radio]:checked").closest("label").addClass("checked");
+              $(box).find("input[type=radio]:checked").closest(".options-item").addClass("checked");
+              if (checked) {
+                $(this).closest("label").attr("data-checked", this.value);
+                $(this).closest(".options-item").attr("data-checked", this.value);
+              }
+            } else {
+              $(this).closest("label").toggleClass("checked", checked);
+              $(this).closest(".options-item").toggleClass("checked", checked);
+            }
+          });
+        });
+        $(".alert-dialog-label[data-target]").on("click", function() {
+          var targetSelector = $(this).data("target");
+          var isVisible = $(targetSelector).toggle().is(":visible");
+          $(this).find(".caret.icon").toggleClass("down", !isVisible).toggleClass("up", isVisible);
+        });
+
+        $("#reklamationDialog").find("input[value=geliefert]")
+                .trigger("click")
+                .trigger("change");
+    });
+  </script>
+  <div id="UnzustellBarToggle" data-target="#UnzustellbarBox" class="unzustellbar-label alert-dialog-label">Lieferung kann nicht zugestellt werden <i class="caret down icon"></i></div>
+  <div id="UnzustellbarBox" class="inline-dialog-box" style="display: none;">
+    <div class="options-box">
+      <label class="options-item">
+        <input type="radio" name="unzustellbar_grund" value="Kunde nicht angetroffen">
+        <span class="label-text">Kunde nicht angetroffen</span></label>
+      <label class="options-item">
+        <input type="radio" name="unzustellbar_grund" value="Falsche Adresse">
+        <span class="label-text">Falsche Adresse</span></label>
+      <label class="options-item">
+        <input type="radio" name="unzustellbar_grund" value="Annahme verweigert">
+        <span class="label-text">Annahme verweigert</span></label>
+      <button class="btn blue" style="width:100%;font-size:1.2rem;margin-top: 1rem;">Speichern und senden</button>
+    </div>
+  </div>
+  <h2 style="margin-left:0;margin-top:1rem;">Kundenabnahme</h2>
+  <div id="KundenabnahmeBox" style="padding:0rem;{if $umzugsstatus eq "abgeschlossen"}display:none:{/if}">
     <form id="frmAbnahme" class="w3-container" action="%WebRoot%lieferscheinabnahme.php" method="POST"
           name="abnahme" enctype="multipart/form-data" target="_self">
       <input type="hidden" name="aid" value="{$AS.aid|escape}">
-      <div>
+      <div style="padding:.5rem;background-color: #f1f8ff;">
         Die Ware wurde ordnungsgemäß geliefert und in einwandfreiem Zustand montiert. Ebenfalls bestätigen Sie hiermit, dass durch
         uns keine Schäden an Ihrem Gebäude und Ihren Räumlichkeiten entstanden sind. Sollten Schäden entstanden sein, notieren
         Sie diese bitte auf dem beiliegendem Reklamationsformular.
@@ -346,7 +462,7 @@
         <div><label style="margin-right:3rem;width:initial;" class="input-bg-color" > Etikettierung erfolgt</label></div>
         {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
          {foreach name=GList item=L from=$Umzugsleistungen}
-          {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" }
+          {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" or $L.kategorie eq "Montage"}
            {continue}
           {/if}
         <label style="margin-right:3rem;width:12rem;padding: 10px 3px 5px 0;text-align: left;color:#0078dc;" class="input-bg-color" >
@@ -362,7 +478,7 @@
 
       {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
        {foreach name=GList item=L from=$Umzugsleistungen}
-        {if $L.kategorie eq "Schreibtisch" }
+        {if $L.kategorie eq "Schreibtisch" or  $L.kategorie eq "Schreibtischlampe"}
           <div style="min-height:1.5rem;margin-top:1.2rem;">
             <div>
               <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
@@ -380,6 +496,102 @@
         {/if}
        {/foreach}
       {/if}
+
+      <style>
+        #ReklamationLabel {
+
+        }
+        #reklamationDialog .options-item {
+          border-radius: 5px;
+        }
+        #reklamationDialog .options-item .item label {
+          min-height: 1.5rem;
+          color: #4d4d4d;
+        }
+        #reklamationDialog .options-item .item {
+          background-image: linear-gradient(to bottom, rgba(250, 250, 250, 0.8), #9a9393);
+        }
+        #reklamationDialog .options-item[data-checked=geliefert] {
+          background-color: lightgreen;
+          color: #005100;
+          border: 1px solid #005100;
+        }
+        #reklamationDialog .options-item[data-checked=geliefert] .item-geliefert {
+          background-color: green;
+          background-image: linear-gradient(to bottom, #90ee90, #006400);
+        }
+        #reklamationDialog .options-item[data-checked=geliefert] .item-geliefert,
+        #reklamationDialog .options-item[data-checked=geliefert] .item-geliefert label {
+          color: lightgreen;
+          color: #fff;
+        }
+
+        #reklamationDialog .options-item[data-checked=fehlt] {
+          background-color: lightskyblue;
+          color: #0141ac;
+          border: 1px solid #0141ac;
+        }
+        #reklamationDialog .options-item[data-checked=fehlt] .item-fehlt {
+          background-color: blue;
+          background-image: linear-gradient(to bottom, #afd9fb, #0148bf);
+        }
+        #reklamationDialog .options-item[data-checked=fehlt] .item-fehlt,
+        #reklamationDialog .options-item[data-checked=fehlt] .item-fehlt label {
+          color: lightskyblue;
+          color: #fff;
+        }
+
+        #reklamationDialog .options-item[data-checked=rekla] {
+          background-color: lightpink;
+          color: #980000;
+          border: 1px solid red;
+        }
+        #reklamationDialog .options-item .item-rekla {
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+        #reklamationDialog .options-item[data-checked=rekla] .item-rekla {
+          background-color: red;
+          background-image: linear-gradient(to bottom, #fbdada, #d50707);
+        }
+        #reklamationDialog .options-item[data-checked=rekla] .item-rekla,
+        #reklamationDialog .options-item[data-checked=rekla] .item-rekla label {
+          color: lightpink;
+          color: #fff;
+        }
+      </style>
+
+      <div>
+        <div id="ReklamationLabel" data-target="#reklamationDialog" class="reklamation-label alert-dialog-label">Reklamation hinzufügen <i class="caret down icon"></i></div>
+        <div id="reklamationDialog" class="inline-dialog-box">
+          <div class="options-box">
+          {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
+            {foreach name=GList item=L from=$Umzugsleistungen}
+            {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" or $L.kategorie eq "Montage"}
+              {continue}
+            {/if}
+
+            <div class="options-item">
+
+              {if $L.menge_mertens eq 1}
+              <div class="options-item-caption" style="width:100%;display: block;">
+                {$L.kategorie|escape}</div>
+              <div class="item item-geliefert" style="display:inline-block;width:30%;border-left: 1px solid rgba(0, 0, 0, .5);"><label style="">OK<input type="radio" value="geliefert" name="lieferpos[{$L.leistung_id|escape}]" style="display:none" checked></label></div>
+              <div class="item item-fehlt" style="display:inline-block;width:30%;border-left: 1px solid rgba(0, 0, 0, .5);"><label style="">Fehlt<input type="radio" value="fehlt" name="lieferpos[{$L.leistung_id|escape}]" style="display:none;background-color:#fff;color:red;text-align:right;"></label></div>
+              <div class="item item-rekla" style="display:inline-block;width:30%;border-left: 1px solid rgba(0, 0, 0, .5);"><label style="">Rekla<input type="radio" value="rekla" name="lieferpos[{$L.leistung_id|escape}]" style="display:none;background-color:#fff;color:red;text-align:right;"></label></div>
+              {else}
+              <div class="options-item-caption"><input type="checkbox" data-target="" name="failure[{$L.leistung_id|escape}]" value="1">
+                {$L.kategorie|escape}</div>
+            <div style="display:inline-block;width:48%;">Fehlt: <input type="number" size="3" min="0" max="{$L.menge_mertens}" value="0" name="fehlmenge[{$L.leistung_id|escape}]" align="right" style="background-color:#fff;color:red;text-align:right;"></div>
+            <div style="display:inline-block;width:48%;">Rekla: <input type="number" align="right" size="3" min="0" max="{$L.menge_mertens}" value="0" name="fehlerhaft[{$L.leistung_id|escape}]" style="background-color:#fff;color:red;text-align:right;"></div>
+              {/if}
+
+            </div>
+            {/foreach}
+          </div>
+          {/if}
+        </div>
+      </div>
 
       <div style="margin-top:.5rem;">
         <div style="display:inline-block;margin-right:2rem;margin-top:1rem;">
@@ -420,9 +632,17 @@
 
         <div style="clear: both"></div>
       </div>
+<<<<<<< Updated upstream
       <button id="btnSubmit" class="btn blue btn-submit" type="button" onclick="return false;">Speichern</button>
       <button id="btnLaden" class="btn grey btn-submit" type="button" onclick="lieferscheinVonLocalStorageLaden()">Letzte Eingabe laden</button>
 
+=======
+      <div style="margin-top:1rem">
+        <button id="btnSubmit" style="float:left" class="btn blue btn-submit" type="button" onclick="return false;">Speichern<br>und senden</button>
+        <button id="btnLaden" style="float:right" class="btn grey btn-submit" type="button" onclick="lieferscheinVonLocalStorageLaden()">Letzte Eingabe für <br>Auftrag #{$AS.aid} laden</button>
+        <div style="clear:both;"></div>
+      </div>
+>>>>>>> Stashed changes
       <div id="output" style="display: none;"></div>
     </form>
   </div>
@@ -869,9 +1089,15 @@
     }
     function addLieferscheinDaten(aid, name, value) {
       var daten = getLieferscheinDaten(aid);
-      daten.aid = aid;
       daten[name] = value;
-      localStorage.setItem(storageKey, JSON.stringify(daten));
+      setLieferscheinDaten(aid, daten);
+    }
+    function addLieferscheinSubmitted(aid) {
+      var daten = getLieferscheinDaten(aid);
+      daten.submitted = 1;
+      daten.lastSumitDate = getDbDateTimeString();
+
+      setLieferscheinDaten(aid, daten);
     }
     function removeLieferscheinByAID(aid) {
       var storageKey = 'lieferschein_' + aid;
@@ -891,6 +1117,8 @@
       if (aid && (!daten.aid || isNaN(daten.aid))) {
         daten.aid = aid;
       }
+      daten.submitted = false;
+      daten.lastSubmitDate = getDbDateTimeString();
 
       if (!daten.aid) {
         var error = "Lieferschein kann nicht ohne Auftrags-ID zwichengespeichert werden!";
@@ -907,7 +1135,8 @@
       var frm = $("#frmAbnahme");
       var daten = getLieferscheinDaten(aid);
 
-      if (!daten) {
+      console.log('Letzte Lieferscheindaten für ' + aid, { daten });
+      if (!daten || Object.keys(daten).length === 0) {
         console.log('Es existieren keine Lieferschein-Daten im LocalStorage für die AID ' + aid);
         alert('Es existieren keine Lieferschein-Daten im lokalen Speicher für die AID ' + aid);
         return false;
@@ -951,7 +1180,11 @@
       var etikettierung = frm.find("input[name=etikettierung_erfolgt]");
       var leistungen = frm.find("input[name^=leistung]");
       var etikettiert = frm.find("input[name^=etikettierung_erfolgt]");
-      var checkedLength = etikettiert.filter(function() { return this.checked; }).length;
+      var etikettiertChecked = etikettiert.filter(function() { return this.checked; });
+      var checkedLength = etikettiertChecked.length;
+      var fpruefung = frm.find("input[name^=funktionspruefung_erfolgt]");
+      var fpruefungChecked = fpruefung.filter(function() { return this.checked; });
+      var fcheckedLength = fpruefungChecked.length;
 
       var leistungenLabels = [];
       leistungen.each(function() { leistungenLabels.push( $(this).data("label")  )});
@@ -965,12 +1198,17 @@
         lieferdatum,
         etikettierung,
         leistungen,
+        etikettiert,
         checkedLength,
-        leistungenLabels
+        leistungenLabels,
+        fpruefung,
+        fpruefungChecked,
+        fcheckedLength
       });
 
       if (!aid || isNaN(aid)) {
-        alert("Bitte Seite neu laden. Es liegt keine Auftrags-ID vor!");
+        // alert("Bitte Seite neu laden. Es liegt keine Auftrags-ID vor!");
+        MyInfoBox('Bitte Seite neu laden', 'Es liegt keine Auftrags-ID vor!');
         return false;
       }
 
@@ -998,16 +1236,18 @@
       }
 
       if (errors) {
-        alert("Der Lieferschein wurde nicht vollständig ausgefüllt.\n\n" + errors);
+        console.log({errors});
+        MyInfoBox('Der Lieferschein wurde nicht vollständig ausgefülltn!', errors.split("\n").join("<br>"));
         return false;
       }
 
-      if (etikettierung.length && !etikettierung.prop("checked")) {
-        warnings = "Die Etikettierung wurde nicht bestätigt.\n";
+      if (checkedLength < etikettiert.length) {
+        var missingChecks = etikettiert.length - checkedLength;
+        warnings+= "Die Etikettierung von " + missingChecks + " Artikeln wurde nicht bestätigt.\n";
       }
-      if (checkedLength < leistungen.length) {
-        var missingChecks = leistungen.length - checkedLength;
-        warnings+= "Die Lieferung von " + missingChecks + " Artikeln wurde nicht bestätigt.\n";
+      if (fpruefung.length && fcheckedLength < fpruefung.length) {
+        var fmissingChecks = fpruefung.length - fcheckedLength;
+        warnings+= "Die Prüfung von " + fmissingChecks + " Artikeln wurde nicht bestätigt.\n";
       }
 
       if (warnings) {
@@ -1016,11 +1256,18 @@
           return false;
         }
       }
+      console.log({checked: etikettiertChecked, etikettiert, warnings});
+      return;
       var formData = new FormData(frm.get(0));
       lieferscheinSpeichern();
 
       if (!window.navigator.onLine) {
-        alert("Aktuell besteht keine Internetverbindung um die Daten zum Server zu übertragen!");
+        if (0) alert(
+                "Aktuell besteht keine Internetverbindung um die Daten zum Server zu übertragen!\n" +
+                "Die Eingaben zu dieser Auslieferung wurden gespeichert und können später aus dieser Ansicht geladen und versendet werden."
+        );
+        MyInfoBox('Fehlende Internetverbindun!', "Aktuell besteht keine Internetverbindung um die Daten zum Server zu übertragen!\n" +
+                "Die Eingaben zu dieser Auslieferung wurden gespeichert und können später aus dieser Ansicht geladen und versendet werden.");
         return;
       }
 
@@ -1047,6 +1294,8 @@
               var sHtml = data.msg.split("\n").join("<br>");
               $("#output").addClass("success").removeClass("error").html( data.msg.split("\n").join("<br>") );
               MyInfoBox('Auftrag wurde abgeschlossen', sHtml);
+
+              addLieferscheinSubmitted(aid);
             }
           } else {
             var sHtml = '';

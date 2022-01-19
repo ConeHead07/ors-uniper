@@ -56,7 +56,7 @@ td.menge, td.menge, input.menge, td.preis, td.sum {
         <tr class="row inputRowVon">
             <td class="ktg1">{$L.kategorie|escape}</td>
             <td class="lstg">{$L.leistung|escape}</td>
-            <td class="menge">{if is_numeric($L.menge_property)}{$L.menge_property|escape|number_format:0:",":"."}{/if}</td>
+            <td class="menge">{if is_numeric($L.menge_mertens)}{$L.menge_mertens|escape|number_format:0:",":"."}{/if}</td>
             <td class="unit hideForUniper">{$L.leistungseinheit|escape}</td>
             <td class=" hideForUniper">{if is_numeric($L.menge2_property)}{$L.menge2_property|escape|number_format:2:",":"."}{/if}</td>
             <td class="unit hideForUniper">{$L.leistungseinheit2|escape}</td>
