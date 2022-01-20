@@ -22,7 +22,7 @@ function umzugsleistungen_laden($AID) {
     return $db->query_rows($sql, 0, array('aid'=>$AID));
 }
 
-function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
+function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen, bool $autocalc = true) {
     global $db;
     // Annahme: leistung_ref_id in leistungen bezieht sich auf automatisch anzupassende Shipping-Positionen
 
@@ -81,7 +81,7 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
             if (!$_refId && !$_refId2 && !$_refId3) {
                 continue;
             }
-            if ($_refId) {
+            if ($_refId && ($autocalc || empty($rowsById[$_refId]))) {
                 if (!isset($rowsByRefId[$_refId])) {
                     $rowsByRefId[$_refId] = [
                         'aid' => $AID,
@@ -96,11 +96,13 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
                     unset($rowsById[$_refId]);
                 }
 
-                $rowsByRefId[$_refId]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
-                $rowsByRefId[$_refId]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
+                if ($autocalc) {
+                    $rowsByRefId[$_refId]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
+                    $rowsByRefId[$_refId]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
+                }
             }
 
-            if ($_refId2) {
+            if ($_refId2 && ($autocalc || empty($rowsById[$_refId2]))) {
                 if (!isset($rowsByRefId[$_refId2])) {
                     $rowsByRefId[$_refId2] = [
                         'aid' => $AID,
@@ -115,10 +117,12 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
                     unset($rowsById[$_refId2]);
                 }
 
-                $rowsByRefId[$_refId2]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
-                $rowsByRefId[$_refId2]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
+                if ($autocalc) {
+                    $rowsByRefId[$_refId2]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
+                    $rowsByRefId[$_refId2]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
+                }
             }
-            if ($_refId3) {
+            if ($_refId3 && ($autocalc || empty($rowsById[$_refId3]) )) {
                 if (!isset($rowsByRefId[$_refId3])) {
                     $rowsByRefId[$_refId3] = [
                         'aid' => $AID,
@@ -133,22 +137,26 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
                     unset($rowsById[$_refId3]);
                 }
 
-                $rowsByRefId[$_refId3]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
-                $rowsByRefId[$_refId3]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
+                if ($autocalc) {
+                    $rowsByRefId[$_refId3]['menge_property'] += (int)$rowsById[$_id]['menge_property'];
+                    $rowsByRefId[$_refId3]['menge_mertens'] += (int)$rowsById[$_id]['menge_mertens'];
+                }
             }
         }
 
         if ($aHasPos['Stuhl'] > 0 && $aHasPos['Schreibtisch'] > 0 && $aHasPos['Leuchte'] > 0) {
             // Füge Rabatt für Komplettpaket (Stuhl, Schreibtisch und Leutchte) von 25Euro hinzu
             $_lstgId = 237;
-            $rowsByRefId[$_lstgId] = [
-                'aid' => $AID,
-                'leistung_id' => $_lstgId,
-                'menge_property' => 1,
-                'menge2_property' => 1,
-                'menge_mertens' => 1,
-                'menge2_mertens' => 1,
-            ];
+            if ($autocalc || empty($rowsById[$_lstgId])) {
+                $rowsByRefId[$_lstgId] = [
+                    'aid' => $AID,
+                    'leistung_id' => $_lstgId,
+                    'menge_property' => $autocalc ? 1 : 0,
+                    'menge2_property' => 1,
+                    'menge_mertens' => $autocalc ? 1 : 0,
+                    'menge2_mertens' => 1,
+                ];
+            }
         }
     }
     // echo json_encode(compact('sql', 'rows', 'rowsByRefId', 'aHasPos'));
@@ -161,7 +169,7 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen) {
 
 }
 
-function umzugsleistungen_speichern($AID) {
+function umzugsleistungen_speichern($AID, $autocalc_ref_mengen = true) {
     //umzugsleistungen_leeren($AID);
     global $db;
     global $user;
@@ -188,7 +196,7 @@ function umzugsleistungen_speichern($AID) {
         }
     }
 
-    $data = umzugsleistungen_inputWithShipping($AID, $lst);
+    $data = umzugsleistungen_inputWithShipping($AID, $lst, $autocalc_ref_mengen);
     $data = array_map(function($item) use($creator) {
         $item['createdby'] = $creator;
         return $item;
@@ -225,10 +233,10 @@ function umzugsleistungen_speichern($AID) {
             if (!is_numeric($row['menge2_mertens']))  $row['menge2_mertens']  = new DbExpr ('NULL');
             
             if (in_array($row['leistung_id'], $existing_ids)) {
-                $row['hauptauftragsmenge'] = $row['menge_mertens'];
                 $db->query($sqlUpdate, $row);
 //                die('#' . __LINE__ . ' ' . $db->lastQuery);
             } else {
+                $row['hauptauftragsmenge'] = $row['menge_mertens'];
                 $db->query($sqlInsert, $row);
                 //die('#' . __LINE__ . ' ' . $db->lastQuery);
             }
@@ -418,7 +426,12 @@ function umzugsantrag_speichern() {
         
     $save_ul_count = 0;
     if ($cntAS > 0 || $cmd !== 'status') {
-        umzugsleistungen_speichern($AID);
+        if (isset($AS->arrDbdata['autocalc_ref_mengen'])) {
+            $autocalc_ref_mengen = (bool)$AS->arrDbdata['autocalc_ref_mengen'];
+        } else {
+            $autocalc_ref_mengen = true;
+        }
+        umzugsleistungen_speichern($AID, $autocalc_ref_mengen);
         $ulrows = umzugsleistungen_laden($AID);
         foreach($ulrows as $row) {
             if ($row['leistungseinheit'] === 'AP') {

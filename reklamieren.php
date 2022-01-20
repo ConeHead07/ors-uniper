@@ -34,7 +34,7 @@ if (count($inputReklaLeistungen)) {
 }
 
 function reklaResponseError(int $aid, array $errors = []) {
-    global $inputTeilLeistungen, $leistungsIds, $leistungsMengen, $leistungsMengenById, $log;
+    global $inputTeilLeistungen, $leistungsIds, $inputLeistungsMengen, $inputLeistungsMengenByLID, $log;
     header('Content-Type: application/json; charset=UTF-8');
     echo json_encode([
         'type' => 'error',
@@ -43,8 +43,8 @@ function reklaResponseError(int $aid, array $errors = []) {
         'aid' => $aid,
         'inputReklaLeistungen' => $inputTeilLeistungen,
         'leistungsIds' => $leistungsIds,
-        'leistungsMengen' => $leistungsMengen,
-        'leistungsMengenByIds' => $leistungsMengenById,
+        'leistungsMengen' => $inputLeistungsMengen,
+        'leistungsMengenByIds' => $inputLeistungsMengenByLID,
         'log' => $log
 
     ]);

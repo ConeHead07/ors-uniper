@@ -46,7 +46,8 @@ function getTeillieferungenByAid(int $aid, array $opts = []) {
 				 		lk.Bezeichnung,
 				 		IF (IFNULL(lk.Farbe, "") != "", CONCAT(", ", lk.Farbe), ""),
 				 		IF (IFNULL(lk.Groesse, "") != "", CONCAT(", ", lk.Groesse), "")
-				 	) ORDER BY leistungskategorie SEPARATOR ";"
+				 	)
+				 	ORDER BY leistungskategorie SEPARATOR ";"
 				  ) AS LeistungenBez,
 				 SUM(IFNULL(lk.preis_pro_einheit,0) * IFNULL(al.menge_rekla, 1) * IFNULL(al.menge2_rekla,1)) AS Summe
 				FROM mm_umzuege a

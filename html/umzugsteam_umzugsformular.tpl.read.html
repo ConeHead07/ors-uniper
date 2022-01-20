@@ -11,62 +11,62 @@
 
 <link rel="stylesheet" type="text/css" href="css/umzugsformular.css">
 <link rel="stylesheet" type="text/css" href="../css/umzugsformular.css">
-<!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
-<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
-<h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1> 
-<p>
-<div id="Umzugsantrag" class="divInlay"> 
-  <h2 style="margin:0;">Auftragsdaten</h2>
-  {if $umzugsstatus eq "abgeschlossen"}
-  <div>
-    <h2>Der Auftrag wurde bereits abgeschlossen!</h2>
-  </div>
-  {/if}
-  <table border=0 cellspacing=1 cellpadding=1>
-    <tr>
-      <td style="padding:0;height:auto;width:200px;"><label style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
-      <td style="padding:0;width:250px;"><div  class="itxt itxt2col">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</div></td>
-    </tr>
-    <tr>
-      <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
-      <td style="padding:0;"><div  class="itxt itxt2col">{$AS.umzugszeit|escape}</div></td>
-    </tr>
+<!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN -->
+<div class="divModuleBasic padding6px width5Col heightAuto colorContentMain">
+  <h1><span class="spanTitle">Leistungsanforderung #{$AS.aid}</span></h1>
+  <p>
+  <div id="Umzugsantrag" class="divInlay">
+    <h2 style="margin:0;">Auftragsdaten</h2>
+    {if $umzugsstatus eq "abgeschlossen"}
+    <div>
+      <h2>Der Auftrag wurde bereits abgeschlossen!</h2>
+    </div>
+    {/if}
+    <table border=0 cellspacing=1 cellpadding=1>
+      <tr>
+        <td style="padding:0;height:auto;width:200px;"><label style="display:block;width:auto;">Ausf&uuml;hrungstermin:</label></td>
+        <td style="padding:0;width:250px;"><div  class="itxt itxt2col">{$AS.umzugstermin|escape|date_format:"%d.%m.%Y"}</div></td>
+      </tr>
+      <tr>
+        <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Ausf&uuml;hrungszeit:</label></td>
+        <td style="padding:0;"><div  class="itxt itxt2col">{$AS.umzugszeit|escape}</div></td>
+      </tr>
 
-    <tr>
-      <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
-      <td style="padding:0;"><div  class="itxt itxt2col">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
-    </tr>
+      <tr>
+        <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
+        <td style="padding:0;"><div  class="itxt itxt2col">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
+      </tr>
 
-    <tr>
-      <td style="padding:0;"><label style="display:block;width:auto;">Bestätigt:</label></td>
-      <td style="padding:0;" class="status_{$AS.genehmigt_br}"><div  class="itxt itxt2col"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></div></td>
-    </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">Bestätigt:</label></td>
+        <td style="padding:0;" class="status_{$AS.genehmigt_br}"><div  class="itxt itxt2col"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></div></td>
+      </tr>
 
-    <tr>
-      <td style="padding:0;"><label style="display:block;width:auto;">Abgeschlossen:</label></td>
-      <td style="padding:0;" class="status_{$AS.abgeschlossen}"><div  class="itxt itxt2col"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></div></td>
-    </tr>
-    <tr>
-      <td style="padding:0;"><label style="display:block;width:auto;">Status:</label></td>
-      <td style="padding:0;"><div  class="itxt itxt2col">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</div></td>
-    </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">Abgeschlossen:</label></td>
+        <td style="padding:0;" class="status_{$AS.abgeschlossen}"><div  class="itxt itxt2col"><img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></div></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">Status:</label></td>
+        <td style="padding:0;"><div  class="itxt itxt2col">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</div></td>
+      </tr>
       <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
-  </table>
-  <img src="%WebRoot%images/printer.png" width="16" height="16" alt="">
-  <a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}" style="display: none" target="_Umzugsblatt{$AS.aid}">Anforderungsblatt / Druckansicht</a>
-  <a href="%WebRoot%sites/lieferschein.php?aid={$AS.aid}" target="_Lieferschein{$AS.aid}">Lieferschein (PDF)</a>
-  | <a href="%WebRoot%sites/etiketten.php?aid={$AS.aid}" target="_Etiketten{$AS.aid}">Etiketten (PDF)</a>
-  <br>
+    </table>
+    <img src="%WebRoot%images/printer.png" width="16" height="16" alt="">
+    <a href="%WebRoot%sites/umzugsblatt.php?id={$AS.aid}" style="display: none" target="_Umzugsblatt{$AS.aid}">Anforderungsblatt / Druckansicht</a>
+    <a href="%WebRoot%sites/lieferschein.php?aid={$AS.aid}" target="_Lieferschein{$AS.aid}">Lieferschein (PDF)</a>
+    | <a href="%WebRoot%sites/etiketten.php?aid={$AS.aid}" target="_Etiketten{$AS.aid}">Etiketten (PDF)</a>
+    <br>
 
-  {if $AS.lieferhinweise}
-  <div id="BoxLieferhinweise" style="margin-top:1.5rem">
-    <strong>Lieferhinweise:</strong><br>
-    <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
-  </div>
-  {/if}
+    {if $AS.lieferhinweise}
+    <div id="BoxLieferhinweise" style="margin-top:1.5rem">
+      <strong>Lieferhinweise:</strong><br>
+      <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
+    </div>
+    {/if}
 
-  <div style="margin-top:1.5rem">
-    <div style="float:left">
+    <div style="margin-top:1.5rem">
+      <div style="float:left">
         <h2 style="margin:0;">Lieferdaten</h2>
         <table>
           <tr>
@@ -81,292 +81,292 @@
             <td style="padding:0;"><label style="display:block;width:auto;">Fon:</label></td>
             <td style="padding:0;" data-fld="AS[fon]"><div  class="itxt itxt2col">{$AS.fon|escape}</div></td>
           </tr>
-            <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+          <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
         </table>
-    </div>
-    {if !empty($DL) && !empty($DL.Firmenname)}
-    <div style="float:left; margin-left:50px;">
+      </div>
+      {if !empty($DL) && !empty($DL.Firmenname)}
+      <div style="float:left; margin-left:50px;">
         {include file="umzugsteam_umzugsformular_lieferauswahl.tpl.html"}
+      </div>
+      {/if}
+      <div style="clear: both"></div>
+    </div>
+    <div style="margin-top:2rem;"><h2 style="margin:0;">Lieferadresse <i class="geo-address"
+                                                                         data-address="{$AS.strasse|escape},{$AS.plz|escape}+{$AS.ort|escape},{$AS.land|escape}"
+                                                                         data-geo-strasse="{$AS.strasse|escape}"
+                                                                         data-geo-plz="{$AS.plz|escape}"
+                                                                         geo-geo-ort="{$AS.ort|escape}"
+                                                                         data-geo-land="{$AS.land|escape}"></i></h2></div>
+    <script>
+      $(function() {
+        $("i.geo-address[data-address]").each(function() {
+          var gmapUrl = "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=";
+          var query = encodeURIComponent( $(this).data("address") );
+          // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
+          $(this).wrap( $("<a/>").attr({
+            href: gmapUrl + query,
+            target: "gmap",
+            title: "Lieferadresse in Gmap anzeigen"
+          }) ).addClass("marker icon");
+        });
+      });
+    </script>
+    <table class="form-table lbl-w-200" >
+      <tr>
+        <td>
+          <label>Stra&szlig;e &amp; Nr</label>
+        </td>
+        <td style="width:250px;">{$AS.strasse|escape}</td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>PLZ</label></td>
+        <td>{$AS.plz|escape}</td>
+      </tr>
+
+      <tr>
+        <td><label>{$ASConf.ort.label}</label></td>
+        <td>{$AS.ort|escape}</td>
+      </tr>
+
+
+      <tr>
+        <td style="padding:0;">
+          <label>Land</label></td>
+        <td>{$AS.land|escape}
+        </td>
+      </tr>
+      {*
+      <tr style="display: none">
+        <td style="padding:0;"><label for="gebaeude" style="width:180px;">{$ASConf.gebaeude.label}<span class="right">{if $ASConf.gebaeude.required}<span class="required">*</span>{/if}</span></label>
+          <input type="hidden" id="gebaeude" value="{$AS.gebaeude|escape}" name="AS[gebaeude]"></td>
+        <td style="padding:0;"><input type="text" onclick="get_standort_gebaeude(this, O('gebaeude'))" value="{$AS.gebaeude_text|escape}" name="AS[gebaeude_text]" class="itxt itxt2col"></td>
+      </tr>
+
+      <tr>
+        <td style="padding:0;"><label for="etage" style="display:block;width:auto;">{$ASConf.etage.label}<span class="right">{if $ASConf.etage.required}<span class="required">*</span>{/if}</span></label>
+          <input type="hidden" id="etage" value="{$AS.etage|escape}" {if $ASConf.etage.required}required="required"{/if} name="AS[etage]">
+        </td>
+        <td style="padding:0;"><input type="text" readonly="true" {if $ASConf.etage.required}required="required"{/if} id="ASEtageUsrInput" onclick="get_gebaeude_etage(this, O('etage'))" value="{$AS.etage|escape}" name="AS[etage_text]" class="itxt itxt2col"></td>
+      </tr>
+
+      <tr>
+        <td style="padding:0;"><label for="as_raumnr" style="display:block;width:auto;">{$ASConf.raumnr.label}<span class="right">{if $ASConf.raumnr.required}<span class="required">*</span>{/if}</span></label></td>
+        <td style="padding:0;"><input type="text" id="as_raumnr" xreadonly="true" {if $ASConf.raumnr.required}required="required"{/if} xonclick="get_standort_raumnr(this)" value="{$AS.raumnr|escape}" name="AS[raumnr]" class="itxt itxt2col"></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label for="kostenstelle" style="width:180px;">{$ASConf.kostenstelle.label}<span class="right">{if $ASConf.kostenstelle.required}<span class="required">*</span>{/if}</span></label></td>
+        <td style="padding:0;"><input type="text" id="kostenstelle" value="{$AS.kostenstelle|escape}" name="AS[kostenstelle]" class="itxt itxt2col"></td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label for="planonnr" style="display:block;width:auto;">{$ASConf.planonnr.label}<span class="right">{if $ASConf.planonnr.required}<span class="required">*</span>{/if}</span></label></td>
+        <td style="padding:0;"><input id="planonnr" type="text" value="{$AS.planonnr|escape}" name="AS[planonnr]" class="itxt itxt2col"></td>
+      </tr>
+
+      <tr>
+        <td style="padding:0;"><label for="termin" style="width:180px;">Terminwunsch<span class="right">{if $ASConf.terminwunsch.required}<span class="required">*</span>{/if}</span></label></td>
+        <td style="padding:0;"><input type="text" value="{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}"
+          onfocus="showDtPicker(this)" id="terminwunsch" name="AS[terminwunsch]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/terminwunsch.php"></td>
+      </tr>
+      <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
+      <tr>
+        <td style="padding:0;"><label style="width:180px;">Von<span class="right">{if $ASConf.von.required}<span class="required">*</span>{/if}</span></label>
+          <input type="hidden" readonly="readonly" id="von_gebaeude_id" value="{$AS.von_gebaeude_id|escape}" name="AS[von_gebaeude_id]">
+        </td>
+        <td style="padding:0;">
+          <input onclick="get_gebaeude(this, O('von_gebaeude_id'))" id="von_gebaeude_text" type="text" value="{$AS.von_gebaeude_text|escape}" readonly="readonly" class="itxt itxt2col">
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:0;"><label style="width:180px;">Nach<span class="right">{if $ASConf.nach.required}<span class="required">*</span>{/if}</span></label>
+          <input type="hidden" id="nach_gebaeude_id" value="{$AS.nach_gebaeude_id|escape}" name="AS[nach_gebaeude_id]">
+        </td>
+        <td style="padding:0;">
+          <input onclick="get_gebaeude(this, O('nach_gebaeude_id'))" id="nach_gebaeude_text" type="text" value="{$AS.nach_gebaeude_text|escape}" readonly="readonly" class="itxt itxt2col">
+        </td>
+      </tr>
+      *}
+    </table>
+
+    {if !empty($AS.ansprechpartner) or !empty($AS.ansprechpartner_fon)}
+    <div style="margin-top:1.5rem">
+      <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2>
+      <table>
+        <tr>
+          <td style="padding:0;width:200px;""><label style="width:100%;">Vor &amp; Nachname:</label></td>
+          <td style="padding:0;width:250px;"><div  class="itxt itxt2col">{$AS.ansprechpartner|escape}</div></td>
+        </tr>
+        <tr>
+          <td style="padding:0;"><label style="width:100%;">Telefon:</label></td>
+          <td style="padding:0;"><div  class="itxt itxt2col">{$AS.ansprechpartner_fon|escape}</div></td>
+        </tr>
+      </table>
     </div>
     {/if}
-    <div style="clear: both"></div>
-  </div>
-  <div style="margin-top:2rem;"><h2 style="margin:0;">Lieferadresse <i class="geo-address"
-                                                                       data-address="{$AS.strasse|escape},{$AS.plz|escape}+{$AS.ort|escape},{$AS.land|escape}"
-                                                                       data-geo-strasse="{$AS.strasse|escape}"
-                                                                       data-geo-plz="{$AS.plz|escape}"
-                                                                       geo-geo-ort="{$AS.ort|escape}"
-                                                                       data-geo-land="{$AS.land|escape}"></i></h2></div>
-  <script>
-    $(function() {
-      $("i.geo-address[data-address]").each(function() {
-        var gmapUrl = "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=";
-        var query = encodeURIComponent( $(this).data("address") );
-        // https://www.google.com/maps/dir/?api=1&destination=Mainzer+Straße+97,65189+Wiesbaden,Deutschland&travelmode=driving
-        $(this).wrap( $("<a/>").attr({
-          href: gmapUrl + query,
-          target: "gmap",
-          title: "Lieferadresse in Gmap anzeigen"
-        }) ).addClass("marker icon");
-      });
-    });
-  </script>
-  <table class="form-table lbl-w-200" >
-    <tr>
-      <td>
-        <label>Stra&szlig;e &amp; Nr</label>
-      </td>
-      <td style="width:250px;">{$AS.strasse|escape}</td>
-    </tr>
 
-    <tr>
-      <td>
-        <label>PLZ</label></td>
-      <td>{$AS.plz|escape}</td>
-    </tr>
+    <div clear= "all" style="clear:both;"></div>
 
-    <tr>
-      <td><label>{$ASConf.ort.label}</label></td>
-      <td>{$AS.ort|escape}</td>
-    </tr>
-
-
-    <tr>
-      <td style="padding:0;">
-        <label>Land</label></td>
-      <td>{$AS.land|escape}
-      </td>
-    </tr>
-    {*
-    <tr style="display: none">
-      <td style="padding:0;"><label for="gebaeude" style="width:180px;">{$ASConf.gebaeude.label}<span class="right">{if $ASConf.gebaeude.required}<span class="required">*</span>{/if}</span></label>
-        <input type="hidden" id="gebaeude" value="{$AS.gebaeude|escape}" name="AS[gebaeude]"></td>
-      <td style="padding:0;"><input type="text" onclick="get_standort_gebaeude(this, O('gebaeude'))" value="{$AS.gebaeude_text|escape}" name="AS[gebaeude_text]" class="itxt itxt2col"></td>
-    </tr>
-
-    <tr>
-      <td style="padding:0;"><label for="etage" style="display:block;width:auto;">{$ASConf.etage.label}<span class="right">{if $ASConf.etage.required}<span class="required">*</span>{/if}</span></label>
-        <input type="hidden" id="etage" value="{$AS.etage|escape}" {if $ASConf.etage.required}required="required"{/if} name="AS[etage]">
-      </td>
-      <td style="padding:0;"><input type="text" readonly="true" {if $ASConf.etage.required}required="required"{/if} id="ASEtageUsrInput" onclick="get_gebaeude_etage(this, O('etage'))" value="{$AS.etage|escape}" name="AS[etage_text]" class="itxt itxt2col"></td>
-    </tr>
-
-    <tr>
-      <td style="padding:0;"><label for="as_raumnr" style="display:block;width:auto;">{$ASConf.raumnr.label}<span class="right">{if $ASConf.raumnr.required}<span class="required">*</span>{/if}</span></label></td>
-      <td style="padding:0;"><input type="text" id="as_raumnr" xreadonly="true" {if $ASConf.raumnr.required}required="required"{/if} xonclick="get_standort_raumnr(this)" value="{$AS.raumnr|escape}" name="AS[raumnr]" class="itxt itxt2col"></td>
-    </tr>
-    <tr>
-      <td style="padding:0;"><label for="kostenstelle" style="width:180px;">{$ASConf.kostenstelle.label}<span class="right">{if $ASConf.kostenstelle.required}<span class="required">*</span>{/if}</span></label></td>
-      <td style="padding:0;"><input type="text" id="kostenstelle" value="{$AS.kostenstelle|escape}" name="AS[kostenstelle]" class="itxt itxt2col"></td>
-    </tr>
-    <tr>
-      <td style="padding:0;"><label for="planonnr" style="display:block;width:auto;">{$ASConf.planonnr.label}<span class="right">{if $ASConf.planonnr.required}<span class="required">*</span>{/if}</span></label></td>
-      <td style="padding:0;"><input id="planonnr" type="text" value="{$AS.planonnr|escape}" name="AS[planonnr]" class="itxt itxt2col"></td>
-    </tr>
-
-    <tr>
-      <td style="padding:0;"><label for="termin" style="width:180px;">Terminwunsch<span class="right">{if $ASConf.terminwunsch.required}<span class="required">*</span>{/if}</span></label></td>
-      <td style="padding:0;"><input type="text" value="{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}"
-        onfocus="showDtPicker(this)" id="terminwunsch" name="AS[terminwunsch]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/terminwunsch.php"></td>
-    </tr>
-    <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
-    <tr>
-      <td style="padding:0;"><label style="width:180px;">Von<span class="right">{if $ASConf.von.required}<span class="required">*</span>{/if}</span></label>
-        <input type="hidden" readonly="readonly" id="von_gebaeude_id" value="{$AS.von_gebaeude_id|escape}" name="AS[von_gebaeude_id]">
-      </td>
-      <td style="padding:0;">
-        <input onclick="get_gebaeude(this, O('von_gebaeude_id'))" id="von_gebaeude_text" type="text" value="{$AS.von_gebaeude_text|escape}" readonly="readonly" class="itxt itxt2col">
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:0;"><label style="width:180px;">Nach<span class="right">{if $ASConf.nach.required}<span class="required">*</span>{/if}</span></label>
-        <input type="hidden" id="nach_gebaeude_id" value="{$AS.nach_gebaeude_id|escape}" name="AS[nach_gebaeude_id]">
-      </td>
-      <td style="padding:0;">
-        <input onclick="get_gebaeude(this, O('nach_gebaeude_id'))" id="nach_gebaeude_text" type="text" value="{$AS.nach_gebaeude_text|escape}" readonly="readonly" class="itxt itxt2col">
-      </td>
-    </tr>
-    *}
-  </table>
-
-  {if !empty($AS.ansprechpartner) or !empty($AS.ansprechpartner_fon)}
-  <div style="margin-top:1.5rem">
-    <h2 style="margin:0;">Abweichender Ansprechpartner vor Ort</h2>
-    <table>
-      <tr>
-        <td style="padding:0;width:200px;""><label style="width:100%;">Vor &amp; Nachname:</label></td>
-        <td style="padding:0;width:250px;"><div  class="itxt itxt2col">{$AS.ansprechpartner|escape}</div></td>
-      </tr>
-      <tr>
-        <td style="padding:0;"><label style="width:100%;">Telefon:</label></td>
-        <td style="padding:0;"><div  class="itxt itxt2col">{$AS.ansprechpartner_fon|escape}</div></td>
-      </tr>
-    </table>
-  </div>
-  {/if}
-
-  <div clear= "all" style="clear:both;"></div>
-
-  {if 0}
-      {include file="admin_umzugsformular_mitarbeiterauswahl.tpl.html"}
-  {/if}
-  {if 0}
-      {include file="admin_umzugsformular_geraeteauswahl.tpl.html"}
-  {/if}
-  {if 0}
-      {include file="admin_umzugsformular_ortsauswahl.tpl.html"}
-  {/if}
-  {if 1}
+    {if 0}
+    {include file="admin_umzugsformular_mitarbeiterauswahl.tpl.html"}
+    {/if}
+    {if 0}
+    {include file="admin_umzugsformular_geraeteauswahl.tpl.html"}
+    {/if}
+    {if 0}
+    {include file="admin_umzugsformular_ortsauswahl.tpl.html"}
+    {/if}
+    {if 1}
     <div style="margin-top:1.5rem"></div>
-      {include file="umzugsteam_umzugsformular_leistungsauswahl.tpl.read.html"}
-  {/if}
-  {if !empty($UmzugsAnlagen)}
+    {include file="umzugsteam_umzugsformular_leistungsauswahl.tpl.read.html"}
+    {/if}
+    {if !empty($UmzugsAnlagen)}
     <div style="margin-top:1.5rem"></div>
     {include file="umzugsformular_attachments.tpl.read.html" internal=1}
-  {/if}
-  <br>
-  {if !empty($UmzugsAnlagenIntern)}
+    {/if}
+    <br>
+    {if !empty($UmzugsAnlagenIntern)}
     {include file="umzugsformular_attachments.tpl.read2.html" UmzugsAnlagen=$UmzugsAnlagenIntern internal=1}
-  {/if}
+    {/if}
 
-  {if 0}
-  <div style="width:100%">
+    {if 0}
+    <div style="width:100%">
       {include file="admin_umzugsformular_gruppierung.tpl.html"}
-  </div>
-  {/if}
+    </div>
+    {/if}
 
-  <div id="LoadingBar"></div>
+    <div id="LoadingBar"></div>
 
-  <style>
-    #KundenabnahmeBox label {
-      width:initial;
-    }
-    #KundenabnahmeBox label,
-    #KundenabnahmeBox input {
-      background-color: initial;
-      border: initial;
-      color: initial;
-    }
-    #KundenabnahmeBox label + input {
-      margin-right:.5rem;
-    }
-    .canvas-sig,
-    .m-signature-pad--body canvas {
-      position: relative;
-      left: 0;
-      top: 0;
-      width: 99%;
-      height:200px;
-      border: 1px solid #CCCCCC;
-      box-sizing: border-box;
-      background-color: #eaf9ff;
-    }
+    <style>
+      #KundenabnahmeBox label {
+        width:initial;
+      }
+      #KundenabnahmeBox label,
+      #KundenabnahmeBox input {
+        background-color: initial;
+        border: initial;
+        color: initial;
+      }
+      #KundenabnahmeBox label + input {
+        margin-right:.5rem;
+      }
+      .canvas-sig,
+      .m-signature-pad--body canvas {
+        position: relative;
+        left: 0;
+        top: 0;
+        width: 99%;
+        height:200px;
+        border: 1px solid #CCCCCC;
+        box-sizing: border-box;
+        background-color: #eaf9ff;
+      }
 
-    #DialogBackLayer,
-    .dialog-back-layer {
-      position: fixed;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.75);
-      z-index: 9999;
-      box-sizing: border-box;
-    }
-    #DialogWrapper,
-    .dialog-wrapper
-    {
-      border: 3px solid #0078dc;
-      padding: 0.5rem;
-      background-color: #ffffff;
-      border-radius: .5rem;
-      box-sizing: border-box;
-    }
-    .dialog-back-layer,
-    .signature-dialog {
-      display: none;
-    }
-    .signature-dialog-active {
-      display: flex;
-    }
-    .doc-body-no-scrollbars {
-      overflow: hidden !important;
-    }
-    form#frmAbnahme .input-bg-color {
-      /* background-color: #eaf9ff; */
-    }
+      #DialogBackLayer,
+      .dialog-back-layer {
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 9999;
+        box-sizing: border-box;
+      }
+      #DialogWrapper,
+      .dialog-wrapper
+      {
+        border: 3px solid #0078dc;
+        padding: 0.5rem;
+        background-color: #ffffff;
+        border-radius: .5rem;
+        box-sizing: border-box;
+      }
+      .dialog-back-layer,
+      .signature-dialog {
+        display: none;
+      }
+      .signature-dialog-active {
+        display: flex;
+      }
+      .doc-body-no-scrollbars {
+        overflow: hidden !important;
+      }
+      form#frmAbnahme .input-bg-color {
+        /* background-color: #eaf9ff; */
+      }
 
-    .options-box .options-item,
-    .options-box label {
-      display:flex;
-      align-items: center;
-      width:100%;
-      text-align:left;
-      padding: 0 0 0 5px;
-      margin: 0.7rem 0;
-      background-color: #ebedef;
-      color: gray;
-      box-sizing: border-box;
-      min-height: 2.5rem;
-      border-radius:3px;
-    }
+      .options-box .options-item,
+      .options-box label {
+        display:flex;
+        align-items: center;
+        width:100%;
+        text-align:left;
+        padding: 0 0 0 5px;
+        margin: 0.7rem 0;
+        background-color: #ebedef;
+        color: gray;
+        box-sizing: border-box;
+        min-height: 2.5rem;
+        border-radius:3px;
+      }
 
-    .options-box input[type=radio],
-    .options-box input[type=checkbox] {
-      width:1.4rem;
-      height:1.4rem;
-    }
+      .options-box input[type=radio],
+      .options-box input[type=checkbox] {
+        width:1.4rem;
+        height:1.4rem;
+      }
 
-    .options-box input + span,
-    .options-box input + .label-text {
-      font-size: 1rem;
-      padding-left: 1rem;
-      margin: 1px 1px 1px 5px;
-      flex-grow: 2;
-      display: flex;
-      align-items: center;
-      height: 100%;
-      box-sizing: border-box;
-    }
-    .options-box input:checked + span,
-    .options-box input:checked + .label-text {
-      font-weight: bold;
-      background-color: red;
-      color: #fff;
-    }
+      .options-box input + span,
+      .options-box input + .label-text {
+        font-size: 1rem;
+        padding-left: 1rem;
+        margin: 1px 1px 1px 5px;
+        flex-grow: 2;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      .options-box input:checked + span,
+      .options-box input:checked + .label-text {
+        font-weight: bold;
+        background-color: red;
+        color: #fff;
+      }
 
-    .options-box .options-item.checked,
-    .options-box label.checked {
-      background-color: red;
-      font-weight: bold;
-      color: #fff;
-    }
-    .options-item-caption {
-      display:inline-block;
-      width:100%;
-      font-weight:bold;
-    }
-    .inline-dialog-box,
-    #UnzustellbarBox {
-      background-color: #f1f8ff;
-      border: 1px solid #0075B5;
-      /* border-bottom: 1px solid red; */
-      padding: 5px 5px 5px 5px;
-    }
-    .alert-dialog-label,
-    .unzustellbar-label {
-      color: red;
-      font-weight: bold;
-      font-size: 1.1rem;
-      /* margin-bottom: 1rem; */
-      padding: 0.3rem 0 0.3rem 0.2em;
-      cursor: pointer;
-    }
-  </style>
-  <script>
-    $(function() {
+      .options-box .options-item.checked,
+      .options-box label.checked {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+      }
+      .options-item-caption {
+        display:inline-block;
+        width:100%;
+        font-weight:bold;
+      }
+      .inline-dialog-box,
+      #UnzustellbarBox {
+        background-color: #f1f8ff;
+        border: 1px solid #0075B5;
+        /* border-bottom: 1px solid red; */
+        padding: 5px 5px 5px 5px;
+      }
+      .alert-dialog-label,
+      .unzustellbar-label {
+        color: red;
+        font-weight: bold;
+        font-size: 1.1rem;
+        /* margin-bottom: 1rem; */
+        padding: 0.3rem 0 0.3rem 0.2em;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      $(function() {
         $(".options-box").each(function() {
           var box = this;
           $(box).find("input[type=radio],input[type=checkbox]").on("change", function() {
@@ -398,25 +398,29 @@
         $("#reklamationDialog").find("input[value=geliefert]")
                 .trigger("click")
                 .trigger("change");
-    });
-  </script>
-  <div id="UnzustellBarToggle" data-target="#UnzustellbarBox" class="unzustellbar-label alert-dialog-label">Lieferung kann nicht zugestellt werden <i class="caret down icon"></i></div>
-  <div id="UnzustellbarBox" class="inline-dialog-box" style="display: none;">
-    <div class="options-box">
-      <label class="options-item">
-        <input type="radio" name="unzustellbar_grund" value="Kunde nicht angetroffen">
-        <span class="label-text">Kunde nicht angetroffen</span></label>
-      <label class="options-item">
-        <input type="radio" name="unzustellbar_grund" value="Falsche Adresse">
-        <span class="label-text">Falsche Adresse</span></label>
-      <label class="options-item">
-        <input type="radio" name="unzustellbar_grund" value="Annahme verweigert">
-        <span class="label-text">Annahme verweigert</span></label>
-      <button class="btn blue" style="width:100%;font-size:1.2rem;margin-top: 1rem;">Speichern und senden</button>
+      });
+    </script>
+  {if false}
+    <div id="UnzustellBarToggle" data-target="#UnzustellbarBox" class="unzustellbar-label alert-dialog-label">Lieferung kann nicht zugestellt werden <i class="caret down icon"></i></div>
+  {else}
+  <div id="UnzustellBarToggle"></div>
+  {/if}
+    <div id="UnzustellbarBox" class="inline-dialog-box" style="display: none;">
+      <div class="options-box">
+        <label class="options-item">
+          <input type="radio" name="unzustellbar_grund" value="Kunde nicht angetroffen">
+          <span class="label-text">Kunde nicht angetroffen</span></label>
+        <label class="options-item">
+          <input type="radio" name="unzustellbar_grund" value="Falsche Adresse">
+          <span class="label-text">Falsche Adresse</span></label>
+        <label class="options-item">
+          <input type="radio" name="unzustellbar_grund" value="Annahme verweigert">
+          <span class="label-text">Annahme verweigert</span></label>
+        <button class="btn blue" style="width:100%;font-size:1.2rem;margin-top: 1rem;">Speichern und senden</button>
+      </div>
     </div>
-  </div>
-  <h2 style="margin-left:0;margin-top:1rem;">Kundenabnahme</h2>
-  <div id="KundenabnahmeBox" style="padding:0rem;{if $umzugsstatus eq "abgeschlossen"}display:none:{/if}">
+    <h2 style="margin-left:0;margin-top:1rem;">Kundenabnahme</h2>
+    <div id="KundenabnahmeBox" style="padding:0rem;{if $umzugsstatus eq "abgeschlossen"}display:none:{/if}">
     <form id="frmAbnahme" class="w3-container" action="%WebRoot%lieferscheinabnahme.php" method="POST"
           name="abnahme" enctype="multipart/form-data" target="_self">
       <input type="hidden" name="aid" value="{$AS.aid|escape}">
@@ -446,25 +450,25 @@
           <span style="display: inline-block;width:4rem;">Ankunft</span>
           <span style="border-bottom:2px solid #0078dc;margin-left:1rem;">
           <input
-                name="ankunft" id="ankunftsZeit" type="time" size="8"
-                style="min-width:80px;color: #0078dc;" class="input-bg-color"> Uhr</span>
+                  name="ankunft" id="ankunftsZeit" type="time" size="8"
+                  style="min-width:80px;color: #0078dc;" class="input-bg-color"> Uhr</span>
         </label>
         <label style="margin-right:3rem;width:initial;display: inline-block;text-align:left;">
           <span style="display: inline-block;width:4rem;">Abfahrt</span>
           <span style="border-bottom:2px solid #0078dc;margin-left:1rem">
           <input
-                name="abfahrt" id="abfahrtsZeit" type="time" size="8"
-                style="min-width:80px;color:#0078dc;" class="input-bg-color"> Uhr</span>
+                  name="abfahrt" id="abfahrtsZeit" type="time" size="8"
+                  style="min-width:80px;color:#0078dc;" class="input-bg-color"> Uhr</span>
         </label>
       </div>
 
       <div style="min-height:1.5rem;margin-top:1.2rem;">
         <div><label style="margin-right:3rem;width:initial;" class="input-bg-color" > Etikettierung erfolgt</label></div>
         {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
-         {foreach name=GList item=L from=$Umzugsleistungen}
-          {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" or $L.kategorie eq "Montage"}
-           {continue}
-          {/if}
+        {foreach name=GList item=L from=$Umzugsleistungen}
+        {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" or $L.kategorie eq "Montage"}
+        {continue}
+        {/if}
         <label style="margin-right:3rem;width:12rem;padding: 10px 3px 5px 0;text-align: left;color:#0078dc;" class="input-bg-color" >
           <input name="etikettierung_erfolgt[{$L.leistung_id|escape}]"
                  data-label="{$L.kategorie|escape}"
@@ -472,29 +476,29 @@
                  style="width:1rem;height:1rem;outline: 2px solid #0078dc;outline-style: auto;"
                  value="{$L.kategorie|escape}" type="checkbox"> {$L.kategorie|escape}
         </label>
-         {/foreach}
+        {/foreach}
         {/if}
       </div>
 
       {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
-       {foreach name=GList item=L from=$Umzugsleistungen}
-        {if $L.kategorie eq "Schreibtisch" or  $L.kategorie eq "Schreibtischlampe"}
-          <div style="min-height:1.5rem;margin-top:1.2rem;">
-            <div>
-              <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
-              Funktionsprüfung erfolgt</label>
-            </div>
-            <label style="margin-right:3rem;width:initial;color:#0078dc;padding: 10px 3px 5px 0" class="input-bg-color" >
-              <input name="funktionspruefung_erfolgt[]"
-                     data-label="{$L.kategorie|escape}"
-                     id="Schreibtischpruefung"
-                     style="width:1rem;height:1rem;outline: 2px solid #0078dc;outline-style: auto;"
-                     value="{$L.kategorie|escape}" type="checkbox"> {$L.kategorie|escape}
-            </label>
-          </div>
-          {break}
-        {/if}
-       {/foreach}
+      {foreach name=GList item=L from=$Umzugsleistungen}
+      {if $L.kategorie eq "Schreibtisch" or  $L.kategorie eq "Schreibtischlampe"}
+      <div style="min-height:1.5rem;margin-top:1.2rem;">
+        <div>
+          <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
+            Funktionsprüfung erfolgt</label>
+        </div>
+        <label style="margin-right:3rem;width:initial;color:#0078dc;padding: 10px 3px 5px 0" class="input-bg-color" >
+          <input name="funktionspruefung_erfolgt[]"
+                 data-label="{$L.kategorie|escape}"
+                 id="Schreibtischpruefung"
+                 style="width:1rem;height:1rem;outline: 2px solid #0078dc;outline-style: auto;"
+                 value="{$L.kategorie|escape}" type="checkbox"> {$L.kategorie|escape}
+        </label>
+      </div>
+      {break}
+      {/if}
+      {/foreach}
       {/if}
 
       <style>
@@ -562,13 +566,17 @@
       </style>
 
       <div>
+        {if false}
         <div id="ReklamationLabel" data-target="#reklamationDialog" class="reklamation-label alert-dialog-label">Reklamation hinzufügen <i class="caret down icon"></i></div>
-        <div id="reklamationDialog" class="inline-dialog-box">
+        {else}
+        <div id="ReklamationLabel"></div>
+        {/if}
+        <div id="reklamationDialog" class="inline-dialog-box" style="display: none;">
           <div class="options-box">
-          {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
+            {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
             {foreach name=GList item=L from=$Umzugsleistungen}
             {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" or $L.kategorie eq "Montage"}
-              {continue}
+            {continue}
             {/if}
 
             <div class="options-item">
@@ -582,8 +590,8 @@
               {else}
               <div class="options-item-caption"><input type="checkbox" data-target="" name="failure[{$L.leistung_id|escape}]" value="1">
                 {$L.kategorie|escape}</div>
-            <div style="display:inline-block;width:48%;">Fehlt: <input type="number" size="3" min="0" max="{$L.menge_mertens}" value="0" name="fehlmenge[{$L.leistung_id|escape}]" align="right" style="background-color:#fff;color:red;text-align:right;"></div>
-            <div style="display:inline-block;width:48%;">Rekla: <input type="number" align="right" size="3" min="0" max="{$L.menge_mertens}" value="0" name="fehlerhaft[{$L.leistung_id|escape}]" style="background-color:#fff;color:red;text-align:right;"></div>
+              <div style="display:inline-block;width:48%;">Fehlt: <input type="number" size="3" min="0" max="{$L.menge_mertens}" value="0" name="fehlmenge[{$L.leistung_id|escape}]" align="right" style="background-color:#fff;color:red;text-align:right;"></div>
+              <div style="display:inline-block;width:48%;">Rekla: <input type="number" align="right" size="3" min="0" max="{$L.menge_mertens}" value="0" name="fehlerhaft[{$L.leistung_id|escape}]" style="background-color:#fff;color:red;text-align:right;"></div>
               {/if}
 
             </div>
@@ -604,45 +612,39 @@
         </div>
 
         <div style="display:inline-block;margin-top:1rem;">
-        <div style="display:inline-block;margin-right:2rem;">
-          <div
-                  class="input-bg-color"
-                  style="border-bottom:2px solid #0078dc;min-height:1.5rem;width:14rem;display: inline-flex;">
-            <input id="lsSignatureUnterzeichner" type="text" name="sig_ma_unterzeichner"
-                   value="{$AS.vorname|escape} {$AS.name|escape}"
-                   style="width:100%;align-self: flex-end;color:#0078dc;">
+          <div style="display:inline-block;margin-right:2rem;">
+            <div
+                    class="input-bg-color"
+                    style="border-bottom:2px solid #0078dc;min-height:1.5rem;width:14rem;display: inline-flex;">
+              <input id="lsSignatureUnterzeichner" type="text" name="sig_ma_unterzeichner"
+                     value="{$AS.vorname|escape} {$AS.name|escape}"
+                     style="width:100%;align-self: flex-end;color:#0078dc;">
+            </div>
+
+            <div>(Name Kunde in Blockbuchstaben)</div>
           </div>
 
-          <div>(Name Kunde in Blockbuchstaben)</div>
-        </div>
-
-        <div style="display:inline-block;">
-          <div id="imgSignatureBoxMA"
-               class="input-bg-color"
-               style="border-bottom:2px solid #0078dc;min-height:1.5rem;display: inline-flex;width:15rem;position:relative;">
-            <span style="position:absolute;right:-1.5rem;bottom:0;color:#0078dc;"><i class="pen square  icon"></i></span>
-            <img id="imgSignatureMA" src="" style="max-height:1.5rem;max-width:15rem;display:none;align-self: flex-end">
-            <input id="lsSignatureMA" type="hidden" name="sig_ma_dataurl" value="">
-            <input id="lsSignatureMAGeodata" type="hidden" name="sig_ma_geodata" value="">
-            <input id="lsSignatureMACreated" type="hidden" name="sig_ma_created" value="">
+          <div style="display:inline-block;">
+            <div id="imgSignatureBoxMA"
+                 class="input-bg-color"
+                 style="border-bottom:2px solid #0078dc;min-height:1.5rem;display: inline-flex;width:15rem;position:relative;">
+              <span style="position:absolute;right:-1.5rem;bottom:0;color:#0078dc;"><i class="pen square  icon"></i></span>
+              <img id="imgSignatureMA" src="" style="max-height:1.5rem;max-width:15rem;display:none;align-self: flex-end">
+              <input id="lsSignatureMA" type="hidden" name="sig_ma_dataurl" value="">
+              <input id="lsSignatureMAGeodata" type="hidden" name="sig_ma_geodata" value="">
+              <input id="lsSignatureMACreated" type="hidden" name="sig_ma_created" value="">
+            </div>
+            <div>(Unterschrift)</div>
           </div>
-          <div>(Unterschrift)</div>
-        </div>
         </div>
 
         <div style="clear: both"></div>
       </div>
-<<<<<<< Updated upstream
-      <button id="btnSubmit" class="btn blue btn-submit" type="button" onclick="return false;">Speichern</button>
-      <button id="btnLaden" class="btn grey btn-submit" type="button" onclick="lieferscheinVonLocalStorageLaden()">Letzte Eingabe laden</button>
-
-=======
       <div style="margin-top:1rem">
         <button id="btnSubmit" style="float:left" class="btn blue btn-submit" type="button" onclick="return false;">Speichern<br>und senden</button>
         <button id="btnLaden" style="float:right" class="btn grey btn-submit" type="button" onclick="lieferscheinVonLocalStorageLaden()">Letzte Eingabe für <br>Auftrag #{$AS.aid} laden</button>
         <div style="clear:both;"></div>
       </div>
->>>>>>> Stashed changes
       <div id="output" style="display: none;"></div>
     </form>
   </div>
@@ -651,674 +653,674 @@
 
 <script src="%WebRoot%js/signature_pad.js"></script>
 
-  <div id="SigDialogMertens" class="signature-dialog dialog-back-layer">
-    <div class="dialog-wrapper" style="width:90vw">
-      <div id="signature-pad-mertens" style="display:none;width:90%;" date-refpad="" data-refimage="#imgSignatureMertens" data-refinput="#lsSignatureMertens" class="signature-pad m-signature-pad">
-        <div style="font-weight:bold;">Montageteam der merTens AG</div>
-        <div class="signature-pad--body m-signature-pad--body">
-          <canvas id="canvas-sig-mertens" class="canvas-sig canvas-sig-mertens"></canvas>
-        </div>
-        <div style="text-align: center">
-          <button type="button" onclick="cancelSignaturePad('#signature-pad-mertens');return false;" class="btn gray btn-cancel">Abbrechen</button>
-          <button type="button" onclick="loeschenSignaturePad('#signature-pad-mertens');return false;" class="btn red btn-clear">Leeren</button>
-          <button type="button" onclick="submitSignature('#signature-pad-mertens');return false;" class="btn green btn-apply">OK</button>
-        </div>
+<div id="SigDialogMertens" class="signature-dialog dialog-back-layer">
+  <div class="dialog-wrapper" style="width:90vw">
+    <div id="signature-pad-mertens" style="display:none;width:90%;" date-refpad="" data-refimage="#imgSignatureMertens" data-refinput="#lsSignatureMertens" class="signature-pad m-signature-pad">
+      <div style="font-weight:bold;">Montageteam der merTens AG</div>
+      <div class="signature-pad--body m-signature-pad--body">
+        <canvas id="canvas-sig-mertens" class="canvas-sig canvas-sig-mertens"></canvas>
       </div>
-
-    </div>
-  </div>
-
-  <div id="SigDialogMA" class="signature-dialog dialog-back-layer">
-    <div class="dialog-wrapper">
-      <div id="signature-pad-ma" style="display:none;width:90vw;" data-refpad="" data-refimage="#imgSignatureMA" data-refinput="#lsSignatureMA" class="signature-pad m-signature-pad">
-        <div style="font-weight:bold;">Kunde: Unterschrift</div>
-        <div class="signature-pad--body m-signature-pad--body">
-          <canvas id="canvas-sig-ma" class="canvas-sig canvas-sig-ma"></canvas>
-        </div>
-        <div style="text-align: center">
-          <button type="button"
-                  class="btn gray btn-cancel btn-sig-cancel"
-                  onclick="cancelSignaturePad('#signature-pad-ma');return false;">Abbrechen</button>
-          <button type="button"
-                  class="btn red btn-clear btn-sig-erase"
-                  onclick="loeschenSignaturePad('#signature-pad-ma');return false;">Leeren</button>
-          <button type="button"
-                  class="btn green btn-apply btn-sig-apply"
-                  onclick="submitSignature('#signature-pad-ma');return false;">OK</button>
-        </div>
+      <div style="text-align: center">
+        <button type="button" onclick="cancelSignaturePad('#signature-pad-mertens');return false;" class="btn gray btn-cancel">Abbrechen</button>
+        <button type="button" onclick="loeschenSignaturePad('#signature-pad-mertens');return false;" class="btn red btn-clear">Leeren</button>
+        <button type="button" onclick="submitSignature('#signature-pad-mertens');return false;" class="btn green btn-apply">OK</button>
       </div>
-
     </div>
+
   </div>
+</div>
 
-  <div style="display:none;" id="statusCheck">Browser-Status-Check: <span id="browserOnlineStatus"></span></div>
-
-  <div id="signature-pad-test" style="width:90vw;display:none;" data-refpad="" data-refimage="#imgSignatureMA" data-refinput="#lsSignatureMA" class="signature-pad m-signature-pad">
-    <div class="signature-pad--body m-signature-pad--body">
-      <canvas id="canvas-sig-test" class="canvas-sig canvas-sig-test"></canvas>
+<div id="SigDialogMA" class="signature-dialog dialog-back-layer">
+  <div class="dialog-wrapper">
+    <div id="signature-pad-ma" style="display:none;width:90vw;" data-refpad="" data-refimage="#imgSignatureMA" data-refinput="#lsSignatureMA" class="signature-pad m-signature-pad">
+      <div style="font-weight:bold;">Kunde: Unterschrift</div>
+      <div class="signature-pad--body m-signature-pad--body">
+        <canvas id="canvas-sig-ma" class="canvas-sig canvas-sig-ma"></canvas>
+      </div>
+      <div style="text-align: center">
+        <button type="button"
+                class="btn gray btn-cancel btn-sig-cancel"
+                onclick="cancelSignaturePad('#signature-pad-ma');return false;">Abbrechen</button>
+        <button type="button"
+                class="btn red btn-clear btn-sig-erase"
+                onclick="loeschenSignaturePad('#signature-pad-ma');return false;">Leeren</button>
+        <button type="button"
+                class="btn green btn-apply btn-sig-apply"
+                onclick="submitSignature('#signature-pad-ma');return false;">OK</button>
+      </div>
     </div>
+
   </div>
+</div>
+
+<div style="display:none;" id="statusCheck">Browser-Status-Check: <span id="browserOnlineStatus"></span></div>
+
+<div id="signature-pad-test" style="width:90vw;display:none;" data-refpad="" data-refimage="#imgSignatureMA" data-refinput="#lsSignatureMA" class="signature-pad m-signature-pad">
+  <div class="signature-pad--body m-signature-pad--body">
+    <canvas id="canvas-sig-test" class="canvas-sig canvas-sig-test"></canvas>
+  </div>
+</div>
 
 </div>
 
 <script>
-    var aid = {$AS.aid|json_encode};
-    function escapeSelector(name) {
-      return name.replaceAll('[', '\\[').replaceAll(']', '\\]');
+  var aid = {$AS.aid|json_encode};
+  function escapeSelector(name) {
+    return name.replaceAll('[', '\\[').replaceAll(']', '\\]');
+  }
+  {literal}
+
+  $(function() {
+    if ($("#abnahmeLieferdatum").val() === '') {
+      var heute = new Date();
+      var defautLieferdatum = heute.getFullYear() + "-" +
+              (heute.getMonth() < 9 ? '0' : '') + (heute.getMonth() +1) + "-" +
+              (heute.getDate() < 10 ? '0' : '') + heute.getDate();
+      $("#abnahmeLieferdatum").val(defautLieferdatum);
     }
-    {literal}
+    // SignaturePad.prototype.getPlainCanvasElement = function() {
+    //   return this._canvas;
+    // };
+    //
+    // SignaturePad.prototype.getCanvasElement = function() {
+    //   return $(this._canvas);
+    // };
+    //
+    // SignaturePad.prototype.getOuterBox = function() {
+    //   return $(this._canvas).closest("div.signature-pad");
+    // };
+    //
+    // SignaturePad.prototype.getOuterBody = function() {
+    //   return $(this._canvas).closest("div.signature-pad-body");
+    // };
+    //
+    // SignaturePad.prototype.getTargetInput = function() {
+    //   var outerBox = this.getOuterBox();
+    //   var refSelector = outerBox.data("refinput");
+    //   if (refSelector) {
+    //     return $(refSelector);
+    //   }
+    //   return null;
+    // };
+    //
+    // SignaturePad.prototype.getTargetImage = function() {
+    //   var outerBox = this.getOuterBox();
+    //   var refSelector = outerBox.data("refimage");
+    //   if (refSelector) {
+    //     return $(refSelector);
+    //   }
+    //   return null;
+    // };
+    console.log('Initially ' + (window.navigator.onLine ? 'on' : 'off') + 'line');
 
-    $(function() {
-      if ($("#abnahmeLieferdatum").val() === '') {
-        var heute = new Date();
-        var defautLieferdatum = heute.getFullYear() + "-" +
-                (heute.getMonth() < 9 ? '0' : '') + (heute.getMonth() +1) + "-" +
-                (heute.getDate() < 10 ? '0' : '') + heute.getDate();
-        $("#abnahmeLieferdatum").val(defautLieferdatum);
-      }
-      // SignaturePad.prototype.getPlainCanvasElement = function() {
-      //   return this._canvas;
-      // };
-      //
-      // SignaturePad.prototype.getCanvasElement = function() {
-      //   return $(this._canvas);
-      // };
-      //
-      // SignaturePad.prototype.getOuterBox = function() {
-      //   return $(this._canvas).closest("div.signature-pad");
-      // };
-      //
-      // SignaturePad.prototype.getOuterBody = function() {
-      //   return $(this._canvas).closest("div.signature-pad-body");
-      // };
-      //
-      // SignaturePad.prototype.getTargetInput = function() {
-      //   var outerBox = this.getOuterBox();
-      //   var refSelector = outerBox.data("refinput");
-      //   if (refSelector) {
-      //     return $(refSelector);
-      //   }
-      //   return null;
-      // };
-      //
-      // SignaturePad.prototype.getTargetImage = function() {
-      //   var outerBox = this.getOuterBox();
-      //   var refSelector = outerBox.data("refimage");
-      //   if (refSelector) {
-      //     return $(refSelector);
-      //   }
-      //   return null;
-      // };
-      console.log('Initially ' + (window.navigator.onLine ? 'on' : 'off') + 'line');
-
-      $(window).on('online', function() {
-        console.log('Became online');
-        $("#browserOnlineStatus").text("ONLINE");
-      });
-      $(window).on('offline', function() {
-        console.log('Became offline');
-        $("#browserOnlineStatus").text("OFFLINE");
-      });
-
-      document.getElementById('statusCheck').addEventListener('click', function() {
-        var isOnline = window.navigator.onLine;
-        console.log('window.navigator.onLine is ' + isOnline);
-        $("#browserOnlineStatus").text(isOnline ? "ONLINE" : "OFFLINE");
-      });
-
-      var createSignaturPad = function(containerSelector, options) {
-        var defaults = {
-          minWidth: 1.5, // minimale Breite des Stiftes
-          maxWidth: 6, // maximale Breite des Stiftes
-          penColor: "#000000", // Stiftfarbe
-          backgroundColor: '#FFFFFF'
-        };
-        var conf = defaults;
-        if (options !== undefined && options !== null && typeof options === "object") {
-          if ("minWidth" in options && !isNaN(options.minWidth) && options.minWidth > 0) {
-            conf.minWidth = options.minWidth;
-          }
-          if ("maxWidth" in options && !isNaN(options.maxWidth) && options.maxWidth > 0) {
-            conf.maxWidth = options.maxWidth;
-          }
-          if (conf.maxWidth < conf.minWidth) {
-            conf.maxWidth = conf.minWidth;
-          }
-          if ("penColor" in options && typeof options.penColor === "string") {
-            conf.penColor = options.penColor;
-          }
-          if ("backgroundColor" in options && typeof options.backgroundColor === "string") {
-            conf.backgroundColor = options.backgroundColor;
-          }
-        }
-        var container = $(containerSelector);
-        if (container.length === 0) {
-          console.error('Signatur-Pad Container not found by containerSelector', { containerSelector });
-          return;
-        }
-        if (container.length > 1) {
-          console.error('containerSelector selektiert mehr als ein Element', { containerSelector });
-          return;
-        }
-
-        var jSigBody = container.find("[class$=body]");
-        var jCanvas = container.find("canvas");
-
-        if (jSigBody.length === 0) {
-          jSigBody = $("<div/>").addClass("m-signature-pad--body").appendTo(container);
-          if (jCanvas.length === 1) {
-            jCanvas.appendTo(jSigBody);
-          }
-        }
-
-        if (jCanvas.length === 0) {
-          jCanvas = $("<canvas/>").appendTo(jSigBody);
-        }
-
-        var signaturePad = new SignaturePad(jCanvas.get(0), conf);
-        container.data('refpad', signaturePad);
-
-        $(window).on("resize", onResizeCanvas.bind(window, signaturePad));
-        onResizeCanvas(signaturePad);
-
-        console.log("createSignaturePad", { wrapper: container, jSigBody, jCanvas, signaturePad } );
-
-        var targetImage = signaturePad.getTargetImage();
-        if (targetImage && targetImage.length) {
-          var targetImageParent = targetImage.parent();
-          // targetImage.off("click").on("click", function() { showSignatureDialog(containerSelector); });
-          targetImageParent.off("click").on("click", function() { showSignatureDialog(containerSelector); });
-        }
-        return signaturePad;
-      };
-
-      $(".signature-dialog").appendTo("body");
-      createSignaturPad('#signature-pad-mertens');
-      createSignaturPad('#signature-pad-ma');
-      var canvasTest = document.getElementById('canvas-sig-test');
-      if (canvasTest) {
-        var sigPadTest = new SignaturePad(canvasTest);
-        onResizeCanvas(sigPadTest);
-      }
-
-      // $("#imgSignatureBoxMertens").on("click", function() {
-      //   showSignatureDialog('#signature-pad-mertens');
-      // });
-      // $("#imgSignatureBoxMA").on("click", function() {
-      //   showSignatureDialog('#signature-pad-ma');
-      // });
-
+    $(window).on('online', function() {
+      console.log('Became online');
+      $("#browserOnlineStatus").text("ONLINE");
+    });
+    $(window).on('offline', function() {
+      console.log('Became offline');
+      $("#browserOnlineStatus").text("OFFLINE");
     });
 
-    function onResizeCanvas(sigPad) {
-      var oldContent = sigPad.toData();
-      var sigPadCanvas = sigPad.getPlainCanvasElement();
-      var ratio = Math.max(window.devicePixelRatio || 1, 1);
-      sigPadCanvas.width = sigPadCanvas.offsetWidth * ratio;
-      sigPadCanvas.height = sigPadCanvas.offsetHeight * ratio;
-      sigPadCanvas.getContext("2d").scale(ratio, ratio);
-      sigPad.clear();
-      sigPad.fromData(oldContent);
-    };
+    document.getElementById('statusCheck').addEventListener('click', function() {
+      var isOnline = window.navigator.onLine;
+      console.log('window.navigator.onLine is ' + isOnline);
+      $("#browserOnlineStatus").text(isOnline ? "ONLINE" : "OFFLINE");
+    });
 
-    function releaseContainerFromOverlay(container) {
-      var originParent = container.data("originParent");
-      var originPrev = container.data("originPrev");
-      if (originPrev && originPrev.length && originParent && originParent.length) {
-        if (originParent.get(0) === originPrev.parent().get(0)) {
-          container.insertAfter(originPrev);
-          return true;
-        }
-      }
-      if (originParent && originParent.length === 1) {
-        container.appendTo(originParent);
-        return true;
-      }
-      if (originPrev && originPrev.length === 1) {
-        container.insertAfter(originPrev);
-        return true;
-      }
-      container.appendTo("body");
-    }
-
-    function showSignatureDialog(containerSelector) {
-
-      var container = $(containerSelector);
-      $("body").addClass("doc-body-no-scrollbars");
-      $(".signature-dialog.signature-dialog-active").removeClass("signature-dialog-active");
-      container.show().closest(".signature-dialog").addClass("signature-dialog-active");
-      var signaturePad = container.data("refpad");
-      console.log("showSignatureDialog: ", { containerData: container.data(), signaturePad })
-      onResizeCanvas(signaturePad);
-      return;
-    }
-
-    function createSignatureDialog(containerSelector) {
-
-      var container = $(containerSelector);
-      var overlayId = "DialogBackLayer";
-      var overlay = $("#" + overlayId);
-      var dialogWrapperId = "DialogWrapper";
-      var dialogWrapper = $("#" + dialogWrapperId);
-
-      var containerOriginPrev = container.data("originPrev");
-      var containerOriginParent = container.data("originParent");
-
-      if (!containerOriginParent) {
-        container.data("originParent", container.parent());
-      }
-
-      if (!containerOriginPrev) {
-        container.data("originPrev", container.prev());
-      }
-
-      if (overlay.length === 0) {
-        overlay = $("<div/>")
-                .attr({id: overlayId })
-                .addClass(".dialog-back-layer")
-                .appendTo("body");
-      }
-
-      if (dialogWrapper.length === 0) {
-        dialogWrapper = $("<div/>")
-                .attr({id: dialogWrapperId })
-                .addClass(".dialog-wrapper")
-                .appendTo(overlay);
-      } else {
-        dialogWrapper.find("*").each(function() {
-          var originParent = $(this).data("originParent");
-          var originPrev = $(this).data("originPrev");
-          if (originParent.length > 0 || originPrev.length > 0) {
-            releaseContainerFromOverlay( $(this) );
-          }
-        });
-      }
-      console.log('showSignatureDialog: ', { containerSelector, container, overlayId, overlay });
-      overlay.show();
-      dialogWrapper.show();
-
-      container.appendTo(dialogWrapper)
-              .css({
-                width: "90vw"
-              })
-              .show();
-    }
-
-    function hideSignatureDialog(containerSelector) {
-
-      var container = $(containerSelector);
-      $("body").removeClass("doc-body-no-scrollbars");
-      $(".signature-dialog.signature-dialog-active").removeClass("signature-dialog-active");
-      container.hide().closest(".signature-dialog").removeClass("signature-dialog-active");
-      return;
-
-      var container = $(containerSelector);
-      var overlayId = "DialogBackLayer";
-      var overlay = $("#" + overlayId);
-      console.log('hideSignatureDialog: ', { containerSelector, container, overlayId, overlay });
-      container.hide();
-      overlay.hide();
-      releaseContainerFromOverlay( container );
-    }
-
-    function cancelSignaturePad(selector) {
-      hideSignatureDialog(selector);
-    }
-
-    function getLocation(fnSuccessPos) {
-      var options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
+    var createSignaturPad = function(containerSelector, options) {
+      var defaults = {
+        minWidth: 1.5, // minimale Breite des Stiftes
+        maxWidth: 6, // maximale Breite des Stiftes
+        penColor: "#000000", // Stiftfarbe
+        backgroundColor: '#FFFFFF'
       };
-
-      var error = function() {
-        console.error('GEO-ACCESS-ERROR', arguments);
-      };
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(fnSuccessPos, error, options);
-      } else {
-        console.error('No GEO-Access!');
-      }
-    }
-
-    function getDbDateTimeString() {
-      var d = new Date();
-      if (d.toLocaleDateString && d.toLocaleTimeString) {
-        var dtParts = d.toLocaleDateString().split('.').reverse();
-        if (dtParts[1].length < 2) dtParts[1] = '0' + dtParts[1];
-        if (dtParts[2].length < 2) dtParts[2] = '0' + dtParts[2];
-        return dtParts.join('-') + " "  + d.toLocaleTimeString();
-      }
-      var Y = d.getFullYear();
-      var m = (d.getMonth() < 9 ? '0' : '') + (d.getMonth() + 1).toString(10);
-      var d = (d.getDate() < 10 ? '0' : '') + d.getDate().toString(10);
-      var H = (d.getHours() < 10 ? '0' : '') + d.getHours().toString(10);
-      var i = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes().toString(10);
-      var s = (d.getSeconds() < 10 ? '0' : '') + d.getSeconds().toString(10);
-
-      return [Y, m, d].join('-') + ' ' + [H, i, s].join(':');
-
-    }
-
-    function submitSignature(selector) {
-      var container = $(selector);
-      var signaturePad = container.data("refpad");
-      var img = signaturePad.getTargetImage();
-      var input = signaturePad.getTargetInput();
-      var inputGeo = $("#" + input.attr("id") + "Geodata");
-      var inputTime = $("#" + input.attr("id") + "Created");
-
-      //Unterschrift in verstecktes Feld übernehmen
-      // var imgDataUrl = signaturePad.toDataURL();
-      var imgDataUrl = signaturePad.getDataUrlOfPaintedArea();
-
-      if (input && input.length) {
-        input.val(imgDataUrl != "data:" ? imgDataUrl : '');
-        inputGeo.val('');
-        inputTime.val('');
-      } else {
-        console.error('input not found', { selector, container, signaturePad, img, input });
-      }
-
-      if (img && img.length) {
-        if (imgDataUrl && (typeof imgDataUrl === 'string') && imgDataUrl.length > 6) {
-          img.attr({src: imgDataUrl}).show();
-          var dt = getDbDateTimeString();
-          inputTime.val(dt);
-          getLocation(function getPosition(position) {
-            var geodata = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-              altitude: position.coords.altitude,
-              accuracy: position.coords.accuracy,
-              speed: position.coords.speed,
-              timestamp: position.timestamp
-            };
-            inputGeo.val(JSON.stringify(geodata));
-            console.log('getLocation callback position:', { arguments, position });
-          });
-
-        } else {
-          console.error('Nothing to write as Signatur-Image: ', { imgDataUrl });
-          img.attr({src: ''}).hide();
+      var conf = defaults;
+      if (options !== undefined && options !== null && typeof options === "object") {
+        if ("minWidth" in options && !isNaN(options.minWidth) && options.minWidth > 0) {
+          conf.minWidth = options.minWidth;
         }
-      } else {
-        console.error('img not found', { selector, container, signaturePad, img, input });
-      }
-      hideSignatureDialog(selector);
-    }
-    function loeschenSignaturePad(selector) {
-      var container = $(selector);
-      var signaturePad = container.data("refpad");
-      var img = signaturePad.getTargetImage();
-      var input = signaturePad.getTargetInput();
-      var inputGeo = $("#" + input.attr("id") + "Geodata");
-      var inputTime = $("#" + input.attr("id") + "Created");
-
-      signaturePad.clear();
-
-      if (input && input.length) {
-        input.val('');
-        inputGeo.val('');
-        inputTime.val('');
-      } else {
-        console.error('input not found', { selector, container, signaturePad, img, input });
-      }
-      if (img && img.length) {
-        img.hide().attr({src: ''});
-      } else {
-        console.error('img not found!', { selector, container, signaturePad, img, input });
-      }
-    }
-
-    function getLieferscheinDaten(aid) {
-      var storageKey = 'lieferschein_' + aid;
-      var item = localStorage.getItem(storageKey);
-      if (item === null) {
-        return {};
-      } else {
-        return JSON.parse(item);
-      }
-    }
-    function setLieferscheinDaten(aid, daten) {
-      var storageKey = 'lieferschein_' + aid;
-      daten.aid = aid;
-      localStorage.setItem(storageKey, JSON.stringify(daten));
-    }
-    function addLieferscheinDaten(aid, name, value) {
-      var daten = getLieferscheinDaten(aid);
-      daten[name] = value;
-      setLieferscheinDaten(aid, daten);
-    }
-    function addLieferscheinSubmitted(aid) {
-      var daten = getLieferscheinDaten(aid);
-      daten.submitted = 1;
-      daten.lastSumitDate = getDbDateTimeString();
-
-      setLieferscheinDaten(aid, daten);
-    }
-    function removeLieferscheinByAID(aid) {
-      var storageKey = 'lieferschein_' + aid;
-      localStorage.removeItem(storageKey);
-    }
-
-    function lieferscheinSpeichern() {
-      var frm = $("#frmAbnahme");
-      var formData = new FormData(frm.get(0));
-
-      var daten = {};
-      formData.forEach(function(value, name) {
-        daten[name] = value;
-        console.log({name, value});
-      });
-
-      if (aid && (!daten.aid || isNaN(daten.aid))) {
-        daten.aid = aid;
-      }
-      daten.submitted = false;
-      daten.lastSubmitDate = getDbDateTimeString();
-
-      if (!daten.aid) {
-        var error = "Lieferschein kann nicht ohne Auftrags-ID zwichengespeichert werden!";
-        console.error(error);
-        alert(error);
-        return false;
-      }
-
-      setLieferscheinDaten(aid, daten);
-
-    }
-
-    function lieferscheinVonLocalStorageLaden() {
-      var frm = $("#frmAbnahme");
-      var daten = getLieferscheinDaten(aid);
-
-      console.log('Letzte Lieferscheindaten für ' + aid, { daten });
-      if (!daten || Object.keys(daten).length === 0) {
-        console.log('Es existieren keine Lieferschein-Daten im LocalStorage für die AID ' + aid);
-        alert('Es existieren keine Lieferschein-Daten im lokalen Speicher für die AID ' + aid);
-        return false;
-      }
-
-      for(var name in daten) {
-        if (!daten.hasOwnProperty(name)) {
-          continue;
+        if ("maxWidth" in options && !isNaN(options.maxWidth) && options.maxWidth > 0) {
+          conf.maxWidth = options.maxWidth;
         }
-        name.replace('[', '\\[');
-        var input = frm.find("input[name=" + escapeSelector(name) + "]");
-        if (input.length === 1) {
-          var type = input.attr("type");
-          if (['radio', 'checkbox'].indexOf(type) > -1 ) {
-            input.prop("checked", true);
-          }
-          input.val(daten[name]);
+        if (conf.maxWidth < conf.minWidth) {
+          conf.maxWidth = conf.minWidth;
+        }
+        if ("penColor" in options && typeof options.penColor === "string") {
+          conf.penColor = options.penColor;
+        }
+        if ("backgroundColor" in options && typeof options.backgroundColor === "string") {
+          conf.backgroundColor = options.backgroundColor;
         }
       }
-
-      var showImgMt = ("sig_mt_dataurl" in daten && daten['sig_mt_dataurl'].length > 6);
-      $("#imgSignatureMertens").attr("src", showImgMt ? daten["sig_mt_dataurl"] : "NOT-FOUND" ).toggle(showImgMt);
-
-      var showImgMa = ("sig_ma_dataurl" in daten && daten['sig_ma_dataurl'].length > 6);
-      $("#imgSignatureMA").attr("src", showImgMa ? daten["sig_ma_dataurl"] : "NOT-FOUND" ).toggle(showImgMa);
-    }
-
-    function submitAbnahme() {
-      var frm = $("#frmAbnahme");
-      var errors = '';
-      var warnings = '';
-      var aid = frm.find("input[name=aid]").val();
-
-      var sigMt = frm.find("input[name=sig_mt_dataurl]").val();
-      var sigMa = frm.find("input[name=sig_ma_dataurl]").val();
-
-      var ankunft = frm.find("input[name=ankunft]").val();
-      var abfahrt = frm.find("input[name=abfahrt]").val();
-      var lieferdatum = frm.find("input[name=lieferdatum]").val();
-
-      var etikettierung = frm.find("input[name=etikettierung_erfolgt]");
-      var leistungen = frm.find("input[name^=leistung]");
-      var etikettiert = frm.find("input[name^=etikettierung_erfolgt]");
-      var etikettiertChecked = etikettiert.filter(function() { return this.checked; });
-      var checkedLength = etikettiertChecked.length;
-      var fpruefung = frm.find("input[name^=funktionspruefung_erfolgt]");
-      var fpruefungChecked = fpruefung.filter(function() { return this.checked; });
-      var fcheckedLength = fpruefungChecked.length;
-
-      var leistungenLabels = [];
-      leistungen.each(function() { leistungenLabels.push( $(this).data("label")  )});
-
-      console.log({
-        aid,
-        sigMt,
-        sigMa,
-        ankunft,
-        abfahrt,
-        lieferdatum,
-        etikettierung,
-        leistungen,
-        etikettiert,
-        checkedLength,
-        leistungenLabels,
-        fpruefung,
-        fpruefungChecked,
-        fcheckedLength
-      });
-
-      if (!aid || isNaN(aid)) {
-        // alert("Bitte Seite neu laden. Es liegt keine Auftrags-ID vor!");
-        MyInfoBox('Bitte Seite neu laden', 'Es liegt keine Auftrags-ID vor!');
-        return false;
+      var container = $(containerSelector);
+      if (container.length === 0) {
+        console.error('Signatur-Pad Container not found by containerSelector', { containerSelector });
+        return;
       }
-
-      if (!sigMt) {
-        errors+= "Die Unterschrift eines merTens-Mitarbeiter fehlt!\n";
-      }
-      if (!sigMa) {
-        errors+= "Die Kunden-Unterschrift fehlt!\n";
-      }
-      if (!lieferdatum) {
-        errors+= "Angabe Lieferdatum (Datum) fehlt!\n";
-      }
-      if (!ankunft) {
-        errors+= "Angabe Ankunftszeit fehlt!\n";
-      }
-      if (!abfahrt) {
-        errors+= "Angabe Abfahrtszeit fehlt!\n";
-      }
-      if (ankunft >= abfahrt) {
-        errors+= "Die Abfahrtszeit kann nicht vor der Ankunftszeit liegen!\n";
-      }
-      if (!checkedLength) {
-        errors+= "Es wurde kein Artikel als etikettiert markiert:\n";
-        errors+= " - " + leistungenLabels.join("\n - ") + "\n";
-      }
-
-      if (errors) {
-        console.log({errors});
-        MyInfoBox('Der Lieferschein wurde nicht vollständig ausgefülltn!', errors.split("\n").join("<br>"));
-        return false;
-      }
-
-      if (checkedLength < etikettiert.length) {
-        var missingChecks = etikettiert.length - checkedLength;
-        warnings+= "Die Etikettierung von " + missingChecks + " Artikeln wurde nicht bestätigt.\n";
-      }
-      if (fpruefung.length && fcheckedLength < fpruefung.length) {
-        var fmissingChecks = fpruefung.length - fcheckedLength;
-        warnings+= "Die Prüfung von " + fmissingChecks + " Artikeln wurde nicht bestätigt.\n";
-      }
-
-      if (warnings) {
-        var warningsQuestion = "Möchten Sie trotz unvollständiger Angaben den Lieferschein so abnehmen?\n";
-        if ( !confirm(warningsQuestion + warnings) ) {
-          return false;
-        }
-      }
-      console.log({checked: etikettiertChecked, etikettiert, warnings});
-      return;
-      var formData = new FormData(frm.get(0));
-      lieferscheinSpeichern();
-
-      if (!window.navigator.onLine) {
-        if (0) alert(
-                "Aktuell besteht keine Internetverbindung um die Daten zum Server zu übertragen!\n" +
-                "Die Eingaben zu dieser Auslieferung wurden gespeichert und können später aus dieser Ansicht geladen und versendet werden."
-        );
-        MyInfoBox('Fehlende Internetverbindun!', "Aktuell besteht keine Internetverbindung um die Daten zum Server zu übertragen!\n" +
-                "Die Eingaben zu dieser Auslieferung wurden gespeichert und können später aus dieser Ansicht geladen und versendet werden.");
+      if (container.length > 1) {
+        console.error('containerSelector selektiert mehr als ein Element', { containerSelector });
         return;
       }
 
-      frm.find("#btnSubmit").prop("disabled", true);
-      umzugsantrag_loadingBar('Daten werden übertragen!');
+      var jSigBody = container.find("[class$=body]");
+      var jCanvas = container.find("canvas");
 
-      $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: frm.attr("action"),
-        data: formData,
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 800000,
-        success: function (data) {
-          $("#output").html('');
-          console.log("SUCCESS : ", data);
-          if (data.type === 'success') {
-            frm.find("#btnSubmit")
-                    .text('Auftrag wurde abgeschlossen')
-                    .prop("disabled", true);
-            if ('msg' in data) {
-              var sHtml = data.msg.split("\n").join("<br>");
-              $("#output").addClass("success").removeClass("error").html( data.msg.split("\n").join("<br>") );
-              MyInfoBox('Auftrag wurde abgeschlossen', sHtml);
-
-              addLieferscheinSubmitted(aid);
-            }
-          } else {
-            var sHtml = '';
-            if (typeof data === 'object' && 'errors' in data) {
-              sHtml = (Array.isArray(data.errors)) ? data.errors.join("\n") : JSON.stringify(data.errors);
-              sHtml = sHtml.split("\n").join("<br>");
-            }
-            $("#output").addClass("error").removeClass("success").html( sHtml );
-            MyInfoBox('Es sind Fehler aufgetreten', sHtml);
-            frm.find("#btnSubmit").prop("disabled", false);
-          }
-        },
-        error: function (e) {
-          $("#output").addClass("error").removeClass("success").text(e.responseText);
-          var sHtml = e.responseText.split("\n").join("<br>");
-          MyInfoBox('Serverfehler', sHtml);
-          console.log("ERROR : ", e);
-          frm.find("#btnSubmit").prop("disabled", false);
+      if (jSigBody.length === 0) {
+        jSigBody = $("<div/>").addClass("m-signature-pad--body").appendTo(container);
+        if (jCanvas.length === 1) {
+          jCanvas.appendTo(jSigBody);
         }
-      });
+      }
 
+      if (jCanvas.length === 0) {
+        jCanvas = $("<canvas/>").appendTo(jSigBody);
+      }
+
+      var signaturePad = new SignaturePad(jCanvas.get(0), conf);
+      container.data('refpad', signaturePad);
+
+      $(window).on("resize", onResizeCanvas.bind(window, signaturePad));
+      onResizeCanvas(signaturePad);
+
+      console.log("createSignaturePad", { wrapper: container, jSigBody, jCanvas, signaturePad } );
+
+      var targetImage = signaturePad.getTargetImage();
+      if (targetImage && targetImage.length) {
+        var targetImageParent = targetImage.parent();
+        // targetImage.off("click").on("click", function() { showSignatureDialog(containerSelector); });
+        targetImageParent.off("click").on("click", function() { showSignatureDialog(containerSelector); });
+      }
+      return signaturePad;
+    };
+
+    $(".signature-dialog").appendTo("body");
+    createSignaturPad('#signature-pad-mertens');
+    createSignaturPad('#signature-pad-ma');
+    var canvasTest = document.getElementById('canvas-sig-test');
+    if (canvasTest) {
+      var sigPadTest = new SignaturePad(canvasTest);
+      onResizeCanvas(sigPadTest);
     }
 
-    $("#frmAbnahme").find("#btnSubmit").off("click").on("click", submitAbnahme);
-    {/literal}
-  </script>
+    // $("#imgSignatureBoxMertens").on("click", function() {
+    //   showSignatureDialog('#signature-pad-mertens');
+    // });
+    // $("#imgSignatureBoxMA").on("click", function() {
+    //   showSignatureDialog('#signature-pad-ma');
+    // });
+
+  });
+
+  function onResizeCanvas(sigPad) {
+    var oldContent = sigPad.toData();
+    var sigPadCanvas = sigPad.getPlainCanvasElement();
+    var ratio = Math.max(window.devicePixelRatio || 1, 1);
+    sigPadCanvas.width = sigPadCanvas.offsetWidth * ratio;
+    sigPadCanvas.height = sigPadCanvas.offsetHeight * ratio;
+    sigPadCanvas.getContext("2d").scale(ratio, ratio);
+    sigPad.clear();
+    sigPad.fromData(oldContent);
+  };
+
+  function releaseContainerFromOverlay(container) {
+    var originParent = container.data("originParent");
+    var originPrev = container.data("originPrev");
+    if (originPrev && originPrev.length && originParent && originParent.length) {
+      if (originParent.get(0) === originPrev.parent().get(0)) {
+        container.insertAfter(originPrev);
+        return true;
+      }
+    }
+    if (originParent && originParent.length === 1) {
+      container.appendTo(originParent);
+      return true;
+    }
+    if (originPrev && originPrev.length === 1) {
+      container.insertAfter(originPrev);
+      return true;
+    }
+    container.appendTo("body");
+  }
+
+  function showSignatureDialog(containerSelector) {
+
+    var container = $(containerSelector);
+    $("body").addClass("doc-body-no-scrollbars");
+    $(".signature-dialog.signature-dialog-active").removeClass("signature-dialog-active");
+    container.show().closest(".signature-dialog").addClass("signature-dialog-active");
+    var signaturePad = container.data("refpad");
+    console.log("showSignatureDialog: ", { containerData: container.data(), signaturePad })
+    onResizeCanvas(signaturePad);
+    return;
+  }
+
+  function createSignatureDialog(containerSelector) {
+
+    var container = $(containerSelector);
+    var overlayId = "DialogBackLayer";
+    var overlay = $("#" + overlayId);
+    var dialogWrapperId = "DialogWrapper";
+    var dialogWrapper = $("#" + dialogWrapperId);
+
+    var containerOriginPrev = container.data("originPrev");
+    var containerOriginParent = container.data("originParent");
+
+    if (!containerOriginParent) {
+      container.data("originParent", container.parent());
+    }
+
+    if (!containerOriginPrev) {
+      container.data("originPrev", container.prev());
+    }
+
+    if (overlay.length === 0) {
+      overlay = $("<div/>")
+              .attr({id: overlayId })
+              .addClass(".dialog-back-layer")
+              .appendTo("body");
+    }
+
+    if (dialogWrapper.length === 0) {
+      dialogWrapper = $("<div/>")
+              .attr({id: dialogWrapperId })
+              .addClass(".dialog-wrapper")
+              .appendTo(overlay);
+    } else {
+      dialogWrapper.find("*").each(function() {
+        var originParent = $(this).data("originParent");
+        var originPrev = $(this).data("originPrev");
+        if (originParent.length > 0 || originPrev.length > 0) {
+          releaseContainerFromOverlay( $(this) );
+        }
+      });
+    }
+    console.log('showSignatureDialog: ', { containerSelector, container, overlayId, overlay });
+    overlay.show();
+    dialogWrapper.show();
+
+    container.appendTo(dialogWrapper)
+            .css({
+              width: "90vw"
+            })
+            .show();
+  }
+
+  function hideSignatureDialog(containerSelector) {
+
+    var container = $(containerSelector);
+    $("body").removeClass("doc-body-no-scrollbars");
+    $(".signature-dialog.signature-dialog-active").removeClass("signature-dialog-active");
+    container.hide().closest(".signature-dialog").removeClass("signature-dialog-active");
+    return;
+
+    var container = $(containerSelector);
+    var overlayId = "DialogBackLayer";
+    var overlay = $("#" + overlayId);
+    console.log('hideSignatureDialog: ', { containerSelector, container, overlayId, overlay });
+    container.hide();
+    overlay.hide();
+    releaseContainerFromOverlay( container );
+  }
+
+  function cancelSignaturePad(selector) {
+    hideSignatureDialog(selector);
+  }
+
+  function getLocation(fnSuccessPos) {
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    var error = function() {
+      console.error('GEO-ACCESS-ERROR', arguments);
+    };
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(fnSuccessPos, error, options);
+    } else {
+      console.error('No GEO-Access!');
+    }
+  }
+
+  function getDbDateTimeString() {
+    var d = new Date();
+    if (d.toLocaleDateString && d.toLocaleTimeString) {
+      var dtParts = d.toLocaleDateString().split('.').reverse();
+      if (dtParts[1].length < 2) dtParts[1] = '0' + dtParts[1];
+      if (dtParts[2].length < 2) dtParts[2] = '0' + dtParts[2];
+      return dtParts.join('-') + " "  + d.toLocaleTimeString();
+    }
+    var Y = d.getFullYear();
+    var m = (d.getMonth() < 9 ? '0' : '') + (d.getMonth() + 1).toString(10);
+    var d = (d.getDate() < 10 ? '0' : '') + d.getDate().toString(10);
+    var H = (d.getHours() < 10 ? '0' : '') + d.getHours().toString(10);
+    var i = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes().toString(10);
+    var s = (d.getSeconds() < 10 ? '0' : '') + d.getSeconds().toString(10);
+
+    return [Y, m, d].join('-') + ' ' + [H, i, s].join(':');
+
+  }
+
+  function submitSignature(selector) {
+    var container = $(selector);
+    var signaturePad = container.data("refpad");
+    var img = signaturePad.getTargetImage();
+    var input = signaturePad.getTargetInput();
+    var inputGeo = $("#" + input.attr("id") + "Geodata");
+    var inputTime = $("#" + input.attr("id") + "Created");
+
+    //Unterschrift in verstecktes Feld übernehmen
+    // var imgDataUrl = signaturePad.toDataURL();
+    var imgDataUrl = signaturePad.getDataUrlOfPaintedArea();
+
+    if (input && input.length) {
+      input.val(imgDataUrl != "data:" ? imgDataUrl : '');
+      inputGeo.val('');
+      inputTime.val('');
+    } else {
+      console.error('input not found', { selector, container, signaturePad, img, input });
+    }
+
+    if (img && img.length) {
+      if (imgDataUrl && (typeof imgDataUrl === 'string') && imgDataUrl.length > 6) {
+        img.attr({src: imgDataUrl}).show();
+        var dt = getDbDateTimeString();
+        inputTime.val(dt);
+        getLocation(function getPosition(position) {
+          var geodata = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            altitude: position.coords.altitude,
+            accuracy: position.coords.accuracy,
+            speed: position.coords.speed,
+            timestamp: position.timestamp
+          };
+          inputGeo.val(JSON.stringify(geodata));
+          console.log('getLocation callback position:', { arguments, position });
+        });
+
+      } else {
+        console.error('Nothing to write as Signatur-Image: ', { imgDataUrl });
+        img.attr({src: ''}).hide();
+      }
+    } else {
+      console.error('img not found', { selector, container, signaturePad, img, input });
+    }
+    hideSignatureDialog(selector);
+  }
+  function loeschenSignaturePad(selector) {
+    var container = $(selector);
+    var signaturePad = container.data("refpad");
+    var img = signaturePad.getTargetImage();
+    var input = signaturePad.getTargetInput();
+    var inputGeo = $("#" + input.attr("id") + "Geodata");
+    var inputTime = $("#" + input.attr("id") + "Created");
+
+    signaturePad.clear();
+
+    if (input && input.length) {
+      input.val('');
+      inputGeo.val('');
+      inputTime.val('');
+    } else {
+      console.error('input not found', { selector, container, signaturePad, img, input });
+    }
+    if (img && img.length) {
+      img.hide().attr({src: ''});
+    } else {
+      console.error('img not found!', { selector, container, signaturePad, img, input });
+    }
+  }
+
+  function getLieferscheinDaten(aid) {
+    var storageKey = 'lieferschein_' + aid;
+    var item = localStorage.getItem(storageKey);
+    if (item === null) {
+      return {};
+    } else {
+      return JSON.parse(item);
+    }
+  }
+  function setLieferscheinDaten(aid, daten) {
+    var storageKey = 'lieferschein_' + aid;
+    daten.aid = aid;
+    localStorage.setItem(storageKey, JSON.stringify(daten));
+  }
+  function addLieferscheinDaten(aid, name, value) {
+    var daten = getLieferscheinDaten(aid);
+    daten[name] = value;
+    setLieferscheinDaten(aid, daten);
+  }
+  function addLieferscheinSubmitted(aid) {
+    var daten = getLieferscheinDaten(aid);
+    daten.submitted = 1;
+    daten.lastSumitDate = getDbDateTimeString();
+
+    setLieferscheinDaten(aid, daten);
+  }
+  function removeLieferscheinByAID(aid) {
+    var storageKey = 'lieferschein_' + aid;
+    localStorage.removeItem(storageKey);
+  }
+
+  function lieferscheinSpeichern() {
+    var frm = $("#frmAbnahme");
+    var formData = new FormData(frm.get(0));
+
+    var daten = {};
+    formData.forEach(function(value, name) {
+      daten[name] = value;
+      console.log({name, value});
+    });
+
+    if (aid && (!daten.aid || isNaN(daten.aid))) {
+      daten.aid = aid;
+    }
+    daten.submitted = false;
+    daten.lastSubmitDate = getDbDateTimeString();
+
+    if (!daten.aid) {
+      var error = "Lieferschein kann nicht ohne Auftrags-ID zwichengespeichert werden!";
+      console.error(error);
+      alert(error);
+      return false;
+    }
+
+    setLieferscheinDaten(aid, daten);
+
+  }
+
+  function lieferscheinVonLocalStorageLaden() {
+    var frm = $("#frmAbnahme");
+    var daten = getLieferscheinDaten(aid);
+
+    console.log('Letzte Lieferscheindaten für ' + aid, { daten });
+    if (!daten || Object.keys(daten).length === 0) {
+      console.log('Es existieren keine Lieferschein-Daten im LocalStorage für die AuftragsID ' + aid);
+      alert('Es existieren keine Lieferschein-Daten im lokalen Speicher für die AuftragsID' + aid);
+      return false;
+    }
+
+    for(var name in daten) {
+      if (!daten.hasOwnProperty(name)) {
+        continue;
+      }
+      name.replace('[', '\\[');
+      var input = frm.find("input[name=" + escapeSelector(name) + "]");
+      if (input.length === 1) {
+        var type = input.attr("type");
+        if (['radio', 'checkbox'].indexOf(type) > -1 ) {
+          input.prop("checked", true);
+        }
+        input.val(daten[name]);
+      }
+    }
+
+    var showImgMt = ("sig_mt_dataurl" in daten && daten['sig_mt_dataurl'].length > 6);
+    $("#imgSignatureMertens").attr("src", showImgMt ? daten["sig_mt_dataurl"] : "NOT-FOUND" ).toggle(showImgMt);
+
+    var showImgMa = ("sig_ma_dataurl" in daten && daten['sig_ma_dataurl'].length > 6);
+    $("#imgSignatureMA").attr("src", showImgMa ? daten["sig_ma_dataurl"] : "NOT-FOUND" ).toggle(showImgMa);
+  }
+
+  function submitAbnahme() {
+    var frm = $("#frmAbnahme");
+    var errors = '';
+    var warnings = '';
+    var aid = frm.find("input[name=aid]").val();
+
+    var sigMt = frm.find("input[name=sig_mt_dataurl]").val();
+    var sigMa = frm.find("input[name=sig_ma_dataurl]").val();
+
+    var ankunft = frm.find("input[name=ankunft]").val();
+    var abfahrt = frm.find("input[name=abfahrt]").val();
+    var lieferdatum = frm.find("input[name=lieferdatum]").val();
+
+    var etikettierung = frm.find("input[name=etikettierung_erfolgt]");
+    var leistungen = frm.find("input[name^=leistung]");
+    var etikettiert = frm.find("input[name^=etikettierung_erfolgt]");
+    var etikettiertChecked = etikettiert.filter(function() { return this.checked; });
+    var checkedLength = etikettiertChecked.length;
+    var fpruefung = frm.find("input[name^=funktionspruefung_erfolgt]");
+    var fpruefungChecked = fpruefung.filter(function() { return this.checked; });
+    var fcheckedLength = fpruefungChecked.length;
+
+    var leistungenLabels = [];
+    leistungen.each(function() { leistungenLabels.push( $(this).data("label")  )});
+
+    console.log({
+      aid,
+      sigMt,
+      sigMa,
+      ankunft,
+      abfahrt,
+      lieferdatum,
+      etikettierung,
+      leistungen,
+      etikettiert,
+      checkedLength,
+      leistungenLabels,
+      fpruefung,
+      fpruefungChecked,
+      fcheckedLength
+    });
+
+    if (!aid || isNaN(aid)) {
+      // alert("Bitte Seite neu laden. Es liegt keine Auftrags-ID vor!");
+      MyInfoBox('Bitte Seite neu laden', 'Es liegt keine Auftrags-ID vor!');
+      return false;
+    }
+
+    if (!sigMt) {
+      errors+= "Die Unterschrift eines merTens-Mitarbeiter fehlt!\n";
+    }
+    if (!sigMa) {
+      errors+= "Die Kunden-Unterschrift fehlt!\n";
+    }
+    if (!lieferdatum) {
+      errors+= "Angabe Lieferdatum (Datum) fehlt!\n";
+    }
+    if (!ankunft) {
+      errors+= "Angabe Ankunftszeit fehlt!\n";
+    }
+    if (!abfahrt) {
+      errors+= "Angabe Abfahrtszeit fehlt!\n";
+    }
+    if (ankunft >= abfahrt) {
+      errors+= "Die Abfahrtszeit kann nicht vor der Ankunftszeit liegen!\n";
+    }
+    if (!checkedLength) {
+      errors+= "Es wurde kein Artikel als etikettiert markiert:\n";
+      errors+= " - " + leistungenLabels.join("\n - ") + "\n";
+    }
+
+    if (errors) {
+      console.log({errors});
+      MyInfoBox('Der Lieferschein wurde nicht vollständig ausgefülltn!', errors.split("\n").join("<br>"));
+      return false;
+    }
+
+    if (checkedLength < etikettiert.length) {
+      var missingChecks = etikettiert.length - checkedLength;
+      warnings+= "Die Etikettierung von " + missingChecks + " Artikeln wurde nicht bestätigt.\n";
+    }
+    if (fpruefung.length && fcheckedLength < fpruefung.length) {
+      var fmissingChecks = fpruefung.length - fcheckedLength;
+      warnings+= "Die Prüfung von " + fmissingChecks + " Artikeln wurde nicht bestätigt.\n";
+    }
+
+    if (warnings) {
+      var warningsQuestion = "Möchten Sie trotz unvollständiger Angaben den Lieferschein so abnehmen?\n";
+      if ( !confirm(warningsQuestion + warnings) ) {
+        return false;
+      }
+    }
+    console.log({checked: etikettiertChecked, etikettiert, warnings});
+
+    var formData = new FormData(frm.get(0));
+    lieferscheinSpeichern();
+
+    if (!window.navigator.onLine) {
+      if (0) alert(
+              "Aktuell besteht keine Internetverbindung um die Daten zum Server zu übertragen!\n" +
+              "Die Eingaben zu dieser Auslieferung wurden gespeichert und können später aus dieser Ansicht geladen und versendet werden."
+      );
+      MyInfoBox('Fehlende Internetverbindung!', "Aktuell besteht keine Internetverbindung um die Daten zum Server zu übertragen!<br>\n" +
+              "Die Eingaben zu dieser Auslieferung wurden gespeichert und können später aus dieser Ansicht geladen und versendet werden.");
+      return;
+    }
+
+    frm.find("#btnSubmit").prop("disabled", true);
+    umzugsantrag_loadingBar('Daten werden übertragen!');
+
+    $.ajax({
+      type: "POST",
+      enctype: 'multipart/form-data',
+      url: frm.attr("action"),
+      data: formData,
+      processData: false,
+      contentType: false,
+      cache: false,
+      timeout: 800000,
+      success: function (data) {
+        $("#output").html('');
+        console.log("SUCCESS : ", data);
+        if (data.type === 'success') {
+          frm.find("#btnSubmit")
+                  .text('Auftrag wurde abgeschlossen')
+                  .prop("disabled", true);
+          if ('msg' in data) {
+            var sHtml = data.msg.split("\n").join("<br>");
+            $("#output").addClass("success").removeClass("error").html( data.msg.split("\n").join("<br>") );
+            MyInfoBox('Auftrag wurde abgeschlossen', sHtml);
+
+            addLieferscheinSubmitted(aid);
+          }
+        } else {
+          var sHtml = '';
+          if (typeof data === 'object' && 'errors' in data) {
+            sHtml = (Array.isArray(data.errors)) ? data.errors.join("\n") : JSON.stringify(data.errors);
+            sHtml = sHtml.split("\n").join("<br>");
+          }
+          $("#output").addClass("error").removeClass("success").html( sHtml );
+          MyInfoBox('Es sind Fehler aufgetreten', sHtml);
+          frm.find("#btnSubmit").prop("disabled", false);
+        }
+      },
+      error: function (e) {
+        $("#output").addClass("error").removeClass("success").text(e.responseText);
+        var sHtml = e.responseText.split("\n").join("<br>");
+        MyInfoBox('Serverfehler', sHtml);
+        console.log("ERROR : ", e);
+        frm.find("#btnSubmit").prop("disabled", false);
+      }
+    });
+
+  }
+
+  $("#frmAbnahme").find("#btnSubmit").off("click").on("click", submitAbnahme);
+  {/literal}
+</script>
