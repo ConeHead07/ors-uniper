@@ -402,6 +402,11 @@ td label {
   border:0;
   box-sizing: border-box;
 }
+.MitarbeierItem .inputRowVon td input[type=radio],
+.MitarbeierItem .inputRowVon td input[type=checkbox] {
+    width: 1em;
+    height: 1em;
+}
 
 .MitarbeierItem .inputRowVon {
   background:#f1f8ff;

@@ -149,7 +149,7 @@ if ($AID) {
     $aReklas = getReklamationenByAid($AID);
     $aTeillieferungen = getTeillieferungenByAid($AID);
 
-    $aLSItems = getLieferscheineByAid($AID);
+    $aLSItems = getLieferscheineByAid($AID, ['onlySigned' => true]);
 	
 } else {
 	// else: lade Eingabeformular

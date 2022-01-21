@@ -159,6 +159,24 @@
     {include file="umzugsformular_attachments.tpl.read2.html" UmzugsAnlagen=$UmzugsAnlagenIntern internal=1}
   {/if}
 
+  {if !empty($Teillieferungen)}
+  <div style="margin-top:1.5rem"></div>
+  <fieldset><legend><strong>Teil-Lieferungen</strong></legend>
+    <div style="padding:5px">
+      {include file="admin_umzugsformular_teillieferungen.tpl.html" aItems=$Teillieferungen}
+    </div>
+  </fieldset>
+  {/if}
+
+  {if !empty($Reklamationen)}
+  <div style="margin-top:1.5rem"></div>
+  <fieldset><legend><strong>Reklamationen</strong></legend>
+    <div style="padding:5px">
+      {include file="admin_umzugsformular_reklamationen.tpl.html" aReklas=$Reklamationen}
+    </div>
+  </fieldset>
+  {/if}
+
   {if 0}
   <div style="width:100%">
       {include file="admin_umzugsformular_gruppierung.tpl.html"}

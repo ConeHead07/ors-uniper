@@ -70,6 +70,11 @@ function getLieferscheineByAid(int $aid, array $opts = []) {
     global $db, $_CONF, $MConf, $user, $connid, $InclBaseDir;
     require_once($InclBaseDir."umzugsanlagen.inc.php");
 
+    $andWhere = '';
+    if (!empty($opts['onlySigned'])) {
+    	$andWhere.= ' AND (source="fileupload" OR IFNULL(sig_kd_blob, "") != "")';
+	}
+
     $sql = 'SELECT 
               lid, 
               aid, 
@@ -90,7 +95,7 @@ function getLieferscheineByAid(int $aid, array $opts = []) {
               modified_user,
               modified_at
             FROM mm_lieferscheine 
-            WHERE aid = ' . $aid . '
+            WHERE aid = ' . $aid . ' ' . $andWhere . '
             ORDER BY lid DESC';
 
     $aRows = $db->query_rows($sql);

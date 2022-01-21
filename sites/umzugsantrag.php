@@ -4,6 +4,7 @@ require_once($InclBaseDir . 'umzugsmitarbeiter.inc.php');
 require_once($InclBaseDir . 'umzugsanlagen.inc.php');
 require_once($InclBaseDir . 'leistungskatalog.inc.php');
 require_once($SitesBaseDir . 'umzugsantrag_sendmail.php');
+require_once("sites/umzugsantrag_stdlib.php");
 
 $ASConf = &$_CONF['umzugsantrag'];
 $MAConf = &$_CONF['umzugsmitarbeiter'];
@@ -163,6 +164,10 @@ if ($AID) {
         $aAtItems[$i]["datei_link"] = $MConf['WebRoot']."attachements/".$AT->arrInput["dok_datei"];
         $aAtItems[$i]["datei_groesse"] = format_file_size($AT->arrInput["dok_groesse"]);
     }
+
+    $aReklas = getReklamationenByAid($AID);
+    $aTeillieferungen = getTeillieferungenByAid($AID);
+    $aLSItems = getLieferscheineByAid($AID, ['onlySigned' => true]);
 } else {
     // else: lade Eingabeformular
     $defaultAS = array(
@@ -336,6 +341,25 @@ if (!empty($aLItems) && count($aLItems)) {
     $Tpl->assign('Umzugsleistungen', []);
     $Tpl->assign('UmzugsleistungenJson',     json_encode([]));
 }
+
+if (!empty($aLSItems) && count($aLSItems)) {
+    $Tpl->assign("UmzugLieferscheine", $aLSItems);
+} else {
+    $Tpl->assign("UmzugLieferscheine", []);
+}
+
+if (!empty($aReklas) && count($aReklas)) {
+    $Tpl->assign("Reklamationen", $aReklas);
+} else {
+    $Tpl->assign("Reklamationen", []);
+}
+
+if (!empty($aTeillieferungen) && count($aTeillieferungen)) {
+    $Tpl->assign("Teillieferungen", $aTeillieferungen);
+} else {
+    $Tpl->assign("Teillieferungen", []);
+}
+
 $Tpl->assign('Gesamtsumme', $Gesamtsumme);
 if (!empty($aGItems) && count($aGItems)) $Tpl->assign('Geraeteliste', $aGItems);
 if (!empty($aMaItems) && count($aMaItems)) $Tpl->assign('Mitarbeiterliste', $aMaItems);

@@ -102,7 +102,7 @@ if (!is_array($leistungsIds) || empty($leistungsIds)) {
 }
 
 if (count($errors)) {
-    return teilResponseError($aid, $errors);
+    return reklaResponseError($aid, $errors);
 }
 
 $lids = implode(',', $leistungsIds);
@@ -139,7 +139,7 @@ if (empty($akLeistungenRefs)) {
 }
 
 if (count($errors)) {
-    return teilResponseError($aid, $errors);
+    return reklaResponseError($aid, $errors);
 }
 
 $aGrundLeistungen = [];
@@ -173,7 +173,7 @@ $db->query(
 
 $reklaAid = $db->insert_id();
 if (!$reklaAid) {
-    return teilResponseError($aid, ['Systemfehler: Reklamation konnte nicht angelegt werden!']);
+    return reklaResponseError($aid, ['Systemfehler: Reklamation konnte nicht angelegt werden!']);
 }
 
 $NL = "\n";
@@ -249,7 +249,7 @@ if (umzugsantrag_mailinform($aid, 'reklamation', $reklaAid)) {
     }
 }
 
-teilResponseSuccess([
+reklaResponseSuccess([
     'aid' => $aid,
     'leistungen' => $leistungsMengenById,
     'reklaAid' => $reklaAid

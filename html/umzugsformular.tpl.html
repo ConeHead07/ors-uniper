@@ -344,6 +344,30 @@
                 {include file="umzugsformular_attachments.tpl.read.html"}
             </div>
             {/if}
+
+            {if !empty($UmzugLieferscheine)}
+            <div style="margin-top:1.5rem"></div>
+            {include file="umzugsformular_lieferscheine.tpl.read2.html" UmzugsAnlagen=$UmzugLieferscheine internal=1}
+            {/if}
+
+            {if !empty($Teillieferungen)}
+            <div style="margin-top:1.5rem"></div>
+            <fieldset><legend><strong>Teil-Lieferungen</strong></legend>
+                <div style="padding:5px">
+                    {include file="admin_umzugsformular_teillieferungen.tpl.html" aItems=$Teillieferungen}
+                </div>
+            </fieldset>
+            {/if}
+
+            {if !empty($Reklamationen)}
+            <div style="margin-top:1.5rem"></div>
+            <fieldset><legend><strong>Reklamationen</strong></legend>
+                <div style="padding:5px">
+                    {include file="admin_umzugsformular_reklamationen.tpl.html" aReklas=$Reklamationen}
+                </div>
+            </fieldset>
+            {/if}
+
             <!-- <div style="color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="addMa();return false;">Weiteren Mitarbeiter ausw&auml;hlen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></div><br> -->
             <br>
             <div id="BoxBemerkungen">

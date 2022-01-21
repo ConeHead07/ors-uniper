@@ -310,6 +310,16 @@ $(function(){
     .table-leistungen thead th {
         font-size: 0.75rem;
     }
+    .table-leistungen .row-checkbox,
+    .table-leistungen .col.menge {
+        vertical-align: middle;
+    }
+    .table-leistungen.MitarbeierItem .row.inputRowVon input {
+        height:1.2em;
+    }
+    .table-leistungen td.with-input {
+        padding:0;
+    }
 </style>
 {/literal}
 <h2 style="margin:0">{if empty($title)}Bestellte Leistungen{else}{$title}{/if}</h2>
@@ -348,7 +358,7 @@ $(function(){
             <td style="padding:0;"><span onclick="drop_Leistung(this)" style="cursor:pointer;margin:0;padding:0;"><img style="cursor:pointer;margin:0;padding:0;" align="absmiddle" src="images/loeschen_off.png" width="14" alt=""></span></td>
             *}
             {if isset($enableLeistungCheckbox) && !empty($enableLeistungCheckbox)}
-            <td>
+            <td class="row-checkbox">
                 <input type="checkbox" name="chckLeistung[]" value="{$L.leistung_id}">
             </td>
             {/if}
@@ -376,13 +386,13 @@ $(function(){
                 {/if}
             </td>
 
-            <td class="col field-mertens_menge menge">{if !empty($mengeMertensReadOnly)}
+            <td class="col field-mertens_menge menge{if empty($mengeMertensReadOnly)} with-input{/if}">{if !empty($mengeMertensReadOnly)}
                 {$L.menge_mertens|number_format:2:",":"."}{else}
                 <input class="menge" name="L[menge_mertens][]" value="{$L.menge_mertens|number_format:2:',':'.'}" type="text">
             {/if}<input class="ilstg" name="L[leistung_id][]" value="{$L.leistung_id}" type="hidden"></td>
 
             {if !empty($showReklas)}
-            <td class="col field-menge_rekla menge">{if !empty($mengeReklasReadOnly)}
+            <td class="col field-menge_rekla menge{if empty($mengeReklasReadOnly)} with-input{/if}">{if !empty($mengeReklasReadOnly)}
                 {$L.menge_rekla|number_format:2:",":"."}{else}
                 <input class="menge" name="L[menge_rekla][{$L.leistung_id}]" value="{$L.menge_rekla|number_format:2:',':'.'}" type="text">
             {/if}
@@ -390,18 +400,18 @@ $(function(){
             {/if}
 
             {if !empty($addReklas)}
-            <td class="col field-add_rekla menge"><input style="color:red" class="menge" name="L[neue_rekla][{$L.leistung_id}]" value="0" type="text"></td>
+            <td class="col field-add_rekla menge"><input style="color:red" class="menge" name="L[neue_rekla][{$L.leistung_id}]" value="0" type="number" step="1" min="0" max="{$L.menge_mertens}"></td>
             {/if}
 
             {if !empty($showLiefermenge)}
-            <td class="col field-menge_geliefert menge">{if !empty($mengeGeliefertReadOnly)}
+            <td class="col field-menge_geliefert menge{if empty($mengeGeliefertReadOnly)} with-input{/if}">{if !empty($mengeGeliefertReadOnly)}
                 {$L.menge_geliefert|number_format:2:",":"."}{else}
                 <input class="menge" name="L[menge_geliefert][{$L.leistung_id}]" value="{$L.menge_geliefert|number_format:2:',':'.'}" type="text">
                 {/if}</td>
             {/if}
 
             {if !empty($addTeilmengen)}
-            <td class="col field-add_teil menge"><input style="color:darkgreen" class="menge" name="L[neue_teilmenge][{$L.leistung_id}]" value="0" type="text"></td>
+            <td class="col field-add_teil menge"><input style="color:darkgreen" class="menge" name="L[neue_teilmenge][{$L.leistung_id}]" value="0" type="number" step="1" min="0" max="{$L.menge_mertens}"></td>
             {/if}
 
             {if $PreiseAnzeigen}
