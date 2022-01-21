@@ -19,6 +19,7 @@ function umzugsantrag_senden() {
     $addBemerkung = "";
     $UpdateToken = "";
     $Umzugsarten = array();
+    $cmd = getRequest('cmd', '');
     $AID = getRequest("id","");
     $ASPostItem = getRequest("AS",false);
     if (empty($ASPostItem) || !isset($ASPostItem["name"])) {
@@ -114,7 +115,12 @@ function umzugsantrag_senden() {
     $save_ul_count = 0;
     $cntAS = count(array_diff(array_keys($ASPostItem), array('aid', 'bemerkungen')));
     if ($cntAS > 0 || $cmd !== 'status') {
-        umzugsleistungen_speichern($AID);
+        if (isset($AS->arrDbdata['autocalc_ref_mengen'])) {
+            $autocalc_ref_mengen = (bool)$AS->arrDbdata['autocalc_ref_mengen'];
+        } else {
+            $autocalc_ref_mengen = true;
+        }
+        umzugsleistungen_speichern($AID, $autocalc_ref_mengen);
         $ulrows = umzugsleistungen_laden($AID);
         foreach($ulrows as $row) {
             if ($row['leistungseinheit'] === 'AP') {

@@ -1,3 +1,4 @@
+{if false}admin_umzugsformular_leistungsauswahl.tpl.html<br>{/if}
 {assign var="colspan" value=3}
 
 {if !isset($mengeReklasReadOnly)}
@@ -334,7 +335,8 @@ $(function(){
             {if !empty($addTeilmengen)}
             <th class="col field-add_teil menge" style="background-color:darkgreen;color:#fff;">T-Menge</th>
             {/if}
-            {if $PreiseAnzeigen}<th class="col col-preis preis">Preis</th>
+            {if $PreiseAnzeigen}
+            <th class="col col-preis preis">Preis</th>
             <th class="col field-sum sum">Gesamt</th>
             {/if}
         </tr>

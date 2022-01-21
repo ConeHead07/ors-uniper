@@ -121,7 +121,12 @@
     {include file="umzugsformular_geraeteauswahl.tpl.read.html"}
 {/if}
 {if 1}
-    {include file="umzugsformular_leistungsauswahl.tpl.read.html"}
+    {if $AS.autocalc_ref_mengen}
+      {assign var="show_menge_mertens" value="0"}
+    {else}
+      {assign var="show_menge_mertens" value="1"}
+    {/if}
+    {include file="umzugsformular_leistungsauswahl.tpl.read.html" show_menge_mertens=$show_menge_mertens}
 {/if}
 
 {if !empty($UmzugsAnlagen)}
@@ -138,7 +143,7 @@
 
 <input class='btn blue' type="submit" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Bemerkung hinzufügen">
 
-  <button type="button" class="btn red">Leistung reklamieren</button>
+  {if false}<button type="button" class="btn red">Leistung reklamieren</button>{/if}
 </form>
 
 <div id="LoadingBar"></div>
@@ -150,8 +155,8 @@
   <div class="dialog-wrapper" style="width:90vw">
     <div style="width:90%;">
       <div id="datenschutzContent" style="max-height:80vh;overflow-y: scroll;text-align:left;">
-
-        {include file="umzugsformular_leistungsauswahl.tpl.read.html" enableLeistungCheckbox="1"}
+        {include file="umzugsformular_leistungsauswahl.tpl.read.html"
+        enableLeistungCheckbox="1"}
 
       </div>
 
@@ -162,6 +167,7 @@
 
   </div>
 </div>
+{literal}
 <script>
   function showReklaDialog() {
 
@@ -199,3 +205,4 @@
 
   });
 </script>
+{/literal}

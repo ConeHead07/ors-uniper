@@ -2124,7 +2124,13 @@ class ItemEdit
 			$arrSysFlds = array();
 
 			foreach($this->arrConf["Fields"] as $fN => $fC) {
-				if (empty($fC["dbField"])) continue;
+				if (empty($fC['dbField'])) {
+				    continue;
+                }
+
+                if ($this->editMode !== 'Insert' && !isset($this->arrInput[$fN])) {
+                    continue;
+                }
 				
 				if (!$this->userHasFldAccess($fN, $this->editMode)) {
 					if ($this->editMode == "Insert" && $fC["required"]) {
@@ -2160,9 +2166,9 @@ class ItemEdit
 					if (isset($this->arrInput[$fN]) && is_numeric($this->arrInput[$fN]) ) {
 						if ($SQL_SET) $SQL_SET.= ",\n";
 						$SQL_SET.= "`".$fC["dbField"]."` = \"" . MyDB::escape_string($this->arrInput[$fN]) . "\"";
-					} elseif ($this->editMode != "Insert") {
+					} elseif ($this->editMode === 'Insert' && $fC['null']) {
 						 if ($SQL_SET) $SQL_SET.= ",\n";
-						 $SQL_SET.= "`".$fC["dbField"]."` = NULL";
+						 $SQL_SET.= '`' . $fC['dbField'] . '` = NULL';
 					}
 					break;
 					

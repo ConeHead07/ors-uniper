@@ -712,10 +712,10 @@ $_CONF["umzugsantrag"] = array(
             "deleteMinAccess" => null
         ),
         "autocalc_ref_mengen" => array(
-            "dbField" => "ref_aid",
+            "dbField" => "autocalc_ref_mengen",
             "key" => "",
-            "label" => "Ref-Aid",
-            "listlabel" => "Ref-Aid",
+            "label" => "Autocalc",
+            "listlabel" => "Autocalc",
             "fieldPos" => 1,
             "fieldGroup" => "main",
             "description" => "",

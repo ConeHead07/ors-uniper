@@ -166,7 +166,7 @@
 
       <tr>
         <td style="padding:0;"><label for="termin" style="width:180px;">Terminwunsch<span class="right">{if $ASConf.terminwunsch.required}<span class="required">*</span>{/if}</span></label></td>
-        <td style="padding:0;"><input type="text" value="{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}"
+        <td style="padding:0;"><input id="termin" type="text" value="{$AS.terminwunsch|escape|date_format:"%d.%m.%Y"}"
           onfocus="showDtPicker(this)" id="terminwunsch" name="AS[terminwunsch]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/terminwunsch.php"></td>
       </tr>
       <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
@@ -364,7 +364,31 @@
         padding: 0.3rem 0 0.3rem 0.2em;
         cursor: pointer;
       }
+      textarea[name=unzustellbar_bemerkung] {
+        width:100%;
+        resize: vertical;display:none;
+        border: 1px solid #0075B5;
+        padding: .5rem;
+        font-size: 1rem;
+        height: 2.5rem;
+        background-color:white;
+        color: #0075B5;
+        box-sizing: border-box;
+        outline-color: #0075B5;
+      }
+      .spinner.icon.loading {
+        animation: lds-dual-ring 1.2s linear infinite;
+      }
+      @keyframes lds-dual-ring {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
+    {if false}<i class="spinner icon loading"></i>{/if}
     <script>
       $(function() {
         $(".options-box").each(function() {
@@ -406,6 +430,11 @@
   <div id="UnzustellBarToggle"></div>
   {/if}
     <div id="UnzustellbarBox" class="inline-dialog-box" style="display: none;">
+      <form id="frmUnzustellbar" method="post" action="{literal}{WebRoot}{/literal}zustellversuch.php"
+            onsubmit="return false;">
+        <input name="datum" type="hidden" value="{$smarty.now|date_format:'%Y-%m-%d'}">
+        <input name="zeit" type="hidden" value="{$smarty.now|date_format:'%H:%M:%S'}">
+        <input type="hidden" name="aid" value="{$AS.aid}">
       <div class="options-box">
         <label class="options-item">
           <input type="radio" name="unzustellbar_grund" value="Kunde nicht angetroffen">
@@ -416,8 +445,16 @@
         <label class="options-item">
           <input type="radio" name="unzustellbar_grund" value="Annahme verweigert">
           <span class="label-text">Annahme verweigert</span></label>
-        <button class="btn blue" style="width:100%;font-size:1.2rem;margin-top: 1rem;">Speichern und senden</button>
+        <label class="options-item">
+          <input type="radio" name="unzustellbar_grund" value="Abbruch der Anlieferung">
+          <span class="label-text">Abbruch der Anlieferung</span></label>
+        <label class="options-item">
+          <input data-toggletarget="#uzb_bemerkung" type="radio" name="unzustellbar_grund" value="Sonstiges">
+          <span class="label-text">Sonstiges</span></label>
       </div>
+      <textarea id="uzb_bemerkung" name="unzustellbar_bemerkung" style="width:100%;resize: vertical;display:none" placeholder="Geben Sie bitte einen Grund an warum die Lieferung nicht zugestellt werde konnte"></textarea>
+      </form>
+      <button id="btnUnzustellbar" class="btn blue" style="width:100%;font-size:1.2rem;margin-top: 1rem;">Speichern und senden</button>
     </div>
     <h2 style="margin-left:0;margin-top:1rem;">Kundenabnahme</h2>
     <div id="KundenabnahmeBox" style="padding:0rem;{if $umzugsstatus eq "abgeschlossen"}display:none:{/if}">
@@ -642,7 +679,7 @@
       </div>
       <div style="margin-top:1rem">
         <button id="btnSubmit" style="float:left" class="btn blue btn-submit" type="button" onclick="return false;">Speichern<br>und senden</button>
-        <button id="btnLaden" style="float:right" class="btn grey btn-submit" type="button" onclick="lieferscheinVonLocalStorageLaden()">Letzte Eingabe für <br>Auftrag #{$AS.aid} laden</button>
+        <button id="btnLaden" style="float:right" class="btn grey btn-submit" type="button">Letzte Eingabe für <br>Auftrag #{$AS.aid} laden</button>
         <div style="clear:both;"></div>
       </div>
       <div id="output" style="display: none;"></div>
@@ -705,17 +742,78 @@
 
 <script>
   var aid = {$AS.aid|json_encode};
+  {literal}
   function escapeSelector(name) {
     return name.replaceAll('[', '\\[').replaceAll(']', '\\]');
   }
-  {literal}
+
 
   $(function() {
+    $("#btnLaden").on("click", function() {
+      lieferscheinVonLocalStorageLaden();
+    });
+
+    $("#btnUnzustellbar").on("click", function(e) {
+      var btn = $(this).prop('disabled', true).waitMe({effect: 'ios'});
+      var box = $(this).closest(".inline-dialog-box");
+      var frm = box.find("form");
+      var url = frm.attr("action");
+      var aid = frm.find(":input[name=aid]").val();
+      var grundOpts = frm.find(":input[name=unzustellbar_grund");
+      var grundText = box.find(":input[name=unzustellbar_bemerkung]");
+      var grundTextVal = grundText.val();
+
+      var checkedOpt = grundOpts.filter(":checked");
+
+      if (!checkedOpt.length) {
+        alert("Bitte wählen Sie einen Grund für die Unzustellbarkeit aus!");
+        btn.prop('disabled', false).waitMe('hide');
+        return;
+      }
+
+      if (checkedOpt.val() === 'Sonstiges' && grundText.is(":visible") && !grundText.val()) {
+        alert("Geben Sie bitte einen Grund, warum die Lieferung nicht zugestellt werden konnte.");
+        btn.prop('disabled', false).waitMe('hide');
+        return;
+      }
+
+
+      var data = {
+        aid: aid,
+        grund: grundText,
+        bemerkung: grundTextVal,
+        datum: getDbDateString(),
+        zeit: getDbTimeString()
+      };
+
+      var rq = $.post(url, data, function(data) {
+        MyInfoBox('Daten wurden übertragen', 'Zustellversuch wurde gespeichert!');
+      });
+      rq.always(function() {
+        btn.prop('disabled', false).waitMe('hide');
+      })
+    });
+    $(":radio[data-toggletarget]").each(function() {
+      var frm = $(this).closest("form");
+      var self = this;
+      var selTarget = $(this).data("toggletarget");
+      var target = $(selTarget);
+      var name = $(this).attr("name");
+      var selOpts = ":radio[name=" + escapeSelector(name) + "]";
+
+      frm.find(selOpts).on("change", function() {
+        var toggleShow = this === self;
+        target.toggle(toggleShow);
+        if (toggleShow && target.length) {
+          target[0].focus();
+        }
+      });
+    });
+    onchange="$( $(this).data('toggletarget') ).toggle(this.checked)"
+
     if ($("#abnahmeLieferdatum").val() === '') {
       var heute = new Date();
-      var defautLieferdatum = heute.getFullYear() + "-" +
-              (heute.getMonth() < 9 ? '0' : '') + (heute.getMonth() +1) + "-" +
-              (heute.getDate() < 10 ? '0' : '') + heute.getDate();
+      var defautLieferdatum = getDbDateString();
       $("#abnahmeLieferdatum").val(defautLieferdatum);
     }
     // SignaturePad.prototype.getPlainCanvasElement = function() {
@@ -985,23 +1083,25 @@
     }
   }
 
-  function getDbDateTimeString() {
+  function getDbDateString() {
     var d = new Date();
-    if (d.toLocaleDateString && d.toLocaleTimeString) {
-      var dtParts = d.toLocaleDateString().split('.').reverse();
-      if (dtParts[1].length < 2) dtParts[1] = '0' + dtParts[1];
-      if (dtParts[2].length < 2) dtParts[2] = '0' + dtParts[2];
-      return dtParts.join('-') + " "  + d.toLocaleTimeString();
-    }
     var Y = d.getFullYear();
     var m = (d.getMonth() < 9 ? '0' : '') + (d.getMonth() + 1).toString(10);
     var d = (d.getDate() < 10 ? '0' : '') + d.getDate().toString(10);
+    return [Y, m, d].join('-');
+  }
+
+  function getDbTimeString() {
+    var d = new Date();
     var H = (d.getHours() < 10 ? '0' : '') + d.getHours().toString(10);
     var i = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes().toString(10);
     var s = (d.getSeconds() < 10 ? '0' : '') + d.getSeconds().toString(10);
 
-    return [Y, m, d].join('-') + ' ' + [H, i, s].join(':');
+    return [H, i, s].join(':');
+  }
 
+  function getDbDateTimeString() {
+    return getDbDateString() + ' ' + getDbTimeString();
   }
 
   function submitSignature(selector) {
@@ -1139,8 +1239,8 @@
 
     console.log('Letzte Lieferscheindaten für ' + aid, { daten });
     if (!daten || Object.keys(daten).length === 0) {
-      console.log('Es existieren keine Lieferschein-Daten im LocalStorage für die AuftragsID ' + aid);
-      alert('Es existieren keine Lieferschein-Daten im lokalen Speicher für die AuftragsID' + aid);
+      console.log('Es existieren keine Lieferschein-Daten im LocalStorage für die Auftrags-ID ' + aid);
+      alert('Es existieren keine Lieferschein-Daten im lokalen Speicher für die Auftrags-ID ' + aid);
       return false;
     }
 

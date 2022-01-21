@@ -190,6 +190,10 @@ function umzugsleistungen_speichern($AID, $autocalc_ref_mengen = true) {
     $iNumLeistungen = !empty($lst) && !empty($lst['leistung_id']) ? count($lst['leistung_id']) : 0;
     for($i = 0; $i < $iNumLeistungen; $i++) {
         foreach($aLstDefaults as $_k => $_defaultVal) {
+            if (!isset($lst['menge_property']) && isset($lst['menge_mertens'])) {
+                $lst['menge_property'] = $lst['menge_mertens'];
+                $lst['menge2_property'] = $lst['menge2_mertens'];
+            }
             if (!isset($lst[$_k][$i])) {
                 $lst[$_k][$i] = $_defaultVal;
             }
@@ -408,6 +412,7 @@ function umzugsantrag_speichern() {
             $AS->arrInput["bemerkungen"] = (!empty($AS->arrDbdata["bemerkungen"])) ? $AS->arrDbdata["bemerkungen"] : "";
         }
 
+        // die(print_r([ 'FILE'=> __FILE__, 'LINE' => __LINE__, 'AS->arrInput' => $AS->arrInput], 1));
         if (!$AS->save()) {
 
         }
@@ -423,7 +428,7 @@ function umzugsantrag_speichern() {
         $error.= "Systemfehler: Antrag konnte nicht angelegt werden (Antrags->id:".$AS->id.")!<br>\n";
         return false;
 	}
-        
+
     $save_ul_count = 0;
     if ($cntAS > 0 || $cmd !== 'status') {
         if (isset($AS->arrDbdata['autocalc_ref_mengen'])) {

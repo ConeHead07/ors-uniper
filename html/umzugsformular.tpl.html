@@ -324,8 +324,19 @@
             {if 0}
             {include file="umzugsformular_ortsauswahl.tpl.html"}
             {/if}
+
             {if $user.gruppe eq "admin" || $user.gruppe eq "user" || $user.gruppe == "kunde_report"}
-            {include file="umzugsformular_leistungsauswahl.tpl.html"}
+                {if $AS.autocalc_ref_mengen}
+                    {include file="umzugsformular_leistungsauswahl.tpl.html"}
+                {else}
+                {include file="admin_umzugsformular_leistungsauswahl.tpl.html"
+                    showLiefermenge="0"
+                    showReklas="0"
+                    PreiseAnzeigen="0"
+                    addTeilmengen="0"
+                    showTeilmengen="0"
+                }
+                {/if}
             {/if}
 
             {if 0 and $user.gruppe eq "admin" and $user.adminmode eq "superadmin"}
