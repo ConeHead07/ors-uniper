@@ -109,17 +109,25 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
   | <a href="%WebRoot%sites/etiketten.php?aid={$AS.aid}" target="_Etiketten{$AS.aid}">Etiketten</a>
 <br>
     {if !empty($AS.bemerkungen)}
-    <table class="form-table" width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
-        <tr>
-          <td>Bisherige Bemerkungen:</td>
-          <td class="no-border"></td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <div id="BemerkungenHistorie" style="resize: vertical;overflow:auto;height:4rem">{$AS.bemerkungen|nl2br}</div>
-          </td>
-        </tr>
-    </table>
+    <div style="margin-top: 1.5rem">
+      {if $AS.neue_bemerkungen_fuer_admin > 0}
+      <div id="neueBemerkungenHintBox" style="text-align: right;">
+        Es liegen <u>{$AS.neue_bemerkungen_fuer_admin}</u> neue Bemerkungen für Admins vor
+       <button id="btnMarkAsRead" data-num="{$AS.neue_bemerkungen_fuer_admin|escape}" class="btn green btn-mark-reas" style="padding: 2px 5px 2px 5px;margin: 0 2px 0 0;">als gelesen markieren</button>
+      </div>
+      {/if}
+      <table class="form-table" width="100%" border=1 cellspacing=1 cellpadding=1>
+          <tr>
+            <td> Bisherige Bemerkungen:</td>
+            <td class="no-border"></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div id="BemerkungenHistorie" style="resize: vertical;overflow:auto;height:4rem">{$AS.bemerkungen|nl2br}</div>
+            </td>
+          </tr>
+      </table>
+    </div>
     {/if}
 
     {if !empty($AS.lieferhinweise)}
@@ -351,6 +359,10 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
       <strong>Bemerkung hinzufügen:</strong><br>
       <textarea class="iarea bemerkungen" name="AS[bemerkungen]" style="resize: vertical;overflow: auto"></textarea>
   </div>
+    <button class='btn blue'
+            onclick="umzugsantrag_add_bemerkung()"
+            style="cursor: pointer"
+            type="button">Bemerkung hinzufügen</button>
 
   <div style="margin-top: 2rem">
     <strong>Lieferhinweis (für Lieferschein):</strong><br>
@@ -379,13 +391,13 @@ Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
            title="Diese Dateianhänge sind auch für den Kunden sichtbar">Dokumente<br>öffnen / hochladen</button>
 {if $creator == "mertens"}
   <button
-          type="submit" class="btn blue" style="float:right;margin-left:5px;"
+          type="button" class="btn blue" style="float:right;margin-left:5px;"
           onclick="umzugsantrag_add_internal_attachement()"
           title="Diese Dateianhänge sind für den Kunden Nicht sichtbar">Interne Dokumente<br>öffnen / hochladen</button>
   {/if}
 
   <button
-          type="submit" class="btn blue" style="float:right;margin-left:5px;"
+          type="button" class="btn blue" style="float:right;margin-left:5px;"
           onclick="umzugsantrag_add_lieferschein()"
           value="Quittierten Lieferschein hinzufügen">Quittierten Lieferschein<br>hinzufügen</button>
   </div>
@@ -586,6 +598,9 @@ Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
 </div>
 {literal}
 <script>
+  function getAID() {
+    return $("input[name=AS\\[aid\\]]").val();
+  }
   function showReklaDialog() {
 
     var container = $("#ReklaDialog");
@@ -803,6 +818,29 @@ Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
     $(".cluetip").cluetip({activation: 'click', closePosition: 'title', arrows: true});
 
 
+    $("#btnMarkAsRead").bind("click", function(e) {
+      var btn = $(this).waitMe();
+      var box = $("#neueBemerkungenHintBox");
+      var aid = getAID();
+      var numGelesen = $(this).data("num");
+
+      var rq = $.get('/bemerkungen_gelesen.php', { aid, numGelesen }, function(responseData) {
+        if (typeof responseData === 'object' && 'type' in responseData) {
+          if (responseData.type === 'success') {
+            box.hide();
+            return;
+          }
+          if (responseData.type === 'error') {
+            alert(responseData.error || 'Fehler beim Zurücksetzen des Zählers!');
+          }
+        }
+      });
+
+      rq.always(function() {
+        btn.waitMe('hide');
+      });
+
+    });
   });
 </script>
 {/literal}

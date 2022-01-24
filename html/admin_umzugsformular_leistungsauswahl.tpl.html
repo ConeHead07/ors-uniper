@@ -223,6 +223,32 @@ function drop_Leistung(obj) {
 
 $(function(){
     $( "input.menge.creator, input.menge2.creator" ).bind("change", mengeChangeCallback);
+
+    $("input[type=number][max]").bind('change', function(e) {
+        var val = $(this).val();
+        var maxVal = $(this).attr("max");
+        var minVal = $(this).attr("min");
+
+        if (isNaN(val)) {
+            $(this).val(0);
+            return;
+        }
+
+        if (maxVal !== undefined && !isNaN(maxVal)) {
+            if (parseFloat(val) > parseFloat(maxVal)) {
+                $(this).val(maxVal);
+                return;
+            }
+        }
+
+        if (minVal !== undefined && !isNaN(minVal)) {
+            if (parseFloat(val) < parseFloat(minVal)) {
+                $(this).val(minVal);
+                return;
+            }
+        }
+
+    });
 });
 
 function add_Leistung() {

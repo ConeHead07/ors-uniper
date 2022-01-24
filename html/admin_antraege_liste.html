@@ -87,6 +87,7 @@
     {assign var="showZeit" value=false}
     {assign var="showName" value=false}
     {assign var="showErinnert" value=false}
+    {assign var="showNumNewBmk" value=false}
     {assign var="checkWidth" value=24}
     {assign var="aidWidth" value=35}
     {assign var="kidWidth" value=65}
@@ -103,8 +104,13 @@
     {assign var="leistungenWidth" value=50}
     {assign var="lieferdatumWidth" value=70}
     {assign var="abgeschlossenWidth" value=75}
+    {assign var="numNewBmkWidth" value=30}
     {assign var="summeWidth" value=60}
     {assign var="erinnertWidth" value=75}
+
+
+    {assign var="showNumNewBmk" value=true}
+    {assign var="strasseWidth" value=110}
 
 {if $s eq "auslieferung"}
     {assign var="zeitWidth" value=45}
@@ -193,6 +199,14 @@
     .currency-euro::after {
         content: " €";
     }
+
+    .fld-neue_bemerkungen_fuer_admin.has-new {
+        background-color: red;
+        border-radius: 4px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+    }
 </style>
 <div style="clear:both"></div>
 {if $ListBrowsing}{$ListBrowsing}{/if}
@@ -264,6 +278,9 @@
       {if $showLeistungen}
       <div class="fld-cell fld-leistungen order" data-fld="leistungen" style="width:{$leistungenWidth}px;"><a href="{$ListBaseLink}&ofld=leistungen{if $ofld eq "leistungen" && $odir ne "DESC"}&odir=DESC{/if}">Lstg.</a></div>
       {/if}
+      {if $showNumNewBmk}
+      <div title="Anzahl neuer ungelesener Bemerkungen für Admins" class="fld-cell fld-neue_bemerkungen_fuer_admin order" data-fld="neue_bemerkungen_fuer_admin" style="width:{$numNewBmkWidth}px;"><a href="{$ListBaseLink}&ofld=neue_bemerkungen_fuer_admin{if $ofld eq "neue_bemerkungen_fuer_admin" && $odir ne "DESC"}&odir=DESC{/if}">Bmk+</a></div>
+      {/if}
       {if $showSumme}
       <div class="fld-cell fld-summe order" data-fld="summe" style="width:{$summeWidth}px;" title="Auftragswert"><a href="{$ListBaseLink}&ofld=summe{if $ofld eq "summe" && $odir ne "DESC"}&odir=DESC{/if}">Summe</a></div>
       {/if}
@@ -309,6 +326,9 @@
           {/if}
           {if $showLeistungen}
           <div class="fld-cell fld-leistungen" style="width:{$leistungenWidth}px;"><input name="q[Leistungen]" value="{if !empty($q) && isset($q.Leistungen)}{$q.Leistungen}{/if}"></div>
+          {/if}
+          {if $showNumNewBmk}
+          <div class="fld-cell fld-neue_bemerkungen_fuer_admin" style="width:{$numNewBmkWidth}px;"><input name="q[neue_bemerkungen_fuer_admin]" value="{if !empty($q) && isset($q.neue_bemerkungen_fuer_admin)}{$q.neue_bemerkungen_fuer_admin}{/if}"></div>
           {/if}
           {if $showSumme}
           <div class="fld-cell fld-summe" style="width:{$summeWidth}px;"><input name="q[summe]" value="{if !empty($q) && isset($q.summe)}{$q.summe}{/if}"></div>
@@ -364,6 +384,9 @@
               {/if}
               {if $showLeistungen}
               <div class="fld-cell fld-leistungen" style="width:{$leistungenWidth}px;" title="{$U.LeistungenFull}">{$U.Leistungen}&nbsp;</div>
+              {/if}
+              {if $showNumNewBmk}
+              <div class="fld-cell fld-neue_bemerkungen_fuer_admin{if $U.neue_bemerkungen_fuer_admin > 0} has-new red{/if}" style="width:{$numNewBmkWidth}px;" title="{$U.neue_bemerkungen_fuer_admin}"><span>{$U.neue_bemerkungen_fuer_admin}</span>&nbsp;</div>
               {/if}
               {if $showSumme}
               <div class="fld-cell fld-summe" style="width:{$summeWidth}px;">{$U.Summe|number_format:2:",":"."}&nbsp;</div>

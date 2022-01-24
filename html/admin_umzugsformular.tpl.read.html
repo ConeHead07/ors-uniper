@@ -218,11 +218,15 @@
 
   {if $user.gruppe eq "admin" and $user.adminmode eq "superadmin"}
     {if !empty($AS.bemerkungen)}
+    {/if}
     <div id="BoxBemerkungen" style="margin-top: 2rem;display:none;">
       <strong>Bemerkung hinzufügen:</strong><br>
       <textarea class="iarea bemerkungen" name="AS[bemerkungen]" style="resize: vertical;overflow: auto"></textarea>
     </div>
-    {/if}
+    <button class='btn blue'
+            onclick="umzugsantrag_add_bemerkung()"
+            style="cursor: pointer"
+            type="button">Bemerkung hinzufügen</button>
 
     <input type="hidden" name="AS[aid]" value="{$AS.aid}">
     <input type="hidden" name="AS[token]" value="{$AS.token}">

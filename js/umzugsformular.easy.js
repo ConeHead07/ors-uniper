@@ -215,6 +215,7 @@ function umzugsantrag_save_notsend() {
 
 function umzugsantrag_add_bemerkung(e) {
 	var id = umzugsantrag_id();
+	$( "body" ).waitMe();
 	var cmd= "add_bemerkung";
 	var frm = document.forms["frmUmzugsantrag"];
 	var url = "umzugsantrag.php?cmd=" + cmd + "&id=" + id;
@@ -225,14 +226,20 @@ function umzugsantrag_add_bemerkung(e) {
 		e.preventDefault();
 	}
 	var InfoBoxLoading = umzugsantrag_loadingBar('Ihre Nachricht wird übertragen.');
+	var bmk = '';
+	if ($(frm).find(":input[name=AS\\[add_bemerkungen\\]]").length) {
+		bmk = $(frm).find(":input[name=AS\\[add_bemerkungen\\]]").val();
+	} else {
+		bmk = $(frm).find(":input[name=AS\\[bemerkungen\\]]").val();
+	}
 	var data = {
 		id,
 		"AS[aid]": $(frm).find(":input[name=AS\\[aid\\]]").val(),
 		"AS[token]": $(frm).find(":input[name=AS\\[token\\]]").val(),
-		"AS[add_bemerkungen]": $(frm).find(":input[name=AS\\[add_bemerkungen\\]]").val()
+		"AS[add_bemerkungen]": bmk
 	};
 	// alert("#234 umzugsantrag_add_bemerkung()\n" + JSON.stringify(data));
-	$.post(url, data, function(oData, sStatus, req) {
+	var rq = $.post(url, data, function(oData, sStatus, req) {
 		var cType = req.getResponseHeader("Content-Type"); // "text/plain", "text/html", "text/html", "application/xml"
 		if (cType.indexOf("/xml") > -1) {
 			if (!req.responseXML) {
@@ -253,6 +260,11 @@ function umzugsantrag_add_bemerkung(e) {
 		console.log({nodeSuccess, nodeMsg, nodeError });
 
 		// self.location.reload(true);
+	});
+	rq.always(function() {
+		$( "body" ).waitMe('hide');
+		self.location.reload();
+		alert("Seite wird neu geladen!");
 	});
 	return false;
 	if (fb_AjaxRequest(url, frm.method, 'fb_AjaxXmlUpdate(%req%, "'+selector+'","'+cmd+'")', data)) {

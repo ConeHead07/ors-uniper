@@ -1,10 +1,16 @@
-<link rel="STYLESHEET" type="text/css" href="../css/SelBox.easy.css?%assetsRefreshId%">
-<link rel="STYLESHEET" type="text/css" href="css/SelBox.easy.css?%assetsRefreshId%">
+{literal}
+<link rel="STYLESHEET" type="text/css" href="{WebRoot}css/SelBox.easy.css?%assetsRefreshId%">
+<link rel="stylesheet" type="text/css" href="{WebRoot}/css/umzugsformular.css?%assetsRefreshId%"/>
+<script type="text/javascript" src="{WebRoot}js/FbAjaxUpdater.js?%assetsRefreshId%"></script>
+<script type="text/javascript" src="{WebRoot}js/PageInfo.js?%assetsRefreshId%"></script>
+<script type="text/javascript" src="{WebRoot}js/ObjectHandler.js?%assetsRefreshId%"></script>
+<script type="text/javascript" src="{WebRoot}js/SelBox.easy.js?%assetsRefreshId%"></script>
+<script type="text/javascript" src="{WebRoot}js/umzugsformular.easy.js?%assetsRefreshId%"></script>
+{/literal}
 
 <div id="SysInfoBox"></div>
 
-<link rel="stylesheet" type="text/css" href="css/umzugsformular.css?%assetsRefreshId%"/>
-<link rel="stylesheet" type="text/css" href="../css/umzugsformular.css?%assetsRefreshId%"/>
+
 <!-- MODUL UEBERSCHRIFTENBOX 109099 BEGIN --> 
 <div class="divModuleBasic padding6px width5Col heightAuto colorContentMain"> 
 <h1><span class="spanTitle">Auftrag</span></h1>
@@ -164,13 +170,12 @@
 <textarea class="iarea bemerkungen" name="AS[add_bemerkungen]"></textarea>
 <br>
 
-  <button class='btn blue'
+  <button class='btn blue btn-add-bemerkung'
           onclick="umzugsantrag_add_bemerkung()"
           style="cursor: pointer"
           type="button">Bemerkung hinzufügen</button>
 
-
-  {if true}<button id="btnShowReklaDialog" type="button" class="btn red">Leistung reklamieren</button>{/if}
+  {if false}<button id="btnShowReklaDialog" type="button" class="btn red">Leistung reklamieren</button>{/if}
 </form>
 
 <div id="LoadingBar"></div>
@@ -236,11 +241,10 @@
             .find("button.btn-apply")
             .off("click")
             .on("click", function() {
-              alert("click");
               var btnApply = $(this);
               var frm = $(this).closest("form");
               var btnCancel = frm.find("button.btn-cancel");
-              btnApply.prop("disabled", true);
+              btnApply.prop("disabled", true).waitMe();
               btnCancel.prop("disabled", true);
 
               var aid = frm.find('[name=aid]').val();
@@ -256,6 +260,8 @@
                 var mng = frm.find('[name^=L\\[neue_rekla\\]\\[' + lid + '\\]]').val();
                 if (!parseInt(mng)) {
                   alert("Für die " + (i+1) + ". ausgewählte Position wurde keine Menge angegeben!");
+                  btnApply.prop("disabled", false).waitMe('hide');
+                  btnCancel.prop("disabled", false);
                   return;
                 }
                 leistungen.push({ leistung_id: lid, menge: mng });
@@ -264,14 +270,13 @@
 
               if(!leistungen.length) {
                 alert("Es wurden keine Leistungen für die Reklamation ausgewählt!");
+                btnApply.prop("disabled", false).waitMe('hide');
+                btnCancel.prop("disabled", false);
                 return;
               }
               if ($.trim(grund) === "") {
                 alert("Es wurden kein Grund für die Reklamation angegeben!");
-                return;
-              }
-              if (false) {
-                btnApply.prop("disabled", false);
+                btnApply.prop("disabled", false).waitMe('hide');
                 btnCancel.prop("disabled", false);
                 return;
               }
@@ -284,7 +289,8 @@
                       }, function(response) {
                         console.log({ response });
                         if (response.type === "success") {
-                          alert("Reklamation wurde angelegt mit der ID " + response.reklaAid);
+                          alert("Reklamation wurde angelegt mit der ID " + response.reklaAid + "\nSeite wird neu geladen!");
+                          self.location.reload();
                         } else {
                           alert("Es sind Fehler aufgetreten!\n" + response.msg);
                         }
@@ -292,7 +298,7 @@
               );
               request.always(function() {
                 $("body").removeClass("doc-body-no-scrollbars");
-                btnApply.prop("disabled", false);
+                btnApply.prop("disabled", false).waitMe('hide');
                 btnCancel.prop("disabled", false);
               });
             }).end();

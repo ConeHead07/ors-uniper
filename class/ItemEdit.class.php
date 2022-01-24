@@ -2002,22 +2002,31 @@ class ItemEdit
 	}
 	
 	function checkInput() {
-		$this->Warning = "";
-		$this->Error = "";
+		$this->Warning = '';
+		$this->Error = '';
+		$isUpdate = strcasecmp($this->editMode, 'Update') === 0;
+		$isInsert = strcasecmp($this->editMode, 'Insert') === 0;
 		if (count($this->arrInput)) {
 			foreach($this->arrConf["Fields"] as $fN => $fC) { // f:fieldName, c:fieldConf
+			    if ($isUpdate && !isset($this->arrInput[$fN])) {
+			        continue;
+                }
 				$err = "";
 				if ( !$this->userHasFldAccess($fN, $this->editMode) ) {
-					if ($this->editMode == "Insert") {
-						if ($fC["required"]) $this->arrInput[$fN] = $fC["default"];
+					if ($isInsert) {
+						if ($fC["required"]) {
+						    $this->arrInput[$fN] = $fC["default"];
+                        }
 						else {
-							if (isset($this->arrInput[$fN]) )
-								$this->Warning.= "Sie haben nicht die erforderlichen Insert-Rechte für ".$fC['label']."!<br>\n";
+							if (isset($this->arrInput[$fN]) ) {
+                                $this->Warning .= 'Sie haben nicht die erforderlichen Insert-Rechte für ' . $fC['label'] . "!<br>\n";
+                            }
 							continue;
 						}
 					} else {
-						if (isset($this->arrInput[$fN]) )
-							$this->Warning.= "Sie haben nicht die erforderlichen Update-Rechte für ".$fC['label']."!<br>\n";
+						if (isset($this->arrInput[$fN]) ) {
+						    $this->Warning.= 'Sie haben nicht die erforderlichen Update-Rechte für ' . $fC['label']."!<br>\n";
+                        }
 						continue;
 					}
 				}
@@ -2036,7 +2045,7 @@ class ItemEdit
 				}
 				$isValid = true;
 				$doCheck = true;
-				if ($this->editMode == "Insert" && isset($fC["createByFunction"]) && $fC["createByFunction"] !== "") {
+				if ($isInsert && isset($fC['createByFunction']) && $fC['createByFunction'] !== '') {
 					$doCheck = false;
 				}
 				
@@ -2106,8 +2115,8 @@ class ItemEdit
 			}
 			return true;
 		} else {
-			$this->Error.= " Eingabedaten wurden noch nicht übergeben / geladen!<br>";
-			$this->Error.= "Fügen Sie die Eingabedaten mit object->inputLoad(Array Eingaben)<br>!";
+			$this->Error.= ' Eingabedaten wurden noch nicht übergeben / geladen!<br>';
+			$this->Error.= 'Fügen Sie die Eingabedaten mit object->inputLoad(Array Eingaben)!<br>';
 			return false;
 		}
 	}

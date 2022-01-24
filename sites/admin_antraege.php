@@ -108,6 +108,7 @@ $orderFields = array(
 	'abgeschlossen' => array('field'=>'U.abgeschlossen_am', 'defaultOrder'=>'ASC'),
     'tour_kennung' =>  array('field'=>'tour_kennung', 'defaultOrder'=>'ASC'),
     'Leistungen' =>  array('field'=>'Leistungen', 'defaultOrder'=>'ASC'),
+    'neue_bemerkungen_fuer_admin' => array('field' => 'neue_bemerkungen_fuer_admin', 'defaultOrder'=>'DESC'),
     'summe' =>  array('field'=>'Summe', 'defaultOrder'=>'ASC'),
 );
 
@@ -309,7 +310,7 @@ $sqlSelect = 'SELECT U.*, U.umzugstermin AS Lieferdatum, ' . $NL
     . ' REPLACE(REPLACE(GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR ""), "P", ""), "R", "") AS Leistungen, ' . $NL
     . ' GROUP_CONCAT(lk.leistungskategorie ORDER BY leistungskategorie SEPARATOR ", ") AS LeistungenFull, ' . $NL
     . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Summe, ' . $NL
-    . ' (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Menge' . $NL;
+    . ' (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Menge ' . $NL;
 
 $sql = 'SELECT COUNT(1) AS `count` FROM (' . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t';
 

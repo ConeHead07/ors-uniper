@@ -259,6 +259,10 @@ label {
 .itxt * {
     font-size:0.8rem;
 }
+div.itxt {
+    height:auto;
+    min-height: 25px;
+}
 .iselect {
     width: 100%;
     min-height: 25px;

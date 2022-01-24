@@ -661,8 +661,8 @@ function umzugsantrag_add_bemerkung() {
         return false;
     }
 
-    $AS->arrConf["Fields"]["umzugstermin"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
-    $AS->arrConf["Fields"]["umzugszeit"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
+    $AS->arrConf["Fields"]["umzugstermin"]["required"] = false;
+    $AS->arrConf["Fields"]["umzugszeit"]["required"] = false;
 
     $db = dbconn::getInstance();
 
@@ -686,11 +686,12 @@ function umzugsantrag_add_bemerkung() {
         }
 
         $sql = 'UPDATE mm_umzuege SET ' . $NL
-            . ' bemerkungen = TRIM(CONCAT(:bemerkung, "\n\n", bemerkungen))'
+            . ' bemerkungen = TRIM(CONCAT(IFNULL(:bemerkung, ""), "\n\n", IFNULL(bemerkungen, "")))'
             . (count($aSet) > 0 ? ', ' . $NL . implode(",\n", $aSet) : '') . $NL
             . ' WHERE aid = :aid LIMIT 1';
 
         $db->query($sql, [ 'bemerkung' => $enrichedBemerkung, 'aid' => $AID]);
+        $lastQuery = $db->lastQuery;
 
         if ($db->error()) {
             $error.= $db->error();

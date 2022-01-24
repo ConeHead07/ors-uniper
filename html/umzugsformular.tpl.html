@@ -380,6 +380,12 @@
                 <strong>Bemerkungen</strong><br>
                 <textarea class="iarea bemerkungen" name="AS[bemerkungen]"></textarea>
             </div>
+            {if !empty($AS.aid)}
+            <button class='btn blue'
+                            onclick="umzugsantrag_add_bemerkung()"
+                            style="cursor: pointer"
+                            type="button">Bemerkung hinzufügen</button>
+            {/if}
             <div style="margin-top:20px;">
                 <input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;">
                 <button
