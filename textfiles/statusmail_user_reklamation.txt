@@ -22,3 +22,10 @@ Mit freundlichen Grüßen
 Ihr Team von
 merTens AG für {HomepageTitle}
 
+
+!!! Bitte antworten Sie nicht direkt auf diese E-Mail !!!
+Dies ist eine automatisch generierte Mail von einer System-E-Mail Adresse – bitte antworten Sie nicht direkt auf diese E-Mail, sondern nutzen Sie bei Rückfragen bitte die Bemerkungsfunktion in Ihrer Auftragsansicht!
+
+
+!!! Please do not reply to this e-mail directly !!!
+This is an automatically generated e-mail from a system e-mail address - please do not reply to this e-mail directly, but use the comment function in your order view if you have any questions!

@@ -15,7 +15,12 @@ Bitte stellen Sie sicher, dass wir Sie (oder Ihren abweichenden Empfänger) zu d
 
 Sie können den Status Ihrer Bestellung unter https://uniper.mertens.ag/ jederzeit einsehen.
 
-Sollte der Termin nicht wahrnehmbar sein, teilen Sie uns dies bitte so bald wie möglich über eine Nachricht im Feld „Bemerkung“ in Ihrem Bestellkonto mit. Wir werden dann eine neue Terminierung vornehmen. 
+Sollte der Termin nicht wahrnehmbar sein, teilen Sie uns dies bitte so bald wie möglich über eine Nachricht im Feld „Bemerkung“ in Ihrem Bestellkonto mit. Wir werden dann eine neue Terminierung vornehmen.
+
+
+
+!!! Bitte antworten Sie nicht direkt auf diese E-Mail !!!
+Dies ist eine automatisch generierte Mail von einer System-E-Mail Adresse – bitte antworten Sie nicht direkt auf diese E-Mail, sondern nutzen Sie bei Rückfragen bitte die Bemerkungsfunktion in Ihrer Auftragsansicht!
 
 ***
 
@@ -41,3 +46,7 @@ Mit freundlichen Grüßen/ With kind regards
 
 Ihr Team von
 merTens AG für {HomepageTitle}
+
+
+!!! Please do not reply to this e-mail directly !!!
+This is an automatically generated e-mail from a system e-mail address - please do not reply to this e-mail directly, but use the comment function in your order view if you have any questions!
