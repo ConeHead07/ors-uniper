@@ -33,7 +33,7 @@
   <table width="100%">
     <tr>
       <td style="padding:0;">
-        <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
+        <div id="BemerkungenHistorie" style="resize: vertical;overflow-y: auto; height: 4.5rem;">{$AS.bemerkungen|nl2br}</div>
       </td>
     </tr>
   </table>
@@ -164,8 +164,11 @@
 <textarea class="iarea bemerkungen" name="AS[add_bemerkungen]"></textarea>
 <br>
 
+  <button class='btn blue'
+          onclick="umzugsantrag_add_bemerkung()"
+          style="cursor: pointer"
+          type="button">Bemerkung hinzufügen</button>
 
-<input class='btn blue' type="submit" xstyle="padding:0 0 9px 0;background:url(images/BtnBlue_160.png) bottom left no-repeat;border:0;width:160px;height:24px;font-size:12px;color:#fff;font-weight:bold;" value="Bemerkung hinzufügen">
 
   {if true}<button id="btnShowReklaDialog" type="button" class="btn red">Leistung reklamieren</button>{/if}
 </form>

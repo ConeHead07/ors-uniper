@@ -46,8 +46,21 @@ switch($cmd) {
 		$error.= $ua_errors;
 	}
 	break;
-	
-	case "speichern_ohne_status":
+
+
+    case "add_bemerkung":
+        $ua_errors = umzugsantrag_addbemerkung_fehler();
+        if (!$ua_errors) {
+            $reID = umzugsantrag_add_bemerkung();
+            if ($reID) {
+                $msg.= "Ihre Bemerkung wurde aufgenommen!<br>\n";
+            }
+        } else {
+            $error.= $ua_errors;
+        }
+        break;
+
+    case "speichern_ohne_status":
 	$ua_errors = umzugsantrag_fehler();
 	if (!$ua_errors) {
 		$reID = umzugsantrag_speichern();

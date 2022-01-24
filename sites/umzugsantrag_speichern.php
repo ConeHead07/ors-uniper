@@ -405,9 +405,23 @@ function umzugsantrag_speichern() {
             $AS->arrInput["bemerkungen"].= $addBemerkung;
             $enrichedBemerkung = str_replace("\n", "\r\n", $AS->arrInput["bemerkungen"]);
 
-            if (!empty($AS->arrDbdata["bemerkungen"]) && trim($AS->arrDbdata["bemerkungen"])) {
-                $AS->arrInput["bemerkungen"].= "\n\n".$AS->arrDbdata["bemerkungen"];
+            if (!$AS->itemExists) {
+                $AS->arrInput['neue_bemerkungen_fuer_admin'] = 1;
+            } else {
+                if (!empty($AS->arrDbdata["bemerkungen"]) && trim($AS->arrDbdata["bemerkungen"])) {
+                    $AS->arrInput["bemerkungen"] .= "\n\n" . $AS->arrDbdata["bemerkungen"];
+                }
+
+                $kunde_uid = $AS->arrDbdata['antragsteller_uid'];
+                if ($kunde_uid == $user['uid'] || $user['gruppe'] !== 'admin') {
+                    $AS->arrInput['neue_bemerkungen_fuer_admin'] = new DbExpr('neue_bemerkungen_fuer_admin + 1');
+                }
+
+                if ($kunde_uid != $user['uid']) {
+                    $AS->arrInput['neue_bemerkungen_fuer_kunde'] = new DbExpr('neue_bemerkungen_fuer_kunde + 1');
+                }
             }
+
         } else {
             $AS->arrInput["bemerkungen"] = (!empty($AS->arrDbdata["bemerkungen"])) ? $AS->arrDbdata["bemerkungen"] : "";
         }
@@ -596,3 +610,114 @@ function update_gelieferte_mengen($aid, array $aLeistungenMitMengen, string $lie
     }
     return $numUpdates;
 }
+
+function umzugsantrag_add_bemerkung() {
+    global $db;
+    global $error;
+    global $msg;
+    global $_CONF;
+    global $MConf;
+    global $connid;
+    global $user;
+
+    $UpdateToken = "";
+    $AID = getRequest("id","");
+    $ASPostItem = getRequest("AS",false);
+    $addBemerkung = "";
+    $enrichedBemerkung = '';
+    $NL = "\n";
+
+    if (!empty($ASPostItem["aid"])) {
+        $AID = $ASPostItem["aid"];
+    }
+
+    if (empty($AID)) {
+        return false;
+    }
+
+    if (!empty($ASPostItem["bemerkungen"])) {
+        $addBemerkung = trim($ASPostItem["bemerkungen"]);
+        unset($ASPostItem["bemerkungen"]);
+    }
+
+    if (!empty($ASPostItem['add_bemerkungen'])) {
+        $addBemerkung = trim($ASPostItem["add_bemerkungen"]);
+    }
+
+    if (empty($addBemerkung)) {
+        return false;
+    }
+
+    $userIsAdmin = (strpos($user["gruppe"], "kunde_report")!==false || strpos($user["gruppe"], "admin")!==false);
+
+
+    $ASConf = $_CONF["umzugsantrag"];
+
+    $AS = new ItemEdit($ASConf, $connid, $user, $AID);
+
+    if (!$AS->itemExists) {
+        $error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
+        $aDBG[] = '#' . __LINE__ . ' NO ITEM FOUND WITH AID' . $AID ;
+        return false;
+    }
+
+    $AS->arrConf["Fields"]["umzugstermin"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
+    $AS->arrConf["Fields"]["umzugszeit"]["required"] = ($AS->itemExists && $AS->arrDbdata["antragsstatus"]=="gesendet");
+
+    $db = dbconn::getInstance();
+
+    $AS->loadInput($ASPostItem);
+    if ($addBemerkung) {
+        $AS->arrInput["bemerkungen"] = "Bemerkung von " . $user["user"]
+            . " am " . date("d.m.Y")
+            . " um " . date("H:i")."\n";
+        $kunde_uid = $AS->arrDbdata['antragsteller_uid'];
+
+        $AS->arrInput["bemerkungen"].= $addBemerkung;
+        $enrichedBemerkung = str_replace("\n", "\r\n", $AS->arrInput["bemerkungen"]);
+
+        $aSet = [];
+        if ($kunde_uid == $user['uid'] || $user['gruppe'] !== 'admin') {
+            $aSet[] = 'neue_bemerkungen_fuer_admin = (neue_bemerkungen_fuer_admin + 1)';
+        }
+
+        if ($kunde_uid != $user['uid'] || $user['gruppe'] === 'admin') {
+            $aSet[] = 'neue_bemerkungen_fuer_kunde = (neue_bemerkungen_fuer_kunde + 1)';
+        }
+
+        $sql = 'UPDATE mm_umzuege SET ' . $NL
+            . ' bemerkungen = TRIM(CONCAT(:bemerkung, "\n\n", bemerkungen))'
+            . (count($aSet) > 0 ? ', ' . $NL . implode(",\n", $aSet) : '') . $NL
+            . ' WHERE aid = :aid LIMIT 1';
+
+        $db->query($sql, [ 'bemerkung' => $enrichedBemerkung, 'aid' => $AID]);
+
+        if ($db->error()) {
+            $error.= $db->error();
+            return false;
+        }
+    }
+
+    $error.= $AS->Error;
+    $error.= $AS->dbError;
+
+    if ($enrichedBemerkung) {
+        $authorUser = $user;
+        if (umzugsantrag_mailinform($AID, "neuebemerkung", $enrichedBemerkung, $authorUser)) {
+            $iNumMails = umzugsantrag_mailinform_get_numMails();
+            if ($iNumMails > 0) {
+                if ($user['gruppe'] === 'admin') {
+                    $msg .= "Mail mit neuer Bemerkung wurde gesendet [Anzahl: $iNumMails]!<br>\n";
+                } else {
+                    $msg .= "Ihre Daten wurden weitergeleiter!<br>\n";
+                }
+            }
+        } else {
+            if ($user['gruppe'] === 'admin') {
+                $error.= "Fehler beim Mailversand [#421]!<br>\n";
+            }
+        }
+    }
+    return $AID;
+}
+

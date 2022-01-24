@@ -92,6 +92,15 @@ function umzugsantrag_senden() {
             $AS->arrInput["bemerkungen"] = "Bemerkung von ".$user["user"]." am ".date("d.m.Y")." um ".date("H:i")."\n";
             $AS->arrInput["bemerkungen"].= trim($addBemerkung);
             if (!empty($AS->arrDbdata["bemerkungen"])) $AS->arrInput["bemerkungen"].= "\n\n".$AS->arrDbdata["bemerkungen"];
+
+            $kunde_uid = $AS->arrDbdata['antragsteller_uid'] ?: $user['uid'];
+            if ($kunde_uid == $user['uid'] || $user['gruppe'] !== 'admin') {
+                $AS->arrInput['neue_bemerkungen_fuer_admin'] = new DbExpr('neue_bemerkungen_fuer_admin + 1');
+            }
+
+            if ($kunde_uid != $user['uid']) {
+                $AS->arrInput['neue_bemerkungen_fuer_kunde'] = new DbExpr('neue_bemerkungen_fuer_kunde + 1');
+            }
         } else {
             $AS->arrInput["bemerkungen"] = (!empty($AS->arrDbdata["bemerkungen"])) ? $AS->arrDbdata["bemerkungen"] : "";
         }

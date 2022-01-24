@@ -172,6 +172,30 @@ function getLeistungenError() {
     
 }
 
+function umzugsantrag_addbemerkung_fehler() {
+    global $_CONF;
+    global $connid;
+    global $user;
+
+    $ASConf = $_CONF["umzugsantrag"];
+    $ASPostItem = getRequest("AS",false);
+
+    if (empty($ASPostItem['aid'])) {
+        return 'Es wurde keine Auftrags-ID übergeben!';
+    }
+    if (empty($ASPostItem['add_bemerkungen']) || trim($ASPostItem['add_bemerkungen']) === '') {
+        return 'Es wurde keine Bemerkung angegeben!';
+    }
+
+    $AID = $ASPostItem["aid"];
+    $AS = new ItemEdit($ASConf, $connid, $user, $AID);
+    if ($AS->itemExists) {
+        return '';
+    } else {
+        return 'Es existiert kein Auftrag mit der ID ' . $AID . '!';
+    }
+}
+
 function umzugsantrag_fehler() {
     global $db;
     global $_CONF;

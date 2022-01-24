@@ -75,7 +75,23 @@
     | <a href="%WebRoot%sites/etiketten.php?aid={$AS.aid}" target="_Etiketten{$AS.aid}">Etiketten</a>
   <br>
 
-  <div style="float:left">
+
+    {if !empty($AS.bemerkungen)}
+    <table class="form-table" width="100%" border=1 cellspacing=1 cellpadding=1 style="margin-top: 1.5rem">
+      <tr>
+        <td style="padding:0;height:auto;width:200px;">Bisherige Bemerkungen:</td>
+        <td class="no-border"></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div id="BemerkungenHistorie" style="resize: vertical;overflow:auto;height:4rem">{$AS.bemerkungen|nl2br}</div>
+        </td>
+      </tr>
+    </table>
+    {/if}
+
+    <div style="margin-top:1.5rem">
+
   <h2 style="margin:0;">Leistungsantragsteller</h2>
   <table class="form-table" >
     <tr>
@@ -201,10 +217,12 @@
   </div>
 
   {if $user.gruppe eq "admin" and $user.adminmode eq "superadmin"}
-    <div id="BoxBemerkungen" style="margin-top: 2rem">
+    {if !empty($AS.bemerkungen)}
+    <div id="BoxBemerkungen" style="margin-top: 2rem;display:none;">
       <strong>Bemerkung hinzufügen:</strong><br>
       <textarea class="iarea bemerkungen" name="AS[bemerkungen]" style="resize: vertical;overflow: auto"></textarea>
     </div>
+    {/if}
 
     <input type="hidden" name="AS[aid]" value="{$AS.aid}">
     <input type="hidden" name="AS[token]" value="{$AS.token}">

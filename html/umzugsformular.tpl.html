@@ -91,14 +91,20 @@
             {if !empty($AS) and !empty($AS.bemerkungen)}
             <table width="100%">
                 <tr>
-                    <td style="padding:0;">
-                        <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
+                    <td style="padding:0;width:200px;" valign="top">
+                        <label style="display:block;width:auto;">Bisherige Bemerkungen:</label>
+                    </td>
+                    <td style="padding:0;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding:0;">
+                        <div id="BemerkungenHistorie" style="resize: vertical;overflow-y: auto; height: 3rem;">{$AS.bemerkungen|nl2br}</div>
                     </td>
                 </tr>
             </table>
             {/if}
 
-            <h2 style="margin:0;">Lieferadresse</h2>
+            <h2 style="margin:1.5rem 0 0 0;">Lieferadresse</h2>
             <table>
                 <tr>
                     <td style="padding:0;width:200px;">
