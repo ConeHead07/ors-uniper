@@ -198,6 +198,8 @@ $validFields = array(
     'land' => array('field'=> 'a.land'),
     'ort' => array('field'=> 'a.ort'),
     'plz' => array('field'=> 'a.plz'),
+    'umzug' => array('field'=> 'a.umzug'),
+    'service' => array('field'=> 'a.service'),
     'strasse' => array('field'=> 'a.strasse'),
     'antragsdatum' => array('field'=> 'a.antragsdatum'),
     'umzugstermin' => array('field'=> 'a.umzugstermin'),

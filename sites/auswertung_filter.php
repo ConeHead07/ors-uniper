@@ -61,6 +61,8 @@ foreach($kws as $i => $_kw) {
 $validFields = array(
     'aid',
     'kid',
+    'service',
+    'umzug',
     'land',
     'ort',
     'plz',
@@ -228,7 +230,8 @@ $sqlFrom = ' FROM mm_umzuege a ' . "\n"
       . ' ) ' . "\n";
 
 $sqlWhere = ' WHERE 1 ' . "\n"
-      . ' AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN :von AND :bis ' . "\n";
+    . ' AND service != "Rekla" '
+    . ' AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN :von AND :bis ' . "\n";
 if (count($aWhereStatusAnyOf)) {
     $sqlWhere.= ' AND ( ' . implode(' OR ', $aWhereStatusAnyOf) . ')' . "\n";
 }

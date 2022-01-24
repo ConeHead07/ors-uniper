@@ -73,6 +73,12 @@ foreach($kws as $i => $_kw) {
 
 $validFields = array(
     'aid',
+    'kid',
+    'service',
+    'umzug',
+    'plz',
+    'strasse',
+    'antragsdatum',
     'vorgangsnummer',
     'nachname',
     'bundesland',
@@ -82,7 +88,7 @@ $validFields = array(
     'planonnr',
     'umzugstermin',
     'abgeschlossen_am',
-    'abgerechnet_am',
+    'beerechnet_am',
     'summe',
     'aids',
     'ulids'
@@ -98,6 +104,10 @@ foreach($validFields as $_f) {
     }
     elseif (strcmp($_f,'aid') === 0) {
         $sqlQueryField = 'a.aid';
+    } elseif(strcmp($_f,'kid') === 0) {
+        $sqlQueryField = 'user.personalnr';
+    } elseif(strcmp($_f,'strasse') === 0) {
+        $sqlQueryField = 'a.strasse';
     }
     elseif (!empty($query[$_f]) && strcmp($_f,'aids') === 0) {
         $_aids = explode(',', $query[$_f]);
@@ -141,26 +151,29 @@ elseif ($order == 'aid') {
     $sqlOrderFld = 'a.aid';
 }
 
-$sqlSelect = 'SELECT a.*, user.personalnr, user.personalnr AS kid, '
-    .' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
-    .' u.nachname, u.nachname stom, '
-    .' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe';
-$sqlFrom = ' FROM mm_umzuege a '
-    .' LEFT JOIN mm_user AS `user` ON (a.antragsteller_uid = user.uid) '
-    .' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id '
-    .' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid '
-    .' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) '
-    .' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
-    .' LEFT JOIN mm_leistungspreismatrix lm ON('
-    .'    l.leistung_id = lm.leistung_id '
-    .'    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
-    .'    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))'
-    .' ) ';
-$sqlWhere = ' WHERE '
-    // .' abgeschlossen_am IS NOT NULL AND '
-    .' abgeschlossen = "Ja" AND abgeschlossen_am IS NOT NULL AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN :von AND :bis '
-    .(!$all ? 'AND berechnet_am IS NULL' : '')
-    .( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '')
+$sqlSelect = 'SELECT a.*, user.personalnr, user.personalnr AS kid, ' . $NL
+    . ' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, ' . $NL
+    . ' u.nachname, u.nachname stom, ' . $NL
+    . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . $NL;
+$sqlFrom = ' FROM mm_umzuege a ' . $NL
+    . ' LEFT JOIN mm_user AS `user` ON (a.antragsteller_uid = user.uid) ' . $NL
+    . ' LEFT JOIN mm_stamm_gebaeude g ON a.gebaeude = g.id ' . $NL
+    . ' LEFT JOIN mm_user u ON g.standortmanager_uid = u.uid ' . $NL
+    . ' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) ' . $NL
+    . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . $NL
+    . ' LEFT JOIN mm_leistungspreismatrix lm ON(' . $NL
+    . '    l.leistung_id = lm.leistung_id ' . $NL
+    . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
+    . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
+    . ' ) ' . $NL;
+$sqlWhere = ' WHERE ' . $NL
+    . ' umzugsstatus = "abgeschlossen" '  . $NL
+    . ' AND abgeschlossen = "Ja" '  . $NL
+    . ' AND abgeschlossen_am IS NOT NULL '  . $NL
+    . ' AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN :von AND :bis ' . $NL
+    . ' AND service != "Rekla" ' . $NL
+    . (!$all ? 'AND berechnet_am IS NULL' : '') . $NL
+    . ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '') . $NL
     ;
 $sqlGroup = ' GROUP BY a.aid';
 $sqlHaving = ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' : '');
@@ -193,24 +206,26 @@ $sqlStat = 'SELECT COUNT(1) numAll, SUM(summe) sumAll FROM (' . $sqlForStat . ')
 $stat = $db->query_row($sqlStat, $aParams);
 
 if (false && empty($wTL)) {
-    $sqlTL = 'SELECT ul.id AS ulid, a.*, `user`.personalnr, `user`.personalnr AS kid, '
-        .' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, '
-        .' u.nachname, u.nachname stom, '
-        .' (if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe'
-        .' FROM mm_umzuege a '
-        .' LEFT JOIN mm_user AS `user` ON (a.antragsteller_uid = user.uid) '
-        .' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) '
-        .' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
-        .' LEFT JOIN mm_leistungspreismatrix lm ON('
-        .'    l.leistung_id = lm.leistung_id '
-        .'    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) '
-        .'    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))'
-        .' ) '
-        .' WHERE '
-        . ' abgeschlossen = "Init" AND (ul.rechnungsnr IS NULL OR ul.rechnungsnr = "") '
-        . (count($wTL) ? ' AND ' . implode(' AND ', $wTL) : '')
-        . ' AND ul.abgeschlossen_am BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . ' '
-        .' ORDER BY ' . $sqlOrderFld. ' ' . $odir;
+    $sqlTL = 'SELECT ul.id AS ulid, a.*, `user`.personalnr, `user`.personalnr AS kid, ' . $NL
+        .' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, ' . $NL
+        .' u.nachname, u.nachname stom, ' . $NL
+        .' (if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe' . $NL
+        .' FROM mm_umzuege a ' . $NL
+        .' LEFT JOIN mm_user AS `user` ON (a.antragsteller_uid = user.uid) ' . $NL
+        .' LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) ' . $NL
+        .' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . $NL
+        .' LEFT JOIN mm_leistungspreismatrix lm ON(' . $NL
+        .'    l.leistung_id = lm.leistung_id ' . $NL
+        .'    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
+        .'    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
+        .' ) ' . $NL
+        .' WHERE ' . $NL
+        . ' abgeschlossen = "Init" ' . $NL
+        . ' AND (ul.rechnungsnr IS NULL OR ul.rechnungsnr = "") ' . $NL
+        . (count($wTL) ? ' AND ' . implode(' AND ', $wTL) : '') . $NL
+        . ' AND ul.abgeschlossen_am BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . ' ' . $NL
+        . ' AND service != "Rekla" ' . $NL
+        .' ORDER BY ' . $sqlOrderFld. ' ' . $odir . $NL;
     $rowsTL = $db->query_rows($sql, 0, array('von'=> $datumvon, 'bis'=> $datumbis));
 } else {
     $rowsTL = [];
@@ -241,6 +256,7 @@ $Tpl->assign('datumfeld', $datumfeld);
 $Tpl->assign('order', $order);
 $Tpl->assign('odir', $odir);
 $Tpl->assign('s', $s);
+$Tpl->assign('q', $query);
 $Tpl->assign('aAids', $aAids);
 $Tpl->assign('aUlids', $aUlids);
 $body_content = $Tpl->fetch('auswertung_form.html');

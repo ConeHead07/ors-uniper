@@ -119,6 +119,7 @@ $sqlAuftraege = 'SELECT
     JOIN mm_leistungskatalog AS lk ON (ul.leistung_id = lk.leistung_id)
     LEFT JOIN mm_leistungskategorie k ON (lk.leistungskategorie_id = k.leistungskategorie_id)
     WHERE umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja"
+      AND service != "Rekla" 
       AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
     ' . $andWhere . '
     GROUP BY a.aid
@@ -137,7 +138,8 @@ $sqlLeistungen = 'SELECT
     WHERE ul.aid IN (
       SELECT aid FROM mm_umzuege 
       WHERE umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja" 
-      AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
+        AND service != "Rekla" 
+        AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
       ' .$andWhere . '
     )
     GROUP BY lk.leistung_id, k.leistungskategorie, lk.Bezeichnung, lk.Farbe, lk.Groesse, lk.preis_pro_einheit
@@ -156,6 +158,7 @@ $sqlTeilLeistungen = 'SELECT
     WHERE ul.aid IN (
       SELECT aid FROM mm_umzuege 
       WHERE umzugsstatus = "bestaetigt"
+      AND service != "Rekla" 
       AND (vorgangsnummer IS NULL OR TRIM(vorgangsnummer) = "")
       AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
     ) AND (
