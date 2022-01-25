@@ -2013,6 +2013,7 @@ class ItemEdit
 			    if ($isUpdate && !isset($this->arrInput[$fN])) {
 			        continue;
                 }
+                $createByFunction = $fC['createByFunction'];
 				$err = "";
 				if ( !$this->userHasFldAccess($fN, $this->editMode) ) {
 					if ($isInsert) {
@@ -2061,7 +2062,13 @@ class ItemEdit
 						$this->arrErrFlds[$fN] = $fC["label"].": Interner Systemfehler";
 						return false;
 					}
-				} elseif (empty($createByFunction) && isset($this->arrInput[$fN]) && is_string($this->arrInput[$fN]) && strlen(trim($this->arrInput[$fN])) ) {
+				} elseif (empty($createByFunction) && isset($this->arrInput[$fN]) &&
+                        (
+                            (is_string($this->arrInput[$fN]) && strlen(trim($this->arrInput[$fN])))
+                            OR
+                            (is_array($this->arrInput[$fN]) && count($this->arrInput[$fN]) > 0)
+                        )
+                    ) {
 					// Prüfe Eingabe auf Typ und Länge
 					$err = "";
 					$isValid = $this->checkType->isValidType( $this->arrInput[$fN], $fC["type"], $fC["size"], $fC["min"], $fC["max"], $err);
@@ -2089,7 +2096,7 @@ class ItemEdit
 				} else {
 					// Prüfe, ob Eingabe erforderlich
 					if ($fC["required"]) {
-						$this->arrErrFlds[$fN] = $fC["label"] . ": Fehlende Eingabe";
+						$this->arrErrFlds[$fN] = $fC["label"] . ": Fehlende Eingabe ...";
 					}
 				}
 			}

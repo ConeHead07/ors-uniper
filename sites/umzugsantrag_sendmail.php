@@ -89,6 +89,7 @@ function get_notificationUsers($aid, $status, $value) {
             AND (
                 statusmails_filter = "" 
                 OR statusmails_filter = "alle" 
+                OR statusmails_filter LIKE "alle%" 
                 OR CONCAT(",", statusmails_filter, ",") LIKE :status
                 OR CONCAT(",", statusmails_filter, ",") LIKE :statusAndVal
             )
