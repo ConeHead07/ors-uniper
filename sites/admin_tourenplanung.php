@@ -241,7 +241,7 @@ foreach($validFields as $_f => $_fOpts) {
         elseif (preg_match('/^(!)(.+)$/', trim($query[$_f]), $m)) {
             $_q = 'IFNULL(' . $sqlQueryField . ',"") NOT LIKE ' . $db->quote( str_replace('*','%', $m[2]) . '%');
         }
-        elseif (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
+        elseif (preg_match('/^([<>=]{1,2})(.*)$/', trim($query[$_f]), $m)) {
             $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]);
         } else {
             $_q = 'IFNULL(' . $sqlQueryField . ',"") LIKE ' . $db->quote( str_replace('*','%', $query[$_f]) . '%');

@@ -51,6 +51,79 @@ function get_umzugsblatt_verteiler($antragsOrt, $antragsGebaeude) {
 	return $verteiler;
 }
 
+function get_notificationUsers($aid, $status, $value) {
+    global $db;
+    global $_TABLE;
+
+    $row = $db->query_row(
+        'SELECT antragsteller_uid, umzugsstatus '
+        . ' FROM ' . $_TABLE['umzugsantrag'] . ' ' . PHP_EOL
+        . ' WHERE aid = ' . (int)$aid
+    );
+    if (!$row) {
+        return null;
+    }
+    $antragsteller_uid = $row['antragsteller_uid'];
+
+    // statusmail set options
+    // 'any',
+    //'alle',
+    //'keine',
+    //'angeboten',
+    //'beantragt',
+    //'bemerkung',
+    //'bemerkung_self',
+    //'zurueckgegeben',
+    // 'geprueft','geprueft:Ja','geprueft:Nein',
+    //'erneutpruefen',
+    //'genehmigt','genehmigt:Ja','genehmigt:Nein',
+    //'genehmigt_br','genehmigt_br:Ja','genehmigt_br:Nein',
+    //'abgelehnt',
+    //'bestaetigt','bestaetigt:Ja','bestaetigt:Nein',
+    //'storniert',
+    //'abgeschlossen','abgeschlossen:Ja','abgeschlossen:Storniert'
+
+    $qStatus = '%,' . $status . ',%';
+    $qStatusAndVal = '%,' . $status . ':' . $value . ',%';
+    $whereNotifyable = '(bekommt_statusmails = "Ja" 
+            AND (
+                statusmails_filter = "" 
+                OR statusmails_filter = "alle" 
+                OR CONCAT(",", statusmails_filter, ",") LIKE :status
+                OR CONCAT(",", statusmails_filter, ",") LIKE :statusAndVal
+            )
+        )'
+        ;
+    $renderedWhereNotifyable = $db->getRenderedQuery($whereNotifyable, [ 'status' => $qStatus, 'statusAndVal' => $qStatusAndVal]);
+
+    // user.gruppe enum('user','umzugsteam','kunde_report','admin_standort','admin_gesamt','admin','v-mitarbeiter','v-property','mertens')
+    $users = array(
+        'antragsteller' => $db->query_row(
+            'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
+            . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, statusmails_filter, '
+            . ' email AS `to`'
+            . ' FROM  mm_user ' . PHP_EOL
+            . ' WHERE ' . $renderedWhereNotifyable . ' AND uid = ' . (int)$antragsteller_uid
+        ),
+        'admins' => $db->query_rows(
+            'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
+            . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, statusmails_filter, '
+            . ' email AS `to`'
+            . ' FROM  mm_user ' . PHP_EOL
+            . ' WHERE ' . $renderedWhereNotifyable . ' AND gruppe IN ("admin") '
+        ),
+        'properties' => $db->query_rows(
+            'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
+            . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, statusmails_filter, '
+            . ' email AS `to`'
+            . ' FROM  mm_user ' . PHP_EOL
+            . ' WHERE ' . $renderedWhereNotifyable . ' AND gruppe IN ("v-property", "property") '
+        ),
+    );
+
+    return $users;
+}
+
 function get_usersByAid($AID) {
 //        die('#'.__LINE__ . ' ' . __FUNCTION__ . '(' . print_r(func_get_args(),1) . ')');
 	global $MConf;
@@ -79,21 +152,21 @@ function get_usersByAid($AID) {
         $users = array(
             'antragsteller' => $db->query_row(
                 'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
-                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, statusmails, '
                 . ' email AS `to` '
                 . ' FROM  mm_user ' . PHP_EOL
                 . ' WHERE freigegeben = "Ja" AND uid = ' . (int)$antrag_uid
             ),
             'admins' => $db->query_rows(
                 'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
-                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, statusmails, '
                 . ' email AS `to` '
                 . ' FROM  mm_user ' . PHP_EOL
                 . ' WHERE freigegeben = "Ja" AND gruppe IN ("admin") '
             ),
             'properties' => $db->query_rows(
                 'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
-                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, statusmails, '
                 . ' email AS `to` '
                 . ' FROM  mm_user ' . PHP_EOL
                 . ' WHERE freigegeben = "Ja" AND gruppe IN ("kunde-report", "v-property", "property") '
@@ -106,21 +179,21 @@ function get_usersByAid($AID) {
         $users = array(
             'antragsteller' => $db->query_row(
                 'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
-                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, statusmails, '
                 . ' email AS to'
                 . ' FROM  mm_user ' . PHP_EOL
                 . ' WHERE uid = ' . (int)$antrag_uid
             ),
             'admins' => $db->query_rows(
                 'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
-                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, statusmails, '
                 . ' email AS to'
                 . ' FROM  mm_user ' . PHP_EOL
                 . ' WHERE gruppe IN ("admin") '
             ),
             'properties' => $db->query_rows(
                 'SELECT uid, user, email, fon, emails_cc, gruppe, adminmode, freigegeben, anrede, vorname, nachname, '
-                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, '
+                . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, statusmails, '
                 . ' email AS to'
                 . ' FROM  mm_user ' . PHP_EOL
                 . ' WHERE gruppe IN ("v-property", "property") '
@@ -475,10 +548,11 @@ function umzugsantrag_mailinform($AID, $status='neu', $value, $authorUser = []) 
 	    $authorUser = $user;
     }
     
-	$users = get_usersByAid($AID);
+	// $users = get_usersByAid($AID);
+	$users = get_notificationUsers($AID, $status, $value);
         
 	$TextBaseDir = $MConf['AppRoot'] . $MConf['Texte_Dir'];
-        
+
 	if (!$AID) {
         $umzugsantrag_mailinform_error.= 'Fehlende Auftrags-ID für Mailversand!';
 		return false;
@@ -1174,6 +1248,9 @@ function umzugsantrag_mailinform($AID, $status='neu', $value, $authorUser = []) 
 if (1 && basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
     $AID = 71;
 
+    $sql = 'SELECT aid FROM mm_umzuege ORDER BY RAND() LIMIT 1';
+    $AID = (int)$db->query_one($sql);
+
     $AS = new ItemEdit($_CONF['umzugsantrag'], $connid, $user, $AID);
     $AS->loadDbdata();
     $AS->dbdataToInput();
@@ -1197,9 +1274,13 @@ if (1 && basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
     echo '<pre>';
     $iNumStatus = count($aStatus);
     for ($i = 0; $i < $iNumStatus; $i++) {
-            echo '#'.__LINE__." umzugsantrag_mailinform($AID, ".$aStatus[$i]['status'].', '.$aStatus[$i]['wert'].")<br>\n";
-            umzugsantrag_mailinform($AID,$aStatus[$i]['status'], $aStatus[$i]['wert']);
-            exit;
+        $_status = $aStatus[$i]['status'];
+        $_value = $aStatus[$i]['wert'];
+        echo '#'.__LINE__." get_notificationUsers($AID, " . $_status . ', ' . $_value . ")<br>\n";
+        $_notifyUsers = get_notificationUsers($AID, $_status, $_value);
+        foreach($_notifyUsers as $_group => $_users) {
+            echo "&gt; &gt; &gt; $_group =&gt; " . (empty($_users) ? '---' : (isset($_users[0]['email']) ? implode(', ', array_column($_users, 'user')): $_users['user'])) . "<br>\n";
+        }
     }
     echo '</pre>';
 }

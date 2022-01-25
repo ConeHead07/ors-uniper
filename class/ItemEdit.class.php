@@ -771,7 +771,9 @@ class ItemListClass
 	function get_fldConfNameByDbfld($dbfld, $dbtbl) {
 		if ($this->ItemConf["Table"] == $dbtbl) {
 			foreach ($this->ItemConf["Fields"] as $k => $v) {
-			
+			    if (!isset($v['dbField'])) {
+			        throw new \Exception('Missing index dbField for Field ' . $k . ' in Config:' . "\n" . print_r($v,1));
+                }
 				if ($dbfld == $v["dbField"]) {
 					return $k;
 				}

@@ -122,13 +122,13 @@ foreach($validFields as $_f) {
             break;
         }
         elseif (preg_match('#^(!=)(.*)$#', trim($query[$_f]), $m)) {
-            $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]);
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]) . ' /* #' . __LINE__ . ' */';
         }
         elseif (preg_match('/^(!)(.+)$/', trim($query[$_f]), $m)) {
-            $_q = 'IFNULL(' . $sqlQueryField . ',"") NOT LIKE ' . $db->quote( str_replace('*','%', $m[2]) . '%');
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") NOT LIKE ' . $db->quote( str_replace('*','%', $m[2]) . '%') . ' /* #' . __LINE__ . ' */';
         }
-        elseif (preg_match('/^([<>=]{1,2})(.+)$/', trim($query[$_f]), $m)) {
-            $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]);
+        elseif (preg_match('/^([<>=]{1,2})(.*)$/', trim($query[$_f]), $m)) {
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") ' . $m[1] . $db->quote($m[2]) . ' /* #' . __LINE__ . ' */';
         } else {
             $_term = str_replace('*','%', trim($query[$_f]));
             if ($_f === 'land' && strcmp($_term,'NL') === 0) {
@@ -140,7 +140,7 @@ foreach($validFields as $_f) {
             else {
                 $_term.= '%';
             }
-            $_q = 'IFNULL(' . $sqlQueryField . ',"") LIKE ' . $db->quote( str_replace('*','%', $_term) . '%');
+            $_q = 'IFNULL(' . $sqlQueryField . ',"") LIKE ' . $db->quote( str_replace('*','%', $_term) . '%') . ' /* #' . __LINE__ . ' */';
         }
         
         if ($sqlQueryField === 'nachname') {
@@ -246,7 +246,7 @@ $aParams = array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis));
 
 $sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
 $rows = $db->query_rows($sql, 0, $aParams);
-// echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
+echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
 
 $sqlForStat = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving;
 $sqlStat = 'SELECT COUNT(1) numAll, SUM(summe) sumAll FROM (' . $sqlForStat . ') AS t';
