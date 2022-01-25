@@ -142,12 +142,14 @@ if ($AID) {
               ." or token = " . $db->quote($AS->arrDbdata['token']);
         $aATs = $db->query_rows($sql);
 	echo $db->error();
+
+	$baseAID = $AID; // $AS->arrDbdata['ref_aid'] ?: $AID;
 	
 	$aAtItems = getAttachements($AS->arrDbdata, 0);
 	$aAtIntItems = getAttachements($AS->arrDbdata, 1);
-	$aGroupItems = getGruppierungen($AID);
-    $aReklas = getReklamationenByAid($AID);
-    $aTeillieferungen = getTeillieferungenByAid($AID);
+	$aGroupItems = getGruppierungen($baseAID);
+    $aReklas = getReklamationenByAid($baseAID);
+    $aTeillieferungen = getTeillieferungenByAid($baseAID);
 
     $aLSItems = getLieferscheineByAid($AID, ['onlySigned' => true]);
 	

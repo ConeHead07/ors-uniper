@@ -193,10 +193,10 @@ if (in_array( 'avisiert', $aAuftragsstatus)) {
     $aWhereStatusAnyOf[] = ' (umzugsstatus = "bestaetigt") ' . "\n";
 }
 if (in_array('abgeschlossen', $aAuftragsstatus)) {
-    $aWhereStatusAnyOf[] = ' (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja") ' . "\n";
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja" AND IFNULL(berechnet_am, "") = "") ' . "\n";
 }
 if (in_array('abgerechnet', $aAuftragsstatus)) {
-    $aWhereStatusAnyOf[] = ' (IFNULL(berechnet_am, "") != "") ' . "\n";
+    $aWhereStatusAnyOf[] = ' (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja" AND IFNULL(berechnet_am, "") != "") ' . "\n";
 }
 
 
