@@ -5,7 +5,7 @@ $NL = "\n";
 $request = $_REQUEST;
 $datumvon = (!empty($_REQUEST['datumvon']))   ? $_REQUEST['datumvon'] : '';
 $datumbis = (!empty($_REQUEST['datumbis']))   ? $_REQUEST['datumbis'] : '';
-$datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'umzugstermin';
+$datumfeld = (!empty($_REQUEST['datumfeld'])) ? $_REQUEST['datumfeld'] : 'antragsdatum';
 $exportFormat = getRequest('format', 'html');
 $all   = (!empty($_REQUEST['all']))     ? (int)$_REQUEST['all'] : 1;
 
