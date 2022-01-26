@@ -40,6 +40,12 @@
       <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
       <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
     </tr>
+    {if !empty($AS.reklamiert_von) or !empty($AS.reklamiert_am)}
+    <tr>
+      <td style="padding:0;"><label style="width:180px;">Reklamiert:</label></td>
+      <td style="padding:0;" class="options-onoff"><label class="itxt itxt2col off active">{$AS.reklamiert_am} von {$AS.reklamiert_von}</label></td>
+    </tr>
+    {/if}
     {if $AS.angeboten_am}
     <tr>
       <td style="padding:0;"><label style="display:block;width:auto;">Genehmigt:</label></td>
@@ -241,5 +247,50 @@
          onclick="umzugsantrag_set_status('abgeschlossen','Init')"
          value="Abschluss / Storno wieder aufheben">
   {/if}
+  {if $AS.service eq "Ja" && empty($AS.ref_aid)}
+    <button type="button" class="btn red" id="showReklaDialog">Leistungen<br>reklamieren</button>
+  {/if}
   </form>
 </div>
+{include file="dialogs/rekla_dialog.html"}
+
+{literal}
+<script>
+  function getAID() {
+    return $("input[name=AS\\[aid\\]]").val();
+  }
+
+  $(function() {
+
+    $("#showReklaDialog").on("click", function(e) {
+      e.preventDefault();
+      showReklaDialog();
+      return false;
+    });
+
+    $("#btnMarkAsRead").bind("click", function(e) {
+      var btn = $(this).waitMe();
+      var box = $("#neueBemerkungenHintBox");
+      var aid = getAID();
+      var numGelesen = $(this).data("num");
+
+      var rq = $.get('/bemerkungen_gelesen.php', { aid, numGelesen }, function(responseData) {
+        if (typeof responseData === 'object' && 'type' in responseData) {
+          if (responseData.type === 'success') {
+            box.hide();
+            return;
+          }
+          if (responseData.type === 'error') {
+            alert(responseData.error || 'Fehler beim Zurücksetzen des Zählers!');
+          }
+        }
+      });
+
+      rq.always(function() {
+        btn.waitMe('hide');
+      });
+
+    });
+  });
+</script>
+{/literal}

@@ -364,6 +364,8 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
             style="cursor: pointer"
             type="button">Bemerkung hinzufügen</button>
 
+{if ($AS.umzugsstatus ne "abgeschlossen" and $AS.umzugsstatus ne "storniert" and $AS.umzugsstatus ne "abgelehnt")
+    or !empty($AS.lieferhinweise)}
   <div style="margin-top: 2rem">
     <strong>Lieferhinweis (für Lieferschein):</strong><br>
 {if $AS.umzugsstatus ne "abgeschlossen" and $AS.umzugsstatus ne "storniert" and $AS.umzugsstatus ne "abgelehnt"}
@@ -374,6 +376,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 {/if}
     </div>
   </div>
+{/if}
 
 <div style="margin-top:1.5rem;width:100%;margin-top:2.5rem;">
   <div>
@@ -503,311 +506,19 @@ Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
 </div>
 <div id="LoadingBar"></div>
 </p>
-</div> 
-<style>
-  .hint-box {
-    margin-top: 1rem;
-    border: 1px solid #0075b5;
-    padding: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: bold;
-    background-color: #f1f8ff;
-    color: #d7081e;
-    border-radius: 0.5rem;
-    font-style: italic;
-  }
-  .hint-box-title {
-    color: #000;
-    font-weight: bold;
-    font-style: normal;
-    font-size: 1rem;
-  }
-</style>
-
-
-
-<div id="ReklaDialog" class="dialog dialog-back-layer">
-  <div class="dialog-wrapper" style="width:90%">
-    <div style="width:90%;">
-      <form>
-      <div id="reklaContent" style="max-height:80vh;overflow-y: auto;text-align:left;">
-
-        {include file="admin_umzugsformular_leistungsauswahl.tpl.html"
-          enableLeistungCheckbox="1"
-          addReklas="1"
-          showReklas="1"
-          title="Welche Leistung möchten Sie reklamieren"}
-
-      </div>
-      <div id="BoxBemerkungen" style="margin-top: 1rem">
-        <strong>Reklamationsgrund hinzufügen: (<em>erforderlich</em>)</strong><br>
-        <textarea class="iarea bemerkungen" name="grund" style="resize: vertical;overflow: auto"></textarea>
-      </div>
-
-        <div class="hint-box">
-          <div class="hint-box-title">Wichtiger Hinweis, bitte lesen und beachten!</div>
-          Beim Anlegen einer Reklamation erhält der Kunde eine Benachrichtigung mit dem angegebenen Reklamationsgrund.<br>
-          Bitte prüfen Sie vor dem Absenden die ausgewählten Leistungen, Mengen und Reklamationsgrund.
-        </div>
-
-      <div style="text-align: center;margin-top: 1rem">
-        <input type="hidden" name="aid" value="{$AS.aid}">
-        <button type="button" onclick="return false;" class="btn red btn-apply">Reklamation anlegen</button>
-        <button type="button" onclick="return false;" class="btn gray btn-cancel">Schließen</button>
-      </div>
-      </form>
-    </div>
-
-  </div>
 </div>
+{include file="dialogs/rekla_dialog.html"}
+{include file="dialogs/teillieferung_dialog.html"}
 
-<div id="TeillieferungDialog" class="dialog dialog-back-layer">
-  <div class="dialog-wrapper" style="width:90%">
-    <div style="width:90%;">
-      <form>
-        <div id="tlContent" style="max-height:80vh;overflow-y: auto;text-align:left;">
-
-          {include file="admin_umzugsformular_leistungsauswahl.tpl.html"
-          enableLeistungCheckbox="1"
-          addTeilmengen="1"
-          showReklas="1"
-          showLiefermengen="1"
-          title="Wählen Sie Leistungen und Menge für die Teil-Lieferung aus"}
-
-        </div>
-        <div id="BoxBemerkungen" style="margin-top: 1rem">
-          <strong>Teillieferungsgrund hinzufügen:</strong><br>
-          <textarea class="iarea bemerkungen" name="grund" style="resize: vertical;overflow: auto"></textarea>
-        </div>
-
-        <div class="hint-box">
-          <div class="hint-box-title">Wichtiger Hinweis, bitte lesen und beachten!</div>
-          Bitte prüfen Sie vor dem Absenden die ausgewählten Leistungen und Teil-Lieferungsmengen.
-          und geben Sie nach Möglichkeit ein Grund an.
-        </div>
-
-        <div style="text-align: center;margin-top: 1rem">
-          <input type="hidden" name="aid" value="{$AS.aid}">
-          <button type="button" onclick="return false;" class="btn green btn-apply">Teilliefrung anlegen</button>
-          <button type="button" onclick="return false;" class="btn gray btn-cancel">Schließen</button>
-        </div>
-      </form>
-    </div>
-
-  </div>
-</div>
 {literal}
 <script>
   function getAID() {
     return $("input[name=AS\\[aid\\]]").val();
   }
-  function showReklaDialog() {
-
-    var container = $("#ReklaDialog");
-    $("body").addClass("doc-body-no-scrollbars");
-    var dialog = container.closest(".dialog");
-    console.log({containerLength: container.length, dialogLength: dialog.length });
-    dialog
-            .addClass("dialog-active")
-            .find("button.btn-cancel")
-            .off("click")
-            .on("click", function() {
-              $("body").removeClass("doc-body-no-scrollbars");
-              $("#eingabe_datenschutz_confirm").prop("checked", false);
-              container.removeClass("dialog-active");
-            }).end()
-            .find("button.btn-apply")
-            .off("click")
-            .on("click", function() {
-              var btnApply = $(this);
-              var frm = $(this).closest("form");
-              var btnCancel = frm.find("button.btn-cancel");
-              btnApply.prop("disabled", true);
-              btnCancel.prop("disabled", true);
-
-              var aid = frm.find('[name=aid]').val();
-              var grund = frm.find('[name=grund]').val();
-              var chckLeistungen = frm.find('[name=chckLeistung\\[\\]]:checked').serializeArray();
-              console.log({ aid, chckLeistungen });
-
-              var leistungen = [];
-              for(var i = 0; i < chckLeistungen.length; i++) {
-                var lid = chckLeistungen[i].value;
-                var sel = '[name^=L\\[neue_rekla\\]\\[' + lid + '\\]]';
-                console.log('Rekla-Mengen Selector: ', sel, frm.find(sel).length, frm.find(sel).val());
-                var mng = frm.find('[name^=L\\[neue_rekla\\]\\[' + lid + '\\]]').val();
-                if (!parseInt(mng)) {
-                  alert("Für die " + (i+1) + ". ausgewählte Position wurde keine Menge angegeben!");
-                  return;
-                }
-                leistungen.push({ leistung_id: lid, menge: mng });
-              }
-              console.log({ aid, chckLeistungen, leistungen });
-
-              if(!leistungen.length) {
-                alert("Es wurden keine Leistungen für die Reklamation ausgewählt!");
-                return;
-              }
-              if ($.trim(grund) === "") {
-                alert("Es wurden kein Grund für die Reklamation angegeben!");
-                return;
-              }
-              if (false) {
-                btnApply.prop("disabled", false);
-                btnCancel.prop("disabled", false);
-                return;
-              }
-
-              var request = $.post('/reklamieren.php',
-                      {
-                        aid,
-                        leistungen,
-                        grund
-                      }, function(response) {
-                        console.log({ response });
-                        if (response.type === "success") {
-                          alert("Reklamation wurde angelegt mit der ID " + response.reklaAid);
-                        } else {
-                          alert("Es sind Fehler aufgetreten!\n" + response.msg);
-                        }
-                      }
-              );
-              request.always(function() {
-                $("body").removeClass("doc-body-no-scrollbars");
-                btnApply.prop("disabled", false);
-                btnCancel.prop("disabled", false);
-              });
-            }).end();
-    return;
-  }
-  function showTeillieferungDialog() {
-
-    var container = $("#TeillieferungDialog");
-    $("body").addClass("doc-body-no-scrollbars");
-    var dialog = container.closest(".dialog");
-    console.log({containerLength: container.length, dialogLength: dialog.length });
-    dialog
-            .addClass("dialog-active")
-            .find("button.btn-cancel")
-            .off("click")
-            .on("click", function() {
-              $("body").removeClass("doc-body-no-scrollbars");
-              $("#eingabe_datenschutz_confirm").prop("checked", false);
-              container.removeClass("dialog-active");
-            }).end()
-            .find("button.btn-apply")
-            .off("click")
-            .on("click", function() {
-              var btnApply = $(this);
-              var frm = $(this).closest("form");
-              var btnCancel = frm.find("button.btn-cancel");
-              btnApply.prop("disabled", true);
-              btnCancel.prop("disabled", true);
-
-              var aid = frm.find('[name=aid]').val();
-              var grund = frm.find('[name=grund]').val();
-              var chckLeistungen = frm.find('[name=chckLeistung\\[\\]]:checked').serializeArray();
-              console.log({ aid, chckLeistungen });
-
-              var leistungen = [];
-              for(var i = 0; i < chckLeistungen.length; i++) {
-                var lid = chckLeistungen[i].value;
-                var sel = '[name^=L\\[neue_teilmenge\\]\\[' + lid + '\\]]';
-                console.log('Rekla-Mengen Selector: ', sel, frm.find(sel).length, frm.find(sel).val());
-                var mng = frm.find('[name^=L\\[neue_teilmenge\\]\\[' + lid + '\\]]').val();
-                if (!parseInt(mng)) {
-                  alert("Für die " + (i+1) + ". ausgewählte Position wurde keine Menge angegeben!");
-                  return;
-                }
-                leistungen.push({ leistung_id: lid, menge: mng });
-              }
-              console.log({ aid, chckLeistungen, leistungen });
-
-              if(!leistungen.length) {
-                alert("Es wurden keine Leistungen für die Teil-Lieferung ausgewählt!");
-                return;
-              }
-
-              if (false) {
-                btnApply.prop("disabled", false);
-                btnCancel.prop("disabled", false);
-                return;
-              }
-
-              var request = $.post('/teillieferung.php',
-                      {
-                        aid,
-                        leistungen,
-                        grund
-                      }, function(response) {
-                        console.log({ response });
-                        if (response.type === "success") {
-                          alert("Teillieferung wurde angelegt mit der ID " + response.teilAid);
-                        } else {
-                          alert("Es sind Fehler aufgetreten!\n" + response.msg);
-                        }
-                      }
-              );
-              request.always(function() {
-                $("body").removeClass("doc-body-no-scrollbars");
-                btnApply.prop("disabled", false);
-                btnCancel.prop("disabled", false);
-              });
-            }).end();
-    return;
-  }
 
   $(function() {
-    $("#ReklaDialog").appendTo("body");
-    var frm = $("#ReklaDialog").find("form");
-    var tplTable = $("#ReklaDialog").find("#TplLeistungTable");
-    frm.after(tplTable);
 
-    frm.find("[name=chckLeistung\\[\\]]").on("change", function(e) {
-      var lid = $(this).val();
-      var row = $(this).closest(".row[data-row]").data("row");
-      var neu = $(this).closest(".row").find("[name^=L\\[neue_rekla\\]]");
-      if (!$(this).prop("checked")) {
-        neu.val(0);
-        return;
-      }
-      var mtMenge = parseFloat(row.menge_mertens || 1);
-      var rkMenge = parseFloat(row.menge_rekla || 0);
-      var glMenge = parseFloat(row.menge_geliefert || 0);
-      var neuVal = Math.max(1, mtMenge - rkMenge - glMenge);
-
-      neu.val(neuVal);
-    });
-
-    // $("#reklaContent").load("/textfiles/rekla.html");
-
-    $("#showReklaDialog").on("click", function(e) {
-      e.preventDefault();
-      showReklaDialog();
-      return false;
-    });
-
-    // Teillieferung
-    $("#TeillieferungDialog").appendTo("body");
-    var frmTL = $("#TeillieferungDialog").find("form");
-    var tplTable = $("#TeillieferungDialog").find("#TplLeistungTable");
-    tplTable.remove();
-
-    frmTL.find("[name=chckLeistung\\[\\]]").on("change", function(e) {
-      var lid = $(this).val();
-      var row = $(this).closest(".row[data-row]").data("row");
-      var neu = $(this).closest(".row").find("[name^=L\\[neue_teilmenge\\]]");
-      if (!$(this).prop("checked")) {
-        neu.val(0);
-        return;
-      }
-
-      var mtMenge = parseFloat(row.menge_mertens || 1);
-      var glMenge = parseFloat(row.menge_geliefert || 0);
-      var neuVal = Math.max(1, mtMenge - glMenge);
-
-      neu.val(neuVal);
-    });
+    $(".cluetip").cluetip({activation: 'click', closePosition: 'title', arrows: true});
 
     $("#showTeillieferungDialog").on("click", function(e) {
       e.preventDefault();
@@ -815,8 +526,11 @@ Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
       return false;
     });
 
-    $(".cluetip").cluetip({activation: 'click', closePosition: 'title', arrows: true});
-
+    $("#showReklaDialog").on("click", function(e) {
+      e.preventDefault();
+      showReklaDialog();
+      return false;
+    });
 
     $("#btnMarkAsRead").bind("click", function(e) {
       var btn = $(this).waitMe();
