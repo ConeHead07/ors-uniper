@@ -246,7 +246,9 @@ $aParams = array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis));
 
 $sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
 $rows = $db->query_rows($sql, 0, $aParams);
-echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
+if (constant('APP_ENVIRONMENT') === 'DEVELOPMENT') {
+    echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
+}
 
 $sqlForStat = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving;
 $sqlStat = 'SELECT COUNT(1) numAll, SUM(summe) sumAll FROM (' . $sqlForStat . ') AS t';
