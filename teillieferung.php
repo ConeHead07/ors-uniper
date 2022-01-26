@@ -69,15 +69,15 @@ function getFormattedBemerkung(string $grund, array $leistungen) {
     $uname = $user['user'];
     $datumzeit = date('d.m.Y') . ' um ' . date('H:i');
 
-    $result = 'Aufnahme einer Reklamation von :name am :datumzeit.' . "\n";
+    $result = 'Teillieferung angelegt von :name am :datumzeit.' . "\n";
     $result = strtr($result, [ ':name' => $uname, ':datumzeit' => $datumzeit]);
 
-    $result.= 'Reklamierte Leistungen: ' . "\n";
+    $result.= 'Leistungen der Teillieferung: ' . "\n";
     foreach($leistungen as $lstg) {
         $result.= "- $lstg\n";
     }
     if (trim($grund)) {
-        $result.= 'Begründung der Reklamation' . "\n";
+        $result.= 'Begründung der Teillieferung' . "\n";
         $result.= $grund;
     } else {
         $result.= 'Ohne Begründung' . "\n";
