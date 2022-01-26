@@ -127,6 +127,7 @@
 .tblList .currency-euro::after,
 .tblList td.currency-euro::after,
 .tblList tbody td.currency-euro::after {
+	white-space: nowrap;
 	content: " €";
 }
 

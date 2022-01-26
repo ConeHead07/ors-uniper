@@ -184,9 +184,9 @@ $sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . 
 $rows = $db->query_rows($sql, 0, $aParams);
 
 $sqlArtikel = 'SELECT lk.leistungskategorie AS Kategorie, ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
-    . ' COUNT(distinct(ul.aid)) count, ' . $NL
+    . ' SUM(ul.menge_mertens * ul.menge2_mertens) count, ' . $NL
     . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
-    . ' (l.preis_pro_einheit * COUNT(distinct(ul.aid))) AS Summe, ' . $NL
+    . ' SUM(l.preis_pro_einheit * ul.menge_mertens * ul.menge2_mertens) AS Summe, ' . $NL
     . ' group_concat(ul.aid) aids' . $NL
     . ' FROM (' . $NL . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t '
     . ' JOIN mm_umzuege_leistungen ul ON (t.aid = ul.aid) ' . $NL

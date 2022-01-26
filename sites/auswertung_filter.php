@@ -246,7 +246,7 @@ $aParams = array('von'=>date('Y-m-d', $timeVon), 'bis'=>date('Y-m-d',$timeBis));
 
 $sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . $sqlOrder . $sqlLimit;
 $rows = $db->query_rows($sql, 0, $aParams);
-if (constant('APP_ENVIRONMENT') === 'DEVELOPMENT') {
+if (0 && constant('APP_ENVIRONMENT') === 'DEVELOPMENT') {
     echo '<pre>' . $db->lastQuery . '</pre>' . PHP_EOL;
 }
 
@@ -254,26 +254,26 @@ $sqlForStat = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving;
 $sqlStat = 'SELECT COUNT(1) numAll, SUM(summe) sumAll FROM (' . $sqlForStat . ') AS t';
 $stat = $db->query_row($sqlStat, $aParams);
 
+$sqlArtikel = 'SELECT ul.leistung_id, lk.kategorie_abk AS Ktg_Abk, lk.leistungskategorie AS Kategorie, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
+    . ' COUNT(distinct(ul.aid)) numAuftraege, ' . $NL
+    . ' SUM( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) count, ' . $NL
+    . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
+    . ' SUM(l.preis_pro_einheit * ul.menge_mertens) AS Summe, ' . $NL
+    . ( $exportFormat !== 'html' ? ' group_concat(ul.aid) aids' : '"" AS aids') . $NL
+    . ' FROM (' . $NL . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t '
+    . ' JOIN mm_umzuege_leistungen ul ON (t.aid = ul.aid) ' . $NL
+    . ' JOIN mm_leistungskatalog l ON (ul.leistung_id = l.leistung_id) '
+    . ' JOIN mm_leistungskategorie lk ON (l.leistungskategorie_id = lk.leistungskategorie_id) '
+    . ' LEFT JOIN mm_leistungspreismatrix lm ON('  . $NL
+    . '    l.leistung_id = lm.leistung_id '  . $NL
+    . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
+    . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
+    . ' ) '  . $NL;
+$sqlArtikel.= 'GROUP BY ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . $NL;
+$artikelStat = $db->query_rows($sqlArtikel, 0, $aParams);
+
 if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
     require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
-
-    $sqlArtikel = 'SELECT ul.leistung_id, lk.leistungskategorie AS Kategorie, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
-        . ' COUNT(distinct(ul.aid)) count2, ' . $NL
-        . ' ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) count, ' . $NL
-        . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
-        . ' (l.preis_pro_einheit * COUNT(distinct(ul.aid))) AS Summe, ' . $NL
-        . ' group_concat(ul.aid) aids' . $NL
-        . ' FROM (' . $NL . $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving . ') AS t '
-        . ' JOIN mm_umzuege_leistungen ul ON (t.aid = ul.aid) ' . $NL
-        . ' JOIN mm_leistungskatalog l ON (ul.leistung_id = l.leistung_id) '
-        . ' JOIN mm_leistungskategorie lk ON (l.leistungskategorie_id = lk.leistungskategorie_id) '
-        . ' LEFT JOIN mm_leistungspreismatrix lm ON('  . $NL
-        . '    l.leistung_id = lm.leistung_id '  . $NL
-        . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
-        . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
-        . ' ) '  . $NL;
-    $sqlArtikel.= 'GROUP BY ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . $NL;
-    $artikelStat = $db->query_rows($sqlArtikel, 0, $aParams);
 
     $iNumItems = count($all);
 
@@ -330,6 +330,7 @@ if ($s === 'vauswertung') $site_antrag = 'pantrag';
 $Tpl->assign('numAll', $stat['numAll']);
 $Tpl->assign('sumAll', $stat['sumAll']);
 $Tpl->assign('Auftraege', $rows);
+$Tpl->assign('artikelStat', $artikelStat);
 $Tpl->assign('kw_options', $kw_options);
 $Tpl->assign('kwvon', $kwvon);
 $Tpl->assign('kwbis', $kwbis);

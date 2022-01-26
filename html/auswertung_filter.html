@@ -69,18 +69,23 @@
                 cursor:pointer;
             }
 
+            .tour-stats .title,
             #TourStats .title {
                 font-weight: bold;
                 color: #0075b5;
                 margin-top:1rem;
             }
+            .tour-stats .content,
+            .tour-stats .content-table,
             #TourStats .content,
             #TourStats .content-table {
                 padding: 5px;
             }
+            .tour-stats .content-table,
             #TourStats .content-table {
                 border-top: 1px solid #a4cbe0;
             }
+            .tour-stats .content,
             #TourStats .content {
                 border: 1px solid #a4cbe0;
                 border-radius: 5px;
@@ -234,6 +239,46 @@
             </div>
         </form>
 
+        {* <h2 style="margin:1rem 0 0 0;padding-bottom:0;">Enthaltene Artikel (Calculated on Server)</h2> *}
+        <div class="tour-stats">
+            <div>
+                <div class="title">Leistungsübersicht (Zusammenfassung)</div>
+                <div class="content-table">
+        <table class="tblList" width="100%">
+            <thead>
+            <tr>
+                <th>L-Abk</th>
+                <th>Kategorie</th>
+                <th>Artikel</th>
+                <th>Farbe</th>
+                <th>Größe</th>
+                <th class="menge fld-cell-amount">Preis</th>
+                <th class="menge fld-cell-amount">Menge</th>
+                <th class="menge fld-cell-amount">Summe</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {foreach item=A from=$artikelStat}
+            <tr>
+                <td>{$A.Ktg_Abk}</td>
+                <td>{$A.Kategorie}</td>
+                <td>{$A.Bezeichnung}</td>
+                <td>{$A.Farbe}</td>
+                <td>{$A.Groesse}</td>
+                <td class="fld-cell-amount menge currency-euro" style="padding-left:5px;">{$A.Preis|number_format:2:",":"."}</td>
+                <td class="fld-cell-amount" style="text-align:right;padding-left:5px;font-weight:bold;">{$A.count}</td>
+                <td class="menge fld-summe currency-euro" style="padding-left:5px;font-weight:bold;">{$A.Summe|number_format:2:",":"."}</td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        {* Calculated on Client/Browser BY Javascript *}
         <div id="TourStats">
 
         </div>
@@ -504,8 +549,11 @@ $(function() {
             });
     });
 
-    statsOfAllItems = procesTourStatsAll();
-    renderTourStats(statsOfAllItems);
+    if (false) {
+        // Disable Calculating Tour-Stats on Client, Now it is done serverside !!!
+        statsOfAllItems = procesTourStatsAll();
+        renderTourStats(statsOfAllItems);
+    }
 
 
 
