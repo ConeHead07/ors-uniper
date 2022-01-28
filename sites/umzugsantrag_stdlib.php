@@ -8,7 +8,11 @@ function getReklamationenByAid(int $aid, array $opts = []) {
             FROM mm_umzuege a 
             JOIN (
 				SELECT a.aid,
-				 GROUP_CONCAT(ktg.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS LeistungenKtg, 
+				 GROUP_CONCAT(
+				 	CONCAT(
+				 		ktg.kategorie_abk,
+				 		IF(IFNULL(lk.leistung_abk,"")="", "", CONCAT("", lk.leistung_abk, ""))
+				 	) ORDER BY leistungskategorie SEPARATOR "") AS LeistungenKtg, 
 				 GROUP_CONCAT(
 				 	CONCAT(
 				 		lk.Bezeichnung,
@@ -40,7 +44,12 @@ function getTeillieferungenByAid(int $aid, array $opts = []) {
             FROM mm_umzuege a 
             JOIN (
 				SELECT a.aid,
-				 GROUP_CONCAT(ktg.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS LeistungenKtg, 
+				 GROUP_CONCAT(CONCAT(
+						kategorie_abk, 
+						IF( IFNULL(leistung_abk, "") != "", CONCAT(":", leistung_abk, "|"), ""),
+						""
+					) ORDER BY leistungskategorie SEPARATOR ""
+				 ) AS LeistungenKtg, 
 				 GROUP_CONCAT(
 				 	CONCAT(
 				 		lk.Bezeichnung,

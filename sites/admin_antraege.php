@@ -121,13 +121,19 @@ foreach($validFields as $_f) {
         continue;
     }
     $sqlQueryField = $orderFields[$_f]['field'];
+    $query[$_f] = trim($query[$_f] ?? '');
+    $_qf = $query[$_f];
 
-    if (strcmp($_f, 'Leistungen') === 0 && !empty($query[$_f])) {
-        $chars = str_split( trim($query[$_f]));
-        $chars = preg_replace('#[^A-Z]#', '', $chars);
+    if (strcmp($_f, 'Leistungen') === 0 && strlen($_qf)) {
+        if (preg_match('[ ,]', $_qf)) {
+            $chars = preg_split('[ ,]', $_qf);
+        } else {
+            $chars = str_split($_qf);
+        }
+        $chars = array_filter($chars, function($v) { return strlen(trim($v)) > 0; });
 
         foreach($chars as $_chr) {
-            $having[] = 'GROUP_CONCAT(kategorie_abk) LIKE "%' . $_chr . '%"';
+            $having[] = 'GROUP_CONCAT(CONCAT(kategorie_abk, IF(IFNULL(leistung_abk,"")="", "", CONCAT("", leistung_abk, "")))) LIKE "%' . $_chr . '%"';
         }
         continue;
     }
@@ -307,7 +313,11 @@ $sqlSelect = 'SELECT U.*, U.umzugstermin AS Lieferdatum, ' . $NL
     . ' user.personalnr AS kid, ' . $NL
     . ' CONCAT(vg.stadtname, " ", vg.adresse) von_gebaeude, ' . $NL
     . ' CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude, ' . $NL
-    . ' REPLACE(REPLACE(GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR ""), "P", ""), "R", "") AS Leistungen, ' . $NL
+    . ' REPLACE(REPLACE(GROUP_CONCAT( CONCAT(
+			 	kategorie_abk, 
+				IF( IFNULL(leistung_abk, "") != "", CONCAT("", leistung_abk, ""), ""),
+				""
+			) ORDER BY leistungskategorie SEPARATOR ""), "P", ""), "R", "") AS Leistungen, ' . $NL
     . ' GROUP_CONCAT(lk.leistungskategorie ORDER BY leistungskategorie SEPARATOR ", ") AS LeistungenFull, ' . $NL
     . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Summe, ' . $NL
     . ' (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Menge ' . $NL;

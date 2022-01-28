@@ -107,7 +107,7 @@ $sqlAuftraege = 'SELECT
       a.aid, u.personalnr AS kid, a.umzugsstatus, a.abgeschlossen_am, 
       a.umzugstermin, a.tour_kennung, a.plz, a.ort, a.umzug, a.service,
       GROUP_CONCAT(
-        k.kategorie_abk ORDER BY k.kategorie_abk SEPARATOR ""
+        CONCAT(k.kategorie_abk, IF(IFNULL(lk.leistung_abk,"")="", "", CONCAT("", lk.leistung_abk, ""))) ORDER BY k.kategorie_abk SEPARATOR ""
       )  AS LstAbk,
       GROUP_CONCAT(
         CONCAT_WS(" ", k.leistungskategorie, lk.Bezeichnung, lk.Farbe, lk.Groesse, lk.preis_pro_einheit) ORDER BY k.kategorie_abk SEPARATOR "\n"

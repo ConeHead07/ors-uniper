@@ -219,12 +219,18 @@ $having = array();
 $w = array();
 foreach($validFields as $_f => $_fOpts) {
     $sqlQueryField = $_fOpts['field'];
+    $_qf = trim($query[$_f] ?? '');
+
     if ($_f === 'Leistungen' && !empty($query[$_f])) {
-        $chars = str_split( trim($query[$_f]));
-        $chars = preg_replace('#[^A-Z]#', '', $chars);
+        if (preg_match('[ ,]', $_qf)) {
+            $chars = preg_split('[ ,]', $_qf);
+        } else {
+            $chars = str_split($_qf);
+        }
+        $chars = array_filter($chars, function($v) { return strlen(trim($v)) > 0; });
 
         foreach($chars as $_chr) {
-            $having[] = 'GROUP_CONCAT(kategorie_abk) LIKE "%' . $_chr . '%"';
+            $having[] = 'GROUP_CONCAT(CONCAT(lk.kategorie_abk, IF(IFNULL(l.leistung_abk,"")="", "", CONCAT("", l.leistung_abk, "")))) LIKE "%' . $_chr . '%"';
         }
         break;
     }
@@ -270,13 +276,13 @@ if ($order == 'Wirtschaftseinheit') {
 elseif ($order == 'aid') {
     $sqlOrderFld = 'a.aid';
 }elseif ($order == 'Leistungen') {
-    $sqlOrderFld = 'GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "")';
+    $sqlOrderFld = 'GROUP_CONCAT(CONCAT(lk.kategorie_abk, IF(IFNULL(l.leistung_abk,"")="", CONCAT("", l.leistung_abk, ""))) ORDER BY leistungskategorie SEPARATOR "")';
 }
 
 $sqlSelect = 'SELECT a.*, user.personalnr, user.personalnr AS kid, ' . $NL
     . ' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, ' . $NL
     . ' u.nachname, u.nachname stom, ' . $NL
-    . ' GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . $NL
+    . ' GROUP_CONCAT(CONCAT(lk.kategorie_abk, IF(IFNULL(l.leistung_abk,"")="", "", CONCAT("", l.leistung_abk, ""))) ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . $NL
     . '   GROUP_CONCAT(' . $NL
     . '     IF (l.leistung_id is NULL, "", CONCAT_WS("<|#|>", '  . $NL
     . '      l.leistung_id, lk.kategorie_abk, lk.leistungskategorie, ' . $NL
@@ -328,7 +334,7 @@ $stat = $db->query_row($sqlStat, $aParams);
 if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
     require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
 
-    $sqlArtikel = 'SELECT ul.leistung_id, lk.leistungskategorie AS Kategorie, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
+    $sqlArtikel = 'SELECT ul.leistung_id, lk.leistungskategorie AS Kategorie, l.leistung_abk, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
         . ' SUM(ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) count, ' . $NL
         . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
         . ' SUM(l.preis_pro_einheit * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Summe, ' . $NL

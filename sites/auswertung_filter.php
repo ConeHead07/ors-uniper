@@ -112,12 +112,17 @@ foreach($validFields as $_f) {
 
     if (isset($query[$_f]) && is_string($query[$_f]) && trim($query[$_f]) !== '') {
         $_q = '';
+        $_qf = trim($query[$_f] ?? '');
         if ($_f === 'Leistungen') {
-            $chars = str_split( trim($query[$_f]));
-            $chars = preg_replace('#[^A-Z]#', '', $chars);
+            if (preg_match('[ ,]', $_qf)) {
+                $chars = preg_split('[ ,]', $_qf);
+            } else {
+                $chars = str_split($_qf);
+            }
+            $chars = array_filter($chars, function($v) { return strlen(trim($v)) > 0; });
 
             foreach($chars as $_chr) {
-                $having[] = 'GROUP_CONCAT(kategorie_abk) LIKE "%' . $_chr . '%"';
+                $having[] = 'GROUP_CONCAT(CONCAT(lk.kategorie_abk, IF(IFNULL(l.leistung_abk,"")="", "", CONCAT("", l.leistung_abk, "")))) LIKE "%' . $_chr . '%"';
             }
             break;
         }
@@ -205,7 +210,7 @@ $sqlSelect = 'SELECT a.*, ' . "\n"
       . ' g.id Wirtschaftseinheit, g.bundesland, g.stadtname, g.adresse, ' . "\n"
       . ' u.nachname, u.nachname stom, ua.nachname antragsteller_name, ' . "\n"
       . ' ua.gruppe antragsteller_gruppe, ' . "\n"
-      . ' GROUP_CONCAT(lk.kategorie_abk ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . $NL
+      . ' GROUP_CONCAT(CONCAT(lk.kategorie_abk, IF(IFNULL(l.leistung_abk,"")="", "", CONCAT("", l.leistung_abk, ""))) ORDER BY leistungskategorie SEPARATOR "") AS Leistungen, ' . $NL
       . '   GROUP_CONCAT(' . $NL
       . '     IF (l.leistung_id is NULL, "", CONCAT_WS("<|#|>", '  . $NL
       . '      l.leistung_id, lk.kategorie_abk, lk.leistungskategorie, ' . $NL
@@ -254,7 +259,7 @@ $sqlForStat = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving;
 $sqlStat = 'SELECT COUNT(1) numAll, SUM(summe) sumAll FROM (' . $sqlForStat . ') AS t';
 $stat = $db->query_row($sqlStat, $aParams);
 
-$sqlArtikel = 'SELECT ul.leistung_id, lk.kategorie_abk AS Ktg_Abk, lk.leistungskategorie AS Kategorie, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
+$sqlArtikel = 'SELECT ul.leistung_id, CONCAT(lk.kategorie_abk, IF(IFNULL(l.leistung_abk,"")="", "", CONCAT("", l.leistung_abk, ""))) AS Ktg_Abk, lk.leistungskategorie AS Kategorie, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
     . ' COUNT(distinct(ul.aid)) numAuftraege, ' . $NL
     . ' SUM( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) count, ' . $NL
     . ' MAX(l.preis_pro_einheit) Preis, ' . $NL

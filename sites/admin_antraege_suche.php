@@ -107,7 +107,12 @@ if (in_array($ofld, ['Strasse', 'Ort', 'PLZ', 'Land', 'Vorname', 'Name'])) {
 if ($ofld && isset($searchFields[$ofld])) {
 	$orderBy = 'ORDER BY ' . $ofld . ' ' . ($odir != 'DESC' ? 'ASC' : 'DESC');
 } elseif($ofld === 'Leistungen') {
-    $orderBy = 'ORDER BY GROUP_CONCAT(kategorie_abk ORDER BY leistungskategorie)' . ($odir != 'DESC' ? 'ASC' : 'DESC');
+    $orderBy = 'ORDER BY GROUP_CONCAT(
+            CONCAT(
+			 	kategorie_abk, 
+				IF( IFNULL(leistung_abk, "") != "", CONCAT(":", leistung_abk, "|"), ""),
+				""
+			)ORDER BY leistungskategorie)' . ($odir != 'DESC' ? 'ASC' : 'DESC');
 } else {
 	$orderBy = $defaultOrder;
 }
@@ -263,7 +268,12 @@ if ($sendquery) {
             . ' a.tour_kennung AS Tour, ' . "\n"
             . ' CONCAT(a.name, ", ", substr(a.vorname, 1, 1), ".") AS Name, a.ort AS Ort, a.plz AS PLZ, a.strasse AS Strasse, ' . "\n"
 			. ' a.land AS Land, a.umzugstermin AS Liefertermin, a.umzugsstatus AS Status, ' . "\n"
-            . ' GROUP_CONCAT(kategorie_abk ORDER BY leistungskategorie) AS Leistungen, ' . "\n"
+            . ' GROUP_CONCAT(
+                     CONCAT(
+                        kategorie_abk, 
+                        IF( IFNULL(leistung_abk, "") != "", CONCAT(":", leistung_abk, "|"), ""),
+                        ""
+                    ) ORDER BY leistungskategorie) AS Leistungen, ' . "\n"
             . ' SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS summe ' . "\n"
         ;
 		$sqlFrom = 'FROM `' . $_TABLE['umzugsantrag'] . '` a ' . "\n"
