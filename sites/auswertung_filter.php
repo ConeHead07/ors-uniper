@@ -259,9 +259,15 @@ $sqlForStat = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlHaving;
 $sqlStat = 'SELECT COUNT(1) numAll, SUM(summe) sumAll FROM (' . $sqlForStat . ') AS t';
 $stat = $db->query_row($sqlStat, $aParams);
 
-$sqlArtikel = 'SELECT ul.leistung_id, CONCAT(lk.kategorie_abk, IF(IFNULL(l.leistung_abk,"")="", "", CONCAT("", l.leistung_abk, ""))) AS Ktg_Abk, lk.leistungskategorie AS Kategorie, l.Bezeichnung, l.Farbe, l.Groesse, ' . $NL
+$sqlArtikel = 'SELECT 
+    ul.leistung_id AS ID,
+    CONCAT(lk.kategorie_abk, IF(IFNULL(l.leistung_abk,"")="", "", CONCAT("", l.leistung_abk, ""))) AS Ktg_Abk,
+    lk.leistungskategorie AS Kategorie, 
+    l.Bezeichnung, 
+    l.Farbe, 
+    l.Groesse, ' . $NL
     . ' COUNT(distinct(ul.aid)) numAuftraege, ' . $NL
-    . ' SUM( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) count, ' . $NL
+    . ' SUM( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) AS Menge, ' . $NL
     . ' MAX(l.preis_pro_einheit) Preis, ' . $NL
     . ' SUM(l.preis_pro_einheit * ul.menge_mertens) AS Summe, ' . $NL
     . ( $exportFormat !== 'html' ? ' group_concat(ul.aid) aids' : '"" AS aids') . $NL
@@ -279,8 +285,6 @@ $artikelStat = $db->query_rows($sqlArtikel, 0, $aParams);
 
 if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
     require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
-
-    $iNumItems = count($all);
 
     $aSelectCols = [
         'summe', 'aid', 'kid', 'tour_kennung', 'service', 'plz', 'ort', 'strasse',
@@ -314,13 +318,21 @@ if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
     }
 
     $aSelectStat = [
-        'ID', 'Kategorie', 'Bezeichnung', 'Farbe', 'Größe', 'Menge', 'Preis', 'Summe', 'aids'
+        'ID', 'Ktg_Abk', 'Kategorie', 'Bezeichnung', 'Farbe', 'Größe', 'Menge', 'Preis', 'Summe', 'numAuftraege', 'aids'
     ];
     $sheet02Name = 'KumulierteLeistungen';
     $sheet02Header = leistungsRowToSheetHeader($aSelectStat );
     $writer->writeSheetHeader($sheet02Name, $sheet02Header);
     foreach($artikelStat as $_row) {
-        $writer->writeSheetRow($sheet02Name, $_row);
+        $_export = [];
+        $_styles = [];
+        foreach($aSelectStat as $k) {
+            $s = [];
+            $v = isset($_row[$k]) ? $_row[$k] : '';
+            $_styles[] = $s;
+            $_export[] = $v;
+        }
+        $writer->writeSheetRow($sheet02Name, $_export, $_styles);
     }
 
     header('Content-Type: application/xls');
