@@ -18,15 +18,20 @@ function leistungsRowToSheetHeader($row) {
         $_colFormat = 'string';
         $_colTitle = str_replace('_', ' ', ucfirst($k));
 
-        if ( preg_match('#(datum|_am|umzugsstatus_vom)#i', $k)) {
-            $_colFormat ='MM.DD.YYYY HH:MM';
+        if ( strpos($k, ' ') !== false) {
+            $_colFormat = 'string';
+        } elseif ( preg_match('#(umzugstermin|liefertermin|lieferdatum)#i', $k)) {
+            $_colFormat = 'MM.DD.YYYY'; // 'string'; //
+        } elseif ( preg_match('#(antragsdatum|_am|umzugsstatus_vom)#i', $k)) {
+            $_colFormat = 'MM.DD.YYYY HH:MM'; // 'string'; //
         } elseif ( preg_match('#(summe|preis)#i', $k)) {
-            $_colFormat ='euro';
-        } elseif ( preg_match('#(menge|plz)#i', $k) ) {
+            $_colFormat = 'euro';
+        } elseif ( preg_match('#(menge)#i', $k) ) {
             $_colFormat = '0';
         }
 
         switch(strtolower($k)) {
+            case 'tour':
             case 'tour_kennung':
                 $_colTitle = 'Tour';
                 break;
@@ -41,10 +46,12 @@ function leistungsRowToSheetHeader($row) {
 
             case 'umzugstermin':
             case 'lieferdatum':
+            case 'liefertermin':
                 $_colFormat ='MM.DD.YYYY';
                 $_colTitle = 'Lieferdatum';
                 break;
 
+            case 'auftragsstatus':
             case 'umzugsstatus':
                 $_colTitle = 'Auftragsstatus';
                 break;
