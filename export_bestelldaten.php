@@ -24,7 +24,7 @@ function rowToSheetHeader($row) {
     return $sheet1header;
 }
 // 'temp','angeboten','beantragt','zurueckgegeben','geprueft','erneutpruefen','genehmigt','abgelehnt','bestaetigt','storniert','abgeschlossen'
-$baseQuery = <<<EOT
+$AlleLeistungen = <<<EOT
 SELECT 
  		a.umzugsstatus AS Auftragsstatus,
 		usr.personalnr AS KID,
@@ -76,9 +76,6 @@ $aSQL = [];
 $aSQL[] = [
     'name' => 'AnstehendeLeistungenPerKW',
     'sql' => <<<EOT
-WITH AlleLeistungen AS (
-$baseQuery
-)
 SELECT AL.LieferKW AS KW, 
 	MIN(AL.Liefertermin) AS "First",
 	MAX(AL.Liefertermin) AS "Last",
@@ -91,7 +88,7 @@ SELECT AL.LieferKW AS KW,
 	SUM(IFNULL(AL.Menge, 0)) AS Menge, 
 	SUM(IFNULL(AL.Preis, 0)) AS Summe, 
 	GROUP_CONCAT(DISTINCT(AL.Liefertermin)) AS Liefertermine
-	FROM AlleLeistungen AS AL
+	FROM ( $AlleLeistungen ) AS AL
 	WHERE 
 		AL.Auftragsstatus = "bestaetigt"
         AND AL.Liefertermin IS NOT NULL AND AL.Liefertermin != ""
@@ -104,9 +101,6 @@ EOT
 $aSQL[] = [
     'name' => 'AnstehendeLeistungenPerTag',
     'sql' => <<<EOT
-WITH AlleLeistungen AS (
-$baseQuery
-)
 SELECT AL.LieferKW AS KW, 
 	AL.Liefertermin,
 	AL.leistung_id,
@@ -117,7 +111,7 @@ SELECT AL.LieferKW AS KW,
 	AL.Preis,
 	SUM(IFNULL(AL.Menge, 0)) AS Menge, 
 	SUM(IFNULL(AL.Preis, 0)) AS Summe
-	FROM AlleLeistungen AS AL
+	FROM ( $AlleLeistungen ) AS AL
 	WHERE 
 		AL.Auftragsstatus = "bestaetigt"
         AND AL.Liefertermin IS NOT NULL AND AL.Liefertermin != ""
@@ -165,15 +159,12 @@ EOT
 
 $aSQL[] = [
     'name' => 'AlleBestellLeistungen',
-    'sql' =>$baseQuery
+    'sql' =>$AlleLeistungen
 ];
 
 $aSQL[] = [
     'name' => 'AlleKumulierteLeistungenPerKW',
     'sql' => <<<EOT
-WITH AlleLeistungen AS (
-$baseQuery
-)
 SELECT AL.LieferKW AS KW, 
 	MIN(AL.Liefertermin) AS "First",
 	MAX(AL.Liefertermin) AS "Last",
@@ -186,7 +177,7 @@ SELECT AL.LieferKW AS KW,
 	SUM(IFNULL(AL.Menge, 0)) AS Menge, 
 	SUM(IFNULL(AL.Preis, 0)) AS Summe, 
 	GROUP_CONCAT(DISTINCT(AL.Liefertermin)) AS Liefertermine
-	FROM AlleLeistungen AS AL
+	FROM ( $AlleLeistungen ) AS AL
 	WHERE 
 		AL.Auftragsstatus NOT IN ("temp", "zurueckgegeben", "erneutpruefen", "abgelehnt", "storniert")
 AND AL.Liefertermin IS NOT NULL AND AL.Liefertermin != ""
