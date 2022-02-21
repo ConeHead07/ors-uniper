@@ -14,7 +14,7 @@ require_once 'header.php';
 
 $topmenu = '';
 $bodby_content = '';
-$assetsRefreshId = '202201261714';
+$assetsRefreshId = '202202111530';
 
 // Seitenbereiche
 require_once $MConf['AppRoot'] . $MConf['Inc_Dir']   . 'lib_admin_cms.php';

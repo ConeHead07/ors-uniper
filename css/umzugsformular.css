@@ -342,6 +342,7 @@ td label {
   height:55px;
 }
 
+.LeistungItem,
 .MitarbeierItem {
   border-left:1px solid #0075B5;
   border-top:1px solid #0075B5;
@@ -350,11 +351,15 @@ td label {
   width:900px;
   margin-bottom:10px;
 }
+.LeistungItem thead td,
+.LeistungItem thead th,
+.LeistungItem tbody td,
 .MitarbeierItem thead td,
+.MitarbeierItem thead th,
 .MitarbeierItem tbody td  {
   border-right:1px solid #0075B5;
   border-bottom:1px solid #0075B5;
-  padding:4px 2px 4px 2px;
+  padding:3px 2px 3px .8rem;
 }
 .ColEtg {
 	width:20px;
@@ -383,18 +388,21 @@ td label {
   z-background:#f1f8ff;
 }
 
+.LeistungItem thead,
 .MitarbeierItem thead {
   font-size:0.8rem;
   font-weight:bold;
   background:#0075B5;
   color:#fff;
 }
+.LeistungItem .row td,
 .MitarbeierItem .inputRowVon td,
 .MitarbeierItem .inputRowZiel td {
   padding:0;
   height:22px;
 }
-
+.LeistungItem .row td input,
+.LeistungItem .row td input.itxt,
 .MitarbeierItem .inputRowVon td input,
 .MitarbeierItem .inputRowVon td input.itxt {
   width:100%;
@@ -406,12 +414,39 @@ td label {
   border:0;
   box-sizing: border-box;
 }
+
+.LeistungItem .row td input[type=radio],
+.LeistungItem .row td input[type=checkbox],
 .MitarbeierItem .inputRowVon td input[type=radio],
 .MitarbeierItem .inputRowVon td input[type=checkbox] {
     width: 1em;
     height: 1em;
 }
+.LeistungItem tr.row td,
+.MitarbeierItem tr.row.inputRowVon td {
+    font-size:0.8rem;
+}
+.LeistungItem tr.row td:not(.with-input),
+.MitarbeierItem tr.row.inputRowVon td:not(.with-input) {
+    padding:.2rem .8rem;
+}
 
+.LeistungItem tr.row td.with-input input[type=text],
+.LeistungItem tr.row td.with-input input[type=number],
+.LeistungItem tr.row td.with-input input[type=date],
+.LeistungItem tr.row td.with-input input[type=range],
+.MitarbeierItem tr.row.inputRowVon td.with-input input[type=text],
+.MitarbeierItem tr.row.inputRowVon td.with-input input[type=number],
+.MitarbeierItem tr.row.inputRowVon td.with-input input[type=date],
+.MitarbeierItem tr.row.inputRowVon td.with-input input[type=range] {
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+    color: #549e1a;
+    font-weight: bold;
+}
+
+.LeistungItem .row,
 .MitarbeierItem .inputRowVon {
   background:#f1f8ff;
 }

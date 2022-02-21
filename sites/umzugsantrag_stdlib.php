@@ -1,5 +1,126 @@
 <?php 
 
+function getAllOrderedLeistungenByUid(int $uid, array $opts = []) {
+	global $db;
+	$aParams = [ 'uid' => $uid ];
+	$aAndWhere = [];
+
+	if (!empty($opts['WithStatus'])) {
+		$aStati = (array)$opts['WithStatus'];
+		$aQuotedStati = array_map(function($v) use($db) { return $db::quote($v); }, $aStati);
+		$aAndWhere[] = 'a.umzugsstatus IN ('
+			. implode(', ', $aQuotedStati )
+			. ')';
+	} elseif (!empty($opts['WithoutStatus'])) {
+		$aStati = (array)$opts['WithoutStatus'];
+		$aQuotedStati = array_map(function($v) use($db) { return $db::quote($v); }, $aStati);
+		$aAndWhere[] = 'a.umzugsstatus NOT IN ('
+			. implode(', ', $aQuotedStati )
+			. ')';
+	} else {
+		$aAndWhere = 'a.umzugsstatus != "storniert"';
+	}
+
+	if (!empty($opts['WithKategorieId'])) {
+		$aKtgId = (array)$opts['WithKategorieId'];
+		$aQuotedKtgId = array_map(function($v) use($db) { return $db::quote($v); }, $aKtgId);
+		$aAndWhere[] = 'ktg.leistungskategorie_id IN ('
+			. implode(', ', $aQuotedKtgId )
+			. ')';
+	}
+
+	if (!empty($opts['WithLeistungsart'])) {
+		$aArt = (array)$opts['WithLeistungsart'];
+		$aQuotedArt = array_map(function($v) use($db) { return $db::quote($v); }, $aArt);
+		$aAndWhere[] = 'ktg.leistungsart IN ('
+			. implode(', ', $aQuotedArt )
+			. ')';
+	} elseif (!empty($opts['WithoutLeistungsart'])) {
+		$aArt = (array)$opts['WithoutLeistungsart'];
+		$aQuotedArt = array_map(function($v) use($db) { return $db::quote($v); }, $aArt);
+		$aAndWhere[] = 'ktg.leistungsart NOT IN ('
+			. implode(', ', $aQuotedArt )
+			. ')';
+	}
+
+	$sql = 'SELECT 
+    a.aid,
+    al.id AS l_id,
+    al.*,
+    ktg.leistungskategorie_id,
+    a.service,
+    a.antragsdatum,
+    a.umzugsstatus,
+    al.menge_mertens,
+    ktg.leistungsart AS Art,
+    ktg.leistungskategorie AS Kategorie,
+    ktg.leistungskategorie AS kategorie,
+    klg.Bezeichnung,
+    klg.Bezeichnung AS leistung,
+    klg.Farbe,
+    klg.Groesse,
+    klg.preis_pro_einheit,
+    klg.preis_pro_einheit AS Preis,
+    (al.menge_mertens * klg.preis_pro_einheit) AS gesamtpreis,
+    (al.menge_mertens * klg.preis_pro_einheit) AS Summe
+   FROM mm_umzuege AS a
+   JOIN mm_umzuege_leistungen AS al ON (a.aid = al.aid) 
+   JOIN mm_leistungskatalog AS klg ON (al.leistung_id = klg.leistung_id) 
+   JOIN mm_leistungskategorie AS ktg ON (klg.leistungskategorie_id = ktg.leistungskategorie_id)
+   WHERE 
+      a.antragsteller_uid = :uid
+';
+	if (count($aAndWhere)) {
+		$sql .= ' AND ' . implode(' AND ', $aAndWhere);
+	}
+
+	$sql.= '
+    ORDER BY a.aid, ktg.leistungskategorie, klg.Bezeichnung, klg.Farbe, klg.Groesse
+';
+	return $db->query_rows($sql, 0, $aParams);
+}
+
+
+function getAllOrderedLeistungskagetorienByUid(int $uid, array $opts = []) {
+	global $db;
+	$aParams = [ 'uid' => $uid ];
+	$sql = 'SELECT 
+    ktg.leistungskategorie AS Kategorie,
+    ktg.leistungskategorie_id,
+    COUNT(DISTINCT(a.aid)) AS NumAuftraege,
+    SUM(al.menge_mertens) AS SumMenge,
+    CONCAT(
+    	"[",
+		GROUP_CONCAT(
+			CONCAT(
+				"{",
+				CONCAT(\'"Bezeichnung":"\', QUOTE(klg.Bezeichnung), \'", \'),
+				CONCAT(\'"Farbe":"\', QUOTE(klg.Farbe), \'", \'),
+				CONCAT(\'"Groesse":"\', QUOTE(klg.Groesse), \'", \'),
+				CONCAT(\'"Menge":"\', al.menge_mertens, \'", \'),
+				CONCAT(\'"aid":"\', a.aid, \'", \'),
+				CONCAT(\'"service":"\', a.service, \'", \'),
+				CONCAT(\'"antragsdatum":"\', a.antragsdatum, \'", \'),
+				CONCAT(\'"umzugsstatus":"\', a.umzugsstatus, \'" \'),
+				"}"
+			)
+			ORDER BY al.aid
+			SEPARATOR ",\n"
+		),
+		"]"
+    )
+   FROM mm_umzuege AS a
+   JOIN mm_umzuege_leistungen AS al ON (a.aid = al.aid) 
+   JOIN mm_leistungskatalog AS klg ON (al.leistung_id = klg.leistung_id) 
+   JOIN mm_leistungskategorie AS ktg ON (klg.leistungskategorie_id = ktg.leistungskategorie_id)
+   WHERE 
+      a.antragsteller_uid = :uid
+      AND a.umzugsstatus != "storniert"
+   GROUP BY ktg.Kategorie, ktg.leistungskategorie_id
+';
+	return $db->query_rows($sql, $aParams);
+}
+
 function getReklamationenByAid(int $aid, array $opts = []) {
 
 	global $db;
@@ -110,7 +231,8 @@ function getLieferscheineByAid(int $aid, array $opts = []) {
     $aRows = $db->query_rows($sql);
     echo $db->error();
 
-    for($i = 0; $i < count($aRows); $i++) {
+    $iNumRows = count($aRows);
+    for($i = 0; $i < $iNumRows; $i++) {
 
         $_row = $aRows[$i];
         $_aid = (int)$_row['aid'];
@@ -121,6 +243,34 @@ function getLieferscheineByAid(int $aid, array $opts = []) {
     }
 
     return $aRows;
+}
+
+function getRueckholLeistungen() {
+	global $db;
+
+	$sql = <<<EOT
+SELECT 
+ ktg.leistungskategorie AS kategorie,
+ ktg.leistungskategorie,
+ ktg.kategorie_abk,
+ klg.leistung_abk,
+ klg.leistung_id,
+ klg.Bezeichnung,
+ klg.Bezeichnung AS leistung,
+ klg.Beschreibung,
+ klg.preis_pro_einheit,
+ klg.preis_pro_einheit AS Preis,
+ klg.produkt_link
+ FROM mm_leistungskategorie AS ktg   
+ JOIN mm_leistungskatalog AS klg ON (ktg.leistungskategorie_id = klg.leistungskategorie_id)
+ WHERE 
+ 	ktg.leistungskategorie LIKE "R%ckholung" 
+ 	and klg.verfuegbar = "Ja" 
+ 	AND klg.aktiv = "Ja"
+ 	ORDER BY klg.Bezeichnung
+EOT;
+
+	return $db->query_rows($sql);
 }
 
 function getAttachements($data, $internal) {
@@ -144,8 +294,9 @@ function getAttachements($data, $internal) {
 	
 	$aATs = $db->query_rows($sql);
 	echo $db->error();
-	
-	for($i = 0; $i < count($aATs); $i++) {
+
+	$iNumRows = count($aATs);
+	for($i = 0; $i < $iNumRows; $i++) {
 		$DOKID = $aATs[$i]["dokid"];
 		$AT = new ItemEdit($_CONF["umzugsanlagen"], $connid, $user, $DOKID);
 		$AT->dbdataToInput();
@@ -175,7 +326,8 @@ function get_ma_post_items() {
 	//echo "<pre>#".__LINE__." ".basename(__FILE__)." _POST:".print_r($_POST,1)."</pre><br>\n";
 	
 	$aMaItems = array();
-	if (!empty($_POST["MA"])) for($i = 0; $i < count($_POST["MA"]["vorname"]); $i++) {
+	$iNumItems = count($_POST["MA"]["vorname"]);
+	if (!empty($_POST["MA"])) for($i = 0; $i < $iNumItems; $i++) {
 		$aMaItems[$i]["ID"] = $i+1;
 		foreach($_POST["MA"] as $fld => $aTmp) {
 			$aMaItems[$i][$fld] = $_POST["MA"][$fld][$i];
@@ -305,7 +457,8 @@ function get_arbeitsplatz_belegung($raumid, $apnr=false) {
 	//echo "#".__LINE__." ".basename(__FILE__)." sql:$sql<br>\n";
 	
 	$rows_clean = array();
-	for($i = 0; $i < count($rows); $i++) {
+	$iNumRows = count($rows);
+	for($i = 0; $i < $iNumRows; $i++) {
 		$row = $rows[$i];
 		$sql = "SELECT aid FROM `".$MAConf["Table"]."` LEFT JOIN `".$ASConf["Table"]."` a USING(aid)\n";
 		$sql.= "WHERE maid=\"".$db->escape($row["id"])."\" AND a.`umzugsstatus` IN ('beantragt','geprueft','genehmigt','bestaetigt')\n";
@@ -348,7 +501,8 @@ function update_umzuege_raumid() {
 	$sql = "SELECT mid, gebaeude, etage, raumnr, ziel_gebaeude, ziel_etage, ziel_raumnr FROM `".$MAConf["Table"]."`";
 	$rows = $db->query_rows($sql);
 	if ($db->error()) die($db->error()."<br>\n<br>\n".$sql);
-	for($i = 0; $i < count($rows); $i++) {
+	$iNumRows = count($rows);
+	for($i = 0; $i < $iNumRows; $i++) {
 		$row = $rows[$i];
 		$raumid = get_raumid_byGER($row["gebaeude"], $row["etage"], $row["raumnr"]);
 		$zraumid = get_raumid_byGER($row["ziel_gebaeude"], $row["ziel_etage"], $row["ziel_raumnr"]);
@@ -359,6 +513,7 @@ function update_umzuege_raumid() {
 }
 
 function update_umzuege_status() {
+	global $_CONF;
 	$ASConf = $_CONF["umzugsantrag"];
 	// `"$ASConf["Table"]."`
 	
@@ -388,4 +543,3 @@ $raumid = "3345";
 echo "Belegung raumid $raumid: ".print_r(get_arbeitsplatz_belegung($raumid, $apnr=false),1);
 echo "</pre>\n";
 */
-?>

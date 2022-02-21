@@ -37,14 +37,19 @@ $sql = 'SELECT ' . $NL
     . ' IFNULL(l.leistung_stamm_id, StammIds.leistung_stamm_id) AS leistung_stamm_id, ' . $NL
     . ' IFNULL(StammIds.numVarianten, 0) AS NumVarianten, ' . $NL
     . ' l.Bezeichnung, ' . $NL
-    . ' l.Bezeichnung leistung, ' . $NL
+    . ' CONCAT('  . "\n"
+    . '   l.Bezeichnung, '
+    . '   IF(IFNULL(l.Farbe, "")="", "", CONCAT(", ", l.Farbe)), ' . "\n"
+    . '   IF(IFNULL(l.Groesse, "")="", "", CONCAT(", ", l.Groesse)) ' . "\n"
+    . ' ) leistung, ' . "\n"
     . ' l.Beschreibung, ' . $NL
     . ' l.Farbe, ' . $NL
     . ' l.Groesse, ' . $NL
     . ' produkt_link, ' . $NL
     . ' leistungseinheit, ' . $NL
     . ' leistungseinheit2, ' . $NL
-    . ' leistungskategorie AS kategorie, ' . $NL
+    . ' k.leistungsart AS art, ' . $NL
+    . ' k.leistungskategorie AS kategorie, ' . $NL
     . ' l.leistungskategorie_id AS kategorie_id, ' . $NL
     . ' l.aktiv, l.verfuegbar, ' . $NL
     . ' preis_pro_einheit, image, ' . $NL
@@ -52,18 +57,21 @@ $sql = 'SELECT ' . $NL
     . ' m.preiseinheit mx_preiseinheit, ' . $NL
     . ' m.mengen_von mx_von, ' . $NL
     . ' m.mengen_bis mx_bis' . $NL
-    . ' FROM mm_leistungskatalog l LEFT JOIN mm_leistungskategorie k ' . $NL
+    . ' FROM mm_leistungskatalog l ' . $NL
+    . ' LEFT JOIN mm_leistungskategorie k ' . $NL
     . '  ON l.leistungskategorie_id = k.leistungskategorie_id ' . $NL
     . ' LEFT JOIN mm_leistungspreismatrix m ' . $NL
     . '  ON l.leistung_id = m.leistung_id ' . $NL
     . ' LEFT JOIN (' . $NL
     . '     SELECT l.leistung_stamm_id, COUNT(1) numVarianten ' . $NL
     . '     FROM mm_leistungskatalog l' . $NL
-    . '     WHERE l.aktiv="Ja" AND IFNULL(l.leistung_stamm_id, 0) != 0 AND l.leistung_id != l.leistung_stamm_id' . $NL
-    . ' GROUP BY leistung_stamm_id' . $NL
+    . '     WHERE l.aktiv="Ja" '  . $NL
+    . '       AND IFNULL(l.leistung_stamm_id, 0) != 0 AND l.leistung_id != l.leistung_stamm_id' . $NL
+    . '     GROUP BY leistung_stamm_id' . $NL
     . ') StammIds ' . $NL
     . ' ON (l.leistung_id = StammIds.leistung_stamm_id OR l.leistung_stamm_id = StammIds.leistung_stamm_id)' . $NL
     . ' WHERE l.aktiv = "Ja" ' . $NL
+    . ' AND k.leistungsart = "Artikel" ' . $NL
     . ' ORDER BY kategorie, Bezeichnung, mx_von' . $NL;
 
 

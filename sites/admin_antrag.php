@@ -57,30 +57,45 @@ $PreiseAnzeigen = ($user['darf_preise_sehen'] === 'Ja') ? 1 : 0;
 // die('<pre>' . print_r($user,1));
 $Tpl->assign('PreiseAnzeigen', $PreiseAnzeigen);
 
-$sql = 'SELECT l.leistung_id, l.leistung_ref_id, l.leistung_ref_id2, l.leistung_ref_id3, Bezeichnung leistung, leistungseinheit, leistungseinheit2, '
-      . ' leistungskategorie AS kategorie, l.leistungskategorie_id AS kategorie_id, '
-      . ' l.aktiv, l.verfuegbar, '
-      . ' preis_pro_einheit, image, '
-      . ' m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis'
-      . ' FROM mm_leistungskatalog l '
-      . ' LEFT JOIN mm_leistungskategorie k ON l.leistungskategorie_id = k.leistungskategorie_id '
-      . '  LEFT JOIN mm_leistungspreismatrix m ON l.leistung_id = m.leistung_id '
-      . ' WHERE l.aktiv = "Ja" '
-      . ' ORDER BY kategorie, Bezeichnung, mx_von';
+$sql = 'SELECT l.leistung_id, l.leistung_ref_id, '
+    . ' l.leistung_ref_id2, l.leistung_ref_id3, '
+    . ' l.Bezeichnung, '
+    . ' l.Beschreibung, '
+    . ' l.Farbe, '
+    . ' l.Groesse, '
+    . ' l.produkt_link, '
+    . ' CONCAT('  . "\n"
+    . '   l.Bezeichnung, '
+    . '   IF(IFNULL(l.Farbe, "")="", "", CONCAT(", ", l.Farbe)), ' . "\n"
+    . '   IF(IFNULL(l.Groesse, "")="", "", CONCAT(", ", l.Groesse)) ' . "\n"
+    . ' ) leistung, ' . "\n"
+    . ' leistungseinheit, leistungseinheit2, '
+    . ' k.leistungskategorie AS kategorie, '
+    . ' k.leistungsart, '
+    . ' l.leistungskategorie_id AS kategorie_id, '
+    . ' l.aktiv, l.verfuegbar, '
+    . ' preis_pro_einheit, image, '
+    . ' m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis'
+    . ' FROM mm_leistungskatalog l '
+    . ' LEFT JOIN mm_leistungskategorie k ON l.leistungskategorie_id = k.leistungskategorie_id '
+    . '  LEFT JOIN mm_leistungspreismatrix m ON l.leistung_id = m.leistung_id '
+    . ' WHERE l.aktiv = "Ja" '
+    . ' ORDER BY kategorie, Bezeichnung, mx_von';
 
-$lkTreeItems = array();
-$lkTreeItemsJson = array();
-$lkmById = array();
+$aGroupItems = [];
+$lkTreeItems = [];
+$lkTreeItemsJson = [];
+$lkmById = [];
 $lkItems = $db->query_rows($sql);
 foreach($lkItems as $k => $v) {
     $ktg1 = (empty($v['kategorie'])) ? 'Einsatz' : $v['kategorie'];
     $lkTreeItems[$ktg1][$v['leistung']][] = $v;
     
-    $jvals = array();
+    $jvals = [];
     foreach($v as $jk => $jv) $jvals[utf8_encode ($jk)] = utf8_encode($jv);
     if (!isset($lkTreeItemsJson[utf8_encode($ktg1)][utf8_encode($v['leistung'])])) {
         $lkTreeItemsJson[utf8_encode($ktg1)][utf8_encode($v['leistung'])] = $jvals;
-        $lkmById[$v['leistung_id']] = array();
+        $lkmById[$v['leistung_id']] = [];
     }
     
     if ($v['mx_preis']) $lkmById[$v['leistung_id']][] = array(
@@ -136,12 +151,6 @@ if ($AID) {
             $MAItems[$i]["critical_status_img"] = ($isCritical ? "warning_triangle.png" : "thumb_up.png");
             /**/
 	}
-	
-	//die("#".__LINE__." ".basename(__FILE__)."<br>\n");
-        $sql = "SELECT dokid FROM `".$ATConf["Table"]."` WHERE aid = ".intval($AID)
-              ." or token = " . $db->quote($AS->arrDbdata['token']);
-        $aATs = $db->query_rows($sql);
-	echo $db->error();
 
 	$baseAID = $AID; // $AS->arrDbdata['ref_aid'] ?: $AID;
 	
@@ -282,17 +291,22 @@ if (!empty($aGItems) && count($aGItems)) {
 
 $SumBase = 'MH';
 $sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_property, ' . "\n"
-      .' ul.menge_mertens, ul.menge2_mertens, ' . "\n"
-      .' ul.menge_rekla, ul.menge2_rekla, ' . "\n"
-      .' ul.menge_geliefert, ul.menge2_geliefert, ' . "\n"
-      .' l.Bezeichnung leistung, lk.leistungskategorie kategorie, lk.leistungskategorie_id kategorie_id, ' . "\n"
-      .' l.image, l.Beschreibung, l.produkt_link, l.Farbe, l.Groesse, ' . "\n"
-      .' l.leistungseinheit, l.leistungseinheit2, if(lm.preis, lm.preis, preis_pro_einheit) preis_pro_einheit ' . "\n"
-      .' FROM mm_umzuege_leistungen ul ' . "\n"
-      .' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
-      .' LEFT JOIN mm_leistungskategorie lk ON(l.leistungskategorie_id = lk.leistungskategorie_id) ' . "\n"
-      .' LEFT JOIN mm_leistungspreismatrix lm ON(' . "\n"
-      .'    l.leistung_id = lm.leistung_id ';
+      . ' ul.menge_mertens, ul.menge2_mertens, ' . "\n"
+      . ' ul.menge_rekla, ul.menge2_rekla, ' . "\n"
+      . ' ul.menge_geliefert, ul.menge2_geliefert, ' . "\n"
+      . ' CONCAT('  . "\n"
+      . '   l.Bezeichnung, '
+      . '   IF(IFNULL(l.Farbe, "")="", "", CONCAT(", ", l.Farbe)), ' . "\n"
+      . '   IF(IFNULL(l.Groesse, "")="", "", CONCAT(", ", l.Groesse)) ' . "\n"
+      . ' ) leistung, ' . "\n"
+      . ' lk.leistungskategorie kategorie, lk.leistungskategorie_id kategorie_id, ' . "\n"
+      . ' l.image, l.Beschreibung, l.produkt_link, l.Farbe, l.Groesse, ' . "\n"
+      . ' l.leistungseinheit, l.leistungseinheit2, if(lm.preis, lm.preis, preis_pro_einheit) preis_pro_einheit ' . "\n"
+      . ' FROM mm_umzuege_leistungen ul ' . "\n"
+      . ' LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) ' . "\n"
+      . ' LEFT JOIN mm_leistungskategorie lk ON(l.leistungskategorie_id = lk.leistungskategorie_id) ' . "\n"
+      . ' LEFT JOIN mm_leistungspreismatrix lm ON(' . "\n"
+      . '    l.leistung_id = lm.leistung_id ';
       if ($SumBase == 'MH') {
             $sql.= '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . "\n"
                   .'    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))';
@@ -339,14 +353,17 @@ if (!empty($aLItems) && count($aLItems)) {
 }
 $Tpl->assign("Gesamtsumme", $Gesamtsumme);
 $Tpl->assign('enableLeistungCheckbox', false);
-
 //die("#".__LINE__." aAtItems: ".print_r($aAtItems,1)."<br>\n");
 
 $mainmenu = "Class-Active-Umzug"; //Umzug" xclass="liActive
 $topmenu = implode("", file($MConf["AppRoot"]."/sites/mitarbeiter_topmenu.tpl.html"));
 
-$istEditierbar = in_array($AS->arrDbdata["umzugsstatus"],[ 'angeboten', 'beantragt', 'bestaetigt', 'geprueft', 'geprueft' ]);
-$istAktiv = in_array($AS->arrDbdata["umzugsstatus"],[ 'bestaetigt', 'geprueft' ]);
+$istEditierbar = empty($AS->arrDbdata["umzugsstatus"])
+    || in_array($AS->arrDbdata["umzugsstatus"],[ 'angeboten', 'beantragt', 'bestaetigt', 'geprueft', 'geprueft' ]);
+
+$istAktiv = !empty($AS->arrDbdata["umzugsstatus"])
+    && in_array($AS->arrDbdata["umzugsstatus"],[ 'bestaetigt', 'geprueft' ]);
+
 $AS->loadDbdata();
 
 if ($istUmzugsteam && $istAktiv) {

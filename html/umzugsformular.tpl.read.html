@@ -30,6 +30,18 @@
       <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Auftragsstatus:</label></td>
       <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">{$AS.umzugsstatus}</div></td>
     </tr>
+    {if !empty($AS.ref_aid)}
+    <tr>
+      <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Bezieht sich auf:</label></td>
+      <td style="padding:0;width:250px;"><a href="/?s=kantrag&id={$AS.ref_aid}">{$AS.ref_aid}</a></td>
+    </tr>
+    {/if}
+    {if !empty($AS.rueckholung_von) or !empty($AS.rueckholung_am)}
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">RückholAuftrag:</label></td>
+      <td style="padding:0;" class="options-onoff"><label class="itxt itxt2col off active">{$AS.rueckholung_am} von {$AS.rueckholung_von}</label></td>
+    </tr>
+    {/if}
     <tr>
       <td style="padding:0;width:200px;" valign="top"><label style="display:block;width:auto;">Bisherige Bemerkungen:</label></td>
       <td style="padding:0;">{if empty($AS.bemerkungen)}<div class="itxt itxt2col ireadonly"><i>Keine</i></div>{/if}</td>
@@ -185,7 +197,7 @@
 
 
 <div id="ReklaDialog" class="dialog dialog-back-layer">
-  <div class="dialog-wrapper" style="width:90%">
+  <div class="dialog-wrapper" style="width:90%;max-height: 95vh;overflow-y: scroll;">
     <div style="width:90%;">
       <form>
         <div id="reklaContent" style="max-height:80vh;overflow-y: auto;text-align:left;">

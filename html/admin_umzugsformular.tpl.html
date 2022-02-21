@@ -35,7 +35,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     </tr>
   {if !empty($AS.ref_aid)}
   <tr>
-    <td class="label" style="padding:0;width:200px;height:auto;width:auto;"><label for="termin" style="width:180px;">Bezieht sich auf:</label></td>
+    <td class="label" style="padding:0;width:200px;height:auto;width:auto;"><label style="width:180px;">Bezieht sich auf:</label></td>
     <td style="padding:0;width:250px;"><a href="/?s=aantrag&id={$AS.ref_aid}">{$AS.ref_aid}</a></td>
   </tr>
   {/if}
@@ -43,6 +43,12 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
   <tr>
     <td style="padding:0;"><label style="width:180px;">Reklamiert:</label></td>
     <td style="padding:0;" class="options-onoff"><label class="itxt itxt2col off active">{$AS.reklamiert_am} von {$AS.reklamiert_von}</label></td>
+  </tr>
+  {/if}
+  {if !empty($AS.rueckholung_von) or !empty($AS.rueckholung_am)}
+  <tr>
+    <td style="padding:0;"><label style="width:180px;">RückholAuftrag:</label></td>
+    <td style="padding:0;" class="options-onoff"><label class="itxt itxt2col off active">{$AS.rueckholung_am} von {$AS.rueckholung_von}</label></td>
   </tr>
   {/if}
   <tr>
@@ -73,11 +79,13 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     <td style="padding:0;height:auto;width:auto;"><label style="width:180px;">Antragsdatum:</label></td>
     <td style="padding:0;width:auto;"><div  class="itxt itxt2col">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
   </tr>
+
   <tr>
-    <td style="padding:0;width:auto;"><label style="width:180px;">{if $AS.angeboten_am}Genehmigt{else}Best&auml;tigt{/if}:</label></td>
-    <td style="padding:0;width:auto;" class="status_{$AS.genehmigt_br}">
-      <div  class="itxt itxt2col"><img id="imgStatGen" src="images/status_{$AS.genehmigt_br|lower}.png"><span id="txtStatGen">{if $AS.genehmigt_br ne "Init"} {$AS.genehmigt_br} am {$AS.genehmigt_br_am|date_format:"%d.%m.%Y %H:%M"} {$AS.genehmigt_br_von}{/if}</span></div></td>
+    <td style="padding:0;width:auto;"><label style="width:180px;">Best&auml;tigt / Avisiert:</label></td>
+    <td style="padding:0;width:auto;" class="status_{$AS.genehmigt_br}" title="{$AS.bestaetigt}{if $AS.bestaetigt_am} am {$AS.bestaetigt_am|date_format:'%d.%m.%Y um %H:%M'} von {$AS.bestaetigt_von}{/if}">
+      <div  class="itxt itxt2col"><img id="imgStatGen" src="images/status_{$AS.bestaetigt|lower}.png"><span id="txtStatGen">{$AS.bestaetigt}{if $AS.bestaetigt_am} am {$AS.bestaetigt_am|date_format:"%d.%m. um %H:%M"} von {$AS.bestaetigt_von}{/if}</span></div></td>
   </tr>
+
   <tr>
     <td style="padding:0;width:auto;"><label style="width:180px;">Abgeschlossen:</label></td>
     <td style="padding:0;width:auto;" class="status_{$AS.abgeschlossen}">
@@ -85,7 +93,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
       <img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></div></td>
   </tr>
   <tr>
-    <td style="padding:0;"><label style="width:180px;">Status:</label></td>
+    <td style="padding:0;"><label style="width:180px;">Aktueller Status:</label></td>
     <td style="padding:0;"><div class="itxt itxt2col">{if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}</div></td>
   </tr>
   {if $AS.angeboten_von}
@@ -305,14 +313,28 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 {/if}
 
 {if 1}
-    {* include file="umzugsformular_leistungsauswahl.tpl.read.html" *}
-    {if !empty($Reklamationen)}
+
+    {if $AID > 0 and !empty($Reklamationen)}
     {assign var="showReklas" value="1"}
     {else}
     {assign var="showReklas" value="0"}
     {/if}
+
+    {if $AID > 0}
+    {assign var="aidExists" value="1"}
+    {else}
+    {assign var="aidExists" value="0"}
+    {/if}
     <div style="margin-top:1.5rem">
-    {include file="admin_umzugsformular_leistungsauswahl.tpl.html" showLiefermenge="1" showReklas="1"}
+
+      {include file="admin_umzugsformular_leistungsauswahl.tpl.html"
+      showLiefermenge="$aidExists"
+      showAddLeistung="1"
+      showReklas="$showReklas"
+      PreiseAnzeigen="$PreiseAnzeigen"
+      addTeilmengen="0"
+      showTeilmengen="0"
+      }
     </div>
 {/if}
 

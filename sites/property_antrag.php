@@ -1,8 +1,9 @@
 <?php 
-require_once($InclBaseDir."php_json.php");
-require_once("sites/umzugsantrag_stdlib.php");
+require_once $InclBaseDir . 'php_json.php';
+require_once 'sites/umzugsantrag_stdlib.php';
+require_once $InclBaseDir . 'umzugsgruppierungen.lib.php';
 
-if (strpos($user["gruppe"], "kunde_report") === false && strpos($user["adminmode"], "superadmin") === false) {
+if (strpos($user['gruppe'], 'kunde_report') === false && strpos($user['adminmode'], 'superadmin') === false) {
     if ($user['gruppe'] === 'admin' && strpos($_SERVER['REQUEST_URI'], '=pantrag')) {
         $_alt = str_replace('=pantrag', '=aantrag', $_SERVER['REQUEST_URI']);
         Header('Location: ' . $_alt);
@@ -11,16 +12,16 @@ if (strpos($user["gruppe"], "kunde_report") === false && strpos($user["adminmode
     die("UNERLAUBTER ZUGRIFF!<br>$_lnk");
 }
 
-require_once($InclBaseDir."umzugsantrag.inc.php");
-require_once($InclBaseDir."umzugsmitarbeiter.inc.php");
-require_once($InclBaseDir."umzugsanlagen.inc.php");
-require_once($InclBaseDir."leistungskatalog.inc.php");
-require_once($InclBaseDir."dienstleister.inc.php");
+require_once $InclBaseDir.'umzugsantrag.inc.php';
+require_once $InclBaseDir.'umzugsmitarbeiter.inc.php';
+require_once $InclBaseDir.'umzugsanlagen.inc.php';
+require_once $InclBaseDir.'leistungskatalog.inc.php';
+require_once $InclBaseDir.'dienstleister.inc.php';
 
-$ATConf = &$_CONF["umzugsanlagen"];
-$ASConf = &$_CONF["umzugsantrag"];
-$MAConf = &$_CONF["umzugsmitarbeiter"];
-$LKConf = &$_CONF["leistungskatalog"];
+$ATConf = &$_CONF['umzugsanlagen'];
+$ASConf = &$_CONF['umzugsantrag'];
+$MAConf = &$_CONF['umzugsmitarbeiter'];
+$LKConf = &$_CONF['leistungskatalog'];
 
 $Tpl = new myTplEngine();
 
@@ -50,83 +51,91 @@ $Tpl->assign('lkmByIdJson', json_encode($lkmById) );
 
 // Get ID, falls Antrag bereits vorhanden
 $creator = 'property';
-$AID = getRequest("id",'');
-$export = getRequest("export",'');
-if (empty($AID)) $AID = (!empty($_POST["AS"]["aid"]) ? $_POST["AS"]["aid"] : (!empty($_GET["AS"]["aid"]) ? $_GET["AS"]["aid"] : ''));
+$AID = getRequest('id','');
+$export = getRequest('export','');
+if (empty($AID)) {
+    $AID = (!empty($_POST['AS']['aid']) ? $_POST['AS']['aid'] : (!empty($_GET['AS']['aid']) ? $_GET['AS']['aid'] : ''));
+}
 
 $AS = new ItemEdit($ASConf, $connid, $user, $AID);
 $MA = new ItemEdit($MAConf, $connid, $user, false);
-$TplMaListItem = array("ID"=>1, "nachname"=>"", "vorname"=>"", "ort"=>"", "gebaeude"=>"", "raumnr"=>"");
+
+$TplMaListItem = array('ID'=>1, 'nachname'=>"", 'vorname'=>"", 'ort'=>"", 'gebaeude'=>"", 'raumnr'=>"");
 $PreiseAnzeigen = ($user['darf_preise_sehen'] === 'Ja') ? 1 : 0;
 $Tpl->assign('PreiseAnzeigen', $PreiseAnzeigen);
+
 // If AID: Bearbeitungsformular mit DB-Daten
 if ($AID) {
 	$AS->loadDbdata();
 	// print_r($AS->arrDbdata);
 	$AS->dbdataToInput();
-	$sql = "SELECT mid FROM `".$MAConf["Table"]."` WHERE aid = ".intval($AID);
+	$sql = "SELECT mid FROM `".$MAConf['Table']."` WHERE aid = ".intval($AID);
 	$aMIDs = $db->query_rows($sql);
 
 	$iNumMIDs = count($aMIDs);
 	for($i = 0; $i < $iNumMIDs; $i++) {
-            $MID = $aMIDs[$i]["mid"];
+            $MID = $aMIDs[$i]['mid'];
             $MA = new ItemEdit($MAConf, $connid, $user, $MID);
             $MA->dbdataToInput();
             $MAItems[$i] = $MA->arrInput;
 
-            $raumdaten = get_raumdaten_byGER($MAItems[$i]["zgebaeude"], $MAItems[$i]["zetage"], $MAItems[$i]["zraumnr"]);
-            $raum_ma_fix = get_arbeitsplatz_belegung($raumdaten["id"], $apnr=false);
-            $raum_ma_hin = get_arbeitsplatz_hinzuege($raumdaten["id"], $apnr=false);
+            $raumdaten = get_raumdaten_byGER($MAItems[$i]['zgebaeude'], $MAItems[$i]['zetage'], $MAItems[$i]['zraumnr']);
+            $raum_ma_fix = get_arbeitsplatz_belegung($raumdaten['id'], $apnr=false);
+            $raum_ma_hin = get_arbeitsplatz_hinzuege($raumdaten['id'], $apnr=false);
 
             $count_ma_fix = (is_array($raum_ma_fix) && count($raum_ma_fix)) ? count($raum_ma_fix) : 0;
             $count_ma_hin = (is_array($raum_ma_hin) && count($raum_ma_hin)?count($raum_ma_hin):0);
             $count_ma_all = $count_ma_fix+$count_ma_hin;
 
             if ($count_ma_all) {
-                    $isCritical = ($raumdaten["raum_flaeche"] / 10) < $count_ma_all;
+                    $isCritical = ($raumdaten['raum_flaeche'] / 10) < $count_ma_all;
             } else $isCritical = false;
 
-            $MAItems[$i]["critical_status_index"] = ($isCritical ? 1 : 0);
-            $MAItems[$i]["critical_status_info"] = intval($raumdaten["raum_flaeche"])."qm: ".$count_ma_fix."Fix + ".$count_ma_hin."Hin";
-            $MAItems[$i]["critical_status_img"] = ($isCritical ? "warning_triangle.png" : "thumb_up.png");
+            $MAItems[$i]['critical_status_index'] = ($isCritical ? 1 : 0);
+            $MAItems[$i]['critical_status_info'] = (int)$raumdaten['raum_flaeche'].'qm: '.$count_ma_fix.'Fix + '.$count_ma_hin.'Hin';
+            $MAItems[$i]['critical_status_img'] = ($isCritical ? 'warning_triangle.png' : 'thumb_up.png');
 	}
-        $sql = "SELECT dokid FROM `".$ATConf["Table"]."` WHERE aid = ".intval($AID)
-              ." or token = " . $db->quote($AS->arrDbdata['token']);
-        $aATs = $db->query_rows($sql);
-	echo $db->error();
 
-	$iNumAnlagen = count($aATs);
-	for($i = 0; $i < $iNumAnlagen; $i++) {
-		$DOKID = $aATs[$i]["dokid"];
-		$AT = new ItemEdit($_CONF["umzugsanlagen"], $connid, $user, $DOKID);
-		$AT->dbdataToInput();
-		$aAtItems[$i] = $AT->arrInput;
-		$aAtItems[$i]["datei_link"] = $MConf["WebRoot"]."attachements/".$AT->arrInput["dok_datei"];
-		$aAtItems[$i]["datei_groesse"] = format_file_size($AT->arrInput["dok_groesse"]);
-		
-	}
+    $baseAID = $AS->arrDbdata['ref_aid'] ?: $AID; // $AS->arrDbdata['ref_aid'] ?: $AID;
+
+    $aAtItems = getAttachements($AS->arrDbdata, 0);
+    $aAtIntItems = getAttachements($AS->arrDbdata, 1);
+    $aGroupItems = getGruppierungen($baseAID);
+    $aReklas = getReklamationenByAid($baseAID);
+    $aTeillieferungen = getTeillieferungenByAid($baseAID);
+    $aAllOrderedLeistungen = getAllOrderedLeistungenByUid(
+        $AS->arrDbdata['antragsteller_uid'],
+        [
+            'WithStatus' => [ 'abgeschlossen' ],
+            'WithLeistungsart' => [ 'Artikel' ]
+        ]
+    );
+
+    $aLSItems = getLieferscheineByAid($AID, ['onlySigned' => true]);
+    $aRueckholLeistungen = getRueckholLeistungen();
+
 } else {
     // else: lade Eingabeformular
     $defaultAS = array(
-        "vorname" => $user["vorname"],
-        "name" => $user["nachname"],
-        "fon" => $user["fon"],
-        "email"=> $user["email"],
-        "ort" => $user["standort"],
-        "gebaeude" => $user["gebaeude"]
+        'vorname' => $user['vorname'],
+        'name' => $user['nachname'],
+        'fon' => $user['fon'],
+        'email'=> $user['email'],
+        'ort' => $user['standort'],
+        'gebaeude' => $user['gebaeude']
     );
     $AS->loadInput($defaultAS, false);
     $MA->loadInput(array(), false);
 }
-$Tpl->assign("AS", array($AS->arrInput));
+$Tpl->assign('AS', array($AS->arrInput));
 
 // Lade Dienstleister
 $dl_id = $AS->arrInput['dienstleister_id'];
-$DL = new ItemEdit($_CONF["dienstleister"], $connid, $user, $dl_id);
+$DL = new ItemEdit($_CONF['dienstleister'], $connid, $user, $dl_id);
 $DL->loadDbdata();
 $DL->dbdataToInput();
-$Tpl->assign("DL", $DL->arrInput);
-$Tpl->assign("MAConf", $MAConf['Fields']);
+$Tpl->assign('DL', $DL->arrInput);
+$Tpl->assign('MAConf', $MAConf['Fields']);
 
 $AS->arrInput['gebaeude_text'] = '';
 $AS->arrInput['von_gebaeude_text'] = '';
@@ -154,18 +163,18 @@ if ((int)$AS->arrInput['antragsteller_uid']) {
     $AS->arrInput['kid'] = $_kid;
 }
 
-$Tpl->assign("s", $s);
+$Tpl->assign('s', $s);
 $Tpl->assign('AID', $AID);
 $Tpl->assign('AIDJson', json_encode($AID));
-$Tpl->assign("ASConf", $ASConf['Fields']);$Tpl->assign("AS", $AS->arrInput);
-$Tpl->assign("ASJson", json_encode($AS->arrInput));
-$Tpl->assign("umzugsstatus", $AS->arrInput['umzugsstatus']);
-$Tpl->assign("umzugsstatusJson", json_encode($AS->arrInput['umzugsstatus']));
-$Tpl->assign("antragsstatus", $AS->arrInput['antragsstatus']);
-$Tpl->assign("antragsstatusJson", json_encode($AS->arrInput['antragsstatus']));
-$Tpl->assign("creator", $creator);
-$Tpl->assign("creatorJson", json_encode($creator));
-$Tpl->assign("user", $user);
+$Tpl->assign('ASConf', $ASConf['Fields']);$Tpl->assign('AS', $AS->arrInput);
+$Tpl->assign('ASJson', json_encode($AS->arrInput));
+$Tpl->assign('umzugsstatus', $AS->arrInput['umzugsstatus']);
+$Tpl->assign('umzugsstatusJson', json_encode($AS->arrInput['umzugsstatus']));
+$Tpl->assign('antragsstatus', $AS->arrInput['antragsstatus']);
+$Tpl->assign('antragsstatusJson', json_encode($AS->arrInput['antragsstatus']));
+$Tpl->assign('creator', $creator);
+$Tpl->assign('creatorJson', json_encode($creator));
+$Tpl->assign('user', $user);
 $userForJson = $user;
 unset($userForJson['pw']);
 unset($userForJson['authentcode']);
@@ -173,17 +182,62 @@ unset($userForJson['authentcode']);
 $Tpl->assign('userJson', json_encode($userForJson));
 
 //die('<pre>' . print_r($AS->arrInput,1) . '</pre>');
-$Tpl->assign("propertyName", $propertyName);
+$Tpl->assign('propertyName', $propertyName);
 
 if (!empty($MAItems) && count($MAItems)) {
-    $Tpl->assign("Mitarbeiterliste", $MAItems);
+    $Tpl->assign('Mitarbeiterliste', $MAItems);
 }
 if (!empty($aAtItems) && count($aAtItems)) {
-    $Tpl->assign("UmzugsAnlagen", $aAtItems);
+    $Tpl->assign('UmzugsAnlagen', $aAtItems);
 }
 
+if (!empty($aAtIntItems) && count($aAtIntItems)) {
+    $Tpl->assign('UmzugsAnlagenIntern', $aAtIntItems);
+} else {
+    $Tpl->assign('UmzugsAnlagenIntern', []);
+}
+
+if (!empty($aLSItems) && count($aLSItems)) {
+    $Tpl->assign('UmzugLieferscheine', $aLSItems);
+} else {
+    $Tpl->assign('UmzugLieferscheine', []);
+}
+
+if (!empty($aGroupItems) && count($aGroupItems)) {
+    $Tpl->assign('UmzugsGruppierungen', $aGroupItems);
+}
+
+$aids = array_map(function($a) { return $a['aid']; }, $aGroupItems);
+if (!empty($aids) && count($aids)) {
+    $Tpl->assign('UmzugsGruppierungsIds', implode(',', $aids));
+}
+
+if (!empty($aReklas) && count($aReklas)) {
+    $Tpl->assign('Reklamationen', $aReklas);
+} else {
+    $Tpl->assign('Reklamationen', []);
+}
+
+if (!empty($aTeillieferungen) && count($aTeillieferungen)) {
+    $Tpl->assign('Teillieferungen', $aTeillieferungen);
+} else {
+    $Tpl->assign('Teillieferungen', []);
+}
+
+if (!empty($aAllOrderedLeistungen) && count($aAllOrderedLeistungen)) {
+    $Tpl->assign('AllOrderedLeistungen', $aAllOrderedLeistungen);
+} else {
+    $Tpl->assign('AllOrderedLeistungen', []);
+}
+if (!empty($aRueckholLeistungen) && count($aRueckholLeistungen)) {
+    $Tpl->assign('RueckholLeistungen', $aRueckholLeistungen);
+} else {
+    $Tpl->assign('RueckholLeistungen', []);
+}
+
+
 // Erzeuge GeraeteListe (Array) für Smarty-Template
-$CsvLines = explode("\n", $AS->arrInput["geraete_csv"]);
+$CsvLines = explode("\n", $AS->arrInput['geraete_csv']);
 $aGItems = array();
 $aGCols = array();
 $iNumCsvLines = count($CsvLines);
@@ -191,14 +245,14 @@ for ($i = 0; $i < $iNumCsvLines; $i++) {
     $aGCols = explode("\t", $CsvLines[$i]);
     if (count($aGCols) != 4) continue;
     $aGItems[$i] = array(
-        "Art" => $aGCols[0],
-        "Nr" => $aGCols[1],
-        "Von" => $aGCols[2],
-        "Nach" => $aGCols[3]
+        'Art' => $aGCols[0],
+        'Nr' => $aGCols[1],
+        'Von' => $aGCols[2],
+        'Nach' => $aGCols[3]
     );
 }
 if (!empty($aGItems) && count($aGItems)) {
-    $Tpl->assign("Geraeteliste", $aGItems);
+    $Tpl->assign('Geraeteliste', $aGItems);
 }
 
 $SumBase = 'MH';
@@ -250,11 +304,15 @@ foreach($aLItems as &$_it) {
 //echo '#'.__LINE__ . ' Gesamtsumme: ' . $Gesamtsumme . '<br>';
 //die('<pre>' . print_r($aLItems,1) . '</pre>');
 
-if (!empty($aLItems) && count($aLItems)) $Tpl->assign("Umzugsleistungen", $aLItems);
-$Tpl->assign("Gesamtsumme", $Gesamtsumme);
+if (!empty($aLItems) && count($aLItems)) {
+    $Tpl->assign('Umzugsleistungen', $aLItems);
+} else {
+    $Tpl->assign('Umzugsleistungen', []);
+}
+$Tpl->assign('Gesamtsumme', $Gesamtsumme);
 
-$mainmenu = "Class-Active-Umzug"; //Umzug" xclass="liActive
-$topmenu = implode("", file($MConf["AppRoot"]."/sites/mitarbeiter_topmenu.tpl.html"));
+$mainmenu = 'Class-Active-Umzug'; //Umzug" xclass="liActive
+$topmenu = implode('', file($MConf['AppRoot'].'/sites/mitarbeiter_topmenu.tpl.html'));
 
 $AS->loadDbdata();
 
@@ -272,7 +330,7 @@ if (in_array($AS->arrDbdata['umzugsstatus'], array('temp', 'angeboten', 'zurueck
 	$body_content = $Tpl->fetch('property_umzugsformular.tpl.read.html');
 }
 
-//$body_content = implode("", file($MConf["AppRoot"].$MConf["Tpl_Dir"]."umzugsformular.tpl.html"));
+//$body_content = implode('', file($MConf['AppRoot'].$MConf['Tpl_Dir'].'umzugsformular.tpl.html'));
 if (DEBUG && basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
 	echo $body_content;
 }

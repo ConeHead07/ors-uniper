@@ -10,14 +10,12 @@ $errors = [];
 $data = compact('aid', 'numGelesen');
 
 function bmResponseError(int $aid, array $errors = []) {
-    global $inputTeilLeistungen, $leistungsIds, $inputLeistungsMengen, $inputLeistungsMengenByLID, $log;
     header('Content-Type: application/json; charset=UTF-8');
     echo json_encode([
         'type' => 'error',
         'errors' => $errors,
         'msg' => implode("\n", $errors),
-        'aid' => $aid,
-        'log' => $log
+        'aid' => $aid
 
     ]);
     exit;

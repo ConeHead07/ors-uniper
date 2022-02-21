@@ -61,6 +61,7 @@
 .tblList thead textarea,
 .tblList thead select {
 	background-color: #e2f2ff;
+	width: 100%;
 }
 .tblList tbody {
     background:#fff;

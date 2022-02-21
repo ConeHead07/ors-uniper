@@ -58,7 +58,7 @@ function blurBox(callback, hide) {
 </script>
 <!-- Removed MH in Leistungen  -->
 <h2 style="margin:0;padding:0">Leistungen</h2>
-<table class="MitarbeierItem" style="width:100%;">
+<table class="MitarbeierItem property-leistungsauswahl" style="width:100%;">
     <thead>
         <tr>
             <td>Kategorie</td>
@@ -86,8 +86,8 @@ function blurBox(callback, hide) {
     {/foreach}
     <tr id="summary">
     {if $PreiseAnzeigen}
-        <td colspan="{if $PreiseAnzeigen}6{else}4{/if}"><span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
-        {/if}
+        <td colspan="{if $PreiseAnzeigen}6{else}4{/if}"><span id="xallsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
+    {/if}
     </tr>
     </tbody>
 </table>

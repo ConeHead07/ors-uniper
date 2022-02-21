@@ -40,10 +40,22 @@
       <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Antragsdatum:</label></td>
       <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.antragsdatum|escape|date_format:"%d.%m.%Y"}</div></td>
     </tr>
+    {if !empty($AS.ref_aid)}
+    <tr>
+      <td style="padding:0;height:auto;"><label style="display:block;width:auto;">Bezieht sich auf:</label></td>
+      <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly"><a href="/?s=aantrag&id={$AS.ref_aid}">{$AS.ref_aid}</a></div></td>
+    </tr>
+    {/if}
     {if !empty($AS.reklamiert_von) or !empty($AS.reklamiert_am)}
     <tr>
       <td style="padding:0;"><label style="width:180px;">Reklamiert:</label></td>
       <td style="padding:0;" class="options-onoff"><label class="itxt itxt2col off active">{$AS.reklamiert_am} von {$AS.reklamiert_von}</label></td>
+    </tr>
+    {/if}
+    {if !empty($AS.rueckholung_von) or !empty($AS.rueckholung_am)}
+    <tr>
+      <td style="padding:0;"><label style="width:180px;">RückholAuftrag:</label></td>
+      <td style="padding:0;" class="options-onoff"><label class="itxt itxt2col off active">{$AS.rueckholung_am} von {$AS.rueckholung_von}</label></td>
     </tr>
     {/if}
     {if $AS.angeboten_am}
@@ -204,19 +216,19 @@
       {include file="admin_umzugsformular_gruppierung.tpl.html"}
   </div>
   {/if}
-    {if !empty($AS.bemerkungen)}
-    <div id="BoxBemerkungen">
-      <strong>Bemerkungen:</strong><br>
-      <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
-    </div>
-    <br>
-    {/if}
-    {if !empty($AS.lieferhinweise)}
-    <div id="BoxLieferhinweise">
-      <strong>Lieferhinweise:</strong><br>
-      <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
-    </div>
-    {/if}
+  {if !empty($AS.bemerkungen)}
+  <div id="BoxBemerkungen">
+    <strong>Bemerkungen:</strong><br>
+    <div id="BemerkungenHistorie">{$AS.bemerkungen|nl2br}</div>
+  </div>
+  <br>
+  {/if}
+  {if !empty($AS.lieferhinweise)}
+  <div id="BoxLieferhinweise">
+    <strong>Lieferhinweise:</strong><br>
+    <div id="LieferhinweiseContent">{$AS.lieferhinweise|nl2br}</div>
+  </div>
+  {/if}
 
     <div id="LoadingBar"></div>
 

@@ -51,6 +51,20 @@
     <td style="padding:0;"><div class="itxt itxt2col ireadonly">
       {if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}
     </div></td>
+
+  {if !empty($AS.rueckholung_von) or !empty($AS.rueckholung_am)}
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">RückholAuftrag:</label></td>
+    <td style="padding:0;" class="options-onoff"><label class="itxt itxt2col off active">{$AS.rueckholung_am} von {$AS.rueckholung_von}</label></td>
+  </tr>
+  {/if}
+
+  {if !empty($AS.ref_aid)}
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Bezieht sich auf:</label></td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly"><a href="/?s=pantrag&id={$AS.ref_aid}">{$AS.ref_aid}</a></div></td>
+  </tr>
+  {/if}
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
 </table>
