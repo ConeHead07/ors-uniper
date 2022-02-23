@@ -57,11 +57,16 @@
       <td style="padding:0;"><div class="itxt itxt2col ireadonly"><a href="/?s=pantrag&id={$AS.ref_aid}">{$AS.ref_aid}</a></div></td>
       </tr>
       {/if}
-      </tr>
       {if !empty($AS.rueckholung_von) or !empty($AS.rueckholung_am)}
       <tr>
         <td style="padding:0;"><label style="display:block;width:auto;">RückholAuftrag:</label></td>
         <td style="padding:0;" class="options-onoff"><label class="itxt itxt2col off active">{$AS.rueckholung_am} von {$AS.rueckholung_von}</label></td>
+      </tr>
+      {/if}
+      {if $AS.angeboten_von}
+      <tr>
+        <td style="padding:0;"><label style="display:block;width:auto;">Angeboten:</label></td>
+        <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.angeboten_am} von {$AS.angeboten_von}</div></td>
       </tr>
       {/if}
         <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
@@ -277,7 +282,6 @@
 
     $("#showRueckholungDialog").bind("click", function(e) {
       e.preventDefault();
-      alert("#260 Call showRueckholungDialog()");
       showRueckholungDialog();
       return false;
     });
