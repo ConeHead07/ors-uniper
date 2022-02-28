@@ -113,6 +113,7 @@ if ($AID) {
 
     $aLSItems = getLieferscheineByAid($AID, ['onlySigned' => true]);
     $aRueckholLeistungen = getRueckholLeistungen();
+    $aOrderedRHItems = getOrderedRueckholLeistungen($AID);
 
 } else {
     // else: lade Eingabeformular
@@ -235,6 +236,11 @@ if (!empty($aRueckholLeistungen) && count($aRueckholLeistungen)) {
     $Tpl->assign('RueckholLeistungen', []);
 }
 
+if (!empty($aOrderedRHItems)) {
+    $Tpl->assign("aOrderedRHItems", $aOrderedRHItems);
+} else {
+    $Tpl->assign("aOrderedRHItems", []);
+}
 
 // Erzeuge GeraeteListe (Array) für Smarty-Template
 $CsvLines = explode("\n", $AS->arrInput['geraete_csv']);

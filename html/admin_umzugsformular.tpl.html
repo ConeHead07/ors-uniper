@@ -364,6 +364,15 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     </fieldset>
     {/if}
 
+    {if !empty($aOrderedRHItems)}
+    <div style="margin-top:1.5rem"></div>
+    <fieldset><legend><strong>Rückholaufträge</strong></legend>
+      <div style="padding:5px">
+        {include file="admin_ordered_rueckholungen.tpl.html" baseService="aantrag" aItems=$aOrderedRHItems}
+      </div>
+    </fieldset>
+    {/if}
+
 {if !empty($UmzugsAnlagen)}
   {include file="umzugsformular_attachments.tpl.read.html"}
 {/if}

@@ -168,6 +168,7 @@ if ($AID) {
     $aTeillieferungen = getTeillieferungenByAid($baseAID);
 
     $aLSItems = getLieferscheineByAid($AID, ['onlySigned' => true]);
+    $aOrderedRHItems = getOrderedRueckholLeistungen($AID);
 	
 } else {
 	// else: lade Eingabeformular
@@ -276,6 +277,12 @@ if (!empty($aTeillieferungen) && count($aTeillieferungen)) {
     $Tpl->assign("Teillieferungen", $aTeillieferungen);
 } else {
     $Tpl->assign("Teillieferungen", []);
+}
+
+if (!empty($aOrderedRHItems)) {
+    $Tpl->assign("aOrderedRHItems", $aOrderedRHItems);
+} else {
+    $Tpl->assign("aOrderedRHItems", []);
 }
 
 

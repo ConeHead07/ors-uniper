@@ -197,6 +197,15 @@
   {include file="umzugsformular_lieferscheine.tpl.read2.html" UmzugsAnlagen=$UmzugLieferscheine internal=1}
   {/if}
 
+  {if !empty($aOrderedRHItems)}
+  <div style="margin-top:1.5rem"></div>
+  <fieldset><legend><strong>Rückholaufträge</strong></legend>
+    <div style="padding:5px">
+      {include file="admin_ordered_rueckholungen.tpl.html" baseService="pantrag" aItems=$aOrderedRHItems}
+    </div>
+  </fieldset>
+  {/if}
+
   {if 0}
   <div style="width:100%">
     {include file="admin_umzugsformular_gruppierung.tpl.html"}

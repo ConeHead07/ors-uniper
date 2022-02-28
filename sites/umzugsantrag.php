@@ -176,6 +176,7 @@ if ($AID) {
     $aReklas = getReklamationenByAid($AID);
     $aTeillieferungen = getTeillieferungenByAid($AID);
     $aLSItems = getLieferscheineByAid($AID, ['onlySigned' => true]);
+    $aOrderedRHItems = getOrderedRueckholLeistungen($AID);
 } else {
     // else: lade Eingabeformular
     $defaultAS = array(
@@ -360,6 +361,12 @@ if (!empty($aReklas) && count($aReklas)) {
     $Tpl->assign("Reklamationen", $aReklas);
 } else {
     $Tpl->assign("Reklamationen", []);
+}
+
+if (!empty($aOrderedRHItems)) {
+    $Tpl->assign("aOrderedRHItems", $aOrderedRHItems);
+} else {
+    $Tpl->assign("aOrderedRHItems", []);
 }
 
 if (!empty($aTeillieferungen) && count($aTeillieferungen)) {

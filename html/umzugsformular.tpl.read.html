@@ -180,6 +180,15 @@
   </fieldset>
   {/if}
 
+  {if !empty($aOrderedRHItems)}
+  <div style="margin-top:1.5rem"></div>
+  <fieldset><legend><strong>Rückholaufträge</strong></legend>
+    <div style="padding:5px">
+      {include file="admin_ordered_rueckholungen.tpl.html" baseService="kantrag" aItems=$aOrderedRHItems}
+    </div>
+  </fieldset>
+  {/if}
+
   <div style="margin-top:1.5rem"></div>
 <form action="?s={$s}" method="post" name="frmUmzugsantrag">
 <input type="hidden" name="AS[aid]" value="{$AS.aid}">

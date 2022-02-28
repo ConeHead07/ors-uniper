@@ -146,7 +146,14 @@ function getAllOrderedLeistungenByUid(int $uid, array $opts = []) {
 	$sql.= '
     ORDER BY a.aid, ktg.leistungskategorie, klg.Bezeichnung, klg.Farbe, klg.Groesse
 ';
-	return $db->query_rows($sql, 0, $aParams);
+
+	$rows = $db->query_rows($sql, 0, $aParams);
+    if (0) {
+        $sql = $db->lastQuery;
+        echo '<pre>' . print_r(json_encode(compact('sql', 'rows'), JSON_PRETTY_PRINT), 1) . '</pre>';
+        exit;
+    }
+    return $rows;
 }
 
 
@@ -312,6 +319,41 @@ function getLieferscheineByAid(int $aid, array $opts = []) {
     }
 
     return $aRows;
+}
+
+function getOrderedRueckholLeistungen(int $AID, array $opts = []) {
+    global $db;
+
+    $sql = 'SELECT a.*, stat.Summe, stat.LeistungenBez
+            FROM mm_umzuege a 
+            JOIN (
+				SELECT a.aid, 
+				 GROUP_CONCAT(
+				 	CONCAT(
+				 		lk.Bezeichnung,
+				 		IF (IFNULL(lk.Farbe, "") != "", CONCAT(", ", lk.Farbe), ""),
+				 		IF (IFNULL(lk.Groesse, "") != "", CONCAT(", ", lk.Groesse), "")
+				 	) ORDER BY leistungskategorie SEPARATOR ";"
+				  ) AS LeistungenBez,
+				 SUM(IFNULL(lk.preis_pro_einheit,0) * IFNULL(al.menge_mertens, 1) * IFNULL(al.menge2_mertens,1)) AS Summe
+				FROM mm_umzuege a
+				JOIN mm_umzuege_leistungen al ON (a.aid = al.aid)
+				JOIN mm_leistungskatalog lk ON (al.leistung_id = lk.leistung_id)
+				JOIN mm_leistungskategorie ktg ON (lk.leistungskategorie_id = ktg.leistungskategorie_id)
+				WHERE leistungskategorie LIKE :rueckholung AND ref_aid = ' . $AID . '
+				GROUP BY a.aid
+            ) AS stat ON (a.aid = stat.aid)
+            WHERE ref_aid = ' . $AID . '
+            ORDER BY aid DESC';
+
+    $aRows = $db->query_rows($sql, 0, [ 'rueckholung' => "Rückholung" ]);
+    if (0) {
+        $sql = $db->lastQuery;
+        echo '<pre>' . print_r(json_encode(compact('sql', 'aRows'), JSON_PRETTY_PRINT), 1) . '</pre>';
+        exit;
+    }
+    return $aRows;
+
 }
 
 function getRueckholLeistungen() {

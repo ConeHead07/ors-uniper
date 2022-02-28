@@ -178,6 +178,15 @@
     {include file="admin_umzugsformular_leistungsauswahl.tpl.html"}
 {/if}
 
+  {if !empty($aOrderedRHItems)}
+  <div style="margin-top:1.5rem"></div>
+  <fieldset><legend><strong>Rückholaufträge</strong></legend>
+    <div style="padding:5px">
+      {include file="admin_ordered_rueckholungen.tpl.html" baseService="pantrag" aItems=$aOrderedRHItems}
+    </div>
+  </fieldset>
+  {/if}
+
 {include file="umzugsformular_attachments.tpl.read.html"}
 
 <!-- <div style="color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="addMa();return false;">Weiteren Mitarbeiter ausw&auml;hlen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></div><br> -->
