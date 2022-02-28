@@ -48,15 +48,15 @@ function getLeistungsAuswahl(array $opts = []) {
             . ' FROM mm_leistungskategorie k ' . $NL
             . ' LEFT JOIN ( ' . $NL
             . '   SELECT * ' . $NL
-            . '   FROM mm_leistungskatalog l ' . $NL
-            . '   WHERE l.aktiv = "Ja"' . $NL
-            . ($AID
-                ? ' AND (IFNULL(l.angebots_aid, "") = "" OR l.angebots_aid = ' . $db::quote($AID) . ') ' . $NL
-                : ' AND IFNULL(l.angebots_aid, "") = "" ' . $NL
+            . '   FROM mm_leistungskatalog t ' . $NL
+            . '   WHERE t.aktiv = "Ja"' . $NL
+            . ($AID && 1
+                ? ' AND (IFNULL(t.angebots_aid, "") = "" OR t.angebots_aid = ' . $db::quote($AID) . ') ' . $NL
+                : ' AND IFNULL(t.angebots_aid, "") = "" ' . $NL
+              )
             . ' ) l ON k.leistungskategorie_id = l.leistungskategorie_id' . $NL
             . ' LEFT JOIN mm_leistungspreismatrix m ON l.leistung_id = m.leistung_id ' . $NL
             . ' WHERE k.leistungsart = "Angebot" ' . $NL
-            )
             ;
         $rowsA = $db->query_rows($sqlA, 0);
 //        echo '<pre>' . json_encode(compact('sqlA', 'rowsA', JSON_PRETTY_PRINT)) . '</pre>';

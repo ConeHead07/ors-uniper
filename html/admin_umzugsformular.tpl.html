@@ -444,17 +444,19 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
               title="Diese Dateianhänge sind für den Kunden Nicht sichtbar">Interne Dokumente<br>öffnen / hochladen</button>
       {/if}
 
+      {if $AS.umzugsstatus eq "beantragt" or $AS.umzugsstatus eq "abgeschlossens"}
       <button
               type="button" class="btn blue" style="float:right;margin-left:5px;"
               onclick="umzugsantrag_add_lieferschein()"
               value="Quittierten Lieferschein hinzufügen">Quittierten Lieferschein<br>hinzufügen</button>
+      {/if}
     {/if}
   </div>
 <br>
 {if !empty($AID) and $AS.umzugsstatus ne "temp"}
   <div style="margin-top:2.5rem;"><strong>Status mit Benachrichtung setzen: </strong></div>
   <div class="statusConsole">
-  {if $AS.umzugsstatus eq "beantragt" or $AS.umzugsstatus eq "angeboten"}
+  {if $AS.umzugsstatus eq "beantragt" or $AS.umzugsstatus eq "genehmigt"}{*  or $AS.umzugsstatus eq "angeboten" *}
     <button
           id="btnStatGeprBackToUser" type="submit"
           class="{if $AS.umzugsstatus eq 'beantragt' or $AS.umzugsstatus eq 'erneutpruefen' or $AS.umzugsstatus eq 'angeboten'}btn blue{else}cssHide{/if}"
@@ -524,7 +526,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
          onclick="umzugsantrag_set_status('abgeschlossen','Storniert')"
           value="Auftrag Stornieren">Auftrag<br>Stornieren</button>
   {/if}
-    {if $AS.service eq "Ja" && empty($AS.ref_aid)}
+    {if $AS.service eq "Ja" && empty($AS.ref_aid) and $AS.umzugsstatus ne "angeboten" and $AS.umzugsstatus ne "temp"}
     <button type="button" class="btn red" id="showReklaDialog">Leistungen<br>reklamieren</button>
     <button type="button" class="btn green" id="showTeillieferungDialog">Teil-Lieferung<br>anlegen</button>
     {/if}
