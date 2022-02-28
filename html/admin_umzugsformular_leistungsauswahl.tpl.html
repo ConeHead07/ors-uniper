@@ -70,17 +70,42 @@
     .table-leistungen td.with-input {
         padding:0;
     }
+    
+    table.table-leistungen .col.field-kategorie,
+    table.table-leistungen th.col.field-kategorie,
+    table.table-leistungen td.col.field-kategorie {
+        width: 25%;
+        max-widht: 250px;
+        box-sizing: border-box;
+        padding: 0;
+    }
+    table.table-leistungen .col.preis,
+    table.table-leistungen .col.menge,
+    table.table-leistungen .col.sum,
+    table.table-leistungen th.col.preis,
+    table.table-leistungen th.col.menge,
+    table.table-leistungen th.col.sum,
+    table.table-leistungen td.col.preis,
+    table.table-leistungen td.col.menge,
+    table.table-leistungen td.col.sum {
+        width: 10%;
+        max-widht: 120px;
+        box-sizing: border-box;
+        padding: 0;
+        padding-right: 3px;
+        text-align: right;
+    }
+    table.table-leistungen th.col.field-kategorie,
+    table.table-leistungen th.col.field-leistung {
+        text-align: left;
+        padding-left: 3px;
+    }
+
+
 </style>
 {/literal}
 <div class="widget-leistungsauswahl" id="widgetLA_{$uniqueId}" data-src="admin/umzugsformular/leistungsauswahl/tpl/html" data-test="2" style="display:block;margin-top:15px;">
     <!-- admin_umzugsformular_leistungsauswahl.tpl.html -->
-    {if $showAddLeistung}
-    <div>
-    <span style="margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;"
-          class="btn-add-leistung" data-test="3">
-    Leistung hinzuf&uuml;gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
-    </div>
-    {/if}
     <h2 style="margin:0">{if empty($title)}Bestellte Leistungen{else}{$title}{/if}</h2>
     <table class="table-leistungen MitarbeierItem" style="width:100%;">
         <thead>
@@ -118,8 +143,8 @@
                 {/if}
 
                 {if $PreiseAnzeigen}
-                <th class="col col-preis preis">Preis</th>
-                <th class="col field-sum sum">Gesamt</th>
+                <th class="col col-preis field-preis_pro_einhei preis">Preis</th>
+                <th class="col field-gesamtpreis sum">Gesamt</th>
                 {/if}
             </tr>
         </thead>
@@ -202,15 +227,29 @@
                 {/if}
 
                 {if $PreiseAnzeigen}
-                <td class="preis">{if $L.preis_pro_einheit}{$L.preis_pro_einheit|number_format:2:",":"."} €{/if}</td>
-                <td class="sum">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|number_format:2:",":"."} €{/if}</td>
+                <td class="col field-preis_pro_einheit preis">{if $L.preis_pro_einheit}{$L.preis_pro_einheit|number_format:2:",":"."} €{/if}</td>
+                <td class="col field-gesamtpreis sum">{if is_numeric($L.gesamtpreis)}{$L.gesamtpreis|number_format:2:",":"."} €{/if}</td>
                 {assign var="Gesamtsumme" value=$Gesamtsumme + $L.gesamtpreis}
                 {/if}
             </tr>
         {/foreach}
             <tr id="summary">
-                {if $PreiseAnzeigen}
-                <td colspan="{$colspan}"><span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span><span style="margin-left:5px">&euro;</span></td>
+                {if $showAddLeistung || $PreiseAnzeigen}
+                <td colspan="{$colspan}">
+
+                    {if $showAddLeistung}
+                    <span style="float:left;margin-bottom:2px;color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;"
+                          class="btn-add-leistung" data-test="3">
+                    Leistung hinzuf&uuml;gen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></span>
+                    {/if}
+                    {if $PreiseAnzeigen}
+                    <div style="display:inline-block;float:right">
+                    <span id="allsum" data-allsum="0">{$Gesamtsumme|escape|number_format:2:",":"."}</span>
+                    <span style="margin-left:5px">&euro;</span>
+                    </div>
+                    {/if}
+                    <span style="clear: both"></span>
+                </td>
                 {else}
                 <td colspan="{$colspan}" style="display:none;"></td>
                 {/if}
@@ -552,9 +591,13 @@
                     }
 
                     if (!IstIndividuellesAngebot) {
-                        $( obj ).html( data.leistung );
+                        $( obj )
+                            .toggleClass("with-input", false)
+                            .html( data.leistung );
 
-                        objPreis.html( numberFormat(data.preis_pro_einheit, 2, ",") );
+                        objPreis
+                            .toggleClass("with-input", false)
+                            .html( numberFormat(data.preis_pro_einheit, 2, ",") );
 
                         if ( objInpM.length) {
                             console.log("#255");
@@ -567,11 +610,15 @@
                         var iLeistungMng = data.menge_mertens;
 
                         row.data("doNotOpenOnFocus", 1);
-                        $( obj ).html("").append(
+                        $( obj )
+                            .toggleClass("with-input", true)
+                            .html("")
+                            .append(
                           $("<input/>")
                               .attr({
                                   name: "L[Bezeichnung][]",
                               })
+                              .css({ height: "100%" })
                               .addClass("Bezeichnung")
                               .val( sLeistungTxt )
                               .bind("change input", function(e) {
@@ -593,13 +640,17 @@
                         );
                         objInpM.val(iLeistungMng);
 
-                        objPreis.html("").append(
+                        objPreis
+                            .toggleClass("with-input", true)
+                            .html("")
+                            .append(
                             $("<input/>")
                                 .attr({
                                     type: "number",
                                     name: "L[preis_pro_einheit][]",
                                     min: 0
                                 })
+                                .css({ height: "100%" })
                                 .addClass("menge preis preis_pro_einheit")
                                 .val( 1 )
                                 .bind("change", function(e) {
