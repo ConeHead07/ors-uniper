@@ -28,6 +28,14 @@ $id = getRequest("id", "");
 $name = getRequest("name","");
 $value = getRequest("value","");
 $SELF = basename($_SERVER["PHP_SELF"]);
+$acceptedResponseFormat = 'xml';
+$reID = 0;
+
+if (!empty(getRequest('AcceptedResponseFormat', ''))) {
+    $acceptedResponseFormat = getRequest('AcceptedResponseFormat', '');
+} elseif (isset($_SERVER['HTTP_ACCEPT'])) {
+    $acceptedResponseFormat = $_SERVER['HTTP_ACCEPT'];
+}
 
 switch($cmd) {
 	case "mapflege_speichern":
@@ -138,8 +146,17 @@ switch($cmd) {
 	break;
 	
 	case "status":
-//	echo "#".__LINE__." ".basename(__FILE__)." status: $id, $name, $value<br>\n";
-	$ua_errors = umzugsantrag_fehler();
+        if ($name === 'genehmigt') {
+            $aCheckOptions = [
+                'CheckLeistungen' => false,
+                'CheckAngeboteneLeistungen' => false,
+                'CheckMitarbeiter' => false,
+                'CheckLiefertermin' => false,
+            ];
+            $ua_errors = umzugsantrag_fehler($aCheckOptions);
+        } else {
+            $ua_errors = umzugsantrag_fehler();
+        }
 	if (!$ua_errors) {
 		$reID = umzugsantrag_speichern();
 		if ($reID) {
@@ -191,6 +208,20 @@ if ($msg || $error) {
 	}
 }
 
+if (preg_match('/\bjson\b/i', $acceptedResponseFormat) && !preg_match('/\bxml\b/i', $acceptedResponseFormat)) {
+    header('Content-Type: application/json; charset=UTF-8');
+
+    $type = empty($error) ? 'success' : 'error';
+    $success = empty($error);
+    $Update = [
+      'id' => !empty($boxid) ? $boxid : 'frmEditData',
+        'data' => '-' . $msg . ':' . $error . 'H:' . $formHtml
+    ];
+    $id = !empty($id) ? $id : (!empty($reID) ? $reID : 0);
+    echo json_encode(compact('type', 'success', 'id', 'reID', 'msg', 'error', 'Update', 'LoadScript'), JSON_PRETTY_PRINT);
+    exit;
+}
+
 if (!defined("NEWLINE")) define("NEWLINE", "\n");
 if (!defined("TAB")) define("TAB", "\n");
 header("Content-Type: text/xml; charset=UTF-8");
@@ -204,3 +235,4 @@ if (!empty($LoadScript)) echo TAB.'<LoadScript language="javascript" src="cdata"
 //echo TAB.'<POST><![CDATA['.print_r($_POST,1).']]></POST>'.NEWLINE;
 //echo TAB.'<GET><![CDATA['.print_r($_GET,1).']]></GET>'.NEWLINE;
 echo '</Result>';
+

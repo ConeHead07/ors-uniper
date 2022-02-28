@@ -155,8 +155,10 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
   <div  style="margin-top: 2rem">
 <div style="float:left">
 <h2 style="margin:0;">Lieferdaten</h2>
+  <button id="btnSelectCustomer" type="button"> Kunde auswählen </button>
 <input type="hidden" name="AS[aid]" value="{$AS.aid}">
 <input type="hidden" name="AS[token]" value="{$AS.token}">
+  <input type="hidden" value="{$AS.antragsteller_uid|escape}" name="AS[antragsteller_uid]">
 <table class="form-table" >
   <tr>
       <td style="padding:0;"><label for="mitarbeiter" style="width:180px;">Vor{if $ASConf.vorname.required}<span class="required">*</span>{/if} &amp; Nachname<span class="right">{if $ASConf.name.required}<span class="required">*</span>{/if}</span></label></td>
@@ -335,6 +337,12 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
       addTeilmengen="0"
       showTeilmengen="0"
       }
+      <div>
+      <input type="hidden" name="AS[autocalc_ref_mengen]" value="0">
+      <label style="background:none;border:0;width:100%;height:auto;color:black;text-align:left;" for="check_autocalc_ref_mengen">
+        <input id="check_autocalc_ref_mengen" {if !empty($AS.autocalc_ref_mengen)}checked{/if} type="checkbox" name="AS[autocalc_ref_mengen]" value="1">
+        Mit Katalog-Leistungen verknüpfte Leistungen (Power-Cube, DGUV, Transport, Rabatt) automatisch übernehmen</label>
+      </div>
     </div>
 {/if}
 
@@ -381,10 +389,12 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
       <strong>Bemerkung hinzufügen:</strong><br>
       <textarea class="iarea bemerkungen" name="AS[bemerkungen]" style="resize: vertical;overflow: auto"></textarea>
   </div>
+    {if !empty($AID)}
     <button class='btn blue'
             onclick="umzugsantrag_add_bemerkung()"
             style="cursor: pointer"
             type="button">Bemerkung hinzufügen</button>
+    {/if}
 
 {if ($AS.umzugsstatus ne "abgeschlossen" and $AS.umzugsstatus ne "storniert" and $AS.umzugsstatus ne "abgelehnt")
     or !empty($AS.lieferhinweise)}
@@ -402,32 +412,46 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 
 <div style="margin-top:1.5rem;width:100%;margin-top:2.5rem;">
   <div>
-  <input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;"><!--
- --><button type="submit" class="btn grey"
-           onclick="umzugsantrag_save()"
-           title="Speichern ohne Statusänderung.
-Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
-            value="Speichern ohne Status">Speichern ohne Status<br>Neue Bemerkung senden</button><!--
- -->{if 0}<input type="submit" class="btn blue d-none" style="margin-right:5px;"
-           onclick="umzugsantrag_reload()"
-           value="Neu laden">{/if}<!--
- --><button type="submit" class="btn blue" style="float:right;margin-left:5px;"
-           onclick="umzugsantrag_add_attachement()"
-           title="Diese Dateianhänge sind auch für den Kunden sichtbar">Dokumente<br>öffnen / hochladen</button>
-{if $creator == "mertens"}
-  <button
-          type="button" class="btn blue" style="float:right;margin-left:5px;"
-          onclick="umzugsantrag_add_internal_attachement()"
-          title="Diese Dateianhänge sind für den Kunden Nicht sichtbar">Interne Dokumente<br>öffnen / hochladen</button>
-  {/if}
+  <input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;">
+    {if empty($AID)}
+    <button
+            id="btnAngebotSenden"
+            type="submit"
+            class="btn green"
+            title="Angebot senden"
+            value="Angeboten">Angebot<br>senden</button>
+    {/if}
+    {if !empty($AID)}
+      <button type="submit" class="btn grey"
+             onclick="umzugsantrag_save()"
+             title="Speichern ohne Statusänderung.
+  Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
+              value="Speichern ohne Status">Speichern ohne Status<br>Neue Bemerkung senden</button>
 
-  <button
-          type="button" class="btn blue" style="float:right;margin-left:5px;"
-          onclick="umzugsantrag_add_lieferschein()"
-          value="Quittierten Lieferschein hinzufügen">Quittierten Lieferschein<br>hinzufügen</button>
+      {if 0}<input type="submit" class="btn blue d-none" style="margin-right:5px;"
+             onclick="umzugsantrag_reload()"
+             value="Neu laden">
+      {/if}
+
+      <button type="submit" class="btn blue" style="float:right;margin-left:5px;"
+             onclick="umzugsantrag_add_attachement()"
+             title="Diese Dateianhänge sind auch für den Kunden sichtbar">Dokumente<br>öffnen / hochladen</button>
+
+      {if $creator == "mertens"}
+      <button
+              type="button" class="btn blue" style="float:right;margin-left:5px;"
+              onclick="umzugsantrag_add_internal_attachement()"
+              title="Diese Dateianhänge sind für den Kunden Nicht sichtbar">Interne Dokumente<br>öffnen / hochladen</button>
+      {/if}
+
+      <button
+              type="button" class="btn blue" style="float:right;margin-left:5px;"
+              onclick="umzugsantrag_add_lieferschein()"
+              value="Quittierten Lieferschein hinzufügen">Quittierten Lieferschein<br>hinzufügen</button>
+    {/if}
   </div>
 <br>
-{if $AS.umzugsstatus ne "temp"}
+{if !empty($AID) and $AS.umzugsstatus ne "temp"}
   <div style="margin-top:2.5rem;"><strong>Status mit Benachrichtung setzen: </strong></div>
   <div class="statusConsole">
   {if $AS.umzugsstatus eq "beantragt" or $AS.umzugsstatus eq "angeboten"}
@@ -531,6 +555,7 @@ Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
 </div>
 {include file="dialogs/rekla_dialog.html"}
 {include file="dialogs/teillieferung_dialog.html"}
+{include file="dialogs/kundenauswahl_dialog.html"}
 
 {literal}
 <script>
@@ -552,6 +577,19 @@ Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
       e.preventDefault();
       showReklaDialog();
       return false;
+    });
+
+    $("#btnSelectCustomer").on("click", function(e) {
+      showKundenauswahlDialog(function(result) {
+        console.log("SELECTED USER:\n" + JSON.stringify(result));
+        $(":input[name=AS\\[antragsteller_uid\\]]").val(result.uid);
+        $(":input[name=AS\\[vorname\\]]").val(result.vorname);
+        $(":input[name=AS\\[vorname\\]]").val(result.vorname);
+        $(":input[name=AS\\[name\\]]").val(result.nachname);
+        $(":input[name=AS\\[email\\]]").val(result.email);
+        $(":input[name=AS\\[fon\\]]").val(result.fon);
+        $(":input[name=AS\\[personalnr\\]]").val(result.personalnr);
+      });
     });
 
     $("#btnMarkAsRead").bind("click", function(e) {
@@ -577,6 +615,103 @@ Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
       });
 
     });
+
+    $("#btnAngebotSenden").bind("click", function(e) {
+      e.preventDefault();
+      var frm = document.forms["frmUmzugsantrag"];
+      frm.action = "umzugsantrag.php";
+      var namedArray = getNamedArrayOfForm( frm );
+      var error = umzugsantrag_errors(true);
+      console.log(Object.keys(namedArray) );
+      console.log({namedArray});
+
+      var neueAngebote = [];
+      var inputAngebote = $(frm).find(".table-leistungen tbody .row.ist-angebot input[name^=L\\[leistung_id\\]\\[]");
+      var inputLeistungen = $(frm).find(".table-leistungen tbody .row:not(.ist-angebot) :input[name^=L\\[]");
+
+      inputAngebote.each(function() {
+                var tr = $(this).closest("tr");
+                var data = tr.data();
+                if (!("leistung" in data)) {
+                  return
+                }
+                neueAngebote.push({
+                  leistung_id: data.leistung.leistung_id,
+                  kategorie_id: data.leistung.kategorie_id,
+                  Bezeichnung: data.leistung.Bezeichnung,
+                  menge_mertens: data.leistung.menge_mertens,
+                  menge2_mertens: data.leistung.menge2_mertens,
+                  preis_pro_einheit: data.leistung.preis_pro_einheit,
+                });
+              });
+
+      if (error) {
+        error = "<h4 class=\"hdErr\" style=\"color:#f00;\">Achtung - Antrag konnte nicht gesendet werden!</h4>\n"+error;
+        ErrorBox(error);
+        return false;
+      }
+
+      var url = frm.action;
+
+      var data = $(frm).find(":input[name]:not([name^=L\\[])").serialize();
+      data+= $.param({cmd: 'senden', status: 'angebot'})
+      if (inputLeistungen.length) {
+        data+= "&" + inputLeistungen.serialize();
+      }
+      if (neueAngebote.length) {
+        data+= "&" + $.param({ NeueAngebote: neueAngebote});
+      }
+      var onSuccess = function(responseData, textStatus, jqXHR) {
+        console.log("AngebotSenden onSuccess response data", { responseData, textStatus });
+        if (responseData.type === "success" & responseData.success && responseData.id) {
+          window.top.location.href = '?s=aantrag&id=' + responseData.id;
+          return;
+        }
+        alert('Fehler beim Speicher' + "\n" + (responseData.msg || "") + (responseData.error || "") );
+      };
+
+      var dataType = 'json';
+      console.log({ url, data, dataType });
+      // return;
+      umzugsantrag_loadingBar('');
+      var response = $.post(url, data, onSuccess, dataType);
+      response.always(function() {
+        console.log("AngebotSenden always()");
+        $("#LoadingBar").remove();
+      });
+
+      return;
+    });
+
+    function xxxx_umzugsantrag_send() {
+      if (!document.forms["frmUmzugsantrag"]) return false;
+      var namedArray = getNamedArrayOfForm(document.forms["frmUmzugsantrag"]);
+      var AntragSenden = true;
+      var error = umzugsantrag_errors(AntragSenden);
+      var ma = "";
+      var InputFields = false;
+
+      if (namedArray["MA[name]"]) {
+        for (var i = 0; i < namedArray["MA[name]"].length; i++) {
+          InputFields = getUmzugsItemInputFields(namedArray["MA[name]"][i]);
+        }
+      }
+
+      if (error) {
+        error = "<h4 class=\"hdErr\" style=\"color:#f00;\">Achtung - Antrag konnte nicht gesendet werden!</h4>\n"+error;
+        ErrorBox(error);
+        return false;
+      }
+
+      document.forms["frmUmzugsantrag"].action = "umzugsantrag.php";
+      frmSerializeGeraete();
+      var sData = frmSerialize(document.forms["frmUmzugsantrag"]);
+      var selector = "MyInfoBoxTxt";
+      umzugsantrag_loadingBar('');
+      //alert("Antrag wird zwischengespeichert!\n"+sData);
+      frmSerializeGeraete();
+      AjaxFormSend(document.forms["frmUmzugsantrag"], selector, "", "cmd=senden", "senden");
+    }
   });
 </script>
 {/literal}

@@ -33,8 +33,9 @@ function umzugsantrag_status($AID, $name, $value) {
 
 	$istStorno = (strcmp($name, 'abgeschlossen') === 0 && strcmp($value, 'Storniert') === 0);
     $isRueckgabe = ($name === 'zurueckgeben');
+    $isGenehmigung = ($name === 'genehmigt');
 
-	if (!$istStorno && !$isRueckgabe) {
+	if (!$istStorno && !$isRueckgabe && !$isGenehmigung) {
         if (!$AS->arrInput['umzugstermin']) {
             $ASError .= "Der Umzugstermin wurde noch nicht festgesetzt!<br>\n";
         }

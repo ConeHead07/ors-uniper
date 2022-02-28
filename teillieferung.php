@@ -45,7 +45,7 @@ function teilResponseError(int $aid, array $errors = []) {
         'errors' => $errors,
         'msg' => implode("\n", $errors),
         'aid' => $aid,
-        'inputReklaLeistungen' => $inputTeilLeistungen,
+        'inputTeilLeistungen' => $inputTeilLeistungen,
         'leistungsIds' => $leistungsIds,
         'leistungsMengen' => $inputLeistungsMengen,
         'leistungsMengenByIds' => $inputLeistungsMengenByLID,
@@ -106,7 +106,7 @@ if (!is_array($leistungsIds) || empty($leistungsIds)) {
 }
 
 if (count($errors)) {
-    return teilResponseError($aid, $errors);
+    return rueckResponseError($aid, $errors);
 }
 
 $lids = implode(',', $leistungsIds);
@@ -221,7 +221,7 @@ if (empty($errors)) {
 }
 
 if (count($errors)) {
-    return teilResponseError($aid, $errors);
+    return rueckResponseError($aid, $errors);
 }
 
 $aGrundLeistungen = [];
@@ -238,10 +238,12 @@ $sFormattedGrund = getFormattedBemerkung($grund, $aGrundLeistungen);
 
 $colNames = ['ref_aid', 'umzug', 'service', ];
 $quotedDaten = [ $aid, $db::quote('Teil'), $db::quote('Teil') ];
+$antrag['token'] = $db->expr("SUBSTR( MD5( CONCAT_WS(\"-\", aid, antragsteller_uid, antragsdatum, RAND() )  ) ,5, 10)");
 $antrag['bemerkungen'] = $sFormattedGrund;
 $antrag['antragsdatum'] = $db->expr('NOW()');
 $antrag['umzugsstatus'] = 'beantragt';
 $antrag['umzugsstatus_vom'] = $db->expr('NOW()');
+$antrag['created'] = $db->expr('NOW()');
 foreach($antrag as $k => $v) {
     $colNames[] = $k;
     $quotedDaten[] = $db::quote($v);
@@ -254,7 +256,7 @@ $db->query(
 
 $teilAid = $db->insert_id();
 if (!$teilAid) {
-    return teilResponseError($aid, ['Systemfehler: Teillieferung konnte nicht angelegt werden!']);
+    return rueckResponseError($aid, ['Systemfehler: Teillieferung konnte nicht angelegt werden!']);
 }
 
 $NL = "\n";
@@ -340,7 +342,7 @@ if (false && umzugsantrag_mailinform($aid, 'teillieferung', $teilAid)) {
     }
 }
 
-teilResponseSuccess([
+rueckResponseSuccess([
     'aid' => $aid,
     'leistungen' => $inputLeistungsMengenByLID,
     'teilAid' => $teilAid

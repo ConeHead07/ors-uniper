@@ -226,11 +226,11 @@ function InfoBoxClose() {
 }
 function ErrorBox(sHtml, dockToObj, dockAlign, hspace, vspace) {
 	console.log('#228 app/js/ObjectHandler.js MyInfoxBox', { sHtml });
-	MyInfoBox("Es sind Fehler aufgetreten!", sHtml, dockToObj, dockAlign, hspace, vspace);
+	return MyInfoBox("Es sind Fehler aufgetreten!", sHtml, dockToObj, dockAlign, hspace, vspace);
 }
 
 function InfoBox(sHtml, dockToObj, dockAlign, hspace, vspace) {
-	MyInfoBox("Hinweis!", sHtml, dockToObj, dockAlign, hspace, vspace);
+	return MyInfoBox("Hinweis!", sHtml, dockToObj, dockAlign, hspace, vspace);
 }
 
 function MyInfoBox(sTitle, sHtml, dockToObj, dockAlign, hspace, vspace) {

@@ -225,7 +225,7 @@
       {/if}
 
       {** status angeboten gibt es bei uniper nicht! *}
-      {if 0 and $AS.umzugsstatus eq "angeboten"}
+      {if $AS.umzugsstatus eq "angeboten"}
 
       <div style="margin-top:1.5rem;width:100%;">
         {if 0}<!--
@@ -237,8 +237,8 @@
         {/if}
         <br>
 
-        <strong>Aktuellen Status <span style="color:#00f;">{$AS.umzugsstatus}</span> &auml;ndern</strong>
-        <div class="statusConsole" style="xdisplay:none;margin-top:1.5rem;">
+        <strong>Möchten Sie diesen Angebot annehmen?</strong>
+        <div class="statusConsole">
 
           <input id="btnStatGenJa"
                  type="submit"
@@ -249,11 +249,13 @@
                  class="{if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br eq 'Nein' || $AS.bestaetigt ne 'Init')}cssHide{else}btn red{/if}"
                  onclick="umzugsantrag_set_status('genehmigt','Nein')"
                  value="Ablehnen">
+          {*
           <input id="btnStatGenReset"
                  type="submit"
                  class="{if $AS.genehmigt_br eq 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn red{/if}"
                  onclick="umzugsantrag_set_status('genehmigt','Init')"
                  value="Genehmigung aufheben">
+          *}
         </div>
         <br>
         <div id="BoxBemerkungen">

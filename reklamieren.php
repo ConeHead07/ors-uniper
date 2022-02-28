@@ -34,17 +34,17 @@ if (count($inputReklaLeistungen)) {
 }
 
 function reklaResponseError(int $aid, array $errors = []) {
-    global $inputTeilLeistungen, $leistungsIds, $inputLeistungsMengen, $inputLeistungsMengenByLID, $log;
+    global $inputReklaLeistungen, $leistungsIds, $leistungsMengen, $leistungsMengenById, $log;
     header('Content-Type: application/json; charset=UTF-8');
     echo json_encode([
         'type' => 'error',
         'errors' => $errors,
         'msg' => implode("\n", $errors),
         'aid' => $aid,
-        'inputReklaLeistungen' => $inputTeilLeistungen,
+        'inputReklaLeistungen' => $inputReklaLeistungen,
         'leistungsIds' => $leistungsIds,
-        'leistungsMengen' => $inputLeistungsMengen,
-        'leistungsMengenByIds' => $inputLeistungsMengenByLID,
+        'leistungsMengen' => $leistungsMengen,
+        'leistungsMengenByIds' => $leistungsMengenById,
         'log' => $log
 
     ]);
@@ -157,10 +157,12 @@ $sFormattedGrund = getFormattedBemerkung($grund, $aGrundLeistungen);
 
 $colNames = ['ref_aid', 'umzug', 'service', ];
 $quotedDaten = [ $aid, $db::quote('Rekla'), $db::quote('Rekla') ];
+$antrag['token'] = $db->expr("SUBSTR( MD5( CONCAT_WS(\"-\", aid, antragsteller_uid, antragsdatum, RAND() )  ) ,5, 10)");
 $antrag['bemerkungen'] = $sFormattedGrund;
 $antrag['antragsdatum'] = $db->expr('NOW()');
 $antrag['umzugsstatus'] = 'beantragt';
 $antrag['umzugsstatus_vom'] = $db->expr('NOW()');
+$antrag['created'] = $db->expr('NOW()');
 foreach($antrag as $k => $v) {
     $colNames[] = $k;
     $quotedDaten[] = $db::quote($v);

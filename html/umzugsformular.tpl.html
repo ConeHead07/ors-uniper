@@ -86,6 +86,12 @@
                     <td style="padding:0;"><label for="as_kid" style="display:block;width:auto;">KID</label></td>
                     <td style="padding:0;"><input type="text" id="as_kid" name="AS[personalnr]"  readonly value="{if !empty($AS)}{$user.personalnr|escape}{/if}" class="itxt itxt2col ireadonly" ></td>
                 </tr>
+                {if !empty($AS.ref_aid)}
+                <tr>
+                    <td style="padding:0;"><label style="width:180px;">Bezieht sich auf:</label></td>
+                    <td style="padding:0;"><a href="/?s=kantrag&id={$AS.ref_aid}">{$AS.ref_aid}</a></td>
+                </tr>
+                {/if}
             </table>
 
             {if !empty($AS) and !empty($AS.bemerkungen)}
@@ -331,18 +337,22 @@
             {include file="umzugsformular_ortsauswahl.tpl.html"}
             {/if}
 
-            {if $user.gruppe eq "admin" || $user.gruppe eq "user" || $user.gruppe == "kunde_report"}
-                {if $AS.autocalc_ref_mengen}
-                    {include file="umzugsformular_leistungsauswahl.tpl.html"}
+            {if $AID AND ( $user.gruppe eq "admin" or empty($AS.autocalc_ref_mengen))}
+                {if $creator eq "mertens"}
+                    {assign var="CreatorMertens" value="1"}
                 {else}
+                    {assign var="CreatorMertens" value="0"}
+                {/if}
                 {include file="admin_umzugsformular_leistungsauswahl.tpl.html"
                     showLiefermenge="0"
+                    showAddLeistung="$CreatorMertens"
                     showReklas="0"
-                    PreiseAnzeigen="0"
+                    PreiseAnzeigen="$CreatorMertens"
                     addTeilmengen="0"
                     showTeilmengen="0"
                 }
-                {/if}
+            {else}
+                {include file="umzugsformular_leistungsauswahl.tpl.html"}
             {/if}
 
             {if 0 and $user.gruppe eq "admin" and $user.adminmode eq "superadmin"}

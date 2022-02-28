@@ -188,7 +188,7 @@ if ($AID) {
     );
     $AS->loadInput($defaultAS, false);
     $MA->loadInput(array(), false);
-    $as->arrInput['personalnr'] = $user['personalnr'];
+    $AS->arrInput['personalnr'] = $user['personalnr'];
 
     //$aMaItems = array($MA->arrInput);
 }

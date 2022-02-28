@@ -20,7 +20,7 @@
     }
 </style>
 <div id="ReklaDialog" class="dialog rekla-dialog dialog-back-layer">
-    <div class="dialog-wrapper" style="width:90%">
+    <div class="dialog-wrapper" style="width:90%;max-height: 95vh;overflow-y: scroll;">
         <div style="width:90%;">
             <form>
                 <div id="reklaContent" style="max-height:80vh;overflow-y: auto;text-align:left;">
@@ -150,7 +150,7 @@
     $(function() {
         $("#ReklaDialog").appendTo("body");
         var frm = $("#ReklaDialog").find("form");
-        var tplTable = $("#ReklaDialog").find("#TplLeistungTable");
+        var tplTable = frm.find("#TplLeistungTable").addClass("tpl-rekla-row");
         frm.after(tplTable);
 
         frm.find("[name=chckLeistung\\[\\]]").on("change", function(e) {

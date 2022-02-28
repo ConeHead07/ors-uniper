@@ -80,21 +80,28 @@ $sql = 'SELECT l.leistung_id, l.leistung_ref_id, '
     . ' LEFT JOIN mm_leistungskategorie k ON l.leistungskategorie_id = k.leistungskategorie_id '
     . '  LEFT JOIN mm_leistungspreismatrix m ON l.leistung_id = m.leistung_id '
     . ' WHERE l.aktiv = "Ja" '
+    . ($AID
+        ? ' AND (IFNULL(l.angebots_aid, "") = "" OR l.angebots_aid = ' . $db::quote($AID) . ') '
+        : ' AND IFNULL(l.angebots_aid, "") = "" '
+    )
     . ' ORDER BY kategorie, Bezeichnung, mx_von';
 
 $aGroupItems = [];
 $lkTreeItems = [];
 $lkTreeItemsJson = [];
 $lkmById = [];
-$lkItems = $db->query_rows($sql);
+// $lkItems = $db->query_rows($sql);
+$lkItems = getLeistungsAuswahl([ 'AID' => $AID, 'mitNeuenAngeboten' => true ]);
+//echo '<pre>' . json_encode($lkItems, JSON_PRETTY_PRINT) . '</pre>';
+//exit;
 foreach($lkItems as $k => $v) {
     $ktg1 = (empty($v['kategorie'])) ? 'Einsatz' : $v['kategorie'];
     $lkTreeItems[$ktg1][$v['leistung']][] = $v;
     
     $jvals = [];
-    foreach($v as $jk => $jv) $jvals[utf8_encode ($jk)] = utf8_encode($jv);
-    if (!isset($lkTreeItemsJson[utf8_encode($ktg1)][utf8_encode($v['leistung'])])) {
-        $lkTreeItemsJson[utf8_encode($ktg1)][utf8_encode($v['leistung'])] = $jvals;
+    foreach($v as $jk => $jv) $jvals[$jk] = $jv;
+    if (!isset($lkTreeItemsJson[$ktg1][$v['leistung']])) {
+        $lkTreeItemsJson[$ktg1][$v['leistung']] = $jvals;
         $lkmById[$v['leistung_id']] = [];
     }
     
@@ -208,6 +215,8 @@ if ((int)$AS->arrInput['antragsteller_uid']) {
         .'FROM mm_user WHERE uid = ' . (int)$AS->arrInput['antragsteller_uid']);
     $AS->arrInput['personalnr'] = $_kid;
     $AS->arrInput['kid'] = $_kid;
+} else {
+    $AS->arrInput['personalnr'] = '';
 }
 
 $Tpl->assign("s", $s);
@@ -299,7 +308,7 @@ $sql = 'SELECT ul.leistung_id, ul.leistung_id lid, ul.menge_property, ul.menge2_
       . '   IF(IFNULL(l.Farbe, "")="", "", CONCAT(", ", l.Farbe)), ' . "\n"
       . '   IF(IFNULL(l.Groesse, "")="", "", CONCAT(", ", l.Groesse)) ' . "\n"
       . ' ) leistung, ' . "\n"
-      . ' lk.leistungskategorie kategorie, lk.leistungskategorie_id kategorie_id, ' . "\n"
+      . ' lk.leistungskategorie kategorie, lk.leistungskategorie_id kategorie_id, lk.leistungsart, ' . "\n"
       . ' l.image, l.Beschreibung, l.produkt_link, l.Farbe, l.Groesse, ' . "\n"
       . ' l.leistungseinheit, l.leistungseinheit2, if(lm.preis, lm.preis, preis_pro_einheit) preis_pro_einheit ' . "\n"
       . ' FROM mm_umzuege_leistungen ul ' . "\n"

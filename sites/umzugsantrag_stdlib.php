@@ -1,5 +1,74 @@
 <?php 
 
+function getLeistungsAuswahl(array $opts = []) {
+
+    global $db;
+
+    $AID = !empty($opts['AID']) ? (int)$opts['AID'] : 0;
+    $mitNeuenAngeboten = !empty($opts['mitNeuenAngeboten']);
+
+    $NL = "\n";
+
+    $sqlSelect = 'SELECT l.leistung_id, l.leistung_ref_id, ' . $NL
+        . ' l.leistung_ref_id2, l.leistung_ref_id3, ' . $NL
+        . ' l.Bezeichnung, ' . $NL
+        . ' l.Beschreibung, ' . $NL
+        . ' l.Farbe, ' . $NL
+        . ' l.Groesse, ' . $NL
+        . ' l.produkt_link, ' . $NL
+        . ' CONCAT(' . $NL
+        . '   l.Bezeichnung, ' . $NL
+        . '   IF(IFNULL(l.Farbe, "")="", "", CONCAT(", ", l.Farbe)), ' . $NL
+        . '   IF(IFNULL(l.Groesse, "")="", "", CONCAT(", ", l.Groesse)) ' . $NL
+        . ' ) leistung, ' . $NL
+        . ' leistungseinheit, leistungseinheit2, ' . $NL
+        . ' k.leistungskategorie AS kategorie, ' . $NL
+        . ' k.leistungsart, ' . $NL
+        . ' IFNULL(k.leistungskategorie_id, l.leistungskategorie_id) AS kategorie_id, ' . $NL
+        . ' l.aktiv, l.verfuegbar, ' . $NL
+        . ' preis_pro_einheit, image, ' . $NL
+        . ' m.preis mx_preis, m.preiseinheit mx_preiseinheit, m.mengen_von mx_von, m.mengen_bis mx_bis' . $NL
+        ;
+    $sqlFrom = ' FROM mm_leistungskatalog l ' . $NL
+        . ' LEFT JOIN mm_leistungskategorie k ON l.leistungskategorie_id = k.leistungskategorie_id ' . $NL
+        . ' LEFT JOIN mm_leistungspreismatrix m ON l.leistung_id = m.leistung_id ' . $NL
+        ;
+    $sqlWhere = ' WHERE l.verfuegbar = "Ja" AND k.leistungsart != "Angebot" ' . $NL
+        . ($AID
+            ? ' AND (IFNULL(l.angebots_aid, "") = "" OR l.angebots_aid = ' . $db::quote($AID) . ') ' . $NL
+            : ' AND IFNULL(l.angebots_aid, "") = "" ' . $NL
+        );
+    $sqlOrder = ' ORDER BY kategorie, Bezeichnung, mx_von' . $NL;
+    $sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlOrder;
+
+    $rows = $db->query_rows($sql, 0);
+
+    if ($mitNeuenAngeboten) {
+        $sqlA = $sqlSelect
+            . ' FROM mm_leistungskategorie k ' . $NL
+            . ' LEFT JOIN ( ' . $NL
+            . '   SELECT * ' . $NL
+            . '   FROM mm_leistungskatalog l ' . $NL
+            . '   WHERE l.aktiv = "Ja"' . $NL
+            . ($AID
+                ? ' AND (IFNULL(l.angebots_aid, "") = "" OR l.angebots_aid = ' . $db::quote($AID) . ') ' . $NL
+                : ' AND IFNULL(l.angebots_aid, "") = "" ' . $NL
+            . ' ) l ON k.leistungskategorie_id = l.leistungskategorie_id' . $NL
+            . ' LEFT JOIN mm_leistungspreismatrix m ON l.leistung_id = m.leistung_id ' . $NL
+            . ' WHERE k.leistungsart = "Angebot" ' . $NL
+            )
+            ;
+        $rowsA = $db->query_rows($sqlA, 0);
+//        echo '<pre>' . json_encode(compact('sqlA', 'rowsA', JSON_PRETTY_PRINT)) . '</pre>';
+//        exit;
+
+        foreach($rowsA as $_row) {
+            $rows[] = $_row;
+        }
+    }
+    return $rows;
+}
+
 function getAllOrderedLeistungenByUid(int $uid, array $opts = []) {
 	global $db;
 	$aParams = [ 'uid' => $uid ];
@@ -324,9 +393,12 @@ function get_ort_byGeb($geb) {
 function get_ma_post_items() {
 	global $_POST;
 	//echo "<pre>#".__LINE__." ".basename(__FILE__)." _POST:".print_r($_POST,1)."</pre><br>\n";
-	
+    if (empty($_POST["MA"]["vorname"])) {
+        return [];
+    }
+
 	$aMaItems = array();
-	$iNumItems = count($_POST["MA"]["vorname"]);
+	$iNumItems = !empty($_POST["MA"]["vorname"]) ? count($_POST["MA"]["vorname"]) : 0;
 	if (!empty($_POST["MA"])) for($i = 0; $i < $iNumItems; $i++) {
 		$aMaItems[$i]["ID"] = $i+1;
 		foreach($_POST["MA"] as $fld => $aTmp) {

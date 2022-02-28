@@ -21,7 +21,7 @@ $cat = getRequest("cat", "neue");
 $allusers = (int)  getRequest('allusers', 1);
 
 if (empty($s)) $s = getRequest("s", "");
-if (!in_array($cat, array("neue", "bearbeitung", "gepruefte", "genehmigte", "aktive", "abgelehnte", "abgeschlossene", "stornierte"))) $cat = "neue";
+if (!in_array($cat, array("angeboten", "neue", "bearbeitung", "gepruefte", "genehmigte", "aktive", "abgelehnte", "abgeschlossene", "stornierte"))) $cat = "neue";
 //if ($cat == 'bearbeitung') $cat = 'neue';
 
 $defaultOrder = "ORDER BY antragsdatum ASC";
@@ -67,8 +67,13 @@ $sqlFrom= "FROM `".$CUA["Table"]."` U LEFT JOIN `".$CUM["Table"]."` M USING(aid)
 //'abgeschlossen'
  
 switch($cat) {
+    case 'angeboten':
+        $sqlWhere= "WHERE (umzugsstatus  IN ('angeboten' ))\n";
+        // $sqlWhere= "WHERE ((umzugsstatus = 'beantrag' and usr.gruppe NOT LIKE \"admin%\")\n";
+        break;
+
     case 'neue':
-        $sqlWhere= "WHERE (umzugsstatus  IN ('angeboten', 'beantragt', 'erneutpruefen'))\n";
+        $sqlWhere= "WHERE (umzugsstatus  IN ('beantragt', 'erneutpruefen', 'genehmigt'))\n";
         // $sqlWhere= "WHERE ((umzugsstatus = 'beantrag' and usr.gruppe NOT LIKE \"admin%\")\n";
         break;
 
@@ -80,7 +85,7 @@ switch($cat) {
 	break;
         
 	case "neue":
-	if (0) $sqlWhere= "WHERE umzugsstatus IN ('geprueft','beantragt')\n";
+	if (0) $sqlWhere= "WHERE umzugsstatus IN ('geprueft','beantragt', 'genehmigt')\n";
 	else $sqlWhere= "WHERE umzugsstatus = 'angeboten' OR (umzugsstatus = 'geprueft' AND umzug ='Ja')\n";
 	break;
     

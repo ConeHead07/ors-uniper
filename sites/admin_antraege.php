@@ -248,7 +248,7 @@ if (!$allusers) {
 $sqlWhereStatus = '';
 switch($cat) {
 	case 'neue':
-	$sqlWhereStatus.= 'AND umzugsstatus IN ("angeboten", "beantragt", "erneutpruefen") AND IFNULL(tour_kennung, "") = ""' . $NL;
+	$sqlWhereStatus.= 'AND umzugsstatus IN ("beantragt", "genehmigt", "erneutpruefen") AND IFNULL(tour_kennung, "") = ""' . $NL;
 	break;
     
 	case 'angeboten':

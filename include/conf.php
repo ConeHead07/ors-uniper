@@ -120,6 +120,9 @@ $MConf = array(
     'genehmigung_requires_pruefung' => false,
     'bestaetigung_requires_genehmigung' => false,
 
+    'notify_user_angeboten' => true,
+    'notify_user_angeboten_tpl' => 'statusmail_user_angeboten.txt',
+
     'notify_user_beantragt' => true,
     'notify_user_beantragt_tpl' => 'statusmail_user_beantragt.txt',
 
@@ -175,8 +178,9 @@ $MConf = array(
     'notify_property_beantragt' => false,
     'notify_property_beantragt_tpl' => 'statusmail_umzug_neu.txt',
 
-    'notify_property_angeboten' => false,
-    'notify_property_angeboten_tpl' => 'statusmail_umzug_zurgenehmigung.txt',
+    'notify_property_angeboten' => true,
+    'notify_property_angeboten_tpl' => 'statusmail_property_angeboten.txt',
+//    'notify_property_angeboten_tpl' => 'statusmail_umzug_zurgenehmigung.txt',
 
     'notify_property_geprueft' => false,
     'notify_property_geprueft_tpl' => 'statusmail_umzug_zurgenehmigung.txt',

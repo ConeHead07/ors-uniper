@@ -12,7 +12,8 @@
 <!-- TAB NAVIGATION ITEMS BEGIN --> 
 <div id="ID128585" class="divTabbedNavigation" style="width:100%;"> 
 <div class="divTabbedList" style="width:100%;"> 
-<ul> 
+<ul>
+        <li {if $cat eq "angeboten"}class="activeTab"{/if}><a href="?s={$s}&cat=angeboten{if $allusers}&allusers=1{/if}">Angebote</a></li>
         <li {if $cat eq "neue"}class="activeTab"{/if}><a href="?s={$s}&cat=neue{if $allusers}&allusers=1{/if}">Bestellungen</a></li>
         <li {if $cat eq "bearbeitung"}class="activeTab"{/if} style="display:none"><a href="?s={$s}&cat=bearbeitung{if $allusers}&allusers=1{/if}">Neue Antr&auml;ge von merTens</a></li>
         <li {if $cat eq "aktive"}class="activeTab"{/if}><a href="?s={$s}&cat=aktive{if $allusers}&allusers=1{/if}">Avisiert</a></li><!-- Genehmigt -->

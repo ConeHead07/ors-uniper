@@ -143,7 +143,7 @@ function get_Leistung( obj ) {
             objInpM2.unbind("change");
         }
         objInpM.unbind("change");
-        if (objUnit.html().toLowerCase().indexOf("prozent") < 0) objInpM.bind("change", mengeChangeCallback);
+        if (!objUnit.html() || objUnit.html().toLowerCase().indexOf("prozent") < 0) objInpM.bind("change", mengeChangeCallback);
         
         $( this ).hide();
         blurBox( "#ldescselect", 1);
@@ -184,7 +184,7 @@ var numberFormat = function(number, dec, decToken, thousandSep) {
 var mengeChangeCallback = function() {
     var tr = $( this ).closest("tr");
     var objUnit = tr.find(".unit:eq(0)");
-    if (objUnit.html().toLowerCase().indexOf("prozent") > -1) return;
+    if (objUnit.html() && objUnit.html().toLowerCase().indexOf("prozent") > -1) return;
         
     var id = tr.find("input.ilstg").val();
     var preis = parseFloat(tr.find("td.lstg").attr("data-p"));
@@ -238,7 +238,7 @@ $(function(){
 {/literal}
 </script>
 
-<div id="auswahlUmzugsleistungenBox"></div>
+<div data-src="html/umzugsformular/leistungsauswahl/tpl/html" id="auswahlUmzugsleistungenBox"></div>
 
 {literal}
 <script>

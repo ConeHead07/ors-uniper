@@ -171,7 +171,12 @@
                     {$L.menge_mertens|number_format:2:",":"."}{else}
                     <input class="menge creator auftragsmenge" name="L[menge_mertens][]" value="{$L.menge_mertens}" type="number">
                     <input class="menge2 creator" name="L[menge2_mertens][]" value="{$L.menge2_mertens|number_format:2:',':'.'}" type="hidden"><input class="ilstg" name="L[leistung_id][]" value="{$L.leistung_id}" type="hidden">
-                {/if}</td>
+                {/if}{if $showAddLeistung}
+                        <input type="hidden" name="L[Bezeicnung][]" value="">
+                        {if $PreiseAnzeigen}
+                        <input type="hidden" name="L[preis_pro_einheit][]" value="">
+                        {/if}
+                    {/if}</td>
 
                 {if !empty($showReklas)}
                 <td class="col field-menge_rekla menge{if empty($mengeReklasReadOnly)} with-input{/if}">{if !empty($mengeReklasReadOnly)}
@@ -237,7 +242,12 @@
             <td class="col field-mertens_menge menge{if empty($mengeMertensReadOnly)} with-input{/if}">
                 <input class="menge creator" name="L[menge_mertens][]" value="1" min="0" type="number">
                 <input class="menge2 creator" name="L[menge2_mertens][]" value="1" type="hidden">
-                <input class="ilstg" name="L[leistung_id][]" value="" type="hidden"></td>
+                <input class="ilstg" name="L[leistung_id][]" value="" type="hidden">{if $showAddLeistung}
+                <input type="hidden" name="L[Bezeicnung][]" value="">
+                {if $PreiseAnzeigen}
+                <input type="hidden" name="L[preis_pro_einheit][]" value="">
+                {/if}
+                {/if}</td>
 
             {if !empty($showReklas)}
             <td class="col field-menge_rekla menge{if empty($mengeReklasReadOnly)} with-input{/if}">
@@ -326,28 +336,45 @@
 
             for(var ktg1 in lkItems) {
                 var lNames = Object.keys(lkItems[ktg1]);
-                var firstName = lNames[0];
-                var lArt = lkItems[ktg1][firstName].leistungsart;
+                var lArt = "";
+                var ktgId = 0;
+                for (var k in lkItems[ktg1]) {
+                    if (lkItems[ktg1][k] && lkItems[ktg1][k].leistungsart) {
+                        lArt = lkItems[ktg1][k].leistungsart;
+                    }
+                    if (lkItems[ktg1][k] && lkItems[ktg1][k].kategorie_id) {
+                        ktgId = lkItems[ktg1][k].kategorie_id;
+                    }
+                }
+                // alert(JSON.stringify({ ktg1, lArt, lNames, "lkItems[ktg1]": lkItems[ktg1], lkItems }))
 
-                lktgselect.append(
-                    $("<option/>")
-                        .val(ktg1)
-                        .text(ktg1)
-                        .data("leistungen", lkItems[ktg1])
-                        .data("kategorie1", ktg1)
-                        .data("leistungsart", lArt)
-                );
+                var opt = $("<option/>")
+                    .val(ktg1)
+                    .text(ktg1)
+                    .data("kategorie1", ktg1)
+                    .data("leistungsart", lArt)
+                    .data("kategorie_id", ktgId)
+                    .data("leistungen", lkItems[ktg1]);
+                lktgselect.append( opt );
+                // alert(JSON.stringify({ "opt.data()": opt.data() }));
             }
 
             lktgselect
                 .unbind("change")
                 .change(function(e) {
-                    var lArt = $(this).find("option:selected").data("leistungsart");
-                    $( obj ).data( "leistungsart", + lArt );
+                    $( obj ).data(
+                        "leistungsart",
+                        $(this).find("option:selected").data("leistungsart")
+                    );
 
                     $( obj ).data(
                         "kategorie1",
                         $(this).find("option:selected").data("kategorie1")
+                    );
+
+                    $( obj ).data(
+                        "kategorie_id",
+                        $(this).find("option:selected").data("kategorie_id")
                     );
 
                     $( obj ).data(
@@ -385,27 +412,59 @@
         function get_Leistung( obj ) {
             obj = this;
             console.log("#157");
-            var objKtg1 = $( obj ).closest("tr").find(".ktg1");
-            var objUnit = $( obj ).closest("tr").find(".unit:eq(0)");
-            var objUnit2 = $( obj ).closest("tr").find(".unit:eq(1)");
-            var objInpAll = $( obj ).closest("tr").find("input");
-            var objInp = $( obj ).closest("tr").find("input.ilstg");
-            var objInpM = $( obj ).closest("tr").find("input.menge:not([readonly]):not(.menge2)");
-            var objInpM2 = $( obj ).closest("tr").find("input.menge2.creator");
-            var objPreis = $( obj ).closest("tr").find("td.preis");
-            var objSum = $( obj ).closest("tr").find("td.sum");
+            var row = $( obj ).closest("tr");
+            console.log("tr.data(doNotOpenOnFocus)", row.data("doNotOpenOnFocus"));
+            if (row.data("doNotOpenOnFocus")) {
+                return;
+            }
+            var objKtg1 = row.find(".ktg1");
+            var objUnit = row.find(".unit:eq(0)");
+            var objUnit2 = row.find(".unit:eq(1)");
+            var objInpAll = row.find("input");
+            var objInp = row.find("input.ilstg");
+            var objInpM = row.find("input.menge:not([readonly]):not(.menge2)");
+            var objInpM2 = row.find("input.menge2.creator");
+            var objPreis = row.find("td.preis");
+            var objSum = row.find("td.sum");
+
             if ( !$( objKtg1 ).data("kategorie1") ||  !$( objKtg1 ).data("leistungen") ) {
                 get_Kategorie.apply( objKtg1 );
                 return;
             };
 
+            var kategorie = $(objKtg1).data( "kategorie1" );
             var leistungen = $( objKtg1 ).data( "leistungen" );
             var leistungsart = $( objKtg1 ).data( "leistungsart" );
+            var kategorie_id = $( objKtg1 ).data( "kategorie_id" );
+            var IstIndividuellesAngebot = leistungsart === "Angebot";
+            obj.data('kategorie_id', kategorie_id);
 
             console.log("#174");
-            ldescselect.data("leistungen", leistungen).html(
-                $("<option/>").text("Bitte auswählen")
-            );
+
+            ldescselect.data("leistungen", leistungen).html("");
+            ldescselect.append($("<option/>").text("Bitte auswählen"));
+            if (leistungsart === "Angebot") {
+                ldescselect.append(
+                    $("<option/>")
+                        .val("+")
+                        .text("Neues Angebot anlegen")
+                        .data('leistung', {
+                            leistung_id: 0,
+                            kategorie_id,
+                            Bezeichnung: '',
+                            Farbe: '',
+                            Groesse: '',
+                            leistung: '',
+                            preis_pro_einheit: 1,
+                            menge_mertens: 1,
+                            menge2_mertens: 1,
+                            menge_property: 1,
+                            menge2_property: 1,
+                            leistungseinheit: 'St.',
+                            leistungseinheit2: '',
+                        })
+                );
+            }
 
             console.log("#179");
             for(var lstg in leistungen) {
@@ -433,11 +492,26 @@
                     var data = $(this)
                         .find("option:selected")
                         .data("leistung");
+
+                    row.data("leistung", data);
+                    row.data("kategorie", {
+                        kategorie,
+                        leistungsart,
+                        kategorie_id,
+                    });
+
+                    row.toggleClass("ist-angebot", leistungsart === "Angebot");
+                    row.toggleClass("leistung-exists", data.leistung_id && +data.leistung_id > 0);
+
+                    console.log("#468");
                     var oldMenge = (objInpM.length && objInpM.val()) ? +objInpM.val() : 0;
                     var newMenge = oldMenge > 0 ? oldMenge : 1;
 
-                    console.log("#197");
-                    if ( lstgIsAllreadyInList(data.leistung_id, objInp) ) {
+                    console.log("#471");
+                    var IstNeuesAngebot = IstIndividuellesAngebot && !data.leistung_id;
+
+                    if (!IstNeuesAngebot && lstgIsAllreadyInList(data.leistung_id, objInp) ) {
+                        console.log("#477");
                         console.log("Die Leistung wurde bereits in die Liste aufgenommen!\n" +
                             "Bitte fügen Sie die Mengen dem bestehenden Eintrag hinzu.\n"+
                             "Andernfalls werden bestehende Mengen überschrieben."
@@ -446,21 +520,17 @@
                         return false;
                     }
 
-                    console.log("#208");
+                    console.log("85");
                     $( objKtg1 )
                         .html( $( objKtg1)
                             .data( "kategorie1") );
-
-                    $( obj )
-                        .html( data.leistung )
-                        .attr({"data-p": data.preis_pro_einheit, "data-sum":0});
 
                     objInpAll.val("");
                     $( objInp ).val( data.leistung_id );
                     $( objUnit ).html( data.leistungseinheit );
                     $( objUnit2 ).html( data.leistungseinheit2 );
-                    objPreis.html( numberFormat(data.preis_pro_einheit, 2, ",") );
                     objSum.html("");
+
 
                     if (data.leistungseinheit2) {
                         objInpM2.val("1");
@@ -473,20 +543,80 @@
                     }
 
                     objInpM.unbind("change");
+                    $( obj )
+                        .html( data.leistung )
+                        .attr({"data-p": data.preis_pro_einheit, "data-sum":0});
 
                     if (!objUnit.html() || objUnit.html().toLowerCase().indexOf("prozent") < 0) {
                         objInpM.bind("change", mengeChangeCallback);
                     }
 
-                    $( this ).hide();
-                    blurBox( "#" + ldescselectId, 1);
+                    if (!IstIndividuellesAngebot) {
+                        $( obj ).html( data.leistung );
 
-                    if ( objInpM.length) {
-                        console.log("#255");
-                        objInpM.val(newMenge).get(0).focus();
+                        objPreis.html( numberFormat(data.preis_pro_einheit, 2, ",") );
+
+                        if ( objInpM.length) {
+                            console.log("#255");
+                            objInpM.val(newMenge).get(0).focus();
+                            objInpM.trigger("change");
+                        }
+
+                    } else {
+                        var sLeistungTxt = data.leistung;
+                        var iLeistungMng = data.menge_mertens;
+
+                        row.data("doNotOpenOnFocus", 1);
+                        $( obj ).html("").append(
+                          $("<input/>")
+                              .attr({
+                                  name: "L[Bezeichnung][]",
+                              })
+                              .addClass("Bezeichnung")
+                              .val( sLeistungTxt )
+                              .bind("change input", function(e) {
+                                  data.leistung = $(this).val();
+                                  data.Bezeichnung = $(this).val();
+                              })
+                              .bind("focus", function(e) {
+                                  var trV = $(this).closest("tr");
+                                  trV.data("doNotOpenOnFocus", 1);
+                                  var trVData = trV.data();
+                                  console.log({trV, trVData, "trV.data()": trV.data() });
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                              })
+                              .bind("blur", function() {
+                                  console.log("input blur");
+                                  $(this).closest("tr").data("doNotOpenOnFocus", 0);
+                              })
+                        );
+                        objInpM.val(iLeistungMng);
+
+                        objPreis.html("").append(
+                            $("<input/>")
+                                .attr({
+                                    type: "number",
+                                    name: "L[preis_pro_einheit][]",
+                                    min: 0
+                                })
+                                .addClass("menge preis preis_pro_einheit")
+                                .val( 1 )
+                                .bind("change", function(e) {
+                                    $( obj ).attr({"data-p": this.value.replace(",", ".") });
+                                    data.preis_pro_einheit = this.value.replace(",", ".");
+                                    mengeChangeCallback.apply(this);
+                                })
+                        );
+
                         objInpM.trigger("change");
 
                     }
+
+                    console.log("#552");
+                    $( this ).hide();
+                    console.log("#554");
+                    blurBox( "#" + ldescselectId, 1);
 
                 })
                 .bind("blur", function(event){
@@ -529,26 +659,45 @@
 
         var mengeChangeCallback = function() {
             console.log("#287");
+            var $this = this;
             var tr = $( this ).closest("tr");
             var objUnit = tr.find(".unit:eq(0)");
             if (objUnit.html() && objUnit.html().toLowerCase().indexOf("prozent") > -1) {
                 return;
             }
 
+            var selVal1 = "input.menge.creator";
+            var selVal2 = "input.menge2.creator";
             var id = tr.find("input.ilstg").val();
             var preis = parseFloat(tr.find("td.lstg").attr("data-p"));
-            var val  = parseFloat(tr.find("input.menge.creator").val().replace(',', '.'));
+            console.log({
+                'function': "mengeChangeCallback",
+                "$this": $this,
+                tr,
+                selVal1,
+                selVal2,
+                "tr.find(selVal1).length": tr.find(selVal1).length,
+                "tr.find(selVal2).length": tr.find(selVal2).length
+            });
+            var val1  = parseFloat(tr.find("input.menge.creator").val().replace(',', '.'));
             var val2 = parseFloat(tr.find("input.menge2.creator").val().replace(',', '.')) || 1;
+            var dataLeistung = tr.data("leistung");
+            if (tr.find("input.menge.creator").length) {
+                dataLeistung.menge_mertens = val1;
+            }
+            if (tr.find("input.menge2.creator").length) {
+                dataLeistung.menge2_mertens = val2;
+            }
             var mx = lkmById[ id ] || [];
             for(var i = 0; i < mx.length; ++i) {
-                if ((1*mx[i].von) <= val && ( (1*mx[i].bis) < 0.01 || (1*mx[i].bis) >= val) ) {
+                if ((1*mx[i].von) <= val1 && ( (1*mx[i].bis) < 0.01 || (1*mx[i].bis) >= val1) ) {
                     preis = mx[i].preis;
                     tr.find("td.preis").html( numberFormat(preis, 2, ",", ".") );
                     break;
                 }
             }
-            tr.find("td.lstg").attr("data-sum", preis * val * val2);
-            tr.find("td.sum").html( numberFormat(preis * val * val2, 2, ",", ".") );
+            tr.find("td.lstg").attr("data-sum", preis * val1 * val2);
+            tr.find("td.sum").html( numberFormat(preis * val1 * val2, 2, ",", ".") );
             calc_AllSum();
             return false;
         };

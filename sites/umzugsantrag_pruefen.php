@@ -196,12 +196,17 @@ function umzugsantrag_addbemerkung_fehler() {
     }
 }
 
-function umzugsantrag_fehler() {
+function umzugsantrag_fehler(array $options = []) {
     global $db;
     global $_CONF;
     global $MConf;
     global $connid;
     global $user;
+
+    $checkLeistungen = isset($options['CheckLeistungen']) ? (bool)$options['CheckLeistungen'] : true;
+    $checkAngeboteneLeistungen = isset($options['CheckAngeboteneLeistungen']) ? (bool)$options['CheckAngeboteneLeistungen'] : true;
+    $checkMitarbeiter = isset($options['CheckMitarbeiter']) ? (bool)$options['CheckMitarbeiter'] : true;
+    $checkLiefertermin = isset($options['CheckLiefertermin']) ? (bool)$options['CheckLiefertermin'] : true;
     
     $error = "";
     $ASConf = $_CONF["umzugsantrag"];
@@ -300,87 +305,129 @@ function umzugsantrag_fehler() {
             return $error;
     }
     $leistungen = getRequest('L');
+    $aNeueAngebote = getRequest('NeueAngebote', []);
+    $iNumAngebote = is_array($aNeueAngebote) ? count($aNeueAngebote) : 0;
 
-    // START: Fit Leistungen
-    // Fit Leistungen and remove Leistungen without valid leistung_id
-    $aLeistungenMitIds = [];
-    if (is_array($leistungen) && isset($leistungen['leistung_id']) && is_array($leistungen['leistung_id'])) {
-        $aLeistungsProps = [ 'menge_mertens', 'menge2_mertens', 'menge_property', 'menge2_property'];
-        $iNumLeistungen = count($leistungen['leistung_id']);
-        for($i = 0; $i < $iNumLeistungen; $i++) {
-            if ((int)$leistungen['leistung_id'][$i] > 0) {
-                $aLeistungenMitIds['leistung_id'][$i] = $leistungen['leistung_id'][$i];
-                foreach($aLeistungsProps as $_prop) {
-                    if (isset($leistungen[$_prop][$i])) {
-                        $aLeistungenMitIds[$_prop][$i] = $leistungen[$_prop][$i];
+    if ($checkAngeboteneLeistungen) {
+
+        if ($iNumAngebote) {
+            for($i = 0; $i < $iNumAngebote; $i++) {
+                $_a = $aNeueAngebote[$i];
+
+                $_aErr = [];
+                if (empty($_a['Bezeichnung'])) {
+                    $_aErr[] = 'Fehlende Bezeichnung';
+                }
+
+                if (!(int)$_a['kategorie_id']) {
+                    $_aErr[] = 'Fehlende Katalogs-Kategorie-ID';
+                }
+
+                if (!(int)$_a['menge_mertens']) {
+                    $_aErr[] = 'Menge muss größer 0 sein';
+                }
+
+                if (!((float)str_replace(',', '.', $_a['preis_pro_einheit']))) {
+                    $_aErr[] = 'Preis muss größer 0 sein (' . $_a['preis_pro_einheit'] . ' => ' . str_replace( ',', '.', $_a['preis_pro_einheit']) . ')';
+                }
+
+                if (count($_aErr)) {
+                    $error.= 'Angebot ' . ($i + 1) . ' enthält Fehler: ' . implode(', ', $_aErr) . '!' . "\n" . json_encode($_a);
+                }
+            }
+        }
+
+    }
+
+    if ($checkLeistungen) {
+        // START: Fit Leistungen
+        // Fit Leistungen and remove Leistungen without valid leistung_id
+        $aLeistungenMitIds = [];
+
+        if (is_array($leistungen) && isset($leistungen['leistung_id']) && is_array($leistungen['leistung_id'])) {
+            $aLeistungsProps = [ 'menge_mertens', 'menge2_mertens', 'menge_property', 'menge2_property'];
+            $iNumLeistungen = count($leistungen['leistung_id']);
+            for($i = 0; $i < $iNumLeistungen; $i++) {
+                if ((int)$leistungen['leistung_id'][$i] > 0) {
+                    $aLeistungenMitIds['leistung_id'][$i] = $leistungen['leistung_id'][$i];
+                    foreach($aLeistungsProps as $_prop) {
+                        if (isset($leistungen[$_prop][$i])) {
+                            $aLeistungenMitIds[$_prop][$i] = $leistungen[$_prop][$i];
+                        }
                     }
                 }
             }
         }
-    }
-    $leistungen = $aLeistungenMitIds;
-    // ENDE: Fit Leistungen
+        $leistungen = $aLeistungenMitIds;
 
-//    die(print_r(['leistungen'=> $leistungen, 'REQUEST_L' => $_REQUEST['L']]));
-    if (!empty($leistungen) && is_array($leistungen) && count($leistungen)) {
-        $errLst = getLeistungenError();
-        if ($errLst && $errLst != 1) $error .= $errLst;
-    } else {
-        $error.= 'Es wurde kein Artikel ausgewählt!';
+        if (!empty($leistungen) && is_array($leistungen) && count($leistungen)) {
+            $errLst = getLeistungenError();
+            if ($errLst && $errLst != 1) {
+                $error .= $errLst;
+            }
+        } elseif (empty($iNumAngebote)) {
+            $error.= 'Es wurde kein Artikel ausgewählt!' . "\n";
+        }
     }
-	
-    $MAError = false;
-    foreach($MAPostItems as $i => $MAItem) {
+
+    if ($checkMitarbeiter) {
+
+        $MAError = false;
+        foreach($MAPostItems as $i => $MAItem) {
             $MA = new ItemEdit($MAConf, $connid, $user, false);
             $MAItem["aid"] = $AID;
             if ($MAItem["maid"]) $rows_dubletten = get_existing_antraegeByMaId($MAItem["maid"], $AID);
 
             $errDubletten = "";
             if (!empty($rows_dubletten) && is_array($rows_dubletten) && count($rows_dubletten)) {
-                    foreach($rows_dubletten as $dub) {
-                            $lnkDub = (strpos($user["gruppe"], "admin") === false) ? $dub["antragsdatum"] : "<a href=\"?s=aantrag&id=".urlencode($dub["aid"])."\" target=\"winDub\">".$dub["antragsdatum"]." ".($dub["umzugsstatus"]!="beantragt"?$dub["umzugsstatus"]." am ".format_dbDate($dub["umzugsstatus_vom"],"d.m"):"")." (ID:".$dub["aid"].")</a>";
-                            $errDubletten.= "Für den Mitarbeiter existiert bereits ein Antrag vom ".$lnkDub."!<br>\n";
+                foreach($rows_dubletten as $dub) {
+                    $lnkDub = (strpos($user["gruppe"], "admin") === false) ? $dub["antragsdatum"] : "<a href=\"?s=aantrag&id=".urlencode($dub["aid"])."\" target=\"winDub\">".$dub["antragsdatum"]." ".($dub["umzugsstatus"]!="beantragt"?$dub["umzugsstatus"]." am ".format_dbDate($dub["umzugsstatus_vom"],"d.m"):"")." (ID:".$dub["aid"].")</a>";
+                    $errDubletten.= "Für den Mitarbeiter existiert bereits ein Antrag vom ".$lnkDub."!<br>\n";
 
-                    }
+                }
             }
             $MA->loadInput($MAItem);
             if (!$MA->checkInput() || $errDubletten) {
-                    $error.= "Fehlerhafte Angaben beim ".($i+1).". Mitarbeiter ".$MAItem["name"]."!<br>\n";
-                    $error.= $errDubletten.$MA->Error;
-                    //if (count($MA->arrErrFlds)) $error.= print_r($MA->arrErrFlds, 1);
-                    $MAError = true;
-            } else {			
-                    $raumtyp = get_raumtyp_byGER($MAItem["gebaeude"], $MAItem["etage"], $MAItem["raumnr"]);
-                    $zraumtyp = get_raumtyp_byGER($MAItem["zgebaeude"], $MAItem["zetage"], $MAItem["zraumnr"]);
+                $error.= "Fehlerhafte Angaben beim ".($i+1).". Mitarbeiter ".$MAItem["name"]."!<br>\n";
+                $error.= $errDubletten.$MA->Error;
+                //if (count($MA->arrErrFlds)) $error.= print_r($MA->arrErrFlds, 1);
+                $MAError = true;
+            } else {
+                $raumtyp = get_raumtyp_byGER($MAItem["gebaeude"], $MAItem["etage"], $MAItem["raumnr"]);
+                $zraumtyp = get_raumtyp_byGER($MAItem["zgebaeude"], $MAItem["zetage"], $MAItem["zraumnr"]);
 
-                    if ($raumtyp && $raumtyp == "GBUE" && !preg_match('/^\d*$/', $MAItem["apnr"])) {
-                            $error.= "Fehlende oder ungültige Ist-Arbeitsplatznr (Ganzzahl) beim ".($i+1).". Mitarbeiter ".$MAItem["name"]."!<br>\n";
-                            $MAError = true;
-                    }
-                    if ($zraumtyp && $zraumtyp == "GBUE" && !preg_match('/^\d*$/', $MAItem["zapnr"])) {
-                            $error.= "Fehlende oder ungültige Ziel-Arbeitsplatznr (Ganzzahl) beim ".($i+1).". Mitarbeiter ".$MAItem["name"]."!<br>\n";
-                            $MAError = true;
-                    }
+                if ($raumtyp && $raumtyp == "GBUE" && !preg_match('/^\d*$/', $MAItem["apnr"])) {
+                    $error.= "Fehlende oder ungültige Ist-Arbeitsplatznr (Ganzzahl) beim ".($i+1).". Mitarbeiter ".$MAItem["name"]."!<br>\n";
+                    $MAError = true;
+                }
+                if ($zraumtyp && $zraumtyp == "GBUE" && !preg_match('/^\d*$/', $MAItem["zapnr"])) {
+                    $error.= "Fehlende oder ungültige Ziel-Arbeitsplatznr (Ganzzahl) beim ".($i+1).". Mitarbeiter ".$MAItem["name"]."!<br>\n";
+                    $MAError = true;
+                }
             }
-    }
-    if ($MAError) {
+        }
+        if ($MAError) {
             return $error;
+        }
+
     }
 	
     $AS->loadInput($ASPostItem);
     $AS->Error = "";
     if ( ($cntAS > 0 || $cmd !== 'status') && !$AS->checkInput()) {
-            $error.= "Überprüfen Sie die Basis-Angaben zum Antragssteller!<br>\n";
-            $error.= $AS->Error;
-            return $error;
+        $error.= "Überprüfen Sie die Basis-Angaben zum Antragssteller!<br>\n";
+        $error.= $AS->Error;
+        return $error;
     }
 
-    if ( ($cntAS > 0 || $cmd !== 'status') && getRequest("umzugsart") != "Datenpflege") {
+    if ( $checkLiefertermin) {
+        if (($cntAS > 0 || $cmd !== 'status') && getRequest("umzugsart") != "Datenpflege") {
             if (!$AID || $AS->arrDbdata["umzugsstatus"] == "temp") {
-                    if (!check_minWerktage($ASPostItem["terminwunsch"], $MConf['minWerktageVorlauf'] )) {
-						$error.= "Umzugstermin ist zu kurzfristig. Planen Sie eine Vorlaufzeit von mind. {$MConf['minWerktageVorlauf']} Arbeitstagen ein!<br>\n";
-                    }
+                if (!empty($ASPostItem["terminwunsch"]) && !check_minWerktage($ASPostItem["terminwunsch"], $MConf['minWerktageVorlauf'])) {
+                    $error .= "Umzugstermin ist zu kurzfristig. Planen Sie eine Vorlaufzeit von mind. {$MConf['minWerktageVorlauf']} Arbeitstagen ein!<br>\n";
+                }
             }
+        }
     }
 
     if ( $cntAS > 0 || $cmd !== 'status' ) {

@@ -169,6 +169,95 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen, bool 
 
 }
 
+function neueAngebotsLeistungen_speichern($AID): array {
+    global $db;
+    global $user;
+
+    $aNeueAngebote = getRequest('NeueAngebote', []);
+    $aReLeistungsIds = [];
+
+    foreach($aNeueAngebote as $_angebot) {
+        if (empty($_angebot['leistung_id'])) {
+            if (empty($_angebot['Bezeichnung']) || !trim($_angebot['Bezeichnung'])) {
+                continue;
+            }
+            if (empty($_angebot['kategorie_id']) || !(int)$_angebot['kategorie_id']) {
+                continue;
+            }
+            if (empty($_angebot['menge_mertens']) || !(float)$_angebot['menge_mertens']) {
+                continue;
+            }
+            if (empty($_angebot['preis_pro_einheit']) || !(float)$_angebot['preis_pro_einheit']) {
+                continue;
+            }
+            if (empty($_angebot['menge2_mertens']) || !(float)$_angebot['menge2_mertens']) {
+                $_angebot['menge2_mertens'] = 1;
+            }
+            if (empty($_angebot['Beschreibung'])) {
+                $_angebot['Beschreibung'] = '';
+            }
+
+            $_angebot['menge_property'] = $_angebot['menge_mertens'];
+            $_angebot['menge2_property'] = $_angebot['menge2_mertens'];
+
+            $sth = $db->query('INSERT INTO mm_leistungskatalog SET 
+                  angebots_aid = :AID,
+                  leistungskategorie_id = :kategorie_id,
+                  Bezeichnung = :Bezeichnung,
+                  Beschreibung = :Beschreibung,
+                  preis_pro_einheit = :preis_pro_einheit
+              ', [
+                'AID' => $AID,
+                'kategorie_id' => $_angebot['kategorie_id'],
+                'Bezeichnung' => $_angebot['Bezeichnung'],
+                'Beschreibung' => $_angebot['Beschreibung'],
+                'preis_pro_einheit' => $_angebot['preis_pro_einheit'],
+            ]);
+            $_leistung_id = $db->last_insert_id();
+            $aReLeistungsIds[] = $_leistung_id;
+
+            $db->query('INSERT INTO mm_umzuege_leistungen SET 
+                      aid = :AID,
+                      leistung_id = :leistung_id,
+                      hauptauftragsmenge = :hauptauftragsmenge,
+                      menge_mertens = :menge_mertens,
+                      menge2_mertens = :menge2_mertens,
+                      menge_property = :menge_property,
+                      menge2_property = :menge2_property
+            ', [
+                'AID' => $AID,
+                'leistung_id'        => $_leistung_id,
+                'hauptauftragsmenge' => $_angebot['menge_mertens'],
+                'menge_mertens'      => $_angebot['menge_mertens'],
+                'menge2_mertens'     => $_angebot['menge2_mertens'],
+                'menge_property'     => $_angebot['menge_property'],
+                'menge2_property'    => $_angebot['menge2_property'],
+            ]);
+        } else {
+            $aReLeistungsIds[] = $_angebot['leistung_id'];
+            $aValidFields = [ 'hauptauftragsmenge', 'menge_mertens', 'menge2_mertens', 'menge_property', 'menge2_property'];
+            $aUpdateSets = [];
+            foreach($_angebot as $k => $v) {
+                if (in_array($k, $aValidFields) && is_numeric($v)) {
+                    $aUpdateSets[] = $k . ' = ' . $db::quote($v);
+                }
+            }
+            if (!count($aUpdateSets)) {
+                continue;
+            }
+            $sql = 'UPDATE mm_umzuege_leistungen SET '
+                . implode(",\n ", $aUpdateSets)
+                . ' WHERE aid = :AID AND leistung_id = :leistung_id'
+                ;
+            $db->query($sql, [ 'AID' => $AID, 'leistung_id' => $_angebot['leistung_id']]);
+        }
+
+    }
+
+    return $aReLeistungsIds;
+
+}
+
 function umzugsleistungen_speichern($AID, $autocalc_ref_mengen = true) {
     //umzugsleistungen_leeren($AID);
     global $db;
@@ -179,6 +268,7 @@ function umzugsleistungen_speichern($AID, $autocalc_ref_mengen = true) {
     //die('<pre>#' . __LINE__ . ' ' . __FILE__ . ' existing_ids: ' . print_r($existing_ids,1).'</pre>');
     $creator = (preg_match('/umzugsteam|admin/', $user['gruppe'] ) ? 'mertens' : 'property' );
     $data = array();
+    $aNeueAngebote = getRequest('NeueAngebote', []);
     $lst = getRequest('L', []);
     $aLstDefaults = [
         'menge_mertens' => 1,
@@ -186,6 +276,8 @@ function umzugsleistungen_speichern($AID, $autocalc_ref_mengen = true) {
         'menge_property' => 1,
         'menge2_property' => 1,
     ];
+
+    $aReLeistungsIds = neueAngebotsLeistungen_speichern($AID);
 
     $iNumLeistungen = !empty($lst) && !empty($lst['leistung_id']) ? count($lst['leistung_id']) : 0;
     for($i = 0; $i < $iNumLeistungen; $i++) {
@@ -209,7 +301,7 @@ function umzugsleistungen_speichern($AID, $autocalc_ref_mengen = true) {
     );
     $edit_ids = array_column($data, 'leistung_id');
     
-    $delete_ids = array_diff($existing_ids, $edit_ids);
+    $delete_ids = array_diff($existing_ids, $edit_ids, $aReLeistungsIds);
     //die('<pre>#' . __LINE__ . ' ' . __FILE__ . ' '.print_r($delete_ids,1) . '</pre>');
     
     if (count($data)) {

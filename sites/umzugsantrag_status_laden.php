@@ -30,7 +30,7 @@ function umzugsantrag_status_laden($AID) {
 	$ASJson = "";
 	
 	if (!$AID) {
-		$error.= "Statusdaten können erst nach erstmaligem Speichern geladen werden!<br>\n";
+		$error.= "Statusdaten kÃ¶nnen erst nach erstmaligem Speichern geladen werden!<br>\n";
 		return false;
 	}
 	$AS = new ItemEdit($_CONF["umzugsantrag"], $connid, $user, $AID);

@@ -42,6 +42,12 @@
       <td style="padding:0;" class="options-onoff"><label class="itxt itxt2col off active">{$AS.rueckholung_am} von {$AS.rueckholung_von}</label></td>
     </tr>
     {/if}
+    {if $AS.angeboten_von}
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Angeboten:</label></td>
+      <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.angeboten_am} von {$AS.angeboten_von}</div></td>
+    </tr>
+    {/if}
     <tr>
       <td style="padding:0;width:200px;" valign="top"><label style="display:block;width:auto;">Bisherige Bemerkungen:</label></td>
       <td style="padding:0;">{if empty($AS.bemerkungen)}<div class="itxt itxt2col ireadonly"><i>Keine</i></div>{/if}</td>

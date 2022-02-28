@@ -65,6 +65,12 @@
     <td style="padding:0;"><div class="itxt itxt2col ireadonly"><a href="/?s=pantrag&id={$AS.ref_aid}">{$AS.ref_aid}</a></div></td>
   </tr>
   {/if}
+  {if $AS.angeboten_von}
+  <tr>
+    <td style="padding:0;"><label style="display:block;width:auto;">Angeboten:</label></td>
+    <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.angeboten_am} von {$AS.angeboten_von}</div></td>
+  </tr>
+  {/if}
   </tr>
 	<!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
 </table>
@@ -203,10 +209,11 @@
         value="Dateianhänge">
 <br>
 <br>
-  {*
+
 <strong>Status setzen: </strong> {$AS.umzugsstatus}
 <div class="statusConsole" xstyle="display:none;">
 {if $AS.umzugsstatus eq "geprueft" || $AS.umzugsstatus eq "angeboten"}
+  {*
 <input
         id="btnStatZurueck"
         class="btn blue"
@@ -217,6 +224,7 @@
         data-sendLabel="Senden"
         title="Erneut prüfen lassen"
         value="Zurück geben">
+  *}
 <input
         id="btnStatGenJa"
         class="{if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br ne 'Init' || $AS.genehmigt ne 'Init')}cssHide{else}btn green{/if}"
@@ -232,13 +240,16 @@
         type="submit"
         onclick="umzugsantrag_set_status('genehmigt','Nein')"
         value="Ablehnen">
+  {*
 <input
         id="btnStatGenReset"
         type="submit"
         class="{if $AS.genehmigt_br eq 'Init' || $AS.bestaetigt ne 'Init'}cssHide{else}btn blue{/if}"
         onclick="umzugsantrag_set_status('genehmigt','Init')"
         value="Genehmigung aufheben">
+  *}
 {/if}</div>
+  {*
   *}
 <!-- Debug-Btn:
 <input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">

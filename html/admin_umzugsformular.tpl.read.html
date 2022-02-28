@@ -85,6 +85,12 @@
         {if empty($AS.angeboten_am) and $AS.umzugsstatus|escape eq "genehmigt"}bestaetigt{else}{$AS.umzugsstatus|escape}{/if}
       </div></td>
     </tr>
+    {if $AS.angeboten_von}
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Angeboten:</label></td>
+      <td style="padding:0;"><div class="itxt itxt2col ireadonly">{$AS.angeboten_am} von {$AS.angeboten_von}</div></td>
+    </tr>
+    {/if}
       <!-- SelBox_initLSDefault(initInputObj, initLSName, initMultiple, initLSSearchFields, initLSInputFields) -->
   </table>
     <img src="%WebRoot%images/printer.png" width="16" height="16" alt="">

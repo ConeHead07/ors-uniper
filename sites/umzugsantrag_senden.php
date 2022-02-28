@@ -93,7 +93,7 @@ function umzugsantrag_senden() {
             $AS->arrInput["bemerkungen"].= trim($addBemerkung);
             if (!empty($AS->arrDbdata["bemerkungen"])) $AS->arrInput["bemerkungen"].= "\n\n".$AS->arrDbdata["bemerkungen"];
 
-            $kunde_uid = $AS->arrDbdata['antragsteller_uid'] ?: $user['uid'];
+            $kunde_uid = $AS->arrDbdata['antragsteller_uid'] ?? $user['uid'];
             if ($kunde_uid == $user['uid'] || $user['gruppe'] !== 'admin') {
                 $AS->arrInput['neue_bemerkungen_fuer_admin'] = new DbExpr('neue_bemerkungen_fuer_admin + 1');
             }
@@ -104,8 +104,18 @@ function umzugsantrag_senden() {
         } else {
             $AS->arrInput["bemerkungen"] = (!empty($AS->arrDbdata["bemerkungen"])) ? $AS->arrDbdata["bemerkungen"] : "";
         }
-        //die('<pre>#'.__LINE__.' ' . __FILE__ . ' f:'.__FUNCTION__ . "\nAS->arrInput\n" . print_r($AS->arrInput,1));
+//        die('<pre>#'.__LINE__.' ' . __FILE__ . ' f:'.__FUNCTION__ . "\nAS->arrInput\n" . print_r($AS->arrInput,1));
+//        die('<pre>#'.__LINE__.' ' . __FILE__ . ' f:'.__FUNCTION__ . "\nASPostItem\n" . print_r($ASPostItem,1));
         $AS->save();
+
+        if (!empty($ASPostItem['antragsteller_uid']) && strpos($user['gruppe'], 'admin') !== false && $ASPostItem['antragsteller_uid'] != $user['uid']) {
+            $AS->arrInput['antragsteller_uid'] = $ASPostItem['antragsteller_uid'];
+            $sql = 'UPDATE mm_umzuege SET antragsteller_uid = ' . (int)$ASPostItem['antragsteller_uid']
+                . ' WHERE aid = ' . $AS->id;
+            $db->query($sql);
+        }
+//        $AS->loadDbdata();
+//        die('<pre>#'.__LINE__.' ' . __FILE__ . ' f:'.__FUNCTION__ . "\nAS->arrDbdata\n" . print_r($AS->arrDbdata,1));
         if (!$AID) {
             $AID = $AS->id;
             $UpdateToken = $AS->arrInput["token"]; //substr(md5($AID.time()),0,10);
@@ -124,7 +134,10 @@ function umzugsantrag_senden() {
     $save_ul_count = 0;
     $cntAS = count(array_diff(array_keys($ASPostItem), array('aid', 'bemerkungen')));
     if ($cntAS > 0 || $cmd !== 'status') {
-        if (isset($AS->arrDbdata['autocalc_ref_mengen'])) {
+        if (isset($ASPostItem['autocalc_ref_mengen'])) {
+            $autocalc_ref_mengen = $ASPostItem['autocalc_ref_mengen'];
+        }
+        elseif (isset($AS->arrDbdata['autocalc_ref_mengen'])) {
             $autocalc_ref_mengen = (bool)$AS->arrDbdata['autocalc_ref_mengen'];
         } else {
             $autocalc_ref_mengen = true;

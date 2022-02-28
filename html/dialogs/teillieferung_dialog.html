@@ -20,7 +20,7 @@
     }
 </style>
 <div id="TeillieferungDialog" class="dialog rekla-teillieferung dialog-back-layer">
-    <div class="dialog-wrapper" style="width:90%">
+    <div class="dialog-wrapper" style="width:90%;max-height: 95vh;overflow-y: scroll;">
         <div style="width:90%;">
             <form>
                 <div id="tlContent" style="max-height:80vh;overflow-y: auto;text-align:left;">
@@ -146,11 +146,12 @@
 
         // Teillieferung
         $("#TeillieferungDialog").appendTo("body");
-        var frmTL = $("#TeillieferungDialog").find("form");
-        var tplTable = $("#TeillieferungDialog").find("#TplLeistungTable");
+        var frm = $("#TeillieferungDialog").find("form");
+        var tplTable = frm.find("#TplLeistungTable").addClass("tpl-teillieferung-row");
+        console.log("teillieferung tplTable length", tplTable.length);
         tplTable.remove();
 
-        frmTL.find("[name=chckLeistung\\[\\]]").on("change", function(e) {
+        frm.find("[name=chckLeistung\\[\\]]").on("change", function(e) {
             var lid = $(this).val();
             var row = $(this).closest(".row[data-row]").data("row");
             var neu = $(this).closest(".row").find("[name^=L\\[neue_teilmenge\\]]");

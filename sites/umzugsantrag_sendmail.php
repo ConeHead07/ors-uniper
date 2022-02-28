@@ -118,7 +118,7 @@ function get_notificationUsers($aid, $status, $value) {
             . ' personalnr, strasse, plz, ort, standort, standortverwaltung, gebaeude, darf_preise_sehen, statusmails_filter, '
             . ' email AS `to`'
             . ' FROM  mm_user ' . PHP_EOL
-            . ' WHERE ' . $renderedWhereNotifyable . ' AND gruppe IN ("v-property", "property") '
+            . ' WHERE ' . $renderedWhereNotifyable . ' AND gruppe IN ("v-property", "property", "kunde_report") '
         ),
     );
 
