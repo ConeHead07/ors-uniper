@@ -23,6 +23,7 @@ class LS_Model {
 
     private $error = '';
     private $validationErrors = [];
+    private $validationWarnings = [];
     private $db = null;
     private $mysqli = null;
     private $inputVarNames = [];
@@ -31,6 +32,10 @@ class LS_Model {
     private $auftragsdaten = [];
     private $leistungen = [];
     private $lsdata = [];
+    private $debugLog = [];
+    public $bDebugValidation = false;
+    public $aMissingLeistungsIds = [];
+    public $aMissingFPIds = [];
 
     private $ktgIdLieferung = 18;
     private $ktgIdRabatt = 25;
@@ -75,6 +80,17 @@ class LS_Model {
         }
     }
 
+    public function debug($line, $data = '') {
+        if ($this->bDebugValidation) {
+            $this->debugLog[] = [ 'line' => $line, 'data' => $data ];
+        }
+        return $this;
+    }
+
+    public function getDebugLog() {
+        return $this->debugLog;
+    }
+
 
     public function AidExists($aid) {
         $num = $this->db->query_one(
@@ -116,12 +132,19 @@ FROM mm_umzuege_leistungen l
 LEFT JOIN  `mm_leistungskatalog` k ON l.leistung_id = k.leistung_id
 WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $this->ktgIdLieferung . ', ' . $this->ktgIdRabatt . ', ' . $this->ktgIdMontage . ')');
 
+        if ($this->bDebugValidation) {
+            $sql = $this->db->lastQuery;
+            $this->debug(__LINE__, compact('sql', 'rows'));
+        }
 
         if (empty($rows)) {
+            $this->bDebugValidation && $this->debug(__LINE__);
             return [];
         }
 
-        return array_column($rows, 0);
+        $oneColRows = array_column($rows, 'leistung_id');
+        $this->bDebugValidation && $this->debug(__LINE__, compact('oneColRows' ));
+        return $oneColRows;
     }
 
     public function getLeistungen() {
@@ -194,6 +217,10 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
 
     public function getValidationErrors() {
         return $this->validationErrors;
+    }
+
+    public function getValidationWarnings() {
+        return $this->validationWarnings;
     }
 
     public function loadLastLieferschein() {
@@ -433,6 +460,30 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
         return true;
     }
 
+    public function auftragUnvollstaendigeAusfuehrung(string $bemerkung) {
+        global $user;
+
+        if (!$this->AID) {
+            return false;
+        }
+
+        $sql = 'UPDATE mm_umzuege SET 
+    bemerkungen = CONCAT(:bemerkung, "\n\n", bemerkungen),
+    modified = NOW()
+    WHERE aid = :aid LIMIT 1';
+
+        $this->db->query($sql, [
+            'bemerkung' => $bemerkung,
+            'aid' => $this->AID
+        ]);
+
+        if ($this->db->error()) {
+            $this->error;
+            return false;
+        }
+        return true;
+    }
+
     public function getBinaryFromBase64DataUrl($dataurl) {
         $_val = $dataurl;
         $commaPos = strpos($_val, ',');
@@ -453,7 +504,15 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
         $this->error = '';
         $this->validationErrors = [];
         $input = [];
-        $auftragLeistungenIds = $this->getLeistungenIds();
+        // $auftragLeistungenIds = $this->getLeistungenIds();
+        $auftragsLeistungen = $this->getLeistungen();
+        $auftragLeistungenIds = array_column($auftragsLeistungen, 'leistung_id');
+        $this->debug(__LINE__, compact('auftragLeistungenIds'));
+
+        $tmp = array_filter($auftragsLeistungen, function($item) { return in_array($item['Kategorie'], ['Schreibtisch', 'Schreibtischlampe']); });
+        $auftragFktPruefLstgIds = array_values(array_map(function($item) { return $item['leistung_id']; }, $tmp));
+        $this->aMissingLeistungsIds = [];
+        $this->aMissingFPIds = [];
 
         foreach($this->inputVarNames as $_name) {
             $_val = $rawInput[$_name] ?? '';
@@ -601,16 +660,68 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
                     break;
 
                 case 'etikettierung_erfolgt':
-                    if (empty($_val)) {
-                        $this->validationErrors[$_name] = 'Es fehlen Angaben zur Etikettierung!';
-                    }
-                    if (is_array($_val) && count($_val) < count($auftragLeistungenIds)) {
-                        $this->validationErrors[$_name] = 'Es wurden nicht alle Artikel als etikettiert markiert!';
+                    $this->aMissingLeistungsIds = [];
+                        $this->debug(__LINE__, compact( '_name', '_val', '_colName' ));
+                    if (count($auftragLeistungenIds)) {
+                        if (empty($_val) || !is_array($_val)) {
+                            $this->debug(__LINE__);
+                            $this->validationErrors[$_name] = 'Es fehlen Angaben zur Etikettierung!';
+                            $this->aMissingLeistungsIds = $auftragLeistungenIds;
+                        } else {
+                            $this->debug(__LINE__);
+                        }
+                        if (is_array($_val) && count($_val) < count($auftragLeistungenIds)) {
+                            $this->debug(__LINE__);
+                            $this->validationWarnings[$_name] = 'Es wurden nicht alle Artikel als etikettiert markiert!';
+                            $this->aMissingLeistungsIds = array_values(array_diff($auftragLeistungenIds, array_keys($_val)));
+                        } else {
+                            $this->debug(__LINE__);
+                        }
+
+                        if (count($this->aMissingLeistungsIds)) {
+                            $tmp = $this->aMissingLeistungsIds;
+                            $missingFPL = array_filter($auftragsLeistungen, function ($item) use ($tmp) {
+                                return in_array($item['leistung_id'], $tmp);
+                            });
+                            $missingLShorst = array_map(function ($item) {
+                                return $item['Kategorie'] . ': ' . $item['Bezeichnung'];
+                            }, $missingFPL);
+
+                            if (empty($_val) || !is_array($_val)) {
+                                $this->validationErrors[$_name] .= "\n - " . implode("\n - ", $missingLShorst);
+                            } else {
+                                $this->validationWarnings[$_name] .= "\n - " . implode("\n - ", $missingLShorst);
+                            }
+                        }
                     }
                     $_val = json_encode($_val);
                     break;
 
                 case 'funktionspruefung_erfolgt':
+                    $this->aMissingFPIds = [];
+                    if (count($auftragFktPruefLstgIds)) {
+                        if (empty($_val) || !is_array($_val)) {
+                            $this->debug(__LINE__);
+                            $this->validationWarnings[$_name] = 'Es fehlen Angaben zur Funktionsprüfung!';
+                            $this->aMissingFPIds = $auftragFktPruefLstgIds;
+                        }
+                        elseif (count($_val) < count($auftragFktPruefLstgIds)) {
+                            $this->debug(__LINE__);
+                            $this->validationWarnings[$_name] = 'Es wurden nicht alle Funktionsprüfungen durchgeführt!';
+                            $this->aMissingFPIds = array_values(array_diff($auftragFktPruefLstgIds, $_val) );
+                        }
+                        if (count($this->aMissingFPIds)) {
+                            $tmp = $this->aMissingFPIds;
+                            $missingFPL = array_filter($auftragsLeistungen, function ($item) use ($tmp) {
+                                return in_array($item['leistung_id'], $tmp);
+                            });
+                            $missingFPShorst = array_map(function ($item) {
+                                return $item['Kategorie'] . ': ' . $item['Bezeichnung'];
+                            }, $missingFPL);
+                            $this->validationWarnings[$_name] .= "\n - " . implode("\n - ", $missingFPShorst);
+                        }
+                    }
+                    $this->debug(__LINE__, compact( '_name', '_val', '_colName' ));
                     $_val = json_encode($_val);
                     break;
 
@@ -634,7 +745,7 @@ WHERE aid = ' . (int)$this->AID . ' AND k.leistungskategorie_id NOT IN (' . $thi
         if (!count($this->validationErrors)) {
             return $input;
         }
-        return false;
+        return $input;
 
     }
 

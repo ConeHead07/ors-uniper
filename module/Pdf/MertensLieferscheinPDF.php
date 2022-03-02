@@ -14,6 +14,7 @@ class MertensLieferscheinPDF extends MertensBasePDF
     protected $auftragsdaten = [];
     protected $lieferscheindaten = [];
     protected $leistungen = [];
+    protected $auslieferBemerkung = '';
     protected $leistungenLabels = [];
     protected $aEtikettenCheck = [];
     protected $sigMtDataUrlSrc = '';
@@ -36,6 +37,11 @@ class MertensLieferscheinPDF extends MertensBasePDF
 
     public function setAuftragsdaten(array $daten) {
         $this->auftragsdaten = $daten;
+        return $this;
+    }
+
+    public function setBemerkung(string $bemerkung) {
+        $this->auslieferBemerkung = $bemerkung;
         return $this;
     }
 
@@ -241,6 +247,15 @@ class MertensLieferscheinPDF extends MertensBasePDF
         $this->SetFont('helvetica', '', 9);
         $this->Ln(10);
         $this->writeHTML($kundenAbnahme);
+
+        if ($this->auslieferBemerkung) {
+            $this->AddPage();
+
+            $this->Ln(10);
+            $this->writeHTML(
+                "<div><b>Reklamations-Anmerkungen bei Auslieferung:</b></div>\n"
+                . '<p>' . $this->auslieferBemerkung) . '</p>';
+        }
     }
 
     public function getCaption() {

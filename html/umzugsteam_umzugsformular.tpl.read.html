@@ -377,6 +377,7 @@
         color: #0075B5;
         box-sizing: border-box;
         outline-color: #0075B5;
+        border-radius: 4px;
       }
       .spinner.icon.loading {
         animation: lds-dual-ring 1.2s linear infinite;
@@ -426,7 +427,7 @@
                 .trigger("change");
       });
     </script>
-  {if false}
+  {if 1}
     <div id="UnzustellBarToggle" data-target="#UnzustellbarBox" class="unzustellbar-label alert-dialog-label">Lieferung kann nicht zugestellt werden <i class="caret down icon"></i></div>
   {else}
   <div id="UnzustellBarToggle"></div>
@@ -520,24 +521,30 @@
       </div>
 
       {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
-      {foreach name=GList item=L from=$Umzugsleistungen}
-      {if $L.kategorie eq "Schreibtisch" or  $L.kategorie eq "Schreibtischlampe"}
-      <div style="min-height:1.5rem;margin-top:1.2rem;">
+        {foreach name=GList item=L from=$Umzugsleistungen}
+          {if $L.kategorie eq "Schreibtisch" or  $L.kategorie eq "Schreibtischlampe"}
+          <div style="min-height:1.5rem;margin-top:1.2rem;">
+            <div>
+              <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
+                Funktionsprüfung erfolgt</label>
+            </div>
+          </div>
+          {break}
+          {/if}
+        {/foreach}
         <div>
-          <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
-            Funktionsprüfung erfolgt</label>
+        {foreach name=GList item=L from=$Umzugsleistungen}
+          {if $L.kategorie eq "Schreibtisch" or  $L.kategorie eq "Schreibtischlampe"}
+          <label style="margin-right:3rem;width:initial;color:#0078dc;padding: 10px 3px 5px 0" class="input-bg-color" >
+            <input name="funktionspruefung_erfolgt[]"
+                   data-label="{$L.kategorie|escape}"
+                   id="Schreibtischpruefung"
+                   style="width:1rem;height:1rem;outline: 2px solid #0078dc;outline-style: auto;"
+                   value="{$L.kategorie|escape}" type="checkbox"> {$L.kategorie|escape}
+          </label>
+          {/if}
+        {/foreach}
         </div>
-        <label style="margin-right:3rem;width:initial;color:#0078dc;padding: 10px 3px 5px 0" class="input-bg-color" >
-          <input name="funktionspruefung_erfolgt[]"
-                 data-label="{$L.kategorie|escape}"
-                 id="Schreibtischpruefung"
-                 style="width:1rem;height:1rem;outline: 2px solid #0078dc;outline-style: auto;"
-                 value="{$L.kategorie|escape}" type="checkbox"> {$L.kategorie|escape}
-        </label>
-      </div>
-      {break}
-      {/if}
-      {/foreach}
       {/if}
 
       <style>
@@ -602,10 +609,23 @@
           color: lightpink;
           color: #fff;
         }
+        #reklamationDialog textarea[name=rekla_bemerkung] {
+          width:100%;
+          resize: vertical;
+          border: 1px solid #0075B5;
+          padding: .5rem;
+          font-size: 1rem;
+          height: 2.5rem;
+          background-color:white;
+          color: #0075B5;
+          box-sizing: border-box;
+          outline-color: #0075B5;
+          border-radius: 4px;
+        }
       </style>
 
       <div>
-        {if false}
+        {if 1}
         <div id="ReklamationLabel" data-target="#reklamationDialog" class="reklamation-label alert-dialog-label">Reklamation hinzufügen <i class="caret down icon"></i></div>
         {else}
         <div id="ReklamationLabel"></div>
@@ -613,30 +633,32 @@
         <div id="reklamationDialog" class="inline-dialog-box" style="display: none;">
           <div class="options-box">
             {if !empty($Umzugsleistungen) and is_array($Umzugsleistungen)}
-            {foreach name=GList item=L from=$Umzugsleistungen}
-            {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" or $L.kategorie eq "Montage"}
-            {continue}
-            {/if}
+              {foreach name=GList item=L from=$Umzugsleistungen}
+                {if $L.kategorie_id eq "18" or $L.kategorie_id eq "25" or $L.kategorie eq "Montage"}
+                  {continue}
+                {/if}
 
             <div class="options-item">
 
-              {if $L.menge_mertens eq 1}
+                {if $L.menge_mertens eq 1}
               <div class="options-item-caption" style="width:100%;display: block;">
-                {$L.kategorie|escape}</div>
+                  {$L.kategorie|escape}</div>
               <div class="item item-geliefert" style="display:inline-block;width:30%;border-left: 1px solid rgba(0, 0, 0, .5);"><label style="">OK<input type="radio" value="geliefert" name="lieferpos[{$L.leistung_id|escape}]" style="display:none" checked></label></div>
               <div class="item item-fehlt" style="display:inline-block;width:30%;border-left: 1px solid rgba(0, 0, 0, .5);"><label style="">Fehlt<input type="radio" value="fehlt" name="lieferpos[{$L.leistung_id|escape}]" style="display:none;background-color:#fff;color:red;text-align:right;"></label></div>
               <div class="item item-rekla" style="display:inline-block;width:30%;border-left: 1px solid rgba(0, 0, 0, .5);"><label style="">Rekla<input type="radio" value="rekla" name="lieferpos[{$L.leistung_id|escape}]" style="display:none;background-color:#fff;color:red;text-align:right;"></label></div>
-              {else}
+                {else}
               <div class="options-item-caption"><input type="checkbox" data-target="" name="failure[{$L.leistung_id|escape}]" value="1">
-                {$L.kategorie|escape}</div>
+                  {$L.kategorie|escape}</div>
               <div style="display:inline-block;width:48%;">Fehlt: <input type="number" size="3" min="0" max="{$L.menge_mertens}" value="0" name="fehlmenge[{$L.leistung_id|escape}]" align="right" style="background-color:#fff;color:red;text-align:right;"></div>
               <div style="display:inline-block;width:48%;">Rekla: <input type="number" align="right" size="3" min="0" max="{$L.menge_mertens}" value="0" name="fehlerhaft[{$L.leistung_id|escape}]" style="background-color:#fff;color:red;text-align:right;"></div>
-              {/if}
+                {/if}
 
             </div>
-            {/foreach}
+              {/foreach}
+            {/if}
           </div>
-          {/if}
+          <b>Erläuterung / Bemerkung / Sonstiges</b>
+          <textarea name="rekla_bemerkung"></textarea>
         </div>
       </div>
 
@@ -761,7 +783,7 @@
       var frm = box.find("form");
       var url = frm.attr("action");
       var aid = frm.find(":input[name=aid]").val();
-      var grundOpts = frm.find(":input[name=unzustellbar_grund");
+      var grundOpts = frm.find(":input[name=unzustellbar_grund]");
       var grundText = box.find(":input[name=unzustellbar_bemerkung]");
       var grundTextVal = grundText.val();
 
@@ -779,22 +801,23 @@
         return;
       }
 
-
       var data = {
         aid: aid,
-        grund: grundText,
-        bemerkung: grundTextVal,
-        datum: getDbDateString(),
-        zeit: getDbTimeString()
+        grund: checkedOpt.val(), // '', //
+        bemerkung: grundTextVal, // '', //
+        datum: getDbDateString(), // '', //
+        zeit: getDbTimeString() // '' //
       };
 
-      var rq = $.post(url, data, function(data) {
+      var rq = $.post(url, data, function(d) {
         MyInfoBox('Daten wurden übertragen', 'Zustellversuch wurde gespeichert!');
       });
+
       rq.always(function() {
         btn.prop('disabled', false).waitMe('hide');
-      })
+      });
     });
+
     $(":radio[data-toggletarget]").each(function() {
       var frm = $(this).closest("form");
       var self = this;
@@ -1247,17 +1270,35 @@
     }
 
     for(var name in daten) {
+      var inputVal = daten[name];
+      console.log('#1268 laod ', { name, inputVal });
       if (!daten.hasOwnProperty(name)) {
+        console.log('#1270 cancel is no ownProperty');
         continue;
       }
       name.replace('[', '\\[');
-      var input = frm.find("input[name=" + escapeSelector(name) + "]");
+      var input = frm.find(":input[name=" + escapeSelector(name) + "]");
+      console.log('#1275 searched for "input[name="' + escapeSelector(name) + '"]" ', input.length);
       if (input.length === 1) {
+        console.log('#1277');
         var type = input.attr("type");
+        console.log('#1279 type', type);
         if (['radio', 'checkbox'].indexOf(type) > -1 ) {
-          input.prop("checked", true);
+          console.log('#1281 type is of type radio or checkbox', type);
+          input.prop("checked", true).trigger("change");
+        } else {
+          input.val(daten[name]);
         }
-        input.val(daten[name]);
+      } else if (input.length > 1) {
+        var type = input.eq(0).attr("type");
+        if (['radio'].indexOf(type) > -1 ) {
+          console.log('#1289 type is of type radio', type);
+          input.filter(function() {
+            var radioVal = $(this).val();
+            var foundCheck = radioVal == inputVal;
+            console.log("#1290 radio filter ", { foundCheck, radioVal, inputVal });
+            return $(this).val() == inputVal; }).prop("checked", true).trigger("change");
+        }
       }
     }
 
@@ -1289,6 +1330,36 @@
     var fpruefung = frm.find("input[name^=funktionspruefung_erfolgt]");
     var fpruefungChecked = fpruefung.filter(function() { return this.checked; });
     var fcheckedLength = fpruefungChecked.length;
+
+
+/*
+  <input type="radio" value="geliefert" name="lieferpos[{$L.leistung_id|escape}]">
+  <input type="radio" value="fehlt" name="lieferpos[{$L.leistung_id|escape}]">
+  <input type="radio" value="rekla" name="lieferpos[{$L.leistung_id|escape}]">
+
+  Fehlt: <input value="0" name="fehlmenge[{$L.leistung_id|escape}]"
+  Rekla: <input value="0" name="fehlerhaft[{$L.leistung_id|escape}]"
+  <textarea name="rekla_bemerkung"></textarea>
+*/
+    var reklaDialog = $("#reklamationDialog");
+    var numFehlt = 0;
+    var numRekla = 0;
+    var reklaBem = reklaDialog.find(":input[name=rekla_bemerkung]").val();
+    reklaDialog.find(":input[name^=lieferpos]:checked").each(function() {
+      if ($(this).val() === "fehlt") {
+        numFehlt+= +$(this).val();
+        return;
+      }
+      if ($(this).val() === "rekla") {
+        numRekla+= +$(this).val();
+        return;
+      }
+    });
+    reklaDialog.find(":input[name^=fehlmenge]").each(function() { numFehlt+= +$(this).val(); });
+    reklaDialog.find(":input[name^=fehlerhaft]").each(function() { numRekla+= +$(this).val(); });
+    var hasRekla = (reklaBem.length > 5 || numFehlt > 0 || numRekla > 0);
+
+
 
     var leistungenLabels = [];
     leistungen.each(function() { leistungenLabels.push( $(this).data("label")  )});
@@ -1335,8 +1406,13 @@
       errors+= "Die Abfahrtszeit kann nicht vor der Ankunftszeit liegen!\n";
     }
     if (!checkedLength) {
-      errors+= "Es wurde kein Artikel als etikettiert markiert:\n";
-      errors+= " - " + leistungenLabels.join("\n - ") + "\n";
+      if (!numFehlt && !numRekla) {
+        errors += "Es wurde kein Artikel als etikettiert markiert:\n";
+        errors += " - " + leistungenLabels.join("\n - ") + "\n";
+      } else {
+        warnings += "Es wurde kein Artikel als etikettiert markiert:\n";
+        warnings += " - " + leistungenLabels.join("\n - ") + "\n";
+      }
     }
 
     if (errors) {

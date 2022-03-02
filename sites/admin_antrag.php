@@ -3,6 +3,9 @@ require_once($InclBaseDir."php_json.php");
 require_once("sites/umzugsantrag_stdlib.php");
 require_once($InclBaseDir."umzugsgruppierungen.lib.php");
 
+if (empty($cmd)) {
+    $cmd = '';
+}
 
 // Get ID, falls Antrag bereits vorhanden
 $AID = getRequest("id",'');
@@ -189,6 +192,7 @@ $dl_id = $AS->arrInput['dienstleister_id'];
 $DL = new ItemEdit($_CONF["dienstleister"], $connid, $user, $dl_id);
 $DL->loadDbdata();
 $DL->dbdataToInput();
+$Tpl->assign('cmd', $cmd);
 $Tpl->assign("DL", $DL->arrInput);
 $Tpl->assign("MAConf", $MAConf['Fields']);
 

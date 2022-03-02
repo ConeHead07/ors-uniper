@@ -1,6 +1,12 @@
 {assign var="laenderCsv" value=$ASConf.land.size|substr:1:-1}
 {assign var="laenderLst" value="','"|explode:$laenderCsv}
 
+
+{assign var="fillCustomerInput" value="1"}
+{if $creator eq "mertens" and empty($AID)}
+{assign var="fillCustomerInput" value="0"}
+{/if}
+
 {literal}
 <script src="{WebRoot}js/FbAjaxUpdater.js?%assetsRefreshId%" type="text/javascript"></script>
 <script src="{WebRoot}js/PageInfo.js?%assetsRefreshId%" type="text/javascript"></script>
@@ -64,6 +70,7 @@
         <form action="umzugsantrag_speichern.php" name="frmUmzugsantrag" method="post" style="margin:0;padding:0;display:inline;">
             <input type="hidden" name="AS[aid]" value="{if !empty($AS)}{$AS.aid}{/if}">
             <input type="hidden" name="AS[token]" value="{if !empty($AS)}{$AS.token}{/if}">
+            <input type="hidden" value="{if $fillCustomerInput}{$AS.antragsteller_uid|escape}{/if}" name="AS[antragsteller_uid]">
             <span class="required-label">* Erforderliche Angaben</span>
             <table>
                 <tr>
@@ -72,19 +79,19 @@
                             Vor{if $ASConf.vorname.required}<span class="required">*</span>{/if} &amp; Nachname<span class="right">{if $ASConf.name.required}<span class="required">*</span>{/if}</span>
                         </label></td>
 
-                    <td style="padding:0;width:250px;"><input type="text" id="as_vornachname" readonly="true" value="{if !empty($AS)}{$AS.vorname|escape}{/if}" {if $ASConf.name.required}required="required"{/if} name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" id="as_name" readonly="true" value="{if !empty($AS)}{$AS.name|escape}{/if}" name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
+                    <td style="padding:0;width:250px;"><input type="text" id="as_vornachname" readonly="true" value="{if $fillCustomerInput and !empty($AS)}{$AS.vorname|escape}{/if}" {if $ASConf.name.required}required="required"{/if} name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" id="as_name" readonly="true" value="{if $fillCustomerInput and !empty($AS)}{$AS.name|escape}{/if}" name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_email" style="display:block;width:auto;">E-Mail<span class="right">{if $ASConf.email.required}<span class="required">*</span>{/if}</span></label></td>
-                    <td style="padding:0;"><input type="text" autocomplete="email" id="as_email" value="{if !empty($AS)}{$AS.email|escape}{/if}" name="AS[email]" {if $ASConf.email.required}required="required"{/if} readonly="true" class="itxt itxt2col" title="E-Mail"></td>
+                    <td style="padding:0;"><input type="text" autocomplete="email" id="as_email" value="{if $fillCustomerInput and !empty($AS)}{$AS.email|escape}{/if}" name="AS[email]" {if $ASConf.email.required}required="required"{/if} readonly="true" class="itxt itxt2col" title="E-Mail"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_fon" style="display:block;width:auto;">Telefon<span class="right">{if $ASConf.fon.required}<span class="required">*</span>{/if}</span></label></td>
-                    <td style="padding:0;"><input type="text" autocomplete="tel" id="as_fon" value="{if !empty($AS)}{$AS.fon|escape}{/if}" {if $ASConf.fon.required}required="required"{/if} name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
+                    <td style="padding:0;"><input type="text" autocomplete="tel" id="as_fon" value="{if $fillCustomerInput and !empty($AS)}{$AS.fon|escape}{/if}" {if $ASConf.fon.required}required="required"{/if} name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_kid" style="display:block;width:auto;">KID</label></td>
-                    <td style="padding:0;"><input type="text" id="as_kid" name="AS[personalnr]"  readonly value="{if !empty($AS)}{$user.personalnr|escape}{/if}" class="itxt itxt2col ireadonly" ></td>
+                    <td style="padding:0;"><input type="text" id="as_kid" name="AS[personalnr]"  readonly value="{if $fillCustomerInput and !empty($AS)}{$user.personalnr|escape}{/if}" class="itxt itxt2col ireadonly" ></td>
                 </tr>
                 {if !empty($AS.ref_aid)}
                 <tr>
@@ -93,6 +100,9 @@
                 </tr>
                 {/if}
             </table>
+            {if !$fillCustomerInput}
+            <button id="btnSelectCustomer" class="btn green" type="button"> Kunde auswählen </button>
+            {/if}
 
             {if !empty($AS) and !empty($AS.bemerkungen)}
             <table width="100%">
@@ -407,6 +417,14 @@
             {/if}
             <div style="margin-top:20px;">
                 <input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;">
+                {if !$fillCustomerInput}
+                <button
+                        id="btnAngebotSenden"
+                        type="submit"
+                        class="btn green"
+                        title="Angebot senden"
+                        value="Angeboten">Angebot<br>senden</button>
+                {else}
                 <button
                         class="btn green"
                         type="submit"
@@ -442,6 +460,7 @@
                     title="Nur Speichern, noch nicht bestellen"
                     value="Speichern"><i class="icon shopping cart"></i> Warenkorb speichern</button>
 
+            {/if}
             <!-- Debug-Btn:
             <input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">
             <input type="submit" onclick="return umzugsantrag_submit_debug('senden')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="senden">
@@ -453,4 +472,38 @@
         </form>
     </div>
     <div id="LoadingBar"></div>
+    {if !$fillCustomerInput}
+    {include file="dialogs/kundenauswahl_dialog.html"}
+    {/if}
+
+    {if !$fillCustomerInput}
+    <script>
+        $("#btnSelectCustomer").on("click", function(e) {
+            showKundenauswahlDialog(function(result) {
+                console.log("SELECTED USER:\n" + JSON.stringify(result));
+                $(":input[name=AS\\[antragsteller_uid\\]]").val(result.uid);
+                $(":input[name=AS\\[vorname\\]]").val(result.vorname);
+                $(":input[name=AS\\[vorname\\]]").val(result.vorname);
+                $(":input[name=AS\\[name\\]]").val(result.nachname);
+                $(":input[name=AS\\[email\\]]").val(result.email);
+                $(":input[name=AS\\[fon\\]]").val(result.fon);
+                $(":input[name=AS\\[personalnr\\]]").val(result.personalnr);
+            });
+        });
+
+        $("#btnAngebotSenden").on("click", function(e) {
+
+            e.preventDefault();
+
+            var frm = document.forms["frmUmzugsantrag"];
+            var as_uid = $( frm ).find(":input[name=AS\\[antragsteller_uid\\]]");
+            if (as_uid.length && !as_uid.val()) {
+                ErrorBox("Bitte wählen Sie erst einen Kunden für das Angebot aus!");
+                return;
+            }
+
+            umzugsantrag_send();
+        });
+    </script>
+    {/if}
 </div>

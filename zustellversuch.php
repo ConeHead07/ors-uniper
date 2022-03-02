@@ -1,13 +1,15 @@
 <?php
-require_once('header.php');
-require_once($SitesBaseDir . '/umzugsantrag_sendmail.php');
-require_once($InclBaseDir . 'umzugsantrag.inc.php');
+require_once 'header.php';
+require_once $SitesBaseDir . '/umzugsantrag_sendmail.php';
+require_once $SitesBaseDir . '/umzugsantrag_speichern.php';
+require_once $InclBaseDir  . 'umzugsantrag.inc.php';
 
 $aid = (int)getRequest('aid', 0);
 $grund = getRequest('grund', '');
 $bemerkung = getRequest('bemerkung', '');
 $datum = getRequest('datum', '');
 $zeit = getRequest('zeit', '');
+$errors = [];
 
 $data = compact('aid', 'grund', 'bemerkung', 'datum', 'zeit');
 
@@ -77,7 +79,7 @@ if (count($errors)) {
 }
 
 
-$sFormattedGrund = getFormattedBemerkung($grund, $aGrundLeistungen);
+$sFormattedGrund = getFormattedBemerkung($grund, $data);
 
 $colNames = ['ref_aid', 'umzug', 'service', ];
 $quotedDaten = [ $aid, $db::quote('Teil'), $db::quote('Teil') ];
@@ -111,8 +113,15 @@ $db->query($sqlStatusUpdate, [
     'aid' => $aid
 ]);
 
-
-if (false && umzugsantrag_mailinform($aid, 'teillieferung', $zvID)) {
+$inputItem = [
+    'aid' => $aid,
+    'id' => $aid,
+    'add_bemerkungen' => $sFormattedGrund,
+];
+umzugsantrag_add_bemerkung($inputItem);
+$error = '';
+/*
+if (false && umzugsantrag_mailinform($aid, 'zustellversuch', $zvID)) {
     $iNumMails = umzugsantrag_mailinform_get_numMails();
     if ($iNumMails > 0) {
         if ($user['gruppe'] === 'admin') {
@@ -128,9 +137,10 @@ if (false && umzugsantrag_mailinform($aid, 'teillieferung', $zvID)) {
         $error.= "Fehler im Nachrichtensystem [#215]!<br>\n";
     }
 }
+*/
 
 zvResponseSuccess([
     'aid' => $aid,
-    'leistungen' => $inputLeistungsMengenByLID,
-    'teilAid' => $zvID
+    'msg' => $msg,
+    'error' => $error
 ]);
