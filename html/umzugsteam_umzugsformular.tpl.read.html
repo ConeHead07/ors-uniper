@@ -525,6 +525,13 @@
           <label style="margin-right:3rem;width:initial;" class="input-bg-color" >
             Funktionsprüfung erfolgt</label>
         </div>
+      </div>
+      {break}
+      {/if}
+      {/foreach}
+      <div>
+        {foreach name=GList item=L from=$Umzugsleistungen}
+        {if $L.kategorie eq "Schreibtisch" or  $L.kategorie eq "Schreibtischlampe"}
         <label style="margin-right:3rem;width:initial;color:#0078dc;padding: 10px 3px 5px 0" class="input-bg-color" >
           <input name="funktionspruefung_erfolgt[]"
                  data-label="{$L.kategorie|escape}"
@@ -532,10 +539,9 @@
                  style="width:1rem;height:1rem;outline: 2px solid #0078dc;outline-style: auto;"
                  value="{$L.kategorie|escape}" type="checkbox"> {$L.kategorie|escape}
         </label>
+        {/if}
+        {/foreach}
       </div>
-      {break}
-      {/if}
-      {/foreach}
       {/if}
 
       <style>
