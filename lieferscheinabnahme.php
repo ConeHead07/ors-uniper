@@ -179,13 +179,13 @@ if (0) {
 $debugLog = [ __FILE__ ];
 $debugLog[] = __LINE__;
 
-if (false !== $input) {
+if ($input) {
     $debugLog[] = __LINE__;
     $input['schlussbericht'] = $incompleteMsg;
     $lid = $lsmodel->save($input);
 
     $auftrag = $lsmodel->getAuftragsdaten();
-    $leistungen = $lsmodel->getLeistungen();au
+    $leistungen = $lsmodel->getLeistungen();
     $lsdaten = $lsmodel->getData();
 
     $debugLog[] = __LINE__;
