@@ -611,7 +611,7 @@ function update_gelieferte_mengen($aid, array $aLeistungenMitMengen, string $lie
     return $numUpdates;
 }
 
-function umzugsantrag_add_bemerkung() {
+function umzugsantrag_add_bemerkung(array $inputItem = []) {
     global $db;
     global $error;
     global $msg;
@@ -621,8 +621,13 @@ function umzugsantrag_add_bemerkung() {
     global $user;
 
     $UpdateToken = "";
-    $AID = getRequest("id","");
-    $ASPostItem = getRequest("AS",false);
+    if (!$inputItem) {
+        $AID = getRequest("id", "");
+        $ASPostItem = getRequest("AS", false);
+    } else {
+        $AID = $inputItem['id'] ?? $inputItem['aid']; // getRequest("id", "");
+        $ASPostItem = $inputItem;
+    }
     $addBemerkung = "";
     $enrichedBemerkung = '';
     $NL = "\n";
@@ -684,6 +689,9 @@ function umzugsantrag_add_bemerkung() {
         if ($kunde_uid != $user['uid'] || $user['gruppe'] === 'admin') {
             $aSet[] = 'neue_bemerkungen_fuer_kunde = (neue_bemerkungen_fuer_kunde + 1)';
         }
+        $aSet[] = 'modified = NOW()';
+        $aSet[] = 'modified_uid = ' . $db::quote($user['uid']);
+        $aSet[] = 'modifiedby = ' . $db::quote($user['user']);
 
         $sql = 'UPDATE mm_umzuege SET ' . $NL
             . ' bemerkungen = TRIM(CONCAT(IFNULL(:bemerkung, ""), "\n\n", IFNULL(bemerkungen, "")))'
