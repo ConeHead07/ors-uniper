@@ -163,13 +163,26 @@ function umzugsantrag_status($AID, $name, $value) {
                         . '`abgeschlossen_am`= NULL, ' . "\n"
                         . '`abgeschlossen_von`= NULL'
                     ;
-                    if ($AS->arrDbdata['geprueft'] === 'Ja') {
+                    if ($AS->arrDbdata['bestaetigt'] === 'Ja') {
+                        $sql_set.= ', umzugsstatus = "bestaetigt"';
+                        $sql_set.= ', umzugsstatus_vom = bestaetigt_am';
+                    } elseif ($AS->arrDbdata['genehmigt'] === 'Ja') {
+                        $sql_set.= ', umzugsstatus = "genehmigt"';
+                        $sql_set.= ', umzugsstatus_vom = genehmigt_am';
+                    } elseif ($AS->arrDbdata['genehmigt_br'] === 'Ja') {
+                        $sql_set.= ', umzugsstatus = "genehmigt"';
+                        $sql_set.= ', umzugsstatus_vom = genehmigt_br_am';
+                    } elseif ($AS->arrDbdata['geprueft'] === 'Ja') {
+                        $sql_set.= ', umzugsstatus = "geprueft"';
                         $sql_set.= ', umzugsstatus_vom = geprueft_am';
                     } elseif ($AS->arrDbdata['zurueckgegeben'] === 'Ja') {
+                        $sql_set.= ', umzugsstatus = "zurueckgegebent"';
                         $sql_set.= ', umzugsstatus_vom = zurueckgegeben_am';
                     } elseif (!empty($AS->arrDbdata['angboten_von'])) {
+                        $sql_set.= ', umzugsstatus = "angeboten"';
                         $sql_set.= ', umzugsstatus_vom = angeboten_am';
                     } else {
+                        $sql_set.= ', umzugsstatus = "beantragt"';
                         $sql_set.= ', umzugsstatus_vom = antragsdatum';
                     }
                     $sendmail_newstatus = '';
