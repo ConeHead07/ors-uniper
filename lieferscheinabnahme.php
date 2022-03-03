@@ -100,7 +100,7 @@ $aLidToItem['a219'] = arrayFindFirst($aLeistungen, ['leistung_id' => 219]);
 $reklaBem = '';
 $aLieferpos = isset($aPostInput['lieferpos']) ? $aPostInput['lieferpos'] : []; // {219: "rekla", 223: "fehlt", 224: "rekla"}#
 
-$aReklas = [];
+$aRekla = [];
 $aFehlt = [];
 foreach($aLieferpos as $_id => $_stat) {
     switch($_stat) {
@@ -137,9 +137,9 @@ if (count($aFehlt)) {
     }
 }
 
-if (count($aFehlt)) {
-    $incompleteMsg.= count($aFehlt) . " bestellte Leistungen wurden bei der Auslieferung reklamiert:\n";
-    foreach($aFehlt as $_row) {
+if (count($aRekla)) {
+    $incompleteMsg.= count($aRekla) . " bestellte Leistungen wurden bei der Auslieferung reklamiert:\n";
+    foreach($aRekla as $_row) {
         $incompleteMsg.= '- '
             . $_row['Kategorie'] . ': '
             . trim(trim($_row['Bezeichnung'] . ', ' . $_row['Groesse'] . $_row['Farbe'] ), ',') . "\n";
