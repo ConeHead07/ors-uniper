@@ -246,18 +246,21 @@
         {/if}
         <br>
 
-        <strong>Möchten Sie diesen Angebot annehmen?</strong>
+        <strong>Möchten Sie dieses Angebot bestellen?</strong>
         <div class="statusConsole">
 
-          <input id="btnStatGenJa"
+          <button id="btnStatGenJa"
                  type="submit"
                  class="{if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br eq 'Ja' || $AS.bestaetigt ne 'Init')}cssHide{else}btn green{/if}" onclick="umzugsantrag_set_status('genehmigt','Ja')"
-                 value="Genehmigen">
-          <input id="btnStatGenNein"
+                 value="Bestellen">Ja<br>bestellen
+          </button>
+          <button id="btnStatGenNein"
                  type="submit"
                  class="{if $AS.umzugsstatus ne 'angeboten' && ($AS.genehmigt_br eq 'Nein' || $AS.bestaetigt ne 'Init')}cssHide{else}btn red{/if}"
                  onclick="umzugsantrag_set_status('genehmigt','Nein')"
-                 value="Ablehnen">
+                 value="Nicht bestellen">
+            Nicht<br>bestellen
+          </button>
           {*
           <input id="btnStatGenReset"
                  type="submit"
