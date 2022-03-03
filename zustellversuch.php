@@ -113,23 +113,13 @@ $db->query($sqlStatusUpdate, [
     'aid' => $aid
 ]);
 
-
-if (false && umzugsantrag_mailinform($aid, 'teillieferung', $zvID)) {
-    $iNumMails = umzugsantrag_mailinform_get_numMails();
-    if ($iNumMails > 0) {
-        if ($user['gruppe'] === 'admin') {
-            $msg .= "Mail wurde gesendet [Anzahl: $iNumMails]!<br>\n";
-        } else {
-            $msg .= "Ihre Daten wurden weitergeleiter!<br>\n";
-        }
-    }
-} else {
-    if ($user['gruppe'] === 'admin') {
-        $error.= "Fehler beim Mailversand [#213]!<br>\n";
-    } else {
-        $error.= "Fehler im Nachrichtensystem [#215]!<br>\n";
-    }
-}
+$debugLog[] = __LINE__;
+$inputItem = [
+    'aid' => $aid,
+    'id' => $aid,
+    'add_bemerkungen' => $sFormattedGrund,
+];
+umzugsantrag_add_bemerkung($inputItem);
 
 zvResponseSuccess([
     'aid' => $aid,
