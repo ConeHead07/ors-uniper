@@ -82,7 +82,7 @@ for($i = 0; $i < count($rows); $i++) {
             $test = json_decode($v, false, 10);
             $error = json_last_error();
             if ($error) {
-                echo '#' . __LINE__ . ' ' . __FILE__ . '<br>AID ' . $row['aid'] . ' ' . getJsonErrorByCodeId($error) . '<br><pre>' . $v . '</pre>';
+                echo '#' . __LINE__ . ' ' . __FILE__ . '<br>AID ' . $row['aid'] . ' k: ' . $k . ' ' . getJsonErrorByCodeId($error) . '<br><pre>' . $v . '</pre>';
                 exit;
             }
             $jsonItem.= !json_last_error() ? $v : json_encode($v);
