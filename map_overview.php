@@ -45,6 +45,23 @@ SELECT
 EOT;
 $rows = $db->query_rows($sql);
 
+function getJsonErrorByCodeId(int $codeId) {
+    switch($codeId) {
+        case JSON_ERROR_NONE: return "[$codeId] " . 'Kein Fehler aufgetreten.';
+        case JSON_ERROR_DEPTH: return "[$codeId] " . ' Die maximale Stacktiefe wurde überschritten.';
+        case JSON_ERROR_STATE_MISMATCH: return "[$codeId] " . 'Ungültiges oder missgestaltetes JSON';
+        case JSON_ERROR_CTRL_CHAR: return "[$codeId] " . 'Steuerzeichenfehler, möglicherweise unkorrekt kodiert.';
+        case JSON_ERROR_SYNTAX: return "[$codeId] " . 'Syntaxfehler.';
+        case JSON_ERROR_UTF8: return "[$codeId] " . 'Missgestaltete UTF-8 Zeichen, möglicherweise fehlerhaft kodiert';
+        case JSON_ERROR_RECURSION: return "[$codeId] " . 'Eine oder mehrere rekursive Referenzen im zu kodierenden Wert';
+        case JSON_ERROR_INF_OR_NAN: return "[$codeId] " . 'Eine oder mehrere NAN oder INF Werte im zu kodierenden Wert';
+        case JSON_ERROR_UNSUPPORTED_TYPE: return "[$codeId] " . 'Ein Wert eines Typs, der nicht kodiert werden kann, wurde übergeben';
+        case JSON_ERROR_INVALID_PROPERTY_NAME: return "[$codeId] " . 'Ein Eigenschaftsname, der nicht kodiert werden kann, wurde übergeben';
+        case JSON_ERROR_UTF16: return "[$codeId] " . 'Deformierte UTF-16 Zeichen; möglicherweise fehlerhaft kodiert';
+        default: return "[$codeId] Unbekannter Fehlerocde!";
+    }
+}
+
 $jsonData = '[';
 for($i = 0; $i < count($rows); $i++) {
     $row = $rows[$i];
@@ -65,7 +82,7 @@ for($i = 0; $i < count($rows); $i++) {
             $test = json_decode($v, false, 10);
             $error = json_last_error();
             if ($error) {
-                echo '#' . __LINE__ . ' ' . __FILE__ . '<br>' . $error . '<br><pre>' . $v . '</pre>';
+                echo '#' . __LINE__ . ' ' . __FILE__ . '<br>AID ' . $row['aid'] . ' ' . getJsonErrorByCodeId($error) . '<br><pre>' . $v . '</pre>';
                 exit;
             }
             $jsonItem.= !json_last_error() ? $v : json_encode($v);
