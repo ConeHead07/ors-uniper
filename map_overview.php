@@ -21,12 +21,12 @@ SELECT
             "{",
             '"LstId":', al.leistung_id, ",",
             '"KtgId":', ktg.leistungskategorie_id, ",",
-            '"Kategorie":"', REPLACE(ktg.leistungskategorie, '"', '\\"'), '",',
-            '"Ktg":"', REPLACE(ktg.kategorie_abk, '"', '\\"'), '",',
-            '"Lstg":"', REPLACE(klg.leistung_abk, '"', '\\"'), '",',
-            '"Bezeichnung":"', REPLACE(klg.Bezeichnung, '"', '\\"'), '",',
-            '"Farbe":"', REPLACE(klg.Farbe, '"', '\\"'), '",',
-            '"Groesse":"', REPLACE(klg.Groesse, '"', '\\"'), '",',
+            '"Kategorie":"', REPLACE(IFNULL(ktg.leistungskategorie, ""), '"', '\\"'), '",',
+            '"Ktg":"', REPLACE(IFNULL(ktg.kategorie_abk, ""), '"', '\\"'), '",',
+            '"Lstg":"', REPLACE(IFNULL(klg.leistung_abk, ""), '"', '\\"'), '",',
+            '"Bezeichnung":"', REPLACE(IFNULL(klg.Bezeichnung, ""), '"', '\\"'), '",',
+            '"Farbe":"', REPLACE(IFNULL(klg.Farbe, ""), '"', '\\"'), '",',
+            '"Groesse":"', REPLACE(IFNULL(klg.Groesse, ""), '"', '\\"'), '",',
             '"Menge":', al.menge_mertens,
             "}"
             )
