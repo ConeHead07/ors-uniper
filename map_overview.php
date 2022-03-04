@@ -84,7 +84,7 @@ for($i = 0; $i < count($rows); $i++) {
             if ($error) {
                 echo '#' . __LINE__ . ' ' . __FILE__ . '<br>AID ' . $row['aid'] . ' k: ' . $k . ' ' . getJsonErrorByCodeId($error) . '<br>' . "\n";
                 echo '<pre>' . $v . '</pre>' . "\n";
-                echo '<pre>' . $sql . '</pre>' . "\n";
+                echo '<pre>' . $sql . ';</pre>' . "\n";
                 exit;
             }
             $jsonItem.= !json_last_error() ? $v : json_encode($v);
