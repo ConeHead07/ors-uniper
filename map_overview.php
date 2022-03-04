@@ -43,6 +43,7 @@ SELECT
     WHERE a.umzugsstatus = "beantragt" AND IFNULL(a.tour_kennung, "") = "" 
     GROUP BY a.aid, a.service, a.umzugsstatus, usr.personalnr, g.lat, g.lng
 EOT;
+$db->query('SET SESSION group_concat_max_len = 1000000;');
 $rows = $db->query_rows($sql);
 
 function getJsonErrorByCodeId(int $codeId) {
@@ -84,7 +85,9 @@ for($i = 0; $i < count($rows); $i++) {
             if ($error) {
                 echo '#' . __LINE__ . ' ' . __FILE__ . '<br>AID ' . $row['aid'] . ' k: ' . $k . ' ' . getJsonErrorByCodeId($error) . '<br>' . "\n";
                 echo '<pre>' . $v . '</pre>' . "\n";
-                echo '<pre>' . $sql . ';</pre>' . "\n";
+                echo '<pre>' . "\n";
+                echo $sql . ';' . "\n";
+                echo '</pre>' . "\n";
                 exit;
             }
             $jsonItem.= !json_last_error() ? $v : json_encode($v);
