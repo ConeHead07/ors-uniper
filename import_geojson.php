@@ -14,6 +14,26 @@ $errors = [];
 $log = [];
 $log[] = __LINE__;
 
+
+$timeIn = time();
+$timeOffset = time();
+function getDuration() {
+    global $timeIn, $timeOffset;
+    $now = time();
+    $total = $now - $timeIn;
+    $step  = $now - $timeOffset;
+    $timeOffset = $now;
+
+    return compact('total', 'step' );
+}
+
+function printDuration($line, $msg) {
+    $a = getDuration();
+    echo "#{$line} Total: {$a['total']}s, Step: {$a['step']}s; " . $msg;
+    ob_implicit_flush(true);
+}
+
+
 function guidv4()
 {
     if (function_exists('com_create_guid') === true)
@@ -94,13 +114,13 @@ $iNumJsonData = count($jsonData);
 $NL = "\n";
 for($i = 0; $i < $iNumJsonData; $i++) {
     $it = $jsonData[$i];
-    echo "i: $i, AID: {$it->aid},";
+    printDuration(__LINE__, " i: $i, AID: {$it->aid},");
     if (empty($it->lat) || empty($it->lng)) {
-        echo "NO GeoData Found<br>";
+        printDuration(__LINE__, "NO GeoData Found<br>");
         $errors[] = 'Unvollständige Geodaten in Json-Daten[' . $i . '] mit aid ' . $it->aid . ': ' . json_encode($it);
         continue;
     }
-    echo ' |#' . __LINE__ . ": {$it->lat},{$it->lng}";
+    printDuration(__LINE__, " {$it->lat},{$it->lng}");
 
     $currAid = (int)$it->aid;
     $existingId =$db->query_one($sqlCheckAid, [ 'aid' => $currAid]);
@@ -120,7 +140,7 @@ for($i = 0; $i < $iNumJsonData; $i++) {
         }
         // geoResponseDebug(compact('i', 'existingId', 'iNumInserts', 'iNumUpdates', 'sqlInsertCols', 'sqlInsertValues', '_sql'));
     } else {
-        echo ' |#' . __LINE__ . ': Insert';
+        printDuration(__LINE__, 'Insert');
         $sqlInsertValues = '('
             . implode(', ', [
                 $db::quote(guidv4()),
@@ -137,7 +157,7 @@ for($i = 0; $i < $iNumJsonData; $i++) {
         $sqlValues[] = $sqlInsertValues;
         $_sql = $sqlInsertCols . $sqlInsertValues;
         try {
-            echo ' |#' . __LINE__ . ': execute query';
+            printDuration(__LINE__, 'execute query');
             $sth = $db->query($_sql);
             if ($sth === true) {
                 ++$iNumInserts;
@@ -165,7 +185,7 @@ for($i = 0; $i < $iNumJsonData; $i++) {
             ]);
         }
     }
-    echo ' |#' . __LINE__ . ': done<br>';
+    printDuration(__LINE__, 'done<br>');
     // geoResponseDebug(compact('i', 'iNumInserts', 'iNumUpdates', 'sqlInsertCols', 'sqlInsertValues', '_sql'));
 }
 $jsonData = [];
@@ -176,25 +196,4 @@ geoResponseSuccess([
     'iNumInserts' => $iNumInserts,
     'iNumUpdates' => $iNumUpdates,
 ]);
-
-/*
-$sql = $sqlInsertCols . "\n"
-    . implode(",\n", $sqlValues);
-try {
-    $sth = $db->query( $sql );
-    geoResponseSuccess([
-        'num_imports' => $sth->num_rows,
-    ]);
-} catch(\Exception $e) {
-    geoResponseError([
-        'error' => $e->getMessage(),
-        'sql' => $sql,
-        'TraceAsString' => $e->getTraceAsString(),
-        'Trace' => $e->getTrace(),
-        'Line'=> $e->getLine(),
-        'File'=> $e->getFile(),
-    ]);
-}
-*/
-
 
