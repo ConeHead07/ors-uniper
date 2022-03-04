@@ -75,8 +75,6 @@ function geoResponseDebug(array $daten = []) {
     exit;
 }
 
-
-
 if (count($errors)) {
     $log[] = __LINE__;
     return geoResponseError($aid, $errors);
@@ -96,13 +94,18 @@ $iNumJsonData = count($jsonData);
 $NL = "\n";
 for($i = 0; $i < $iNumJsonData; $i++) {
     $it = $jsonData[$i];
+    echo "i: $i, AID: {$it->aid},";
     if (empty($it->lat) || empty($it->lng)) {
+        echo "NO GeoData Found<br>";
         $errors[] = 'Unvollständige Geodaten in Json-Daten[' . $i . '] mit aid ' . $it->aid . ': ' . json_encode($it);
         continue;
     }
+    echo ' |#' . __LINE__ . ": {$it->lat},{$it->lng}";
+
     $currAid = (int)$it->aid;
     $existingId =$db->query_one($sqlCheckAid, [ 'aid' => $currAid]);
     if ($existingId) {
+        echo ' |#' . __LINE__ . ': Update existing';
 
         $sqlUpdate = 'UPDATE mm_geolocations SET '  . $NL
         . ' lat = ' . $db::quote($it->lat) . ', '  . $NL
@@ -117,6 +120,7 @@ for($i = 0; $i < $iNumJsonData; $i++) {
         }
         // geoResponseDebug(compact('i', 'existingId', 'iNumInserts', 'iNumUpdates', 'sqlInsertCols', 'sqlInsertValues', '_sql'));
     } else {
+        echo ' |#' . __LINE__ . ': Insert';
         $sqlInsertValues = '('
             . implode(', ', [
                 $db::quote(guidv4()),
@@ -133,6 +137,7 @@ for($i = 0; $i < $iNumJsonData; $i++) {
         $sqlValues[] = $sqlInsertValues;
         $_sql = $sqlInsertCols . $sqlInsertValues;
         try {
+            echo ' |#' . __LINE__ . ': execute query';
             $sth = $db->query($_sql);
             if ($sth === true) {
                 ++$iNumInserts;
@@ -148,6 +153,7 @@ for($i = 0; $i < $iNumJsonData; $i++) {
             // geoResponseDebug(compact('i', 'sth', 'iNumInserts', 'sqlInsertCols', 'sqlInsertValues', '_sql'));
 
         } catch (\Exception $e) {
+            echo ' |#' . __LINE__ . ': exception<br>';
             geoResponseError([
                 'error' => $e->getMessage(),
                 'iNumInserts' => $iNumInserts,
@@ -159,6 +165,7 @@ for($i = 0; $i < $iNumJsonData; $i++) {
             ]);
         }
     }
+    echo ' |#' . __LINE__ . ': done<br>';
     // geoResponseDebug(compact('i', 'iNumInserts', 'iNumUpdates', 'sqlInsertCols', 'sqlInsertValues', '_sql'));
 }
 $jsonData = [];
