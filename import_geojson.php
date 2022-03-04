@@ -41,9 +41,15 @@ function printDuration($line, $msg) {
     ob_implicit_flush(true);
 }
 
-
 function guidv4()
 {
+    global $increment;
+    $increment+= 37 * 37;
+    $mc = microtime(true);
+    $rnd = rand($increment, $increment * 1000);
+    $fake = md5(md5($increment) . md5($mc) . md5($rnd));
+    return vsprintf('%s-%s-%s-%s', str_split($fake, 8));
+
     if (function_exists('com_create_guid') === true)
         return trim(com_create_guid(), '{}');
 
