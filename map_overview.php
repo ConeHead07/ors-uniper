@@ -523,6 +523,10 @@ $jsonData.= ']';
 <div id="container">
     <div id="map"></div>
     <div id="sidebar">
+        Startzeit:
+        <div>
+            <input type="date" xstyle="width:45%" id="fbStartDate"><input type="time" xstyle="width:45%" id="fbStartTime">
+        </div>
         Start:
         <input type="text" style="width:100%" id="fbStart" placeholder="Start-Adresse" value="Stahlwerk Becker 8, 47877 Willich, Deutschland">
         Wegpunkte:
@@ -558,5 +562,14 @@ Beuthener Str. 60, 40883 Ratingen, Deutschland</textarea>
     async
 ></script>
 </body>
+<script>
+    var dt = new Date(),
+        h = dt.getHours(),
+        m = dt.getMinutes(),
+        hh = (h < 10 ? '0' : '') + h,
+        mm = (m < 10 ? '0' : '') + m;
+    fbStartDate.value = dt.toISOString().substr(0, 10);
+    fbStartTime.value = hh + ":" + mm;
+</script>
 </html>
 

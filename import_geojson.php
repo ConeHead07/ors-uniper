@@ -1,8 +1,16 @@
 <?php
+ini_set('error_reporting', 1);
+ini_set('display_errors	', 1);
+ini_set('display_startup_errors', 1);
+ini_set('log_errors', 1);
 
-require_once('header.php');
-require_once($SitesBaseDir . '/umzugsantrag_sendmail.php');
-require_once($InclBaseDir . 'umzugsantrag.inc.php');
+require_once 'header.php';
+require_once $SitesBaseDir . '/umzugsantrag_sendmail.php';
+require_once $InclBaseDir . 'umzugsantrag.inc.php';
+ini_set('error_reporting', 1);
+ini_set('display_errors	', 1);
+ini_set('display_startup_errors', 1);
+ini_set('log_errors', 1);
 
 $jsonFile = __DIR__ . '/data/Alle_AuftraegeMitLatLng.json';
 
@@ -187,6 +195,11 @@ for($i = 0; $i < $iNumJsonData; $i++) {
     }
     printDuration(__LINE__, 'done<br>');
     // geoResponseDebug(compact('i', 'iNumInserts', 'iNumUpdates', 'sqlInsertCols', 'sqlInsertValues', '_sql'));
+
+    if ($i > 2) {
+        printDuration(__LINE__, 'Exit Script-Execution!');
+        exit;
+    }
 }
 $jsonData = [];
 
