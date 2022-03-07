@@ -378,7 +378,7 @@ $jsonData = json_encode([]);
                     row.appendChild(colStartTime);
                     row.appendChild(colDur);
                     row.appendChild(colArrivalTime);
-                    
+
                     colAct.innerText = 'Nr';
                     colStartTime.innerText = 'Start';
                     colArrivalTime.innerText = 'Ankunft';
