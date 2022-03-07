@@ -2,7 +2,7 @@
 require_once 'header.php';
 require_once 'map_lib.php';
 
-$status = !isset($_REQUEST['status']) ? $_REQUEST['status'] : 'beantragt';
+$status = isset($_REQUEST['status']) ? $_REQUEST['status'] : '';
 $ort = !empty($_REQUEST['ort']) ? $_REQUEST['ort'] : '';
 $mitTourkennung = !empty($_REQUEST['mitTourkennung']) ? $_REQUEST['mitTourkennung'] : '';
 $tourkennung = !empty($_REQUEST['tourkennung']) ? $_REQUEST['tourkennung'] : '';
@@ -11,9 +11,13 @@ if ($status && !in_array($status, $aValidStatus)) {
     $status = current($aValidStatus);
 }
 
+$andWhereStatus = '';
+if ($status) {
+    $andWhereStatus = ' AND a.umzugsstatus = ' . $db::quote($status) . ' ';
+}
 
 $sqlAuftragWithoutGeoData = <<<EOT
-    SELECT MIN(a.aid) AS aid, 
+    SELECT MIN(a.aid) AS aid, COUNT(DISTINCT(a.aid)) NumAuftraege,
         a.strasse,
         a.plz,
         a.ort,
@@ -25,7 +29,7 @@ $sqlAuftragWithoutGeoData = <<<EOT
         LIKE
         CONCAT(SUBSTRING_INDEX(gl.strasse, ',', 1), ", ", gl.plz, " ", gl.ort, ", ", gl.land) 
      )
-     WHERE IFNULL(gl.orig_target_id, "") = ""
+     WHERE IFNULL(gl.lat, "") = "" $andWhereStatus
      GROUP BY 
         a.strasse,
         a.plz,
@@ -42,23 +46,26 @@ $sqlInsertGeodata = <<<EOT
 EOT;
 
 $rows = $db->query_rows($sqlAuftragWithoutGeoData);
+echo '<pre>' . $db->lastQuery . '</pre>' . "\n";
+echo 'FOUND ' . count($rows) . ' rows<br>' . "\n";
 foreach ($rows as $_row) {
     $address = $_row['Adresse'];
-    echo 'SEARCH FOR ' . $address . "<br>\n";
+    echo 'SEARCH FOR <pre>' . json_encode(compact('address')) . "</pre><br>\n";
     $result = searchGmap($address);
     if ($result && !empty($result['success']) && !empty($result['lat']) && !empty($result['lng'])) {
-        echo 'FOUND ' . json_encode($result) . "<br>\n";
-        $aParams = array_merge($row, $row, $result, [
+        echo 'FOUND <pre>' . json_encode($result) . "</pre><br>\n";
+        $aParams = array_merge($_row, $result, [
             'uuid' => getUuid(),
             'strasse' => $_row['strasse'],
             'orig_target_id' => $_row['aid']
         ]);
         insertGeoCache($aParams);
+        echo '<pre>' . $db->lastQuery . '</pre>' . "\n";
 
         echo 'INSERT GEODATA ' . json_encode($aParams) . "<br>\n";
         $db->affected_rows();
         echo 'INSERT ID ' . $db->last_insert_id() . "<br>\n";
     } else {
-        echo 'NOT FOUND ' . json_encode($result) . "<br>\n";
+        echo 'NOT FOUND <pre>' . json_encode(compact('result')) . "</pre><br>\n";
     }
 }
