@@ -87,6 +87,28 @@ $jsonData = json_encode([]);
         var map = null;
         var markers = [];
 
+        function dateToDateDE(date) {
+            var dt = date,
+                yy = dt.getFullYear(),
+                m = +dt.getMonth(),
+                mm = (m < 9 ? '0' : '') + (m+1).toString(10),
+                d = +dt.getDate(),
+                dd = (d < 10 ? '0' : '') + d.toString(10);
+
+            return yy + "-" + mm + "-" + dd;
+        }
+
+        function dateToTimeDE(date) {
+
+            var dt = date,
+                h = +dt.getHours(),
+                m = +dt.getMinutes(),
+                hh = (h < 10 ? '0' : '') + h.toString(10),
+                mm = (m < 10 ? '0' : '') + m.toString(10);
+
+            return hh + ":" + mm;
+        }
+
         function setMarker(map, lat, lng, jsonItem) {
             var title = jsonItem.KID;
             var marker = new google.maps.Marker({
@@ -253,18 +275,45 @@ $jsonData = json_encode([]);
             directionsService,
             directionsRenderer
         ) {
-            const waypts= [];
-            const elmWaypoints = document.getElementById(
+            var waypts= [];
+            var elmWaypoints = document.getElementById(
                 "fbWaypoints"
             );
-            const elmAvgStayMinutes = document.getElementById("fbAvgBreak");
-            const waypointAvgStayMinutes = +elmAvgStayMinutes.value;
-            const waypointsText = elmWaypoints.value.trim();
+            var elmAvgStayMinutes = document.getElementById("fbAvgBreak");
+            var waypointAvgStayMinutes = +elmAvgStayMinutes.value;
+            var waypointsText = elmWaypoints.value.trim();
 
-            const waypointsArray = waypointsText.split("\n");
+            var waypointsArray = waypointsText.split("\n");
+
+            var startDateText = document.getElementById("fbStartDate").value;
+            var startTimeText = document.getElementById("fbStartTime").value;
+
+            var now = new Date();
+            now.setMinutes( now.getMinutes() + 5 );
+
+            var today = dateToDateDE( now );
+            var nowZeit = dateToTimeDE( now );
+
+            var start = new Date();
+            if (startDateText) {
+                if (startDateText) {
+                    start = new Date(startDateText);
+                }
+            }
+            if (startTimeText && startTimeText.match(/^\d\d(:\d\d){1,2}$/)) {
+                start.setHours( parseInt(startTimeText.split(":")[0]) );
+                start.setMinutes( parseInt(startTimeText.split(":")[1]) );
+            }
+
+            if (start.toISOString() < now.toISOString()) {
+                start = new Date(now);
+            }
+            var startDateTime = start.toLocaleString();
+
+            var departureTime = new Date(start);
 
 
-            const waypointsStay = waypointsArray.map(function(v) {
+            var waypointsStay = waypointsArray.map(function(v) {
                 if (v.split(";").length > 1) {
                     let dur = v.split(";")[1];
                     let durParseInt = parseInt(dur);
@@ -276,20 +325,11 @@ $jsonData = json_encode([]);
 
             for(var i  = 0; i < waypointsArray.length; i++) {
                 waypointsArray[i] = waypointsArray[i].split(";")[0];
+                waypts.push({
+                    location: waypointsArray[i],
+                    stopover: true,
+                });
             }
-
-            for (let i = 0; i < waypointsArray.length; i++) {
-                if (waypointsArray[i]) {
-                    waypts.push({
-                        location: waypointsArray[i],
-                        stopover: true,
-                    });
-                }
-            }
-
-            const departureTime = new Date();
-            departureTime.setHours( departureTime.getHours() + 24);
-            departureTime.setHours(8);
 
             directionsService
                 .route({
@@ -308,17 +348,23 @@ $jsonData = json_encode([]);
 
                     var currDateTime = new Date(departureTime);
 
-                    const route = response.routes[0];
-                    const summaryPanel = document.getElementById(
+                    var route = response.routes[0];
+                    var summaryPanel = document.getElementById(
                         "directions-panel"
                     );
 
                     let reorderedWaypointsTxt = '';
                     summaryPanel.innerHTML = "";
 
-                    const waypoint_order = route.waypoint_order;
-                    const row = createElm("div", {}, "row", {});
-                    const colAct = createElm("div", {}, "col act", {});
+                    var fbStartPoint = document.getElementById("fbStart").value;
+
+                    var fbStartPointElm = createElm("div", {}, "row", {});
+                    fbStartPointElm.textContent = fbStartPoint + ", " + startDateTime;
+                    summaryPanel.appendChild( fbStartPointElm );
+
+                    var waypoint_order = route.waypoint_order;
+                    var row = createElm("div", {}, "row", {});
+                    var colAct = createElm("div", {}, "col act", {});
                     const colStartTime = createElm("div", {}, "col abfahrt", {});
                     const colArrivalTime = createElm("div", {}, "col ankunft", {});
                     const colFrom = createElm("div", {}, "col start_address", {});
@@ -333,9 +379,11 @@ $jsonData = json_encode([]);
                     colDur.innerText = 'Dauer';
 
                     summaryPanel.appendChild(row);
+                    var routeLegsLength = route.legs.length;
+                    var waypointsStayLength = waypointsStay.length;
 
                     // For each route, display summary information.
-                    for (let i = 0; i < route.legs.length; i++) {
+                    for (let i = 0; i < routeLegsLength; i++) {
                         const routeSegment = i + 1;
 
                         const origIdx = waypoint_order[i];
@@ -356,14 +404,18 @@ $jsonData = json_encode([]);
                         row.appendChild(colDur);
                         row.appendChild(colArrivalTime);
 
-                        const h1 = currDateTime.getHours();
-                        const m1 = currDateTime.getMinutes();
-                        const abfahrt = (h1 < 10 ? "0" : "") + h1.toString() + ":" + (m1 < 10 ? "0" : "") + m1.toString();
+                        var h1 = currDateTime.getHours();
+                        var m1 = currDateTime.getMinutes();
+                        var abfahrt = (h1 < 10 ? "0" : "") + h1.toString() + ":" + (m1 < 10 ? "0" : "") + m1.toString();
+                        var duration = route.legs[i].duration.value;
 
-                        currDateTime.setSeconds( currDateTime.getSeconds() +  route.legs[i].duration.value );
-                        const h = currDateTime.getHours();
-                        const m = currDateTime.getMinutes();
-                        const ankunft = (h < 10 ? "0" : "") + h.toString() + ":" + (m < 10 ? "0" : "") + m.toString();
+                        currDateTime.setSeconds(currDateTime.getSeconds() + duration);
+                        // currDateTime.setTime(currDateTime.getTime() + (duration * 1000));
+
+                        var h = currDateTime.getHours();
+                        var m = currDateTime.getMinutes();
+                        var ankunft = (h < 10 ? "0" : "") + h.toString() + ":" + (m < 10 ? "0" : "") + m.toString();
+
 
                         colAct.innerText = routeSegment.toString(10);
                         colStartTime.innerText = abfahrt;
