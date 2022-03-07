@@ -649,8 +649,29 @@ $jsonData.= ']';
     <div id="map"></div>
     <div id="sidebar">
         <div>
-            <div></div>Filter:
+            <div style="font-weight: bold;">Auftragsfilter:</div>
+            <div>
+                <form action="/map_overview.php">
+                Auftragsstatus: <select name="status">
+                    <option value=""<?= empty($status) ? ' selected' : '' ?>>Alle</option>
+                    <option value="beantragt"<?= $status === 'beantragt' ? ' selected' : '' ?>>Beantragt</option>
+                    <option value="bestaetigt"<?= $status === 'bestaetigt' ? ' selected' : '' ?>>Bestätigt</option>
+                    <option value="abgeschlossen"<?= $status === 'abgeschlossen' ? ' selected' : '' ?>>abgeschlossen</option>
+                </select><br>
+                Tourkennung:
+                <select name="mitTourkennung">
+                    <option value="0"<?= empty($mitTourkennung) ? ' selected' : '' ?>>Alle</option>
+                    <option value="-1"<?= $mitTourkennung == '-1' ? ' selected' : '' ?>>Ohne Tourkennung</option>
+                    <option value="1"<?= $mitTourkennung == '1' ? ' selected' : '' ?>>Ohne Tourkennung</option>
+                </select><br>
+                Tourkennung: <input name="tourkennung" type="text" value="<?= htmlentities($tourkennung) ?>" placeholder="Tourkennung"><br>
+                Ort: <input name="ort" placeholder="Ort" value="<?= htmlentities($ort) ?>">
+                <button type="submit">Senden</button>
+                </form>
+            </div>
+            <br>
         </div>
+        <div style="font-weight: bold;">Optimale Wegpunkte berechnen:</div>
         Startzeit:
         <div>
             <input type="date" xstyle="width:45%" id="fbStartDate"><input type="time" xstyle="width:45%" id="fbStartTime">
