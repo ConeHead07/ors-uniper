@@ -371,6 +371,14 @@ $jsonData = json_encode([]);
                     const colTo = createElm("div", {}, "col end_address", {});
                     const colDist = createElm("div", {}, "col distance", {});
                     const colDur = createElm("div", {}, "col duration", {});
+
+                    row.appendChild(colAct);
+                    row.appendChild(colTo);
+                    row.appendChild(colDist);
+                    row.appendChild(colStartTime);
+                    row.appendChild(colDur);
+                    row.appendChild(colArrivalTime);
+                    
                     colAct.innerText = 'Nr';
                     colStartTime.innerText = 'Start';
                     colArrivalTime.innerText = 'Ankunft';
@@ -378,7 +386,7 @@ $jsonData = json_encode([]);
                     colDist.innerText = 'Strecke';
                     colDur.innerText = 'Dauer';
 
-                    summaryPanel.appendChild(row);
+                    summaryPanel.appendChild( row );
                     var routeLegsLength = route.legs.length;
                     var waypointsStayLength = waypointsStay.length;
 
