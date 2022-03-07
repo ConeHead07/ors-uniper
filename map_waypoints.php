@@ -1,125 +1,12 @@
 <?php
 require_once 'header.php';
 require_once 'map_lib.php';
-
-$searchForGeoData = !empty($_REQUEST['searchForGeoData']);
-$status = !isset($_REQUEST['status']) ? $_REQUEST['status'] : 'beantragt';
-$ort = !empty($_REQUEST['ort']) ? $_REQUEST['ort'] : '';
-$mitTourkennung = !empty($_REQUEST['mitTourkennung']) ? $_REQUEST['mitTourkennung'] : '';
-$tourkennung = !empty($_REQUEST['tourkennung']) ? $_REQUEST['tourkennung'] : '';
-$aValidStatus = [ 'beantragt', 'angeboten', 'bestaetigt', 'abgeschlossen' ];
-if ($status && !in_array($status, $aValidStatus)) {
-    $status = current($aValidStatus);
-}
-
-$sql = <<<EOT
-SELECT 
-    a.aid,
-    a.service,
-    a.umzugsstatus,
-    a.antragsdatum,
-    usr.personalnr AS KID,
-    g.lat,
-    g.lng,
-    SUM(al.menge_mertens * klg.preis_pro_einheit) AS Summe,
-    GROUP_CONCAT(
-      CONCAT(ktg.kategorie_abk, klg.leistung_abk) SEPARATOR ","
-    ) AS LAbk,
-    CONCAT(
-        "[",
-        GROUP_CONCAT(
-          CONCAT(
-            "{",
-            '"LstId":', al.leistung_id, ",",
-            '"KtgId":', ktg.leistungskategorie_id, ",",
-            '"Kategorie":"', REPLACE(IFNULL(ktg.leistungskategorie, ""), '"', '\\"'), '",',
-            '"Ktg":"', REPLACE(IFNULL(ktg.kategorie_abk, ""), '"', '\\"'), '",',
-            '"Lstg":"', REPLACE(IFNULL(klg.leistung_abk, ""), '"', '\\"'), '",',
-            '"Bezeichnung":"', REPLACE(IFNULL(klg.Bezeichnung, ""), '"', '\\"'), '",',
-            '"Farbe":"', REPLACE(IFNULL(klg.Farbe, ""), '"', '\\"'), '",',
-            '"Groesse":"', REPLACE(IFNULL(klg.Groesse, ""), '"', '\\"'), '",',
-            '"Menge":', al.menge_mertens,
-            "}"
-            )
-            SEPARATOR ","
-        ),
-        "]"
-    ) AS jsonLeistungen
-    FROM mm_umzuege AS a 
-    JOIN mm_user AS usr ON (a.antragsteller_uid = usr.uid)
-    JOIN mm_umzuege_leistungen AS al ON (a.aid = al.aid)
-    JOIN mm_leistungskatalog AS klg ON (al.leistung_id = klg.leistung_id)
-    JOIN mm_leistungskategorie AS ktg ON (klg.leistungskategorie_id = ktg.leistungskategorie_id)
-    JOIN mm_geolocations AS g ON(
-        CONCAT(SUBSTRING_INDEX(a.strasse, ',', 1), ", ", a.plz, " ", a.ort, ", ", a.land) 
-        LIKE
-        CONCAT(SUBSTRING_INDEX(g.strasse, ',', 1), ", ", g.plz, " ", g.ort, ", ", g.land) 
-     )
-EOT;
-$sql.= '
-    WHERE 1 > 0 '
-    . ($status ? ' AND a.umzugsstatus = ' . $db::quote($status) . ' ' : '')
-    . ($ort ? ' AND a.ort LIKE ' . $db::quote($ort) . ' ' : '')
-    . ($mitTourkennung === '-1'
-        ? ' AND IFNULL(a.tour_kennung, "") = "" '
-        : (
-                $mitTourkennung === '1'
-                ? ' AND IFNULL(a.tour_kennung, "") != "" '
-                : ''
-        )
-      )
-    . ($mitTourkennung != '-' && $tourkennung ? ' AND a.tour_kennung LIKE ' . $db::quote($tourkennung) . ' ' : '')
-    . ' GROUP BY a.aid, a.service, a.umzugsstatus, usr.personalnr, g.lat, g.lng
-';
-$db->query('SET SESSION group_concat_max_len = 1000000;');
-$rows = $db->query_rows($sql);
-
-
-$jsonData = '[';
-for($i = 0; $i < count($rows); $i++) {
-    $row = $rows[$i];
-    $jsonItem = '{';
-    foreach($row as $k => $v) {
-        if (strlen($jsonItem) > 3) {
-            $jsonItem.= ', ';
-        }
-        $jsonItem.= $db->quote($k) . ': ';
-        if (is_numeric($v)) {
-            $jsonItem.= $v;
-        } elseif (is_null($v)) {
-            $jsonItem.= 'null';
-        }
-        elseif (strpos($v, '{') !== 0 && strpos($v, '[') !== 0) {
-            $jsonItem.= json_encode($v);
-        } else {
-            $test = json_decode($v, false, 10);
-            $error = json_last_error();
-            if ($error) {
-                echo '#' . __LINE__ . ' ' . __FILE__ . '<br>AID ' . $row['aid'] . ' k: ' . $k . ' ' . getJsonErrorByCodeId($error) . '<br>' . "\n";
-                echo '<pre>' . $v . '</pre>' . "\n";
-                echo '<pre>' . "\n";
-                echo $sql . ';' . "\n";
-                echo '</pre>' . "\n";
-                exit;
-            }
-            $jsonItem.= !json_last_error() ? $v : json_encode($v);
-        }
-    }
-    $jsonItem.= '}';
-    $jsonData.= ($i > 0 ? ",\n" : '') . '  ' . $jsonItem;
-}
-$jsonData.= ']';
-/**
- * Created by PhpStorm.
- * User: f.barthold
- * Date: 09.02.2022
- * Time: 15:31
- */
+$jsonData = json_encode([]);
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Markers Overview</title>
+    <title>Waypoints in Directions</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <style>
         html,
@@ -250,6 +137,9 @@ $jsonData.= ']';
 
 
         function setMarkersFromJsonData() {
+            if ("undefined" == (typeof jsonData) || !Array.isArray(jsonData)) {
+                return false;
+            }
             for(var i = 0; i < jsonData.length; i++) {
                 var jsonItem = jsonData[i];
                 var lat = jsonItem.lat;
