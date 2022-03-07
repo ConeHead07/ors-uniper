@@ -3,7 +3,7 @@ require_once 'header.php';
 require_once 'map_lib.php';
 
 $searchForGeoData = !empty($_REQUEST['searchForGeoData']);
-$status = !isset($_REQUEST['status']) ? $_REQUEST['status'] : 'beantragt';
+$status = isset($_REQUEST['status']) ? $_REQUEST['status'] : 'beantragt';
 $ort = !empty($_REQUEST['ort']) ? $_REQUEST['ort'] : '';
 $mitTourkennung = !empty($_REQUEST['mitTourkennung']) ? $_REQUEST['mitTourkennung'] : '';
 $tourkennung = !empty($_REQUEST['tourkennung']) ? $_REQUEST['tourkennung'] : '';
@@ -76,7 +76,8 @@ $rows = $db->query_rows($sql);
 
 
 $jsonData = '[';
-for($i = 0; $i < count($rows); $i++) {
+$iNumRows = count($rows);
+for($i = 0; $i < $iNumRows; $i++) {
     $row = $rows[$i];
     $jsonItem = '{';
     foreach($row as $k => $v) {
@@ -121,6 +122,8 @@ $jsonData.= ']';
 <head>
     <title>Markers Overview</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script ssrc="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+    <script src="/js/gmap_extensions/markerClusterer.1.0.26.min.js"></script>
     <style>
         html,
         body {
@@ -198,6 +201,8 @@ $jsonData.= ']';
         var jsonData = <?= $jsonData ?>;
         var map = null;
         var markers = [];
+        var geocoder = null;
+        var mc = null;
 
         function setMarker(map, lat, lng, jsonItem) {
             var title = jsonItem.KID;
@@ -207,8 +212,10 @@ $jsonData.= ']';
                 title
             });
 
-            var contentString = '<div id="content"><h1>' + jsonItem.KID+ ' ' + jsonItem.Summe.toFixed(2).replace('.', '.') + ' €</h1>' +
-                jsonItem.antragsdatum + ', ' + jsonItem.umzugsstatus + ', ' + jsonItem.Summe.toFixed(2).replace('.', '.') + ' €';
+            var aidLinked = '<a href="/index.php?s=aantrag&id=' + jsonItem.aid + '" target="_blank">' + jsonItem.aid + "</a>";
+
+            var contentString = '<div id="content"><h1>#AID ' + aidLinked + ' #KID ' + jsonItem.KID + '</h1>' +
+                "Beantragt: " + jsonItem.antragsdatum + ', Status:' + jsonItem.umzugsstatus + ', Summe: ' + jsonItem.Summe.toFixed(2).replace('.', '.') + ' €';
 
             contentString+= '</div>';
             var infowindow = new google.maps.InfoWindow({
@@ -220,7 +227,6 @@ $jsonData.= ']';
                 infowindow.open(map,marker);
             });
 
-            markers.push(marker);
             return marker;
         }
 
@@ -250,12 +256,15 @@ $jsonData.= ']';
 
 
         function setMarkersFromJsonData() {
+            var markers = [];
             for(var i = 0; i < jsonData.length; i++) {
                 var jsonItem = jsonData[i];
                 var lat = jsonItem.lat;
                 var lng = jsonItem.lng;
                 var mrkr = setMarker(map, lat, lng, jsonItem);
+                markers.push(mrkr);
             }
+            return markers;
         }
 
         function clearWaypointsInput() {
@@ -554,10 +563,12 @@ $jsonData.= ']';
                 }
             );
 
-            setMarkersFromJsonData();
+            markers = setMarkersFromJsonData();
 
-            // Add a marker clusterer to manage the markers.
-            new MarkerClusterer({ markers, map });
+            if ("undefined" !== (typeof markerClusterer) && markerClusterer.MarkerClusterer) {
+                // Add a marker clusterer to manage the markers.
+                mc = new markerClusterer.MarkerClusterer({ markers, map });
+            }
         }
     </script>
 </head>
@@ -565,6 +576,9 @@ $jsonData.= ']';
 <div id="container">
     <div id="map"></div>
     <div id="sidebar">
+        <div>
+            <div></div>Filter:
+        </div>
         Startzeit:
         <div>
             <input type="date" xstyle="width:45%" id="fbStartDate"><input type="time" xstyle="width:45%" id="fbStartTime">

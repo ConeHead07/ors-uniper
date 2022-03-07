@@ -157,7 +157,8 @@ $sFormattedGrund = getFormattedBemerkung($grund, $aGrundLeistungen);
 
 $colNames = ['ref_aid', 'umzug', 'service', ];
 $quotedDaten = [ $aid, $db::quote('Rekla'), $db::quote('Rekla') ];
-$antrag['token'] = $db->expr("SUBSTR( MD5( CONCAT_WS(\"-\", aid, antragsteller_uid, antragsdatum, RAND() )  ) ,5, 10)");
+// $antrag['token'] = $db->expr("SUBSTR( MD5( CONCAT_WS(\"-\", aid, antragsteller_uid, antragsdatum, RAND() )  ) ,5, 10)");
+$antrag['token'] = $db->expr('SUBSTR( MD5( CONCAT_WS("-", CURRENT_TIMESTAMP, ' . $db::quote($user['uid']) . ', RAND() )  ) ,5, 10)');
 $antrag['bemerkungen'] = $sFormattedGrund;
 $antrag['antragsdatum'] = $db->expr('NOW()');
 $antrag['umzugsstatus'] = 'beantragt';

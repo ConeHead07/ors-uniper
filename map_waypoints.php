@@ -8,6 +8,7 @@ $jsonData = json_encode([]);
 <head>
     <title>Waypoints in Directions</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="/js/gmap_extensions/markerClusterer.1.0.26.min.js"></script>
     <style>
         html,
         body {
@@ -93,9 +94,10 @@ $jsonData = json_encode([]);
                 map: map,
                 title
             });
+            var aidLinked = '<a href="/index.php?s=aantrag&id=' + jsonItem.aid + '" target="_blank">' + jsonItem.aid + "</a>";
 
-            var contentString = '<div id="content"><h1>' + jsonItem.KID+ ' ' + jsonItem.Summe.toFixed(2).replace('.', '.') + ' €</h1>' +
-                jsonItem.antragsdatum + ', ' + jsonItem.umzugsstatus + ', ' + jsonItem.Summe.toFixed(2).replace('.', '.') + ' €';
+            var contentString = '<div id="content"><h1>#AID ' + aidLinked + ' #KID ' + jsonItem.KID + '</h1>' +
+                "Beantragt: " + jsonItem.antragsdatum + ', Status:' + jsonItem.umzugsstatus + ', Summe: ' + jsonItem.Summe.toFixed(2).replace('.', '.') + ' €';
 
             contentString+= '</div>';
             var infowindow = new google.maps.InfoWindow({
@@ -447,7 +449,7 @@ $jsonData = json_encode([]);
             setMarkersFromJsonData();
 
             // Add a marker clusterer to manage the markers.
-            new MarkerClusterer({ markers, map });
+            new markerClusterer.MarkerClusterer({ markers, map });
         }
     </script>
 </head>

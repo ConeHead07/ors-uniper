@@ -83,7 +83,7 @@ if (!$token && $aid) {
     switch($response) {
         case 'json':
             header('Content-Type: application/json');
-            json_encode([
+            echo json_encode([
                 'success' => false,
                 'error' => 'Es wurde kein Token übergeben',
                 'jquery-upload-file-error' => 'Es wurde kein Token übergeben',
@@ -91,12 +91,12 @@ if (!$token && $aid) {
 
         default:
             echo
-                '<strong>Es wurde kein token &uuml;bergeben!</strong> <br>'
-                . '<br>'
+                '<strong>Es wurde kein token &uuml;bergeben!</strong> <br>' . "\n"
+                . '<br>' . "\n"
                 . '<strong>Wie erhalte ich einen Token</strong>'
-                . 'Einen Token erhalten Sie automatisch beim Öffnen eines Leistungsformulars.<br>'
-                . '<br>'
-                . 'Anschlie&szlig;end k&ouml;nnen Sie Dateien hinzuf&uuml;gen!<br>\n'
+                . 'Einen Token erhalten Sie automatisch beim Öffnen eines Leistungsformulars.<br>' . "\n"
+                . '<br>' . "\n"
+                . 'Anschlie&szlig;end k&ouml;nnen Sie Dateien hinzuf&uuml;gen!<br>' . "\n"
             ;
     }
     exit;

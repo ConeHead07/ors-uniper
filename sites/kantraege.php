@@ -58,8 +58,9 @@ $sqlWhere= "WHERE 1 \n";
 if (!$allusers) {
     $sqlWhere.= 'AND ('
 //             .'        g.regionalmanager_uid = ' . (int)$user['uid'] 
-//             .'     OR g.standortmanager_uid = ' . (int)$user['uid'] OR 
-             .'     U.antragsteller_uid   = ' . (int)$user['uid'] . ') ';
+//             .'     OR g.standortmanager_uid = ' . (int)$user['uid'] OR
+             .'     U.created_uid = ' . (int)$user['uid'] . ' '
+             .'     OR U.antragsteller_uid   = ' . (int)$user['uid'] . ') ';
 }
 
 switch($cat) {
@@ -74,7 +75,7 @@ switch($cat) {
 	break;
 	
 	case "gesendet":
-	$sqlWhere.= " AND umzugsstatus IN (\"beantragt\",\"angeboten\",\"geprueftn\",\"abgeschlossen\", \"bestaetigt\") \n";
+	$sqlWhere.= " AND umzugsstatus NOT IN (\"temp\", \"zurueckgegeben\") \n";
 	$catTitle = "gesendete";
 	break;
 	
@@ -155,8 +156,6 @@ if (is_array($all)) foreach($all as $i => $item) {
 	$Umzuege[$i]["LinkOpen"] = "?s=kantrag&id=".$item["aid"];
 	$Umzuege[$i]["Mitarbeiter"] = $item["mitarbeiter_num"];
     $Umzuege[$i]["Von"] = ($item["gebaeude"]?$item["gebaeude"]:"&nbsp;");
-    $Umzuege[$i]["Von"] = ($item["gebaeude"]?$item["gebaeude"]:"&nbsp;");
-	$Umzuege[$i]["Von"] = ($item["gebaeude"]?$item["gebaeude"]:"&nbsp;");
 	$Umzuege[$i]["Nach"] = ($item["ziel_gebaeude"]?$item["ziel_gebaeude"]:"&nbsp;");
 	$Umzuege[$i]["Antragsstatus"] =  $item["antragsstatus"];
 	$Umzuege[$i]["Termin"] = ($item["umzugstermin"]?$item["umzugstermin"]:$item["terminwunsch"]);

@@ -33,7 +33,7 @@ function umzugsantrag_antrag_stornieren() {
 	if ($AID && !empty($ASPostItem["aid"])) $AID = $ASPostItem["aid"];
 	
 	if(!$AID) {
-		$error.= "Fehlende Antrags-ID für Storniervorgang!<br>\n";
+		$error.= "Fehlende Antrags-ID fï¿½r Storniervorgang!<br>\n";
 		return false;
 	}
 	
@@ -42,7 +42,7 @@ function umzugsantrag_antrag_stornieren() {
 	
 	if ($AID) {
 		if (!$AS->itemExists) {
-			$error.= "Es wurde kein Umzugsantrag mit der übermittelten Antrags-ID gefunden!<br>\n";
+			$error.= "Es wurde kein Umzugsantrag mit der Ã¼bermittelten Antrags-ID gefunden!<br>\n";
 			return false;
 		}
 		if ($AS->arrDbdata["antragsstatus"] == "gesendet") {
@@ -54,7 +54,7 @@ function umzugsantrag_antrag_stornieren() {
 	$sql = "UPDATE `".$ASConf["Table"]."` SET antragsstatus=\"storniert\", umzugsstatus=\"storniert\" WHERE `aid` = \"".$db->escape($AID)."\"";
 	$db->query($sql);
 	if ($db->error()) {
-		$msg.= "Systemehler beim Stornieren des Auftrag! Bitte versuchen Sie es später noch mal oder wenden Sie sich an die Bearbeitungsstelle!<br>\n";
+		$msg.= "Systemehler beim Stornieren des Auftrag! Bitte versuchen Sie es spï¿½ter noch mal oder wenden Sie sich an die Bearbeitungsstelle!<br>\n";
 		$msg.= $db->error()."<br>\n".$sql."<br>\n";
 		return false;
 	} else {
@@ -70,7 +70,7 @@ function umzugsantrag_antrag_stornieren() {
 	$db->query($sql);
 	
 	if ($db->error()) {
-		$msg.= "Fehler beim Löschen der Mitarbeiterdaten!<br>\n";
+		$msg.= "Fehler beim Lï¿½schen der Mitarbeiterdaten!<br>\n";
 	}
 	return true;
 }

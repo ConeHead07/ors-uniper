@@ -30,6 +30,23 @@
       <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Auftragsstatus:</label></td>
       <td style="padding:0;width:250px;"><div class="itxt itxt2col ireadonly">{$AS.umzugsstatus}</div></td>
     </tr>
+
+    {if !empty($AS.bestaetigt_am)}
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Best&auml;tigt / Avisiert:</label></td>
+      <td style="padding:0;" class="status_{$AS.genehmigt_br}" title="{$AS.bestaetigt}{if $AS.bestaetigt_am} am {$AS.bestaetigt_am|date_format:'%d.%m.%Y um %H:%M'} von {$AS.bestaetigt_von}{/if}">
+        <div  class="itxt itxt2col ireadonly"><img id="imgStatGen" src="images/status_{$AS.bestaetigt|lower}.png"><span id="txtStatGen">{$AS.bestaetigt}{if $AS.bestaetigt_am} am {$AS.bestaetigt_am|date_format:"%d.%m. um %H:%M"} von {$AS.bestaetigt_von}{/if}</span></div></td>
+    </tr>
+    {/if}
+
+    {if !empty($AS.abgeschlossen_am)}
+    <tr>
+      <td style="padding:0;"><label style="display:block;width:auto;">Abgeschlossen:</label></td>
+      <td style="padding:0;" class="status_{$AS.abgeschlossen}">
+        <div  class="itxt itxt2col ireadonly">
+          <img id="imgStatAbg" src="images/status_{$AS.abgeschlossen|lower}.png"><span id="txtStatAbg">{if $AS.abgeschlossen ne "Init"} {$AS.abgeschlossen} am {$AS.abgeschlossen_am|date_format:"%d.%m.%Y %H:%M"} {$AS.abgeschlossen_von}{/if}</span></div></td>
+    </tr>
+    {/if}
     {if !empty($AS.ref_aid)}
     <tr>
       <td style="padding:0;width:200px;"><label style="display:block;width:auto;">Bezieht sich auf:</label></td>
