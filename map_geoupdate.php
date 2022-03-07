@@ -35,7 +35,6 @@ $sqlAuftragWithoutGeoData = <<<EOT
         a.plz,
         a.ort,
         a.land
-     LIMIT 10
 EOT;
 
 $sqlInsertGeodata = <<<EOT
@@ -45,7 +44,7 @@ $sqlInsertGeodata = <<<EOT
     (:uuid, :lat, :lng, :strasse, :plz, :ort, :land, "ors_uniper.mm_umzuege.aid", orig_target_id, "gmaps")
 EOT;
 
-$rows = $db->query_rows($sqlAuftragWithoutGeoData);
+$rows = $db->query_rows($sqlAuftragWithoutGeoData . ' LIMIT 100');
 echo '<pre>' . $db->lastQuery . '</pre>' . "\n";
 echo 'FOUND ' . count($rows) . ' rows<br>' . "\n";
 foreach ($rows as $_row) {
