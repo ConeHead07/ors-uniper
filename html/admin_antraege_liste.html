@@ -149,7 +149,7 @@
     {assign var="showBestaetigt" value=false}
     {assign var="showLeistungen" value=true}
     {assign var="showErinnert" value=true}
-    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $lieferdatumWidth + $bestaetigtWidth - $checkWidth - $erinnertWidth}
+    {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $lieferdatumWidth + $bestaetigtWidth - $checkWidth - $erinnertWidth - 15}
 {elseif $cat eq "disponierte"}
     {assign var="showBestaetigt" value=false}
     {assign var="showAbgeschlossen" value=false}
@@ -212,6 +212,10 @@
     }
     .fld-neue_bemerkungen_fuer_admin {
         text-align:center;
+    }
+
+    .flds-head-colsearch .fld-cell input {
+        background-color: #ceeaff;
     }
 </style>
 <div style="clear:both"></div>
@@ -295,7 +299,7 @@
   </div>
       <div class="flds-head-colsearch">
           {if $showCheck}
-          <div class="fld-cell fld-checkbox" style="width:{$checkWidth}px;"></div>
+          <div class="fld-cell fld-checkbox" style="width:{$checkWidth}px;">&nbsp;</div>
           {/if}
           <div class="fld-cell fld-aid" style="width:{$aidWidth}px;"><input name="q[aid]" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></div>
           <div class="fld-cell fld-kid" style="width:{$kidWidth}px;"><input name="q[kid]" value="{if !empty($q) && isset($q.kid)}{$q.kid}{/if}"></div>
