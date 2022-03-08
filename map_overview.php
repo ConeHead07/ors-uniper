@@ -206,6 +206,7 @@ $jsonData.= ']';
         var mc = null;
         var infoWindows = [];
         var lastOpenedWindow = null;
+        var lastWaypoints = [];
 
         function dateToDateDE(date) {
             var dt = date,
@@ -485,6 +486,18 @@ $jsonData.= ']';
                 });
             }
 
+            for(var m=null, li = lastWaypoints.length - 1; li >= 0; li--) {
+                try {
+                    m = lastWaypoints.pop();
+                    if (m && "setMap" in m) {
+                        m.setMap(null);
+                    }
+                } catch(e) {
+                    console.error("Error on removing Marker", { i, m, e });
+                }
+            }
+            lastWaypoints.length = 0;
+
             directionsService
                 .route({
                     origin: (document.getElementById("fbStart")).value,
@@ -602,8 +615,9 @@ $jsonData.= ']';
                             const content = "Lat: " + loc.lat() + ", Lng: " + loc.lng();
                             setTimeout(function() {
                                 const marker = addMarker(map, loc.lat(), loc.lng(), (i + 1).toString(), title, content);
+                                lastWaypoints.push(marker);
                                 console.log("addMarker(map, " + loc.lat() + ", " + loc.lng() + ", \"" + (i+1) + "\",\"" + title + "\", \"" + content + "\")", marker);
-                            }, 2000);
+                            }, 1500);
                             reorderedWaypointsTxt += route.legs[i].end_address + "; " + waypointStay + "m\n";
                         }
                     }

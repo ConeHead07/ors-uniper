@@ -87,6 +87,7 @@ $jsonData = json_encode([]);
         var map = null;
         var markers = [];
         var lastOpenedWindow = null;
+        var lastWaypoints = [];
 
         function dateToDateDE(date) {
             var dt = date,
@@ -350,6 +351,18 @@ $jsonData = json_encode([]);
                 });
             }
 
+            for(var m=null, li = lastWaypoints.length - 1; li >= 0; li--) {
+                try {
+                    m = lastWaypoints.pop();
+                    if (m && "setMap" in m) {
+                        m.setMap(null);
+                    }
+                } catch(e) {
+                    console.error("Error on removing Marker", { i, m, e });
+                }
+            }
+            lastWaypoints.length = 0;
+
             directionsService
                 .route({
                     origin: (document.getElementById("fbStart")).value,
@@ -467,7 +480,7 @@ $jsonData = json_encode([]);
                             const content = "Lat: " + loc.lat() + ", Lng: " + loc.lng();
                             setTimeout(function() {
                                 const marker = addMarker(map, loc.lat(), loc.lng(), (i + 1).toString(), title, content);
-                                markers.push(marker);
+                                lastWaypoints.push(marker);
                                 console.log("addMarker(map, " + loc.lat() + ", " + loc.lng() + ", \"" + (i+1) + "\",\"" + title + "\", \"" + content + "\")", marker);
                             }, 1500);
                             reorderedWaypointsTxt += route.legs[i].end_address + "; " + waypointStay + "m\n";
