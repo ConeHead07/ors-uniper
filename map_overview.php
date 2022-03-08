@@ -204,6 +204,8 @@ $jsonData.= ']';
         var markers = [];
         var geocoder = null;
         var mc = null;
+        var infoWindows = [];
+        var lastOpenedWindow = null;
 
         function dateToDateDE(date) {
             var dt = date,
@@ -228,10 +230,14 @@ $jsonData.= ']';
         }
 
         function sendAddr(obj) {
-            var elmWaypoints = document.getElementById(
-                "fbWaypoints"
-            );
-            elmWaypoints.value = elmWaypoints.value + "\n" + obj.title;
+            var elmWaypoints = document.getElementById("fbWaypoints");
+            var elmAvgBreak = document.getElementById("fbAvgBreak");
+
+            var avgStay = parseInt(elmAvgBreak.value);
+            var stay = (!isNaN(avgStay)) ? "; " + avgStay + "M" : "";
+
+            elmWaypoints.value = elmWaypoints.value + "\n" + obj.dataset.addr + stay;
+
         }
 
         function setMarker(map, lat, lng, jsonItem) {
@@ -244,20 +250,30 @@ $jsonData.= ']';
 
             var aidLinked = '<a href="/index.php?s=aantrag&id=' + jsonItem.aid + '" target="_blank">' + jsonItem.aid + "</a>";
 
-            var addrLinked = '<a href="#" title=' + JSON.stringify(jsonItem.Adresse) + ' onclick="sendAddr(this)">' + jsonItem.Adresse + '</a>';
+            var addrLinked = '<a href="#" data-addr=' + JSON.stringify(jsonItem.Adresse) + ' onclick="sendAddr(this)">' + jsonItem.Adresse + '</a>';
 
             var contentString = '<div id="content"><h1>#AID ' + aidLinked + ' #KID ' + jsonItem.KID + '</h1>' +
                 "Beantragt: " + jsonItem.antragsdatum + ', Status:' + jsonItem.umzugsstatus + ', Summe: ' + jsonItem.Summe.toFixed(2).replace('.', '.') + ' €';
 
             contentString+= '<div>' + addrLinked + '</div>';
             contentString+= '</div>';
-            var infowindow = new google.maps.InfoWindow({
+            var infoWindow = new google.maps.InfoWindow({
                 content: contentString
             });
 
 
             google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
+                if (lastOpenedWindow && lastOpenedWindow !== infoWindow) {
+                    try {
+                        if ("close" in lastOpenedWindow) {
+                            lastOpenedWindow.close();
+                        }
+                    } catch(e) {
+                        console.error("Error on closing lastOpenedWindow", { lastOpenedWindow, e });
+                    }
+                }
+                infoWindow.open(map,marker);
+                lastOpenedWindow = infoWindow;
             });
 
             return marker;
@@ -274,16 +290,25 @@ $jsonData.= ']';
             var contentString = '<div id="content"><h1>' + title + '</h1>' + content;
             contentString+= '</div>';
 
-            var infowindow = new google.maps.InfoWindow({
+            var infoWindow = new google.maps.InfoWindow({
                 content: contentString
             });
 
 
             google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
+                if (lastOpenedWindow && lastOpenedWindow !== infoWindow) {
+                    try {
+                        if ("close" in lastOpenedWindow) {
+                            lastOpenedWindow.close();
+                        }
+                    } catch(e) {
+                        console.error("Error on closing lastOpenedWindow", { lastOpenedWindow, e });
+                    }
+                }
+                infoWindow.open(map,marker);
+                lastOpenedWindow = infoWindow
             });
 
-            markers.push(marker);
             return marker;
         }
 

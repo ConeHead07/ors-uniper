@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-16 16:25:51
+/* Smarty version 3.1.34-dev-7, created on 2022-02-24 06:35:05
   from '/var/www/html/html/property_antraege_liste.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61bb5a7f683e82_43856253',
+  'unifunc' => 'content_62172719c95720_21772459',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b61c7d811103a4750c22714d968eed0c3f1c8c6b' => 
     array (
       0 => '/var/www/html/html/property_antraege_liste.html',
-      1 => 1636556371,
+      1 => 1646312042,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61bb5a7f683e82_43856253 (Smarty_Internal_Template $_smarty_tpl) {
+function content_62172719c95720_21772459 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 ?>
 <!-- TAB BASIC MODULE (128585) BEGIN --> 
@@ -39,7 +39,9 @@ $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugin
 <!-- TAB NAVIGATION ITEMS BEGIN --> 
 <div id="ID128585" class="divTabbedNavigation" style="width:100%;"> 
 <div class="divTabbedList" style="width:100%;"> 
-<ul> 
+<ul>
+        <li <?php if ($_smarty_tpl->tpl_vars['cat']->value == "angeboten") {?>class="activeTab"<?php }?>><a href="?s=<?php echo $_smarty_tpl->tpl_vars['s']->value;?>
+&cat=angeboten<?php if ($_smarty_tpl->tpl_vars['allusers']->value) {?>&allusers=1<?php }?>">Angebote</a></li>
         <li <?php if ($_smarty_tpl->tpl_vars['cat']->value == "neue") {?>class="activeTab"<?php }?>><a href="?s=<?php echo $_smarty_tpl->tpl_vars['s']->value;?>
 &cat=neue<?php if ($_smarty_tpl->tpl_vars['allusers']->value) {?>&allusers=1<?php }?>">Bestellungen</a></li>
         <li <?php if ($_smarty_tpl->tpl_vars['cat']->value == "bearbeitung") {?>class="activeTab"<?php }?> style="display:none"><a href="?s=<?php echo $_smarty_tpl->tpl_vars['s']->value;?>
@@ -152,7 +154,7 @@ foreach ($_from as $_smarty_tpl->tpl_vars['U']->value) {
 px;font-weight:bold;"><?php echo smarty_modifier_date_format($_smarty_tpl->tpl_vars['U']->value['Termin'],"%d.%m.%Y");?>
 &nbsp;</div>
       <?php }?>
-      <div style="float:left;display:block;width:70px;"><?php if ($_smarty_tpl->tpl_vars['U']->value['land'] == "Deutschland") {?>DE<?php } elseif ($_smarty_tpl->tpl_vars['U']->value['land'] == "Niederlande") {?>NL<?php } else {
+      <div style="float:left;display:block;width:70px;"><?php if ($_smarty_tpl->tpl_vars['U']->value['land'] == "Deutschland") {?>DE<?php } elseif ($_smarty_tpl->tpl_vars['U']->value['land'] == "Belgien") {?>BE<?php } elseif ($_smarty_tpl->tpl_vars['U']->value['land'] == "England") {?>EN<?php } elseif ($_smarty_tpl->tpl_vars['U']->value['land'] == "Niederlande") {?>NL<?php } else {
 echo $_smarty_tpl->tpl_vars['U']->value['land'];
 }?>&nbsp;</div>
       <div style="float:left;display:block;width:100px;"><?php echo $_smarty_tpl->tpl_vars['U']->value['ort'];?>

@@ -86,6 +86,7 @@ $jsonData = json_encode([]);
         var jsonData = <?= $jsonData ?>;
         var map = null;
         var markers = [];
+        var lastOpenedWindow = null;
 
         function dateToDateDE(date) {
             var dt = date,
@@ -122,13 +123,23 @@ $jsonData = json_encode([]);
                 "Beantragt: " + jsonItem.antragsdatum + ', Status:' + jsonItem.umzugsstatus + ', Summe: ' + jsonItem.Summe.toFixed(2).replace('.', '.') + ' €';
 
             contentString+= '</div>';
-            var infowindow = new google.maps.InfoWindow({
+            var infowWindow = new google.maps.InfoWindow({
                 content: contentString
             });
 
 
             google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
+                if (lastOpenedWindow && lastOpenedWindow !== infoWindow) {
+                    try {
+                        if ("close" in lastOpenedWindow) {
+                            lastOpenedWindow.close();
+                        }
+                    } catch(e) {
+                        console.error("Error on closing lastOpenedWindow", { lastOpenedWindow, e });
+                    }
+                }
+                infoWindow.open(map,marker);
+                lastOpenedWindow = infoWindow;
             });
 
             markers.push(marker);
@@ -146,16 +157,24 @@ $jsonData = json_encode([]);
             var contentString = '<div id="content"><h1>' + title + '</h1>' + content;
             contentString+= '</div>';
 
-            var infowindow = new google.maps.InfoWindow({
+            var infoWindow = new google.maps.InfoWindow({
                 content: contentString
             });
 
-
             google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
+                if (lastOpenedWindow && lastOpenedWindow !== infoWindow) {
+                    try {
+                        if ("close" in lastOpenedWindow) {
+                            lastOpenedWindow.close();
+                        }
+                    } catch(e) {
+                        console.error("Error on closing lastOpenedWindow", { lastOpenedWindow, e });
+                    }
+                }
+                infoWindow.open(map, marker);
+                lastOpenedWindow = infoWindow;
             });
 
-            markers.push(marker);
             return marker;
         }
 
@@ -448,8 +467,9 @@ $jsonData = json_encode([]);
                             const content = "Lat: " + loc.lat() + ", Lng: " + loc.lng();
                             setTimeout(function() {
                                 const marker = addMarker(map, loc.lat(), loc.lng(), (i + 1).toString(), title, content);
+                                markers.push(marker);
                                 console.log("addMarker(map, " + loc.lat() + ", " + loc.lng() + ", \"" + (i+1) + "\",\"" + title + "\", \"" + content + "\")", marker);
-                            }, 2000);
+                            }, 1500);
                             reorderedWaypointsTxt += route.legs[i].end_address + "; " + waypointStay + "m\n";
                         }
                     }

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-09 22:18:41
+/* Smarty version 3.1.34-dev-7, created on 2022-02-24 05:24:37
   from '/var/www/html/html/umzugsformular.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b272b14ea2d7_82751748',
+  'unifunc' => 'content_621716950792e0_08924798',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '750ec8a64cb73f4201add5544ebe0c754db6d27f' => 
     array (
       0 => '/var/www/html/html/umzugsformular.tpl.html',
-      1 => 1638885167,
+      1 => 1646312042,
       2 => 'file',
     ),
   ),
@@ -21,14 +21,26 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:umzugsformular_mitarbeiterauswahl.tpl.html' => 1,
     'file:umzugsformular_geraeteauswahl.tpl.html' => 1,
     'file:umzugsformular_ortsauswahl.tpl.html' => 1,
+    'file:admin_umzugsformular_leistungsauswahl.tpl.html' => 1,
     'file:umzugsformular_leistungsauswahl.tpl.html' => 1,
     'file:umzugsformular_attachments.tpl.read.html' => 1,
+    'file:umzugsformular_lieferscheine.tpl.read2.html' => 1,
+    'file:admin_umzugsformular_teillieferungen.tpl.html' => 1,
+    'file:admin_umzugsformular_reklamationen.tpl.html' => 1,
+    'file:admin_ordered_rueckholungen.tpl.html' => 1,
+    'file:dialogs/kundenauswahl_dialog.html' => 1,
   ),
 ),false)) {
-function content_61b272b14ea2d7_82751748 (Smarty_Internal_Template $_smarty_tpl) {
+function content_621716950792e0_08924798 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/smarty3/plugins/function.ors_include_static_content.php','function'=>'smarty_function_ors_include_static_content',),1=>array('file'=>'/var/www/html/smarty3/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),2=>array('file'=>'/var/www/html/smarty3/plugins/function.html_radios.php','function'=>'smarty_function_html_radios',),));
 $_smarty_tpl->_assignInScope('laenderCsv', substr($_smarty_tpl->tpl_vars['ASConf']->value['land']['size'],1,-1));
 $_smarty_tpl->_assignInScope('laenderLst', explode("','",$_smarty_tpl->tpl_vars['laenderCsv']->value));?>
+
+
+<?php $_smarty_tpl->_assignInScope('fillCustomerInput', "1");
+if ($_smarty_tpl->tpl_vars['creator']->value == "mertens" && empty($_smarty_tpl->tpl_vars['AID']->value)) {
+$_smarty_tpl->_assignInScope('fillCustomerInput', "0");
+}?>
 
 
 <?php echo '<script'; ?>
@@ -110,6 +122,9 @@ echo $_smarty_tpl->tpl_vars['AS']->value['aid'];
             <input type="hidden" name="AS[token]" value="<?php if (!empty($_smarty_tpl->tpl_vars['AS']->value)) {
 echo $_smarty_tpl->tpl_vars['AS']->value['token'];
 }?>">
+            <input type="hidden" value="<?php if ($_smarty_tpl->tpl_vars['fillCustomerInput']->value) {
+echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['antragsteller_uid'], ENT_QUOTES, 'UTF-8', true);
+}?>" name="AS[antragsteller_uid]">
             <span class="required-label">* Erforderliche Angaben</span>
             <table>
                 <tr>
@@ -118,44 +133,61 @@ echo $_smarty_tpl->tpl_vars['AS']->value['token'];
                             Vor<?php if ($_smarty_tpl->tpl_vars['ASConf']->value['vorname']['required']) {?><span class="required">*</span><?php }?> &amp; Nachname<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['name']['required']) {?><span class="required">*</span><?php }?></span>
                         </label></td>
 
-                    <td style="padding:0;width:250px;"><input type="text" id="as_vornachname" readonly="true" value="<?php if (!empty($_smarty_tpl->tpl_vars['AS']->value)) {
+                    <td style="padding:0;width:250px;"><input type="text" id="as_vornachname" readonly="true" value="<?php if ($_smarty_tpl->tpl_vars['fillCustomerInput']->value && !empty($_smarty_tpl->tpl_vars['AS']->value)) {
 echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['vorname'], ENT_QUOTES, 'UTF-8', true);
-}?>" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['name']['required']) {?>required="required"<?php }?> name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" id="as_name" readonly="true" value="<?php if (!empty($_smarty_tpl->tpl_vars['AS']->value)) {
+}?>" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['name']['required']) {?>required="required"<?php }?> name="AS[vorname]" class="itxt itxt1col floatLeft"><input type="text" id="as_name" readonly="true" value="<?php if ($_smarty_tpl->tpl_vars['fillCustomerInput']->value && !empty($_smarty_tpl->tpl_vars['AS']->value)) {
 echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['name'], ENT_QUOTES, 'UTF-8', true);
 }?>" name="AS[name]" class="itxt itxt1col floatRight" title="Name"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_email" style="display:block;width:auto;">E-Mail<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['email']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" autocomplete="email" id="as_email" value="<?php if (!empty($_smarty_tpl->tpl_vars['AS']->value)) {
+                    <td style="padding:0;"><input type="text" autocomplete="email" id="as_email" value="<?php if ($_smarty_tpl->tpl_vars['fillCustomerInput']->value && !empty($_smarty_tpl->tpl_vars['AS']->value)) {
 echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['email'], ENT_QUOTES, 'UTF-8', true);
 }?>" name="AS[email]" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['email']['required']) {?>required="required"<?php }?> readonly="true" class="itxt itxt2col" title="E-Mail"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_fon" style="display:block;width:auto;">Telefon<span class="right"><?php if ($_smarty_tpl->tpl_vars['ASConf']->value['fon']['required']) {?><span class="required">*</span><?php }?></span></label></td>
-                    <td style="padding:0;"><input type="text" autocomplete="tel" id="as_fon" value="<?php if (!empty($_smarty_tpl->tpl_vars['AS']->value)) {
+                    <td style="padding:0;"><input type="text" autocomplete="tel" id="as_fon" value="<?php if ($_smarty_tpl->tpl_vars['fillCustomerInput']->value && !empty($_smarty_tpl->tpl_vars['AS']->value)) {
 echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['fon'], ENT_QUOTES, 'UTF-8', true);
 }?>" <?php if ($_smarty_tpl->tpl_vars['ASConf']->value['fon']['required']) {?>required="required"<?php }?> name="AS[fon]" class="itxt itxt2col jtooltip" rel="%WebRoot%hilfetexte/antrag_fon.php"></td>
                 </tr>
                 <tr>
                     <td style="padding:0;"><label for="as_kid" style="display:block;width:auto;">KID</label></td>
-                    <td style="padding:0;"><input type="text" id="as_kid" name="AS[personalnr]"  readonly value="<?php if (!empty($_smarty_tpl->tpl_vars['AS']->value)) {
+                    <td style="padding:0;"><input type="text" id="as_kid" name="AS[personalnr]"  readonly value="<?php if ($_smarty_tpl->tpl_vars['fillCustomerInput']->value && !empty($_smarty_tpl->tpl_vars['AS']->value)) {
 echo htmlspecialchars($_smarty_tpl->tpl_vars['user']->value['personalnr'], ENT_QUOTES, 'UTF-8', true);
 }?>" class="itxt itxt2col ireadonly" ></td>
                 </tr>
+                <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value['ref_aid'])) {?>
+                <tr>
+                    <td style="padding:0;"><label style="width:180px;">Bezieht sich auf:</label></td>
+                    <td style="padding:0;"><a href="/?s=kantrag&id=<?php echo $_smarty_tpl->tpl_vars['AS']->value['ref_aid'];?>
+"><?php echo $_smarty_tpl->tpl_vars['AS']->value['ref_aid'];?>
+</a></td>
+                </tr>
+                <?php }?>
             </table>
+            <?php if (!$_smarty_tpl->tpl_vars['fillCustomerInput']->value) {?>
+            <button id="btnSelectCustomer" class="btn green" type="button"> Kunde auswählen </button>
+            <?php }?>
 
             <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value) && !empty($_smarty_tpl->tpl_vars['AS']->value['bemerkungen'])) {?>
             <table width="100%">
                 <tr>
-                    <td style="padding:0;">
-                        <div id="BemerkungenHistorie"><?php echo nl2br($_smarty_tpl->tpl_vars['AS']->value['bemerkungen']);?>
+                    <td style="padding:0;width:200px;" valign="top">
+                        <label style="display:block;width:auto;">Bisherige Bemerkungen:</label>
+                    </td>
+                    <td style="padding:0;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding:0;">
+                        <div id="BemerkungenHistorie" style="resize: vertical;overflow-y: auto; height: 3rem;"><?php echo nl2br($_smarty_tpl->tpl_vars['AS']->value['bemerkungen']);?>
 </div>
                     </td>
                 </tr>
             </table>
             <?php }?>
 
-            <h2 style="margin:0;">Lieferadresse</h2>
+            <h2 style="margin:1.5rem 0 0 0;">Lieferadresse</h2>
             <table>
                 <tr>
                     <td style="padding:0;width:200px;">
@@ -428,8 +460,17 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon']
             <?php $_smarty_tpl->_subTemplateRender("file:umzugsformular_ortsauswahl.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
             <?php }?>
-            <?php if ($_smarty_tpl->tpl_vars['user']->value['gruppe'] == "admin" || $_smarty_tpl->tpl_vars['user']->value['gruppe'] == "user" || $_smarty_tpl->tpl_vars['user']->value['gruppe'] == "kunde_report") {?>
-            <?php $_smarty_tpl->_subTemplateRender("file:umzugsformular_leistungsauswahl.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
+
+            <?php if ($_smarty_tpl->tpl_vars['AID']->value && ($_smarty_tpl->tpl_vars['user']->value['gruppe'] == "admin" || empty($_smarty_tpl->tpl_vars['AS']->value['autocalc_ref_mengen']))) {?>
+                <?php if ($_smarty_tpl->tpl_vars['creator']->value == "mertens") {?>
+                    <?php $_smarty_tpl->_assignInScope('CreatorMertens', "1");?>
+                <?php } else { ?>
+                    <?php $_smarty_tpl->_assignInScope('CreatorMertens', "0");?>
+                <?php }?>
+                <?php $_smarty_tpl->_subTemplateRender("file:admin_umzugsformular_leistungsauswahl.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('showLiefermenge'=>"0",'showAddLeistung'=>((string)$_smarty_tpl->tpl_vars['CreatorMertens']->value),'showReklas'=>"0",'PreiseAnzeigen'=>((string)$_smarty_tpl->tpl_vars['CreatorMertens']->value),'addTeilmengen'=>"0",'showTeilmengen'=>"0"), 0, false);
+?>
+            <?php } else { ?>
+                <?php $_smarty_tpl->_subTemplateRender("file:umzugsformular_leistungsauswahl.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
             <?php }?>
 
@@ -439,14 +480,65 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon']
 ?>
             </div>
             <?php }?>
+
+            <?php if (!empty($_smarty_tpl->tpl_vars['UmzugLieferscheine']->value)) {?>
+            <div style="margin-top:1.5rem"></div>
+            <?php $_smarty_tpl->_subTemplateRender("file:umzugsformular_lieferscheine.tpl.read2.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('UmzugsAnlagen'=>$_smarty_tpl->tpl_vars['UmzugLieferscheine']->value,'internal'=>1), 0, false);
+?>
+            <?php }?>
+
+            <?php if (!empty($_smarty_tpl->tpl_vars['Teillieferungen']->value)) {?>
+            <div style="margin-top:1.5rem"></div>
+            <fieldset><legend><strong>Teil-Lieferungen</strong></legend>
+                <div style="padding:5px">
+                    <?php $_smarty_tpl->_subTemplateRender("file:admin_umzugsformular_teillieferungen.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('aItems'=>$_smarty_tpl->tpl_vars['Teillieferungen']->value), 0, false);
+?>
+                </div>
+            </fieldset>
+            <?php }?>
+
+            <?php if (!empty($_smarty_tpl->tpl_vars['Reklamationen']->value)) {?>
+            <div style="margin-top:1.5rem"></div>
+            <fieldset><legend><strong>Reklamationen</strong></legend>
+                <div style="padding:5px">
+                    <?php $_smarty_tpl->_subTemplateRender("file:admin_umzugsformular_reklamationen.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('aReklas'=>$_smarty_tpl->tpl_vars['Reklamationen']->value), 0, false);
+?>
+                </div>
+            </fieldset>
+            <?php }?>
+
+            <?php if (!empty($_smarty_tpl->tpl_vars['aOrderedRHItems']->value)) {?>
+            <div style="margin-top:1.5rem"></div>
+            <fieldset><legend><strong>Rückholaufträge</strong></legend>
+                <div style="padding:5px">
+                    <?php $_smarty_tpl->_subTemplateRender("file:admin_ordered_rueckholungen.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('baseService'=>"kantrag",'aItems'=>$_smarty_tpl->tpl_vars['aOrderedRHItems']->value), 0, false);
+?>
+                </div>
+            </fieldset>
+            <?php }?>
+
             <!-- <div style="color:#549e1a;font-weight:bold;text-decoration:none;cursor:pointer;" onclick="addMa();return false;">Weiteren Mitarbeiter ausw&auml;hlen <img align="absmiddle" src="images/hinzufuegen_off.png" width="14" alt=""></div><br> -->
             <br>
             <div id="BoxBemerkungen">
                 <strong>Bemerkungen</strong><br>
                 <textarea class="iarea bemerkungen" name="AS[bemerkungen]"></textarea>
             </div>
+            <?php if (!empty($_smarty_tpl->tpl_vars['AS']->value['aid'])) {?>
+            <button class='btn blue'
+                            onclick="umzugsantrag_add_bemerkung()"
+                            style="cursor: pointer"
+                            type="button">Bemerkung hinzufügen</button>
+            <?php }?>
             <div style="margin-top:20px;">
                 <input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;">
+                <?php if (!$_smarty_tpl->tpl_vars['fillCustomerInput']->value) {?>
+                <button
+                        id="btnAngebotSenden"
+                        type="submit"
+                        class="btn green"
+                        title="Angebot senden"
+                        value="Angeboten">Angebot<br>senden</button>
+                <?php } else { ?>
                 <button
                         class="btn green"
                         type="submit"
@@ -482,6 +574,7 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon']
                     title="Nur Speichern, noch nicht bestellen"
                     value="Speichern"><i class="icon shopping cart"></i> Warenkorb speichern</button>
 
+            <?php }?>
             <!-- Debug-Btn:
             <input type="submit" onclick="return umzugsantrag_submit_debug('speichern')" style="padding:0 0 9px 0;background:url(images/BtnGrey.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="speichern">
             <input type="submit" onclick="return umzugsantrag_submit_debug('senden')" style="padding:0 0 9px 0;background:url(images/BtnRed.png) bottom left no-repeat;border:0;width:90px;height:24px;font-size:12px;color:#fff;font-weight:bold;" name="cmd" value="senden">
@@ -493,6 +586,43 @@ echo htmlspecialchars($_smarty_tpl->tpl_vars['AS']->value['ansprechpartner_fon']
         </form>
     </div>
     <div id="LoadingBar"></div>
+    <?php if (!$_smarty_tpl->tpl_vars['fillCustomerInput']->value) {?>
+    <?php $_smarty_tpl->_subTemplateRender("file:dialogs/kundenauswahl_dialog.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
+?>
+    <?php }?>
+
+    <?php if (!$_smarty_tpl->tpl_vars['fillCustomerInput']->value) {?>
+    <?php echo '<script'; ?>
+>
+        $("#btnSelectCustomer").on("click", function(e) {
+            showKundenauswahlDialog(function(result) {
+                console.log("SELECTED USER:\n" + JSON.stringify(result));
+                $(":input[name=AS\\[antragsteller_uid\\]]").val(result.uid);
+                $(":input[name=AS\\[vorname\\]]").val(result.vorname);
+                $(":input[name=AS\\[vorname\\]]").val(result.vorname);
+                $(":input[name=AS\\[name\\]]").val(result.nachname);
+                $(":input[name=AS\\[email\\]]").val(result.email);
+                $(":input[name=AS\\[fon\\]]").val(result.fon);
+                $(":input[name=AS\\[personalnr\\]]").val(result.personalnr);
+            });
+        });
+
+        $("#btnAngebotSenden").on("click", function(e) {
+
+            e.preventDefault();
+
+            var frm = document.forms["frmUmzugsantrag"];
+            var as_uid = $( frm ).find(":input[name=AS\\[antragsteller_uid\\]]");
+            if (as_uid.length && !as_uid.val()) {
+                ErrorBox("Bitte wählen Sie erst einen Kunden für das Angebot aus!");
+                return;
+            }
+
+            umzugsantrag_send();
+        });
+    <?php echo '</script'; ?>
+>
+    <?php }?>
 </div>
 <?php }
 }

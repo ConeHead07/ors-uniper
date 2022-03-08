@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2021-12-09 22:18:41
+/* Smarty version 3.1.34-dev-7, created on 2022-02-24 05:24:37
   from '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_61b272b16f13d9_24698923',
+  'unifunc' => 'content_621716951e58b8_70406230',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '346d952b773372d484fde33cfdf99fd837ff0bb3' => 
     array (
       0 => '/var/www/html/html/umzugsformular_leistungsauswahl.tpl.html',
-      1 => 1637944685,
+      1 => 1646312042,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_61b272b16f13d9_24698923 (Smarty_Internal_Template $_smarty_tpl) {
+function content_621716951e58b8_70406230 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div style="display:block;margin-top:15px;">
     <!-- umzugsformular_leistungsauswahl.tpl.html -->
@@ -151,7 +151,7 @@ function get_Leistung( obj ) {
             objInpM2.unbind("change");
         }
         objInpM.unbind("change");
-        if (objUnit.html().toLowerCase().indexOf("prozent") < 0) objInpM.bind("change", mengeChangeCallback);
+        if (!objUnit.html() || objUnit.html().toLowerCase().indexOf("prozent") < 0) objInpM.bind("change", mengeChangeCallback);
         
         $( this ).hide();
         blurBox( "#ldescselect", 1);
@@ -192,7 +192,7 @@ var numberFormat = function(number, dec, decToken, thousandSep) {
 var mengeChangeCallback = function() {
     var tr = $( this ).closest("tr");
     var objUnit = tr.find(".unit:eq(0)");
-    if (objUnit.html().toLowerCase().indexOf("prozent") > -1) return;
+    if (objUnit.html() && objUnit.html().toLowerCase().indexOf("prozent") > -1) return;
         
     var id = tr.find("input.ilstg").val();
     var preis = parseFloat(tr.find("td.lstg").attr("data-p"));
@@ -247,7 +247,7 @@ $(function(){
 <?php echo '</script'; ?>
 >
 
-<div id="auswahlUmzugsleistungenBox"></div>
+<div data-src="html/umzugsformular/leistungsauswahl/tpl/html" id="auswahlUmzugsleistungenBox"></div>
 
 
 <?php echo '<script'; ?>
