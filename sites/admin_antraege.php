@@ -110,6 +110,7 @@ $orderFields = array(
     'Leistungen' =>  array('field'=>'Leistungen', 'defaultOrder'=>'ASC'),
     'neue_bemerkungen_fuer_admin' => array('field' => 'neue_bemerkungen_fuer_admin', 'defaultOrder'=>'DESC'),
     'summe' =>  array('field'=>'Summe', 'defaultOrder'=>'ASC'),
+    'numAuftraege' =>  array('field'=>'numAuftraege', 'defaultOrder'=>'DESC'),
 );
 
 $validFields = array_keys($orderFields);
@@ -201,6 +202,32 @@ if ($ofld && isset($orderFields[$ofld])) {
 
 $ListBaseLink = '?s='.urlencode($s).'&cat='.urlencode($cat).($allusers ? '&allusers=1' : '');
 
+'SELECT 
+  a.aid,
+  usr.personalnr kid,
+  DATE_FORMAT(a.antragsdatum, "%d.%m.%Y") beantragt,
+  DATE_FORMAT(a.bestaetigt_am, "%d.%m.%Y") bestaetigt,
+  a.umzugsstatus, 
+  DATE_FORMAT(a.umzugsstatus_vom, "%d.%m.%Y") statusdatum, 
+  GROUP_CONCAT(ktg.kategorie_abk SEPARATOR "") Lstg, 
+  ROUND(SUM(klg.preis_pro_einheit * al.menge_mertens),2) Summe  
+  FROM mm_umzuege a 
+  LEFT JOIN mm_umzuege_leistungen al ON (a.aid = al.aid)
+  LEFT JOIN mm_user usr ON (a.antragsteller_uid = usr.uid)
+  LEFT JOIN mm_leistungskatalog klg ON (al.leistung_id = klg.leistung_id)
+  LEFT JOIN mm_leistungskategorie ktg ON (klg.leistungskategorie_id = ktg.leistungskategorie_id)
+  GROUP BY a.aid, a.antragsdatum, a.bestaetigt_am, a.umzugsstatus_vom;
+';
+
+'SELECT 
+  a.antragsteller_uid, usr.personalnr kid,
+  COUNT(DISTINCT(a.aid)) AS numAuftraege,
+  GROUP_CONCAT( CONCAT_WS(" ", CONCAT("#", a.aid), umzugsstatus, "am", DATE_FORMAT(umzugsstatus_vom, "%d.%m.%Y")) SEPARATOR " \n") AS Auftraege
+  FROM mm_umzuege a 
+  left JOIN mm_user usr ON (a.antragsteller_uid = usr.uid)
+  GROUP BY a.antragsteller_uid, usr.personalnr
+';
+
 $sqlFrom  = 'FROM `' . $CUA['Table'] . '` U LEFT JOIN `' . $CUM['Table'] . '` M USING(aid)' . $NL
     . ' LEFT JOIN mm_user user ON U.antragsteller_uid = user.uid ' . $NL
     . ' LEFT JOIN mm_stamm_gebaeude g  ON U.gebaeude = g.id ' . $NL
@@ -213,7 +240,16 @@ $sqlFrom  = 'FROM `' . $CUA['Table'] . '` U LEFT JOIN `' . $CUM['Table'] . '` M 
     . '    l.leistung_id = lm.leistung_id '  . $NL
     . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
     . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
-    . ' ) '  . $NL;
+    . ' ) ' . $NL
+    . ' LEFT JOIN ('
+    . 'SELECT 
+      a.antragsteller_uid,
+      COUNT(DISTINCT(a.aid)) AS numAuftraege,
+      GROUP_CONCAT( CONCAT_WS(" ", CONCAT("#", a.aid), umzugsstatus, "am", DATE_FORMAT(umzugsstatus_vom, "%d.%m.%Y")) SEPARATOR " \n") AS Auftraege
+      FROM mm_umzuege a 
+      GROUP BY a.antragsteller_uid
+    '
+    . ') UStat ON (U.antragsteller_uid = UStat.antragsteller_uid) ' . $NL;
 $sqlWhere = "WHERE 1\n";
 
 if ($datumfeld && $datumvon && $datumbis && $datumvon <= $datumbis) {
@@ -309,10 +345,14 @@ $sqlGroup = ' GROUP BY U.aid' . $NL;
 $sqlHaving = ( count($having) ? ' HAVING (' . implode(' AND ', $having) . ')' . $NL : '');
 
 
-$sqlSelect = 'SELECT U.*, U.umzugstermin AS Lieferdatum, ' . $NL
+$sqlSelect = 'SELECT U.*, ' . $NL
+    . ' U.umzugstermin AS Lieferdatum, ' . $NL
     . ' user.personalnr AS kid, ' . $NL
+    . ' user.user, ' . $NL
     . ' CONCAT(vg.stadtname, " ", vg.adresse) von_gebaeude, ' . $NL
     . ' CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude, ' . $NL
+    . ' UStat.numAuftraege, ' . $NL
+    . ' UStat.Auftraege, ' . $NL
     . ' REPLACE(REPLACE(GROUP_CONCAT( CONCAT(
 			 	kategorie_abk, 
 				IF( IFNULL(leistung_abk, "") != "", CONCAT("", leistung_abk, ""), ""),

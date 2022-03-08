@@ -74,6 +74,8 @@
         <span style="clear:both"></span>
     </div>
     {/if}
+    {assign var="NewLine" value="
+"}
     {assign var="showCheck" value=!empty($selectable)}
     {assign var="showTour" value=false}
     {assign var="showAuftragsdatum" value=true}
@@ -91,12 +93,13 @@
     {assign var="checkWidth" value=24}
     {assign var="aidWidth" value=35}
     {assign var="kidWidth" value=65}
+    {assign var="numAuftraegeWidth" value=25}
     {assign var="landWidth" value=40}
     {assign var="ortWidth" value=115}
     {assign var="plzWidth" value=50}
     {assign var="zeitWidth" value=50}
     {assign var="tourWidth" value=50}
-    {assign var="strasseWidth" value=135}
+    {assign var="strasseWidth" value=115}
     {assign var="serviceWidth" value=50}
     {assign var="beauftragtWidth" value=75}
     {assign var="bestaetigtWidth" value=75}
@@ -246,6 +249,7 @@
       {/if}
       <div class="fld-cell fld-aid order" data-fld="aid" style="width:{$aidWidth}px;" title="Auftrags-ID">ID</div>
       <div class="fld-cell fld-kid order" data-fld="kid" style="width:{$kidWidth}px;" title="Uniper MitarbeiterNr."><a href="{$ListBaseLink}&ofld=kid{if $ofld eq "kid" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
+      <div class="fld-cell fld-numAuftraege order" data-fld="numAuftraege" style="width:{$numAuftraegeWidth}px;" title="Anzahl Kundenaufträge"><a href="{$ListBaseLink}&ofld=numAuftraege{if $ofld eq "numAuftraege" && $odir ne "DESC"}&odir=DESC{/if}">A</a></div>
       {if $showTour}
       <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:{$tourWidth}px;"><a href="{$ListBaseLink}&ofld=tour_kennung{if $ofld eq 'tour_kennung' && $odir ne "DESC"}&odir=DESC{/if}">Tour</a></div>
       {/if}
@@ -295,6 +299,7 @@
           {/if}
           <div class="fld-cell fld-aid" style="width:{$aidWidth}px;"><input name="q[aid]" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></div>
           <div class="fld-cell fld-kid" style="width:{$kidWidth}px;"><input name="q[kid]" value="{if !empty($q) && isset($q.kid)}{$q.kid}{/if}"></div>
+          <div class="fld-cell fld-numAuftraege" style="width:{$numAuftraegeWidth}px;"><input name="q[numAuftraege]" value="{if !empty($q) && isset($q.numAuftraege)}{$q.numAuftraege}{/if}"></div>
           {if $showTour}
           <div class="fld-cell fld-tour_kennung" style="width:{$tourWidth}px;"><input name="q[tour_kennung]" value="{if !empty($q) && isset($q.tour_kennung)}{$q.tour_kennung}{/if}"></div>
           {/if}
@@ -348,6 +353,7 @@
               {/if}
               <div class="fld-cell fld-aid" style="width:{$aidWidth}px;font-weight:bold;">{$U.aid}&nbsp;</div>
               <div class="fld-cell fld-kid" style="width:{$kidWidth}px;" >{$U.kid}&nbsp;</div>
+              <div class="fld-cell fld-numAuftraege" data-info="{$U.user}{$NewLine}{$U.Auftraege}" style="width:{$numAuftraegeWidth}px;" >{$U.numAuftraege}&nbsp;</div>
               {if $showTour}
               <div class="fld-cell fld-tour_kennung" style="width:{$tourWidth}px;">{$U.tour_kennung}&nbsp;</div>
               {/if}
@@ -461,6 +467,13 @@ var odir = "{$odir}";
 
     $(function() {
 
+        var overlay = $("<div/>").css({
+            position: "absolute",
+            backgroundColor: "#bfbfbf",
+            padding: ".3rem"
+        }).hide().appendTo("body");
+        var overlayTimer = null;
+
         $("#toggleCheckboxes").bind("change", function(e) {
             $(":input[type=checkbox][name=aids\\[\\]]").prop("checked", this.checked );
             return false;
@@ -472,6 +485,62 @@ var odir = "{$odir}";
 
         $(".flds-body-row-link[data-href]").bind("click", function(e) {
             self.location.href= $(this).data("href");
+        });
+
+        $(".flds-body-row .fld-cell.fld-numAuftraege").bind("mouseover", function(e) {
+            var elm = this;
+            var info = $(elm).data("info");
+            var infoHtml = $(elm).data("infoHtml");
+            var isOverElm = true;
+            var isOverOverlay = false;
+            var offset = $(elm).offset();
+            try {
+                overlayTimer && clearTimeout(overlayTimer);
+                overlayTimer = null;
+            } catch(e) {}
+
+            if ($.trim(info).length && !infoHtml) {
+                var list = info.split("\n");
+                infoHtml = '';
+                $.each(list, function(idx, val) {
+                    var thisObj = this;
+                    console.log({ val, idx, thisObj });
+                    // return;
+                    var aid = val.substr(1).split(" ")[0];
+                    infoHtml+= "<li><a href=\"/?s=aantrag&id=" + aid + "\" target=_blank>" + val + "</a></li>\n";
+                });
+                $(this).data("infoHtml", infoHtml);
+            }
+
+            overlay.hide().css({
+                left: offset.left,
+                top: offset.top + elm.offsetHeight
+            }).html(infoHtml).show()
+                .bind("mouseover", function() {
+                    isOverOverlay = true;
+                    try {
+                        overlayTimer && clearTimeout(overlayTimer);
+                        overlayTimer = null;
+                    } catch(e) {}
+                })
+                .bind("mouseout", function() {
+                    isOverOverlay = false;
+                    overlayTimer = setTimeout(function() {
+                        if (!isOverOverlay && !isOverElm) {
+                            overlay.hide();
+                        }
+                    }, 300);
+            });
+
+            $(elm).bind("mouseout", function() {
+                isOverElm = false;
+                overlayTimer = setTimeout(function() {
+                    if (!isOverOverlay && !isOverElm) {
+                        overlay.hide();
+                    }
+                }, 300);
+            });
+
         });
 
         var send = function(addQuery = '') {
