@@ -112,7 +112,7 @@ function userquery_parse($userquery) {
     $foundEndOfPh = "";
     $foundSep = false;
     
-    // Test, ob nächstes Element eine Phrase ist
+    // Test, ob nÃ¤chstes Element eine Phrase ist
     if (in_array($rest[0], $aPhraseChr)) {
       $ph = $rest[0];
       $offset = 1;
@@ -135,7 +135,7 @@ function userquery_parse($userquery) {
     } else {
       while(substr($rest, 0, 2) == "  ") $rest = substr($rest,1);
       
-      // Test, ob nächstes Element ein Operator-Zeichen ist
+      // Test, ob nï¿½chstes Element ein Operator-Zeichen ist
       //echo "#".__LINE__." chck4Op in rest:$rest|<br>\n";
       foreach($aSeparatorChr as $r_chr => $r_op) {
         if ($r_chr == substr($rest, 0, strlen($r_chr))) {

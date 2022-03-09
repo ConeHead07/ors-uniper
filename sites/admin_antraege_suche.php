@@ -73,6 +73,7 @@ $searchFields = array(
 	'm.ziel_abteilung' => '',
     'm.umzugsart' => '',
     'a.bemerkungsstatus' => '',
+    'a.service' => '',
     'lk.leistung' => '',
 );
 
@@ -122,6 +123,13 @@ if (!empty($q['kk.leistungskategorie'])) {
 } else {
     $queryForm = str_replace('[/*aCheckedKategorienJson*/]', '[]', $queryForm);
 }
+
+if (!empty($q['a.service'])) {
+    $queryForm = str_replace('[/*aCheckedServiceJson*/]', json_encode($q['a.service']), $queryForm);
+} else {
+    $queryForm = str_replace('[/*aCheckedServiceJson*/]', '[]', $queryForm);
+}
+
 foreach($searchFields as $f => $v) {
 	if (isset($q[$f])) {
 	    $searchFields[$f] = $q[$f];
@@ -172,11 +180,28 @@ if ($sendquery) {
 					case 'a.umzugsstatus':
                     case 'a.tour_kennung':
 					$dbField = $qField;
-					$sqlWhereUA.= ($sqlWhereUA ? 'AND ' : '') . ' (';
+					$sqlWhereUA.= ($sqlWhereUA ? 'AND ' : '') . ' ';
 					$aUQueryParts = userquery_parse($userQuery, 'Both');
 					$sqlWhereUA.= userquery_parts2sql($aUQueryParts, $dbField);
 					$sqlWhereUA.= ")\n";
 					break;
+
+                    case 'a.service':
+                        $dbField = $qField;
+                        $sqlWhereUA.= ($sqlWhereUA ? 'AND ' : '') . ' (';
+
+                        if (is_array($userQuery) && count($userQuery)) {
+                            $aQuotedVals = array_map(function ($val) use ($db) {
+                                return $db::quote($val);
+                            }, $userQuery);
+                            $sqlWhereUA = $qField . ' in (' . implode(', ', $aQuotedVals) . ')' . "\n";
+                        } elseif (is_string($userQuery) && trim($userQuery) !== '') {
+                            $sqlWhereUA.= ($sqlWhereUA ? ' AND ' : '');
+                            $sqlWhereUA.= $qField . ' LIKE ' . $db::quote($userQuery) . "\n";
+                        }
+
+                        $sqlWhereUA.= " \n";
+                        break;
 
                     case 'a.bemerkungsstatus':
                         $mitBmk = ' LENGTH(TRIM(IFNULL(a.bemerkungen, ""))) > 0 ';
@@ -203,10 +228,31 @@ if ($sendquery) {
                         break;
 
                     case 'kk.leistungskategorie':
-                        if (is_array($userQuery)) {
+                        if (is_array($userQuery) && count($userQuery)) {
+
+                            $_angebotsQuery = '';
+                            $_kategorieQuery = '';
+                            if (in_array('Angebot', $userQuery)) {
+                                $userQuery = array_slice(array_filter($userQuery, function($v) { return $v !== 'Angebot'; }), 0);
+                                $_angebotsQuery = ' IFNULL(a.angeboten_am, "") != "" OR kk.leistungsart = "Angebot"';
+                            }
+
                             $sqlWhereKtg.= ($sqlWhereKtg ? ' AND ' : '');
-                            $aQuotedVals = array_map(function( $val ) use($db) { return $db::quote($val);  }, $userQuery);
-                            $sqlWhereKtg.= $qField . ' in (' . implode(', ', $aQuotedVals) . ')' . "\n";
+                            if (count($userQuery)) {
+                                $aQuotedVals = array_map(function ($val) use ($db) {
+                                    return $db::quote($val);
+                                }, $userQuery);
+                                $_kategorieQuery = $qField . ' in (' . implode(', ', $aQuotedVals) . ')' . "\n";
+                            }
+
+                            if ($_kategorieQuery && $_angebotsQuery) {
+                                $sqlWhereKtg.= ' (' . $_kategorieQuery . ' OR ' . $_angebotsQuery . ')';
+                            } elseif ($_angebotsQuery) {
+                                $sqlWhereKtg.= $_angebotsQuery;
+                            } else {
+                                $sqlWhereKtg.= $_kategorieQuery;
+                            }
+
                         } elseif (is_string($userQuery) && trim($userQuery) !== '') {
                             $sqlWhereKtg.= ($sqlWhereKtg ? ' AND ' : '');
                             $sqlWhereKtg.= $qField . ' LIKE ' . $db::quote($aQuotedVals) . "\n";
@@ -321,13 +367,14 @@ if ($sendquery) {
 		$sqlLimit = "LIMIT $offset, $limit";
 
 		$sqlCount = 'SELECT count(1) AS count FROM (SELECT a.aid ' . $sqlFrom . $sqlWhere . $sqlGroup . ') AS t';
+//        echo "<pre>".print_r($sqlCount,1)."</pre>\n";
 		$row = $db->query_singlerow($sqlCount);
 		$num_all = $row['count'];
 
 		$sql = $sqlSelect . $sqlFrom . $sqlWhere . $sqlGroup . $sqlOrder . $sqlLimit;
+//        echo "<pre>".print_r($sql,1)."</pre>\n";
 		$rows = $db->query_rows($sql);
 		$num = count($rows);
-		// echo "<pre>".print_r($sql,1)."</pre>\n";
 	} else {
 		$sql = 'Select ' . "\n"
             . 'a.aid, a.umzugstermin, a.umzugsstatus, m.name, ' . "\n"
@@ -403,7 +450,7 @@ if ($sendquery) {
         </style>
         <fieldset class="legend" id="legendKategorien" style="margin-top:-1rem">
             <legend>Kategorien</legend>
-            <div class="content">T=Schreibtisch, S=Stuhl, R=Rabatt, P=Transportpostion</div>
+            <div class="content">T=Schreibtisch, S=Stuhl, R=Rabatt, P=Transportpostion, A=Angebot, H=Rückholung</div>
         </fieldset>
 EOT;
 		// $rows2Tbl.= '<pre>' . htmlentities($sql) . '</pre>';

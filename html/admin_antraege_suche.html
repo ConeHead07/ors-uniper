@@ -96,7 +96,8 @@
 					<label><input type="checkbox" name="q[kk.leistungskategorie][]" value="Schreibtischlampe"> Lampe</label>
 					<label><input type="checkbox" name="q[kk.leistungskategorie][]" value="Stuhl"> Stuhl</label>
 					<label><input type="checkbox" name="q[kk.leistungskategorie][]" value="Rabatt"> Rabatt</label>
-					<label><input type="checkbox" name="q[kk.leistungskategorie][]" value="Transportpositionen"> Transport</label>
+					<label><input type="checkbox" name="q[kk.leistungskategorie][]" value="Rückholung"> Rückholung</label>
+					<label><input type="checkbox" name="q[kk.leistungskategorie][]" value="Angebot"> Angebot</label>
 				</div>
 			</td>
 		</tr>
@@ -114,17 +115,36 @@
 				<option value="none">ohne Bemerkung</option>
 			</select></td>
 		</tr>
+		<tr>
+			<td style="padding:0;min-height:1rem;background-color:#0075b5; vertical-align: top"><label style="display:block;width:auto;height:100%">
+				Service
+			</label></td>
+			<td class="options" style="padding:0;" style="border:1px solid #0075B5;">
+				<div>
+					<label><input type="checkbox" name="q[a.service][]" value="Ja"> Bestellung</label>
+					<label><input type="checkbox" name="q[a.service][]" value="Teil"> Teillieferung</label>
+					<label><input type="checkbox" name="q[a.service][]" value="Rekla"> Reklamation</label>
+				</div>
+			</td>
+		</tr>
 	</table>
 	<script>
 		var selectedUmzugsstatus = "{q[a.umzugsstatus]}";
 		var selectedBmkstatus = "{q[a.bemerkungsstatus]}";
 		var aCheckedKategorien = [/*aCheckedKategorienJson*/];
+		var aCheckedService = [/*aCheckedServiceJson*/];
+
 		$("#q_umzugsstatus").find("option[value="+selectedUmzugsstatus+"]").prop("selected", true);
 		$("#q_bemerkungsstatus").find("option[value="+selectedBmkstatus+"]").prop("selected", true);
 
 		if (Array.isArray(aCheckedKategorien) && aCheckedKategorien.length > 0) {
 			aCheckedKategorien.forEach(function(val, idx) {
 				$("input[type=checkbox][name*=leistungskategorie][value=" + val + "]").prop("checked", true);
+			});
+		}
+		if (Array.isArray(aCheckedService) && aCheckedService.length > 0) {
+			aCheckedService.forEach(function(val, idx) {
+				$("input[type=checkbox][name*=service][value=" + val + "]").prop("checked", true);
 			});
 		}
 	</script>
