@@ -180,7 +180,7 @@ if ($sendquery) {
 					case 'a.umzugsstatus':
                     case 'a.tour_kennung':
 					$dbField = $qField;
-					$sqlWhereUA.= ($sqlWhereUA ? 'AND ' : '') . ' ';
+					$sqlWhereUA.= ($sqlWhereUA ? 'AND ' : '') . ' (';
 					$aUQueryParts = userquery_parse($userQuery, 'Both');
 					$sqlWhereUA.= userquery_parts2sql($aUQueryParts, $dbField);
 					$sqlWhereUA.= ")\n";
