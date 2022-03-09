@@ -181,7 +181,9 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     <td style="padding:0;"><input type="text" id="as_kid" name="AS[personalnr]" readonly value="{if $fillCustomerInput and !empty($AS)}{$AS.personalnr|escape}{/if}" class="itxt itxt2col" ></td>
   </tr>
 </table>
+  {if $fillCustomerInput}
   <button id="btnSelectCustomer" class="btn green" type="button"> Kunde auswählen </button>
+  {/if}
 
   <div style="margin-top:2rem;"><h2 style="margin:0;">Lieferadresse <i class="geo-address"
                                                     data-address="{$AS.strasse|escape},{$AS.plz|escape}+{$AS.ort|escape},{$AS.land|escape}"
