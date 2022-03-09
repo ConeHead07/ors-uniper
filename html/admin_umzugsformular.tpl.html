@@ -181,7 +181,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     <td style="padding:0;"><input type="text" id="as_kid" name="AS[personalnr]" readonly value="{if $fillCustomerInput and !empty($AS)}{$AS.personalnr|escape}{/if}" class="itxt itxt2col" ></td>
   </tr>
 </table>
-  {if $fillCustomerInput}
+  {if empty($fillCustomerInput)}
   <button id="btnSelectCustomer" class="btn green" type="button"> Kunde auswählen </button>
   {/if}
 
