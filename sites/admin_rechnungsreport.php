@@ -120,6 +120,7 @@ $sqlAuftraege = 'SELECT
     LEFT JOIN mm_leistungskategorie k ON (lk.leistungskategorie_id = k.leistungskategorie_id)
     WHERE umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja"
       AND service != "Rekla" 
+      AND ul.menge_mertens > 0
       AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
     ' . $andWhere . '
     GROUP BY a.aid
@@ -139,6 +140,7 @@ $sqlLeistungen = 'SELECT
       SELECT aid FROM mm_umzuege 
       WHERE umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja" 
         AND service != "Rekla" 
+        AND ul.menge_mertens > 0
         AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
       ' .$andWhere . '
     )
@@ -159,6 +161,7 @@ $sqlTeilLeistungen = 'SELECT
       SELECT aid FROM mm_umzuege 
       WHERE umzugsstatus = "bestaetigt"
       AND service != "Rekla" 
+      AND ul.menge_mertens > 0
       AND (vorgangsnummer IS NULL OR TRIM(vorgangsnummer) = "")
       AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . '
     ) AND (
@@ -405,13 +408,11 @@ HEREDOC;
     } else {
         echo '<div><i>Keine</i></div>' . "\n";
     }
-    echo "<br>\n";
-    echo "<h3>Teil-Leistungen</h3>\n";
     if (count($rowsT)) {
+        echo "<br>\n";
+        echo "<h3>Teil-Leistungen</h3>\n";
         echo array2Table($rowsT);
         echo '<div style="font-size: x-small;display: none;">CSV-Ulids: ' . json_encode($csvUlids) . "</div>\n";
-    } else {
-        echo '<div><i>Keine</i></div>' . "\n";
     }
     echo "<br>\n";
     if (count($csvAids) || count($csvUlids)) {

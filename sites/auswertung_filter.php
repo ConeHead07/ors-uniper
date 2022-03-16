@@ -236,6 +236,7 @@ $sqlFrom = ' FROM mm_umzuege a ' . "\n"
 
 $sqlWhere = ' WHERE 1 ' . "\n"
     . ' AND service != "Rekla" '
+    . ' AND ul.menge_mertens > 0 ' . $NL
     . ' AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN :von AND :bis ' . "\n";
 if (count($aWhereStatusAnyOf)) {
     $sqlWhere.= ' AND ( ' . implode(' OR ', $aWhereStatusAnyOf) . ')' . "\n";

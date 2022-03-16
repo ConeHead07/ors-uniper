@@ -250,7 +250,9 @@ $sqlFrom  = 'FROM `' . $CUA['Table'] . '` U LEFT JOIN `' . $CUM['Table'] . '` M 
       GROUP BY a.antragsteller_uid
     '
     . ') UStat ON (U.antragsteller_uid = UStat.antragsteller_uid) ' . $NL;
-$sqlWhere = "WHERE 1\n";
+$sqlWhere = "WHERE 1\n"
+. ' AND ul.menge_mertens > 0 ' . $NL
+;
 
 if ($datumfeld && $datumvon && $datumbis && $datumvon <= $datumbis) {
     if ($datumvon && $datumbis) {

@@ -172,6 +172,7 @@ $sqlWhere = ' WHERE ' . $NL
     . ' AND abgeschlossen_am IS NOT NULL '  . $NL
     . ' AND DATE_FORMAT(' . $datumfeld . ', "%Y-%m-%d") BETWEEN :von AND :bis ' . $NL
     . ' AND service != "Rekla" ' . $NL
+    . ' AND ul.menge_mertens > 0 ' . $NL
     . (!$all ? 'AND berechnet_am IS NULL' : '') . $NL
     . ( count($w) ? ' AND ('  . implode(' AND ', $w) . ') ' : '') . $NL
     ;
@@ -196,7 +197,8 @@ $sqlArtikel = 'SELECT lk.leistungskategorie AS Kategorie, ul.leistung_id, l.Beze
     . '    l.leistung_id = lm.leistung_id '  . $NL
     . '    AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1)) ' . $NL
     . '    AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))' . $NL
-    . ' ) '  . $NL;
+    . ' ) '  . $NL
+    . ' WHERE ul.menge_mertens > 0 ' . $NL;
 $sqlArtikel.= 'GROUP BY ul.leistung_id, l.Bezeichnung, l.Farbe, l.Groesse' . $NL;
 $artikelStat = $db->query_rows($sqlArtikel, 0, $aParams);
 
@@ -225,6 +227,7 @@ if (false && empty($wTL)) {
         . (count($wTL) ? ' AND ' . implode(' AND ', $wTL) : '') . $NL
         . ' AND ul.abgeschlossen_am BETWEEN ' . $db::quote($datumvon) . ' AND ' . $db::quote($datumbis) . ' ' . $NL
         . ' AND service != "Rekla" ' . $NL
+        . ' AND ul.menge_mertens > 0 ' . $NL
         .' ORDER BY ' . $sqlOrderFld. ' ' . $odir . $NL;
     $rowsTL = $db->query_rows($sql, 0, array('von'=> $datumvon, 'bis'=> $datumbis));
 } else {
