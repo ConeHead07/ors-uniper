@@ -678,7 +678,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
       var url = frm.action;
 
       var data = $(frm).find(":input[name]:not([name^=L\\[])").serialize();
-      data+= $.param({cmd: 'senden', status: 'angebot'})
+      data+= '&' + $.param({cmd: 'senden', status: 'angebot'})
       if (inputLeistungen.length) {
         data+= "&" + inputLeistungen.serialize();
       }
