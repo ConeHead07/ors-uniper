@@ -97,6 +97,7 @@ $orderFields = array(
     'strasse' => array('field'=>'U.strasse', 'defaultOrder'=>'ASC'),
     'plz' => array('field'=>'U.plz', 'defaultOrder'=>'ASC'),
     'ort' => array('field'=>'U.ort', 'defaultOrder'=>'ASC'),
+    'plzort' => array('field'=>'U.ort', 'defaultOrder'=>'ASC'),
     'land' => array('field'=>'U.land', 'defaultOrder'=>'ASC'),
     'umzug' => array('field'=>'umzug', 'defaultOrder'=>'ASC'),
     'service' => array('field'=>'service', 'defaultOrder'=>'ASC'),
@@ -125,6 +126,7 @@ foreach($validFields as $_f) {
     $query[$_f] = trim($query[$_f] ?? '');
     $_qf = $query[$_f];
 
+
     if (strcmp($_f, 'Leistungen') === 0 && strlen($_qf)) {
         if (preg_match('[ ,]', $_qf)) {
             $chars = preg_split('[ ,]', $_qf);
@@ -138,6 +140,11 @@ foreach($validFields as $_f) {
         }
         continue;
     }
+    else
+        if (strcmp($_f, 'plzort') === 0 && strlen($_qf)) {
+            $w[] = 'CONCAT(U.plz, " ", U.ort) LIKE ' . $db::quote('%' . $_qf . '%');
+            continue;
+        }
     elseif (strcmp($_f, 'land') === 0 && !empty($query[$_f]) && strcmp(trim($query[$_f]), 'NL') === 0 ) {
         $w[] = $sqlQueryField . ' LIKE "Niederlande"';
         continue;
@@ -630,8 +637,9 @@ $Tpl->assign('Umzuege', $Auftraege);
 
 //echo '<pre>#' . __LINE__ . ' '; // . print_r( filestat('html/antraege_liste.html'),1);
 try {
-    if (!$istUmzugsteam || true) {
+    if (!$istUmzugsteam) { //  || true) { //
         $body_content .= $Tpl->fetch("admin_antraege_liste.html");
+        //$body_content .= $Tpl->fetch("admin_antraege_liste.table.html");
     } else {
         $body_content .= $Tpl->fetch("umzugsteam_antraege_liste.html");
     }

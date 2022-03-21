@@ -1,0 +1,33 @@
+
+<table class="tblList table-leillieferung" style="width:100%;">
+    <thead>
+        <tr>
+            <td class="col field-aid">ID</td>
+            <td class="col field-aid">Ref</td>
+            <td class="col field-service">Service</td>
+            <td class="col field-antragsdatum">ErstelltAm</td>
+            <td class="col field-LeistungenBez">Artikel</td>
+            <td class="col field-umzugstermin">Liefertermin</td>
+            <td class="col field-umzugsstatus">Status</td>
+            <td class="col field-abgeschlossen">Abgeschlossen</td>
+            <td class="col field-Summe sum menge">Summe</td>
+        </tr>
+    </thead>
+    <tbody>
+    {if !empty($aItems)}
+        {foreach name=GList item=G from=$aItems}
+            <tr data-id="{$G.aid}" class="row inputRowVon">
+                <td class="col field-aid"><a href="?s=aantrag&id={$G.aid}">{$G.aid}</a></td>
+                <td class="col field-aid"><a href="?s=aantrag&id={$G.ref_aid}">{$G.ref_aid}</a></td>
+                <td class="col field-service">{if $G.service eq "Ja"}Bestellg{else}{$G.service}{/if}</td>
+                <td class="col field-antragsdatum">{if $G.antragsdatum}{$G.antragsdatum|date_format:"%d.%m.%Y"}{/if}</td>
+                <td class="col field-LeistungenBez">{$G.LeistungenBez|replace:";":"<br>"}</td>
+                <td class="col field-umzugstermin">{if $G.umzugstermin}{$G.umzugstermin|date_format:"%d.%m.%Y"}{/if}</td>
+                <td class="col field-field-umzugsstatus">{$G.umzugsstatus}</td>
+                <td class="col field-abgeschlossen">{$G.abgeschlossen} {if $G.abgeschlossen_am}{$G.abgeschlossen_am|date_format:"%d.%m.%Y"}{/if}</td>
+                <td class="col field-Summe sum menge">{$G.Summe|number_format:2:",":"."} €</td>
+            </tr>
+        {/foreach}
+    {/if}
+    </tbody>
+</table>

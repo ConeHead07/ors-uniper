@@ -206,6 +206,19 @@
   </fieldset>
   {/if}
 
+  {if !empty($aAllUserAuftraege)}
+  <div style="margin-top:1.5rem"></div>
+  <fieldset>
+    <legend class="toggle-button" data-for="#alleKundenauftraegeBox">
+      <strong>Übersicht aller Aufträge des Kunden</strong>
+      <span><i class="caret down icon"></i></span>
+    </legend>
+    <div id="alleKundenauftraegeBox" style="padding:5px;display:none;">
+      {include file="admin_umzugsformular_auftraege.tpl.html" aItems=$aAllUserAuftraege}
+    </div>
+  </fieldset>
+  {/if}
+
   {if 0}
   <div style="width:100%">
     {include file="admin_umzugsformular_gruppierung.tpl.html"}
@@ -298,6 +311,18 @@
       e.preventDefault();
       showRueckholungDialog();
       return false;
+    });
+
+    $(".toggle-button").bind("click", function() {
+      var iconElm = $(this).find("i.icon");
+      var targetSelector = $(this).data("for");
+      var target = $(targetSelector);
+      var isVisible = target.is(":visible");
+      console.log({iconElm, targetSelector, targetLength: target.length, target, isVisible});
+
+      iconElm.toggleClass("down", isVisible).toggleClass("up", !isVisible);
+      target.toggle(!isVisible);
+
     });
 
     $(".cluetip").cluetip({activation: 'click', closePosition: 'title', arrows: true});

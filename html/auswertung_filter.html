@@ -183,10 +183,11 @@
                         data-umzugstermin="{$item.umzugstermin|escape}"
                         data-tour="{$item.tour_kennung|escape}"
                         data-aid="{$item.aid|escape}"
+                        data-uid="{$item.antragsteller_uid|escape}"
                         data-leistungen="{$item.Leistungen|escape}"
                         data-leistungenfull="{$item.LeistungenFull|escape}">
                     <td><a href="?s={$site_antrag}&id={$item.aid}">{$item.aid}</a></td>
-                    <td>{$item.kid}</td>
+                    <td class="fld-kid">{$item.kid}</td>
                     <td>{if $item.land eq "Deutschland"}D{elseif $item.land eq "Belgien"}BE{elseif $item.land eq "England"}EN{elseif $item.land eq "Niederlande"}NL{else}{$item.land|substr:0:3}{/if}</td>
                     <td>{$item.ort}</td>
                     <td>{$item.plz}</td>
@@ -284,6 +285,7 @@
         </div>
     </div>
 </div>
+{include file="dialogs/allekundenauftraege_dialog.html"}
 <script>
 {literal}
 
@@ -547,6 +549,20 @@ $(function() {
             .bind("click", function (e) {
                 e.stopPropagation();
             });
+    });
+
+
+    $("#tblTourenplanung tr.flds-body-row .fld-kid").bind("click",function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var row = $(this).closest(".flds-body-row");
+        var rowData = row.data();
+
+        if ('uid' in rowData) {
+            showKundenauftraegeDialog(rowData.uid);
+        } else {
+            alert("UID des Antragsteller ist nicht im rowData-Objekt enthalten!");
+        }
     });
 
     if (false) {

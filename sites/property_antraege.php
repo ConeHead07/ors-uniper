@@ -10,7 +10,7 @@ $CUA = &$_CONF["umzugsantrag"];
 $CUM = &$_CONF["umzugsmitarbeiter"];
 $Tpl = new myTplEngine();
 $Umzuege = array();
-
+$NL = "\n";
 if (empty($s)) $s = getRequest("s", "");
 
 $offset = getRequest("offset", 0);
@@ -37,7 +37,8 @@ $orderFields = array(
 	"geprueft" => array("field"=>"geprueft", "defaultOrder"=>"ASC"),
 	"genehmigt" => array("field"=>"genehmigt_br", "defaultOrder"=>"ASC"),
 	"bestaetigt" => array("field"=>"bestaetigt", "defaultOrder"=>"ASC"),
-	"abgeschlossen" => array("field"=>"abgeschlossen", "defaultOrder"=>"ASC"),
+    "abgeschlossen" => array("field"=>"abgeschlossen", "defaultOrder"=>"ASC"),
+    "numAuftraege" => array("field"=>"numAuftraege", "defaultOrder"=>"DESC"),
 );
 if ($ofld && isset($orderFields[$ofld])) {
 	$orderBy = "ORDER BY ".$orderFields[$ofld]["field"]." ";
@@ -54,7 +55,15 @@ $sqlFrom= "FROM `".$CUA["Table"]."` U LEFT JOIN `".$CUM["Table"]."` M USING(aid)
     . " LEFT JOIN mm_stamm_gebaeude g  ON U.gebaeude = g.id \n"
     . " LEFT JOIN mm_stamm_gebaeude vg ON U.von_gebaeude_id = vg.id \n"
     . " LEFT JOIN mm_stamm_gebaeude ng ON U.nach_gebaeude_id = ng.id \n"
-    . " LEFT JOIN mm_user usr ON U.antragsteller_uid = usr.uid \n";
+    . " LEFT JOIN mm_user usr ON U.antragsteller_uid = usr.uid \n"
+    . ' LEFT JOIN (SELECT 
+      a.antragsteller_uid,
+      COUNT(DISTINCT(a.aid)) AS numAuftraege,
+      GROUP_CONCAT( CONCAT_WS(" ", CONCAT("#", a.aid), umzugsstatus, "am", DATE_FORMAT(umzugsstatus_vom, "%d.%m.%Y")) SEPARATOR " \n") AS Auftraege
+      FROM mm_umzuege a 
+      GROUP BY a.antragsteller_uid
+    '
+. ') UStat ON (U.antragsteller_uid = UStat.antragsteller_uid) ' . $NL;
 // 'temp', 
 //'angeboten', 
 //'beantragt', 
@@ -152,8 +161,10 @@ $row = $db->query_singlerow($sql);
 // echo $sql . '<br>' . PHP_EOL . $db->error();
 $num_all = $row["count"];
 
-
-$sql = 'SELECT U.*, usr.personalnr AS kid, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude' ."\n";
+$sql = 'SELECT U.*, usr.personalnr AS kid, usr.user, CONCAT(vg.stadtname, " ", vg.adresse) gebaeude, CONCAT(ng.stadtname, " ", ng.adresse) ziel_gebaeude,' ."\n"
+    . ' UStat.numAuftraege, ' . $NL
+    . ' UStat.Auftraege ' . $NL
+    ;
 $sql.= $sqlFrom.$sqlWhere;
 $sql.= "GROUP BY aid\n";
 $sql.= $orderBy."\n";

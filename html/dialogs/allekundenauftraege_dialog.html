@@ -1,0 +1,77 @@
+<style>
+    .dialog .hint-box,
+    .dialog.rekla-kundenauftraege .hint-box {
+        margin-top: 1rem;
+        border: 1px solid #0075b5;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: bold;
+        background-color: #f1f8ff;
+        color: #d7081e;
+        border-radius: 0.5rem;
+        font-style: italic;
+    }
+    .dialog .hint-box-title,
+    .dialog.rekla-kundenauftraege .hint-box-title {
+        color: #000;
+        font-weight: bold;
+        font-style: normal;
+        font-size: 1rem;
+    }
+</style>
+<div id="KundenauftraegeDialog" class="dialog rekla-kundenauftraege dialog-back-layer">
+    <div class="dialog-wrapper" style="width:90%;max-height: 95vh;xoverflow-y: scroll;">
+        <div style="width:100%;">
+            <div id="tlContent" style="max-height:80vh;overflow-y: auto;text-align:left;">
+            </div>
+
+            <div style="text-align: center;margin-top: 1rem">
+                <button type="button" class="btn gray btn-cancel">Schließen</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{literal}
+<script>
+
+    function showKundenauftraegeDialog(uid) {
+
+        var container = $("#KundenauftraegeDialog");
+        $("body").addClass("doc-body-no-scrollbars");
+        var dialog = container.closest(".dialog");
+        var contentBox = dialog.find("#tlContent");
+        console.log({containerLength: container.length, dialogLength: dialog.length });
+        contentBox.html("");
+        dialog.waitMe({ effect: 'ios'});
+
+        dialog
+            .addClass("dialog-active")
+            .find("button.btn-cancel")
+            .off("click")
+            .on("click", function() {
+                $("body").removeClass("doc-body-no-scrollbars");
+                $("#eingabe_datenschutz_confirm").prop("checked", false);
+                container.removeClass("dialog-active");
+            }).end();
+
+
+        var contentRequest = $.get('{WebRoot}sites/dialog_allekundenauftraege.php', { uid }, function(data) {
+            contentBox.html(data);
+        });
+
+        contentRequest.always(function() {
+            dialog.waitMe( 'hide' );
+        });
+
+        return;
+    }
+
+    $(function() {
+
+        // Kundenauftraege
+        $("#KundenauftraegeDialog").appendTo("body");
+    });
+</script>
+{/literal}

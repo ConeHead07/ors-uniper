@@ -1,84 +1,677 @@
 <!-- TAB NAVIGATION ITEMS BEGIN -->
+<link rel="stylesheet" type="text/css" media="screen" href="{literal}{WebRoot}{/literal}/css/bootstrap-5.1.3-dist/css/bootstrap-grid.css" />
+
+<!-- TAB NAVIGATION ITEMS BEGIN -->
+<style>
+    .tour-caption {
+        font-weight:bold;
+        font-size: small;
+        margin-right: 5px;
+    }
+    a.tour-link {
+        font-size: small;
+        text-decoration: none;
+        border: 1px solid #848383;
+        background-color: #c4c3c3;
+        border-radius: 4px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    a.tour-link:hover {
+        background-color: #dbdada;
+        text-decoration: none;
+    }
+    .flds-body-row .fld-cell {
+        word-break: break-all;
+    }
+    .fld-cell.fld-checkbox {
+        display: inline-block;
+        width:24px;
+    }
+    .ulLinkList .flds-head-colsearch .fld-cell input {
+        margin-top: 1px;
+    }
+
+    ul.ulLinkList li a,
+    ul.ulLinkList li a {
+        padding-right: 0;
+    }
+    .flds-body-row-wrapper:nth-child(even) {
+        background: #efefef;
+        border-top: 1px solid #c7c7c7;
+        border-bottom: 1px solid #c7c7c7;
+    }
+
+    ul.ulLinkList li > a,
+    ul.ulLinkList li > a:active,
+    ul.ulLinkList li > a:focus,
+    ul.ulLinkList li > a:hover,
+    ul.ulLinkList li > a:link,
+    ul.ulLinkList li > a:visited {
+        display: block;
+        width: auto;
+        line-height: 19px;
+        margin: 3px 0px 0px 0px;
+        padding: 0px 0px 1px 1px;
+        background-repeat: no-repeat;
+        text-decoration: none;
+    }
+
+</style>
+<style>
+    .lieferTableRow {
+        grid-template-columns: [aid] 40px [kid] 60px [tour] 40px [strasse] auto [plz] 50px [ort] 100px [land]40px;
+    }
+
+    @media (min-width: 576px) {
+        .container-sm, .container {
+            max-width: 540px;
+        }
+
+        .col-sm-43-pct {
+            width:43%;
+        }
+        .col-sm-45-pct {
+            width:45%;
+        }
+
+        .col-sm-55-pct {
+            width:55%;
+        }
+        .col-sm-57-pct {
+            width:57%;
+        }
+
+        .col-sm-name {
+            width: 80px;
+        }
+        .col-sm-plz {
+            width: 40px;
+        }
+        .col-sm-ort {
+            width: 100px;
+        }
+        .col-sm-land {
+            width: 20px;
+        }
+    }
+    @media (min-width: 750px) {
+        .col-sm-43-pct {
+            width:305px;
+            max-width:305px;
+        }
+        .col-sm-57-pct {
+            flex: 1 0 0%;
+        }
+        .col-sm-ort {
+            width: 35%;
+        }
+        .col-sm-name {
+            width: 21%;
+            max-width: 21%;
+        }
+    }
+    @media (min-width: 768px) {
+        .container-md, .container-sm, .container {
+            max-width: 720px;
+        }
+    }
+    @media (min-width: 992px) {
+        .container-lg, .container-md, .container-sm, .container {
+            max-width: 960px;
+        }
+    }
+    @media (min-width: 1200px) {
+        .container-xl, .container-lg, .container-md, .container-sm, .container {
+            max-width: 1140px;
+        }
+    }
+    @media (min-width: 1400px) {
+        .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+            max-width: 1320px;
+        }
+    }
+
+</style>
 <div id="ID128585" class="divTabbedNavigation" style="width:100%;">
 
-{include file="umzugsteam_antraege_tabs.html"}
-
-<!-- TAB NAVIGATION ITEMS END -->
-
-<!-- TAB ITEM (128587) BEGIN -->
-<div id="ID128587" class="divModuleBasic padding12px width5Col heightAuto">
-<div class="divInlay noMarginBottom borderTop">
-</div>
-
-<!-- Add-On Fließtext(dyn) ID: 128588 BEGIN -->
-<div class="divInlay borderTop">
-    <div style="float:right;padding:10px 20px 0 0;display:none">
-        <a href="{$ListBaseLink}&ofld=id&odir={$odir}&allusers={if $allusers}0{else}1{/if}">Wechsel zu {if $allusers}meine Auftr&auml;ge{else}Auftr&auml;gen aller User{/if}</a>
+    <div style="display: flex;justify-content: space-between">
+        {$top}
+        <div>{if $s eq "auslieferung" or $top eq "auslieferung"}
+            {include file="umzugsteam_antraege_tabs.html"}
+            {else}
+            {include file="admin_antraege_tabs.html"}
+            {/if}</div>
+        <div style="align-self: flex-end;margin-right:5px;margin-bottom:2px;">
+            <button id="btnCsvExport" class="btn btn-blue" style="padding:10px;cursor: pointer;">CSV-Export</button>
+        </div>
     </div>
+    <!-- TAB NAVIGATION ITEMS END -->
 
-{if $cat eq "angeboten"}
-<h2 data-site="admin/antraege/liste/html">Es liegen {$num_all} von Mertens gestellte Aufträge vor</h2>
-{else}
-<h2 data-site="admin/antraege/liste/html">Es liegen {$num_all} {$cat} Aufträge vor</h2>
-{/if}
+    <!-- TAB ITEM (128587) BEGIN -->
+    <div id="ID128587" class="divModuleBasic padding12px width5Col heightAuto">
+        <div class="divInlay noMarginBottom borderTop">
+        </div>
 
-<div style="clear:both"></div>
-{if $ListBrowsing}{$ListBrowsing}{/if}
-  <ul class="ulLinkList">
-  <div class="flds-head-colnames">
-      <div style="float:left;display:block;width:30px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=id{if $ofld eq "id" && $odir ne "DESC"}&odir=DESC{/if}">ID</a></div>
-          <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=kid{if $ofld eq "kid" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
-      <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Lieferdatum</a></div>
-          <div style="float:left;display:block;width:60px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=land{if $ofld eq "land" && $odir ne "DESC"}&odir=DESC{/if}">Land</a></div>
-          <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=ort{if $ofld eq "ort" && $odir ne "DESC"}&odir=DESC{/if}">Lieferort</a></div>
-      <div style="float:left;display:block;width:50px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=plz{if $ofld eq 'plz' && $odir ne "DESC"}&odir=DESC{/if}">PLZ</a></div>
-          <div style="float:left;display:block;width:180px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=strasse{if $ofld eq 'strasse' && $odir ne "DESC"}&odir=DESC{/if}">Stra&szlig;e</a></div>
-          <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=name{if $ofld eq 'name' && $odir ne "DESC"}&odir=DESC{/if}">Name</a></div>
-      <div style="float:left;display:block;width:75px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=service{if $ofld eq 'service' && $odir ne 'DESC'}&odir=DESC{/if}">Service</a></div>
-      <div style="float:left;display:block;width:100px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=antragsdatum{if $ofld eq "antragsdatum" && $odir ne "DESC"}&odir=DESC{/if}">Auftr.Dat.</a></div>
+        <!-- Add-On Fließtext(dyn) ID: 128588 BEGIN -->
+        <div class="divInlay borderTop">
+            {*
+            <div style="float:right;padding:10px 20px 0 0;display:none">
+                <a href="{$ListBaseLink}&ofld=id&odir={$odir}&allusers={if $allusers}0{else}1{/if}">Wechsel zu {if $allusers}meine Auftr&auml;ge{else}Auftr&auml;gen aller User{/if}</a>
+            </div>
+            *}
 
-      <div style="float:left;display:none;width:80px;font-weight:bold;color:#00869c;" title="Abgeschlossen"><a href="{$ListBaseLink}&ofld=abgeschlossen{if $ofld eq "abgeschlossen" && $odir ne "DESC"}&odir=DESC{/if}">Abgeschlossen</a></div><br clear=left>
-  </div>
-{foreach item=U from=$Umzuege}
-      <li class="flds-body-row-wrapper">
-          <a class="flds-body-row-link iconRightContentMain" href="{$U.LinkOpen}">
-  <div>
-      <div style="float:left;display:block;width:30px;font-weight:bold;">{$U.aid}&nbsp;</div>
-      <div style="float:left;display:block;width:75px;" >{$U.kid}&nbsp;&nbsp;</div>
-      <div style="float:left;display:block;width:100px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
-      <div style="float:left;display:block;width:35px;font-weight:bold;">{$U.umzugszeit|substr:0:5}&nbsp;</div>
-      <div style="float:left;display:block;width:60px;">{if $U.land == "Deutschland"}DE{elseif $U.land == "Belgien"}BE{elseif $U.land == "England"}EN{elseif $U.land == "Niederlande"}NL{else}{$U.land}{/if} &nbsp;</div>
-      <div style="float:left;display:block;width:100px;">{$U.ort}&nbsp</div>
-      <div style="float:left;display:block;width:50px;">{$U.plz}&nbsp;</div>
-      <div class="geo-address"
-           data-address="{$U.strasse|escape},{$U.plz|escape}+{$U.ort|escape},{$U.land|escape}" style="float:left;display:block;width:180px;">{$U.strasse}&nbsp;</div>
-      <div style="float:left;display:block;width:100px;">{$U.name}&nbsp;</div>
-      <div style="float:left;display:block;width:75px;" >{$U.service}&nbsp;&nbsp;</div>
-      <div style="float:left;display:block;width:100px;font-style:italic;">{$U.Antragsdatum|date_format:"%d.%m.%Y"}&nbsp;</div>
-      <div style="float:left;display:none;width:80px;">{$U.Abgeschlossen} {if $U.abgeschlossen_am}{$U.abgeschlossen_am|date_format:"%d.%m.%y"}{/if}</div><br clear=left></div>
-  </a></li>
-{/foreach}
-</ul>
+            <div>
+                {if $cat eq "angeboten"}
+                <h2 style="float:left;margin-left:0;padding-left:0;" data-site="admin/antraege/liste/html">Es liegen {$num_all} von Mertens gestellte Aufträge vor</h2>
+                {else}
+                <h2 style="float:left;margin-left:0;padding-left:0;" data-site="admin/antraege/liste/html">Es liegen {$num_all} {$cat} Aufträge vor</h2>
+                {/if}
+                <h2 style="float:right">{$summeTotal|number_format:2:",":"."} &euro;</h2>
+                <span style="clear:both"></span>
+            </div>
+            {if !empty($aTourNrs)}
+            <span style="clear:both"></span>
+            <div style="width:100%;display:block;float:left;margin-top:0.5rem;">
+                <span class="tour-caption">Touren: </span>
+                <div style="height:60px;resize: vertical;min-width:100%;overflow:auto">
+                {foreach item=T from=$aTourNrs}
+                <a class="tour-link" href="{$T.url}">{$T.tour_kennung}</a>
+                {/foreach}
+                <span style="clear:both"></span>
+                </div>
+            </div>
+            {/if}
+            {assign var="NewLine" value="
+            "}
+            {assign var="showCheck" value=!empty($selectable)}
+            {assign var="showTour" value=false}
+            {assign var="showAID" value=true}
+            {assign var="showAuftragsdatum" value=true}
+            {assign var="showLieferdatum" value=true}
+            {assign var="showBestaetigt" value=true}
+            {assign var="showAbgeschlossen" value=true}
+            {assign var="showGenehmigt" value=false}
+            {assign var="showGeprueft" value=false}
+            {assign var="showLeistungen" value=false}
+            {assign var="showSumme" value=true}
+            {assign var="showZeit" value=false}
+            {assign var="showLand" value=true}
+            {assign var="showName" value=false}
+            {assign var="showErinnert" value=false}
+            {assign var="showNumNewBmk" value=false}
+            {assign var="showNumAuftrage" value=true}
+            {assign var="checkWidth" value=24}
+            {assign var="aidWidth" value=35}
+            {assign var="kidWidth" value=55}
+            {assign var="numAuftraegeWidth" value=25}
+            {assign var="landWidth" value=20}
+            {assign var="ortWidth" value=100}
+            {assign var="plzWidth" value=40}
+            {assign var="zeitWidth" value=50}
+            {assign var="tourWidth" value=40}
+            {assign var="serviceWidth" value=40}
+            {assign var="beauftragtWidth" value=75}
+            {assign var="bestaetigtWidth" value=75}
+            {assign var="genehmigtWidth" value=60}
+            {assign var="leistungenWidth" value=55}
+            {assign var="lieferdatumWidth" value=54}
+            {assign var="abgeschlossenWidth" value=75}
+            {assign var="numNewBmkWidth" value=30}
+            {assign var="summeWidth" value=60}
+            {assign var="erinnertWidth" value=75}
 
-<!-- <h2>Startseite Mertens AG</h2>
-<p>
-- Infos nachlegen
-- Mails an Beteiligte verschicken
-- Gesprächsnotizen
-- Lagerbestand abfragen</p>
- -->
- </div>
-<!-- Add-On Fließtext(dyn) ID: 128588 END -->
-</div>
-<!-- TAB ITEM (128587) END -->
+            {assign var="showNumNewBmk" value=true}
+            {assign var="strasseWidth" value=90}
 
-<br class="floatNone" />
+            {if $s eq "auslieferung"}
+            {assign var="zeitWidth" value=45}
+            {assign var="landWidth" value=20}
+            {assign var="strasseWidth" value=180}
+            {assign var="nameWidth" value=80}
+            {assign var="showName" value=true}
+            {assign var="showLand" value=false}
+            {assign var="showAuftragsdatum" value=false}
+            {assign var="showAbgeschlossen" value=false}
+            {assign var="showBestaetigt" value=false}
+            {assign var="showTour" value=true}
+            {assign var="showSumme" value=false}
+            {assign var="showNumAuftrage" value=false}
+            {assign var="showNumNewBmk" value=false}
+
+            {if $cat eq "heute"}
+            {assign var="showLieferdatum" value=false}
+            {elseif $cat eq "aktive"}
+
+            {elseif $cat eq "abgeschlossene"}
+            {assign var="showName" value=false}
+            {assign var="showZeit" value=false}
+            {assign var="strasseWidth" value=$strasseWidth + $zeitWidth + $nameWidth}
+            {/if}
+            {elseif $cat eq "neue" or $cat eq "angeboten"}
+            {assign var="showLieferdatum" value=false}
+            {assign var="showBestaetigt" value=false}
+            {assign var="showAbgeschlossen" value=false}
+            {assign var="showLeistungen" value=true}
+            {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $lieferdatumWidth + $bestaetigtWidth}
+
+            {elseif $cat eq "temp"}
+            {assign var="showLieferdatum" value=false}
+            {assign var="showAbgeschlossen" value=false}
+            {assign var="showBestaetigt" value=false}
+            {assign var="showLeistungen" value=true}
+            {assign var="showErinnert" value=true}
+            {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth + $lieferdatumWidth + $bestaetigtWidth - $checkWidth - $erinnertWidth - 15}
+
+            {elseif $cat eq "disponierte"}
+            {assign var="showBestaetigt" value=false}
+            {assign var="showAbgeschlossen" value=false}
+            {assign var="showAuftragsdatum" value=false}
+            {assign var="showGenehmigt" value=false}
+            {assign var="showTour" value=true}
+            {assign var="showGeprueft" value=false}
+            {assign var="showLeistungen" value=true}
+            {assign var="showZeit" value=true}
+            {assign var="strasseWidth" value=$strasseWidth + $bestaetigtWidth + $abgeschlossenWidth + $beauftragtWidth - $zeitWidth - $tourWidth}
+
+            {elseif $cat eq "aktive"}
+            {assign var="showAbgeschlossen" value=false}
+            {assign var="showTour" value=true}
+            {assign var="showZeit" value=true}
+            {assign var="strasseWidth" value=$strasseWidth + $abgeschlossenWidth - $zeitWidth - $tourWidth + 50}
+            {elseif $cat eq "abgeschlossene"}
+            {assign var="showBestaetigt" value=false}
+            {assign var="strasseWidth" value=$strasseWidth + $bestaetigtWidth + $zeitWidth}
+            {assign var="showZeit" value=false}
+            {/if}
+            <style>
+                .ulLinkList * {
+                    box-sizing: border-box;
+                }
+                .ulLinkList .fld-cell {
+                    float:left;
+                    display:block;
+                }
+                .ulLinkList .flds-head-colnames .fld-cell {
+                    float:left;
+                    display:block;
+                    font-weight:bold;
+                }
+                .ulLinkList .flds-head-colnames .order {
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+                .ulLinkList .flds-head-colnames .order:hover {
+                    color: #0078dc;
+                }
+                .ulLinkList .flds-head-colsearch .fld-cell input {
+                    width: calc(100% - 2px);
+                }
+                .fld-cell-amount,
+                .ulLinkList .fld-summe,
+                .ulLinkList .fld-summe input {
+                    text-align: right;
+                }
+                .currency-euro::after {
+                    content: " €";
+                }
+
+                .fld-neue_bemerkungen_fuer_admin.has-new {
+                    background-color: red;
+                    border-radius: 4px;
+                    color: white;
+                    font-weight: bold;
+                    text-align: center;
+                }
+                .fld-neue_bemerkungen_fuer_admin {
+                    text-align:center;
+                }
+
+                .flds-head-colsearch .fld-cell input {
+                    background-color: #ceeaff;
+                }
+                ul.ulLinkList li a {
+                    padding-right: 0;
+                }
+            </style>
+            <div style="clear:both"></div>
+            <div class="d-none">
+            <div class="col-12">col-12</div>
+            <div class="d-none d-sm-block col-sm-12">d-none col-sm-12</div>
+            <div class="d-none d-md-block col-md-12">d-none d-md-block col-md-12</div>
+            <div class="d-none d-lg-block col-lg-12">d-none d-lg-block col-lg-12</div>
+            <div class="d-none d-xl-block col-xl-12">d-none d-xl-block col-xl-12</div>
+            <div class="d-none d-xxl-block col-xxl-12">d-none d-xxl-block col-xxl-12</div>
+            </div>
+            {if $ListBrowsing}{$ListBrowsing}{/if}
+            <form id="frmList" method="get">
+                <input type="hidden" name="s" value="{$s|escape}">
+                <input type="hidden" name="cat" value="{$cat|escape}">
+                <input type="hidden" name="allusers" value="{$allusers|escape}">
+                <input type="hidden" name="ofld" value="{$ofld|escape}">
+                <input type="hidden" name="odir" value="{$odir|escape}">
+
+                <span style="border:0;font-weight:bold;font-size:12px;">
+        {if !empty($showDateRangeFilter)}
+            {if !empty($rangeDateFields) && count($rangeDateFields) > 1}
+            Aufträge zeitlich eingrenzen:<br>
+            <select id="datumfeld" name="datumfeld">
+                {foreach item=opt from=$rangeDateFields}
+                    <option value="{$opt.value}" {if !empty($opt.checked)}selected{/if}>{$opt.label}</option>
+                {/foreach}
+            </select>
+            {elseif !empty($rangeDateFields) && count($rangeDateFields) > 0}
+                {$rangeDateFields[0].label} zeitlich eingrenzen:<br>
+                <input type="hidden" name="datumfeld" value="{$rangeDateFields[0].value}">
+            {/if}
+            Von: <input type="date" id="rangeDatumvon" name="datumvon" value="{if !empty($rangeDatumvon)}{$rangeDatumvon|escape}{/if}">
+            Bis: <input type="date" id="rangeDatumbis" name="datumbis" value="{if !empty($rangeDatumvon)}{$rangeDatumbis|escape}{/if}">
+            <button type="submit">Filter anwenden</button>
+        {/if}
+    </span>
+
+                <ul class="ulLinkList">
+                    <div class="flds-head-colnames row g-0">
+
+
+                        <div class="col-12 col-sm-5 col-sm-43-pct col-md row g-0">
+                            <div class="fld-cell fld-aid order" data-fld="aid" style="width:{$aidWidth}px;" title="Auftrags-ID">ID</div>
+
+                            <div class="fld-cell fld-kid order" data-fld="kid" style="width:{$kidWidth}px;" title="Uniper MitarbeiterNr.">KID</div>
+
+                            <div class="fld-cell fld-tour_kennung order" data-fld="tour_kennung" style="width:{$tourWidth}px;">Tour</div>
+
+                            <div class="fld-cell fld-service order" data-fld="service" style="width:{$serviceWidth}px;" >Serv.</div>
+
+                            <div class="fld-cell fld-lieferdatum order" data-fld="termin" style="width:{$lieferdatumWidth}px;font-weight:bold;">Termin</div>
+
+                            <div class="fld-cell d-none fld-umzugszeit order" data-fld="umzugszeit" style="width:{$zeitWidth}px;">Zeit</div>
+
+                            <div class="fld-cell fld-leistungen order col" data-fld="leistungen" style="width:{$leistungenWidth}px;" title="Leistungen">Leistung</div>
+                        </div>
+
+                        <div class="col-12 col-sm-7 col-sm-57-pct row g-0">
+                            <div class="fld-cell fld-name order col-3 col-sm-3 col-sm-name" style="xwidth:{$nameWidth}px;" data-fld="name" >Name</div>
+
+                            <div class="fld-cell fld-strasse order col-5 col-sm" style="xmin-width:{$strasseWidth}px;" data-fld="strasse">Straße</div>
+
+                            <div class="fld-cell fld-plz col-4 d-sm-none" style="xmin-width:{$plzWidth}px;">
+                                <span class="order" data-fld="plz">PLZ</span>
+                                <span class="order" data-fld="ort">Ort</span></div>
+
+                            <div class="fld-cell fld-plz order d-none d-sm-inline-block col-sm-1 col-sm-plz" style="xwidth:{$plzWidth}px;" data-fld="plz">PLZ</div>
+
+                            <div class="fld-cell fld-ort order d-none d-sm-inline-block col-sm-3 col-sm-ort" style="xwidth:{$ortWidth}px;" data-fld="ort">Ort</div>
+
+                            <div class="fld-cell fld-land order d-none d-sm-inline-block col-sm-1 col-sm-land" title="Land" style="xwidth:{$landWidth}px;" data-fld="land">Lnd</div>
+                        </div>
+                        <br clear=left>
+                    </div>
+                    <div class="flds-head-colsearch row g-0">
+
+                        <div class="col-12 col-sm-5 col-sm-43-pct col-md row g-0">
+                            <div class="fld-cell fld-aid" style="width:{$aidWidth}px;font-weight:bold;"><input placeholder="AID" name="q[aid]" value="{if !empty($q) && isset($q.aid)}{$q.aid}{/if}"></div>
+
+                            <div class="fld-cell fld-kid" style="width:{$kidWidth}px;"><input placeholder="KID" name="q[kid]" value="{if !empty($q) && isset($q.kid)}{$q.kid}{/if}"></div>
+
+                            <div class="fld-cell fld-tour_kennung" style="width:{$tourWidth}px;"><input placeholder="Tour" name="q[tour_kennung]" value="{if !empty($q) && isset($q.tour_kennung)}{$q.tour_kennung}{/if}"></div>
+
+                            <div class="fld-cell fld-service" style="width:{$serviceWidth}px;" ><input placeholder="Service" name="q[service]" value="{if !empty($q) && isset($q.service)}{$q.service}{/if}"></div>
+
+                            <div class="fld-cell fld-lieferdatum" style="width:{$lieferdatumWidth}px;"><input name="q[termin]" placeholder="JJJJ-MM-TT" value="{if !empty($q) && isset($q.termin)}{$q.termin}{/if}"></div>
+
+                            <div class="fld-cell d-none fld-umzugszeit" style="width:{$zeitWidth}px;"><input name="q[umzugszeit]" placeholder="SS:MM" value="{if !empty($q) && isset($q.umzugszeit)}{$q.umzugszeit}{/if}"></div>
+
+                            <div class="fld-cell fld-leistungen col" style="width:{$leistungenWidth}px;" title="Leistungen"><input name="q[Leistungen]" value="{if !empty($q) && isset($q.Leistungen)}{$q.Leistungen}{/if}"></div>
+                        </div>
+
+                        <div class="col-12 col-sm-7 col-sm-57-pct row g-0">
+                            <div class="fld-cell fld-name col-3 col-sm-3 col-sm-name" style="xwidth:{$nameWidth}px;" ><input placeholder="Name" name="q[name]" value="{if !empty($q) && isset($q.name)}{$q.name}{/if}"></div>
+
+                            <div class="fld-cell fld-strasse col-5 col-sm" style="xmin-width:{$strasseWidth}px;"><input placeholder="Straße" name="q[strasse]" value="{if !empty($q) && isset($q.strasse)}{$q.strasse}{/if}"></div>
+
+                            <div class="fld-cell fld-plzort col-4 d-sm-none" style="xmin-width:{$plzortWidth}px;"><input placeholder="PLZ Ort" name="q[plzort]" value="{if !empty($q) && isset($q.plzort)}{$q.plzort}{/if}"></div>
+
+                            <div class="fld-cell fld-plz d-none d-sm-inline-block col-sm-1 col-sm-plz" style="xwidth:{$plzWidth}px;"><input placeholder="PLZ" name="q[plz]" value="{if !empty($q) && isset($q.plz)}{$q.plz}{/if}"></div>
+
+                            <div class="fld-cell fld-ort d-none d-sm-inline-block col-sm-3 col-sm-ort" style="xwidth:{$ortWidth}px;"><input placeholder="Ort" name="q[ort]" value="{if !empty($q) && isset($q.ort)}{$q.ort}{/if}"></div>
+
+                            <div class="fld-cell fld-land d-none d-sm-inline-block col-sm-1 col-sm-land" title="Land"><input placeholder="Land" name="q[land]" value="{if !empty($q) && isset($q.land)}{$q.land}{/if}"></div>
+                        </div>
+                        <br clear=left>
+                    </div>
+
+                    {foreach item=U from=$Umzuege}
+                    <li class="flds-body-row-wrapper">
+                        <a class="flds-body-row-link xiconRightContentMain">
+                            <div class="flds-body-row flds-body-row-link row g-0" data-uid="{$U.antragsteller_uid}" data-aid="{$U.aid}" data-kid="{$U.kid}" data-href="{$U.LinkOpen}">
+
+                                <div class="col-12 col-sm-5 col-sm-43-pct col-md row g-0">
+                                    <div class="fld-cell fld-aid" style="width:{$aidWidth}px;font-weight:bold;">{$U.aid}&nbsp;</div>
+
+                                    <div class="fld-cell fld-kid" style="width:{$kidWidth}px;">{$U.kid}&nbsp;</div>
+
+                                    <div class="fld-cell fld-tour_kennung" style="width:{$tourWidth}px;">{$U.tour_kennung}&nbsp;</div>
+
+                                    <div class="fld-cell fld-service" style="width:{$serviceWidth}px;" >{$U.service}&nbsp&nbsp;</div>
+
+                                    <div class="fld-cell fld-lieferdatum" style="width:{$lieferdatumWidth}px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%y"}&nbsp;</div>
+
+                                    <div class="fld-cell d-none fld-umzugszeit" style="width:{$zeitWidth}px;">{$U.umzugszeit|substr:0:5}&nbsp;</div>
+
+                                    <div class="fld-cell fld-leistungen col" style="width:{$leistungenWidth}px;" title="{$U.LeistungenFull}">{$U.Leistungen}&nbsp;</div>
+                                </div>
+
+                                <div class="col-12 col-sm-7 col-sm-57-pct row g-0">
+                                    <div class="fld-cell fld-name col-3 col-sm-3 col-sm-name" style="xwidth:{$nameWidth}px;" >{$U.name}&nbsp&nbsp;</div>
+
+                                    <div class="fld-cell fld-strasse col-5 col-sm" style="xmin-width:{$strasseWidth}px;">
+                      <span class="geo-address"
+                            data-address="{$U.strasse|escape},{$U.plz|escape}+{$U.ort|escape},{$U.land|escape}" style="color:red;">
+                    {$U.strasse|escape}</span>
+                                    </div>
+
+                                    <div class="fld-cell fld-plz col-4 d-sm-none" style="xmin-width:{$plzWidth}px;">
+                                        <span class="d-sm-none">{if $U.land == "Deutschland"}{elseif $U.land=="Belgien"}BE {elseif $U.land == "England"}EN {elseif $U.land == "Niederlande"}NL {else}{$U.land|substr:0:3}{/if}</span>{$U.plz}<span class="d-sm-none"> {$U.ort}</span>&nbsp;</div>
+
+                                    <div class="fld-cell fld-plz d-none d-sm-inline-block col-sm-1 col-sm-plz" style="xwidth:{$plzWidth}px;">{$U.plz}&nbsp;</div>
+
+                                    <div class="fld-cell fld-ort d-none d-sm-inline-block col-sm-3 col-sm-ort" style="xwidth:{$ortWidth}px;">{$U.ort}&nbsp;</div>
+
+                                    <div class="fld-cell fld-land d-none d-sm-inline-block col-sm-1 col-sm-land" title="{$U.land|escape}" style="xwidth:{$landWidth}px;text-overflow: ellipsis;min-height:10px;">{if $U.land == "Deutschland"}DE{elseif $U.land=="Belgien"}BE{elseif $U.land == "England"}EN{elseif $U.land == "Niederlande"}NL{else}{$U.land|substr:0:3}{/if}</div>
+                                </div>
+                                <br clear=left>
+                            </div>
+                        </a>
+                    </li>
+                    {* <li>{$U|json_encode}</li> *}
+                    {/foreach}
+                </ul>
+                {if !empty($selectable) && !empty($selectableActionTemplate)}
+                {include file=$selectableActionTemplate}
+                {/if}
+            </form>
+            <h2 style="margin:1rem 0 0 0;padding-bottom:0;">Enthaltene Artikel</h2>
+            <table class="tblList" width="100%">
+                <thead>
+                <tr>
+                    <th>Kategorie</th>
+                    <th>Artikel</th>
+                    <th>Farbe</th>
+                    <th>Größe</th>
+                    <th class="d-none menge fld-cell-amount">Preis</th>
+                    <th class="menge fld-cell-amount">Menge</th>
+                    <th class="d-none menge fld-cell-amount">Summe</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                {foreach item=A from=$artikelStat}
+                <tr>
+                    <td>{$A.Kategorie}</td>
+                    <td>{$A.Bezeichnung}</td>
+                    <td>{$A.Farbe}</td>
+                    <td>{$A.Groesse}</td>
+                    <td class="d-none fld-cell-amount">{$A.Preis}</td>
+                    <td class="fld-cell-amount" style="text-align:right">{$A.count}</td>
+                    <td class="d-none menge fld-summe currency-euro">{$A.Summe|number_format:2:",":"."}</td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            <pre style="display: none;">
+        {$artikelStat|print_r}
+    </pre>
+
+            <!-- <h2>Startseite Mertens AG</h2>
+            <p>
+            - Infos nachlegen
+            - Mails an Beteiligte verschicken
+            - Gesprächsnotizen
+            - Lagerbestand abfragen</p>
+             -->
+        </div>
+        <!-- Add-On Fließtext(dyn) ID: 128588 END -->
+    </div>
+    <!-- TAB ITEM (128587) END -->
+
+    <br class="floatNone" />
 </div>
 <!-- TAB BASIC MODULE (128585) END -->
-
-{literal}
+{include file="dialogs/allekundenauftraege_dialog.html"}
 <script>
+    var ofld = "{$ofld}";
+    var odir = "{$odir}";
+</script>
+<script>
+    {literal}
+
     $(function() {
+
+        var overlay = $("<div/>").css({
+            position: "absolute",
+            backgroundColor: "#bfbfbf",
+            padding: ".3rem"
+        }).hide().appendTo("body");
+        var overlayTimer = null;
+
+        $("#toggleCheckboxes").bind("change", function(e) {
+            $(":input[type=checkbox][name=aids\\[\\]]").prop("checked", this.checked );
+            return false;
+        });
+
+        $("input[type=checkbox][name^=aids\\[\\]]").bind("click", function(e) {
+            e.stopPropagation();
+        });
+
+        $(".flds-body-row-link[data-href]").bind("click", function(e) {
+            self.location.href= $(this).data("href");
+        });
+
+        $(".flds-body-row .fld-cell.fld-numAuftraege").bind("mouseover", function(e) {
+            var elm = this;
+            var info = $(elm).data("info");
+            var infoHtml = $(elm).data("infoHtml");
+            var isOverElm = true;
+            var isOverOverlay = false;
+            var offset = $(elm).offset();
+            try {
+                overlayTimer && clearTimeout(overlayTimer);
+                overlayTimer = null;
+            } catch(e) {}
+
+            if ($.trim(info).length && !infoHtml) {
+                var list = info.split("\n");
+                infoHtml = '';
+                $.each(list, function(idx, val) {
+                    var thisObj = this;
+                    console.log({ val, idx, thisObj });
+                    // return;
+                    var aid = val.substr(1).split(" ")[0];
+                    infoHtml+= "<li><a href=\"/?s=aantrag&id=" + aid + "\" target=_blank>" + val + "</a></li>\n";
+                });
+                $(this).data("infoHtml", infoHtml);
+            }
+
+            overlay.hide().css({
+                left: offset.left,
+                top: offset.top + elm.offsetHeight
+            }).html(infoHtml).show()
+                .bind("mouseover", function() {
+                    isOverOverlay = true;
+                    try {
+                        overlayTimer && clearTimeout(overlayTimer);
+                        overlayTimer = null;
+                    } catch(e) {}
+                })
+                .bind("mouseout", function() {
+                    isOverOverlay = false;
+                    overlayTimer = setTimeout(function() {
+                        if (!isOverOverlay && !isOverElm) {
+                            overlay.hide();
+                        }
+                    }, 300);
+                });
+
+            $(elm).bind("mouseout", function() {
+                isOverElm = false;
+                overlayTimer = setTimeout(function() {
+                    if (!isOverOverlay && !isOverElm) {
+                        overlay.hide();
+                    }
+                }, 300);
+            });
+
+        });
+
+        if (0) $(".flds-body-row .fld-cell.fld-numAuftraege, .flds-body-row .fld-cell.fld-kid").bind("click",function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var row = $(this).closest(".flds-body-row");
+            var rowData = row.data();
+
+            if ('uid' in rowData) {
+                showKundenauftraegeDialog(rowData.uid);
+            } else {
+                alert("UID des Antragsteller ist nicht im rowData-Objekt enthalten!");
+            }
+        });
+
+        var send = function(addQuery = '') {
+            var url = "?" + $("#frmList :input")
+                .filter(function(index, element) {
+                    return $.trim($(element).val()) !== '';
+                })
+                .serialize();
+
+            if (addQuery && addQuery.charAt(0) !== '&') {
+                addQuery = '&' + addQuery;
+            }
+            self.location.href = url + addQuery;
+        };
+
+        $(".ulLinkList .flds-head-colnames .order").click(function(e){
+            e.preventDefault();
+            var fld = $(this).attr("data-fld");
+            var dir = fld === ofld && odir === 'ASC' ? 'DESC' : 'ASC';
+            // alert(JSON.stringify({fld, dir, ofld, odir}));
+            $("input[name=ofld]").val( fld );
+            $("input[name=odir]").val( dir );
+            send();
+            return false;
+        });
+
+        $(".ulLinkList .flds-head-colsearch input").keypress(function(e){
+            if ( (e.keyCode || e.which) === 13) send();
+        });
+
+        $(".ulLinkList .flds-head-colsearch input").bind('change', function(e){
+            send();
+        });
+
+        $("#btnCsvExport").bind("click", function() {
+            send('format=csv');
+        });
 
         $(".geo-address[data-address]").each(function() {
             var gmapUrl = "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=";
@@ -90,7 +683,9 @@
                         href: gmapUrl + query,
                         target: "gmap",
                         title: "Lieferadresse in Gmap anzeigen"
-                    }) )
+                    })
+                        .css({marginTop: 0})
+                )
                 .prepend( $("<i/>").addClass("marker icon").css("width","auto") )
                 .addClass("marker icon")
                 .bind("click", function(e) {
@@ -98,6 +693,5 @@
                 });
         });
     });
-
+    {/literal}
 </script>
-{/literal}

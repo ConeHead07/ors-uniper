@@ -249,13 +249,15 @@ function getTeillieferungenByAid(int $aid, array $opts = []) {
 				 ) AS LeistungenKtg, 
 				 GROUP_CONCAT(
 				 	CONCAT(
+				 	    IFNULL(al.menge_mertens, 0),
+				 	    " x ",
 				 		lk.Bezeichnung,
 				 		IF (IFNULL(lk.Farbe, "") != "", CONCAT(", ", lk.Farbe), ""),
 				 		IF (IFNULL(lk.Groesse, "") != "", CONCAT(", ", lk.Groesse), "")
 				 	)
 				 	ORDER BY leistungskategorie SEPARATOR ";"
 				  ) AS LeistungenBez,
-				 SUM(IFNULL(lk.preis_pro_einheit,0) * IFNULL(al.menge_rekla, 1) * IFNULL(al.menge2_rekla,1)) AS Summe
+				 SUM(IFNULL(lk.preis_pro_einheit,0) * IFNULL(al.menge_mertens, 1) * IFNULL(al.menge2_mertens,1)) AS Summe
 				FROM mm_umzuege a
 				JOIN mm_umzuege_leistungen al ON (a.aid = al.aid)
 				JOIN mm_leistungskatalog lk ON (al.leistung_id = lk.leistung_id)
@@ -269,6 +271,64 @@ function getTeillieferungenByAid(int $aid, array $opts = []) {
 	$aRows = $db->query_rows($sql);
 
 	return $aRows;
+}
+
+function getAllOtherUserAuftraege(int $aid, array $opts = []) {
+    global $db;
+
+    $aWhere = [];
+    if (!empty($aid)) {
+        $aWhere[] = 't1.aid = ' . $aid;
+    }
+    if (empty($aid) && !empty($opts['uid'])) {
+        $aWhere[] = 't1.antragsteller_uid = ' . (int)$opts['uid'];
+    }
+    if (0 === count($aWhere)) {
+        return 0;
+    }
+    $where = implode(' AND ', $aWhere);
+    $sql = 'SELECT 
+          a.*,
+          stat.LeistungenKtg, stat.Summe, stat.LeistungenBez
+          FROM 
+          (SELECT 
+             a.aid,
+             GROUP_CONCAT(CONCAT(
+                    kategorie_abk, 
+                    IF( IFNULL(leistung_abk, "") != "", CONCAT(":", leistung_abk, "|"), ""),
+                    ""
+                ) ORDER BY leistungskategorie SEPARATOR ""
+             ) AS LeistungenKtg, 
+             GROUP_CONCAT(
+                CONCAT(
+                    IFNULL(al.menge_mertens, 0),
+                    " x ",
+                    lk.Bezeichnung,
+                    IF (IFNULL(lk.Farbe, "") != "", CONCAT(", ", lk.Farbe), ""),
+                    IF (IFNULL(lk.Groesse, "") != "", CONCAT(", ", lk.Groesse), "")
+                )
+                ORDER BY leistungskategorie SEPARATOR ";"
+              ) AS LeistungenBez,
+             SUM(IFNULL(lk.preis_pro_einheit,0) * IFNULL(al.menge_rekla, 1) * IFNULL(al.menge2_rekla,1)) AS Summe
+        FROM mm_umzuege t1
+        JOIN mm_umzuege a ON (t1.antragsteller_uid = a.antragsteller_uid)
+        JOIN mm_umzuege_leistungen al ON (a.aid = al.aid)
+        JOIN mm_leistungskatalog lk ON (al.leistung_id = lk.leistung_id)
+        JOIN mm_leistungskategorie ktg ON (lk.leistungskategorie_id = ktg.leistungskategorie_id)
+        WHERE ' . $where . '
+        GROUP BY a.aid
+        ) AS stat 
+        JOIN mm_umzuege a ON (stat.aid = a.aid)
+        ORDER BY if (0 = IFNULL(a.ref_aid, 0), a.aid, a.ref_aid), a.aid
+    ';
+
+    $aRows = $db->query_rows($sql);
+
+    return $aRows;
+}
+
+function getAllOtherUserAuftraegeByUID(int $uid, array $opts = []) {
+    return getAllOtherUserAuftraege(0, array_merge($opts, [ 'uid' => $uid]));
 }
 
 function getLieferscheineByAid(int $aid, array $opts = []) {

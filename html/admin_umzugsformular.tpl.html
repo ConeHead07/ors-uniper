@@ -371,6 +371,19 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
     </fieldset>
     {/if}
 
+    {if !empty($aAllUserAuftraege)}
+    <div style="margin-top:1.5rem"></div>
+    <fieldset>
+      <legend class="toggle-button" data-for="#alleKundenauftraegeBox">
+        <strong>Übersicht aller Aufträge des Kunden</strong>
+        <span><i class="caret down icon"></i></span>
+      </legend>
+      <div id="alleKundenauftraegeBox" style="padding:5px;display:none;">
+        {include file="admin_umzugsformular_auftraege.tpl.html" aItems=$aAllUserAuftraege}
+      </div>
+    </fieldset>
+    {/if}
+
     {if !empty($aOrderedRHItems)}
     <div style="margin-top:1.5rem"></div>
     <fieldset><legend><strong>Rückholaufträge</strong></legend>
@@ -631,6 +644,22 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
       rq.always(function() {
         btn.waitMe('hide');
       });
+
+    });
+
+    $(".toggle-button").bind("click", function() {
+      var iconElm = $(this).find("i.icon");
+      var targetSelector = $(this).data("for");
+      var target = $(targetSelector);
+      var isVisible = target.is(":visible");
+      console.log({iconElm, targetSelector, targetLength: target.length, target, isVisible});
+
+      iconElm.toggleClass("down", isVisible).toggleClass("up", !isVisible);
+      if (isVisible) {
+        target.slideUp();
+      } else {
+        target.slideDown();
+      }
 
     });
 

@@ -119,6 +119,7 @@ $Tpl->assign('lktreeItems', $lkTreeItems);
 $Tpl->assign('lkTreeItemsJson', json_encode($lkTreeItemsJson) );
 $Tpl->assign('lkmByIdJson', json_encode($lkmById) );
 
+$aAllOtherUserAuftraege = [];
 // If AID: Bearbeitungsformular mit DB-Daten
 if ($AID) {
 	$AS->loadDbdata();
@@ -138,30 +139,31 @@ if ($AID) {
 
 	$iNumMIDs = count($aMIDs);
 	for($i = 0; $i < $iNumMIDs; $i++) {
-            $MID = $aMIDs[$i]["mid"];
-            $MA = new ItemEdit($MAConf, $connid, $user, $MID);
-            $MA->dbdataToInput();
-            $aMaItems[$i] = $MA->arrInput;
-            $MAItems[$i] = &$aMaItems[$i];
+        $MID = $aMIDs[$i]["mid"];
+        $MA = new ItemEdit($MAConf, $connid, $user, $MID);
+        $MA->dbdataToInput();
+        $aMaItems[$i] = $MA->arrInput;
+        $MAItems[$i] = &$aMaItems[$i];
 
-            $raumdaten = get_raumdaten_byGER($MAItems[$i]["zgebaeude"], $MAItems[$i]["zetage"], $MAItems[$i]["zraumnr"]);
-            $raum_ma_fix = get_arbeitsplatz_belegung($raumdaten["id"], $apnr=false);
-            $raum_ma_hin = get_arbeitsplatz_hinzuege($raumdaten["id"], $apnr=false);
+        $raumdaten = get_raumdaten_byGER($MAItems[$i]["zgebaeude"], $MAItems[$i]["zetage"], $MAItems[$i]["zraumnr"]);
+        $raum_ma_fix = get_arbeitsplatz_belegung($raumdaten["id"], $apnr=false);
+        $raum_ma_hin = get_arbeitsplatz_hinzuege($raumdaten["id"], $apnr=false);
 
-            $count_ma_fix = (is_array($raum_ma_fix) && count($raum_ma_fix)) ? count($raum_ma_fix) : 0;
-            $count_ma_hin = (is_array($raum_ma_hin) && count($raum_ma_hin)?count($raum_ma_hin):0);
-            $count_ma_all = $count_ma_fix+$count_ma_hin;
+        $count_ma_fix = (is_array($raum_ma_fix) && count($raum_ma_fix)) ? count($raum_ma_fix) : 0;
+        $count_ma_hin = (is_array($raum_ma_hin) && count($raum_ma_hin)?count($raum_ma_hin):0);
+        $count_ma_all = $count_ma_fix+$count_ma_hin;
 
-            if ($count_ma_all) {
-                    $isCritical = ($raumdaten["raum_flaeche"] / 10) < $count_ma_all;
-            } else $isCritical = false;
+        if ($count_ma_all) {
+                $isCritical = ($raumdaten["raum_flaeche"] / 10) < $count_ma_all;
+        } else $isCritical = false;
 
-            $MAItems[$i]["critical_status_index"] = ($isCritical ? 1 : 0);
-            $MAItems[$i]["critical_status_info"] = intval($raumdaten["raum_flaeche"])."qm: ".$count_ma_fix."Fix + ".$count_ma_hin."Hin";
-            $MAItems[$i]["critical_status_img"] = ($isCritical ? "warning_triangle.png" : "thumb_up.png");
-            /**/
+        $MAItems[$i]["critical_status_index"] = ($isCritical ? 1 : 0);
+        $MAItems[$i]["critical_status_info"] = intval($raumdaten["raum_flaeche"])."qm: ".$count_ma_fix."Fix + ".$count_ma_hin."Hin";
+        $MAItems[$i]["critical_status_img"] = ($isCritical ? "warning_triangle.png" : "thumb_up.png");
+        /**/
 	}
 
+	$kundeUid = $AS->arrDbdata['antragsteller_uid'];
 	$baseAID = $AID; // $AS->arrDbdata['ref_aid'] ?: $AID;
 	
 	$aAtItems = getAttachements($AS->arrDbdata, 0);
@@ -169,6 +171,7 @@ if ($AID) {
 	$aGroupItems = getGruppierungen($baseAID);
     $aReklas = getReklamationenByAid($baseAID);
     $aTeillieferungen = getTeillieferungenByAid($baseAID);
+    $aAllOtherUserAuftraege = getAllOtherUserAuftraege($baseAID);
 
     $aLSItems = getLieferscheineByAid($AID, ['onlySigned' => true]);
     $aOrderedRHItems = getOrderedRueckholLeistungen($AID);
@@ -242,6 +245,8 @@ $Tpl->assign("umzugsstatus", $AS->arrInput['umzugsstatus']);
 $Tpl->assign("umzugsstatusJson", json_encode($AS->arrInput['umzugsstatus']));
 $Tpl->assign("antragsstatus", $AS->arrInput['antragsstatus']);
 $Tpl->assign("antragsstatusJson", json_encode($AS->arrInput['antragsstatus']));
+$Tpl->assign("aAllUserAuftraege", $aAllOtherUserAuftraege);
+
 
 if (!empty($aMaItems) && count($aMaItems)) {
     $Tpl->assign("Mitarbeiterliste", $aMaItems);

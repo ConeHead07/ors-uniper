@@ -1,5 +1,13 @@
 <!-- TAB BASIC MODULE (128585) BEGIN --> 
-<!-- INITIAL JS BEGIN --> 
+<!-- INITIAL JS BEGIN -->
+<style>
+    td.link {
+        cursor: pointer;
+    }
+    td.link:hover {
+        text-decoration: underline;
+    }
+</style>
 <script type="text/javascript"> 
   //{literal}
   //$(function() {
@@ -23,8 +31,10 @@
         <!--  -->
 </ul><br clear="all">
 </div>
+</div>
 <!-- TAB NAVIGATION ITEMS END -->
-
+{assign var="NewLine" value="
+"}
 {assign var="showLieferdatum" value=true}
 {assign var="showAvisiert" value=true}
 {assign var="showAbgeschlossen" value=true}
@@ -32,7 +42,8 @@
     {assign var="avisiertWidth" value=80}
     {assign var="abgeschlossenWidth" value=80}
 {assign var="serviceWidth" value=80}
-{assign var="strasseWidth" value=200}
+{assign var="strasseWidth" value=180}
+{assign var="numAuftraegeWidth" value=20}
 
 {if $cat eq "neue"}
     {assign var="showLieferdatum" value=false}
@@ -66,6 +77,7 @@
   <div>
       <div style="float:left;display:block;width:30px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=id{if $ofld eq "id" && $odir ne "DESC"}&odir=DESC{/if}">ID</a></div>
       <div style="float:left;display:block;width:70px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=personalnr{if $ofld eq "personalnr" && $odir ne "DESC"}&odir=DESC{/if}">KID</a></div>
+      <div style="float:left;display:block;width:{$numAuftraegeWidth}px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=numAuftraege{if $ofld eq "numAuftraege" && $odir ne "DESC"}&odir=DESC{/if}">A</a></div>
       {if $showLieferdatum}
       <div style="float:left;display:block;width:{$lieferdatumWidth}px;font-weight:bold;color:#00869c;"><a href="{$ListBaseLink}&ofld=termin{if $ofld eq "termin" && $odir ne "DESC"}&odir=DESC{/if}">Lieferdatum</a></div>
       {/if}
@@ -85,9 +97,10 @@
   </div>
 {foreach item=U from=$Umzuege}
   <li><a class="iconRightContentMain" href="{$U.LinkOpen}">
-  <div>
+  <div class="flds-body-row" data-uid="{$U.antragsteller_uid}">
       <div style="float:left;display:block;width:30px;font-weight:bold;">{$U.aid}&nbsp;</div>
-      <div style="float:left;display:block;width:70px;">{$U.kid}&nbsp;</div>
+      <div class="fld-kid" style="float:left;display:block;width:70px;">{$U.kid}&nbsp;</div>
+      <div class="fld-cell fld-numAuftraege" data-info="{$U.user}{$NewLine}{$U.Auftraege}" style="float:left;display:block;width:{$numAuftraegeWidth}px;" >{$U.numAuftraege}&nbsp;</div>
       {if $showLieferdatum}
       <div style="float:left;display:block;width:{$lieferdatumWidth}px;font-weight:bold;">{$U.Termin|date_format:"%d.%m.%Y"}&nbsp;</div>
       {/if}
@@ -122,4 +135,22 @@
 <br class="floatNone" /> 
 </div> 
 <!-- TAB BASIC MODULE (128585) END -->
+{include file="dialogs/allekundenauftraege_dialog.html"}
+<script>
+    $(function() {
+
+        $(".flds-body-row .fld-kid, .flds-body-row .fld-numAuftraege").toggleClass("link", true).bind("click",function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var row = $(this).closest(".flds-body-row");
+            var rowData = row.data();
+
+            if ('uid' in rowData) {
+                showKundenauftraegeDialog(rowData.uid);
+            } else {
+                alert("UID des Antragsteller ist nicht im rowData-Objekt enthalten!");
+            }
+        });
+    });
+</script>
 

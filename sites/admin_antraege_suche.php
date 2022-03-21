@@ -310,7 +310,7 @@ if ($sendquery) {
 	
 	if ($View == 'Antraege') {
 		
-		$sqlSelect = 'Select a.aid, a.aid AS AID, u.personalnr AS kid, '  . "\n"
+		$sqlSelect = 'Select a.antragsteller_uid AS uid, a.aid, a.aid AS AID, u.personalnr AS kid, '  . "\n"
             . ' a.tour_kennung AS Tour, ' . "\n"
             . ' CONCAT(a.name, ", ", substr(a.vorname, 1, 1), ".") AS Name, a.ort AS Ort, a.plz AS PLZ, a.strasse AS Strasse, ' . "\n"
 			. ' a.land AS Land, a.umzugstermin AS Liefertermin, a.umzugsstatus AS Status, ' . "\n"
@@ -468,8 +468,12 @@ EOT;
             $rows2Tbl .= '<td colspan=1>Aktion</td>';
         }
 		foreach($rows[0] as $fld => $v) {
+		    if ($fld === 'uid') {
+		        continue;
+            }
 		    $_lnk = $ListBaseLink."&ofld=$fld&odir=".listbrowser::get_oDir($fld, $originOFld, $odir);
 		    $_tdTitle = '';
+		    $_tdClass = 'fld-' . $fld;
 		    switch($fld) {
                 case 'Tour':
                 case 'tour_kennung':
@@ -494,7 +498,7 @@ EOT;
             }
 
 			if ($fld !=='aid' && $fld !== 'Land') {
-			    $rows2Tbl.= "<td title='$_tdTitle'><a href=\"" . $_lnk . '">' . $colLabel . '</a></td>';
+			    $rows2Tbl.= "<td class='$_tdClass' title='$_tdTitle'><a href=\"" . $_lnk . '">' . $colLabel . '</a></td>';
             }
 		}
 		$rows2Tbl.= "</thead>\n";
@@ -503,8 +507,9 @@ EOT;
 		$iNumRows = count($rows);
 		for($i = 0; $i < $iNumRows; $i++) {
 			$wz = ($wz!=1)?1:2;
+			$uid = $rows[$i]['uid'];
 			$lnk = '?s=aantrag&id=' . urlencode($rows[$i]['aid']);
-			$rows2Tbl.= "<tr class=\"wz$wz data-href\" data-href='$lnk'>";
+			$rows2Tbl.= "<tr class=\"wz$wz data-href\" data-href='$lnk' data-uid='$uid'>";
 			if ($withRowNumbers) {
                 $rows2Tbl .= '<td>' . ($offset + $i + 1) . '</td>';
             }
@@ -512,13 +517,17 @@ EOT;
 			    $rows2Tbl.= '<td><a href="?s=aantrag&id=' . urlencode($rows[$i]['aid']) . '">anzeigen</a></td>';
             }
 			foreach($rows[$i] as $k => $v) {
+                if ($k === 'uid') {
+                    continue;
+                }
+                $_tdClass = 'fld-' . $k;
 			    switch($k) {
                     case 'aid':
                         // Nothing do not show
                         break;
 
                     case 'summe':
-                        $rows2Tbl.= "<td class='menge'>" . number_format($v, 2, ',', '.') . "</td>\n";
+                        $rows2Tbl.= "<td class=\"' . $_tdClass . '\" class='menge'>" . number_format($v, 2, ',', '.') . "</td>\n";
                         break;
 
                     case 'Land':
@@ -527,7 +536,7 @@ EOT;
 
                     case 'PLZ':
                         $laenderKuerzel = !empty($rows[$i]['Land']) ? getLaenderKuerzelByLand($rows[$i]['Land']).' ' : '';
-                        $rows2Tbl.= '<td>' . $laenderKuerzel . $v . "</td>\n";
+                        $rows2Tbl.= '<td class="' . $_tdClass . '">' . $laenderKuerzel . $v . "</td>\n";
                         break;
 
                     case 'Liefertermin':
@@ -546,10 +555,10 @@ EOT;
                     case 'Kategorien':
                     case 'Leistungen':
                         $ktgAbk = str_replace(',', '', $v); // strtr($v, $aKtgAbk);
-                        $rows2Tbl.= '<td>' . $ktgAbk . "</td>\n";
+                        $rows2Tbl.= '<td class="' . $_tdClass . '">' . $ktgAbk . "</td>\n";
                         break;
                     default:
-                        $rows2Tbl.= "<td>$v</td>";
+                        $rows2Tbl.= "<td class=\"" . $_tdClass . "\">$v</td>";
                 }
             }
 			$rows2Tbl.= "</tr>\n";
@@ -598,4 +607,5 @@ $body_content.= $op;
 $body_content.= "</div>\n";
 $body_content.= "</div>\n";
 $body_content.= "</div>\n";
+$body_content .= $Tpl->fetch('dialogs/allekundenauftraege_dialog.html');
 

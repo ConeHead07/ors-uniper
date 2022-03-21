@@ -134,8 +134,13 @@
 		var aCheckedKategorien = [/*aCheckedKategorienJson*/];
 		var aCheckedService = [/*aCheckedServiceJson*/];
 
-		$("#q_umzugsstatus").find("option[value="+selectedUmzugsstatus+"]").prop("selected", true);
-		$("#q_bemerkungsstatus").find("option[value="+selectedBmkstatus+"]").prop("selected", true);
+		if (selectedUmzugsstatus) {
+			$("#q_umzugsstatus").find("option[value=" + selectedUmzugsstatus + "]").prop("selected", true);
+		}
+
+		if (selectedBmkstatus) {
+			$("#q_bemerkungsstatus").find("option[value=" + selectedBmkstatus + "]").prop("selected", true);
+		}
 
 		if (Array.isArray(aCheckedKategorien) && aCheckedKategorien.length > 0) {
 			aCheckedKategorien.forEach(function(val, idx) {
@@ -155,4 +160,21 @@
 <input type="hidden" name="s" value="{s}">
 <!-- {hiddenFields} -->
 </form>
+
+<script>
+	$(function() {
+		$("table#auftragsSuchResult tbody .fld-kid").bind("click",function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			var row = $(this).closest("tr");
+			var rowData = row.data();
+
+			if ('uid' in rowData) {
+				showKundenauftraegeDialog(rowData.uid);
+			} else {
+				alert("UID des Antragsteller ist nicht im rowData-Objekt enthalten!");
+			}
+		});
+	});
+</script>
 

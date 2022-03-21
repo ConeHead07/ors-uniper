@@ -1,4 +1,11 @@
-
+<style>
+    td.link {
+        cursor: pointer;
+    }
+    td.link:hover {
+        text-decoration: underline;
+    }
+</style>
 <div style="display: flex;justify-content: space-between">
     <div>{include file="admin_auswertung_tabs.html" cat="abrechnung" allusers=1 s="aantraege"}</div>
     <div style="align-self: flex-end;margin-right:5px;margin-bottom:2px;">
@@ -124,7 +131,7 @@ $(function(){
     </div>
     <span style="clear:both"></span>
 </div><br>
-<table class="tblList">
+<table id="tblAbrechnung" class="tblList">
     <thead>
         <tr>
             <th style="cursor:pointer" {literal}
@@ -161,7 +168,7 @@ $(function(){
     </thead>
     <tbody>
     {foreach name=AList item=item from=$Auftraege}
-        <tr>
+        <tr class="flds-body-row" data-uid="{$item.antragsteller_uid}">
             {if !empty($aAids) and in_array($item.aid, $aAids)}
             {assign var="checked" value="checked=\"checked\""}
             {else}
@@ -169,7 +176,7 @@ $(function(){
             {/if}
             <td>{if !$item.berechnet_am}<input type="checkbox" name="aids[]" {$checked} value="{$item.aid}">{/if}</td>
             <td><a href="?s={$site_antrag}&id={$item.aid}">{$item.aid}</a></td>
-            <td>{$item.kid}</td>
+            <td class="fld-kid">{$item.kid}</td>
             <td>{$item.plz}</td>
             <td>{$item.strasse}</td>
             <td>{$item.service}</td>
@@ -306,3 +313,21 @@ $(function(){
         </table>
     </div>
 </div>
+{include file="dialogs/allekundenauftraege_dialog.html"}
+
+<script>
+    $(function() {
+        $("#tblAbrechnung tr.flds-body-row .fld-kid").toggleClass("link", true).bind("click",function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var row = $(this).closest(".flds-body-row");
+            var rowData = row.data();
+
+            if ('uid' in rowData) {
+                showKundenauftraegeDialog(rowData.uid);
+            } else {
+                alert("UID des Antragsteller ist nicht im rowData-Objekt enthalten!");
+            }
+        });
+    });
+</script>

@@ -63,6 +63,7 @@ $MA = new ItemEdit($MAConf, $connid, $user, false);
 $TplMaListItem = array('ID'=>1, 'nachname'=>"", 'vorname'=>"", 'ort'=>"", 'gebaeude'=>"", 'raumnr'=>"");
 $PreiseAnzeigen = ($user['darf_preise_sehen'] === 'Ja') ? 1 : 0;
 $Tpl->assign('PreiseAnzeigen', $PreiseAnzeigen);
+$aAllOtherUserAuftraege = [];
 
 // If AID: Bearbeitungsformular mit DB-Daten
 if ($AID) {
@@ -110,6 +111,7 @@ if ($AID) {
             'WithLeistungsart' => [ 'Artikel' ]
         ]
     );
+    $aAllOtherUserAuftraege = getAllOtherUserAuftraege($baseAID);
 
     $aLSItems = getLieferscheineByAid($AID, ['onlySigned' => true]);
     $aRueckholLeistungen = getRueckholLeistungen();
@@ -181,6 +183,7 @@ unset($userForJson['pw']);
 unset($userForJson['authentcode']);
 unset($userForJson['authentcode']);
 $Tpl->assign('userJson', json_encode($userForJson));
+$Tpl->assign("aAllUserAuftraege", $aAllOtherUserAuftraege);
 
 //die('<pre>' . print_r($AS->arrInput,1) . '</pre>');
 $Tpl->assign('propertyName', $propertyName);
