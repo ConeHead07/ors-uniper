@@ -97,6 +97,7 @@ if ($AID) {
             $MAItems[$i]['critical_status_img'] = ($isCritical ? 'warning_triangle.png' : 'thumb_up.png');
 	}
 
+    $kundeUid = (int)$AS->arrDbdata['antragsteller_uid'];
     $baseAID = $AS->arrDbdata['ref_aid'] ?: $AID; // $AS->arrDbdata['ref_aid'] ?: $AID;
 
     $aAtItems = getAttachements($AS->arrDbdata, 0);
@@ -111,7 +112,7 @@ if ($AID) {
             'WithLeistungsart' => [ 'Artikel' ]
         ]
     );
-    $aAllOtherUserAuftraege = getAllOtherUserAuftraege($baseAID);
+    $aAllOtherUserAuftraege = getAllUserAuftraege($kundeUid);
 
     $aLSItems = getLieferscheineByAid($AID, ['onlySigned' => true]);
     $aRueckholLeistungen = getRueckholLeistungen();

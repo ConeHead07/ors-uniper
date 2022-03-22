@@ -163,7 +163,7 @@ if ($AID) {
         /**/
 	}
 
-	$kundeUid = $AS->arrDbdata['antragsteller_uid'];
+	$kundeUid = (int)$AS->arrDbdata['antragsteller_uid'];
 	$baseAID = $AID; // $AS->arrDbdata['ref_aid'] ?: $AID;
 	
 	$aAtItems = getAttachements($AS->arrDbdata, 0);
@@ -171,7 +171,7 @@ if ($AID) {
 	$aGroupItems = getGruppierungen($baseAID);
     $aReklas = getReklamationenByAid($baseAID);
     $aTeillieferungen = getTeillieferungenByAid($baseAID);
-    $aAllOtherUserAuftraege = getAllOtherUserAuftraege($baseAID);
+    $aAllOtherUserAuftraege = getAllUserAuftraege($kundeUid);
 
     $aLSItems = getLieferscheineByAid($AID, ['onlySigned' => true]);
     $aOrderedRHItems = getOrderedRueckholLeistungen($AID);

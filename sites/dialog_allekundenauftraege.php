@@ -46,7 +46,7 @@ require_once $InclBaseDir . 'umzugsanlagen.inc.php';
 require_once $InclBaseDir . 'leistungskatalog.inc.php';
 require_once $InclBaseDir . 'dienstleister.inc.php';
 
-$kundenAuftraege = getAllOtherUserAuftraegeByUID($UID);
+$kundenAuftraege = getAllUserAuftraege($UID);
 
 $Tpl = new myTplEngine();
 $Tpl->assign('aItems', $kundenAuftraege);
