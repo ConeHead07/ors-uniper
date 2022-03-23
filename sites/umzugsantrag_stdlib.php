@@ -303,8 +303,8 @@ function getAllUserAuftraege(int $uid, array $opts = []) {
               ) AS LeistungenBez,
              SUM(
                   IFNULL(lk.preis_pro_einheit,0) 
-                  * IFNULL(al.menge_rekla, 1) 
-                  * IFNULL(al.menge2_rekla,1)
+                  * IFNULL(al.menge_mertens, 1) 
+                  * IFNULL(al.menge2_mertens,1)
               ) AS Summe
             FROM mm_umzuege a
             JOIN mm_umzuege_leistungen al ON (a.aid = al.aid)

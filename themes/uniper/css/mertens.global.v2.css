@@ -1151,12 +1151,12 @@ ul.ulLinkList li {
   border-top: 1px solid;
   list-style-type: none;
 }
-ul.ulLinkList li a,
-ul.ulLinkList li a:active,
-ul.ulLinkList li a:focus,
-ul.ulLinkList li a:hover,
-ul.ulLinkList li a:link,
-ul.ulLinkList li a:visited {
+ul.ulLinkList li > a,
+ul.ulLinkList li > a:active,
+ul.ulLinkList li > a:focus,
+ul.ulLinkList li > a:hover,
+ul.ulLinkList li > a:link,
+ul.ulLinkList li > a:visited {
   display: block;
   width: auto;
   line-height: 19px;
