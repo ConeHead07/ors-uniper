@@ -289,7 +289,7 @@ function umzugsantrag_save() {
 	document.forms["frmUmzugsantrag"].action = "umzugsantrag.php";
 	var selector = "MyInfoBoxTxt";
 	umzugsantrag_loadingBar('');
-        frmSerializeGeraete();
+	frmSerializeGeraete();
 	AjaxFormSend(document.forms["frmUmzugsantrag"], selector, "", "cmd=speichern&id="+id);
 }
 

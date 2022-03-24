@@ -442,7 +442,7 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 <div style="margin-top:1.5rem;width:100%;margin-top:2.5rem;">
   <div>
   <input type="submit" name="CatchDefaultEnterReturnFalse" onclick="return false;" value="" style="display:none;border:0;background:#fff;color:#fff;position:relative;left:-500px;">
-    {if empty($AID)}
+    {if empty($AID) or $AS.umzugsstatus eq "temp"}
     <button
             id="btnAngebotSenden"
             type="submit"
@@ -450,9 +450,21 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
             title="Angebot senden"
             value="Angeboten">Angebot<br>senden</button>
     {/if}
+
+    {if empty($AID)}
+    <button
+            id="btnAuftragSpeichern"
+            class="btn grey"
+            style="float: right"
+            type="submit"
+            title="Nur Speichern, noch nicht bestellen"
+            value="Speichern"><i class="icon shopping cart"></i> Warenkorb <br>speichern</button>
+    {/if}
+
     {if !empty($AID)}
       <button type="submit" class="btn grey"
-             onclick="umzugsantrag_save()"
+             id="btnAuftragBemSpeichern"
+             xonclick="umzugsantrag_save()"
              title="Speichern ohne Statusänderung.
   Bei neuen Bemerkungen erfolgt eine Benachrichtigungsmail."
               value="Speichern ohne Status">Speichern ohne Status<br>Neue Bemerkung senden</button>
@@ -665,8 +677,19 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 
     $("#btnAngebotSenden").bind("click", function(e) {
       e.preventDefault();
+      sendAngebotFormData({cmd: 'senden', status: 'angebot'});
+    });
+
+    $("#btnAuftragSpeichern, #btnAuftragBemSpeichern").on("click", function(e) {
+      e.preventDefault();
+
+      sendAngebotFormData({ cmd: 'speichern' });
+    });
+
+    function sendAngebotFormData(addData) {
       var frm = document.forms["frmUmzugsantrag"];
       frm.action = "umzugsantrag.php";
+      var id = umzugsantrag_id();
       var namedArray = getNamedArrayOfForm( frm );
       var error = umzugsantrag_errors(true);
       console.log(Object.keys(namedArray) );
@@ -678,26 +701,6 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
         return;
       }
 
-      var neueAngebote = [];
-      var inputAngebote = $(frm).find(".table-leistungen tbody .row.ist-angebot input[name^=L\\[leistung_id\\]\\[]");
-      var inputLeistungen = $(frm).find(".table-leistungen tbody .row:not(.ist-angebot) :input[name^=L\\[]");
-
-      inputAngebote.each(function() {
-                var tr = $(this).closest("tr");
-                var data = tr.data();
-                if (!("leistung" in data)) {
-                  return
-                }
-                neueAngebote.push({
-                  leistung_id: data.leistung.leistung_id,
-                  kategorie_id: data.leistung.kategorie_id,
-                  Bezeichnung: data.leistung.Bezeichnung,
-                  menge_mertens: data.leistung.menge_mertens,
-                  menge2_mertens: data.leistung.menge2_mertens,
-                  preis_pro_einheit: data.leistung.preis_pro_einheit,
-                });
-              });
-
       if (error) {
         error = "<h4 class=\"hdErr\" style=\"color:#f00;\">Achtung - Antrag konnte nicht gesendet werden!</h4>\n"+error;
         ErrorBox(error);
@@ -706,14 +709,20 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
 
       var url = frm.action;
 
-      var data = $(frm).find(":input[name]:not([name^=L\\[])").serialize();
-      data+= '&' + $.param({cmd: 'senden', status: 'angebot'})
-      if (inputLeistungen.length) {
-        data+= "&" + inputLeistungen.serialize();
+      var data = getSerializedFormDataMitAngebotsleistungen();
+      if (addData) {
+        if (typeof addData === "string") {
+          data+= '&' + addData;
+        } else if (typeof addData === 'object') {
+          data+= '&' + $.param(addData);
+        } else {
+          // data+= '&' + $.param({cmd: 'senden', status: 'angebot'});
+        }
       }
-      if (neueAngebote.length) {
-        data+= "&" + $.param({ NeueAngebote: neueAngebote});
+      if (id) {
+        data+= '&id=' + id;
       }
+
       var onSuccess = function(responseData, textStatus, jqXHR) {
         console.log("AngebotSenden onSuccess response data", { responseData, textStatus });
         if (responseData.type === "success" & responseData.success && responseData.id) {
@@ -734,7 +743,45 @@ optionsUmzugsarten.push({value:"Datenpflege", content:"Datenpflege"});
       });
 
       return;
-    });
+    }
+
+    function getSerializedFormDataMitAngebotsleistungen() {
+      var frm = document.forms["frmUmzugsantrag"];
+      frm.action = "umzugsantrag.php";
+      var namedArray = getNamedArrayOfForm( frm );
+      console.log(Object.keys(namedArray) );
+      console.log({namedArray});
+
+      var neueAngebote = [];
+      var inputAngebote = $(frm).find(".table-leistungen tbody .row.ist-angebot input[name^=L\\[leistung_id\\]\\[]");
+      var inputLeistungen = $(frm).find(".table-leistungen tbody .row:not(.ist-angebot) :input[name^=L\\[]");
+
+      inputAngebote.each(function() {
+        var tr = $(this).closest("tr");
+        var data = tr.data();
+        if (!("leistung" in data)) {
+          return
+        }
+        neueAngebote.push({
+          leistung_id: data.leistung.leistung_id,
+          kategorie_id: data.leistung.kategorie_id,
+          Bezeichnung: data.leistung.Bezeichnung,
+          menge_mertens: data.leistung.menge_mertens,
+          menge2_mertens: data.leistung.menge2_mertens,
+          preis_pro_einheit: data.leistung.preis_pro_einheit,
+        });
+      });
+
+      var data = $(frm).find(":input[name]:not([name^=L\\[])").serialize();
+      if (inputLeistungen.length) {
+        data+= "&" + inputLeistungen.serialize();
+      }
+      if (neueAngebote.length) {
+        data+= "&" + $.param({ NeueAngebote: neueAngebote});
+      }
+
+      return data;
+    }
 
     function xxxx_umzugsantrag_send() {
       if (!document.forms["frmUmzugsantrag"]) return false;
