@@ -123,6 +123,7 @@
                     return;
                 }
 
+                btnApply.waitMe({effect: 'ios'});
                 var request = $.post('/reklamieren.php',
                     {
                         aid,
@@ -139,6 +140,7 @@
                     }
                 );
                 request.always(function() {
+                    btnApply.waitMe('hide');
                     $("body").removeClass("doc-body-no-scrollbars");
                     btnApply.prop("disabled", false);
                     btnCancel.prop("disabled", false);
