@@ -106,7 +106,7 @@ if (!is_array($leistungsIds) || empty($leistungsIds)) {
 }
 
 if (count($errors)) {
-    return rueckResponseError($aid, $errors);
+    return teilResponseError($aid, $errors);
 }
 
 $lids = implode(',', $leistungsIds);
@@ -221,7 +221,7 @@ if (empty($errors)) {
 }
 
 if (count($errors)) {
-    return rueckResponseError($aid, $errors);
+    return teilResponseError($aid, $errors);
 }
 
 $aGrundLeistungen = [];
@@ -256,7 +256,7 @@ $db->query(
 
 $teilAid = $db->insert_id();
 if (!$teilAid) {
-    return rueckResponseError($aid, ['Systemfehler: Teillieferung konnte nicht angelegt werden!']);
+    return teilResponseError($aid, ['Systemfehler: Teillieferung konnte nicht angelegt werden!']);
 }
 
 $NL = "\n";
@@ -342,7 +342,7 @@ if (false && umzugsantrag_mailinform($aid, 'teillieferung', $teilAid)) {
     }
 }
 
-rueckResponseSuccess([
+teilResponseSuccess([
     'aid' => $aid,
     'leistungen' => $inputLeistungsMengenByLID,
     'teilAid' => $teilAid
