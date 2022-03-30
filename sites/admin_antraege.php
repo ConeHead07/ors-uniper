@@ -16,9 +16,10 @@ if ($batchCmd = 'erinnerungsmail') {
 }
 
 
-require_once( $InclBaseDir . "umzugsantrag.inc.php");
-require_once( $InclBaseDir . "umzugsmitarbeiter.inc.php");
-require_once( $ModulBaseDir . 'excelexport/helper_functions.php');
+require_once  $InclBaseDir . 'umzugsantrag.inc.php';
+require_once  $InclBaseDir . 'umzugsmitarbeiter.inc.php';
+require_once  $ModulBaseDir . 'excelexport/helper_functions.php';
+require_once 'sites/umzugsantrag_stdlib.php';
 
 $CUA = &$_CONF['umzugsantrag'];
 $CUM = &$_CONF['umzugsmitarbeiter'];
@@ -32,6 +33,7 @@ $exportFormat = 'html';
 if (empty($s)) {
     $s = getRequest('s', "");
 }
+$totalSumOfAllOrders = getTotalSumOfAllOrders();
 
 $userGruppe = $user['gruppe'];
 $istUmzugsteam = $userGruppe === 'umzugsteam' || $s === 'auslieferung';
@@ -632,16 +634,21 @@ $Tpl->assign('showDateRangeFilter', $showDateRangeFilter);
 $Tpl->assign('rangeDateFields', $rangeDateFields);
 $Tpl->assign('rangeDatumvon', $datumvon);
 $Tpl->assign('rangeDatumbis', $datumbis);
+$Tpl->assign('user_darf_preise_sehen', $user['darf_preise_sehen'] === 'Ja');
+$Tpl->assign('totalSumOfAllOrders', $totalSumOfAllOrders);
+$Tpl->assign('TOTAL_SHOP_LIMIT', TOTAL_SHOP_LIMIT);
+
+
 
 $Tpl->assign('Umzuege', $Auftraege);
 
 //echo '<pre>#' . __LINE__ . ' '; // . print_r( filestat('html/antraege_liste.html'),1);
 try {
     if (!$istUmzugsteam) { //  || true) { //
-        $body_content .= $Tpl->fetch("admin_antraege_liste.html");
+        $body_content .= $Tpl->fetch('admin_antraege_liste.html');
         //$body_content .= $Tpl->fetch("admin_antraege_liste.table.html");
     } else {
-        $body_content .= $Tpl->fetch("umzugsteam_antraege_liste.html");
+        $body_content .= $Tpl->fetch('umzugsteam_antraege_liste.html');
     }
 } catch(Exception $e) {
 	echo $e->getMessage();

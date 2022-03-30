@@ -20,6 +20,10 @@ $error = "";
 $sys_error = "";
 /**/
 
+// TEST-Wert
+// if (!defined('TOTAL_SHOP_LIMIT')) define('TOTAL_SHOP_LIMIT', 1650000.00);
+if (!defined('TOTAL_SHOP_LIMIT')) define('TOTAL_SHOP_LIMIT', 1850000.00);
+
 if (!defined("HP_LANG")) {
 	if (isset($_REQUEST["SetLang"])) $SetLang = $_REQUEST["SetLang"];
 	elseif (isset($_SESSION["HP_LANG"])) $SetLang = $_SESSION["HP_LANG"];

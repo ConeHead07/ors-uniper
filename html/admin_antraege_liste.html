@@ -36,7 +36,7 @@
         {else}
             {include file="admin_antraege_tabs.html"}
         {/if}</div>
-        <div style="align-self: flex-end;margin-right:5px;margin-bottom:2px;">
+        <span style="align-self: flex-end;margin-right:5px;margin-bottom:2px;">
             <button id="btnCsvExport" class="btn btn-blue" style="padding:10px;cursor: pointer;">CSV-Export</button>
         </div>
     </div>
@@ -54,6 +54,19 @@
         <a href="{$ListBaseLink}&ofld=id&odir={$odir}&allusers={if $allusers}0{else}1{/if}">Wechsel zu {if $allusers}meine Auftr&auml;ge{else}Auftr&auml;gen aller User{/if}</a>
     </div>
     *}
+
+    {if !empty($totalSumOfAllOrders)}
+    <div>
+        {if $totalSumOfAllOrders gt $TOTAL_SHOP_LIMIT}
+            <div class="alert alert-danger">
+                Vereinbartes Auftragslimit für dieses Shopsystem {if !empty($user_darf_preise_sehen)}{TOTAL_SHOP_LIMIT|number_format:2:",":"."}&euro;{/if} wurde überschritten !!!
+            </div>
+        {/if}
+        {if !empty($user_darf_preise_sehen)}
+        <div class="alert alert-warning">ShopAuftragsSumme: {$totalSumOfAllOrders|number_format:2:",":"."}&euro; (bis heute beantragt, bestaetigt oder abgeschlossen)</div>
+        {/if}
+    </div>
+    {/if}
 
     <div>
     {if $cat eq "angeboten"}

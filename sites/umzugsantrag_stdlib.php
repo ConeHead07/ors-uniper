@@ -1,5 +1,94 @@
 <?php 
 
+function getTotalSumOfAllOrders(array $opts = []) {
+    global $db;
+
+    $aStatus = !empty($opts['umzugsstatus']) && is_array($opts['umzugsstatus']) ? $opts['umzugsstatus'] : [];
+    $dateField = !empty($opts['datum_field']) && is_string($opts['datum_field']) ? $opts['datum_field'] : '';
+    $dateFrom = !empty($opts['datum_from']) && is_string($opts['datum_from']) ? $opts['datum_from'] : '';
+    $dateTo = !empty($opts['datum_to']) && is_string($opts['datum_to']) ? $opts['datum_to'] : '';
+    $aValidStatusFilter = [ 'beantragt', 'bestaetigt', 'abgeschlossen'];
+    $andWhere = '';
+
+    if ($dateField && ($dateFrom || $dateTo)) {
+        switch($dateField) {
+            case 'antragsdatum':
+            case 'bestaetigt_am':
+            case 'abgeschlossen_am':
+            case 'berechnet_am':
+                break;
+
+            default:
+                return 'ERROR INVALID DATE-FIELD ' . $dateField;
+        }
+        if ($dateFrom && !strtotime($dateFrom)) {
+            return 'ERROR INVALID PARAMETER FOR DATE-FROM ' . $dateFrom;
+        }
+        if ($dateTo && !strtotime($dateTo)) {
+            return 'ERROR INVALID PARAMETER FOR DATE-TO ' . $dateTo;
+        }
+        if ($dateFrom) {
+            $andWhere.= ' AND DATE_FORMAT(' . $dateField . ', "%Y-%m-%d) >= "' . date('Y-m-d', strtotime($dateFrom)) . '"';
+        }
+        if ($dateTo) {
+            $andWhere.= ' AND DATE_FORMAT(' . $dateField . ', "%Y-%m-%d) >= "' . date('Y-m-d', strtotime($dateTo)) . '"';
+        }
+    }
+    if (!empty($aStatus)) {
+        $aInvalidStatus = array_diff($aStatus, $aValidStatusFilter);
+        if (!empty($aValidStatusFilter)) {
+            return 'ERROR INVALID PARAMETER FOR STATUS ' . implode(',', $aInvalidStatus);
+        }
+        $andWhere.= 'AND umzugsstatus IN("' . implode('", "', $aStatus) . '")';
+    }
+
+    $sql = <<<EOT
+SELECT 
+	 /* a.*, 
+	 ua.personalnr AS kid,
+	 ua.nachname antragsteller_name, 
+	 ua.gruppe antragsteller_gruppe, 
+	 GROUP_CONCAT(
+	 	CONCAT(lk.kategorie_abk, IF(IFNULL(l.leistung_abk,"")="", "", CONCAT("", l.leistung_abk, ""))) 
+		ORDER BY leistungskategorie SEPARATOR ""
+	 ) AS Leistungen, 
+	 GROUP_CONCAT(
+	     IF (l.leistung_id is NULL, "", CONCAT_WS("<|#|>", 
+	      l.leistung_id, lk.kategorie_abk, lk.leistungskategorie, 
+	      l.Bezeichnung, l.Farbe, l.Groesse, "€", l.preis_pro_einheit
+	,     (ul.menge_mertens * IFNULL(ul.menge2_mertens,1))
+	     ))      ORDER BY leistungskategorie SEPARATOR ";\n"
+	   ) AS LeistungenFull, 
+	   */
+	 SUM(if(lm.preis, lm.preis, preis_pro_einheit) * ul.menge_mertens * IFNULL(ul.menge2_mertens, 1)) AS summe
+	 FROM mm_umzuege a 
+	 JOIN mm_user ua ON a.antragsteller_uid = ua.uid 
+	 LEFT JOIN mm_umzuege_leistungen ul ON (a.aid = ul.aid) 
+	 LEFT JOIN mm_leistungskatalog l ON(ul.leistung_id = l.leistung_id) 
+	 LEFT JOIN mm_leistungskategorie lk ON(l.leistungskategorie_id = lk.leistungskategorie_id) 
+	 LEFT JOIN mm_leistungspreismatrix lm ON(
+        l.leistung_id = lm.leistung_id
+        AND lm.mengen_von <= (ul.menge_mertens * IFNULL(ul.menge2_mertens,1))
+        AND (lm.mengen_bis >= ( ul.menge_mertens * IFNULL(ul.menge2_mertens,1)))
+    ) 
+	 WHERE 1
+    AND service != "Rekla"
+    AND ul.menge_mertens > 0
+    AND
+    (
+        (umzugsstatus = "beantragt")
+        OR  (umzugsstatus = "bestaetigt")
+        OR  (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja" AND IFNULL(berechnet_am, "") = "")
+        OR  (umzugsstatus = "abgeschlossen" AND abgeschlossen = "Ja" AND IFNULL(berechnet_am, "") != "")
+    )
+    $andWhere
+EOT;
+
+    $sum = $db->query_one($sql);
+
+    return $sum;
+}
+
 function getLeistungsAuswahl(array $opts = []) {
 
     global $db;

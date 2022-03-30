@@ -1,10 +1,10 @@
 <?php 
-require_once($InclBaseDir . 'umzugsantrag.inc.php');
-require_once($InclBaseDir . 'umzugsmitarbeiter.inc.php');
-require_once($InclBaseDir . 'umzugsanlagen.inc.php');
-require_once($InclBaseDir . 'leistungskatalog.inc.php');
-require_once($SitesBaseDir . 'umzugsantrag_sendmail.php');
-require_once("sites/umzugsantrag_stdlib.php");
+require_once $InclBaseDir . 'umzugsantrag.inc.php';
+require_once $InclBaseDir . 'umzugsmitarbeiter.inc.php';
+require_once $InclBaseDir . 'umzugsanlagen.inc.php';
+require_once $InclBaseDir . 'leistungskatalog.inc.php';
+require_once $SitesBaseDir . 'umzugsantrag_sendmail.php';
+require_once 'sites/umzugsantrag_stdlib.php';
 
 $ASConf = &$_CONF['umzugsantrag'];
 $MAConf = &$_CONF['umzugsmitarbeiter'];
@@ -115,6 +115,22 @@ $cmd = getRequest('cmd','');
 // Get ID, falls Antrag bereits vorhanden
 $AID = getRequest('id','');
 if (empty($AID)) $AID = (!empty($_POST['AS']['aid']) ? $_POST['AS']['aid'] : (!empty($_GET['AS']['aid']) ? $_GET['AS']['aid'] : ''));
+
+if (empty($AID)) {
+
+    $totalSumOfAllOrders = getTotalSumOfAllOrders();
+    if ( TOTAL_SHOP_LIMIT <= $totalSumOfAllOrders) {
+        $body_content.= '<div class="alert alert-danger">
+Aktuell werden in diesem Shop-System keine neuen Bestellungen mehr angenommen!<br>
+Sie können aber weiterhin über meine Bestellungen auf ihre aktiven Auftäge einsehen.
+</div>
+<div class="alert alert-danger">
+No new orders are currently being accepted in this shop system!<br>
+However, you can still see your active orders via my orders. 
+</div>';
+        return;
+    }
+}
 
 $ASInput = getRequest('AS','');
 //die("#".__LINE__." ".__FILE__);
