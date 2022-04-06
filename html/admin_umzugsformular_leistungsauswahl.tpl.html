@@ -195,7 +195,7 @@
                 <td class="col field-mertens_menge menge{if empty($mengeMertensReadOnly)} with-input{/if}">{if !empty($mengeMertensReadOnly)}
                     {$L.menge_mertens|number_format:2:",":"."}{else}
                     <input class="menge creator auftragsmenge" name="L[menge_mertens][]" value="{$L.menge_mertens}" type="number">
-                    <input class="menge2 creator" name="L[menge2_mertens][]" value="{$L.menge2_mertens|number_format:2:',':'.'}" type="hidden"><input class="ilstg" name="L[leistung_id][]" value="{$L.leistung_id}" type="hidden">
+                    {$L.menge2_mertens}<input class="menge2 creator" name="L[menge2_mertens][]" value="{$L.menge2_mertens|number_format:2:',':'.'}" type="hidden"><input class="ilstg" name="L[leistung_id][]" value="{$L.leistung_id}" type="hidden">
                 {/if}{if $showAddLeistung}
                         <input type="hidden" name="L[Bezeicnung][]" value="">
                         {if $PreiseAnzeigen}

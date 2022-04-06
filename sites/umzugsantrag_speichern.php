@@ -48,7 +48,7 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen, bool 
             'menge_property' => $aInputLeistungen['menge_property'][$i],
             'menge2_property' => $aInputLeistungen['menge2_property'][$i],
             'menge_mertens' => $aInputLeistungen['menge_mertens'][$i],
-            'menge2_mertens' => $aInputLeistungen['menge2_mertens'][$i],
+            'menge2_mertens' => !isset($aInputLeistungen['menge2_mertens'][$i]),
         ];
     }
 
@@ -161,10 +161,9 @@ function umzugsleistungen_inputWithShipping($AID, array $aInputLeistungen, bool 
     }
     // echo json_encode(compact('sql', 'rows', 'rowsByRefId', 'aHasPos'));
 
-    $rowsList = array_values($rowsById);
-    $rowsRefList = array_values($rowsByRefId);
+    // $rowsList = array_values($rowsById);
+    // $rowsRefList = array_values($rowsByRefId);
     $result = array_merge(array_values($rowsById), array_values($rowsByRefId));
-    // die(print_r(compact('lastQuery', 'rows', 'rowsList', 'rowsRefList', 'result'), 1));
     return $result;
 
 }
@@ -320,21 +319,85 @@ function umzugsleistungen_speichern($AID, $autocalc_ref_mengen = true) {
              . ($creator == 'mertens'  ? 'menge2_mertens = :menge2_mertens ' : 'menge2_mertens = :menge2_property ')
              . 'WHERE aid = :aid AND leistung_id = :leistung_id';
         foreach($data as $row) {
-            $row['menge_property']  = (isset($row['menge_property'])  ? getFormattedNumber( $row['menge_property']) : 0);
-            $row['menge_mertens']   = (isset($row['menge_mertens'])   ? getFormattedNumber( $row['menge_mertens'])  : 0);
-            $row['menge2_property'] = (isset($row['menge2_property']) ? getFormattedNumber( $row['menge2_property']) : '' );
-            $row['menge2_mertens']  = (isset($row['menge2_mertens'])  ? getFormattedNumber( $row['menge2_mertens'])  : '' );
+            $isUpdateMode = in_array($row['leistung_id'], $existing_ids, false);
+            foreach(['menge_mertens', 'menge2_mertens', 'menge_property', 'menge2_property'] as $fld) {
+                if (isset($row[$fld]) && $row[$fld] !== '') {
+                    $row[$fld] = getFormattedNumber( $row[$fld]);
+                }
+            }
             
-            if (!is_numeric($row['menge2_property'])) $row['menge2_property'] = new DbExpr ('NULL');
-            if (!is_numeric($row['menge2_mertens']))  $row['menge2_mertens']  = new DbExpr ('NULL');
-            
-            if (in_array($row['leistung_id'], $existing_ids)) {
-                $db->query($sqlUpdate, $row);
-//                die('#' . __LINE__ . ' ' . $db->lastQuery);
+            if ($isUpdateMode) {
+                $sqlUpdate =
+                    'Update mm_umzuege_leistungen SET ';
+                $aSqlSetMengen = [];
+                if ($creator === 'property' ) {
+                    if (isset($row['menge_property']) && is_numeric($row['menge_property'])) {
+                        $aSqlSetMengen[] = 'menge_property = :menge_property ';
+                        $aSqlSetMengen[] = 'menge_mertens = :menge_property ';
+                    }
+                    if (isset($row['menge2_property']) && is_numeric($row['menge2_property'])) {
+                        $aSqlSetMengen[] = 'menge2_property = :menge2_property ';
+                        $aSqlSetMengen[] = 'menge2_mertens = :menge2_property ';
+                    }
+                } else {
+                    if (isset($row['menge_mertens']) && is_numeric($row['menge_mertens'])) {
+                        $aSqlSetMengen[] = 'menge_mertens = :menge_mertens ';
+                    }
+                    if (isset($row['menge2_mertens']) && is_numeric($row['menge2_mertens'])) {
+                        $aSqlSetMengen[] = 'menge2_mertens = :menge2_mertens ';
+                    }
+                }
+                if (count($aSqlSetMengen)) {
+                    $sqlUpdate .= implode(', ', $aSqlSetMengen) . 'WHERE aid = :aid AND leistung_id = :leistung_id';
+                    $db->query($sqlUpdate, $row);
+//                  die('#' . __LINE__ . ' ' . $db->lastQuery);
+                }
             } else {
-                $row['hauptauftragsmenge'] = $row['menge_mertens'];
-                $db->query($sqlInsert, $row);
-                //die('#' . __LINE__ . ' ' . $db->lastQuery);
+                $aSqlSetMengen = [];
+                if ($creator === 'property') {
+                    if (!isset($row['menge_property']) || !is_numeric($row['menge_property'])) {
+                        $row['menge_property'] = 1;
+                    }
+                    if (!isset($row['menge2_property']) || !is_numeric($row['menge2_property'])) {
+                        $row['menge2_property'] = 1;
+                    }
+                    if (isset($row['menge_property']) && is_numeric($row['menge_property'])) {
+                        $aSqlSetMengen['hauptauftragsmenge'] = (float)$row['menge_property'];
+                        $aSqlSetMengen['menge_property'] = (float)$row['menge_property'];
+                        $aSqlSetMengen['menge_mertens'] = (float)$row['menge_property'];
+                    }
+                    if (isset($row['menge2_property']) && is_numeric($row['menge2_property'])) {
+                        $aSqlSetMengen['menge2_property'] = (float)$row['menge2_property'];
+                        $aSqlSetMengen['menge2_mertens'] = (float)$row['menge2_property'];
+                    }
+                } else {
+                    if (!isset($row['menge_mertens']) || !is_numeric($row['menge_mertens'])) {
+                        $row['menge_mertens'] = 1;
+                    }
+                    if (!isset($row['menge2_mertens']) || !is_numeric($row['menge2_mertens'])) {
+                        $row['menge2_mertens'] = 1;
+                    }
+                    if (isset($row['menge_mertens']) && is_numeric($row['menge_mertens'])) {
+                        $aSqlSetMengen['hauptauftragsmenge'] = (float)$row['menge_mertens'];
+                        $aSqlSetMengen['menge_property'] = (float)$row['menge_mertens'];
+                        $aSqlSetMengen['menge_mertens'] = (float)$row['menge_mertens'];
+                    }
+                    if (isset($row['menge2_mertens']) && is_numeric($row['menge2_mertens'])) {
+                        $aSqlSetMengen['menge2_property'] = (float)$row['menge2_mertens'];
+                        $aSqlSetMengen['menge2_mertens'] = (float)$row['menge2_mertens'];
+                    }
+                }
+
+                if (count($aSqlSetMengen)) {
+                    $sFlds = implode(', ', array_keys($aSqlSetMengen));
+                    $sVals = implode(', ', array_values($aSqlSetMengen));
+                    $sqlInsert = 'INSERT INTO mm_umzuege_leistungen(aid, leistung_id, createdby, '
+                        . $sFlds . ') '
+                        . 'VALUES(:aid, :leistung_id, :createdby, ' . $sVals . ')';
+
+                    $db->query($sqlInsert, $row);
+                    //die('#' . __LINE__ . ' ' . $db->lastQuery);
+                }
             }
             if ($db->error() ) {
                 die('#'.__LINE__ . ' ' . $db->error() . '<br>' . PHP_EOL . $db->lastQuery);
