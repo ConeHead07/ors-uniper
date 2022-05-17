@@ -188,6 +188,21 @@ class MertensLieferscheinPDF extends MertensBasePDF
         $recipient.= $auftrag['strasse'] . "\r\n";
         $recipient.= $this->getLaenderKuerzelByLand($auftrag['land']) . "-{$auftrag['plz']} {$auftrag['ort']}\r\n";
 
+        $minAddLines = 0;
+        if (!empty($auftrag['ansprechpartner']) || !empty($auftrag['ansprechpartner_fon'])) {
+            $recipient.= "\r\n";
+            $recipient.= 'Ansprechpartner vor Ort' . "\r\n";
+            $minAddLines+= 2;
+            if (!empty($auftrag['ansprechpartner'])) {
+                $recipient.= $auftrag['ansprechpartner'] . "\r\n";
+                $minAddLines++;
+            }
+            if (!empty($auftrag['ansprechpartner_fon'])) {
+                $recipient.= $auftrag['ansprechpartner_fon'] . "\r\n";
+                $minAddLines++;
+            }
+        }
+
         $aBriefkopfRefData = array_merge([
 //            ['Referenznummer', '12345'],
             ['Ihre KID', !empty($auftrag['kid']) ? $auftrag['kid'] : ''],
@@ -241,6 +256,12 @@ class MertensLieferscheinPDF extends MertensBasePDF
             }
         }
         $this->Ln(4);
+
+        // throw new \Exception(print_r(compact('minAddLines', 'iNumRefLines'), 1));
+        $iNumRecipientLines = count(explode("\r", $recipient));
+        if ($iNumRecipientLines > $iNumRefLines) {
+            $this->Ln(($iNumRecipientLines - $iNumRefLines) * 3);
+        }
 
         $this->writeHTML($auftragsliste);
 
