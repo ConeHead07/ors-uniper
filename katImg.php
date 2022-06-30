@@ -11,7 +11,7 @@ if (!$id) {
 }
 
 $sql = 'SELECT image '
-	. ' FROM `mt_move_uniper`.`mm_leistungskatalog` '
+	. ' FROM `mm_leistungskatalog` '
 	. ' WHERE leistung_id = ' . $id . '';
 $row = $db->query_row($sql);
 
@@ -31,7 +31,7 @@ if ($row['image'] && file_exists($file)) {
 }
 
 $sql = 'SELECT image_urldata '
-    . ' FROM `mt_move_uniper`.`mm_leistungskatalog` '
+    . ' FROM `mm_leistungskatalog` '
     . ' WHERE leistung_id = ' . $id . '';
 $row = $db->query_row($sql);
 

@@ -4,7 +4,7 @@ require("header.php");
 
 $sql = 'SELECT `leistung_id`, `leistungskategorie_id`, `leistungsgruppe`, `aktiv`, `Bezeichnung`, `leistungseinheit`, `leistungseinheit_abk`,'
 	. '`leistungseinheit2`, `leistungseinheit2_abk`, `preis_pro_einheit`, `waehrung`, `created`, `modified`, image '
-	. ' FROM `mt_move_uniper`.`mm_leistungskatalog` '
+	. ' FROM `mm_leistungskatalog` '
 	. ' WHERE image LIKE "%\.jpg" ';
 $rows = $db->query_rows($sql);
 

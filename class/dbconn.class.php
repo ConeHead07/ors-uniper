@@ -717,24 +717,3 @@ function sql_match_rows($sql) {
     return $SQL_MATCH_CACHE[$cacheKey];
 }
 
-if (basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
-    $modelReflector = new ReflectionClass('DBConn');
-    //echo "#".__LINE__." ".basename(__FILE__)."<pre> getMethods:".print_r($modelReflector->getMethods(),1)."</pre><br>\n";
-
-    //$db = new DBConn("localhost", "mt_move", "root", "");
-    $db = new DBConn("localhost", "mt_move_uniper", "root", "geheim3");
-    //$db->close();
-
-    echo "#".__LINE__." ".print_r($db->get_table_statuslist("%benutzer"),1)."<br>\n";
-    echo "#".__LINE__." ".print_r($db->get_field_type("mm_umzuege","anrede"),1)."<br>\n";
-    echo "#".__LINE__." ".print_r($db->get_fields("mm_umzuege","anrede"),1)."<br>\n";
-    echo "#".__LINE__." ".print_r($db->get_field_options("mm_umzuege","anrede"),1)."<br>\n";
-    echo "#".__LINE__." ".print_r($db->add_field_option("mm_umzuege","anrede","unbekannt"),1)."<br>\n";
-    echo "#".__LINE__." ".print_r($db->get_field_options("mm_umzuege","anrede"),1)."<br>\n";
-    echo "#".__LINE__." ".print_r($db->delete_field_option("mm_umzuege","anrede","unbekannt"),1)."<br>\n";
-    echo "#".__LINE__." ".print_r($db->get_fields("mm_umzuege","anrede"),1)."<br>\n";
-    echo "#".__LINE__." ".print_r($db->count_rows("mm_umzuege"),1)."<br>\n";
-    echo "#".__LINE__." ".print_r($db->countDistinct("mm_umzuege","anrede"),1)."<br>\n";
-    $csvExport = $db->query_export_csv("SELECT * FROM mm_user", "mm_user.csv");
-    echo "csvExport: $csvExport<br>\n";
-}
