@@ -39,7 +39,7 @@ if (!isset($_CONF["defaultPruefeLogin"])) {
 $_CONF["redirectAfterLogin"] = "index.php?area=start";
 $_CONF["regc_subject"] = "Aktivieren Sie Ihren Account auf ".$MConf["WebRoot"];
 $_CONF["regc_authentlink"] = $MConf["WebRoot"]."login.php?ac={authentcode}";
-$_CONF["regc_mail_tld_only"] = '@uniper.energy'; // '@gmail.com'; // "@mertens.ag"; // "@mertens.ag"; // "@googlemail.com"; //
+$_CONF["regc_mail_tld_only"] = '@zurich.com'; // '@gmail.com'; // "@mertens.ag"; // "@mertens.ag"; // "@googlemail.com"; //
 $_CONF["regc_mail_tld_check"] = true; //false;
 $_CONF["forget_pw_link"] = $MConf["WebRoot"]."login_fpw.php";
 $_CONF["mailc_subject"]  = "Aktivieren Sie Ihre E-Mail-Änderung";
