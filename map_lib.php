@@ -155,7 +155,7 @@ function insertGeoCache(array $geoData) {
 INSERT INTO mm_geolocations 
 (uuid, lat, lng, strasse, plz, ort, land, orig_target, orig_target_id, google_place_id, geo_source)
 VALUES
-(:uuid, :lat, :lng, :strasse, :plz, :ort, :land, "ors_uniper.mm_umzuege.aid", orig_target_id, :google_place_id, "gmaps")
+(:uuid, :lat, :lng, :strasse, :plz, :ort, :land, "ors_zurich.mm_umzuege.aid", orig_target_id, :google_place_id, "gmaps")
 EOT;
 
     $aParams = [

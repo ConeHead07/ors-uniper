@@ -45,7 +45,7 @@ if ($NLInput) {
 			//echo '#' . __LINE__ . ' aNlVerteiler: ' . print_r($aNlVerteiler,1) . '<br/>' . PHP_EOL;
 			if ($aNlVerteiler) {
 				
-				$hd = "Reply-To:".(!empty($rplVars["Reply-To"])?$rplVars["Reply-To"]:"service-uniper@mertens.ag")."";
+				$hd = "Reply-To:".(!empty($rplVars["Reply-To"])?$rplVars["Reply-To"]:"service-zurich@mertens.ag")."";
 				$suTpl = "Es wurde eine neue Nebenleistung beauftrag. ID #".$NID;
 				$nlStatusTxtTpl = trim(file_get_contents("textfiles/statusmail_nebenleistung_neu.txt"));
 				
@@ -67,8 +67,8 @@ if ($NLInput) {
 					$nlStatusTxt = strtr($nlStatusTxtTpl, $rplNL);
 					//echo '#'.__LINE__ . ' fbmail('.$r_to["to"].')' . '<br/>' . PHP_EOL;
 					fbmail($r_to["to"], $su, $nlStatusTxt, $hd);
-					//fbmail($r_to["to"], $su, $nlStatusTxt."\n\nEmpfänger:\n".print_r($aNlVerteiler,1), $hd);
-					//echo "#".__LINE__." fbmail(".print_r($r_to["to"],1).", $su, $nlStatusTxt.\"\n\nEmpfänger:\n\"".print_r($aNlVerteiler,1).", $hd);";
+					//fbmail($r_to["to"], $su, $nlStatusTxt."\n\nEmpfÃ¤nger:\n".print_r($aNlVerteiler,1), $hd);
+					//echo "#".__LINE__." fbmail(".print_r($r_to["to"],1).", $su, $nlStatusTxt.\"\n\nEmpfÃ¤nger:\n\"".print_r($aNlVerteiler,1).", $hd);";
 					
 				}
 			}
@@ -101,7 +101,7 @@ if ($NLInput) {
 		
 		if ($user["gruppe"]=="admin_standort") {
 			if (strpos(",".$user["standortverwaltung"].",", ",".$NL->arrInput["ort"].",")===false)
-				die("UNERLAUBTER ZUGRIFF! Standort-Administratoren dürfen nur auf Anträge zugreifen, die in Ihrer Standortverwaltung eingetragen sind!");
+				die("UNERLAUBTER ZUGRIFF! Standort-Administratoren dÃ¼rfen nur auf AntrÃ¤ge zugreifen, die in Ihrer Standortverwaltung eingetragen sind!");
 		}
 		$nebenleistung_form = "knebenleistung_lesen.html";
 	} else {

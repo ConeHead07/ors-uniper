@@ -207,7 +207,7 @@ class MertensLieferscheinPDF extends MertensBasePDF
 //            ['Referenznummer', '12345'],
             ['Ihre KID', !empty($auftrag['kid']) ? $auftrag['kid'] : ''],
             ['Ihre Durchwahl', $auftrag['fon']],
-            ['Ihr Bestellzeichen', 'UNIPER-ORS-' . $auftrag['aid']],
+            ['Ihr Bestellzeichen', 'Zurich-ORS-' . $auftrag['aid']],
             ['', ''],
             ['', 'Willich, ' . date('d.m.Y')],
         ], $this->aBriefkopfDaten);

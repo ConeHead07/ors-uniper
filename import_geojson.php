@@ -165,7 +165,7 @@ for($i = 0; $i < $iNumJsonData; $i++) {
                 $db::quote($it->plz),
                 $db::quote($it->ort),
                 $db::quote($it->land),
-                $db::quote('ors_uniper.mm_umzuege.aid'),
+                $db::quote('ors_zurich.mm_umzuege.aid'),
                 $db::quote($it->aid)
             ])
             . ') ';

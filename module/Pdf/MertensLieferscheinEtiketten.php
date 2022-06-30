@@ -24,7 +24,7 @@ class MertensLieferscheinEtiketten extends \TCPDF {
         $this->SetAuthor('merTens AG');
         $this->SetTitle('Etiketten');
         $this->SetSubject('Lieferung NewHomeOffice');
-        $this->SetKeywords('merTens, ORS, Uniper, NewHomeOffice');
+        $this->SetKeywords('merTens, ORS, Zurich, HomeOffice');
 
         $this->setHeaderData('', '', '', '', '', '');
         $this->setFooterData('', '');

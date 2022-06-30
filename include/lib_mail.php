@@ -175,7 +175,7 @@ function send_multipart_mail($to,$subject,$html,$text,$attachements,$header,$spe
 		}
 		/*$fp = fopen("mail_source.txt", "w++");
 		if ($fp) {
-			fputs($fp, "An mail() übergebene Argumente: to, subject, body, header:\n\n");
+			fputs($fp, "An mail() ï¿½bergebene Argumente: to, subject, body, header:\n\n");
 			fputs($fp, "to:\n".$to."\n\n");
 			fputs($fp, "subject:\n".$subject."\n\n");
 			fputs($fp, "body:\n\n\n");
@@ -214,11 +214,11 @@ if (basename(__FILE__) == basename($_SERVER["PHP_SELF"])) {
 	$priority = "";
 	$header="";
 	if ($cc) $header.="CC: ".$cc;
-	$header.="\nFROM: <service-uniper@mertens.ag>";
+	$header.="\nFROM: <service-zurich@mertens.ag>";
 	if ($bc) $header.="\nBCC: ".$bc;
 	if ($priority) $header.="\nX-Priority: ".$priority;
-	$header.="\nReply-To: service-uniper@mertens.ag";
-	$header.="\nReturn-Path: service-uniper@mertens.ag";
+	$header.="\nReply-To: service-zurich@mertens.ag";
+	$header.="\nReturn-Path: service-zurich@mertens.ag";
 	$header.="\nX-Entwickler: Frank Barthold";
         $aHeader = SmtpMailer::mimeHeaderTxtToArray($header);
 	

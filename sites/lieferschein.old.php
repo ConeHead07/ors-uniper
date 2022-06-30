@@ -155,7 +155,7 @@ $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('merTens AG');
 $pdf->SetTitle(!$istKommissionsSchein ? 'Lieferschein' : 'Kommissionsschein');
 $pdf->SetSubject('Lieferung NewHomeOffice');
-$pdf->SetKeywords('merTens, ORS, Uniper, NewHomeOffice');
+$pdf->SetKeywords('merTens, ORS, Zurich, HomeOffice');
 $pdf->SetHeaderData('', '', '', '', [255, 255, 255], [255, 255, 255]);
 
 

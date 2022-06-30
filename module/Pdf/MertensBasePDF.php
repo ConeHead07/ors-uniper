@@ -20,7 +20,7 @@ class MertensBasePDF extends \TCPDF {
         $this->SetAuthor('merTens AG');
         $this->SetTitle('Lieferschein');
         $this->SetSubject('Lieferung NewHomeOffice');
-        $this->SetKeywords('merTens, ORS, Uniper, NewHomeOffice');
+        $this->SetKeywords('merTens, ORS, Zurich, HomeOffice');
         $this->SetHeaderData('', '', '', '', [255, 255, 255], [255, 255, 255]);
 
         // set header and footer fonts

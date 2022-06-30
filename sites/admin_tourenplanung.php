@@ -401,7 +401,7 @@ if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
     }
 
     header('Content-Type: application/xls');
-    header('Content-Disposition: attachment; filename="UniperTourenplanungVom' . date('YmdHi') . '.xlsx"');
+    header('Content-Disposition: attachment; filename="ZurichTourenplanungVom' . date('YmdHi') . '.xlsx"');
     $writer->writeToStdOut();
 
     exit;

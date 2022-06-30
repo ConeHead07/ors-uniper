@@ -41,7 +41,7 @@ $sqlInsertGeodata = <<<EOT
     INSERT INTO mm_geolocations 
     (uuid, lat, lng, strasse, plz, ort, land, orig_target, orig_target_id, geo_source)
     VALUES
-    (:uuid, :lat, :lng, :strasse, :plz, :ort, :land, "ors_uniper.mm_umzuege.aid", orig_target_id, "gmaps")
+    (:uuid, :lat, :lng, :strasse, :plz, :ort, :land, "ors_zurich.mm_umzuege.aid", orig_target_id, "gmaps")
 EOT;
 
 $rows = $db->query_rows($sqlAuftragWithoutGeoData . ' LIMIT 100');

@@ -215,7 +215,7 @@ if ($createPdf) {
 
     $pdf->setAuftragsdaten([
         'vorname' => '',
-        'name' => 'Uniper NewNormal HomeOffice',
+        'name' => 'Zurich HomeOffice',
     ]);
     $pdf->setZeitraum(date('d.m.', $timevon) . ' bis ' . date('d.m.Y', $timebis) );
 
@@ -437,7 +437,7 @@ HEREDOC;
     } else {
         $aTo = [ ['email' => $mailto ] ];
     }
-    $sSubject = 'ORS Uniper: Reporting abgeschlossener Auftraege';
+    $sSubject = 'ORS Zurich: Reporting abgeschlossener Auftraege';
     $sHtmlBody = 'Hallo, <br>
 <br>
 anbei das Reporting abrechenbarer Leistungen für den Zeitraum 
@@ -460,7 +460,7 @@ Zusätzliche Informationen:<br>
 ' . (count($rowsT) ? array2Table($rowsT) . '<br>' : '') . '<br>
 
 Mit besten Grüßen
-Uniper NewNormal Homeoffice
+Zurich Homeoffice
 
     ';
     $sTxtBody = '';

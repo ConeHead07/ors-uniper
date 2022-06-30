@@ -337,7 +337,7 @@ if ($exportFormat !== 'html' && is_array($rows) && count($rows)) {
     }
 
     header('Content-Type: application/xls');
-    header('Content-Disposition: attachment; filename="UniperAuswertungVom' . date('YmdHi') . '.xlsx"');
+    header('Content-Disposition: attachment; filename="ZurichAuswertungVom' . date('YmdHi') . '.xlsx"');
     $writer->writeToStdOut();
 
     exit;

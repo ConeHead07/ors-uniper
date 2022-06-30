@@ -91,7 +91,7 @@ class fbsmtp {
 		if (isset($aSmtpConn["limitOffset"]))     $this->limitOffset =   $aSmtpConn["limitOffset"]; // Formular-Duchreiche-Wert in stichtag_test.php
 		if (isset($aSmtpConn["connection_timeout"])) 	$this->connection_timeout = 	$aSmtpConn["connection_timeout"]; // Formular-Duchreiche-Wert in stichtag_test.php
 		$this->constHeader = array(
-			"From" => 'ors <service-uniper@mertens.ag>',
+			"From" => 'ors <service-zurich@mertens.ag>',
 		);
 	}
 	
@@ -359,7 +359,7 @@ class fbsmtp {
 			
 		    if ($mail_error === false ) {
 		    	if ($show_status) {
-					echo "<span style=\"color:green;font-weight:bold;\">Mailversand an ".$mail_all_count." Empfänger war erfolgreich!</span><br>\n";
+					echo "<span style=\"color:green;font-weight:bold;\">Mailversand an ".$mail_all_count." Empfï¿½nger war erfolgreich!</span><br>\n";
 					echo "Versendete Emails: <br>\n".nl2br($mail_liste);
 					echo "<pre>".basename($this->logfile)."</pre>\n<br>\n";
 				}

@@ -223,7 +223,7 @@ foreach($aSQL as $_query) {
 }
 
 header('Content-Type: application/xls');
-header('Content-Disposition: attachment; filename="UniperBestelldaten' . date('YmdHi') . '.xlsx"');
+header('Content-Disposition: attachment; filename="ZurichBestelldaten' . date('YmdHi') . '.xlsx"');
 $writer->writeToStdOut();
 
 exit;

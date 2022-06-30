@@ -262,7 +262,7 @@ WHERE aid = ' . (int)$AID . ' AND k.leistungskategorie_id NOT IN (' . $ktgIdLief
 
     public function getLieferscheinNr() {
         $lid = $this->getLieferscheinID();
-        return 'UNIPER-4-' . str_pad($this->AID, 5, '0', STR_PAD_LEFT) . '-' . $lid;
+        return 'ZurichR-4-' . str_pad($this->AID, 5, '0', STR_PAD_LEFT) . '-' . $lid;
     }
     
     public function loadByAID(int $AID)
@@ -308,7 +308,7 @@ WHERE aid = ' . (int)$AID . ' AND k.leistungskategorie_id NOT IN (' . $ktgIdLief
         $pdf->SetAuthor('merTens AG');
         $pdf->SetTitle('Lieferschein');
         $pdf->SetSubject('Lieferung NewHomeOffice');
-        $pdf->SetKeywords('merTens, ORS, Uniper, NewHomeOffice');
+        $pdf->SetKeywords('merTens, ORS, Zurich, HomeOffice');
         $pdf->SetHeaderData('', '', '', '', [255, 255, 255], [255, 255, 255]);
         LS_LOX(__FILE__, __LINE__);
 
@@ -335,7 +335,7 @@ WHERE aid = ' . (int)$AID . ' AND k.leistungskategorie_id NOT IN (' . $ktgIdLief
             ['KID', $auftrag['personalnr']],
             ['Ihre Rufnummer', $auftrag['fon']],
             ['Ihre E-Mai', $auftrag['email']],
-            ['Ihr Bestellzeichen', 'Uniper-ORS-' . $this->AID],
+            ['Ihr Bestellzeichen', 'Zurich-ORS-' . $this->AID],
 //            ['', ''],
 //            ['Fachberator', 'Jochen Herbermann'],
 //            ['Telefon', '+49 177 9699 499'],
