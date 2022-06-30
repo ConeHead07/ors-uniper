@@ -92,7 +92,7 @@ $MConf = array(
 	"Html_Body" => "index_body.html",
 	"Html_MsgBox" => "msgbox.html",
 	"Html_ErrBox" => "errorbox.html",
-	"theme" => "uniper",
+	"theme" => "zurich",
 
 	"activity_log_max_days" => 30,
 
@@ -109,12 +109,12 @@ $MConf = array(
     'smtp_from_name' => 'Order Request System',
     // ors-service@mertens.ag
     // service-uniper@mertens.ag
-    'smtp_from_addr' => 'service-uniper@mertens.ag',
+    'smtp_from_addr' => 'service-zurich@mertens.ag',
     'smtp_auth_user' => 'mag\ors-service',
     'smtp_auth_pass' => 'merTens47877',
     'smtp_client_host' => gethostbyname(gethostname()),
 	'min_ma' => 0,
-	'webmaster' => 'service-uniper@mertens.ag',
+	'webmaster' => 'service-zurich@mertens.ag',
 	'minWerktageVorlauf' => 0,
     'validateAntragOrt' => false,
     'validateAntragGebaeude' => false,

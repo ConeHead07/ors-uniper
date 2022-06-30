@@ -411,7 +411,7 @@ function get_standort_property_mail($antragsOrt, $antragsGebaeude) {
 
 function get_standort_admin_mail($antragsOrt, $antragsGebaeude) {
         
-	$aAdminMailTo[] = array('email'=>"service-uniper@mertens.ag", 'Name'=>'ORS', 'Vorname'=>'', 'emails_cc' => '');
+	$aAdminMailTo[] = array('email'=>"service-zurich@mertens.ag", 'Name'=>'ORS', 'Vorname'=>'', 'emails_cc' => '');
 	foreach($aAdminMailTo as $k => $v) 
             $aAdminMailTo[$k]['to'] = $aAdminMailTo[$k]['email'];
         
@@ -497,7 +497,7 @@ function send_status_mail($aUserTo, $tplMail, $rplVars, $aAttachements = [], $au
             $rplVars['ausgefuehrtam'].= ' um ' . substr(trim($rplVars['umzugszeit']), 0, 5) . ' Uhr';
         }
 
-        $aUserHeader['Reply-To'] = $rplVars['Reply-To'] ?? 'service-uniper@mertens.ag';
+        $aUserHeader['Reply-To'] = $rplVars['Reply-To'] ?? 'service-zurich@mertens.ag';
 
         $mailer = SmtpMailer::getNewInstance();
         $mailer->setTplVars($rplVars, 'UTF-8');
@@ -590,9 +590,9 @@ function umzugsantrag_mailinform($AID, $status='neu', $value, $authorUser = []) 
 	$aAdminMailTo = $users['admins'];
         
 	$aAdminMailTo[] = array(
-	    'to'=>'service-uniper@mertens.ag',
-        'email'=>'service-uniper@mertens.ag',
-        'nachname'=>'ORS Uniper',
+	    'to'=>'service-zurich@mertens.ag',
+        'email'=>'service-zurich@mertens.ag',
+        'nachname'=>'ORS Zurich',
         'vorname'=>'NewNormalOffice',
         'emails_cc' => ''
     );

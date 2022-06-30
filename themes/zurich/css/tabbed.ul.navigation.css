@@ -1,0 +1,60 @@
+div.divTabbedList  ul {
+    margin: 0; 
+	padding: 0;
+    text-align:left;
+    border: 0;
+	width:100%;
+}
+
+div.divTabbedList  ul li,
+div.divTabbedList  ul li * {
+	font-family:Arial,Helvetica,sans-serif;
+}
+
+
+div.divTabbedList  ul li {
+    list-style: none;
+	display:block;
+	float:left;
+    margin: 0; 
+	padding: 0px;
+    text-align:center;
+	width:auto;
+	padding-top:10px;
+  }
+div.divTabbedList  ul li,
+div.divTabbedList  ul li * {
+	font-size:.8rem;
+
+}
+div.divTabbedList  ul li a {
+    padding: 10px;
+	display:block;
+	float:left;
+    text-decoration: none; 
+    border-left: 1px solid white; 
+    color: #000; 
+	background-color: rgba(0, 117, 181, .33);
+	--background-color-rgba-as-hex: #0075b554;
+}
+
+div.divTabbedList  ul li a:hover,
+div.divTabbedList  ul li span {
+    color: white; 
+	background-color: #0075B5;
+}
+div.divTabbedList  ul li.activeTab a,
+div.divTabbedList  ul li.activeTab span {
+    color: white; 
+	background-color: #0075B5;
+	font-weight:bold;
+}
+.clearLeft {
+	clear:left;
+	width:100%;
+	height:0;
+	overflow:hidden;
+	border:0;
+}
+
+

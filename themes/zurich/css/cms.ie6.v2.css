@@ -1,0 +1,54 @@
+/* ------------------------------------------------------------------------------------------- */
+/* cms.ie6.v2.css - STRATEGIC DESIGN */
+/* ------------------------------------------------------------------------------------------- */
+/* VERSION: 4.0.0 */
+/* LAST CHANGES: 2010/04/28 */
+/* PUBLISHING DATE: 2011-02-13 09:00:18 */
+/* MEDIA TYPE: screen */
+/* ------------------------------------------------------------------------------------------- */
+
+
+/* ------------------------------------------------------------------------------------------- */
+/* TABBED TARIFF MODULES - BEGIN */
+  div.divTariffInfo {
+    height: 180px;
+  }
+  div.divTariffPrice a span.spanPrice {
+    margin-top: 27px;
+  }
+  div.divTariffPrice p {
+    margin-top: 20px;
+  }
+
+/*IE6 visual float Bug FAQ-Template */
+div.divInlay a.closedFAQ,
+div.divInlay a.openFAQ {
+     height:0.05%;
+     }
+
+
+/* TABBED TARIFF MODULES - END */
+/* ------------------------------------------------------------------------------------------- */
+ 
+/*Unternehmensbereich BEGINN */
+div.wrapPrintFlashFallback {
+    width:565px;
+    height:282px;
+    overflow:hidden;
+}
+
+/* Unternehmensbereich ENDE*/
+
+/* --- InputFormButton --- */
+span.iButton input {
+   top: -1px;
+}
+span.iButton {
+   padding:0px;
+}
+span.iButton b {
+   padding:0px 3px 0px 6px;
+}
+ol.footnote {
+   padding-left: 10px;
+}
